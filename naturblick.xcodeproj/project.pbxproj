@@ -31,7 +31,7 @@
 		7BCE46AF29C9DAFE00C6C101 /* DarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkView.swift; sourceTree = "<group>"; };
 		7BCE46B029C9DAFE00C6C101 /* RatioContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatioContainer.swift; sourceTree = "<group>"; };
 		7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupButton.swift; sourceTree = "<group>"; };
-		7BCE46BE29C9DB3700C6C101 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Group.swift; path = "../../../../Code/naturblick-ios/naturblick-ios/models/Group.swift"; sourceTree = "<group>"; };
+		7BCE46BE29C9DB3700C6C101 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		7BCE46C129C9DC7800C6C101 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
