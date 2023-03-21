@@ -19,7 +19,7 @@ struct GroupsView: View {
                 .primary_500
                 .ignoresSafeArea()
             ScrollView {
-                Image("artportraits24")
+                Image(systemName: "questionmark")
                 Text("Wähle eine Gruppe")
                     .foregroundColor(.white)
                 GeometryReader { geo in
