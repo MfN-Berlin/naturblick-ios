@@ -9,7 +9,7 @@ import SwiftUI
 struct naturblickApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
