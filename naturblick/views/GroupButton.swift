@@ -9,7 +9,7 @@ struct GroupButton: View {
     let group: Group
 
     var body: some View {
-        NavigationLink(destination: HomeView()) {   // SpeciesView(group: group) 
+        NavigationLink(destination: SpeciesListView(filter: .group(group))) {
             VStack {
                 Image(systemName: "questionmark").resizable()
                     .clipShape(Capsule())
