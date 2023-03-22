@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
-		13ACC80329C9BCBA0054BB91 /* naturblickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ACC80229C9BCBA0054BB91 /* naturblickApp.swift */; };
+		13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */; };
 		7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */; };
 		7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */; };
 		7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */; };
@@ -24,7 +24,7 @@
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		131E786829C9BB25000DF928 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		13ACC80229C9BCBA0054BB91 /* naturblickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = naturblickApp.swift; sourceTree = "<group>"; };
+		13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickApp.swift; sourceTree = "<group>"; };
 		7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewButton.swift; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 				7BCE46C029C9DC5E00C6C101 /* utils */,
 				7BCE46BD29C9DB1E00C6C101 /* models */,
 				7BCE46A229C9D90300C6C101 /* views */,
-				13ACC80229C9BCBA0054BB91 /* naturblickApp.swift */,
+				13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */,
 				131E786529C9BB25000DF928 /* Assets.xcassets */,
 				131E786729C9BB25000DF928 /* Preview Content */,
 			);
@@ -126,6 +126,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				13BA832C29CB1BB3003FFE07 /* PBXTargetDependency */,
 			);
 			name = naturblick;
 			productName = naturblick;
@@ -156,6 +157,9 @@
 				Base,
 			);
 			mainGroup = 131E785529C9BB24000DF928;
+			packageReferences = (
+				13BA832A29CB1BAB003FFE07 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+			);
 			productRefGroup = 131E785F29C9BB24000DF928 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -186,7 +190,7 @@
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
 				7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
-				13ACC80329C9BCBA0054BB91 /* naturblickApp.swift in Sources */,
+				13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
 				7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */,
 				7BCE46B929C9DAFE00C6C101 /* RatioContainer.swift in Sources */,
@@ -195,6 +199,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		13BA832C29CB1BB3003FFE07 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 13BA832B29CB1BB3003FFE07 /* SwiftLintPlugin */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		131E786A29C9BB25000DF928 /* Debug */ = {
@@ -389,6 +400,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		13BA832A29CB1BAB003FFE07 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		13BA832B29CB1BB3003FFE07 /* SwiftLintPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13BA832A29CB1BAB003FFE07 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintPlugin";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 131E785629C9BB24000DF928 /* Project object */;
 }

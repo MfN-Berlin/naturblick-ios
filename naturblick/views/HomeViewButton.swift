@@ -5,21 +5,21 @@
 import SwiftUI
 
 struct HomeViewButton: View {
-    
+
     let text: String
     let image: () -> Image
-    
+
     var body: some View {
         VStack {
             ZStack {
-                Circle().fill(Color.secondary_200)
+                Circle().fill(Color.secondary200)
                 image()
-                    .foregroundColor(.nb_white)
+                    .foregroundColor(.nbWhite)
                     .padding()
             }
             Text(text)
                 .multilineTextAlignment(TextAlignment.center)
-                .foregroundColor(.nb_white)
+                .foregroundColor(.nbWhite)
             }
     }
 }
