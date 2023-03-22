@@ -37,3 +37,20 @@ extension Species {
         static let iucnCategory = Expression<String?>("iucn_category")
     }
 }
+
+extension Species {
+    static let sampleData = Species(
+        id: 1,
+        group: "amphibian",
+        sciname: "Lissotriton vulgaris",
+        gername: "Teichmolch",
+        engname: "Smooth newt",
+        wikipedia: nil,
+        maleUrl: "/uploads/crop_d60f7f6c98b0fcf1aa52e7b0_f0b5f2e568.jpg",
+        femaleUrl: nil,
+        gersynonym: nil,
+        engsynonym: nil,
+        redListGermany: "ungefahrdet",
+        iucnCategory: "LC"
+    )
+}

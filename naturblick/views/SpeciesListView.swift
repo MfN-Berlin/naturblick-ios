@@ -12,7 +12,7 @@ struct SpeciesListView: View {
         ScrollView {
             LazyVStack {
                 ForEach(speciesListViewModel.species, id: \.id) { species in
-                    Text(species.sciname)
+                    SpeciesListItemView(species: species)
                 }
             }
         }.task {
