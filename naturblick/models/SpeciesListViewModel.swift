@@ -9,6 +9,13 @@ class SpeciesListViewModel: ObservableObject {
 
     @Published private(set) var species = [Species]()
 
+    private static func query(filter: SpeciesListFilter) -> QueryType {
+        switch filter {
+        case .group(let group):
+            return Species.Definition.table.where(Species.Definition.group == group.id)
+        }
+    }
+
     func filter(filter: SpeciesListFilter) {
         guard let path = Bundle.main.path(forResource: "strapi-db", ofType: "sqlite3") else {
             preconditionFailure("Failed to find database file")
@@ -17,7 +24,9 @@ class SpeciesListViewModel: ObservableObject {
         do {
             let speciesDb = try Connection(path, readonly: true)
 
-            species = try speciesDb.prepareRowIterator(Species.Definition.table).map { row in
+            species = try speciesDb.prepareRowIterator(
+                SpeciesListViewModel.query(filter: filter).order(Species.Definition.gername)
+            ).map { row in
                 Species(
                     id: row[Species.Definition.id],
                     group: row[Species.Definition.group],
