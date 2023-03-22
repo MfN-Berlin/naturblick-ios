@@ -5,9 +5,9 @@
 import SwiftUI
 
 struct GroupButton: View {
-    
+
     let group: Group
-    
+
     var body: some View {
         NavigationLink(destination: HomeView()) {   // SpeciesView(group: group) 
             VStack {

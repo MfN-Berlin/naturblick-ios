@@ -4,8 +4,8 @@
 
 import SwiftUI
 
-struct HomeView : View {
-    
+struct HomeView: View {
+
     var body: some View {
         DarkView {
             VStack {
@@ -18,9 +18,9 @@ struct HomeView : View {
                             .scaledToFill()
                             .frame(height: geo.size.height - geo.size.height * 0.55)
                     }
-                    
+
                     VStack {
-                        Text("Bestimme Tieren und Pflanzen").foregroundColor(.nb_white)
+                        Text("Bestimme Tieren und Pflanzen").foregroundColor(.nbWhite)
                         HStack {
                             HomeViewButton(text: "Vogelstimmen aufnehmen") {
                                 Image(systemName: "questionmark")
@@ -49,7 +49,7 @@ struct HomeView : View {
     }
 }
 
-struct HomeView_Previews : PreviewProvider {
+struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             HomeView()

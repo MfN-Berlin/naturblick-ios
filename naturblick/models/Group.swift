@@ -1,4 +1,3 @@
-
 import Foundation
 
 enum GroupType {
@@ -13,11 +12,15 @@ struct Group: Identifiable, Hashable {
     let image: String
 }
 
-
 extension Group {
     static let groups: [Group] = [
         Group(id: "amphibian", groupType: GroupType.fauna, gerName: "Amphibien", image: "group_amphibian"),
-        Group(id: "hymenoptera", groupType: GroupType.fauna, gerName: "Bienen, Wespen & Co", image: "group_hymenoptera"),
+        Group(
+            id: "hymenoptera",
+            groupType: GroupType.fauna,
+            gerName: "Bienen, Wespen & Co",
+            image: "group_hymenoptera"
+        ),
         Group(id: "conifer", groupType: GroupType.flora, gerName: "Nadelbäume", image: "group_conifer"),
         Group(id: "herb", groupType: GroupType.flora, gerName: "Kräuter & Wildblumen", image: "group_herb"),
         Group(id: "tree", groupType: GroupType.flora, gerName: "Laubbäume & Gingko", image: "group_tree"),

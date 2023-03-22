@@ -2,21 +2,20 @@
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // All Rights Reserved.
 
-
 import SwiftUI
 
 struct GroupsView: View {
-    
+
     let grid = Group.groups.reduce(into: [[]]) { acc, iter in
         acc[acc.count - 1].count < 3
         ? acc[acc.count - 1 ].append(iter)
         : acc.append([iter])
     }
-    
+
     var body: some View {
         ZStack {
             Color
-                .primary_500
+                .primary500
                 .ignoresSafeArea()
             ScrollView {
                 Image(systemName: "questionmark")

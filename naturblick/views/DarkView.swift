@@ -5,14 +5,14 @@
 import SwiftUI
 
 struct DarkView<Content: View>: View {
-    
+
     @ViewBuilder let content: () -> Content
-    
-    private let color = Color.primary_500
-    
+
+    private let color = Color.primary500
+
     var body: some View {
         ZStack {
-            Color.primary_500.ignoresSafeArea()
+            Color.primary500.ignoresSafeArea()
             content()
         }
     }
