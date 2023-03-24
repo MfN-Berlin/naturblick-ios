@@ -21,6 +21,7 @@ struct HomeView: View {
 
                     VStack {
                         Text("Bestimme Tieren und Pflanzen").foregroundColor(.nbWhite)
+                            .font(.nbHeadline6)
                         HStack {
                             HomeViewButton(text: "Vogelstimmen aufnehmen") {
                                 Image(systemName: "questionmark")
