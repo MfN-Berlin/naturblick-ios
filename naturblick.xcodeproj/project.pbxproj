@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */; };
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
 		132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B0D9529CDD5C500B80C9E /* Font+Lato.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Dimensions.swift"; sourceTree = "<group>"; };
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		131E786829C9BB25000DF928 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				7BF564C629D1DEEA003F4D09 /* layouts */,
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
 				132B0D9529CDD5C500B80C9E /* Font+Lato.swift */,
+				1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */,
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
 				132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */,
+				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,

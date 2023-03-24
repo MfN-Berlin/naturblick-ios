@@ -18,8 +18,20 @@ struct SpeciesListView: View {
                 } placeholder: {
                     SpeciesListItemView(species: species, avatar: Image("placeholder"))
                 }
+                .listRowInsets(.init(
+                    top: .defaultPadding,
+                    leading: .defaultPadding,
+                    bottom: .defaultPadding,
+                    trailing: .defaultPadding
+                ))
             } else {
                 SpeciesListItemView(species: species, avatar: Image("placeholder"))
+                    .listRowInsets(.init(
+                        top: .defaultPadding,
+                        leading: .defaultPadding,
+                        bottom: .defaultPadding,
+                        trailing: .defaultPadding
+                    ))
             }
         }
         .task {
