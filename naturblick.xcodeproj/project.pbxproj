@@ -10,6 +10,14 @@
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
 		13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */; };
+		13316BD729C9F3860077292B /* SpeciesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BD629C9F3860077292B /* SpeciesListView.swift */; };
+		13316BD929C9F4150077292B /* Species.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BD829C9F4150077292B /* Species.swift */; };
+		13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDA29C9F6030077292B /* SpeciesListFilter.swift */; };
+		13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */; };
+		13316BE029C9FAF80077292B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 13316BDF29C9FAF80077292B /* SQLite */; };
+		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
+		13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */; };
+		13ACC80329C9BCBA0054BB91 /* naturblickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ACC80229C9BCBA0054BB91 /* naturblickApp.swift */; };
 		7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */; };
 		7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */; };
 		7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */; };
@@ -25,6 +33,13 @@
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		131E786829C9BB25000DF928 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickApp.swift; sourceTree = "<group>"; };
+		13316BD629C9F3860077292B /* SpeciesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListView.swift; sourceTree = "<group>"; };
+		13316BD829C9F4150077292B /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
+		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
+		13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewModel.swift; sourceTree = "<group>"; };
+		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
+		13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItemView.swift; sourceTree = "<group>"; };
+		13ACC80229C9BCBA0054BB91 /* naturblickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = naturblickApp.swift; sourceTree = "<group>"; };
 		7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewButton.swift; sourceTree = "<group>"; };
@@ -40,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13316BE029C9FAF80077292B /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +65,7 @@
 		131E785529C9BB24000DF928 = {
 			isa = PBXGroup;
 			children = (
+				13316BE329CA13E00077292B /* strapi-db.sqlite3 */,
 				131E786029C9BB24000DF928 /* naturblick */,
 				131E785F29C9BB24000DF928 /* Products */,
 			);
@@ -92,6 +109,8 @@
 				7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */,
 				7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */,
 				7BCE46B029C9DAFE00C6C101 /* RatioContainer.swift */,
+				13316BD629C9F3860077292B /* SpeciesListView.swift */,
+				13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -100,6 +119,9 @@
 			isa = PBXGroup;
 			children = (
 				7BCE46BE29C9DB3700C6C101 /* Group.swift */,
+				13316BD829C9F4150077292B /* Species.swift */,
+				13316BDA29C9F6030077292B /* SpeciesListFilter.swift */,
+				13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -129,6 +151,9 @@
 				13BA832C29CB1BB3003FFE07 /* PBXTargetDependency */,
 			);
 			name = naturblick;
+			packageProductDependencies = (
+				13316BDF29C9FAF80077292B /* SQLite */,
+			);
 			productName = naturblick;
 			productReference = 131E785E29C9BB24000DF928 /* naturblick.app */;
 			productType = "com.apple.product-type.application";
@@ -159,6 +184,7 @@
 			mainGroup = 131E785529C9BB24000DF928;
 			packageReferences = (
 				13BA832A29CB1BAB003FFE07 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 			);
 			productRefGroup = 131E785F29C9BB24000DF928 /* Products */;
 			projectDirPath = "";
@@ -174,6 +200,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */,
 				131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */,
 				131E786629C9BB25000DF928 /* Assets.xcassets in Resources */,
 			);
@@ -188,11 +215,16 @@
 			files = (
 				7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */,
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
+				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
 				13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */,
+				13316BD729C9F3860077292B /* SpeciesListView.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
+				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
 				7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */,
+				13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */,
+				13316BD929C9F4150077292B /* Species.swift in Sources */,
 				7BCE46B929C9DAFE00C6C101 /* RatioContainer.swift in Sources */,
 				7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */,
 			);
@@ -408,6 +440,14 @@
 			requirement = {
 				branch = main;
 				kind = branch;
+	                };
+		};
+		13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.14.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -417,6 +457,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 13BA832A29CB1BAB003FFE07 /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintPlugin";
+		};
+		13316BDF29C9FAF80077292B /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
