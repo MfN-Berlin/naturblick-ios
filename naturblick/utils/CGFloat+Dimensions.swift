@@ -9,4 +9,5 @@ extension CGFloat {
     static let defaultPadding: CGFloat = 14
     static let avatarSize: CGFloat = 64
     static let avatarTextOffset: CGFloat = 12
+    static let headerIconSize: CGFloat = 24
 }
