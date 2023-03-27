@@ -25,10 +25,10 @@
 		7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */; };
 		7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */; };
 		7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AF29C9DAFE00C6C101 /* DarkView.swift */; };
-		7BCE46B929C9DAFE00C6C101 /* RatioContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46B029C9DAFE00C6C101 /* RatioContainer.swift */; };
 		7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */; };
 		7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46BE29C9DB3700C6C101 /* Group.swift */; };
 		7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46C129C9DC7800C6C101 /* Color.swift */; };
+		7BF564C829D1DEF9003F4D09 /* VerticalAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF564C729D1DEF9003F4D09 /* VerticalAlignment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,10 +51,10 @@
 		7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewButton.swift; sourceTree = "<group>"; };
 		7BCE46AF29C9DAFE00C6C101 /* DarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkView.swift; sourceTree = "<group>"; };
-		7BCE46B029C9DAFE00C6C101 /* RatioContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatioContainer.swift; sourceTree = "<group>"; };
 		7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupButton.swift; sourceTree = "<group>"; };
 		7BCE46BE29C9DB3700C6C101 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		7BCE46C129C9DC7800C6C101 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		7BF564C729D1DEF9003F4D09 /* VerticalAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalAlignment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +127,6 @@
 				7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */,
 				7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */,
 				7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */,
-				7BCE46B029C9DAFE00C6C101 /* RatioContainer.swift */,
 				13316BD629C9F3860077292B /* SpeciesListView.swift */,
 				13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */,
 			);
@@ -148,10 +147,19 @@
 		7BCE46C029C9DC5E00C6C101 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				7BF564C629D1DEEA003F4D09 /* layouts */,
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
 				132B0D9529CDD5C500B80C9E /* Font+Lato.swift */,
 			);
 			path = utils;
+			sourceTree = "<group>";
+		};
+		7BF564C629D1DEEA003F4D09 /* layouts */ = {
+			isa = PBXGroup;
+			children = (
+				7BF564C729D1DEF9003F4D09 /* VerticalAlignment.swift */,
+			);
+			path = layouts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,9 +254,9 @@
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
 				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
 				7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */,
+				7BF564C829D1DEF9003F4D09 /* VerticalAlignment.swift in Sources */,
 				13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */,
 				13316BD929C9F4150077292B /* Species.swift in Sources */,
-				7BCE46B929C9DAFE00C6C101 /* RatioContainer.swift in Sources */,
 				7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
