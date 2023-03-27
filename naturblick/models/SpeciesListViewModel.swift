@@ -12,7 +12,11 @@ class SpeciesListViewModel: ObservableObject {
     private static func query(filter: SpeciesListFilter) -> QueryType {
         switch filter {
         case .group(let group):
-            return Species.Definition.table.where(Species.Definition.group == group.id)
+            return Species.Definition.table
+                .join(Portrait.Definition.table,
+                      on: Portrait.Definition.species == Species.Definition.table[Species.Definition.id])
+                .filter(Species.Definition.group == group.id)
+                .filter(Portrait.Definition.language == 1) // Only in german to start with
         }
     }
 
@@ -28,7 +32,7 @@ class SpeciesListViewModel: ObservableObject {
                 SpeciesListViewModel.query(filter: filter).order(Species.Definition.gername)
             ).map { row in
                 Species(
-                    id: row[Species.Definition.id],
+                    id: row[Species.Definition.table[Species.Definition.id]],
                     group: row[Species.Definition.group],
                     sciname: row[Species.Definition.sciname],
                     gername: row[Species.Definition.gername],
