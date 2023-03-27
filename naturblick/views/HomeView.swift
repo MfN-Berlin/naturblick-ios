@@ -3,48 +3,85 @@
 // All Rights Reserved.
 
 import SwiftUI
+import OSLog
 
 struct HomeView: View {
 
+    let firstRowWidthFactor: CGFloat = 4.5
+    let secondRowWidthFactor: CGFloat = 5
+    
     var body: some View {
         DarkView {
-            VStack {
-                RatioContainer {
-                    GeometryReader { geo in
-                        Image("Kingfisher")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .ignoresSafeArea()
-                            .scaledToFill()
-                            .frame(height: geo.size.height - geo.size.height * 0.55)
-                    }
-
+            GeometryReader { geo in
+                VStack {
+                    Image("Kingfisher")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: geo.size.width,
+                               height: geo.size.height * 0.6,
+                               alignment: Alignment.top)
+                        .clipped()
+                        .overlay(alignment: .center) {
+                            Image("logo24")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                                .foregroundColor(.white)
+                        }
+                        .overlay(alignment: .bottom) {
+                            Image("oval")
+                                .aspectRatio(contentMode: .fit)
+                        }
+                        .overlay(alignment: .bottomLeading) {
+                            Image("mfn_logo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 90, height: 90)
+                                .foregroundColor(.gray)
+                                .padding()
+                                .padding(.bottom, 40)
+                        }
+                        .ignoresSafeArea()
+                        .padding(.bottom, -geo.safeAreaInsets.top)
+                    
                     VStack {
-                        Text("Bestimme Tieren und Pflanzen").foregroundColor(.nbWhite)
-                            .font(.nbHeadline6)
-                        HStack {
-                            HomeViewButton(text: "Vogelstimmen aufnehmen") {
-                                Image(systemName: "questionmark")
+                        Text("Bestimme Tieren und Pflanzen")
+                            .foregroundColor(.nbWhite)
+                            .font(.headline)
+                            .padding(.bottom)
+                        HStack(alignment: .imageTitleAlignmentGuide, spacing: 16) {
+                            HomeViewButton(text: "Vogelstimmen\naufnehmen",
+                                           color: Color.secondary200,
+                                           width: geo.size.width / self.firstRowWidthFactor) {
+                                Image("microphone")
                             }
-                            HomeViewButton(text: "Merkmale auswählen") {
-                                Image(systemName: "questionmark")
+                            HomeViewButton(text: "Merkmale\nauswählen",
+                                           color: Color.secondary200,
+                                           width: geo.size.width / self.firstRowWidthFactor) {
+                                Image("characteristics24")
                             }
-                            HomeViewButton(text: "Pflanze fotografieren") {
-                                Image(systemName: "questionmark")
+                            HomeViewButton(text: "Pflanze\nfotografieren",
+                                           color: Color.secondary200,
+                                           width: geo.size.width / self.firstRowWidthFactor) {
+                                Image("photo24")
                             }
-                        }.padding(32)
-                        HStack {
-                            HomeViewButton(text: "Feldbuch") {
-                                Image(systemName: "questionmark")
+                        }.padding(8)
+                        HStack(alignment: .imageTitleAlignmentGuide, spacing: 32) {
+                            HomeViewButton(text: "Feldbuch",
+                                           color: Color.primary700,
+                                           width: geo.size.width / self.secondRowWidthFactor) {
+                                Image("feldbuch24")
                             }
                             NavigationLink(destination: GroupsView()) {
-                                HomeViewButton(text: "Arten kennenlernen") {
-                                    Image(systemName: "questionmark")
+                                HomeViewButton(text: "Arten\nkennenlernen",
+                                               color: Color.primary700,
+                                               width: geo.size.width / self.secondRowWidthFactor) {
+                                    Image("ic_specportraits")
                                 }
                             }
                         }
                     }
-                }
+               }
             }
         }
     }
