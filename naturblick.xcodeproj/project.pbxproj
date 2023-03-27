@@ -21,7 +21,6 @@
 		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
 		13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */; };
 		13ACC80329C9BCBA0054BB91 /* naturblickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ACC80229C9BCBA0054BB91 /* naturblickApp.swift */; };
-		7BB3217C29CC67E7003DBCFD /* VerticalAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3217B29CC67E7003DBCFD /* VerticalAlignment.swift */; };
 		7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */; };
 		7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */; };
 		7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */; };
@@ -29,6 +28,7 @@
 		7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */; };
 		7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46BE29C9DB3700C6C101 /* Group.swift */; };
 		7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46C129C9DC7800C6C101 /* Color.swift */; };
+		7BF564C529D1DA3E003F4D09 /* VerticalAlignments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF564C429D1DA3E003F4D09 /* VerticalAlignments.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,7 +47,6 @@
 		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
 		13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItemView.swift; sourceTree = "<group>"; };
 		13ACC80229C9BCBA0054BB91 /* naturblickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = naturblickApp.swift; sourceTree = "<group>"; };
-		7BB3217B29CC67E7003DBCFD /* VerticalAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalAlignment.swift; sourceTree = "<group>"; };
 		7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewButton.swift; sourceTree = "<group>"; };
@@ -55,6 +54,7 @@
 		7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupButton.swift; sourceTree = "<group>"; };
 		7BCE46BE29C9DB3700C6C101 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		7BCE46C129C9DC7800C6C101 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		7BF564C429D1DA3E003F4D09 /* VerticalAlignments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalAlignments.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,12 +108,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		7BB3217A29CC67DC003DBCFD /* layouts */ = {
-			isa = PBXGroup;
-			children = (
-				7BB3217B29CC67E7003DBCFD /* VerticalAlignment.swift */,
-			);
-			path = layouts;
 		132B0D9729CDD75700B80C9E /* resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,11 +147,19 @@
 		7BCE46C029C9DC5E00C6C101 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				7BB3217A29CC67DC003DBCFD /* layouts */,
+				7BF564C329D1DA2E003F4D09 /* layouts */,
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
 				132B0D9529CDD5C500B80C9E /* Font+Lato.swift */,
 			);
 			path = utils;
+			sourceTree = "<group>";
+		};
+		7BF564C329D1DA2E003F4D09 /* layouts */ = {
+			isa = PBXGroup;
+			children = (
+				7BF564C429D1DA3E003F4D09 /* VerticalAlignments.swift */,
+			);
+			path = layouts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,7 +248,6 @@
 				132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */,
-				7BB3217C29CC67E7003DBCFD /* VerticalAlignment.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
 				13ACC80329C9BCBA0054BB91 /* naturblickApp.swift in Sources */,
 				13316BD729C9F3860077292B /* SpeciesListView.swift in Sources */,
@@ -256,6 +257,7 @@
 				13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */,
 				13316BD929C9F4150077292B /* Species.swift in Sources */,
 				7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */,
+				7BF564C529D1DA3E003F4D09 /* VerticalAlignments.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
