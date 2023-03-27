@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
+		132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B0D9529CDD5C500B80C9E /* Font+Lato.swift */; };
+		132B0D9B29CDD78600B80C9E /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 132B0D9829CDD78600B80C9E /* lato_black.ttf */; };
+		132B0D9C29CDD78600B80C9E /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 132B0D9929CDD78600B80C9E /* lato_regular.ttf */; };
+		132B0D9D29CDD78600B80C9E /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 132B0D9A29CDD78600B80C9E /* lato_italic.ttf */; };
 		13316BD729C9F3860077292B /* SpeciesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BD629C9F3860077292B /* SpeciesListView.swift */; };
 		13316BD929C9F4150077292B /* Species.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BD829C9F4150077292B /* Species.swift */; };
 		13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDA29C9F6030077292B /* SpeciesListFilter.swift */; };
@@ -31,6 +35,11 @@
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		131E786829C9BB25000DF928 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		132B0D9529CDD5C500B80C9E /* Font+Lato.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Lato.swift"; sourceTree = "<group>"; };
+		132B0D9829CDD78600B80C9E /* lato_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_black.ttf; sourceTree = "<group>"; };
+		132B0D9929CDD78600B80C9E /* lato_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_regular.ttf; sourceTree = "<group>"; };
+		132B0D9A29CDD78600B80C9E /* lato_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_italic.ttf; sourceTree = "<group>"; };
+		132B0D9E29CDD90B00B80C9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		13316BD629C9F3860077292B /* SpeciesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListView.swift; sourceTree = "<group>"; };
 		13316BD829C9F4150077292B /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
@@ -63,7 +72,7 @@
 		131E785529C9BB24000DF928 = {
 			isa = PBXGroup;
 			children = (
-				13316BE329CA13E00077292B /* strapi-db.sqlite3 */,
+				132B0D9729CDD75700B80C9E /* resources */,
 				131E786029C9BB24000DF928 /* naturblick */,
 				131E785F29C9BB24000DF928 /* Products */,
 			);
@@ -80,6 +89,7 @@
 		131E786029C9BB24000DF928 /* naturblick */ = {
 			isa = PBXGroup;
 			children = (
+				132B0D9E29CDD90B00B80C9E /* Info.plist */,
 				7BCE46C029C9DC5E00C6C101 /* utils */,
 				7BCE46BD29C9DB1E00C6C101 /* models */,
 				7BCE46A229C9D90300C6C101 /* views */,
@@ -104,6 +114,15 @@
 				7BB3217B29CC67E7003DBCFD /* VerticalAlignment.swift */,
 			);
 			path = layouts;
+		132B0D9729CDD75700B80C9E /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				132B0D9829CDD78600B80C9E /* lato_black.ttf */,
+				132B0D9A29CDD78600B80C9E /* lato_italic.ttf */,
+				132B0D9929CDD78600B80C9E /* lato_regular.ttf */,
+				13316BE329CA13E00077292B /* strapi-db.sqlite3 */,
+			);
+			path = resources;
 			sourceTree = "<group>";
 		};
 		7BCE46A229C9D90300C6C101 /* views */ = {
@@ -136,6 +155,7 @@
 			children = (
 				7BB3217A29CC67DC003DBCFD /* layouts */,
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
+				132B0D9529CDD5C500B80C9E /* Font+Lato.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -207,7 +227,10 @@
 			files = (
 				13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */,
 				131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */,
+				132B0D9D29CDD78600B80C9E /* lato_italic.ttf in Resources */,
+				132B0D9B29CDD78600B80C9E /* lato_black.ttf in Resources */,
 				131E786629C9BB25000DF928 /* Assets.xcassets in Resources */,
+				132B0D9C29CDD78600B80C9E /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +243,7 @@
 			files = (
 				7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */,
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
+				132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */,
 				7BB3217C29CC67E7003DBCFD /* VerticalAlignment.swift in Sources */,
@@ -362,6 +386,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"naturblick/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = naturblick/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -390,6 +415,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"naturblick/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = naturblick/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
