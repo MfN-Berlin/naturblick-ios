@@ -21,6 +21,7 @@
 		13316BE029C9FAF80077292B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 13316BDF29C9FAF80077292B /* SQLite */; };
 		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
 		136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D907F29D18BBE00A00BD4 /* Portrait.swift */; };
+		13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13A2923029D2DC3C00AF772A /* Generated.xcassets */; };
 		13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */; };
 		13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
@@ -50,6 +51,7 @@
 		13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewModel.swift; sourceTree = "<group>"; };
 		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
 		136D907F29D18BBE00A00BD4 /* Portrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portrait.swift; sourceTree = "<group>"; };
+		13A2923029D2DC3C00AF772A /* Generated.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Generated.xcassets; sourceTree = "<group>"; };
 		13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItemView.swift; sourceTree = "<group>"; };
 		13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickApp.swift; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */,
 				13F9789429CB3F1D0031D124 /* Configuration.swift */,
 				131E786529C9BB25000DF928 /* Assets.xcassets */,
+				13A2923029D2DC3C00AF772A /* Generated.xcassets */,
 				131E786729C9BB25000DF928 /* Preview Content */,
 			);
 			path = naturblick;
@@ -178,6 +181,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 131E786C29C9BB25000DF928 /* Build configuration list for PBXNativeTarget "naturblick" */;
 			buildPhases = (
+				13A2923229D2F6FE00AF772A /* ShellScript */,
 				131E785A29C9BB24000DF928 /* Sources */,
 				131E785B29C9BB24000DF928 /* Frameworks */,
 				131E785C29C9BB24000DF928 /* Resources */,
@@ -241,11 +245,32 @@
 				132B0D9D29CDD78600B80C9E /* lato_italic.ttf in Resources */,
 				132B0D9B29CDD78600B80C9E /* lato_black.ttf in Resources */,
 				131E786629C9BB25000DF928 /* Assets.xcassets in Resources */,
+				13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */,
 				132B0D9C29CDD78600B80C9E /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		13A2923229D2F6FE00AF772A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library GenerateCharacterAssets.swift -o generate_character_assets && ./generate_character_assets\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		131E785A29C9BB24000DF928 /* Sources */ = {
