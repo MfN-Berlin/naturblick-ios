@@ -5,36 +5,32 @@
 import SwiftUI
 
 struct GroupsView: View {
-
-    let grid = Group.groups.reduce(into: [[]]) { acc, iter in
-        acc[acc.count - 1].count < 3
-        ? acc[acc.count - 1 ].append(iter)
-        : acc.append([iter])
-    }
-
     var body: some View {
         ZStack {
             Color
                 .primary500
                 .ignoresSafeArea()
             ScrollView {
-                Image(systemName: "questionmark")
+                Image("artportraits24")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.sunset)
+                    .frame(width: .headerIconSize, height: .headerIconSize)
                 Text("Wähle eine Gruppe")
+                    .font(.nbHeadline3)
                     .foregroundColor(.white)
-                GeometryReader { geo in
-                    VStack {
-                        ForEach(grid, id: \.self) { row in
-                            HStack(spacing: 16) {
-                                ForEach(row) { group in
-                                    GroupButton(group: group)
-                                        .frame(width: geo.size.width / 3.3)
-                                }
-                            }
+                LazyVGrid(columns: [
+                    GridItem(spacing: .defaultPadding),
+                    GridItem(spacing: .defaultPadding),
+                    GridItem(spacing: .defaultPadding)
+                ], spacing: .defaultPadding) {
+                        ForEach(Group.groups) { group in
+                            GroupButton(group: group)
                         }
-                    }.navigationTitle("Arten kennenlernen")
-                }
-            }.padding(10)
+                    }.padding(.defaultPadding)
+            }
         }
+        .navigationTitle("Arten kennenlernen")
     }
 }
 
