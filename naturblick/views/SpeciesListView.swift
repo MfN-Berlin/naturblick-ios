@@ -9,13 +9,32 @@ struct SpeciesListView: View {
     let filter: SpeciesListFilter
 
     var body: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(speciesListViewModel.species, id: \.id) { species in
-                    SpeciesListItemView(species: species)
+        List(speciesListViewModel.species) { species in
+            if let url = species.maleUrl {
+                // When used, AsyncImage has to be the outermost element
+                // or it will not properly load in List
+                AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                    SpeciesListItemView(species: species, avatar: image)
+                } placeholder: {
+                    SpeciesListItemView(species: species, avatar: Image("placeholder"))
                 }
+                .listRowInsets(.init(
+                    top: .defaultPadding,
+                    leading: .defaultPadding,
+                    bottom: .defaultPadding,
+                    trailing: .defaultPadding
+                ))
+            } else {
+                SpeciesListItemView(species: species, avatar: Image("placeholder"))
+                    .listRowInsets(.init(
+                        top: .defaultPadding,
+                        leading: .defaultPadding,
+                        bottom: .defaultPadding,
+                        trailing: .defaultPadding
+                    ))
             }
-        }.task {
+        }
+        .task {
             speciesListViewModel.filter(filter: filter)
         }
     }
