@@ -17,15 +17,14 @@ struct HomeView: View {
                     Image("Kingfisher")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: geo.size.width,
-                               height: geo.size.height * 0.6,
+                        .frame(height: geo.size.height * 0.6,
                                alignment: Alignment.top)
                         .clipped()
                         .overlay(alignment: .center) {
                             Image("logo24")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 100, height: 100)
+                                .frame(width: geo.size.width / 4)
                                 .foregroundColor(.white)
                         }
                         .overlay(alignment: .bottom) {
@@ -36,10 +35,10 @@ struct HomeView: View {
                             Image("mfn_logo")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 90, height: 90)
+                                .frame(width: geo.size.width / 5)
                                 .foregroundColor(.gray)
+                                .offset(y: -50)
                                 .padding()
-                                .padding(.bottom, 40)
                         }
                         .ignoresSafeArea()
                         .padding(.bottom, -geo.safeAreaInsets.top)
