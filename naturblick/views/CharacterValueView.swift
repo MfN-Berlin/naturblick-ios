@@ -18,6 +18,7 @@ struct CharacterValueView: View {
             Text(value.gername)
                 .font(.nbCaption)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, .defaultPadding)
                 .padding(.bottom, .defaultPadding)
             if(value.hasImage) {

@@ -9,7 +9,24 @@ struct CharacterView: View {
     let character: Character
     let values: [CharacterValue]
     @Binding var selected: Set<Int64>
-    let onToggle: (Int64) -> ()
+
+    private func toggleSelection(id: Int64) {
+        var updated = selected
+
+        if(character.single) {
+            for value in values.filter({$0.id != id}) {
+                updated.remove(value.id)
+            }
+        }
+
+        if updated.contains(id) {
+            updated.remove(id)
+        } else {
+            updated.insert(id)
+        }
+
+        selected = updated
+    }
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -29,7 +46,7 @@ struct CharacterView: View {
                 ForEach(values) { value in
                     CharacterValueView(value: value, selected: selected.contains(value.id))
                         .onTapGesture {
-                            onToggle(value.id)
+                            toggleSelection(id: value.id)
                         }
                 }
             }
@@ -42,8 +59,7 @@ struct CharacterView_Previews: PreviewProvider {
         CharacterView(
             character: Character.sampleData,
             values: CharacterValue.sampleData,
-            selected: .constant([1]),
-            onToggle: {_ in}
+            selected: .constant([1])
         )
     }
 }
