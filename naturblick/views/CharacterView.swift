@@ -8,6 +8,8 @@ import SwiftUI
 struct CharacterView: View {
     let character: Character
     let values: [CharacterValue]
+    @Binding var selected: Set<Int64>
+    let onToggle: (Int64) -> ()
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -25,7 +27,10 @@ struct CharacterView: View {
                 GridItem(spacing: .defaultPadding)
             ], spacing: .defaultPadding) {
                 ForEach(values) { value in
-                    CharacterValueView(value: value)
+                    CharacterValueView(value: value, selected: selected.contains(value.id))
+                        .onTapGesture {
+                            onToggle(value.id)
+                        }
                 }
             }
         }.padding(.defaultPadding)
@@ -36,7 +41,9 @@ struct CharacterView_Previews: PreviewProvider {
     static var previews: some View {
         CharacterView(
             character: Character.sampleData,
-            values: CharacterValue.sampleData
+            values: CharacterValue.sampleData,
+            selected: .constant([1]),
+            onToggle: {_ in}
         )
     }
 }
