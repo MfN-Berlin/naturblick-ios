@@ -52,32 +52,32 @@ struct HomeView: View {
                         HStack(alignment: .imageTitleAlignmentGuide, spacing: 16) {
                             HomeViewButton(text: "Vogelstimmen\naufnehmen",
                                            color: Color.secondary200,
-                                           width: geo.size.width / self.firstRowWidthFactor) {
-                                Image("microphone")
-                            }
+                                           width: geo.size.width / self.firstRowWidthFactor,
+                                           image: Image("microphone")
+                            )
                             HomeViewButton(text: "Merkmale\nauswählen",
                                            color: Color.secondary200,
-                                           width: geo.size.width / self.firstRowWidthFactor) {
-                                Image("characteristics24")
-                            }
+                                           width: geo.size.width / self.firstRowWidthFactor,
+                                           image: Image("characteristics24")
+                            )
                             HomeViewButton(text: "Pflanze\nfotografieren",
                                            color: Color.secondary200,
-                                           width: geo.size.width / self.firstRowWidthFactor) {
-                                Image("photo24")
-                            }
+                                           width: geo.size.width / self.firstRowWidthFactor,
+                                           image: Image("photo24")
+                            )
                         }.padding(8)
                         HStack(alignment: .imageTitleAlignmentGuide, spacing: 32) {
                             HomeViewButton(text: "Feldbuch",
                                            color: Color.primary700,
-                                           width: geo.size.width / self.secondRowWidthFactor) {
-                                Image("feldbuch24")
-                            }
+                                           width: geo.size.width / self.secondRowWidthFactor,
+                                           image: Image("feldbuch24")
+                            )
                             NavigationLink(destination: GroupsView()) {
                                 HomeViewButton(text: "Arten\nkennenlernen",
                                                color: Color.primary700,
-                                               width: geo.size.width / self.secondRowWidthFactor) {
-                                    Image("ic_specportraits")
-                                }
+                                               width: geo.size.width / self.secondRowWidthFactor,
+                                               image: Image("ic_specportraits")
+                                )
                             }
                         }
                     }
