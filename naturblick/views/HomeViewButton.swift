@@ -23,10 +23,9 @@ struct HomeViewButton: View {
                 }
             Text(text)
                 .foregroundColor(.nbWhite)
-                .alignmentGuide(.imageTitleAlignmentGuide) { context in
-                        context[.firstTextBaseline]
-                    }
                 .multilineTextAlignment(TextAlignment.center)
+                .font(.nbCaption)
+            Spacer()
         }
         .font(.subheadline)
     }

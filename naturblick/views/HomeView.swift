@@ -41,9 +41,9 @@ struct HomeView: View {
                     
                         Text("Bestimme Tieren und Pflanzen")
                             .foregroundColor(.nbWhite)
-                            .font(.headline)
+                            .font(.nbHeadline6)
                             .padding(.bottom)
-                        HStack(alignment: .imageTitleAlignmentGuide, spacing: 16) {
+                        HStack(spacing: 16) {
                             HomeViewButton(text: "Vogelstimmen\naufnehmen",
                                            color: Color.secondary200,
                                            image: Image("microphone")
@@ -58,7 +58,7 @@ struct HomeView: View {
                             )
                         }
                         .padding(8)
-                        HStack(alignment: .imageTitleAlignmentGuide, spacing: 32) {
+                        HStack(spacing: 32) {
                             HomeViewButton(text: "Feldbuch",
                                            color: Color.primary700,
                                            image: Image("feldbuch24")
