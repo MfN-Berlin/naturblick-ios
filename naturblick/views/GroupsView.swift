@@ -4,7 +4,9 @@
 
 import SwiftUI
 
-struct GroupsView: View {
+struct GroupsView<Content>: View where Content: View {
+    let groups: [Group]
+    let destination: (Group) -> Content
     var body: some View {
         ZStack {
             Color
@@ -24,8 +26,10 @@ struct GroupsView: View {
                     GridItem(spacing: .defaultPadding),
                     GridItem(spacing: .defaultPadding)
                 ], spacing: .defaultPadding) {
-                        ForEach(Group.groups) { group in
-                            GroupButton(group: group)
+                        ForEach(groups) { group in
+                            NavigationLink(destination: destination(group)) {
+                                GroupButton(group: group)
+                            }
                         }
                     }.padding(.defaultPadding)
             }
@@ -37,7 +41,9 @@ struct GroupsView: View {
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            GroupsView()
+            GroupsView(groups: Group.groups) { group in
+                Text("Clicked on \(group.gerName)")
+            }
         }
     }
 }

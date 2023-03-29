@@ -22,6 +22,12 @@
 		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
 		136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D907F29D18BBE00A00BD4 /* Portrait.swift */; };
 		13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13A2923029D2DC3C00AF772A /* Generated.xcassets */; };
+		13A2923429D3110C00AF772A /* CharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923329D3110C00AF772A /* CharactersView.swift */; };
+		13A2923629D3114500AF772A /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923529D3114500AF772A /* CharacterView.swift */; };
+		13A2923829D3116200AF772A /* CharacterValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923729D3116200AF772A /* CharacterValueView.swift */; };
+		13A2923A29D3123700AF772A /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923929D3123700AF772A /* Character.swift */; };
+		13A2923C29D317A300AF772A /* CharacterValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923B29D317A300AF772A /* CharacterValue.swift */; };
+		13A2923E29D33D3600AF772A /* CharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923D29D33D3600AF772A /* CharactersViewModel.swift */; };
 		13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */; };
 		13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
@@ -51,6 +57,12 @@
 		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
 		136D907F29D18BBE00A00BD4 /* Portrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portrait.swift; sourceTree = "<group>"; };
 		13A2923029D2DC3C00AF772A /* Generated.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Generated.xcassets; sourceTree = "<group>"; };
+		13A2923329D3110C00AF772A /* CharactersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersView.swift; sourceTree = "<group>"; };
+		13A2923529D3114500AF772A /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
+		13A2923729D3116200AF772A /* CharacterValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterValueView.swift; sourceTree = "<group>"; };
+		13A2923929D3123700AF772A /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		13A2923B29D317A300AF772A /* CharacterValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterValue.swift; sourceTree = "<group>"; };
+		13A2923D29D33D3600AF772A /* CharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewModel.swift; sourceTree = "<group>"; };
 		13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItemView.swift; sourceTree = "<group>"; };
 		13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickApp.swift; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -137,6 +149,9 @@
 				7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */,
 				13316BD629C9F3860077292B /* SpeciesListView.swift */,
 				13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */,
+				13A2923329D3110C00AF772A /* CharactersView.swift */,
+				13A2923529D3114500AF772A /* CharacterView.swift */,
+				13A2923729D3116200AF772A /* CharacterValueView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -149,6 +164,9 @@
 				13316BDA29C9F6030077292B /* SpeciesListFilter.swift */,
 				13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */,
 				136D907F29D18BBE00A00BD4 /* Portrait.swift */,
+				13A2923929D3123700AF772A /* Character.swift */,
+				13A2923B29D317A300AF772A /* CharacterValue.swift */,
+				13A2923D29D33D3600AF772A /* CharactersViewModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -266,10 +284,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13A2923E29D33D3600AF772A /* CharactersViewModel.swift in Sources */,
 				7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */,
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
+				13A2923629D3114500AF772A /* CharacterView.swift in Sources */,
 				132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */,
+				13A2923C29D317A300AF772A /* CharacterValue.swift in Sources */,
 				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
+				13A2923429D3110C00AF772A /* CharactersView.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
@@ -277,12 +299,14 @@
 				13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */,
 				13316BD729C9F3860077292B /* SpeciesListView.swift in Sources */,
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
+				13A2923A29D3123700AF772A /* Character.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
 				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
 				7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */,
 				13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */,
 				13316BD929C9F4150077292B /* Species.swift in Sources */,
 				7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */,
+				13A2923829D3116200AF772A /* CharacterValueView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

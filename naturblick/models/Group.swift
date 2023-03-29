@@ -30,4 +30,17 @@ extension Group {
         Group(id: "mammal", groupType: GroupType.fauna, gerName: "Säugetiere", image: "group_mammal"),
         Group(id: "bird", groupType: GroupType.fauna, gerName: "Vögel", image: "group_bird")
     ]
+    private static let characterGroupIds = [
+        "amphibian",
+        "hymenoptera",
+        "herb",
+        "tree",
+        "reptile",
+        "butterfly",
+        "mammal",
+        "bird"
+    ]
+    
+    static let characterGroups = groups.filter( { characterGroupIds.contains($0.id) } )
+    
 }
