@@ -15,7 +15,10 @@ struct CharacterValueView: View {
                 Spacer()
             }
             Text(value.gername)
-                .font(.nbBody1)
+                .font(.nbCaption)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, .defaultPadding)
+                .padding(.bottom, .defaultPadding)
             if(value.hasImage) {
                 Spacer()
             }

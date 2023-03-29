@@ -9,18 +9,16 @@ struct GroupButton: View {
     let group: Group
 
     var body: some View {
-        NavigationLink(destination: SpeciesListView(filter: .group(group))) {
-            VStack() {
-                Image(group.image).resizable()
-                    .resizable()
-                    .clipShape(Circle())
-                    .scaledToFit()
-                Text(group.gerName)
-                    .multilineTextAlignment(TextAlignment.center)
-                    .foregroundColor(.white)
-                    .font(.nbBody1)
-                Spacer()
-            }
+        VStack() {
+            Image(group.image).resizable()
+                .resizable()
+                .clipShape(Circle())
+                .scaledToFit()
+            Text(group.gerName)
+                .multilineTextAlignment(TextAlignment.center)
+                .foregroundColor(.white)
+                .font(.nbBody1)
+            Spacer()
         }
     }
 }
