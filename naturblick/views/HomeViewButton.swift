@@ -13,15 +13,16 @@ struct HomeViewButton: View {
 
     var body: some View {
         VStack {
-            ZStack {
-                Circle().fill(color)
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: width * 0.5, height: width * 0.5)
-                    .foregroundColor(.nbWhite)
-            }
-            .frame(width: width)
+            Circle()
+                .fill(color)
+                .overlay {
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.nbWhite)
+                        .padding()
+                }
+                .frame(width: width)
             Text(text)
                 .foregroundColor(.nbWhite)
                 .alignmentGuide(.imageTitleAlignmentGuide) { context in
