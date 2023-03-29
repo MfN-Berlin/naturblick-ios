@@ -8,7 +8,6 @@ struct HomeViewButton: View {
 
     let text: String
     let color: Color
-    let width: CGFloat
     let image: Image
 
     var body: some View {
@@ -20,9 +19,8 @@ struct HomeViewButton: View {
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(.nbWhite)
-                        .padding()
+                        .padding(16)
                 }
-                .frame(width: width)
             Text(text)
                 .foregroundColor(.nbWhite)
                 .alignmentGuide(.imageTitleAlignmentGuide) { context in
@@ -38,7 +36,6 @@ struct HomeViewButton_Previews: PreviewProvider {
     static var previews: some View {
         HomeViewButton(text: "Vogelstimmen aufnehmen",
                        color: Color.secondary200,
-                       width: 100,
                        image: Image(systemName: "questionmark")
         )
     }
