@@ -8,42 +8,44 @@ struct SpeciesListItemView: View {
     let species: Species
     let avatar: Image
     var body: some View {
-        HStack(alignment: .top) {
-            avatar
-                .resizable()
-                .scaledToFit()
-                .clipShape(Circle())
-                .frame(width: .avatarSize, height: .avatarSize)
-                .padding(.trailing, .defaultPadding)
-            VStack(alignment: .leading) {
-                if let gername = species.gername, let gersynonym = species.gersynonym {
-                    Text(gername)
-                        .font(.nbSubtitle1)
-                    Text(species.sciname)
-                        .font(.nbSubtitle3)
-                        .foregroundColor(Color.secondary200)
-                    Text(gersynonym)
-                        .font(.nbSubtitle3)
-                        .padding(.bottom, .defaultPadding)
-                } else if let gername = species.gername {
-                    Text(gername)
-                        .font(.nbSubtitle1)
-                    Text(species.sciname)
-                        .font(.nbSubtitle3)
-                        .foregroundColor(Color.secondary200)
-                        .padding(.bottom, .defaultPadding)
-                } else if let gersynonym = species.gersynonym {
-                    Text(species.sciname)
-                        .font(.nbSubtitle1)
-                    Text(gersynonym)
-                        .font(.nbSubtitle3)
-                        .padding(.bottom, .defaultPadding)
-                } else {
-                    Text(species.sciname)
-                        .font(.nbSubtitle1)
+        NavigationLink(destination: PortraitView(speciesId: species.id)) {
+            HStack(alignment: .top) {
+                avatar
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .frame(width: .avatarSize, height: .avatarSize)
+                    .padding(.trailing, .defaultPadding)
+                VStack(alignment: .leading) {
+                    if let gername = species.gername, let gersynonym = species.gersynonym {
+                        Text(gername)
+                            .font(.nbSubtitle1)
+                        Text(species.sciname)
+                            .font(.nbSubtitle3)
+                            .foregroundColor(Color.secondary200)
+                        Text(gersynonym)
+                            .font(.nbSubtitle3)
+                            .padding(.bottom, .defaultPadding)
+                    } else if let gername = species.gername {
+                        Text(gername)
+                            .font(.nbSubtitle1)
+                        Text(species.sciname)
+                            .font(.nbSubtitle3)
+                            .foregroundColor(Color.secondary200)
+                            .padding(.bottom, .defaultPadding)
+                    } else if let gersynonym = species.gersynonym {
+                        Text(species.sciname)
+                            .font(.nbSubtitle1)
+                        Text(gersynonym)
+                            .font(.nbSubtitle3)
+                            .padding(.bottom, .defaultPadding)
+                    } else {
+                        Text(species.sciname)
+                            .font(.nbSubtitle1)
+                    }
                 }
+                .padding(.top, .avatarTextOffset)
             }
-            .padding(.top, .avatarTextOffset)
         }
     }
 }

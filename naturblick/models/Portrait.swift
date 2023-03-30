@@ -5,16 +5,16 @@
 import Foundation
 import SQLite
 
-struct Portrait: Identifiable {
+struct Portrait {
     let id: Int64
     let species: Int64
     let description: String
-    let descriptionImage: Int64?
+    let descriptionImage: PortraitImageMeta?
     let language: Int
     let inTheCity: String
-    let intTheCityImage: Int64?
-    let goodToKnowImage: Int64?
-    let spurces: String?
+    let inTheCityImage: PortraitImageMeta?
+    let goodToKnowImage:PortraitImageMeta?
+    let sources: String?
     let audioUrl: String?
     let landscape: Bool
     let focus: Double
@@ -31,7 +31,7 @@ extension Portrait {
         static let inTheCity = Expression<String>("in_the_city")
         static let intTheCityImage = Expression<Int64?>("in_the_city_image_id")
         static let goodToKnowImage = Expression<Int64?>("good_to_know_image_id")
-        static let spurces = Expression<String?>("sources")
+        static let sources = Expression<String?>("sources")
         static let audioUrl = Expression<String?>("audio_url")
 
         // Focus punkt for header image ("description_image")
@@ -39,3 +39,4 @@ extension Portrait {
         static let focus = Expression<Double>("focus")
     }
 }
+
