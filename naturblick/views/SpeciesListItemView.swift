@@ -5,10 +5,10 @@
 import SwiftUI
 
 struct SpeciesListItemView: View {
-    let species: Species
+    let species: SpeciesListItem
     let avatar: Image
     var body: some View {
-        NavigationLink(destination: PortraitView(speciesId: species.id)) {
+        NavigationLink(destination: PortraitView(speciesId: species.speciesId)) {
             HStack(alignment: .top) {
                 avatar
                     .resizable()
@@ -17,7 +17,7 @@ struct SpeciesListItemView: View {
                     .frame(width: .avatarSize, height: .avatarSize)
                     .padding(.trailing, .defaultPadding)
                 VStack(alignment: .leading) {
-                    if let gername = species.gername, let gersynonym = species.gersynonym {
+                    if let gername = species.name, let gersynonym = species.gersynonym {
                         Text(gername)
                             .font(.nbSubtitle1)
                         Text(species.sciname)
@@ -26,8 +26,8 @@ struct SpeciesListItemView: View {
                         Text(gersynonym)
                             .font(.nbSubtitle3)
                             .padding(.bottom, .defaultPadding)
-                    } else if let gername = species.gername {
-                        Text(gername)
+                    } else if let name = species.name {
+                        Text(name)
                             .font(.nbSubtitle1)
                         Text(species.sciname)
                             .font(.nbSubtitle3)
@@ -52,6 +52,6 @@ struct SpeciesListItemView: View {
 
 struct SpeciesListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesListItemView(species: Species.sampleData, avatar: Image("placeholder"))
+        SpeciesListItemView(species: SpeciesListItem.sampleData, avatar: Image("placeholder"))
     }
 }

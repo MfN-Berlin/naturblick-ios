@@ -29,6 +29,54 @@ extension Character {
         static let gerdescription = Expression<String?>("gerdescription")
         static let engdescription = Expression<String?>("engdescription")
     }
+
+    static func charactersQuery(number: Int, query: [(Int64, Float)]) -> (String, [Binding?]) {
+        let selectedCharacters = query.map({_ in  "SELECT ? AS id, ? AS weight" }).joined(separator: " UNION ALL ")
+        let querySyntax = """
+SELECT *, sum(inner_distance) / CAST(? AS REAL) AS distance FROM (SELECT
+character_species.species_id AS species_id,
+female,
+character.rowid AS character_id,
+species.*,
+(sum(abs(selected.weight - character_species.weight)) / 2.0) * character.weight AS inner_distance
+FROM character_value_species AS character_species
+JOIN character_value ON character_value.rowid = character_species.character_value_id
+JOIN character ON character.rowid = character_value.character_id
+JOIN (\(selectedCharacters)) AS selected ON selected.id = character_value.rowid
+JOIN species ON character_species.species_id = species.rowid
+WHERE
+    ? IS NULL
+OR (
+    (? = 1 AND (species.gername LIKE ? OR species.gersynonym LIKE ?))
+    OR (? = 2 AND (species.engname LIKE ? OR species.engsynonym LIKE ?))
+    OR species.sciname LIKE ?
+)
+GROUP BY species_id, female, character_id)
+GROUP BY species_id, female
+HAVING ROUND(distance) < 75
+ORDER BY distance
+"""
+        let searchQuery: String? = nil
+        let numberOfCharacters: Binding = number
+        let characterValueWeights: [Binding] = query.flatMap { id, weight in
+            let binding: [Binding] = [id, Double(weight)]
+            return binding
+        }
+        let args: [Binding?] = [
+            numberOfCharacters
+        ] + characterValueWeights + [
+            searchQuery,
+            1,
+            searchQuery,
+            searchQuery,
+            1,
+            searchQuery,
+            searchQuery,
+            searchQuery
+        ]
+
+        return (querySyntax, args)
+    }
 }
 
 extension Character {

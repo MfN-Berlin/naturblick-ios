@@ -4,17 +4,17 @@
 
 
 import SwiftUI
+import BottomSheet
 
 struct CharactersView: View {
     let group: Group
     @StateObject private var charactersViewModel = CharactersViewModel()
-    @State private var selected: Set<Int64> = []
 
     var body: some View {
         ScrollView {
             VStack {
                 ForEach(charactersViewModel.characters, id: \.0.id) { character, values in
-                    CharacterView(character: character, values: values, selected: $selected)
+                    CharacterView(character: character, values: values, selected: $charactersViewModel.selected)
                     if character.id != charactersViewModel.characters.last?.0.id {
                         Divider()
                     }
@@ -22,8 +22,18 @@ struct CharactersView: View {
             }
         }
         .task {
-            charactersViewModel.filter(group: group)
+            charactersViewModel.configure(group: group)
         }
+        .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
+            NavigationLink(destination: SpeciesListView(filter: charactersViewModel.filter)) {
+                Text("\(charactersViewModel.count) Ergebnissse anzeigen")
+            }
+            .buttonStyle(.borderedProminent)
+            .padding(.defaultPadding)
+            .padding(.bottom, .defaultPadding * 2)
+            .disabled(charactersViewModel.selected.isEmpty)
+        }
+        .navigationTitle(group.gerName)
     }
 }
 

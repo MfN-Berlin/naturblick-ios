@@ -35,6 +35,7 @@ extension Species {
         static let engsynonym = Expression<String?>("engsynonym")
         static let redListGermany = Expression<String?>("red_list_germany")
         static let iucnCategory = Expression<String?>("iucn_category")
+        static let isFemale = Expression<Bool?>("female")
     }
 }
 
