@@ -1,0 +1,63 @@
+//
+// Copyright © 2023 Museum für Naturkunde Berlin.
+// All Rights Reserved.
+
+
+import Foundation
+
+struct SpeciesListItem: Identifiable {
+    var id: String {
+        "\(speciesId)_\(isFemale ?? false)"
+    }
+    var url: String? {
+        if isFemale ?? false {
+            return femaleUrl
+        } else {
+            return maleUrl
+        }
+    }
+    var name: String? {
+        if let isFemale = isFemale, let gername = gername {
+            if isFemale {
+                return "\(gername) ♀"
+            } else {
+                return "\(gername) ♂"
+            }
+        } else {
+            return gername
+        }
+    }
+    let speciesId: Int64
+    let sciname: String
+    let gername: String?
+    let maleUrl: String?
+    let femaleUrl: String?
+    let gersynonym: String?
+    let isFemale: Bool?
+}
+
+extension SpeciesListItem {
+    static let sampleData = SpeciesListItem(
+        speciesId: 1,
+        sciname: "Lissotriton vulgaris",
+        gername: "Teichmolch",
+        maleUrl: "/uploads/crop_d60f7f6c98b0fcf1aa52e7b0_f0b5f2e568.jpg",
+        femaleUrl: nil,
+        gersynonym: nil,
+        isFemale: nil
+    )
+}
+
+extension Species {
+    var toListItem: SpeciesListItem {
+        SpeciesListItem(
+            speciesId: id,
+            sciname: sciname,
+            gername: gername,
+            maleUrl: maleUrl,
+            femaleUrl: femaleUrl,
+            gersynonym: gersynonym,
+            isFemale: nil
+        )
+    }
+}

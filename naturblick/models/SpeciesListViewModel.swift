@@ -7,16 +7,44 @@ import SQLite
 
 class SpeciesListViewModel: ObservableObject {
 
-    @Published private(set) var species = [Species]()
+    @Published private(set) var species = [SpeciesListItem]()
 
-    private static func query(filter: SpeciesListFilter) -> QueryType {
+    private static func query(db: Connection, filter: SpeciesListFilter) throws -> [SpeciesListItem] {
         switch filter {
         case .group(let group):
-            return Species.Definition.table
-                .join(Portrait.Definition.table,
-                      on: Portrait.Definition.species == Species.Definition.table[Species.Definition.id])
-                .filter(Species.Definition.group == group.id)
-                .filter(Portrait.Definition.language == 1) // Only in german to start with
+            return try db.prepareRowIterator(
+                Species.Definition.table
+                    .join(Portrait.Definition.table,
+                          on: Portrait.Definition.species == Species.Definition.table[Species.Definition.id])
+                    .filter(Species.Definition.group == group.id)
+                    .filter(Portrait.Definition.language == 1) // Only in german to start with
+                    .order(Species.Definition.gername)
+            )
+            .map { row in
+                SpeciesListItem(
+                    speciesId: row[Species.Definition.table[Species.Definition.id]],
+                    sciname: row[Species.Definition.sciname],
+                    gername: row[Species.Definition.gername],
+                    maleUrl: row[Species.Definition.maleUrl],
+                    femaleUrl: row[Species.Definition.femaleUrl],
+                    gersynonym: row[Species.Definition.gersynonym],
+                    isFemale: nil
+                )
+            }
+        case .characters(let number, let query):
+            let (querySyntax, bindings) = Character.charactersQuery(number: number, query: query)
+            return try db.prepareRowIterator(querySyntax, bindings: bindings)
+                .map { row in
+                    SpeciesListItem(
+                        speciesId: row[Species.Definition.id],
+                        sciname: row[Species.Definition.sciname],
+                        gername: row[Species.Definition.gername],
+                        maleUrl: row[Species.Definition.maleUrl],
+                        femaleUrl: row[Species.Definition.femaleUrl],
+                        gersynonym: row[Species.Definition.gersynonym],
+                        isFemale: row[Species.Definition.isFemale]
+                    )
+                }
         }
     }
 
@@ -27,25 +55,7 @@ class SpeciesListViewModel: ObservableObject {
 
         do {
             let speciesDb = try Connection(path, readonly: true)
-
-            species = try speciesDb.prepareRowIterator(
-                SpeciesListViewModel.query(filter: filter).order(Species.Definition.gername)
-            ).map { row in
-                Species(
-                    id: row[Species.Definition.table[Species.Definition.id]],
-                    group: row[Species.Definition.group],
-                    sciname: row[Species.Definition.sciname],
-                    gername: row[Species.Definition.gername],
-                    engname: row[Species.Definition.engname],
-                    wikipedia: row[Species.Definition.wikipedia],
-                    maleUrl: row[Species.Definition.maleUrl],
-                    femaleUrl: row[Species.Definition.femaleUrl],
-                    gersynonym: row[Species.Definition.gersynonym],
-                    engsynonym: row[Species.Definition.engsynonym],
-                    redListGermany: row[Species.Definition.redListGermany],
-                    iucnCategory: row[Species.Definition.iucnCategory]
-                )
-            }
+            species = try SpeciesListViewModel.query(db: speciesDb, filter: filter)
         } catch {
             preconditionFailure(error.localizedDescription)
         }

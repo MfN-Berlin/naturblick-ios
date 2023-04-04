@@ -20,6 +20,7 @@
 		13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */; };
 		13316BE029C9FAF80077292B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 13316BDF29C9FAF80077292B /* SQLite */; };
 		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
+		136C118B29D6E66E00805628 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 136C118A29D6E66E00805628 /* BottomSheet */; };
 		136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D907F29D18BBE00A00BD4 /* Portrait.swift */; };
 		13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13A2923029D2DC3C00AF772A /* Generated.xcassets */; };
 		13A2923429D3110C00AF772A /* CharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923329D3110C00AF772A /* CharactersView.swift */; };
@@ -30,6 +31,7 @@
 		13A2923E29D33D3600AF772A /* CharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923D29D33D3600AF772A /* CharactersViewModel.swift */; };
 		13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */; };
 		13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */; };
+		13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
 		7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8008F129D5B66B00950839 /* PortraitImage.swift */; };
 		7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8839D729D5749B006CB94E /* PortraitView.swift */; };
@@ -77,6 +79,7 @@
 		13A2923D29D33D3600AF772A /* CharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewModel.swift; sourceTree = "<group>"; };
 		13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItemView.swift; sourceTree = "<group>"; };
 		13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickApp.swift; sourceTree = "<group>"; };
+		13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItem.swift; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		7B8008F129D5B66B00950839 /* PortraitImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImage.swift; sourceTree = "<group>"; };
 		7B8839D729D5749B006CB94E /* PortraitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitView.swift; sourceTree = "<group>"; };
@@ -105,6 +108,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13316BE029C9FAF80077292B /* SQLite in Frameworks */,
+				136C118B29D6E66E00805628 /* BottomSheet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +207,7 @@
 				7BA037C429D6E11200804AFE /* SimilarSpeciesViewModel.swift */,
 				7BA037C829D7020500804AFE /* PortraitImageMeta.swift */,
 				7BA037CA29D703B600804AFE /* PortraitImageViewModel.swift */,
+				13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -236,6 +241,7 @@
 			name = naturblick;
 			packageProductDependencies = (
 				13316BDF29C9FAF80077292B /* SQLite */,
+				136C118A29D6E66E00805628 /* BottomSheet */,
 			);
 			productName = naturblick;
 			productReference = 131E785E29C9BB24000DF928 /* naturblick.app */;
@@ -268,6 +274,7 @@
 			packageReferences = (
 				13BA832A29CB1BAB003FFE07 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = 131E785F29C9BB24000DF928 /* Products */;
 			projectDirPath = "";
@@ -344,13 +351,13 @@
 				7BA037C729D6E36E00804AFE /* SimilarSpeciesView.swift in Sources */,
 				7BA037BF29D6C8E300804AFE /* GoodToKnow.swift in Sources */,
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
+				13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
 				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
 				7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */,
 				7BA037C529D6E11200804AFE /* SimilarSpeciesViewModel.swift in Sources */,
 				7BA037C129D6C9E800804AFE /* GoodToKnowViewModel.swift in Sources */,
-				7BF564C829D1DEF9003F4D09 /* VerticalAlignment.swift in Sources */,
 				13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */,
 				7BA037C329D6DFF800804AFE /* SimilarSpecies.swift in Sources */,
 				7BA037CD29D705D200804AFE /* PortraitImageView.swift in Sources */,
@@ -567,6 +574,14 @@
 				version = 0.14.1;
 			};
 		};
+		136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lucaszischka/BottomSheet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		13BA832A29CB1BAB003FFE07 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/SwiftLint";
@@ -582,6 +597,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
+		};
+		136C118A29D6E66E00805628 /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */;
+			productName = BottomSheet;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

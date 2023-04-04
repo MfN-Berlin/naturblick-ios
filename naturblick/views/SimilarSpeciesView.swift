@@ -15,9 +15,9 @@ struct SimilarSpeciesView: View {
                 VStack {
                     if let url = mix.species.maleUrl {
                         AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                            SpeciesListItemView(species: mix.species, avatar: image)
+                            SpeciesListItemView(species: mix.species.toListItem, avatar: image)
                         } placeholder: {
-                            SpeciesListItemView(species: mix.species, avatar: Image("placeholder"))
+                            SpeciesListItemView(species: mix.species.toListItem, avatar: Image("placeholder"))
                         }
                     }
                     Text(mix.differences)

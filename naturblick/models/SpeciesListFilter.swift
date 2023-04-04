@@ -6,4 +6,5 @@ import Foundation
 
 enum SpeciesListFilter {
     case group(Group)
+    case characters(Int, [(Int64, Float)])
 }
