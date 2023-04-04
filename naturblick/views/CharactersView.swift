@@ -7,13 +7,14 @@ import SwiftUI
 
 struct CharactersView: View {
     let group: Group
-    @StateObject var charactersViewModel = CharactersViewModel()
+    @StateObject private var charactersViewModel = CharactersViewModel()
+    @State private var selected: Set<Int64> = []
 
     var body: some View {
         ScrollView {
             VStack {
                 ForEach(charactersViewModel.characters, id: \.0.id) { character, values in
-                    CharacterView(character: character, values: values)
+                    CharacterView(character: character, values: values, selected: $selected)
                     if character.id != charactersViewModel.characters.last?.0.id {
                         Divider()
                     }

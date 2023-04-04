@@ -12,7 +12,7 @@ struct Character: Identifiable {
     let engname: String
     let group: String
     let weight: Int64
-    let single: Int64
+    let single: Bool
     let gerdescription: String?
     let engdescription: String?
 }
@@ -25,7 +25,7 @@ extension Character {
         static let engname = Expression<String>("engname")
         static let group = Expression<String>("group")
         static let weight = Expression<Int64>("weight")
-        static let single = Expression<Int64>("single")
+        static let single = Expression<Bool>("single")
         static let gerdescription = Expression<String?>("gerdescription")
         static let engdescription = Expression<String?>("engdescription")
     }
@@ -38,7 +38,7 @@ extension Character {
         engname: "Color",
         group: Group.groups[0].id,
         weight: 1,
-        single: 1,
+        single: true,
         gerdescription: "Verschiedene Farben",
         engdescription: "Different colors"
     )
