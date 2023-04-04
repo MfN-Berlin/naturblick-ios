@@ -64,10 +64,14 @@ struct HomeView: View {
                                            image: Image("characteristics24")
                             )
                         }
-                        HomeViewButton(text: "Pflanze\nfotografieren",
+                        NavigationLink(
+                            destination: PhotoView()) {
+                                HomeViewButton(text: "Pflanze\nfotografieren",
                                        color: Color.secondary200,
                                        image: Image("photo24")
-                        )
+                                )
+                           }
+                        
                     }
                     .padding(8)
                     HStack(spacing: 32) {

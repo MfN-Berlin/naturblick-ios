@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera to capture photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app safes photos to your gallery.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>lato_black.ttf</string>
