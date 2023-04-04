@@ -24,6 +24,7 @@ struct ObservationListView: View {
                     .listRowInsets(.nbInsets)
             }
         }
+        .navigationTitle("Feldbuch")
     }
 }
 
