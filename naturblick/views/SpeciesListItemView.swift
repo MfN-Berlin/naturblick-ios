@@ -22,7 +22,7 @@ struct SpeciesListItemView: View {
                             .font(.nbSubtitle1)
                         Text(species.sciname)
                             .font(.nbSubtitle3)
-                            .foregroundColor(Color.secondary200)
+                            .foregroundColor(Color.secondary)
                         Text(gersynonym)
                             .font(.nbSubtitle3)
                             .padding(.bottom, .defaultPadding)
@@ -31,7 +31,7 @@ struct SpeciesListItemView: View {
                             .font(.nbSubtitle1)
                         Text(species.sciname)
                             .font(.nbSubtitle3)
-                            .foregroundColor(Color.secondary200)
+                            .foregroundColor(Color.secondary)
                             .padding(.bottom, .defaultPadding)
                     } else if let gersynonym = species.gersynonym {
                         Text(species.sciname)

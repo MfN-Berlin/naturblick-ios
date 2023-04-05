@@ -43,12 +43,11 @@ struct HomeView: View {
                         .padding(.bottom, -geo.safeAreaInsets.top)
                     
                     Text("Bestimme Tieren und Pflanzen")
-                        .foregroundColor(.nbWhite)
+                        .foregroundColor(.onPrimaryHighEmphasis)
                         .font(.nbHeadline6)
                         .padding(.bottom)
                     HStack(spacing: 16) {
                         HomeViewButton(text: "Vogelstimmen\naufnehmen",
-                                       color: Color.secondary200,
                                        image: Image("microphone")
                         )
                         NavigationLink(
@@ -60,12 +59,10 @@ struct HomeView: View {
                             )
                         ) {
                             HomeViewButton(text: "Merkmale\nauswählen",
-                                           color: Color.secondary200,
                                            image: Image("characteristics24")
                             )
                         }
                         HomeViewButton(text: "Pflanze\nfotografieren",
-                                       color: Color.secondary200,
                                        image: Image("photo24")
                         )
                     }
@@ -78,7 +75,6 @@ struct HomeView: View {
                         ) {
                             HomeViewButton(
                                 text: "Feldbuch",
-                                color: Color.primary700,
                                 image: Image("feldbuch24")
                             )
                         }
@@ -91,7 +87,6 @@ struct HomeView: View {
                             )
                         ) {
                             HomeViewButton(text: "Arten\nkennenlernen",
-                                           color: Color.primary700,
                                            image: Image("ic_specportraits")
                             )
                         }

@@ -1,31 +1,44 @@
 import SwiftUI
 
 extension Color {
-
-    static let nbWhite = Color("white")
-    static let nbBlack = Color("black")
-    static let onSurface = Color("on_surface")
-
-    static let primary700 = Color("primary_700")
-    static let primary500 = Color("primary_500")
-
-    static let primary400 = Color("primary_400")
-    static let primary200 = Color("primary_200")
-    static let primary100 = Color("primary_100")
-    static let primary50 = Color("primary_50")
-    static let nbPrimary = primary500
-    static let primaryOnHigh = Color("primary_on_high")
-    static let primaryOnMedium = Color("primary_on_medium")
-    static let primaryOnDisabled = Color("primary_on_disabled")
-    static let secondary500 = Color("secondary_500")
-    static let secondary500opacity10 = Color("secondary_500_opacity_10")
-    static let secondary200 = Color("secondary_200")
-    static let nbSecondary = secondary200
-    static let portraitFeatureOpacity50 = Color("portrait_feature_opacity_50")
-    static let goldDarkGreen = Color("gold_dark_green")
-    static let sunset = Color("sunset")
-    static let error = Color("error")
-
-    static let hrColor = Color("hr")
-
+    
+    static let primary = Color("primary")
+    static let secondary = Color("secondary")
+    static let tertiary = Color("tertiary")
+    static let feature = Color("feature")
+    
+    static let onPrimaryHighEmphasis = Color("onprimary.highemphasis")
+    static let onPrimaryMediumEmphasis = Color("onprimary.mediumemphasis")
+    static let onPrimaryLowEmphasis = Color("onprimary.lowemphasis")
+    static let onPrimaryMinimumEmphasis = Color("onprimary.minimumemphasis")
+    static let onPrimaryDisabled = Color("onprimary.disabled")
+    static let onPrimarySignalLow = Color("onprimary.signalLow")
+    static let onPrimarySignalHigh = Color("onprimary.signalHigh")
+    static let onPrimaryButtonPrimary = Color("onprimary.buttonprimary")
+    static let onPrimaryButtonSecondary = Color("onprimary.buttonsecondary")
+    static let onPrimaryTag = Color("onprimary.tag")
+    
+    static let onSecondaryHighEmphasis = Color("onsecondary.highemphasis")
+    static let onSecondaryMediumEmphasis = Color("onsecondary.mediumemphasis")
+    static let onSecondaryLowEmphasis = Color("onsecondary.lowemphasis")
+    static let onSecondaryMinimumEmphasis = Color("onsecondary.minimumemphasis")
+    static let onSecondaryDisabled = Color("onsecondary.disabled")
+    static let onSecondarySignalLow = Color("onsecondary.signalLow")
+    static let onSecondarySignalHigh = Color("onsecondary.signalHigh")
+    static let onSecondaryButtonPrimary = Color("onsecondary.buttonprimary")
+    static let onSecondaryButtonSecondary = Color("onsecondary.buttonsecondary")
+    static let onSecondaryTag = Color("onsecondary.tag")
+    static let onSecondarySignalMedium = Color("onsecondary.signalmedium")
+    static let onSecondaryWarning = Color("onsecondary.warning")
+    
+    static let onFeatureHighEmphasis = Color("onfeature.highemphasis")
+    static let onFeatureMediumEmphasis = Color("onfeature.mediumemphasis")
+    static let onFeatureLowEmphasis = Color("onfeature.lowemphasis")
+    static let onFeatureDisabled = Color("onfeature.disabled")
+    static let onFeatureSignalLow = Color("onfeature.signalLow")
+    static let onFeatureSignalHigh = Color("onfeature.signalHigh")
+    static let onFeatureButtonPrimary = Color("onfeature.buttonprimary")
+    static let onFeatureButtonSecondary = Color("onfeature.buttonsecondary")
+    static let onFeatureTag = Color("onfeature.tag")
+   
 }

@@ -10,13 +10,13 @@ struct GroupsView<Content>: View where Content: View {
     var body: some View {
         ZStack {
             Color
-                .primary500
+                .primary
                 .ignoresSafeArea()
             ScrollView {
                 Image("artportraits24")
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(.sunset)
+                    .foregroundColor(.onPrimarySignalHigh)
                     .frame(width: .headerIconSize, height: .headerIconSize)
                 Text("Wähle eine Gruppe")
                     .font(.nbHeadline3)

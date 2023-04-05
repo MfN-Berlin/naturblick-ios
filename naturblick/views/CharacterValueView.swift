@@ -26,19 +26,19 @@ struct CharacterValueView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .center)
-        .background(Color.nbWhite)
+        .background(Color.primary)
         .cornerRadius(.smallCornerRadius)
         .shadow(color: Color.black.opacity(0.2), radius: .smallCornerRadius, x: 0, y: 0)
         
         if(selected) {
             stack
-                .border(Color.nbPrimary)
+                .border(Color.primary)
                 .overlay(alignment: .topTrailing) {
                     Image("check_circle_24")
                         .resizable()
                         .scaledToFit()
                         .frame(width: .checkedSize, height: .checkedSize)
-                        .foregroundColor(.nbPrimary)
+                        .foregroundColor(.primary)
                         .padding(.halfPadding)
                 }
         } else {

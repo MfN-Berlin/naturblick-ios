@@ -27,7 +27,7 @@ struct ObservationListItemView: View {
                 }
                 Text(observation.time.formatted())
                     .font(.nbSubtitle3)
-                    .foregroundColor(.nbSecondary)
+                    .foregroundColor(.secondary)
             }
             .padding(.top, .avatarTextOffset)
         }
