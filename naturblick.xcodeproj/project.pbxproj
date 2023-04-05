@@ -32,6 +32,10 @@
 		13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */; };
 		13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */; };
 		13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */; };
+		13EC571D29DC779200D56A77 /* ObservationListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC571C29DC779200D56A77 /* ObservationListItem.swift */; };
+		13EC572129DC80AD00D56A77 /* ObservationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572029DC80AD00D56A77 /* ObservationListItemView.swift */; };
+		13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572229DC83E900D56A77 /* ObservationListView.swift */; };
+		13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
 		7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8008F129D5B66B00950839 /* PortraitImage.swift */; };
 		7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8839D729D5749B006CB94E /* PortraitView.swift */; };
@@ -80,6 +84,10 @@
 		13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItemView.swift; sourceTree = "<group>"; };
 		13ACC80229C9BCBA0054BB91 /* NaturblickApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickApp.swift; sourceTree = "<group>"; };
 		13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItem.swift; sourceTree = "<group>"; };
+		13EC571C29DC779200D56A77 /* ObservationListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItem.swift; sourceTree = "<group>"; };
+		13EC572029DC80AD00D56A77 /* ObservationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemView.swift; sourceTree = "<group>"; };
+		13EC572229DC83E900D56A77 /* ObservationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListView.swift; sourceTree = "<group>"; };
+		13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EdgeInsets+Dimensions.swift"; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		7B8008F129D5B66B00950839 /* PortraitImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImage.swift; sourceTree = "<group>"; };
 		7B8839D729D5749B006CB94E /* PortraitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitView.swift; sourceTree = "<group>"; };
@@ -184,6 +192,8 @@
 				7BA037BC29D6C8BB00804AFE /* GoodToKnowView.swift */,
 				7BA037C629D6E36E00804AFE /* SimilarSpeciesView.swift */,
 				7BA037CC29D705D200804AFE /* PortraitImageView.swift */,
+				13EC572029DC80AD00D56A77 /* ObservationListItemView.swift */,
+				13EC572229DC83E900D56A77 /* ObservationListView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -208,6 +218,7 @@
 				7BA037C829D7020500804AFE /* PortraitImageMeta.swift */,
 				7BA037CA29D703B600804AFE /* PortraitImageViewModel.swift */,
 				13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */,
+				13EC571C29DC779200D56A77 /* ObservationListItem.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -218,6 +229,7 @@
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
 				132B0D9529CDD5C500B80C9E /* Font+Lato.swift */,
 				1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */,
+				13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -332,6 +344,7 @@
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
 				13A2923629D3114500AF772A /* CharacterView.swift in Sources */,
 				132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */,
+				13EC572129DC80AD00D56A77 /* ObservationListItemView.swift in Sources */,
 				13A2923C29D317A300AF772A /* CharacterValue.swift in Sources */,
 				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
 				13A2923429D3110C00AF772A /* CharactersView.swift in Sources */,
@@ -341,6 +354,7 @@
 				7BA037BD29D6C8BB00804AFE /* GoodToKnowView.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */,
+				13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */,
 				7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
 				13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */,
@@ -348,12 +362,14 @@
 				13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */,
 				7BA037C929D7020500804AFE /* PortraitImageMeta.swift in Sources */,
 				13316BD729C9F3860077292B /* SpeciesListView.swift in Sources */,
+				13EC571D29DC779200D56A77 /* ObservationListItem.swift in Sources */,
 				7BA037C729D6E36E00804AFE /* SimilarSpeciesView.swift in Sources */,
 				7BA037BF29D6C8E300804AFE /* GoodToKnow.swift in Sources */,
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
 				13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
+				13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */,
 				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
 				7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */,
 				7BA037C529D6E11200804AFE /* SimilarSpeciesViewModel.swift in Sources */,

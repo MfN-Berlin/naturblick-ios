@@ -71,10 +71,17 @@ struct HomeView: View {
                     }
                     .padding(8)
                     HStack(spacing: 32) {
-                        HomeViewButton(text: "Feldbuch",
-                                       color: Color.primary700,
-                                       image: Image("feldbuch24")
-                        )
+                        NavigationLink(
+                            destination: ObservationListView(
+                                observations: [ObservationListItem.sampleData]
+                            )
+                        ) {
+                            HomeViewButton(
+                                text: "Feldbuch",
+                                color: Color.primary700,
+                                image: Image("feldbuch24")
+                            )
+                        }
                         NavigationLink(
                             destination: GroupsView(
                                 groups: Group.groups,
