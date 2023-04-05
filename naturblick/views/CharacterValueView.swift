@@ -26,7 +26,7 @@ struct CharacterValueView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .center)
-        .background(Color.primary)
+        .background(Color.nbPrimary)
         .cornerRadius(.smallCornerRadius)
         .shadow(color: Color.black.opacity(0.2), radius: .smallCornerRadius, x: 0, y: 0)
         
@@ -38,7 +38,7 @@ struct CharacterValueView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: .checkedSize, height: .checkedSize)
-                        .foregroundColor(.primary)
+                        .foregroundColor(.nbPrimary)
                         .padding(.halfPadding)
                 }
         } else {

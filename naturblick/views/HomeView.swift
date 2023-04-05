@@ -69,9 +69,10 @@ struct HomeView: View {
                     .padding(8)
                     HStack(spacing: 32) {
                         NavigationLink(
-                            destination: ObservationListView(
-                                observations: [ObservationListItem.sampleData]
-                            )
+                            destination: ColorTestView()
+//                            ObservationListView(
+//                                observations: [ObservationListItem.sampleData]
+//                            )
                         ) {
                             HomeViewButton(
                                 text: "Feldbuch",

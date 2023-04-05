@@ -8,7 +8,7 @@ struct DarkView<Content: View>: View {
 
     @ViewBuilder let content: () -> Content
 
-    private let color = Color.primary
+    private let color = Color.nbPrimary
 
     var body: some View {
         ZStack {

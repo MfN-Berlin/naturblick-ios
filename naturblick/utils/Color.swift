@@ -2,18 +2,18 @@ import SwiftUI
 
 extension Color {
     
-    static let primary = Color("primary")
-    static let secondary = Color("secondary")
-    static let tertiary = Color("tertiary")
-    static let feature = Color("feature")
+    static let nbPrimary = Color("primary")
+    static let nbSecondary = Color("secondary")
+    static let nbTertiary = Color("tertiary")
+    static let nbFeature = Color("feature")
     
     static let onPrimaryHighEmphasis = Color("onprimary.highemphasis")
     static let onPrimaryMediumEmphasis = Color("onprimary.mediumemphasis")
     static let onPrimaryLowEmphasis = Color("onprimary.lowemphasis")
     static let onPrimaryMinimumEmphasis = Color("onprimary.minimumemphasis")
     static let onPrimaryDisabled = Color("onprimary.disabled")
-    static let onPrimarySignalLow = Color("onprimary.signalLow")
-    static let onPrimarySignalHigh = Color("onprimary.signalHigh")
+    static let onPrimarySignalLow = Color("onprimary.signallow")
+    static let onPrimarySignalHigh = Color("onprimary.signalhigh")
     static let onPrimaryButtonPrimary = Color("onprimary.buttonprimary")
     static let onPrimaryButtonSecondary = Color("onprimary.buttonsecondary")
     static let onPrimaryTag = Color("onprimary.tag")

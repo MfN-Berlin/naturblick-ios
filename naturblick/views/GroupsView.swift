@@ -10,7 +10,7 @@ struct GroupsView<Content>: View where Content: View {
     var body: some View {
         ZStack {
             Color
-                .primary
+                .nbPrimary
                 .ignoresSafeArea()
             ScrollView {
                 Image("artportraits24")
