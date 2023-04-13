@@ -247,10 +247,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 131E786C29C9BB25000DF928 /* Build configuration list for PBXNativeTarget "naturblick" */;
 			buildPhases = (
-				13A2923229D2F6FE00AF772A /* ShellScript */,
+				13A2923229D2F6FE00AF772A /* Run Script */,
 				131E785A29C9BB24000DF928 /* Sources */,
 				131E785B29C9BB24000DF928 /* Frameworks */,
 				131E785C29C9BB24000DF928 /* Resources */,
+				7BCA5DAB29E6F20E0077527A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -322,8 +323,27 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		13A2923229D2F6FE00AF772A /* ShellScript */ = {
+		13A2923229D2F6FE00AF772A /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library GenerateCharacterAssets.swift -o generate_character_assets && ./generate_character_assets\n";
+		};
+		7BCA5DAB29E6F20E0077527A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -337,7 +357,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library GenerateCharacterAssets.swift -o generate_character_assets && ./generate_character_assets\n";
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library AddColors.swift -o add_colors && ./add_colors\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
