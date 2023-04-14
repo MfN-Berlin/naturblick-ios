@@ -15,7 +15,7 @@ class SpeciesListViewModel: ObservableObject {
             return try db.prepareRowIterator(
                 Species.Definition.table
                     .join(Portrait.Definition.table,
-                          on: Portrait.Definition.species == Species.Definition.table[Species.Definition.id])
+                          on: Portrait.Definition.speciesId == Species.Definition.table[Species.Definition.id])
                     .filter(Species.Definition.group == group.id)
                     .filter(Portrait.Definition.language == 1) // Only in german to start with
                     .order(Species.Definition.gername)

@@ -7,7 +7,7 @@ import SQLite
 
 struct Portrait {
     let id: Int64
-    let species: Int64
+    let species: Species
     let description: String
     let descriptionImage: PortraitImageMeta?
     let language: Int
@@ -24,7 +24,7 @@ extension Portrait {
     struct Definition {
         static let table = Table("portrait")
         static let id = Expression<Int64>("rowid")
-        static let species = Expression<Int64>("species_id")
+        static let speciesId = Expression<Int64>("species_id")
         static let description = Expression<String>("description")
         static let descriptionImage = Expression<Int64?>("description_image_id")
         static let language = Expression<Int>("language")
