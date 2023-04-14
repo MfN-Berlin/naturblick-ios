@@ -7,7 +7,7 @@ import Foundation
 
 struct ObservationListItem: Identifiable {
     let id: UUID
-    let species: SpeciesListItem
+    let species: SpeciesListItem?
     let time: Date
 }
 

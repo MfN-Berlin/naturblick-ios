@@ -6,11 +6,10 @@
 import SwiftUI
 
 struct ObservationListView: View {
-    let observations: [ObservationListItem]
-
+    @StateObject var observationListViewModel = ObservationListViewModel()
     var body: some View {
-        List(observations) { observation in
-            if let url = observation.species.url {
+        List(observationListViewModel.observations) { observation in
+            if let url = observation.species?.url {
                 // When used, AsyncImage has to be the outermost element
                 // or it will not properly load in List
                 AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
@@ -24,12 +23,19 @@ struct ObservationListView: View {
                     .listRowInsets(.nbInsets)
             }
         }
+        .onAppear {
+            observationListViewModel.refresh()
+        }
         .navigationTitle("Feldbuch")
+        .alertHttpError(
+            isPresented: $observationListViewModel.errorIsPresented,
+            error: observationListViewModel.error
+        )
     }
 }
 
 struct ObservationListView_Previews: PreviewProvider {
     static var previews: some View {
-        ObservationListView(observations: [ObservationListItem.sampleData])
+        ObservationListView()
     }
 }

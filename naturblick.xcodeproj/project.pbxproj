@@ -20,8 +20,21 @@
 		13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */; };
 		13316BE029C9FAF80077292B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 13316BDF29C9FAF80077292B /* SQLite */; };
 		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
+		1343D1C729DD944D0075ACE3 /* HTTPJsonDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C629DD944D0075ACE3 /* HTTPJsonDownloader.swift */; };
+		1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C829DD94870075ACE3 /* HttpError.swift */; };
+		1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1CA29DD94F50075ACE3 /* BackendClient.swift */; };
+		1343D1D329DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1D229DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift */; };
+		1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */; };
 		136C118B29D6E66E00805628 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 136C118A29D6E66E00805628 /* BottomSheet */; };
 		136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D907F29D18BBE00A00BD4 /* Portrait.swift */; };
+		137963EE29E6ACFF0043E64F /* ObservationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137963ED29E6ACFF0043E64F /* ObservationListViewModel.swift */; };
+		137963F029E6D2500043E64F /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137963EF29E6D2500043E64F /* NetworkResult.swift */; };
+		137963F229E6FFDB0043E64F /* View+alertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137963F129E6FFDB0043E64F /* View+alertError.swift */; };
+		137FE58529E5964100B397DF /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58429E5964100B397DF /* Observation.swift */; };
+		137FE58729E5996800B397DF /* ObsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58629E5996800B397DF /* ObsType.swift */; };
+		137FE58929E59D1700B397DF /* CLLocationCoordinate2D+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58829E59D1700B397DF /* CLLocationCoordinate2D+Decodable.swift */; };
+		137FE58E29E5AC1C00B397DF /* ObservationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58D29E5AC1C00B397DF /* ObservationResponse.swift */; };
+		137FE59029E5B3A500B397DF /* NSMutableData+append.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */; };
 		13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13A2923029D2DC3C00AF772A /* Generated.xcassets */; };
 		13A2923429D3110C00AF772A /* CharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923329D3110C00AF772A /* CharactersView.swift */; };
 		13A2923629D3114500AF772A /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923529D3114500AF772A /* CharacterView.swift */; };
@@ -58,6 +71,16 @@
 		7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46C129C9DC7800C6C101 /* Color.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1343D1D429DD988D0075ACE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 131E785629C9BB24000DF928 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 131E785D29C9BB24000DF928;
+			remoteInfo = naturblick;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Dimensions.swift"; sourceTree = "<group>"; };
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,7 +96,21 @@
 		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
 		13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewModel.swift; sourceTree = "<group>"; };
 		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
+		1343D1C629DD944D0075ACE3 /* HTTPJsonDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPJsonDownloader.swift; sourceTree = "<group>"; };
+		1343D1C829DD94870075ACE3 /* HttpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpError.swift; sourceTree = "<group>"; };
+		1343D1CA29DD94F50075ACE3 /* BackendClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendClient.swift; sourceTree = "<group>"; };
+		1343D1D029DD988D0075ACE3 /* naturblickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = naturblickTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1343D1D229DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZonedDateTimeDecoderTest.swift; sourceTree = "<group>"; };
+		1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZonedDateTime.swift; sourceTree = "<group>"; };
 		136D907F29D18BBE00A00BD4 /* Portrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portrait.swift; sourceTree = "<group>"; };
+		137963ED29E6ACFF0043E64F /* ObservationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListViewModel.swift; sourceTree = "<group>"; };
+		137963EF29E6D2500043E64F /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
+		137963F129E6FFDB0043E64F /* View+alertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+alertError.swift"; sourceTree = "<group>"; };
+		137FE58429E5964100B397DF /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
+		137FE58629E5996800B397DF /* ObsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObsType.swift; sourceTree = "<group>"; };
+		137FE58829E59D1700B397DF /* CLLocationCoordinate2D+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Decodable.swift"; sourceTree = "<group>"; };
+		137FE58D29E5AC1C00B397DF /* ObservationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationResponse.swift; sourceTree = "<group>"; };
+		137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableData+append.swift"; sourceTree = "<group>"; };
 		13A2923029D2DC3C00AF772A /* Generated.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Generated.xcassets; sourceTree = "<group>"; };
 		13A2923329D3110C00AF772A /* CharactersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersView.swift; sourceTree = "<group>"; };
 		13A2923529D3114500AF772A /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterView.swift; sourceTree = "<group>"; };
@@ -120,6 +157,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1343D1CD29DD988D0075ACE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -128,6 +172,7 @@
 			children = (
 				132B0D9729CDD75700B80C9E /* resources */,
 				131E786029C9BB24000DF928 /* naturblick */,
+				1343D1D129DD988D0075ACE3 /* naturblickTests */,
 				131E785F29C9BB24000DF928 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -136,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				131E785E29C9BB24000DF928 /* naturblick.app */,
+				1343D1D029DD988D0075ACE3 /* naturblickTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -173,6 +219,22 @@
 				13316BE329CA13E00077292B /* strapi-db.sqlite3 */,
 			);
 			path = resources;
+			sourceTree = "<group>";
+		};
+		1343D1D129DD988D0075ACE3 /* naturblickTests */ = {
+			isa = PBXGroup;
+			children = (
+				1343D1D929DD98D50075ACE3 /* utils */,
+			);
+			path = naturblickTests;
+			sourceTree = "<group>";
+		};
+		1343D1D929DD98D50075ACE3 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				1343D1D229DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift */,
+			);
+			path = utils;
 			sourceTree = "<group>";
 		};
 		7BCE46A229C9D90300C6C101 /* views */ = {
@@ -219,6 +281,12 @@
 				7BA037CA29D703B600804AFE /* PortraitImageViewModel.swift */,
 				13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */,
 				13EC571C29DC779200D56A77 /* ObservationListItem.swift */,
+				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
+				137FE58429E5964100B397DF /* Observation.swift */,
+				137FE58629E5996800B397DF /* ObsType.swift */,
+				137FE58D29E5AC1C00B397DF /* ObservationResponse.swift */,
+				137963ED29E6ACFF0043E64F /* ObservationListViewModel.swift */,
+				137963EF29E6D2500043E64F /* NetworkResult.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -230,6 +298,12 @@
 				132B0D9529CDD5C500B80C9E /* Font+Lato.swift */,
 				1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */,
 				13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */,
+				1343D1C629DD944D0075ACE3 /* HTTPJsonDownloader.swift */,
+				1343D1C829DD94870075ACE3 /* HttpError.swift */,
+				1343D1CA29DD94F50075ACE3 /* BackendClient.swift */,
+				137FE58829E59D1700B397DF /* CLLocationCoordinate2D+Decodable.swift */,
+				137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */,
+				137963F129E6FFDB0043E64F /* View+alertError.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -259,6 +333,24 @@
 			productReference = 131E785E29C9BB24000DF928 /* naturblick.app */;
 			productType = "com.apple.product-type.application";
 		};
+		1343D1CF29DD988D0075ACE3 /* naturblickTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1343D1D629DD988D0075ACE3 /* Build configuration list for PBXNativeTarget "naturblickTests" */;
+			buildPhases = (
+				1343D1CC29DD988D0075ACE3 /* Sources */,
+				1343D1CD29DD988D0075ACE3 /* Frameworks */,
+				1343D1CE29DD988D0075ACE3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1343D1D529DD988D0075ACE3 /* PBXTargetDependency */,
+			);
+			name = naturblickTests;
+			productName = naturblickTests;
+			productReference = 1343D1D029DD988D0075ACE3 /* naturblickTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -271,6 +363,10 @@
 				TargetAttributes = {
 					131E785D29C9BB24000DF928 = {
 						CreatedOnToolsVersion = 14.1;
+					};
+					1343D1CF29DD988D0075ACE3 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 131E785D29C9BB24000DF928;
 					};
 				};
 			};
@@ -293,6 +389,7 @@
 			projectRoot = "";
 			targets = (
 				131E785D29C9BB24000DF928 /* naturblick */,
+				1343D1CF29DD988D0075ACE3 /* naturblickTests */,
 			);
 		};
 /* End PBXProject section */
@@ -309,6 +406,13 @@
 				131E786629C9BB25000DF928 /* Assets.xcassets in Resources */,
 				13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */,
 				132B0D9C29CDD78600B80C9E /* lato_regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1343D1CE29DD988D0075ACE3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,9 +444,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				13A2923E29D33D3600AF772A /* CharactersViewModel.swift in Sources */,
+				1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */,
 				7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */,
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
 				13A2923629D3114500AF772A /* CharacterView.swift in Sources */,
+				137FE58929E59D1700B397DF /* CLLocationCoordinate2D+Decodable.swift in Sources */,
 				132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */,
 				13EC572129DC80AD00D56A77 /* ObservationListItemView.swift in Sources */,
 				13A2923C29D317A300AF772A /* CharacterValue.swift in Sources */,
@@ -350,13 +456,16 @@
 				13A2923429D3110C00AF772A /* CharactersView.swift in Sources */,
 				7B8839DA29D5762D006CB94E /* PortraitViewModel.swift in Sources */,
 				7BA037CB29D703B600804AFE /* PortraitImageViewModel.swift in Sources */,
+				1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */,
 				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
 				7BA037BD29D6C8BB00804AFE /* GoodToKnowView.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */,
 				13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */,
+				137963F029E6D2500043E64F /* NetworkResult.swift in Sources */,
 				7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
+				1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */,
 				13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */,
 				7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */,
 				13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */,
@@ -365,9 +474,14 @@
 				13EC571D29DC779200D56A77 /* ObservationListItem.swift in Sources */,
 				7BA037C729D6E36E00804AFE /* SimilarSpeciesView.swift in Sources */,
 				7BA037BF29D6C8E300804AFE /* GoodToKnow.swift in Sources */,
+				137FE58E29E5AC1C00B397DF /* ObservationResponse.swift in Sources */,
+				137FE59029E5B3A500B397DF /* NSMutableData+append.swift in Sources */,
+				1343D1C729DD944D0075ACE3 /* HTTPJsonDownloader.swift in Sources */,
+				137FE58529E5964100B397DF /* Observation.swift in Sources */,
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
 				13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
+				137FE58729E5996800B397DF /* ObsType.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
 				13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */,
 				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
@@ -379,11 +493,29 @@
 				7BA037CD29D705D200804AFE /* PortraitImageView.swift in Sources */,
 				13316BD929C9F4150077292B /* Species.swift in Sources */,
 				7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */,
+				137963F229E6FFDB0043E64F /* View+alertError.swift in Sources */,
+				137963EE29E6ACFF0043E64F /* ObservationListViewModel.swift in Sources */,
 				13A2923829D3116200AF772A /* CharacterValueView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1343D1CC29DD988D0075ACE3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1343D1D329DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1343D1D529DD988D0075ACE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 131E785D29C9BB24000DF928 /* naturblick */;
+			targetProxy = 1343D1D429DD988D0075ACE3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		131E786A29C9BB25000DF928 /* Debug */ = {
@@ -558,6 +690,40 @@
 			};
 			name = Release;
 		};
+		1343D1D729DD988D0075ACE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mfnberlin.stadtnaturentdecken.naturblickTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/naturblick.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/naturblick";
+			};
+			name = Debug;
+		};
+		1343D1D829DD988D0075ACE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mfnberlin.stadtnaturentdecken.naturblickTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/naturblick.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/naturblick";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -575,6 +741,15 @@
 			buildConfigurations = (
 				131E786D29C9BB25000DF928 /* Debug */,
 				131E786E29C9BB25000DF928 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1343D1D629DD988D0075ACE3 /* Build configuration list for PBXNativeTarget "naturblickTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1343D1D729DD988D0075ACE3 /* Debug */,
+				1343D1D829DD988D0075ACE3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
