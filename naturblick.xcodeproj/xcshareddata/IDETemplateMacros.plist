@@ -5,7 +5,7 @@
     <key>FILEHEADER</key>
     <string>
 // Copyright © ___YEAR___ ___ORGANIZATIONNAME___.
-// All Rights Reserved.
+// This code is licensed under MIT license (see LICENSE.txt for details)
 </string>
     <key>ORGANIZATIONNAME</key>
     <string>Museum für Naturkunde Berlin</string>
