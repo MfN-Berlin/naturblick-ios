@@ -1,0 +1,152 @@
+{
+  "Primary": {
+    "value": "{sleep.500}",
+    "type": "color"
+  },
+  "Secondary": {
+    "value": "{base.100}",
+    "type": "color"
+  },
+  "tertiary": {
+    "value": "{base.300}",
+    "type": "color"
+  },
+  "Feature": {
+    "value": "{sleep.50}",
+    "type": "color"
+  },
+  "backdrop": {
+    "value": "{base.950}",
+    "type": "color"
+  },
+  "On Primary": {
+    "High Emphasis": {
+      "value": "{base.100}",
+      "type": "color"
+    },
+    "Medium Emphasis": {
+      "value": "{base.150}",
+      "type": "color"
+    },
+    "Low Emphasis": {
+      "value": "{base.170}",
+      "type": "color"
+    },
+    "Minimum Emphasis": {
+      "value": "{base.110}",
+      "type": "color"
+    },
+    "Disabled": {
+      "value": "{sleep.200}",
+      "type": "color"
+    },
+    "Signal Low": {
+      "value": "{sleep.200}",
+      "type": "color"
+    },
+    "Signal High": {
+      "value": "{signal.fun}",
+      "type": "color"
+    },
+    "Button Primary": {
+      "value": "{relax.200}",
+      "type": "color"
+    },
+    "Button Secondary": {
+      "value": "{sleep.700}",
+      "type": "color"
+    },
+    "tag": {
+      "value": "{base.150}",
+      "type": "color"
+    }
+  },
+  "On Secondary": {
+    "High Emphasis": {
+      "value": "{sleep.500}",
+      "type": "color"
+    },
+    "Medium Emphasis": {
+      "value": "{sleep.300}",
+      "type": "color"
+    },
+    "Low Emphasis": {
+      "value": "{sleep.200}",
+      "type": "color"
+    },
+    "Minimum Emphasis": {
+      "value": "{sleep.50}",
+      "type": "color"
+    },
+    "Disabled": {
+      "value": "{base.500}",
+      "type": "color"
+    },
+    "Signal Low": {
+      "value": "{sleep.100}",
+      "type": "color"
+    },
+    "Signal High": {
+      "value": "{signal.happy}",
+      "type": "color"
+    },
+    "Button Primary": {
+      "value": "{relax.200}",
+      "type": "color"
+    },
+    "Button Secondary": {
+      "value": "{sleep.300}",
+      "type": "color"
+    },
+    "tag": {
+      "value": "{base.300}",
+      "type": "color"
+    },
+    "warning": {
+      "value": "{signal.pain}",
+      "type": "color"
+    },
+    "Signal Medium": {
+      "value": "{signal.peace}",
+      "type": "color"
+    }
+  },
+  "On Feature": {
+    "High Emphasis": {
+      "value": "{sleep.600}",
+      "type": "color"
+    },
+    "Medium Emphasis": {
+      "value": "{base.970}",
+      "type": "color"
+    },
+    "Low Emphasis": {
+      "value": "{base.950}",
+      "type": "color"
+    },
+    "Disabled": {
+      "value": "{sleep.200}",
+      "type": "color"
+    },
+    "Signal High": {
+      "value": "{signal.fun}",
+      "type": "color"
+    },
+    "Signal Low": {
+      "value": "{sleep.100}",
+      "type": "color"
+    },
+    "Button Primary": {
+      "value": "{relax.200}",
+      "type": "color"
+    },
+    "Button Secondary": {
+      "value": "{relax.900}",
+      "type": "color"
+    },
+    "tag": {
+      "value": "{base.150}",
+      "type": "color"
+    }
+  }
+}

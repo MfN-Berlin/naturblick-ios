@@ -1,4 +1,4 @@
-import Foundation
+	import Foundation
 
 struct Image: Decodable {
     let url: String
