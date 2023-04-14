@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_baseline_pause_circle_outline_24.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}

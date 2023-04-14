@@ -13,28 +13,55 @@ struct PortraitView: View {
         ScrollView {
             VStack{
                 if let portrait = portraitViewModel.portrait {
-                    Text("Beschreibung")
-                        .font(.nbHeadline3)
-                    if let meta = portrait.descriptionImage {
-                        PortraitImageView(meta: meta)
+                    HStack {
+                        Text(portrait.species.gername ?? "Deutscher Artname")
+                            .font(.nbHeadline3)
+                        
+                        if let url = portrait.audioUrl {
+                            ExampleSoundButton(url: url, color: Color.secondary200)
+                                .frame(height: 35)
+                        }
                     }
-                    Text(portrait.description)
-                    
-                    Text("Verwechslungsarten")
-                        .font(.nbHeadline3)
-                    SimilarSpeciesView(portraitId: portrait.id)
-                    
-                    Text("In der Stadt")
-                        .font(.nbHeadline3)
-                    if let meta = portrait.inTheCityImage {
-                        PortraitImageView(meta: meta)
+
+                    Text(portrait.species.sciname)
+                    VStack {
+                        Text("Beschreibung")
+                            .font(.nbHeadline4)
+
+                        if let meta = portrait.descriptionImage {
+                            PortraitImageView(meta: meta)
+                        }
+                        Text(portrait.description)
                     }
-                    Text(portrait.inTheCity)
-                    Text("Wissenswertes")
-                        .font(.nbHeadline3)
-                    if let meta = portrait.goodToKnowImage {
-                        PortraitImageView(meta: meta)
+
+                    VStack {
+                        Text("Verwechslungsarten")
+                            .font(.nbHeadline4)
+                        SimilarSpeciesView(portraitId: portrait.id)
+                    }
+                    
+                    VStack {
+                        Text("In der Stadt")
+                            .font(.nbHeadline4)
+                        if let meta = portrait.inTheCityImage {
+                            PortraitImageView(meta: meta)
+                        }
+                        Text(portrait.inTheCity)
+                    }
+                    VStack {
+                        Text("Wissenswertes")
+                            .font(.nbHeadline4)
+                        if let meta = portrait.goodToKnowImage {
+                            PortraitImageView(meta: meta)
+                        }
                         GoodToKnowView(portraitId: portrait.id)
+                    }
+                    VStack {
+                        Text("Quellen")
+                            .font(.nbHeadline4)
+                        if let sources = portrait.sources {
+                            Text(sources)
+                        }
                     }
                 } else {
                     Text("Sorry No Portrait")
