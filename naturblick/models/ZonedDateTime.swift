@@ -10,6 +10,13 @@ struct ZonedDateTime: Equatable {
     let tz: TimeZone
 }
 
+extension ZonedDateTime {
+    init() {
+        date = Date()
+        tz = TimeZone.current
+    }
+}
+
 extension ZonedDateTime: Decodable {
     static func dateFormatterFractionalSeconds() -> ISO8601DateFormatter {
         let formatter = ISO8601DateFormatter()
