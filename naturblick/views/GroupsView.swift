@@ -5,36 +5,34 @@
 import SwiftUI
 
 struct GroupsView<Content>: View where Content: View {
+    
     let groups: [Group]
     let destination: (Group) -> Content
+    
     var body: some View {
-        ZStack {
-            Color
-                .primary500
-                .ignoresSafeArea()
+        BaseView(navTitle: "Arten kennenlernen", oneColor: true) {
             ScrollView {
                 Image("artportraits24")
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(.sunset)
+                    .foregroundColor(.onPrimarySignalHigh)
                     .frame(width: .headerIconSize, height: .headerIconSize)
                 Text("Wähle eine Gruppe")
                     .font(.nbHeadline3)
-                    .foregroundColor(.white)
+                    .foregroundColor(.onPrimaryHighEmphasis)
                 LazyVGrid(columns: [
                     GridItem(spacing: .defaultPadding),
                     GridItem(spacing: .defaultPadding),
                     GridItem(spacing: .defaultPadding)
                 ], spacing: .defaultPadding) {
-                        ForEach(groups) { group in
-                            NavigationLink(destination: destination(group)) {
-                                GroupButton(group: group)
-                            }
+                    ForEach(groups) { group in
+                        NavigationLink(destination: destination(group)) {
+                            GroupButton(group: group)
                         }
-                    }.padding(.defaultPadding)
+                    }
+                }.padding(.defaultPadding)
             }
         }
-        .navigationTitle("Arten kennenlernen")
     }
 }
 
