@@ -101,14 +101,6 @@
     "tag": {
       "value": "{base.110}",
       "type": "color"
-    },
-    "warning": {
-      "value": "{signal.pain}",
-      "type": "color"
-    },
-    "Signal Medium": {
-      "value": "{signal.peace}",
-      "type": "color"
     }
   },
   "On Feature": {

@@ -18,11 +18,11 @@ struct HomeViewButton: View {
                     image
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(.nbWhite)
+                        .foregroundColor(.onPrimaryHighEmphasis)
                         .padding(16)
                 }
             Text(text)
-                .foregroundColor(.nbWhite)
+                .foregroundColor(.onPrimaryHighEmphasis)
                 .multilineTextAlignment(TextAlignment.center)
                 .font(.nbCaption)
             Spacer()
@@ -34,7 +34,7 @@ struct HomeViewButton: View {
 struct HomeViewButton_Previews: PreviewProvider {
     static var previews: some View {
         HomeViewButton(text: "Vogelstimmen aufnehmen",
-                       color: Color.secondary200,
+                       color: Color.onPrimaryButtonPrimary,
                        image: Image(systemName: "questionmark")
         )
     }

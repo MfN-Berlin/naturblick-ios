@@ -59,6 +59,14 @@
     "tag": {
       "value": "{base.150}",
       "type": "color"
+    },
+    "Stable Bright": {
+      "value": "{base.100}",
+      "type": "color"
+    },
+    "Stable Dark": {
+      "value": "{sleep.500}",
+      "type": "color"
     }
   },
   "On Secondary": {
@@ -108,6 +116,14 @@
     },
     "Signal Medium": {
       "value": "{signal.peace}",
+      "type": "color"
+    },
+    "Stable Bright": {
+      "value": "{base.100}",
+      "type": "color"
+    },
+    "Stable Dark": {
+      "value": "{sleep.500}",
       "type": "color"
     }
   },
