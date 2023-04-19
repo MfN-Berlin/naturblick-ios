@@ -13,8 +13,15 @@ struct PortraitView: View {
         ScrollView {
             VStack{
                 if let portrait = portraitViewModel.portrait {
-                    Text(portrait.species.gername ?? "Deutscher Artname")
-                        .font(.nbHeadline3)
+                    HStack {
+                         Text(portrait.species.gername ?? "Deutscher Artname")
+                             .font(.nbHeadline3)
+                         
+                         if let url = portrait.audioUrl {
+                             SoundButton(url: url)
+                                 .frame(height: 35)
+                         }
+                    }
                     Text(portrait.species.sciname)
                     VStack {
                         Text("Beschreibung")
@@ -44,8 +51,8 @@ struct PortraitView: View {
                             .font(.nbHeadline4)
                         if let meta = portrait.goodToKnowImage {
                             PortraitImageView(meta: meta)
-                            GoodToKnowView(portraitId: portrait.id)
                         }
+                        GoodToKnowView(portraitId: portrait.id)
                     }
                     VStack {
                         Text("Quellen")
