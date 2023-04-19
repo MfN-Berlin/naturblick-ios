@@ -5,27 +5,28 @@
 
 import SwiftUI
 
-struct ObservationListItemView: View {
-    let observation: ObservationListItem
-    let avatar: Image
 
+struct ObservationListItemView: View {
+    let observation: Observation
+    let species: Species?
+    let image: Image
     var body: some View {
         HStack(alignment: .top) {
-            avatar
+            image
                 .resizable()
                 .scaledToFit()
                 .clipShape(Circle())
                 .frame(width: .avatarSize, height: .avatarSize)
                 .padding(.trailing, .defaultPadding)
             VStack(alignment: .leading) {
-                if let name = observation.species?.name {
+                if let name = species?.gername {
                     Text(name)
                         .font(.nbSubtitle1)
                 } else {
-                    Text(observation.species?.sciname ?? "No species")
+                    Text(species?.sciname ?? "No species")
                         .font(.nbSubtitle1)
                 }
-                Text(observation.time.formatted())
+                Text(observation.created.date.formatted())
                     .font(.nbSubtitle3)
                     .foregroundColor(.nbSecondary)
             }
@@ -34,11 +35,13 @@ struct ObservationListItemView: View {
     }
 }
 
+
 struct ObservationListItemView_Previews: PreviewProvider {
     static var previews: some View {
         ObservationListItemView(
-            observation: ObservationListItem.sampleData,
-            avatar: Image("placeholder")
+            observation: Observation.sampleData,
+            species: Species.sampleData,
+            image: Image("placeholder")
         )
     }
 }
