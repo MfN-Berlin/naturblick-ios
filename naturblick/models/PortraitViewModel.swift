@@ -17,6 +17,11 @@ class PortraitViewModel: ObservableObject {
         return Portrait.Definition.table
             .join(
                 .leftOuter,
+                Species.Definition.table,
+                on: Species.Definition.table[Species.Definition.id] == Portrait.Definition.speciesId
+            )
+            .join(
+                .leftOuter,
                 descImg,
                 on: descImg[PortraitImageMeta.Definition.id] == Portrait.Definition.descriptionImage
             )
@@ -30,7 +35,7 @@ class PortraitViewModel: ObservableObject {
                 goodImg,
                 on: goodImg[PortraitImageMeta.Definition.id] == Portrait.Definition.goodToKnowImage
             )
-            .filter(Portrait.Definition.species == speciesId)
+            .filter(Portrait.Definition.speciesId == speciesId)
             .filter(Portrait.Definition.language == 1) // Only in german to start with
         }
         
@@ -48,7 +53,20 @@ class PortraitViewModel: ObservableObject {
                 .map { row in
                     Portrait(
                         id: row[Portrait.Definition.table[Portrait.Definition.id]],
-                        species: row[Portrait.Definition.species],
+                        species: Species(
+                            id: row[Portrait.Definition.speciesId],
+                            group: row[Species.Definition.table[Species.Definition.group]],
+                            sciname: row[Species.Definition.table[Species.Definition.sciname]],
+                            gername: row[Species.Definition.table[Species.Definition.gername]],
+                            engname: row[Species.Definition.table[Species.Definition.engname]],
+                            wikipedia: row[Species.Definition.table[Species.Definition.wikipedia]],
+                            maleUrl: row[Species.Definition.table[Species.Definition.maleUrl]],
+                            femaleUrl: row[Species.Definition.table[Species.Definition.femaleUrl]],
+                            gersynonym: row[Species.Definition.table[Species.Definition.gersynonym]],
+                            engsynonym: row[Species.Definition.table[Species.Definition.engsynonym]],
+                            redListGermany: row[Species.Definition.table[Species.Definition.redListGermany]],
+                            iucnCategory: row[Species.Definition.table[Species.Definition.iucnCategory]]
+                        ),
                         description: row[Portrait.Definition.description],
                         descriptionImage: row[Portrait.Definition.descriptionImage] != nil
                             ? PortraitImageMeta(

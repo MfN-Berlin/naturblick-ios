@@ -29,7 +29,7 @@ class BackendClient {
         return fieldData as Data
     }
 
-    func sync() -> AnyPublisher<NetworkResult<ObservationResponse>, Never> {
+    func sync() async throws -> ObservationResponse {
         let boundary = UUID()
         var request = URLRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!)
         request.httpMethod = "PUT"
@@ -46,6 +46,6 @@ class BackendClient {
 """.data(using: .utf8)!, contentType: "application/json", boundary: boundary))
         body.append("--\(boundary)--")
         request.httpBody = body as Data
-        return downloader.httpJson(request: request)
+        return try await downloader.httpJson(request: request)
     }
 }

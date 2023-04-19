@@ -11,6 +11,7 @@ struct NaturblickApp: App {
             NavigationView {
                 HomeView()
             }
+            .environment(\.managedObjectContext, ObservationPersistenceController.shared.container.viewContext)
         }
     }
 }

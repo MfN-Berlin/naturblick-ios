@@ -4,33 +4,38 @@
 
 
 import SwiftUI
+import CoreData
 
 struct ObservationListView: View {
-    @StateObject var observationListViewModel = ObservationListViewModel()
+    private let client = BackendClient()
+    private let persistenceController: ObservationPersistenceController = .shared
+    @State private var isPresented: Bool = false
+    @State private var error: HttpError? = nil
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.created, order: .reverse)])
+    private var observations: FetchedResults<ObservationEntity>
+
     var body: some View {
-        List(observationListViewModel.observations) { observation in
-            if let url = observation.species?.url {
-                // When used, AsyncImage has to be the outermost element
-                // or it will not properly load in List
-                AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                    ObservationListItemView(observation: observation, avatar: image)
-                } placeholder: {
-                    ObservationListItemView(observation: observation, avatar: Image("placeholder"))
-                }
-                .listRowInsets(.nbInsets)
-            } else {
-                ObservationListItemView(observation: observation, avatar: Image("placeholder"))
-                    .listRowInsets(.nbInsets)
-            }
+        List(observations, id: \.occurenceId) { observationEntity in
+            let observation = Observation(from: observationEntity)
+            ObservationListItemWithImageView(observation: observation)
         }
-        .onAppear {
-            observationListViewModel.refresh()
+        .refreshable {
+            await sync()
         }
         .navigationTitle("Feldbuch")
-        .alertHttpError(
-            isPresented: $observationListViewModel.errorIsPresented,
-            error: observationListViewModel.error
-        )
+        .alertHttpError(isPresented: $isPresented, error: error)
+    }
+
+    private func sync() async {
+        do {
+            let response = try await client.sync()
+            try await persistenceController.importObservations(from: response.data)
+        } catch is HttpError {
+            self.error = error
+            self.isPresented = true
+        } catch {
+            preconditionFailure(error.localizedDescription)
+        }
     }
 }
 
