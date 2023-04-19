@@ -12,9 +12,10 @@ class SoundStreamer : ObservableObject {
     var audioPlayer: AVPlayer?
     var streamEnd = NotificationCenter.default.publisher(for: NSNotification.Name.NSManagedObjectContextObjectsDidChange)
 
-    func load(sound: String){
+    func play(sound: String){
         if let url = URL(string: Configuration.strapiUrl + sound) {
             self.audioPlayer = AVPlayer(url: url)
+            self.audioPlayer?.play()
             streamEnd = NotificationCenter.default.publisher(for: .AVPlayerItemDidPlayToEndTime)
         }
     }
@@ -35,6 +36,7 @@ struct ExampleSoundButton: View {
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(.nbWhite)
+                        .padding(4)
                 }
         }
         .onTapGesture {
@@ -42,8 +44,7 @@ struct ExampleSoundButton: View {
             isPlaying.toggle()
             
             if isPlaying {
-                soundStream.load(sound: url)
-                soundStream.audioPlayer?.play()
+                soundStream.play(sound: url)
             } else {
                 soundStream.audioPlayer?.pause()
             }
