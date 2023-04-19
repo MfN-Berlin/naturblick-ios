@@ -20,28 +20,34 @@ struct SpeciesListItemView: View {
                     if let gername = species.name, let gersynonym = species.gersynonym {
                         Text(gername)
                             .font(.nbSubtitle1)
+                            .foregroundColor(.onSecondaryHighEmphasis)
                         Text(species.sciname)
                             .font(.nbSubtitle3)
-                            .foregroundColor(Color.onSecondaryHighEmphasis)
+                            .foregroundColor(.onSecondarySignalLow)
                         Text(gersynonym)
                             .font(.nbSubtitle3)
                             .padding(.bottom, .defaultPadding)
+                            .foregroundColor(.onSecondarySignalLow)
                     } else if let name = species.name {
                         Text(name)
                             .font(.nbSubtitle1)
+                            .foregroundColor(.onSecondaryHighEmphasis)
                         Text(species.sciname)
                             .font(.nbSubtitle3)
-                            .foregroundColor(Color.onSecondaryHighEmphasis)
+                            .foregroundColor(Color.onSecondarySignalLow)
                             .padding(.bottom, .defaultPadding)
                     } else if let gersynonym = species.gersynonym {
                         Text(species.sciname)
                             .font(.nbSubtitle1)
+                            .foregroundColor(.onSecondaryHighEmphasis)
                         Text(gersynonym)
                             .font(.nbSubtitle3)
                             .padding(.bottom, .defaultPadding)
+                            .foregroundColor(Color.onSecondarySignalLow)
                     } else {
                         Text(species.sciname)
                             .font(.nbSubtitle1)
+                            .foregroundColor(.onSecondaryHighEmphasis)
                     }
                 }
                 .padding(.top, .avatarTextOffset)

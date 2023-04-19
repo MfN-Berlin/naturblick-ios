@@ -22,13 +22,15 @@ struct ObservationListItemView: View {
                 if let name = species?.gername {
                     Text(name)
                         .font(.nbSubtitle1)
+                        .foregroundColor(.onSecondaryHighEmphasis)
                 } else {
                     Text(species?.sciname ?? "No species")
                         .font(.nbSubtitle1)
+                        .foregroundColor(.onSecondarySignalLow)
                 }
                 Text(observation.created.date.formatted())
                     .font(.nbSubtitle3)
-                    .foregroundColor(.secondaryColor)
+                    .foregroundColor(.onSecondarySignalLow)
             }
             .padding(.top, .avatarTextOffset)
         }

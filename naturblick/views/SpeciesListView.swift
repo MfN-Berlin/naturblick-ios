@@ -9,23 +9,28 @@ struct SpeciesListView: View {
     let filter: SpeciesListFilter
 
     var body: some View {
-        List(speciesListViewModel.species) { species in
-            if let url = species.url {
-                // When used, AsyncImage has to be the outermost element
-                // or it will not properly load in List
-                AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                    SpeciesListItemView(species: species, avatar: image)
-                } placeholder: {
-                    SpeciesListItemView(species: species, avatar: Image("placeholder"))
-                }
-                .listRowInsets(.nbInsets)
-            } else {
-                SpeciesListItemView(species: species, avatar: Image("placeholder"))
+        BaseView {
+            List(speciesListViewModel.species) { species in
+                if let url = species.url {
+                    // When used, AsyncImage has to be the outermost element
+                    // or it will not properly load in List
+                    AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                        SpeciesListItemView(species: species, avatar: image)
+                    } placeholder: {
+                        SpeciesListItemView(species: species, avatar: Image("placeholder"))
+                    }
                     .listRowInsets(.nbInsets)
+                    .listRowBackground(Color.secondaryColor)
+                } else {
+                    SpeciesListItemView(species: species, avatar: Image("placeholder"))
+                        .listRowInsets(.nbInsets)
+                        .listRowBackground(Color.secondaryColor)
+                }
             }
-        }
-        .task {
-            speciesListViewModel.filter(filter: filter)
+            .listStyle(.plain)
+            .task {
+                speciesListViewModel.filter(filter: filter)
+            }
         }
     }
 }

@@ -20,6 +20,7 @@ struct ObservationListItemWithImageView: View {
         .task {
             await model.load(observation: observation)
         }
+        .listRowBackground(Color.secondaryColor)
     }
 }
 

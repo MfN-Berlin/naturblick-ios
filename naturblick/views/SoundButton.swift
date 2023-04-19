@@ -27,12 +27,12 @@ struct SoundButton: View {
     var body: some View {
         VStack {
             Circle()
-                .fill(Color.secondary500)
+                .fill(Color.secondaryColor)
                 .overlay {
                     buttonIcon()
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(.nbWhite)
+                    .foregroundColor(.onSecondaryHighEmphasis)
                     .padding(6)
                 }
         }
