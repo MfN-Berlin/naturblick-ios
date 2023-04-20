@@ -41,17 +41,17 @@ extension Species {
 
 extension Species {
     static let sampleData = Species(
-        id: 1,
-        group: "amphibian",
-        sciname: "Lissotriton vulgaris",
-        gername: "Teichmolch",
-        engname: "Smooth newt",
-        wikipedia: nil,
-        maleUrl: "/uploads/crop_d60f7f6c98b0fcf1aa52e7b0_f0b5f2e568.jpg",
+        id: 44,
+        group: "bird",
+        sciname: "Sturnus vulgaris",
+        gername: "Star",
+        engname: "Starling",
+        wikipedia: "https://de.wikipedia.org/wiki/Star_(Art)",
+        maleUrl: "/uploads/crop_053557dc868d4fac054473e2_f1d6e2d875.jpg",
         femaleUrl: nil,
         gersynonym: nil,
         engsynonym: nil,
-        redListGermany: "ungefahrdet",
+        redListGermany: "gefahrdet",
         iucnCategory: "LC"
     )
 }
