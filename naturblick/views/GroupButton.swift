@@ -16,7 +16,7 @@ struct GroupButton: View {
                 .scaledToFit()
             Text(group.gerName)
                 .multilineTextAlignment(TextAlignment.center)
-                .foregroundColor(.white)
+                .foregroundColor(.onPrimaryHighEmphasis)
                 .font(.nbBody1)
             Spacer()
         }

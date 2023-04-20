@@ -8,9 +8,10 @@ struct HomeView: View {
 
     let firstRowWidthFactor: CGFloat = 4.5
     let secondRowWidthFactor: CGFloat = 5
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
-        DarkView {
+        BaseView(oneColor: true) {
             GeometryReader { geo in
                 VStack {
                     Image("Kingfisher")
@@ -24,10 +25,10 @@ struct HomeView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: geo.size.width / 4)
-                                .foregroundColor(.white)
+                                .foregroundColor(.onPrimaryHighEmphasis)
                         }
                         .overlay(alignment: .bottom) {
-                            Image("oval")
+                            Image(colorScheme == .dark ? "oval_dark" : "oval_light")
                                 .aspectRatio(contentMode: .fit)
                         }
                         .overlay(alignment: .bottomLeading) {
@@ -43,12 +44,12 @@ struct HomeView: View {
                         .padding(.bottom, -geo.safeAreaInsets.top)
                     
                     Text("Bestimme Tieren und Pflanzen")
-                        .foregroundColor(.nbWhite)
+                        .foregroundColor(.onPrimaryHighEmphasis)
                         .font(.nbHeadline6)
                         .padding(.bottom)
                     HStack(spacing: 16) {
                         HomeViewButton(text: "Vogelstimmen\naufnehmen",
-                                       color: Color.secondary200,
+                                       color: Color.onPrimaryButtonPrimary,
                                        image: Image("microphone")
                         )
                         NavigationLink(
@@ -60,12 +61,12 @@ struct HomeView: View {
                             )
                         ) {
                             HomeViewButton(text: "Merkmale\nauswählen",
-                                           color: Color.secondary200,
+                                           color: Color.onPrimaryButtonPrimary,
                                            image: Image("characteristics24")
                             )
                         }
                         HomeViewButton(text: "Pflanze\nfotografieren",
-                                       color: Color.secondary200,
+                                       color: Color.onPrimaryButtonPrimary,
                                        image: Image("photo24")
                         )
                     }
@@ -76,7 +77,7 @@ struct HomeView: View {
                         ) {
                             HomeViewButton(
                                 text: "Feldbuch",
-                                color: Color.primary700,
+                                color: Color.onPrimaryButtonSecondary,
                                 image: Image("feldbuch24")
                             )
                         }
@@ -89,7 +90,7 @@ struct HomeView: View {
                             )
                         ) {
                             HomeViewButton(text: "Arten\nkennenlernen",
-                                           color: Color.primary700,
+                                           color: Color.onPrimaryButtonSecondary,
                                            image: Image("ic_specportraits")
                             )
                         }

@@ -21,24 +21,25 @@ struct CharacterValueView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, .defaultPadding)
                 .padding(.bottom, .defaultPadding)
+                .foregroundColor(.black)
             if(value.hasImage) {
                 Spacer()
             }
         }
         .frame(maxWidth: .infinity, alignment: .center)
-        .background(Color.nbWhite)
+        .background(.white)
         .cornerRadius(.smallCornerRadius)
         .shadow(color: Color.black.opacity(0.2), radius: .smallCornerRadius, x: 0, y: 0)
         
         if(selected) {
             stack
-                .border(Color.nbPrimary)
+                .border(Color.primaryColor)
                 .overlay(alignment: .topTrailing) {
                     Image("check_circle_24")
                         .resizable()
                         .scaledToFit()
                         .frame(width: .checkedSize, height: .checkedSize)
-                        .foregroundColor(.nbPrimary)
+                        .foregroundColor(.primaryColor)
                         .padding(.halfPadding)
                 }
         } else {

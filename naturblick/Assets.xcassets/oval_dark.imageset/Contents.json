@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "oval_dark.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

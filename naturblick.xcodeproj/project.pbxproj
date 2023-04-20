@@ -66,10 +66,10 @@
 		7BA037C929D7020500804AFE /* PortraitImageMeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037C829D7020500804AFE /* PortraitImageMeta.swift */; };
 		7BA037CB29D703B600804AFE /* PortraitImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037CA29D703B600804AFE /* PortraitImageViewModel.swift */; };
 		7BA037CD29D705D200804AFE /* PortraitImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037CC29D705D200804AFE /* PortraitImageView.swift */; };
+		7BCBBB5129EEDA07000DD344 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCBBB5029EEDA07000DD344 /* BaseView.swift */; };
 		7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */; };
 		7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */; };
 		7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */; };
-		7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AF29C9DAFE00C6C101 /* DarkView.swift */; };
 		7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */; };
 		7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46BE29C9DB3700C6C101 /* Group.swift */; };
 		7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46C129C9DC7800C6C101 /* Color.swift */; };
@@ -146,10 +146,10 @@
 		7BA037C829D7020500804AFE /* PortraitImageMeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImageMeta.swift; sourceTree = "<group>"; };
 		7BA037CA29D703B600804AFE /* PortraitImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImageViewModel.swift; sourceTree = "<group>"; };
 		7BA037CC29D705D200804AFE /* PortraitImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImageView.swift; sourceTree = "<group>"; };
+		7BCBBB5029EEDA07000DD344 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewButton.swift; sourceTree = "<group>"; };
-		7BCE46AF29C9DAFE00C6C101 /* DarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarkView.swift; sourceTree = "<group>"; };
 		7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupButton.swift; sourceTree = "<group>"; };
 		7BCE46BE29C9DB3700C6C101 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		7BCE46C129C9DC7800C6C101 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -249,7 +249,6 @@
 		7BCE46A229C9D90300C6C101 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				7BCE46AF29C9DAFE00C6C101 /* DarkView.swift */,
 				7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */,
 				7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */,
 				7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */,
@@ -268,6 +267,7 @@
 				13EC572229DC83E900D56A77 /* ObservationListView.swift */,
 				7B83703429E98EA10075D9F5 /* ColorTestView.swift */,
 				7B993F4829F16C3D0023315B /* SoundButton.swift */,
+				7BCBBB5029EEDA07000DD344 /* BaseView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -474,7 +474,6 @@
 				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
 				7BA037BD29D6C8BB00804AFE /* GoodToKnowView.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
-				7BCE46B829C9DAFE00C6C101 /* DarkView.swift in Sources */,
 				13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */,
 				1343D1C329DD8C9F0075ACE3 /* observations.xcdatamodeld in Sources */,
 				7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */,
@@ -496,6 +495,7 @@
 				13F9EF0B29ED92F100123758 /* ObservationListItemViewModel.swift in Sources */,
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
 				13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */,
+				7BCBBB5129EEDA07000DD344 /* BaseView.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
 				137FE58729E5996800B397DF /* ObsType.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
