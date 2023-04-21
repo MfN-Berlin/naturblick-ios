@@ -15,15 +15,18 @@ struct ObservationListView: View {
     private var observations: FetchedResults<ObservationEntity>
 
     var body: some View {
-        List(observations, id: \.occurenceId) { observationEntity in
-            let observation = Observation(from: observationEntity)
-            ObservationListItemWithImageView(observation: observation)
+        BaseView {
+            List(observations, id: \.occurenceId) { observationEntity in
+                let observation = Observation(from: observationEntity)
+                ObservationListItemWithImageView(observation: observation)
+            }
+            .listStyle(.plain)
+            .refreshable {
+                await sync()
+            }
+            .navigationTitle("Feldbuch")
+            .alertHttpError(isPresented: $isPresented, error: error)
         }
-        .refreshable {
-            await sync()
-        }
-        .navigationTitle("Feldbuch")
-        .alertHttpError(isPresented: $isPresented, error: error)
     }
 
     private func sync() async {

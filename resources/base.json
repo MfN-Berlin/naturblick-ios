@@ -9,11 +9,11 @@
       "type": "color"
     },
     "150": {
-      "value": "#ffffffcf",
+      "value": "#ffffff80",
       "type": "color"
     },
     "170": {
-      "value": "rgba(255,255,255,0.8)",
+      "value": "#ffffffcc",
       "type": "color"
     },
     "300": {
@@ -41,7 +41,7 @@
       "type": "color"
     },
     "950": {
-      "value": "rgba(49,49,49,0.55)",
+      "value": "#3131318c",
       "type": "color"
     },
     "970": {
