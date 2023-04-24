@@ -10,20 +10,32 @@ struct SimilarSpeciesView: View {
     let portraitId: Int64
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             ForEach(similarSpeciesViewModel.mixups) { mix in
-                VStack {
-                    if let url = mix.species.maleUrl {
-                        AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                            SpeciesListItemView(species: mix.species.toListItem, avatar: image)
-                        } placeholder: {
-                            SpeciesListItemView(species: mix.species.toListItem, avatar: Image("placeholder"))
+                NavigationLink(destination: PortraitView(speciesId: mix.species.toListItem.speciesId)) {
+                    VStack(alignment: .leading) {
+                        if let url = mix.species.maleUrl {
+                            AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                                SimilarSpeciesItemView(species: mix.species.toListItem, avatar: image)
+                            } placeholder: {
+                                SimilarSpeciesItemView(species: mix.species.toListItem, avatar: Image("placeholder"))
+                            }
                         }
+                        Text(mix.differences)
+                            .font(.nbBody1)
+                            .padding(.top, .halfPadding)
+                            
                     }
-                    Text(mix.differences)
+                    .frame(maxWidth: .infinity)
+                    .padding(.defaultPadding)
+                    .background {
+                        RoundedRectangle(cornerRadius: .smallCornerRadius)
+                            .foregroundColor(.secondaryColor)
+                    }
                 }
-                Spacer()
+                .buttonStyle(PlainButtonStyle()) // to prevent defualt link-text-styling
             }
+            .padding(.top, .halfPadding)
         }
         .task {
             similarSpeciesViewModel.filter(portraitId: portraitId)

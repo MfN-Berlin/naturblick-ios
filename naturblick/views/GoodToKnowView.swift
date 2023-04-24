@@ -13,6 +13,7 @@ struct GoodToKnowView: View {
         VStack {
             ForEach(goodToKNowViewModel.facts) { x in
                 Text(x.fact)
+                    .font(.nbBody1)
             }
         }
         .task {
