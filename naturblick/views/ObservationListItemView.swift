@@ -21,16 +21,13 @@ struct ObservationListItemView: View {
             VStack(alignment: .leading) {
                 if let name = species?.gername {
                     Text(name)
-                        .font(.nbSubtitle1)
-                        .foregroundColor(.onSecondaryHighEmphasis)
+                        .subtitle1()
                 } else {
                     Text(species?.sciname ?? "No species")
-                        .font(.nbSubtitle1)
-                        .foregroundColor(.onSecondarySignalLow)
+                        .subtitle1()
                 }
                 Text(observation.created.date.formatted())
-                    .font(.nbSubtitle3)
-                    .foregroundColor(.onSecondarySignalLow)
+                    .subtitle3()
             }
             .padding(.top, .avatarTextOffset)
         }

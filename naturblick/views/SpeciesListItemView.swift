@@ -19,35 +19,27 @@ struct SpeciesListItemView: View {
                 VStack(alignment: .leading) {
                     if let gername = species.name, let gersynonym = species.gersynonym {
                         Text(gername)
-                            .font(.nbSubtitle1)
-                            .foregroundColor(.onSecondaryHighEmphasis)
+                            .subtitle1()
                         Text(species.sciname)
-                            .font(.nbSubtitle3)
-                            .foregroundColor(.onSecondarySignalLow)
+                            .subtitle3()
                         Text(gersynonym)
-                            .font(.nbSubtitle3)
+                            .subtitle3()
                             .padding(.bottom, .defaultPadding)
-                            .foregroundColor(.onSecondarySignalLow)
                     } else if let name = species.name {
                         Text(name)
-                            .font(.nbSubtitle1)
-                            .foregroundColor(.onSecondaryHighEmphasis)
+                            .subtitle1()
                         Text(species.sciname)
-                            .font(.nbSubtitle3)
-                            .foregroundColor(Color.onSecondarySignalLow)
+                            .subtitle3()
                             .padding(.bottom, .defaultPadding)
                     } else if let gersynonym = species.gersynonym {
                         Text(species.sciname)
-                            .font(.nbSubtitle1)
-                            .foregroundColor(.onSecondaryHighEmphasis)
+                            .subtitle1()
                         Text(gersynonym)
-                            .font(.nbSubtitle3)
+                            .subtitle3()
                             .padding(.bottom, .defaultPadding)
-                            .foregroundColor(Color.onSecondarySignalLow)
                     } else {
                         Text(species.sciname)
-                            .font(.nbSubtitle1)
-                            .foregroundColor(.onSecondaryHighEmphasis)
+                            .subtitle1()
                     }
                 }
                 .padding(.top, .avatarTextOffset)

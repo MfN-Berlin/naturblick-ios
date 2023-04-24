@@ -16,12 +16,11 @@ struct CharacterValueView: View {
                 Spacer()
             }
             Text(value.gername)
-                .font(.nbCaption)
+                .caption()
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, .defaultPadding)
                 .padding(.bottom, .defaultPadding)
-                .foregroundColor(.black)
             if(value.hasImage) {
                 Spacer()
             }

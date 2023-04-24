@@ -31,11 +31,11 @@ struct CharacterView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(character.gername)
-                .font(.nbSubtitle1)
+                .subtitle1()
                 .padding(.bottom, .defaultPadding)
             if let description = character.gerdescription {
                 Text(description)
-                    .font(.nbBody1)
+                    .body2()
                     .padding(.bottom, .defaultPadding)
             }
             LazyVGrid(columns: [
