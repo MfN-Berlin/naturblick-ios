@@ -10,10 +10,18 @@ struct NaturblickApp: App {
     func navigationBarStyling() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = UIColor(.primaryColor)
-               
+        
+        guard let latoBlack19 = UIFont(name: "Lato-Black", size: 19) else {
+            fatalError("""
+                Failed to load the "CustomFont-Light" font.
+                Make sure the font file is included in the project and the font name is spelled correctly.
+                """
+            )
+        }
+
         let attrs: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor(.onPrimaryHighEmphasis),
-            .font: UIFont.systemFont(ofSize: 19)
+            .font: latoBlack19
         ]
 
         appearance.largeTitleTextAttributes = attrs
