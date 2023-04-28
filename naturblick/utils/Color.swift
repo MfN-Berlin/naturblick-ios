@@ -42,4 +42,6 @@ extension Color {
     static let tertiaryColor = Color("tertiary")
     static let backdropColor = Color("backdrop")
     static let featureColor = Color("Feature")
+    
+    static let onImageSignalLow = Color.black.opacity(0.3)
 }
