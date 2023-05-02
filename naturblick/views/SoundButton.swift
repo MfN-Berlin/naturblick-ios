@@ -8,11 +8,10 @@ import AVFoundation
 
 struct SoundButton: View {
     let url: String
-    @State var playerState: AVPlayer.TimeControlStatus = AVPlayer.TimeControlStatus.paused
-    @StateObject private var soundStream = SoundStreamController.shared
+    @StateObject private var soundStream = SoundStreamController()
     
     func buttonIcon() -> Image {
-        switch playerState {
+        switch soundStream.currentStatus {
             case .waitingToPlayAtSpecifiedRate:
                 return Image(systemName: "clock.circle") // placeholder icon
             case .paused:
@@ -37,14 +36,11 @@ struct SoundButton: View {
                 }
         }
         .onTapGesture {
-            if (playerState == AVPlayer.TimeControlStatus.paused) {
+            if (soundStream.currentStatus == AVPlayer.TimeControlStatus.paused) {
                 soundStream.play(sound: url)
             } else {
                 soundStream.stop()
             }
-        }
-        .onReceive(soundStream.$currentStatus) { status in
-            playerState = status ?? AVPlayer.TimeControlStatus.paused
         }
         .onDisappear {
             soundStream.stop()
