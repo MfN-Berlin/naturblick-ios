@@ -13,90 +13,118 @@ struct HomeView: View {
     var body: some View {
         BaseView(oneColor: true) {
             GeometryReader { geo in
-                VStack {
-                    Image("Kingfisher")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: geo.size.height * 0.6,
-                               alignment: Alignment.top)
-                        .clipped()
-                        .overlay(alignment: .center) {
+                
+                let topRowSize = geo.size.width * 0.25
+                let bottomRowSize = geo.size.width * 0.2
+                
+                ZStack {
+                    VStack {
+                        Image("Kingfisher")
+                            .resizable()
+                            .scaledToFit()
+                            .clipped()
+                            .ignoresSafeArea()
+                            .padding(.bottom, -geo.safeAreaInsets.top)
+                        Spacer()
+                    }
+                    VStack {
+                        VStack {
                             Image("logo24")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: geo.size.width / 4)
+                                .frame(width: geo.size.width / 4, alignment: .center)
                                 .foregroundColor(.onPrimaryHighEmphasis)
                         }
-                        .overlay(alignment: .bottom) {
-                            Image(colorScheme == .dark ? "oval_dark" : "oval_light")
-                                .aspectRatio(contentMode: .fit)
-                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .overlay(alignment: .bottomLeading) {
                             Image("mfn_logo")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: geo.size.width / 5)
                                 .foregroundColor(.gray)
-                                .offset(y: -50)
-                                .padding()
+                                .padding(.defaultPadding)
                         }
-                        .ignoresSafeArea()
-                        .padding(.bottom, -geo.safeAreaInsets.top)
-                    
-                    Text("Bestimme Tieren und Pflanzen")
-                        .foregroundColor(.onPrimaryHighEmphasis)
-                        .font(.nbHeadline6)
-                        .padding(.bottom)
-                    HStack(spacing: 16) {
-                        HomeViewButton(text: "Vogelstimmen\naufnehmen",
-                                       color: Color.onPrimaryButtonPrimary,
-                                       image: Image("microphone")
-                        )
-                        NavigationLink(
-                            destination: GroupsView(
-                                groups: Group.characterGroups,
-                                destination: { group in
-                                    CharactersView(group: group)
+                        RoundBottomView()
+                            .frame(height: .roundBottomHeight)
+                        
+                        VStack {
+                            Text("Bestimme Tieren und Pflanzen")
+                                .foregroundColor(.onPrimaryHighEmphasis)
+                                .font(.nbHeadline6)
+                                .padding(.defaultPadding)
+                            
+                            HStack(alignment: .top) {
+                                Spacer()
+                                HomeViewButton(text: "Vogelstimmen aufnehmen",
+                                               color: Color.onPrimaryButtonPrimary,
+                                               image: Image("microphone"),
+                                               size: topRowSize
+                                )
+                                Spacer()
+                                NavigationLink(
+                                    destination: GroupsView(
+                                        groups: Group.characterGroups,
+                                        destination: { group in
+                                            CharactersView(group: group)
+                                        }
+                                    )
+                                ) {
+                                    HomeViewButton(text: "Merkmale auswählen",
+                                                   color: Color.onPrimaryButtonPrimary,
+                                                   image: Image("characteristics24"),
+                                                   size: topRowSize
+                                    )
                                 }
-                            )
-                        ) {
-                            HomeViewButton(text: "Merkmale\nauswählen",
-                                           color: Color.onPrimaryButtonPrimary,
-                                           image: Image("characteristics24")
-                            )
-                        }
-                        HomeViewButton(text: "Pflanze\nfotografieren",
-                                       color: Color.onPrimaryButtonPrimary,
-                                       image: Image("photo24")
-                        )
-                    }
-                    .padding(8)
-                    HStack(spacing: 32) {
-                        NavigationLink(
-                            destination: ObservationListView()
-                        ) {
-                            HomeViewButton(
-                                text: "Feldbuch",
-                                color: Color.onPrimaryButtonSecondary,
-                                image: Image("feldbuch24")
-                            )
-                        }
-                        NavigationLink(
-                            destination: GroupsView(
-                                groups: Group.groups,
-                                destination: { group in
-                                    SpeciesListView(filter: .group(group))
+                                Spacer()
+                                HomeViewButton(text: "Pflanze fotografieren",
+                                               color: Color.onPrimaryButtonPrimary,
+                                               image: Image("photo24"),
+                                               size: topRowSize
+                                )
+                                Spacer()
+                            }
+                            .padding(.bottom, .defaultPadding)
+                        
+                            HStack(alignment: .top) {
+                                Spacer()
+                                NavigationLink(
+                                    destination: ObservationListView()
+                                ) {
+                                    HomeViewButton(
+                                        text: "Feldbuch",
+                                        color: Color.onPrimaryButtonSecondary,
+                                        image: Image("feldbuch24"),
+                                        size: bottomRowSize
+                                    )
                                 }
-                            )
-                        ) {
-                            HomeViewButton(text: "Arten\nkennenlernen",
-                                           color: Color.onPrimaryButtonSecondary,
-                                           image: Image("ic_specportraits")
-                            )
+                                Spacer()
+                                NavigationLink(
+                                    destination: GroupsView(
+                                        groups: Group.groups,
+                                        destination: { group in
+                                            SpeciesListView(filter: .group(group))
+                                        }
+                                    )
+                                ) {
+                                    HomeViewButton(text: "Arten kennenlernen",
+                                                   color: Color.onPrimaryButtonSecondary,
+                                                   image: Image("ic_specportraits"),
+                                                   size: bottomRowSize
+                                    )
+                                }
+                                Spacer()
+                            }
+                            .padding(.bottom, .defaultPadding * 2)
+                        }
+                        .frame(width: geo.size.width)
+                        .background {
+                            Rectangle()
+                                .foregroundColor(.primaryColor)
                         }
                     }
-                    .frame(width: geo.size.width / 1.8)
+
                 }
+
             }
         }
     }

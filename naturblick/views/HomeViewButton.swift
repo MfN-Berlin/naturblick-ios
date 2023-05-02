@@ -9,6 +9,7 @@ struct HomeViewButton: View {
     let text: String
     let color: Color
     let image: Image
+    let size: CGFloat
 
     var body: some View {
         VStack {
@@ -21,11 +22,13 @@ struct HomeViewButton: View {
                         .foregroundColor(.onPrimaryHighEmphasis)
                         .padding(16)
                 }
+                .frame(width: size, height: size)
             Text(text)
                 .foregroundColor(.onPrimaryHighEmphasis)
-                .multilineTextAlignment(TextAlignment.center)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .font(.nbCaption)
-            Spacer()
+                .frame(width: size)
         }
         .font(.subheadline)
     }
@@ -35,7 +38,8 @@ struct HomeViewButton_Previews: PreviewProvider {
     static var previews: some View {
         HomeViewButton(text: "Vogelstimmen aufnehmen",
                        color: Color.onPrimaryButtonPrimary,
-                       image: Image(systemName: "questionmark")
+                       image: Image(systemName: "questionmark"),
+                       size: 75.0
         )
     }
 }
