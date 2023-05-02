@@ -17,4 +17,5 @@ extension CGFloat {
     static let largeCornerRadius: CGFloat = 8
     static let checkedSize: CGFloat = 20
     static let roundBottomHeight: CGFloat = 30
+    static let editTextIconSize: CGFloat = 24
 }
