@@ -76,11 +76,14 @@ struct HomeView: View {
                                     )
                                 }
                                 Spacer()
-                                HomeViewButton(text: "Pflanze fotografieren",
-                                               color: Color.onPrimaryButtonPrimary,
-                                               image: Image("photo24"),
-                                               size: topRowSize
-                                )
+                                NavigationLink(
+                                    destination: TakePhotoView()) {
+                                        HomeViewButton(text: "Pflanze fotografieren",
+                                                       color: Color.onPrimaryButtonPrimary,
+                                                       image: Image("photo24"),
+                                                       size: topRowSize
+                                        )
+                                    }
                                 Spacer()
                             }
                             .padding(.bottom, .defaultPadding)
