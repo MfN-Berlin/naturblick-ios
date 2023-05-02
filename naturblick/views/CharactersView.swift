@@ -29,6 +29,7 @@ struct CharactersView: View {
                 NavigationLink(destination: SpeciesListView(filter: charactersViewModel.filter)) {
                     Text("\(charactersViewModel.count) Ergebnissse anzeigen")
                 }
+                .accentColor(Color.onPrimaryButtonPrimary)
                 .buttonStyle(.borderedProminent)
                 .padding(.defaultPadding)
                 .padding(.bottom, .defaultPadding * 2)
