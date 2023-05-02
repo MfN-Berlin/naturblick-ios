@@ -30,6 +30,8 @@
 		136C118B29D6E66E00805628 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 136C118A29D6E66E00805628 /* BottomSheet */; };
 		136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */; };
 		136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D907F29D18BBE00A00BD4 /* Portrait.swift */; };
+		136DFAB929F96E6500C8B8FF /* CreateObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */; };
+		136DFABB29F9752100C8B8FF /* NBEditText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DFABA29F9752100C8B8FF /* NBEditText.swift */; };
 		137963F229E6FFDB0043E64F /* View+alertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137963F129E6FFDB0043E64F /* View+alertError.swift */; };
 		137FE58529E5964100B397DF /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58429E5964100B397DF /* Observation.swift */; };
 		137FE58729E5996800B397DF /* ObsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58629E5996800B397DF /* ObsType.swift */; };
@@ -51,6 +53,7 @@
 		13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
 		13F9EF0B29ED92F100123758 /* ObservationListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9EF0A29ED92F100123758 /* ObservationListItemViewModel.swift */; };
+		13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */; };
 		7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B13663829F0122600F1DA30 /* SoundStreamController.swift */; };
 		7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8008F129D5B66B00950839 /* PortraitImage.swift */; };
 		7B83703529E98EA10075D9F5 /* ColorTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B83703429E98EA10075D9F5 /* ColorTestView.swift */; };
@@ -116,6 +119,8 @@
 		135E682E29EE805700192C4A /* ObservationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemView.swift; sourceTree = "<group>"; };
 		136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationPersistenceController.swift; sourceTree = "<group>"; };
 		136D907F29D18BBE00A00BD4 /* Portrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portrait.swift; sourceTree = "<group>"; };
+		136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateObservationView.swift; sourceTree = "<group>"; };
+		136DFABA29F9752100C8B8FF /* NBEditText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBEditText.swift; sourceTree = "<group>"; };
 		137963F129E6FFDB0043E64F /* View+alertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+alertError.swift"; sourceTree = "<group>"; };
 		137FE58429E5964100B397DF /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		137FE58629E5996800B397DF /* ObsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObsType.swift; sourceTree = "<group>"; };
@@ -137,6 +142,7 @@
 		13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EdgeInsets+Dimensions.swift"; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		13F9EF0A29ED92F100123758 /* ObservationListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemViewModel.swift; sourceTree = "<group>"; };
+		13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOperation.swift; sourceTree = "<group>"; };
 		7B13663829F0122600F1DA30 /* SoundStreamController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundStreamController.swift; sourceTree = "<group>"; };
 		7B8008F129D5B66B00950839 /* PortraitImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImage.swift; sourceTree = "<group>"; };
 		7B83703429E98EA10075D9F5 /* ColorTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTestView.swift; sourceTree = "<group>"; };
@@ -284,6 +290,8 @@
 				7BB3DE1D29F2B0A100F0D387 /* RoundBottomView.swift */,
 				7BB3DE1F29F6695F00F0D387 /* SimilarSpeciesItemView.swift */,
 				7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */,
+				136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */,
+				136DFABA29F9752100C8B8FF /* NBEditText.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -315,6 +323,7 @@
 				13F9EF0A29ED92F100123758 /* ObservationListItemViewModel.swift */,
 				7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */,
 				7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */,
+				13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -488,6 +497,7 @@
 				13A2923429D3110C00AF772A /* CharactersView.swift in Sources */,
 				135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */,
 				7B8839DA29D5762D006CB94E /* PortraitViewModel.swift in Sources */,
+				13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */,
 				7BA037CB29D703B600804AFE /* PortraitImageViewModel.swift in Sources */,
 				1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */,
 				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
@@ -497,6 +507,7 @@
 				13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */,
 				1343D1C329DD8C9F0075ACE3 /* observations.xcdatamodeld in Sources */,
 				7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */,
+				136DFABB29F9752100C8B8FF /* NBEditText.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
 				1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */,
 				13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */,
@@ -517,6 +528,7 @@
 				7BB3DE2029F6695F00F0D387 /* SimilarSpeciesItemView.swift in Sources */,
 				13F9EF0B29ED92F100123758 /* ObservationListItemViewModel.swift in Sources */,
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
+				136DFAB929F96E6500C8B8FF /* CreateObservationView.swift in Sources */,
 				13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */,
 				7BCBBB5129EEDA07000DD344 /* BaseView.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
