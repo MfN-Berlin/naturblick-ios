@@ -47,19 +47,20 @@ struct HomeView: View {
                         RoundBottomView()
                             .frame(height: .roundBottomHeight)
                         
-                        
                         VStack {
                             Text("Bestimme Tieren und Pflanzen")
                                 .foregroundColor(.onPrimaryHighEmphasis)
                                 .font(.nbHeadline6)
                                 .padding(.defaultPadding)
                             
-                            HStack(alignment: .top, spacing: geo.size.width * 0.06) {
+                            HStack(alignment: .top) {
+                                Spacer()
                                 HomeViewButton(text: "Vogelstimmen aufnehmen",
                                                color: Color.onPrimaryButtonPrimary,
                                                image: Image("microphone"),
                                                size: topRowSize
                                 )
+                                Spacer()
                                 NavigationLink(
                                     destination: GroupsView(
                                         groups: Group.characterGroups,
@@ -74,16 +75,18 @@ struct HomeView: View {
                                                    size: topRowSize
                                     )
                                 }
+                                Spacer()
                                 HomeViewButton(text: "Pflanze fotografieren",
                                                color: Color.onPrimaryButtonPrimary,
                                                image: Image("photo24"),
                                                size: topRowSize
                                 )
+                                Spacer()
                             }
-                            .padding(.halfPadding)
-                            
+                            .padding(.bottom, .defaultPadding)
                         
-                            HStack(alignment: .top, spacing: geo.size.width * 0.15) {
+                            HStack(alignment: .top) {
+                                Spacer()
                                 NavigationLink(
                                     destination: ObservationListView()
                                 ) {
@@ -94,6 +97,7 @@ struct HomeView: View {
                                         size: bottomRowSize
                                     )
                                 }
+                                Spacer()
                                 NavigationLink(
                                     destination: GroupsView(
                                         groups: Group.groups,
@@ -108,9 +112,9 @@ struct HomeView: View {
                                                    size: bottomRowSize
                                     )
                                 }
+                                Spacer()
                             }
-                            .padding(.defaultPadding * 2.0)
-                             
+                            .padding(.bottom, .defaultPadding * 2)
                         }
                         .frame(width: geo.size.width)
                         .background {
