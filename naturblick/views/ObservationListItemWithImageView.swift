@@ -8,7 +8,7 @@ import class SQLite.Connection
 
 
 struct ObservationListItemWithImageView: View {
-    @StateObject var model = ObservationListItemWithImageViewModel()
+    @StateObject var model = ObservationListItemViewModel()
     let observation: Observation
 
     var body: some View {

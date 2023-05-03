@@ -13,7 +13,7 @@ struct NaturblickApp: App {
         
         guard let latoBlack19 = UIFont(name: "Lato-Black", size: 19) else {
             fatalError("""
-                Failed to load the "CustomFont-Light" font.
+                Failed to load the "Lato-Black" font.
                 Make sure the font file is included in the project and the font name is spelled correctly.
                 """
             )
@@ -38,7 +38,6 @@ struct NaturblickApp: App {
             }
             .accentColor(.onPrimaryHighEmphasis)
             .font(.nbHeadline6)
-            .environment(\.managedObjectContext, ObservationPersistenceController.shared.container.viewContext)
         }
     }
     
