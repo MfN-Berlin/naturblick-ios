@@ -112,7 +112,7 @@ extension CharactersViewModel {
 
                 do {
                     let speciesDb = try Connection(path, readonly: true)
-                    let (querySyntax, bindings) = Character.charactersQuery(number: number, query: query)
+                    let (querySyntax, bindings) = Character.charactersQuery(number: number, query: query, searchQuery: nil)
                     let countSyntax = "SELECT COUNT(*) FROM (\(querySyntax))"
                     return try speciesDb.prepare(countSyntax).scalar(bindings) as! Int64
                 } catch {
