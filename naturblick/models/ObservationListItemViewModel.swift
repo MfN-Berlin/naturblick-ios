@@ -7,7 +7,7 @@ import Foundation
 import SQLite
 
 @MainActor
-class ObservationListItemWithImageViewModel: ObservableObject {
+class ObservationListItemViewModel: ObservableObject {
     @Published private(set) var species: Species? =  nil
     @Published private(set) var url: URL? =  nil
 

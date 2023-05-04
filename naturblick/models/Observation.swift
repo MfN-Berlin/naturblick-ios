@@ -5,6 +5,7 @@
 
 import Foundation
 import CoreLocation
+import SQLite
 
 struct Observation: Decodable {
     let occurenceId: UUID
@@ -22,56 +23,74 @@ struct Observation: Decodable {
 }
 
 extension Observation {
-    var dictionaryValue: [String: Any] {
-        let keyValueArray: [(String, Any?)] = [
-            ("behavior", behavior),
-            ("coordsLatitude", coords?.latitude),
-            ("coordsLongitude", coords?.longitude),
-            ("created", created.date),
-            ("createdTz", created.tz.identifier),
-            ("details", details),
-            ("individuals", individuals),
-            ("localMediaId", localMediaId),
-            ("obsIdent", obsIdent),
-            ("obsType", obsType.rawValue),
-            ("occurenceId", occurenceId),
-            ("speciesId", newSpeciesId),
-            ("thumbnailId", thumbnailId)
-        ]
-        let nonNullArray: [(String, Any)] = keyValueArray.compactMap { key, value in
-            guard let nonNilValue = value else {
-                return nil
-            }
-            return (key, nonNilValue)
-        }
-        return Dictionary(uniqueKeysWithValues: nonNullArray)
-    }
-}
+    enum D {
+        static let observation = Table("observation")
+        static let backendObservation = Table("backend_observation")
+        static let occurenceId = Expression<UUID>("occurence_id")
+        static let obsIdent = Expression<String?>("obs_ident")
+        static let obsType = Expression<String>("obs_type")
+        static let created = Expression<Date>("created")
+        static let createdTz = Expression<String>("created_tz")
+        static let species = Expression<Int64?>("species")
+        static let mediaId = Expression<UUID?>("media_id")
+        static let thumbnailId = Expression<UUID?>("thumbnail_id")
+        static let localMediaId = Expression<String?>("local_media_id")
+        static let coordsLatitude = Expression<Double?>("coords_latitude")
+        static let coordsLongitude = Expression<Double?>("coords_longitude")
+        static let individuals = Expression<Int64?>("individuals")
+        static let behavior = Expression<String?>("behavior")
+        static let details = Expression<String?>("details")
 
-extension Observation {
-    init(from entity: ObservationEntity){
-        occurenceId = entity.occurenceId!
-        obsIdent = entity.obsIdent
-        obsType = ObsType(rawValue: entity.obsType!)!
-        newSpeciesId = entity.speciesId
-        created = ZonedDateTime(
-            date: entity.created!,
-            tz: TimeZone(identifier: entity.createdTz!)!
-        )
-        mediaId = entity.mediaId
-        thumbnailId = entity.thumbnailId
-        localMediaId = entity.localMediaId
-        if let latitude = entity.coordsLatitude, let longitude = entity.coordsLongitude {
-            coords = CLLocationCoordinate2D(
-                latitude: CLLocationDegrees(truncating: latitude),
-                longitude: CLLocationDegrees(truncating: longitude)
-            )
-        } else {
-            coords = nil
+        static func setters(observation: Observation) -> [Setter] {
+            [
+                occurenceId <- observation.occurenceId,
+                obsType <- observation.obsType.rawValue,
+                created <- observation.created.date,
+                createdTz <- observation.created.tz.identifier,
+                species <- observation.newSpeciesId,
+                mediaId <- observation.mediaId,
+                thumbnailId <- observation.thumbnailId,
+                coordsLatitude <- observation.coords?.latitude,
+                coordsLongitude <- observation.coords?.longitude,
+                individuals <- observation.individuals,
+                behavior <- observation.behavior,
+                details <- observation.details
+            ]
         }
-        individuals = entity.individuals
-        behavior = entity.behavior
-        details = entity.details
+
+        static func instance(row: Row) throws -> Observation {
+            var coords: CLLocationCoordinate2D? = nil
+            if let latitude = try row.get(coordsLatitude), let longitude = try row.get(coordsLongitude) {
+                coords = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            }
+            return Observation(
+                occurenceId: try row.get(occurenceId),
+                obsIdent: try row.get(obsIdent),
+                obsType: ObsType(rawValue: try row.get(obsType))!, newSpeciesId: try row.get(species),
+                created: ZonedDateTime(date: try row.get(created), tz: TimeZone(identifier: try row.get(createdTz))!),
+                mediaId: try row.get(mediaId),
+                thumbnailId: try row.get(thumbnailId),
+                localMediaId: try row.get(localMediaId),
+                coords: coords,
+                individuals: try row.get(individuals),
+                behavior: try row.get(behavior),
+                details: try row.get(details)
+            )
+        }
+
+        static func setters(operation: CreateOperation) -> [Setter] {
+            [
+                occurenceId <- operation.occurenceId,
+                obsType <- operation.obsType.rawValue,
+                created <- operation.created.date,
+                createdTz <- operation.created.tz.identifier,
+                details <- operation.details
+            ]
+        }
+    }
+
+    var settters: [Setter] {
+        Observation.D.setters(observation: self)
     }
 }
 

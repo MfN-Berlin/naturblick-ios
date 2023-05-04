@@ -20,7 +20,6 @@
 		13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */; };
 		13316BE029C9FAF80077292B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 13316BDF29C9FAF80077292B /* SQLite */; };
 		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
-		1343D1C329DD8C9F0075ACE3 /* observations.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C129DD8C9F0075ACE3 /* observations.xcdatamodeld */; };
 		1343D1C729DD944D0075ACE3 /* HTTPJsonDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C629DD944D0075ACE3 /* HTTPJsonDownloader.swift */; };
 		1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C829DD94870075ACE3 /* HttpError.swift */; };
 		1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1CA29DD94F50075ACE3 /* BackendClient.swift */; };
@@ -113,7 +112,6 @@
 		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
 		13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewModel.swift; sourceTree = "<group>"; };
 		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
-		1343D1C229DD8C9F0075ACE3 /* observations.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = observations.xcdatamodel; sourceTree = "<group>"; };
 		1343D1C629DD944D0075ACE3 /* HTTPJsonDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPJsonDownloader.swift; sourceTree = "<group>"; };
 		1343D1C829DD94870075ACE3 /* HttpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpError.swift; sourceTree = "<group>"; };
 		1343D1CA29DD94F50075ACE3 /* BackendClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendClient.swift; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 				131E786529C9BB25000DF928 /* Assets.xcassets */,
 				13A2923029D2DC3C00AF772A /* Generated.xcassets */,
 				131E786729C9BB25000DF928 /* Preview Content */,
-				1343D1C129DD8C9F0075ACE3 /* observations.xcdatamodeld */,
 			);
 			path = naturblick;
 			sourceTree = "<group>";
@@ -518,7 +515,6 @@
 				7BA037BD29D6C8BB00804AFE /* GoodToKnowView.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */,
-				1343D1C329DD8C9F0075ACE3 /* observations.xcdatamodeld in Sources */,
 				7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */,
 				136DFABB29F9752100C8B8FF /* NBEditText.swift in Sources */,
 				7B0FF7C42A012F47005674E0 /* TakePhotoView.swift in Sources */,
@@ -875,19 +871,6 @@
 			productName = BottomSheet;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		1343D1C129DD8C9F0075ACE3 /* observations.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				1343D1C229DD8C9F0075ACE3 /* observations.xcdatamodel */,
-			);
-			currentVersion = 1343D1C229DD8C9F0075ACE3 /* observations.xcdatamodel */;
-			path = observations.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 131E785629C9BB24000DF928 /* Project object */;
 }

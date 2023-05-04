@@ -8,17 +8,14 @@ import CoreData
 
 struct ObservationListView: View {
     private let client = BackendClient()
-    private let persistenceController: ObservationPersistenceController = .shared
+    @StateObject var persistenceController = ObservationPersistenceController()
     @State private var create = false
     @State private var createOperation = CreateOperation()
     @State private var isPresented: Bool = false
     @State private var error: HttpError? = nil
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.created, order: .reverse)])
-    private var observations: FetchedResults<ObservationEntity>
 
     var body: some View {
-        List(observations, id: \.occurenceId) { observationEntity in
-            let observation = Observation(from: observationEntity)
+        List(persistenceController.observations, id: \.occurenceId) { observation in
             ObservationListItemWithImageView(observation: observation)
         }
         .refreshable {
@@ -64,7 +61,7 @@ struct ObservationListView: View {
     private func sync() async {
         do {
             let response = try await client.sync()
-            try await persistenceController.importObservations(from: response.data)
+            try persistenceController.importObservations(from: response.data)
         } catch is HttpError {
             self.error = error
             self.isPresented = true
