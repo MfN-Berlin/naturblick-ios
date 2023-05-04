@@ -77,6 +77,8 @@
 		7BB3DE2329F68D4500F0D387 /* UnambiguousFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */; };
 		7BB3DE2529F68DC700F0D387 /* UnambiguousFeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */; };
 		7BB3DE2729F68FE100F0D387 /* SpeciesFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */; };
+		7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */; };
+		7BBF7AF52A03C67400D184FA /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBF7AF42A03C67400D184FA /* LocationRequestView.swift */; };
 		7BCBBB5129EEDA07000DD344 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCBBB5029EEDA07000DD344 /* BaseView.swift */; };
 		7BCCFD7729F2A62A00C71453 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCFD7629F2A62A00C71453 /* Style.swift */; };
 		7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */; };
@@ -169,6 +171,8 @@
 		7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnambiguousFeature.swift; sourceTree = "<group>"; };
 		7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnambiguousFeatureViewModel.swift; sourceTree = "<group>"; };
 		7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesFeaturesView.swift; sourceTree = "<group>"; };
+		7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		7BBF7AF42A03C67400D184FA /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
 		7BCBBB5029EEDA07000DD344 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		7BCCFD7629F2A62A00C71453 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				132B0D9E29CDD90B00B80C9E /* Info.plist */,
+				7BBF7AF12A03C2A600D184FA /* manager */,
 				7BCE46C029C9DC5E00C6C101 /* utils */,
 				7BCE46BD29C9DB1E00C6C101 /* models */,
 				7BCE46A229C9D90300C6C101 /* views */,
@@ -269,6 +274,14 @@
 			path = utils;
 			sourceTree = "<group>";
 		};
+		7BBF7AF12A03C2A600D184FA /* manager */ = {
+			isa = PBXGroup;
+			children = (
+				7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */,
+			);
+			path = manager;
+			sourceTree = "<group>";
+		};
 		7BCE46A229C9D90300C6C101 /* views */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +297,7 @@
 				7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */,
 				7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */,
 				7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */,
+				7BBF7AF42A03C67400D184FA /* LocationRequestView.swift */,
 				136DFABA29F9752100C8B8FF /* NBEditText.swift */,
 				135E682E29EE805700192C4A /* ObservationListItemView.swift */,
 				13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */,
@@ -512,6 +526,7 @@
 				1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */,
 				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
 				7BB3DE2529F68DC700F0D387 /* UnambiguousFeatureViewModel.swift in Sources */,
+				7BBF7AF52A03C67400D184FA /* LocationRequestView.swift in Sources */,
 				7BA037BD29D6C8BB00804AFE /* GoodToKnowView.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */,
@@ -543,6 +558,7 @@
 				13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */,
 				7BCBBB5129EEDA07000DD344 /* BaseView.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
+				7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */,
 				137FE58729E5996800B397DF /* ObsType.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
 				13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */,
@@ -711,6 +727,7 @@
 				INFOPLIST_FILE = naturblick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Naturblick needs camera permission.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Naturblick needs location.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to add your nature photos to the gallery";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -722,7 +739,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mfnberlin.stadtnaturentdecken.naturblick;
+				PRODUCT_BUNDLE_IDENTIFIER = asdfasdfghjk123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -746,6 +763,7 @@
 				INFOPLIST_FILE = naturblick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Naturblick needs camera permission.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Naturblick needs location.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to add your nature photos to the gallery";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -757,7 +775,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mfnberlin.stadtnaturentdecken.naturblick;
+				PRODUCT_BUNDLE_IDENTIFIER = asdfasdfghjk123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
