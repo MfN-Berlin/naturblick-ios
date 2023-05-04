@@ -19,12 +19,12 @@ struct TakePhotoView: View {
                     .frame(width: 300, height: 300)
                 
                 Button("Camera") {
-                    self.isImagePickerDisplay.toggle()
+                    isImagePickerDisplay.toggle()
                 }.padding()
                     .foregroundColor(.black)
             }
-            .sheet(isPresented: self.$isImagePickerDisplay) {
-                ImagePickerView(photoViewModel: self.photoViewModel)
+            .sheet(isPresented: $isImagePickerDisplay) {
+                ImagePickerView(photoViewModel: photoViewModel)
             }
             .onAppear {
                 isImagePickerDisplay = true
