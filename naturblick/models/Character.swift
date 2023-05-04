@@ -30,7 +30,7 @@ extension Character {
         static let engdescription = Expression<String?>("engdescription")
     }
 
-    static func charactersQuery(number: Int, query: [(Int64, Float)]) -> (String, [Binding?]) {
+    static func charactersQuery(number: Int, query: [(Int64, Float)], searchQuery: String?) -> (String, [Binding?]) {
         let selectedCharacters = query.map({_ in  "SELECT ? AS id, ? AS weight" }).joined(separator: " UNION ALL ")
         let querySyntax = """
 SELECT *, sum(inner_distance) / CAST(? AS REAL) AS distance FROM (SELECT
@@ -56,7 +56,6 @@ GROUP BY species_id, female
 HAVING ROUND(distance) < 75
 ORDER BY distance
 """
-        let searchQuery: String? = nil
         let numberOfCharacters: Binding = number
         let characterValueWeights: [Binding] = query.flatMap { id, weight in
             let binding: [Binding] = [id, Double(weight)]

@@ -5,8 +5,10 @@
 import SwiftUI
 
 struct SpeciesListView: View {
-    @StateObject var speciesListViewModel = SpeciesListViewModel()
-    let filter: SpeciesListFilter
+    @StateObject var speciesListViewModel: SpeciesListViewModel
+    init(filter: SpeciesListFilter) {
+        _speciesListViewModel = StateObject(wrappedValue:  SpeciesListViewModel(filter: filter))
+    }
 
     var body: some View {
         BaseView {
@@ -28,9 +30,7 @@ struct SpeciesListView: View {
                 }
             }
             .listStyle(.plain)
-            .task {
-                speciesListViewModel.filter(filter: filter)
-            }
+            .searchable(text: $speciesListViewModel.query)
         }
     }
 }
