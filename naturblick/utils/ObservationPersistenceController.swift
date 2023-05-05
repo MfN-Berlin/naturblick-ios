@@ -35,7 +35,6 @@ class ObservationPersistenceController: ObservableObject {
                         created TEXT NOT NULL,
                         created_tz TEXT NOT NULL,
                         obs_type TEXT NOT NULL,
-                        details TEXT NOT NULL,
                         cc_by_name TEXT NOT NULL,
                         app_version TEXT NOT NULL,
                         device_identifier TEXT NOT NULL,

@@ -83,8 +83,7 @@ extension Observation {
                 occurenceId <- operation.occurenceId,
                 obsType <- operation.obsType.rawValue,
                 created <- operation.created.date,
-                createdTz <- operation.created.tz.identifier,
-                details <- operation.details
+                createdTz <- operation.created.tz.identifier
             ]
         }
     }

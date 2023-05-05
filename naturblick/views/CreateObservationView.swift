@@ -13,7 +13,6 @@ struct CreateObservationView: View {
     var body: some View {
         SwiftUI.Group {
             Form {
-                NBEditText(label: "Notes", iconAsset: "details", text: $createOperation.details)
                 if let location = locationManager.userLocation {
                     Text("\(location.coordinate.longitude); \(location.coordinate.latitude)")
                 }
