@@ -5,10 +5,6 @@
 
 import Foundation
 
-enum ObsType: String, Codable {
-    case manual
-    case audio
-    case image
-    case unidentifiedimage
-    case unidentifiedaudio
+struct SyncInfo: Encodable {
+    let deviceIdentifier: String
 }

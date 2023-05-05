@@ -8,7 +8,7 @@ import Combine
 
 class BackendClient {
     let downloader: HTTPJsonDownloader
-
+    private let encoder = JSONEncoder()
     init(downloader: HTTPJsonDownloader = URLSession.shared) {
         self.downloader = downloader
     }
@@ -29,23 +29,20 @@ class BackendClient {
         return fieldData as Data
     }
 
-    func sync() async throws -> ObservationResponse {
+    func sync(controller: ObservationPersistenceController) async throws -> ObservationResponse {
+        let operations = try controller.getPendingOperations()
+        let observationRequest = ObservationRequest(operations: operations, syncInfo: SyncInfo(deviceIdentifier: Configuration.deviceIdentifier))
         let boundary = UUID()
         var request = URLRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!)
         request.httpMethod = "PUT"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
         let body = NSMutableData()
-        body.append(dataFormField(named: "operations", data: """
-{
-    "operations": [],
-    "syncInfo": {
-        "deviceIdentifier": "\(Configuration.deviceIdentifier)"
-    }
-}
-""".data(using: .utf8)!, contentType: "application/json", boundary: boundary))
+        body.append(dataFormField(named: "operations", data: try encoder.encode(observationRequest), contentType: "application/json", boundary: boundary))
         body.append("--\(boundary)--")
         request.httpBody = body as Data
-        return try await downloader.httpJson(request: request)
+        let response: ObservationResponse = try await downloader.httpJson(request: request)
+        try controller.clearPendingOperations(ids: operations.map { $0.occurenceId })
+        return response
     }
 }

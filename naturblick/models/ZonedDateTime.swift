@@ -17,7 +17,7 @@ extension ZonedDateTime {
     }
 }
 
-extension ZonedDateTime: Decodable {
+extension ZonedDateTime: Codable {
     static func dateFormatterFractionalSeconds() -> ISO8601DateFormatter {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions.insert(.withFractionalSeconds)
@@ -47,5 +47,11 @@ extension ZonedDateTime: Decodable {
                 .init(codingPath: singleValue.codingPath, debugDescription: "Not a valid java ZonedDateTime representation with timezone")
             )
         }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        let zonedDateTime = "\(ZonedDateTime.dateFormatter.string(from: date))[\(tz.identifier)]"
+        var container = encoder.singleValueContainer()
+        try container.encode(zonedDateTime)
     }
 }

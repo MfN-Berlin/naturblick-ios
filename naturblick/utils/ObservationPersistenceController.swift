@@ -32,43 +32,45 @@ class ObservationPersistenceController: ObservableObject {
                     CREATE TABLE create_operation (
                         rowid INTEGER PRIMARY KEY NOT NULL,
                         occurence_id TEXT UNIQUE NOT NULL,
-                        created STRING NOT NULL,
-                        created_tz STRING NOT NULL,
-                        obs_type STRING NOT NULL,
-                        details STRING NOT NULL,
+                        created TEXT NOT NULL,
+                        created_tz TEXT NOT NULL,
+                        obs_type TEXT NOT NULL,
+                        cc_by_name TEXT NOT NULL,
+                        app_version TEXT NOT NULL,
+                        device_identifier TEXT NOT NULL,
                         FOREIGN KEY(rowid) REFERENCES operation(rowid)
                     );
                     CREATE TABLE observation (
                         occurence_id TEXT UNIQUE NOT NULL,
-                        created STRING NOT NULL,
-                        created_tz STRING NOT NULL,
-                        obs_ident STRING,
-                        obs_type STRING NOT NULL,
+                        created TEXT NOT NULL,
+                        created_tz TEXT NOT NULL,
+                        obs_ident TEXT,
+                        obs_type TEXT NOT NULL,
                         species INTEGER,
                         media_id TEXT,
                         thumbnail_id TEXT,
-                        local_media_id STRING,
+                        local_media_id TEXT,
                         coords_latitude DOUBLE,
                         coords_longitude DOUBLE,
                         individuals INTEGER,
-                        behavior STRING,
-                        details STRING
+                        behavior TEXT,
+                        details TEXT
                     );
                     CREATE TABLE backend_observation (
                         occurence_id TEXT UNIQUE NOT NULL,
-                        created STRING NOT NULL,
-                        created_tz STRING NOT NULL,
-                        obs_ident STRING,
-                        obs_type STRING NOT NULL,
+                        created TEXT NOT NULL,
+                        created_tz TEXT NOT NULL,
+                        obs_ident TEXT,
+                        obs_type TEXT NOT NULL,
                         species INTEGER,
                         media_id TEXT,
                         thumbnail_id TEXT,
-                        local_media_id STRING,
+                        local_media_id TEXT,
                         coords_latitude DOUBLE,
                         coords_longitude DOUBLE,
                         individuals INTEGER,
-                        behavior STRING,
-                        details STRING
+                        behavior TEXT,
+                        details TEXT
                     );
                     PRAGMA user_version = 1;
                     COMMIT TRANSACTION;
@@ -121,6 +123,14 @@ class ObservationPersistenceController: ObservableObject {
             )
             try updateAndRefresh()
         }
+    }
+
+    func getPendingOperations() throws -> [CreateOperation] {
+        try queue.prepareRowIterator(CreateOperation.D.table.select(*).order(CreateOperation.D.rowid.asc)).map(CreateOperation.D.instance)
+    }
+
+    func clearPendingOperations(ids: [UUID]) throws {
+        try queue.run(CreateOperation.D.table.filter(ids.contains(CreateOperation.D.occurenceId)).delete())
     }
 }
 
