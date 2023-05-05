@@ -30,4 +30,9 @@ extension Text {
         self.font(.nbHeadline6)
             .foregroundColor(.onPrimaryHighEmphasis)
     }
+    
+    func button() -> some View {
+        self.font(.nbButton)
+            .foregroundColor(.onPrimaryHighEmphasis)
+    }
 }

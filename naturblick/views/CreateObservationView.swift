@@ -7,10 +7,19 @@ import SwiftUI
 
 struct CreateObservationView: View {
     @Binding var createOperation: CreateOperation
-
+    @StateObject private var locationManager = LocationManager.shared
+    @State private var isShowAskForPermission = LocationManager.shared.askForPermission()
+    
     var body: some View {
-        Form {
-            NBEditText(label: "Notes", iconAsset: "details", text: $createOperation.details)
+        SwiftUI.Group {
+            Form {
+                NBEditText(label: "Notes", iconAsset: "details", text: $createOperation.details)
+                if let location = locationManager.userLocation {
+                    Text("\(location.coordinate.longitude); \(location.coordinate.latitude)")
+                }
+            }
+        }.sheet(isPresented: $isShowAskForPermission) {
+            LocationRequestView()
         }
     }
 }
