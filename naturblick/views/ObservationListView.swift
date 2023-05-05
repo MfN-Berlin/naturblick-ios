@@ -38,6 +38,7 @@ struct ObservationListView: View {
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
+                                createOperation = CreateOperation()
                                 create = false
                             }
                         }
