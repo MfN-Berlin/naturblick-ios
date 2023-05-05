@@ -6,18 +6,23 @@
 import SwiftUI
 
 struct CreateObservationView: View {
-    @Binding var createOperation: CreateOperation
+    @Binding var data: CreateData
     @StateObject private var locationManager = LocationManager.shared
     @State private var isShowAskForPermission = LocationManager.shared.askForPermission()
     
     var body: some View {
         SwiftUI.Group {
             Form {
-                if let location = locationManager.userLocation {
-                    Text("\(location.coordinate.longitude); \(location.coordinate.latitude)")
+                if let latitude = data.coords?.latitude,
+                    let longitude = data.coords?.longitude {
+                    Text("\(longitude), \(latitude)")
                 }
+                NBEditText(label: "Notes", iconAsset: "notes", text: $data.details)
             }
-        }.sheet(isPresented: $isShowAskForPermission) {
+        }.onChange(of: locationManager.userLocation) { coords in
+            data.coords = coords?.coordinate
+        }
+        .sheet(isPresented: $isShowAskForPermission) {
             LocationRequestView()
         }
     }
@@ -25,6 +30,6 @@ struct CreateObservationView: View {
 
 struct ObservationEditView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateObservationView(createOperation: .constant(CreateOperation()))
+        CreateObservationView(data: .constant(CreateData()))
     }
 }

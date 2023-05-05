@@ -6,6 +6,6 @@
 import Foundation
 
 struct ObservationRequest: Encodable {
-    let operations: [CreateOperation]
+    let operations: [Operation]
     let syncInfo: SyncInfo
 }

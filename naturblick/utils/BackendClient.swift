@@ -30,7 +30,7 @@ class BackendClient {
     }
 
     func sync(controller: ObservationPersistenceController) async throws -> ObservationResponse {
-        let operations = try controller.getPendingOperations()
+        let (ids, operations) = try controller.getPendingOperations()
         let observationRequest = ObservationRequest(operations: operations, syncInfo: SyncInfo(deviceIdentifier: Configuration.deviceIdentifier))
         let boundary = UUID()
         var request = URLRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!)
@@ -42,7 +42,7 @@ class BackendClient {
         body.append("--\(boundary)--")
         request.httpBody = body as Data
         let response: ObservationResponse = try await downloader.httpJson(request: request)
-        try controller.clearPendingOperations(ids: operations.map { $0.occurenceId })
+        try controller.clearPendingOperations(ids: ids)
         return response
     }
 }

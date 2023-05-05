@@ -6,7 +6,7 @@
 import Foundation
 import CoreLocation
 
-extension CLLocationCoordinate2D: Decodable {
+extension CLLocationCoordinate2D: Codable {
     public init(from decoder: Decoder) throws {
         let singleValue = try decoder.singleValueContainer()
         let components = try singleValue.decode([Double].self)
@@ -16,4 +16,8 @@ extension CLLocationCoordinate2D: Decodable {
         self.init(latitude: components[1], longitude: components[0])
     }
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode([longitude as Double, latitude as Double])
+    }
 }

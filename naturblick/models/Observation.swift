@@ -86,6 +86,21 @@ extension Observation {
                 createdTz <- operation.created.tz.identifier
             ]
         }
+
+        static func setters(operation: PatchOperation) -> [Setter] {
+            var setters: [Setter] = []
+            if let newDetails = operation.details {
+                setters.append(details <- newDetails)
+            }
+            if let newObsType = operation.obsType {
+                setters.append(obsType <- newObsType.rawValue)
+            }
+            if let latitude = operation.coords?.latitude, let longitude = operation.coords?.longitude {
+                setters.append(coordsLatitude <- latitude)
+                setters.append(coordsLongitude <- longitude)
+            }
+            return setters
+        }
     }
 
     var settters: [Setter] {
