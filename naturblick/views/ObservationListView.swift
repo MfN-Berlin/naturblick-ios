@@ -61,7 +61,7 @@ struct ObservationListView: View {
 
     private func sync() async {
         do {
-            let response = try await client.sync()
+            let response = try await client.sync(controller: persistenceController)
             try persistenceController.importObservations(from: response.data)
         } catch is HttpError {
             self.error = error
