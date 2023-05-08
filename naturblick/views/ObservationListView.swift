@@ -16,7 +16,9 @@ struct ObservationListView: View {
 
     var body: some View {
         List(persistenceController.observations, id: \.occurenceId) { observation in
-            ObservationListItemWithImageView(observation: observation)
+            NavigationLink(destination: ObservationView(observation: observation, controller: persistenceController)) {
+                ObservationListItemWithImageView(observation: observation)
+            }
         }
         .refreshable {
             await sync()

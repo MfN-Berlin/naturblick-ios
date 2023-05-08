@@ -10,7 +10,7 @@ import SQLite
 struct PatchOperation: Encodable {
     let occurenceId: UUID
     let obsType: ObsType?
-    let coords: CLLocationCoordinate2D?
+    let coords: Coordinates?
     let details: String?
 }
 
@@ -40,9 +40,9 @@ extension PatchOperation {
             if let rawValue: String = try row.get(table[obsType]) {
                 type = ObsType(rawValue: rawValue)
             }
-            var coords: CLLocationCoordinate2D? = nil
+            var coords: Coordinates? = nil
             if let latitude = try row.get(table[coordsLatitude]), let longitude = try row.get(table[coordsLongitude]) {
-                coords = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                coords = Coordinates(latitude: latitude, longitude: longitude)
             }
             return PatchOperation(
                 occurenceId: try row.get(table[occurenceId]),

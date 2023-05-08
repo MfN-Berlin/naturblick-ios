@@ -4,7 +4,6 @@
 
 
 import Foundation
-import CoreLocation
 
 struct CreateData {
     var occurenceId: UUID = UUID()
@@ -13,7 +12,7 @@ struct CreateData {
     var ccByName: String = "MfN Naturblick"
     var appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
     var deviceIdentifier: String = Configuration.deviceIdentifier
-    var coords: CLLocationCoordinate2D? = nil
+    var coords: Coordinates? = nil
     var details: String = ""
 
     var create: CreateOperation {
