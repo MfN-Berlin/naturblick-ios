@@ -46,6 +46,7 @@ struct HomeView: View {
                         }
                         RoundBottomView()
                             .frame(height: .roundBottomHeight)
+                            .offset(y: 3) // overlaping prevents it from showing a gap
                         
                         VStack {
                             Text("Bestimme Tieren und Pflanzen")
@@ -125,9 +126,7 @@ struct HomeView: View {
                                 .foregroundColor(.primaryColor)
                         }
                     }
-
                 }
-
             }
         }
     }

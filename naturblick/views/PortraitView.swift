@@ -51,11 +51,13 @@ struct PortraitView: View {
                             
                             VStack(alignment: .leading) { // similar species
                                 SpeciesFeaturesView(portraitId: portrait.id, species: portrait.species)
-                                Text("Verwechslungsarten")
-                                    .font(.nbHeadline4)
                                 SimilarSpeciesView(portraitId: portrait.id)
                             }
                             .padding(.defaultPadding)
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .topLeading
+                            )
                             .background {
                                 Rectangle()
                                     .foregroundColor(.featureColor)

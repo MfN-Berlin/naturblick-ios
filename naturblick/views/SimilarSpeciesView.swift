@@ -11,6 +11,10 @@ struct SimilarSpeciesView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
+            if (!similarSpeciesViewModel.mixups.isEmpty) {
+                Text("Verwechslungsarten")
+                    .font(.nbHeadline4)
+            }
             ForEach(similarSpeciesViewModel.mixups) { mix in
                 NavigationLink(destination: PortraitView(speciesId: mix.species.toListItem.speciesId)) {
                     VStack(alignment: .leading) {
