@@ -17,10 +17,12 @@ struct CreateObservationView: View {
                     let longitude = data.coords?.longitude {
                     Text("\(longitude), \(latitude)")
                 }
-                NBEditText(label: "Notes", iconAsset: "notes", text: $data.details)
+                NBEditText(label: "Notes", iconAsset: "details", text: $data.details)
             }
-        }.onChange(of: locationManager.userLocation) { coords in
-            data.coords = coords?.coordinate
+        }.onChange(of: locationManager.userLocation) { location in
+            if let location = location {
+                data.coords = Coordinates(location: location)
+            }
         }
         .sheet(isPresented: $isShowAskForPermission) {
             LocationRequestView()

@@ -4,7 +4,6 @@
 
 
 import Foundation
-import CoreLocation
 import SQLite
 
 struct Observation: Decodable {
@@ -16,7 +15,7 @@ struct Observation: Decodable {
     let mediaId: UUID?
     let thumbnailId: UUID?
     let localMediaId: String?
-    let coords: CLLocationCoordinate2D?
+    let coords: Coordinates?
     let individuals: Int64?
     let behavior: String?
     let details: String?
@@ -59,9 +58,9 @@ extension Observation {
         }
 
         static func instance(row: Row) throws -> Observation {
-            var coords: CLLocationCoordinate2D? = nil
+            var coords: Coordinates? = nil
             if let latitude = try row.get(coordsLatitude), let longitude = try row.get(coordsLongitude) {
-                coords = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                coords = Coordinates(latitude: latitude, longitude: longitude)
             }
             return Observation(
                 occurenceId: try row.get(occurenceId),
@@ -121,6 +120,6 @@ extension Observation {
         coords: nil,
         individuals: nil,
         behavior: nil,
-        details: nil
+        details: "details"
     )
 }

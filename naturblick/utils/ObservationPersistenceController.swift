@@ -143,6 +143,18 @@ class ObservationPersistenceController: ObservableObject {
         }
     }
 
+    func insert(data: EditData) throws {
+        try queue.transaction {
+            if let patch = data.patch {
+                let patchId = try queue.run(Operation.D.table.insert())
+                try queue.run(
+                    PatchOperation.D.table.insert(patch.setters(id: patchId))
+                )
+                try updateAndRefresh()
+            }
+        }
+    }
+
     func getPendingOperations() throws -> ([Int64], [Operation]) {
         let operationAndId = try queue.prepareRowIterator(
             Operation.D.table

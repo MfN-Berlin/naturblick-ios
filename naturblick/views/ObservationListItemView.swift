@@ -28,6 +28,9 @@ struct ObservationListItemView: View {
                 }
                 Text(observation.created.date.formatted())
                     .subtitle3()
+                if let details = observation.details {
+                    Text(details)
+                }
             }
             .padding(.top, .avatarTextOffset)
         }
