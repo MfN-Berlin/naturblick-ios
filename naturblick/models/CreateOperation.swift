@@ -5,39 +5,13 @@
 import Foundation
 import SQLite
 
-struct CreateOperation {
-    var occurenceId: UUID = UUID()
-    var obsType: ObsType = .manual
-    var created: ZonedDateTime = ZonedDateTime()
-    var ccByName: String = "MfN Naturblick"
-    var appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
-    var deviceIdentifier: String = Configuration.deviceIdentifier
-}
-
-extension CreateOperation: Encodable {
-    enum CodingKeys: String, CodingKey {
-        case occurenceId
-        case obsType
-        case created
-        case ccByName
-        case appVersion
-        case deviceIdentifier
-    }
-    enum WrapperCodingKeys: String, CodingKey {
-        case operation
-        case data
-    }
-    func encode(to encoder: Encoder) throws {
-        var wrapper = encoder.container(keyedBy: WrapperCodingKeys.self)
-        try wrapper.encode("create", forKey: .operation)
-        var container = wrapper.nestedContainer(keyedBy: CodingKeys.self, forKey: .data)
-        try container.encode(occurenceId, forKey: .occurenceId)
-        try container.encode(obsType, forKey: .obsType)
-        try container.encode(created, forKey: .created)
-        try container.encode(ccByName, forKey: .ccByName)
-        try container.encode(appVersion, forKey: .appVersion)
-        try container.encode(deviceIdentifier, forKey: .deviceIdentifier)
-    }
+struct CreateOperation: Encodable {
+    let occurenceId: UUID
+    let obsType: ObsType
+    let created: ZonedDateTime
+    let ccByName: String
+    let appVersion: String
+    let deviceIdentifier: String
 }
 
 extension CreateOperation {
@@ -67,12 +41,12 @@ extension CreateOperation {
 
         static func instance(row: Row) throws -> CreateOperation {
             return CreateOperation(
-                occurenceId: try row.get(occurenceId),
-                obsType: ObsType(rawValue: try row.get(obsType))!,
-                created: ZonedDateTime(date: try row.get(created), tz: TimeZone(identifier: try row.get(createdTz))!),
-                ccByName: try row.get(ccByName),
-                appVersion: try row.get(appVersion),
-                deviceIdentifier: try row.get(deviceIdentifier)
+                occurenceId: try row.get(table[occurenceId]),
+                obsType: ObsType(rawValue: try row.get(table[obsType]))!,
+                created: ZonedDateTime(date: try row.get(table[created]), tz: TimeZone(identifier: try row.get(table[createdTz]))!),
+                ccByName: try row.get(table[ccByName]),
+                appVersion: try row.get(table[appVersion]),
+                deviceIdentifier: try row.get(table[deviceIdentifier])
             )
         }
     }

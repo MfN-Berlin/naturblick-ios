@@ -10,7 +10,7 @@ struct ObservationListView: View {
     private let client = BackendClient()
     @StateObject var persistenceController = ObservationPersistenceController()
     @State private var create = false
-    @State private var createOperation = CreateOperation()
+    @State private var createData = CreateData()
     @State private var isPresented: Bool = false
     @State private var error: HttpError? = nil
 
@@ -34,19 +34,19 @@ struct ObservationListView: View {
         }
         .sheet(isPresented: $create) {
             NavigationView {
-                CreateObservationView(createOperation: $createOperation)
+                CreateObservationView(data: $createData)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
-                                createOperation = CreateOperation()
+                                createData = CreateData()
                                 create = false
                             }
                         }
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Add") {
                                 do {
-                                    try persistenceController.insert(operation: createOperation)
-                                    createOperation = CreateOperation()
+                                    try persistenceController.insert(data: createData)
+                                    createData = CreateData()
                                 } catch {
                                     fatalError(error.localizedDescription)
                                 }

@@ -38,7 +38,16 @@ class ObservationPersistenceController: ObservableObject {
                         cc_by_name TEXT NOT NULL,
                         app_version TEXT NOT NULL,
                         device_identifier TEXT NOT NULL,
-                        FOREIGN KEY(rowid) REFERENCES operation(rowid)
+                        FOREIGN KEY(rowid) REFERENCES operation(rowid) ON DELETE CASCADE
+                    );
+                    CREATE TABLE patch_operation (
+                        rowid INTEGER PRIMARY KEY NOT NULL,
+                        occurence_id TEXT NOT NULL,
+                        obs_type TEXT,
+                        details TEXT,
+                        coords_latitude DOUBLE,
+                        coords_longitude DOUBLE,
+                        FOREIGN KEY(rowid) REFERENCES operation(rowid) ON DELETE CASCADE
                     );
                     CREATE TABLE observation (
                         occurence_id TEXT UNIQUE NOT NULL,
@@ -92,8 +101,13 @@ class ObservationPersistenceController: ObservableObject {
     func update() throws {
         try queue.run(Observation.D.observation.delete())
         try queue.run(Observation.D.observation.insert(Observation.D.backendObservation.select(*)))
-        for createOperation in try queue.prepareRowIterator(CreateOperation.D.table.select(*)).map(CreateOperation.D.instance) {
-            try queue.run(Observation.D.observation.insert(or: .replace, Observation.D.setters(operation: createOperation)))
+        for operation in try getPendingOperations().1 {
+            switch(operation) {
+            case .create(let create):
+                try queue.run(Observation.D.observation.insert(or: .replace, Observation.D.setters(operation: create)))
+            case .patch(let patch):
+                try queue.run(Observation.D.observation.filter(Observation.D.occurenceId == patch.occurenceId).update(Observation.D.setters(operation: patch)))
+            }
         }
     }
 
@@ -113,24 +127,43 @@ class ObservationPersistenceController: ObservableObject {
         }
     }
 
-    private static let operationTable = Table("operation")
-
-    func insert(operation: CreateOperation) throws {
+    func insert(data: CreateData) throws {
         try queue.transaction {
-            let id = try queue.run(ObservationPersistenceController.operationTable.insert())
+            let createId = try queue.run(Operation.D.table.insert())
             try queue.run(
-                CreateOperation.D.table.insert(operation.setters(id: id))
+                CreateOperation.D.table.insert(data.create.setters(id: createId))
             )
+            if let patch = data.patch {
+                let patchId = try queue.run(Operation.D.table.insert())
+                try queue.run(
+                    PatchOperation.D.table.insert(patch.setters(id: patchId))
+                )
+            }
             try updateAndRefresh()
         }
     }
 
-    func getPendingOperations() throws -> [CreateOperation] {
-        try queue.prepareRowIterator(CreateOperation.D.table.select(*).order(CreateOperation.D.rowid.asc)).map(CreateOperation.D.instance)
+    func getPendingOperations() throws -> ([Int64], [Operation]) {
+        let operationAndId = try queue.prepareRowIterator(
+            Operation.D.table
+                .join(
+                    .leftOuter,
+                    CreateOperation.D.table,
+                    on: Operation.D.table[Operation.D.rowid] == CreateOperation.D.table[CreateOperation.D.rowid]
+                )
+                .join(
+                    .leftOuter,
+                    PatchOperation.D.table,
+                    on: Operation.D.table[Operation.D.rowid] == PatchOperation.D.table[PatchOperation.D.rowid]
+                )
+                .select(*)
+                .order(Operation.D.rowid.asc))
+        .map(Operation.D.instance)
+        return (operationAndId.map { $0.0 }, operationAndId.map { $0.1 })
     }
 
-    func clearPendingOperations(ids: [UUID]) throws {
-        try queue.run(CreateOperation.D.table.filter(ids.contains(CreateOperation.D.occurenceId)).delete())
+    func clearPendingOperations(ids: [Int64]) throws {
+        try queue.run(Operation.D.table.filter(ids.contains(Operation.D.rowid)).delete())
     }
 }
 
