@@ -98,6 +98,8 @@
 		7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */; };
 		7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46BE29C9DB3700C6C101 /* Group.swift */; };
 		7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46C129C9DC7800C6C101 /* Color.swift */; };
+		7BD016232A0B723600B07A3E /* MultipartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016222A0B723600B07A3E /* MultipartRequest.swift */; };
+		7BD016252A0B8CC400B07A3E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016242A0B8CC400B07A3E /* Data.swift */; };
 		7BDF2D2B2A090EE8002EC35F /* PhotoLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF2D2A2A090EE8002EC35F /* PhotoLibraryManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -204,6 +206,8 @@
 		7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupButton.swift; sourceTree = "<group>"; };
 		7BCE46BE29C9DB3700C6C101 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		7BCE46C129C9DC7800C6C101 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		7BD016222A0B723600B07A3E /* MultipartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartRequest.swift; sourceTree = "<group>"; };
+		7BD016242A0B8CC400B07A3E /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		7BDF2D2A2A090EE8002EC35F /* PhotoLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -402,6 +406,8 @@
 				7B13663829F0122600F1DA30 /* SoundStreamController.swift */,
 				137963F129E6FFDB0043E64F /* View+alertError.swift */,
 				13B686AD2A091951001FD28F /* Formatter.swift */,
+				7BD016222A0B723600B07A3E /* MultipartRequest.swift */,
+				7BD016242A0B8CC400B07A3E /* Data.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -603,6 +609,7 @@
 				7BCBBB5129EEDA07000DD344 /* BaseView.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
 				7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */,
+				7BD016232A0B723600B07A3E /* MultipartRequest.swift in Sources */,
 				137FE58729E5996800B397DF /* ObsType.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
 				7BC46D762A050BB80020EAC6 /* CameraManager.swift in Sources */,
@@ -621,6 +628,7 @@
 				7BA037C329D6DFF800804AFE /* SimilarSpecies.swift in Sources */,
 				7BA037CD29D705D200804AFE /* PortraitImageView.swift in Sources */,
 				13316BD929C9F4150077292B /* Species.swift in Sources */,
+				7BD016252A0B8CC400B07A3E /* Data.swift in Sources */,
 				7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */,
 				137963F229E6FFDB0043E64F /* View+alertError.swift in Sources */,
 				13A2923829D3116200AF772A /* CharacterValueView.swift in Sources */,

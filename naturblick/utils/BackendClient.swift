@@ -5,6 +5,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class BackendClient {
     let downloader: HTTPJsonDownloader
@@ -32,17 +33,34 @@ class BackendClient {
     func sync(controller: ObservationPersistenceController) async throws -> ObservationResponse {
         let (ids, operations) = try controller.getPendingOperations()
         let observationRequest = ObservationRequest(operations: operations, syncInfo: SyncInfo(deviceIdentifier: Configuration.deviceIdentifier))
-        let boundary = UUID()
-        var request = URLRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!)
-        request.httpMethod = "PUT"
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
-        let body = NSMutableData()
-        body.append(dataFormField(named: "operations", data: try encoder.encode(observationRequest), contentType: "application/json", boundary: boundary))
-        body.append("--\(boundary)--")
-        request.httpBody = body as Data
+        var mpr = MultipartRequest()
+        mpr.addJson(key: "operations", jsonData: try encoder.encode(observationRequest))
+        let request = mpr.urlRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!, method: "PUT")
         let response: ObservationResponse = try await downloader.httpJson(request: request)
         try controller.clearPendingOperations(ids: ids)
         return response
+    }
+    
+    func upload(img: UIImage, mediaId: String) async throws {
+        var mpr = MultipartRequest()
+        mpr.add(
+            key: "file",
+            fileName: "\(mediaId).jpg",
+            fileMimeType: "image/jpeg",
+            fileData: img.jpegData(compressionQuality: 0.81)!
+        )
+        
+        let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Configuration.deviceIdentifier)")
+        let request = mpr.urlRequest(url: url!, method: "PUT")
+        
+        let (_, _) = try await URLSession.shared.data(for: request)
+    }
+    
+    func imageId(mediaId: String) async throws {
+        let url = URL(string: Configuration.backendUrl + "/androidimageid?mediaId=\(mediaId)")
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        let (data, response) = try await URLSession.shared.data(for: request)
+        print("ID response is [ \(response) ] data is [ \(String(decoding: data, as: UTF8.self)) ]")
     }
 }

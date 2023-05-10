@@ -16,19 +16,42 @@ struct TakePhotoView: View {
     @StateObject private var cameraManager = CameraManager()
     @StateObject private var photoLibraryManager = PhotoLibraryManager()
     
+    private func uploadImage() {
+        guard let crop = photoViewModel.crop else { return }
+        Task {
+            do {
+                let mediaId = UUID().uuidString
+                try await BackendClient().upload(img: crop, mediaId: mediaId)
+                try await BackendClient().imageId(mediaId: mediaId)
+            } catch {
+                fatalError(error.localizedDescription)
+            }
+        }
+    }
+    
     var body: some View {
         BaseView {
             VStack {
-                Image(uiImage: photoViewModel.img)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipShape(Circle())
-                    .frame(width: 300, height: 300)
-                
-                Button("Camera") {
-                    isImagePickerDisplay.toggle()
-                }.padding()
-                    .foregroundColor(.black)
+                if let img = photoViewModel.img {
+                    Image(uiImage: img)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(Rectangle())
+                        .frame(width: 300, height: 300)
+                    
+                    Button {
+                        uploadImage()
+                    } label: {
+                        Text("Identify")
+                            .button()
+                            .padding()
+                    }
+                    .frame(width: UIScreen.main.bounds.width)
+                    .padding(.horizontal, -32)
+                    .background(Color.onSecondaryButtonPrimary)
+                    .clipShape(Capsule())
+                    .padding()
+                }
             }
             .sheet(isPresented: $isImagePickerDisplay) {
                 ImagePickerView(photoViewModel: photoViewModel)
