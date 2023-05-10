@@ -16,13 +16,14 @@ struct TakePhotoView: View {
     @StateObject private var cameraManager = CameraManager()
     @StateObject private var photoLibraryManager = PhotoLibraryManager()
     
-    private func uploadImage() {
+    private func identify() {
         guard let crop = photoViewModel.crop else { return }
         Task {
             do {
                 let mediaId = UUID().uuidString
                 try await BackendClient().upload(img: crop, mediaId: mediaId)
-                try await BackendClient().imageId(mediaId: mediaId)
+                let results = try await BackendClient().imageId(mediaId: mediaId)
+                photoViewModel.setSpeciesResult(results: results)
             } catch {
                 fatalError(error.localizedDescription)
             }
@@ -39,8 +40,16 @@ struct TakePhotoView: View {
                         .clipShape(Rectangle())
                         .frame(width: 300, height: 300)
                     
+                    if let species = photoViewModel.species {
+                        ForEach(species) { species in
+                            Text(species.sciname)
+                                .padding()
+                                .foregroundColor(.onSecondaryHighEmphasis)
+                        }
+                    }
+                    
                     Button {
-                        uploadImage()
+                        identify()
                     } label: {
                         Text("Identify")
                             .button()

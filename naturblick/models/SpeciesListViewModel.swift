@@ -32,7 +32,7 @@ class SpeciesListViewModel: ObservableObject {
             }
             .assign(to: &$species)
         } catch {
-            preconditionFailure(error.localizedDescription)
+            	
         }
     }
 
@@ -46,17 +46,17 @@ class SpeciesListViewModel: ObservableObject {
                 .filter(Portrait.Definition.language == 1)
             let queryWithSearch = searchQuery != nil ? query.filter(Species.Definition.gername.like("%\(searchQuery!)%")) : query
             return try db.prepareRowIterator(queryWithSearch.order(Species.Definition.gername))
-            .map { row in
-                SpeciesListItem(
-                    speciesId: row[Species.Definition.table[Species.Definition.id]],
-                    sciname: row[Species.Definition.sciname],
-                    gername: row[Species.Definition.gername],
-                    maleUrl: row[Species.Definition.maleUrl],
-                    femaleUrl: row[Species.Definition.femaleUrl],
-                    gersynonym: row[Species.Definition.gersynonym],
-                    isFemale: nil
-                )
-            }
+                .map { row in
+                    SpeciesListItem(
+                        speciesId: row[Species.Definition.table[Species.Definition.id]],
+                        sciname: row[Species.Definition.sciname],
+                        gername: row[Species.Definition.gername],
+                        maleUrl: row[Species.Definition.maleUrl],
+                        femaleUrl: row[Species.Definition.femaleUrl],
+                        gersynonym: row[Species.Definition.gersynonym],
+                        isFemale: nil
+                    )
+                }
         case .characters(let number, let query):
             let searchString = searchQuery != nil ? "%\(searchQuery!)%" : nil
             let (querySyntax, bindings) = Character.charactersQuery(number: number, query: query, searchQuery: searchString)
