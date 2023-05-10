@@ -8,11 +8,11 @@ import class SQLite.Connection
 
 
 struct ObservationListItemWithImageView: View {
-    @StateObject var model = ObservationListItemViewModel()
+    @StateObject var model = ObservationViewModel()
     let observation: Observation
 
     var body: some View {
-        AsyncImage(url: model.url) { image in
+        AsyncThumbnail(speciesUrl: model.species?.maleUrl, thumbnailId: observation.thumbnailId) { image in
             ObservationListItemView(observation: observation, species: model.species, image: image)
         } placeholder: {
             ObservationListItemView(observation: observation, species: model.species, image: Image("placeholder"))

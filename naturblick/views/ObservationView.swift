@@ -8,17 +8,29 @@ import SwiftUI
 struct ObservationView: View {
     let observation: Observation
     let controller: ObservationPersistenceController
+    @StateObject var model = ObservationViewModel()
     @State private var edit = false
     @State var editData: EditData
 
-    init(observation: Observation, controller: ObservationPersistenceController) {
+    init(observation: Observation,
+         controller: ObservationPersistenceController
+    ) {
         self.observation = observation
         self.controller = controller
         self._editData = State(initialValue: EditData(observation: observation))
     }
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack {
+            AsyncThumbnail(speciesUrl: model.species?.maleUrl, thumbnailId: observation.thumbnailId) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .frame(width: .avatarSize, height: .avatarSize)
+            } placeholder: {
+                Image("placeholder")
+            }
             Text(observation.created.date, formatter: .dateTime)
             if let details = observation.details {
                 Text(details)
@@ -52,6 +64,9 @@ struct ObservationView: View {
                         }
                     }
             }
+        }
+        .task {
+            await model.load(observation: observation)
         }
 
     }
