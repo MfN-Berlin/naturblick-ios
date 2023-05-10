@@ -400,17 +400,17 @@
 				1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */,
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
 				7B0FF7C52A0133EE005674E0 /* Coordinator.swift */,
+				7BD016242A0B8CC400B07A3E /* Data.swift */,
 				13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */,
 				132B0D9529CDD5C500B80C9E /* Font+Lato.swift */,
+				13B686AD2A091951001FD28F /* Formatter.swift */,
 				1343D1C829DD94870075ACE3 /* HttpError.swift */,
 				1343D1C629DD944D0075ACE3 /* HTTPJsonDownloader.swift */,
+				7BD016222A0B723600B07A3E /* MultipartRequest.swift */,
 				137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */,
 				136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */,
 				7B13663829F0122600F1DA30 /* SoundStreamController.swift */,
 				137963F129E6FFDB0043E64F /* View+alertError.swift */,
-				13B686AD2A091951001FD28F /* Formatter.swift */,
-				7BD016222A0B723600B07A3E /* MultipartRequest.swift */,
-				7BD016242A0B8CC400B07A3E /* Data.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";

@@ -61,7 +61,6 @@ class BackendClient {
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
         let speciesResults: [SpeciesResult] = try await downloader.httpJson(request: request)
-//        let (data, _) = try await URLSession.shared.data(for: request)
         return speciesResults
     }
 }

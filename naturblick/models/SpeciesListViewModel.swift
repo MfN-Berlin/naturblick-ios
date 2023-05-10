@@ -32,7 +32,7 @@ class SpeciesListViewModel: ObservableObject {
             }
             .assign(to: &$species)
         } catch {
-            preconditionFailure(error.localizedDescription)
+            	
         }
     }
 
