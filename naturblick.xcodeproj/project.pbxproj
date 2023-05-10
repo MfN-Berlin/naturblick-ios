@@ -100,6 +100,7 @@
 		7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46C129C9DC7800C6C101 /* Color.swift */; };
 		7BD016232A0B723600B07A3E /* MultipartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016222A0B723600B07A3E /* MultipartRequest.swift */; };
 		7BD016252A0B8CC400B07A3E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016242A0B8CC400B07A3E /* Data.swift */; };
+		7BD016272A0BCE1F00B07A3E /* SpeciesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */; };
 		7BDF2D2B2A090EE8002EC35F /* PhotoLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF2D2A2A090EE8002EC35F /* PhotoLibraryManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -208,6 +209,7 @@
 		7BCE46C129C9DC7800C6C101 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		7BD016222A0B723600B07A3E /* MultipartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartRequest.swift; sourceTree = "<group>"; };
 		7BD016242A0B8CC400B07A3E /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesResult.swift; sourceTree = "<group>"; };
 		7BDF2D2A2A090EE8002EC35F /* PhotoLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -386,6 +388,7 @@
 				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
 				13B686AB2A09055C001FD28F /* EditData.swift */,
 				13B686B12A09410A001FD28F /* Coordinates.swift */,
+				7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -616,6 +619,7 @@
 				13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */,
 				7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */,
 				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
+				7BD016272A0BCE1F00B07A3E /* SpeciesResult.swift in Sources */,
 				7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */,
 				13B686AC2A09055C001FD28F /* EditData.swift in Sources */,
 				7BA037C529D6E11200804AFE /* SimilarSpeciesViewModel.swift in Sources */,

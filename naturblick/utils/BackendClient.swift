@@ -56,11 +56,12 @@ class BackendClient {
         let (_, _) = try await URLSession.shared.data(for: request)
     }
     
-    func imageId(mediaId: String) async throws {
-        let url = URL(string: Configuration.backendUrl + "/androidimageid?mediaId=\(mediaId)")
+    func imageId(mediaId: String) async throws -> [SpeciesResult] {
+        let url = URL(string: Configuration.backendUrl + "androidimageid?mediaId=\(mediaId)")
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
-        let (data, response) = try await URLSession.shared.data(for: request)
-        print("ID response is [ \(response) ] data is [ \(String(decoding: data, as: UTF8.self)) ]")
+        let speciesResults: [SpeciesResult] = try await downloader.httpJson(request: request)
+//        let (data, _) = try await URLSession.shared.data(for: request)
+        return speciesResults
     }
 }
