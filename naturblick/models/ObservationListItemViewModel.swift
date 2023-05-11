@@ -7,9 +7,8 @@ import Foundation
 import SQLite
 
 @MainActor
-class ObservationListItemViewModel: ObservableObject {
+class ObservationViewModel: ObservableObject {
     @Published private(set) var species: Species? =  nil
-    @Published private(set) var url: URL? =  nil
 
     func load(observation: Observation) async {
         guard let speciesId: Int64 = observation.newSpeciesId else {
@@ -40,10 +39,6 @@ class ObservationListItemViewModel: ObservableObject {
                 iucnCategory: row[Species.Definition.iucnCategory]
             )
             species = species
-            guard let urlStr = species?.maleUrl else {
-                return
-            }
-            url = URL(string: Configuration.strapiUrl + urlStr)!
         } catch {
             preconditionFailure(error.localizedDescription)
         }

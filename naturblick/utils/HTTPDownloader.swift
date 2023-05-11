@@ -8,11 +8,12 @@ import Combine
 
 let validStatus = 200...299
 
-protocol HTTPJsonDownloader {
+protocol HTTPDownloader {
     func httpJson<T: Decodable>(request: URLRequest) async throws -> T
+    func http(request: URLRequest) async throws -> Data
 }
 
-extension URLSession: HTTPJsonDownloader {
+extension URLSession: HTTPDownloader {
     func httpJson<T: Decodable>(request: URLRequest) async throws -> T {
         do {
             let (data, response) = try await self.data(for: request)
@@ -31,5 +32,12 @@ extension URLSession: HTTPJsonDownloader {
                 preconditionFailure(error.localizedDescription)
             }
         }
+    }
+    func http(request: URLRequest) async throws -> Data {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let statusCode = (response as? HTTPURLResponse)?.statusCode, validStatus.contains(statusCode) else {
+            throw HttpError.serverError
+        }
+        return data
     }
 }

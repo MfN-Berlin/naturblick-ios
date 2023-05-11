@@ -77,7 +77,6 @@ struct MultipartRequest {
         request.httpMethod = method
         request.setValue(httpContentTypeHeaderValue, forHTTPHeaderField: "Content-Type")
         request.httpBody = httpBody
-        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
         return request
     }
 }

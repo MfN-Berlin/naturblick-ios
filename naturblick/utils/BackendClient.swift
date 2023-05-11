@@ -8,9 +8,9 @@ import Combine
 import SwiftUI
 
 class BackendClient {
-    let downloader: HTTPJsonDownloader
+    let downloader: HTTPDownloader
     private let encoder = JSONEncoder()
-    init(downloader: HTTPJsonDownloader = URLSession.shared) {
+    init(downloader: HTTPDownloader = URLSession.shared) {
         self.downloader = downloader
     }
 
@@ -35,7 +35,8 @@ class BackendClient {
         let observationRequest = ObservationRequest(operations: operations, syncInfo: SyncInfo(deviceIdentifier: Configuration.deviceIdentifier))
         var mpr = MultipartRequest()
         mpr.addJson(key: "operations", jsonData: try encoder.encode(observationRequest))
-        let request = mpr.urlRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!, method: "PUT")
+        var request = mpr.urlRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!, method: "PUT")
+        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
         let response: ObservationResponse = try await downloader.httpJson(request: request)
         try controller.clearPendingOperations(ids: ids)
         return response
@@ -51,8 +52,8 @@ class BackendClient {
         )
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Configuration.deviceIdentifier)")
-        let request = mpr.urlRequest(url: url!, method: "PUT")
-        
+        var request = mpr.urlRequest(url: url!, method: "PUT")
+        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
         let (_, _) = try await URLSession.shared.data(for: request)
     }
     
@@ -62,5 +63,20 @@ class BackendClient {
         request.httpMethod = "GET"
         let speciesResults: [SpeciesResult] = try await downloader.httpJson(request: request)
         return speciesResults
+    }
+
+    func downloadCached(mediaId: UUID) async throws -> UIImage {
+        let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
+        var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
+        let data = try await downloader.http(request: request)
+        return UIImage(data: data)!
+    }
+
+    func downloadCached(speciesUrl: String) async throws -> UIImage {
+        let url = URL(string: Configuration.strapiUrl + speciesUrl)!
+        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+        let data = try await downloader.http(request: request)
+        return UIImage(data: data)!
     }
 }
