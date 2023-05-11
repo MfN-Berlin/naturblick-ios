@@ -12,6 +12,7 @@ struct CreateOperation: Encodable {
     let ccByName: String
     let appVersion: String
     let deviceIdentifier: String
+    let speciesId: Int64?
 }
 
 extension CreateOperation {
@@ -25,6 +26,7 @@ extension CreateOperation {
         static let ccByName = Expression<String>("cc_by_name")
         static let appVersion = Expression<String>("app_version")
         static let deviceIdentifier = Expression<String>("device_identifier")
+        static let speciesId = Expression<Int64?>("species_id")
 
         static func setters(id: Int64, operation: CreateOperation) -> [Setter] {
             [
@@ -35,7 +37,8 @@ extension CreateOperation {
                 createdTz <- operation.created.tz.identifier,
                 ccByName <- operation.ccByName,
                 appVersion <- operation.appVersion,
-                deviceIdentifier <- operation.deviceIdentifier
+                deviceIdentifier <- operation.deviceIdentifier,
+                speciesId <- operation.speciesId
             ]
         }
 
@@ -46,7 +49,8 @@ extension CreateOperation {
                 created: ZonedDateTime(date: try row.get(table[created]), tz: TimeZone(identifier: try row.get(table[createdTz]))!),
                 ccByName: try row.get(table[ccByName]),
                 appVersion: try row.get(table[appVersion]),
-                deviceIdentifier: try row.get(table[deviceIdentifier])
+                deviceIdentifier: try row.get(table[deviceIdentifier]),
+                speciesId: try row.get(table[speciesId])
             )
         }
     }

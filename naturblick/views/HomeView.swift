@@ -77,7 +77,7 @@ struct HomeView: View {
                                 }
                                 Spacer()
                                 NavigationLink(
-                                    destination: TakePhotoView()) {
+                                    destination: ObservationListView(obsAction: .createImageObservation)) {
                                         HomeViewButton(text: "Pflanze fotografieren",
                                                        color: Color.onPrimaryButtonPrimary,
                                                        image: Image("photo24"),
@@ -91,7 +91,7 @@ struct HomeView: View {
                             HStack(alignment: .top) {
                                 Spacer()
                                 NavigationLink(
-                                    destination: ObservationListView()
+                                    destination: ObservationListView(obsAction: .createManualObservation)
                                 ) {
                                     HomeViewButton(
                                         text: "Feldbuch",

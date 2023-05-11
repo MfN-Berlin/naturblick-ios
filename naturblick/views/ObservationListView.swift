@@ -8,9 +8,11 @@ import CoreData
 
 struct ObservationListView: View {
     private let client = BackendClient()
+    @State var obsAction: ObservationAction
     @StateObject var persistenceController = ObservationPersistenceController()
-    @State private var create = false
+    @State private var createManual = false
     @State private var createData = CreateData()
+    @State private var createImage = false
     @State private var isPresented: Bool = false
     @State private var error: HttpError? = nil
 
@@ -27,21 +29,21 @@ struct ObservationListView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button(action: {
-                    create = true
+                    createManual = true
                 }) {
                     Image(systemName: "plus")
                 }
                 .accessibilityLabel("New Observation")
             }
         }
-        .sheet(isPresented: $create) {
+        .sheet(isPresented: $createManual) {
             NavigationView {
-                CreateObservationView(data: $createData)
+                CreateObservationView(obsAction: .createManualObservation, data: $createData)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
                                 createData = CreateData()
-                                create = false
+                                createManual = false
                             }
                         }
                         ToolbarItem(placement: .confirmationAction) {
@@ -52,10 +54,39 @@ struct ObservationListView: View {
                                 } catch {
                                     fatalError(error.localizedDescription)
                                 }
-                                create = false
+                                createManual = false
                             }
                         }
                     }
+            }
+        }
+        .sheet(isPresented: $createImage) {
+            NavigationView {
+                CreateObservationView(obsAction: .createImageObservation, data: $createData)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Dismiss") {
+                                createData = CreateData()
+                                createImage = false
+                            }
+                        }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Add") {
+                                do {
+                                    try persistenceController.insert(data: createData)
+                                    createData = CreateData()
+                                } catch {
+                                    fatalError(error.localizedDescription)
+                                }
+                                createImage = false
+                            }
+                        }
+                    }
+            }
+        }
+        .onAppear {
+            if (obsAction == .createImageObservation) {
+                createImage = true
             }
         }
         .alertHttpError(isPresented: $isPresented, error: error)
@@ -76,6 +107,6 @@ struct ObservationListView: View {
 
 struct ObservationListView_Previews: PreviewProvider {
     static var previews: some View {
-        ObservationListView()
+        ObservationListView(obsAction: .createManualObservation)
     }
 }
