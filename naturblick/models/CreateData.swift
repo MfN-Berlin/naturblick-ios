@@ -14,9 +14,10 @@ struct CreateData {
     var deviceIdentifier: String = Configuration.deviceIdentifier
     var coords: Coordinates? = nil
     var details: String = ""
+    var species: Species? = nil
 
     var create: CreateOperation {
-        CreateOperation(occurenceId: occurenceId, obsType: obsType, created: created, ccByName: ccByName, appVersion: appVersion, deviceIdentifier: deviceIdentifier)
+        CreateOperation(occurenceId: occurenceId, obsType: obsType, created: created, ccByName: ccByName, appVersion: appVersion, deviceIdentifier: deviceIdentifier, speciesId: species?.id)
     }
 
     var patch: PatchOperation? {

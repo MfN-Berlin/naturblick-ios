@@ -8,7 +8,7 @@ import PhotosUI
 
 struct TakePhotoView: View {
 
-    @Environment(\.dismiss) var dismiss
+    @Binding var isPresented: Bool
     @StateObject private var photoViewModel: PhotoViewModel = PhotoViewModel()
     @State private var isImagePickerDisplay = false
     @State private var isPermissionInfoDisplay = false
@@ -16,6 +16,8 @@ struct TakePhotoView: View {
     @StateObject private var cameraManager = CameraManager()
     @StateObject private var photoLibraryManager = PhotoLibraryManager()
     
+    @Binding var data: CreateData
+        
     private func identify() {
         guard let crop = photoViewModel.crop else { return }
         Task {
@@ -42,24 +44,32 @@ struct TakePhotoView: View {
                     
                     if let species = photoViewModel.species {
                         ForEach(species) { species in
-                            Text(species.sciname)
+                            Button {
+                                data.species = species
+                                isPresented = false
+                            } label: {
+                                Text(species.sciname)
+                                    .padding()
+                            }.frame(width: UIScreen.main.bounds.width)
+                                .padding(.horizontal, -32)
+                                .background(Color.onSecondaryButtonPrimary)
+                                .clipShape(Capsule())
                                 .padding()
-                                .foregroundColor(.onSecondaryHighEmphasis)
                         }
+                    } else {
+                        Button {
+                            identify()
+                        } label: {
+                            Text("Identify")
+                                .button()
+                                .padding()
+                        }
+                        .frame(width: UIScreen.main.bounds.width)
+                        .padding(.horizontal, -32)
+                        .background(Color.onSecondaryButtonPrimary)
+                        .clipShape(Capsule())
+                        .padding()
                     }
-                    
-                    Button {
-                        identify()
-                    } label: {
-                        Text("Identify")
-                            .button()
-                            .padding()
-                    }
-                    .frame(width: UIScreen.main.bounds.width)
-                    .padding(.horizontal, -32)
-                    .background(Color.onSecondaryButtonPrimary)
-                    .clipShape(Capsule())
-                    .padding()
                 }
             }
             .sheet(isPresented: $isImagePickerDisplay) {

@@ -38,6 +38,7 @@ class ObservationPersistenceController: ObservableObject {
                         cc_by_name TEXT NOT NULL,
                         app_version TEXT NOT NULL,
                         device_identifier TEXT NOT NULL,
+                        species_id INTEGER,
                         FOREIGN KEY(rowid) REFERENCES operation(rowid) ON DELETE CASCADE
                     );
                     CREATE TABLE patch_operation (
