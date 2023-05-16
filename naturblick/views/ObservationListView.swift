@@ -10,11 +10,15 @@ struct ObservationListView: View {
     private let client = BackendClient()
     @State var obsAction: ObservationAction
     @StateObject var persistenceController = ObservationPersistenceController()
-    @State private var createManual = false
+    @State private var create = false
     @State private var createData = CreateData()
-    @State private var createImage = false
     @State private var isPresented: Bool = false
     @State private var error: HttpError? = nil
+    
+    private func resetCreate() {
+        createData = CreateData()
+        self.create = false
+    }
 
     var body: some View {
         List(persistenceController.observations, id: \.occurenceId) { observation in
@@ -29,56 +33,32 @@ struct ObservationListView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button(action: {
-                    createManual = true
+                    createData = CreateData()
+                    obsAction = .createManualObservation
+                    create = true
                 }) {
                     Image(systemName: "plus")
                 }
                 .accessibilityLabel("New Observation")
             }
         }
-        .sheet(isPresented: $createManual) {
+        .sheet(isPresented: $create) {
             NavigationView {
-                CreateObservationView(obsAction: .createManualObservation, data: $createData)
+                CreateObservationView(obsAction: obsAction, data: $createData)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
-                                createData = CreateData()
-                                createManual = false
+                                resetCreate()
                             }
                         }
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Add") {
                                 do {
                                     try persistenceController.insert(data: createData)
-                                    createData = CreateData()
+                                    resetCreate()
                                 } catch {
                                     fatalError(error.localizedDescription)
                                 }
-                                createManual = false
-                            }
-                        }
-                    }
-            }
-        }
-        .sheet(isPresented: $createImage) {
-            NavigationView {
-                CreateObservationView(obsAction: .createImageObservation, data: $createData)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Dismiss") {
-                                createData = CreateData()
-                                createImage = false
-                            }
-                        }
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Add") {
-                                do {
-                                    try persistenceController.insert(data: createData)
-                                    createData = CreateData()
-                                } catch {
-                                    fatalError(error.localizedDescription)
-                                }
-                                createImage = false
                             }
                         }
                     }
@@ -86,7 +66,7 @@ struct ObservationListView: View {
         }
         .onAppear {
             if (obsAction == .createImageObservation) {
-                createImage = true
+                create = true
             }
         }
         .alertHttpError(isPresented: $isPresented, error: error)
