@@ -5,6 +5,7 @@
 
 import Foundation
 import CoreLocation
+import MapKit
 
 struct Coordinates: Equatable {
     let latitude: Double
@@ -31,4 +32,29 @@ extension Coordinates {
     init(location: CLLocation) {
         self.init(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
     }
+    
+    init(region: MKCoordinateRegion) {
+        self.init(latitude: region.center.latitude, longitude: region.center.longitude)
+    }
+    
+    var region: MKCoordinateRegion {
+        MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: latitude,
+                longitude: longitude
+            ),
+            latitudinalMeters: 750,
+            longitudinalMeters: 750
+        )
+    }
+    
+}
+
+extension MKCoordinateRegion {
+    static let defaultRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 37.334_900,
+                                       longitude: -122.009_020),
+        latitudinalMeters: 750,
+        longitudinalMeters: 750
+    )
 }
