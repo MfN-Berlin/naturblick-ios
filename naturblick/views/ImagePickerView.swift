@@ -6,9 +6,11 @@
 import SwiftUI
 import UIKit
 
-struct ImagePickerView: UIViewControllerRepresentable {
+struct ImagePickerView: UIViewControllerRepresentable, View {
     
-    let photoViewModel: PhotoViewModel
+    @Binding var imageIdState: ImageIdState
+    @Binding var data: CreateData
+    
     @Environment(\.presentationMode) var isPresented
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
@@ -24,7 +26,8 @@ struct ImagePickerView: UIViewControllerRepresentable {
 
     // Connecting the Coordinator class with this struct
     func makeCoordinator() -> Coordinator {
-        return Coordinator(picker: self, photoViewModel: photoViewModel)
+        return Coordinator(picker: self, data: $data)
     }
+    
 }
 
