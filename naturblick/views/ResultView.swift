@@ -7,14 +7,20 @@ import SwiftUI
 import SQLite
 
 
+@MainActor
 class ResultViewModel : ObservableObject {
     
     @Published private(set) var species: [Species]? = nil
     
-    func identify(img: UIImage, mediaId: UUID) async {
+    func identify(img: UIImage, data: CreateData) async -> UUID {
+        if species != nil {
+            return data.mediaId!
+        }
+        let mediaId = UUID()
         do {
             try await BackendClient().upload(img: img, mediaId: mediaId.uuidString)
             setSpeciesResult(results: try await BackendClient().imageId(mediaId: mediaId.uuidString))
+            return mediaId
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -96,13 +102,9 @@ struct ResultView: SwiftUI.View {
                 }
             }
         }
-        .task {
+	        .task {
             if let img = data.crop {
-                if resultViewModel.species == nil {
-                    let mediaId = UUID()
-                    data.mediaId = mediaId
-                    await resultViewModel.identify(img: img, mediaId: mediaId)
-                }
+                await data.mediaId = resultViewModel.identify(img: img, data: data)
             }
         }
     }
