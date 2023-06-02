@@ -4,6 +4,7 @@
 
 
 import Foundation
+import SwiftUI
 
 struct CreateData {
     var occurenceId: UUID = UUID()
@@ -15,6 +16,10 @@ struct CreateData {
     var coords: Coordinates? = nil
     var details: String = ""
     var species: Species? = nil
+    
+    var img: UIImage? = nil
+    var crop: UIImage? = nil
+    var mediaId: UUID? 
 
     var create: CreateOperation {
         CreateOperation(occurenceId: occurenceId, obsType: obsType, created: created, ccByName: ccByName, appVersion: appVersion, deviceIdentifier: deviceIdentifier, speciesId: species?.id)

@@ -62,10 +62,8 @@
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
 		13F9EF0B29ED92F100123758 /* ObservationListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9EF0A29ED92F100123758 /* ObservationListItemViewModel.swift */; };
 		13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */; };
-		7B0FF7C42A012F47005674E0 /* TakePhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF7C32A012F47005674E0 /* TakePhotoView.swift */; };
 		7B0FF7C62A0133EE005674E0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF7C52A0133EE005674E0 /* Coordinator.swift */; };
 		7B0FF7C82A0139D3005674E0 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */; };
-		7B0FF7CC2A014E51005674E0 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF7CB2A014E51005674E0 /* PhotoViewModel.swift */; };
 		7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B13663829F0122600F1DA30 /* SoundStreamController.swift */; };
 		7B6515012A0A37470083D6F4 /* PermissionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6515002A0A37470083D6F4 /* PermissionInfoView.swift */; };
 		7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8008F129D5B66B00950839 /* PortraitImage.swift */; };
@@ -83,6 +81,8 @@
 		7BA037CB29D703B600804AFE /* PortraitImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037CA29D703B600804AFE /* PortraitImageViewModel.swift */; };
 		7BA037CD29D705D200804AFE /* PortraitImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037CC29D705D200804AFE /* PortraitImageView.swift */; };
 		7BB03C352A0CCA9900C3A885 /* HTTPDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB03C342A0CCA9900C3A885 /* HTTPDownloader.swift */; };
+		7BB350D62A2A0BC1005065E4 /* CropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB350D52A2A0BC1005065E4 /* CropView.swift */; };
+		7BB350D82A2A0DCC005065E4 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB350D72A2A0DCC005065E4 /* ResultView.swift */; };
 		7BB3DE1E29F2B0A100F0D387 /* RoundBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE1D29F2B0A100F0D387 /* RoundBottomView.swift */; };
 		7BB3DE2029F6695F00F0D387 /* SimilarSpeciesItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE1F29F6695F00F0D387 /* SimilarSpeciesItemView.swift */; };
 		7BB3DE2329F68D4500F0D387 /* UnambiguousFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */; };
@@ -173,10 +173,8 @@
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		13F9EF0A29ED92F100123758 /* ObservationListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemViewModel.swift; sourceTree = "<group>"; };
 		13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOperation.swift; sourceTree = "<group>"; };
-		7B0FF7C32A012F47005674E0 /* TakePhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakePhotoView.swift; sourceTree = "<group>"; };
 		7B0FF7C52A0133EE005674E0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
-		7B0FF7CB2A014E51005674E0 /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
 		7B13663829F0122600F1DA30 /* SoundStreamController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundStreamController.swift; sourceTree = "<group>"; };
 		7B6515002A0A37470083D6F4 /* PermissionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionInfoView.swift; sourceTree = "<group>"; };
 		7B8008F129D5B66B00950839 /* PortraitImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImage.swift; sourceTree = "<group>"; };
@@ -194,6 +192,8 @@
 		7BA037CA29D703B600804AFE /* PortraitImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImageViewModel.swift; sourceTree = "<group>"; };
 		7BA037CC29D705D200804AFE /* PortraitImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImageView.swift; sourceTree = "<group>"; };
 		7BB03C342A0CCA9900C3A885 /* HTTPDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPDownloader.swift; sourceTree = "<group>"; };
+		7BB350D52A2A0BC1005065E4 /* CropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropView.swift; sourceTree = "<group>"; };
+		7BB350D72A2A0DCC005065E4 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		7BB3DE1D29F2B0A100F0D387 /* RoundBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundBottomView.swift; sourceTree = "<group>"; };
 		7BB3DE1F29F6695F00F0D387 /* SimilarSpeciesItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarSpeciesItemView.swift; sourceTree = "<group>"; };
 		7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnambiguousFeature.swift; sourceTree = "<group>"; };
@@ -328,6 +328,7 @@
 				13A2923529D3114500AF772A /* CharacterView.swift */,
 				7B83703429E98EA10075D9F5 /* ColorTestView.swift */,
 				136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */,
+				7BB350D52A2A0BC1005065E4 /* CropView.swift */,
 				13B686AF2A093A75001FD28F /* EditObservationView.swift */,
 				7BA037BC29D6C8BB00804AFE /* GoodToKnowView.swift */,
 				7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */,
@@ -344,6 +345,7 @@
 				7B6515002A0A37470083D6F4 /* PermissionInfoView.swift */,
 				7BA037CC29D705D200804AFE /* PortraitImageView.swift */,
 				7B8839D729D5749B006CB94E /* PortraitView.swift */,
+				7BB350D72A2A0DCC005065E4 /* ResultView.swift */,
 				7BB3DE1D29F2B0A100F0D387 /* RoundBottomView.swift */,
 				7BB3DE1F29F6695F00F0D387 /* SimilarSpeciesItemView.swift */,
 				7BA037C629D6E36E00804AFE /* SimilarSpeciesView.swift */,
@@ -352,7 +354,6 @@
 				13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */,
 				13316BD629C9F3860077292B /* SpeciesListView.swift */,
 				7BCCFD7629F2A62A00C71453 /* Style.swift */,
-				7B0FF7C32A012F47005674E0 /* TakePhotoView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -377,7 +378,6 @@
 				137FE58629E5996800B397DF /* ObsType.swift */,
 				13070CA72A053EC700A2046D /* Operation.swift */,
 				134B72B42A05348000C1DCAD /* PatchOperation.swift */,
-				7B0FF7CB2A014E51005674E0 /* PhotoViewModel.swift */,
 				136D907F29D18BBE00A00BD4 /* Portrait.swift */,
 				7B8008F129D5B66B00950839 /* PortraitImage.swift */,
 				7BA037C829D7020500804AFE /* PortraitImageMeta.swift */,
@@ -389,11 +389,11 @@
 				13316BDA29C9F6030077292B /* SpeciesListFilter.swift */,
 				13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */,
 				13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */,
+				7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */,
 				134B72B22A04FBA300C1DCAD /* SyncInfo.swift */,
 				7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */,
 				7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */,
 				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
-				7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -576,6 +576,7 @@
 				132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */,
 				13EC572129DC80AD00D56A77 /* ObservationListItemWithImageView.swift in Sources */,
 				13A2923C29D317A300AF772A /* CharacterValue.swift in Sources */,
+				7BB350D82A2A0DCC005065E4 /* ResultView.swift in Sources */,
 				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
 				13B686B02A093A75001FD28F /* EditObservationView.swift in Sources */,
 				13A2923429D3110C00AF772A /* CharactersView.swift in Sources */,
@@ -583,6 +584,7 @@
 				7B8839DA29D5762D006CB94E /* PortraitViewModel.swift in Sources */,
 				13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */,
 				7BA037CB29D703B600804AFE /* PortraitImageViewModel.swift in Sources */,
+				7BB350D62A2A0BC1005065E4 /* CropView.swift in Sources */,
 				1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */,
 				7B6515012A0A37470083D6F4 /* PermissionInfoView.swift in Sources */,
 				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
@@ -595,7 +597,6 @@
 				13070CA82A053EC700A2046D /* Operation.swift in Sources */,
 				7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */,
 				136DFABB29F9752100C8B8FF /* NBEditText.swift in Sources */,
-				7B0FF7C42A012F47005674E0 /* TakePhotoView.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
 				1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */,
 				13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */,
@@ -606,7 +607,6 @@
 				7BB3DE2329F68D4500F0D387 /* UnambiguousFeature.swift in Sources */,
 				7B83703529E98EA10075D9F5 /* ColorTestView.swift in Sources */,
 				7BA037C729D6E36E00804AFE /* SimilarSpeciesView.swift in Sources */,
-				7B0FF7CC2A014E51005674E0 /* PhotoViewModel.swift in Sources */,
 				13B686AA2A0902D1001FD28F /* ObservationView.swift in Sources */,
 				7BA037BF29D6C8E300804AFE /* GoodToKnow.swift in Sources */,
 				7BB03C352A0CCA9900C3A885 /* HTTPDownloader.swift in Sources */,
