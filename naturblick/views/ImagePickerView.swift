@@ -10,9 +10,7 @@ struct ImagePickerView: UIViewControllerRepresentable, View {
     
     @Binding var imageIdState: ImageIdState
     @Binding var data: CreateData
-    
-    @Environment(\.presentationMode) var isPresented
-    
+        
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .camera
