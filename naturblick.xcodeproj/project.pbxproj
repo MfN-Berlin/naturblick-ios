@@ -11,6 +11,8 @@
 		1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */; };
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
+		132A91412A2DCF6C00AC405C /* Map+Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132A91402A2DCF6C00AC405C /* Map+Picker.swift */; };
+		132A91432A2DD52100AC405C /* CoordinatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132A91422A2DD52100AC405C /* CoordinatesView.swift */; };
 		132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B0D9529CDD5C500B80C9E /* Font+Lato.swift */; };
 		132B0D9B29CDD78600B80C9E /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 132B0D9829CDD78600B80C9E /* lato_black.ttf */; };
 		132B0D9C29CDD78600B80C9E /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 132B0D9929CDD78600B80C9E /* lato_regular.ttf */; };
@@ -123,6 +125,8 @@
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		131E786829C9BB25000DF928 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		132A91402A2DCF6C00AC405C /* Map+Picker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Map+Picker.swift"; sourceTree = "<group>"; };
+		132A91422A2DD52100AC405C /* CoordinatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesView.swift; sourceTree = "<group>"; };
 		132B0D9529CDD5C500B80C9E /* Font+Lato.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Lato.swift"; sourceTree = "<group>"; };
 		132B0D9829CDD78600B80C9E /* lato_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_black.ttf; sourceTree = "<group>"; };
 		132B0D9929CDD78600B80C9E /* lato_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_regular.ttf; sourceTree = "<group>"; };
@@ -331,6 +335,7 @@
 				13A2923729D3116200AF772A /* CharacterValueView.swift */,
 				13A2923529D3114500AF772A /* CharacterView.swift */,
 				7B83703429E98EA10075D9F5 /* ColorTestView.swift */,
+				132A91422A2DD52100AC405C /* CoordinatesView.swift */,
 				136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */,
 				13B686AF2A093A75001FD28F /* EditObservationView.swift */,
 				7BA037BC29D6C8BB00804AFE /* GoodToKnowView.swift */,
@@ -340,6 +345,7 @@
 				7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */,
 				7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */,
 				7BBF7AF42A03C67400D184FA /* LocationRequestView.swift */,
+				132A91402A2DCF6C00AC405C /* Map+Picker.swift */,
 				136DFABA29F9752100C8B8FF /* NBEditText.swift */,
 				135E682E29EE805700192C4A /* ObservationListItemView.swift */,
 				13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */,
@@ -608,6 +614,7 @@
 				1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */,
 				13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */,
 				7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */,
+				132A91412A2DCF6C00AC405C /* Map+Picker.swift in Sources */,
 				13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */,
 				7BA037C929D7020500804AFE /* PortraitImageMeta.swift in Sources */,
 				13316BD729C9F3860077292B /* SpeciesListView.swift in Sources */,
@@ -626,6 +633,7 @@
 				7BB3DE2029F6695F00F0D387 /* SimilarSpeciesItemView.swift in Sources */,
 				13F9EF0B29ED92F100123758 /* ObservationListItemViewModel.swift in Sources */,
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
+				132A91432A2DD52100AC405C /* CoordinatesView.swift in Sources */,
 				136DFAB929F96E6500C8B8FF /* CreateObservationView.swift in Sources */,
 				13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */,
 				7BDF2D2B2A090EE8002EC35F /* PhotoLibraryManager.swift in Sources */,

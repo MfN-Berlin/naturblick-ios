@@ -48,13 +48,14 @@ extension Coordinates {
         )
     }
     
+    static let defaultCoordinates = Coordinates(latitude: 51.163375, longitude: 10.447683)
 }
 
 extension MKCoordinateRegion {
     static let defaultRegion = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.334_900,
-                                       longitude: -122.009_020),
-        latitudinalMeters: 750,
-        longitudinalMeters: 750
+        center: CLLocationCoordinate2D(latitude: 51.163375,
+                                       longitude: 10.447683),
+        latitudinalMeters: 1000000,
+        longitudinalMeters: 1000000
     )
 }
