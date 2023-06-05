@@ -4,6 +4,7 @@
 
 
 import Foundation
+import MapKit
 
 struct EditData {
     let original: Observation
@@ -11,7 +12,7 @@ struct EditData {
     var speciesId: Int64?
     var coords: Coordinates?
     var details: String
-
+    
     init(observation: Observation) {
         self.original = observation
         self.obsType = observation.obsType
@@ -20,6 +21,14 @@ struct EditData {
         self.coords = observation.coords
     }
 
+    var region: MKCoordinateRegion {
+        if let coords = self.coords {
+            return coords.region
+        } else {
+            return .defaultRegion
+        }
+    }
+    
     var patch: PatchOperation? {
         let resolvedDetails = self.details == "" ? nil : self.details
         let details = original.details != resolvedDetails ? self.details : nil
