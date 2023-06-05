@@ -18,6 +18,7 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
         data.wrappedValue.img = selectedImage
+        data.wrappedValue.crop = selectedImage
         UIImageWriteToSavedPhotosAlbum(selectedImage, nil, nil, nil)
         self.picker.imageIdState = .crop
     }

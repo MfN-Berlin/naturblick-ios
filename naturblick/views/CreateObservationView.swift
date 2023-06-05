@@ -55,7 +55,8 @@ struct CreateObservationView: View {
             case .takePhoto:
                 ImagePickerView(imageIdState: $imageIdState, data: $data)
             case .crop:
-                CropView(imageIdState: $imageIdState, data: $data)
+                ImageCropper(imageIdState: $imageIdState, image: $data.crop)
+                .ignoresSafeArea()
             case .chooseResult:
                 ResultView(imageIdState: $imageIdState, data: $data)
             }

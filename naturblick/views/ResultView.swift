@@ -75,6 +75,13 @@ struct ResultView: SwiftUI.View {
     var body: some SwiftUI.View {
         BaseView {
             VStack {
+                if let crop = data.crop {
+                    Image(uiImage: crop)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipShape(Rectangle())
+                        .frame(width: 300, height: 300)
+                }
                 if let species = resultViewModel.species {
                     ForEach(species) { species in
                         Button {
@@ -102,7 +109,7 @@ struct ResultView: SwiftUI.View {
                 }
             }
         }
-	        .task {
+        .task {
             if let img = data.crop {
                 await data.mediaId = resultViewModel.identify(img: img, data: data)
             }
