@@ -48,6 +48,10 @@ extension Coordinates {
         )
     }
     
+    var location: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
     static let defaultCoordinates = Coordinates(latitude: 51.163375, longitude: 10.447683)
 }
 

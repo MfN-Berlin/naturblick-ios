@@ -4,7 +4,7 @@
 
 
 import SwiftUI
-import CoreData
+import MapKit
 
 struct ObservationListView: View {
     private let client = BackendClient()
@@ -14,20 +14,41 @@ struct ObservationListView: View {
     @State private var createData = CreateData()
     @State private var isPresented: Bool = false
     @State private var error: HttpError? = nil
-    
+    @State private var region: MKCoordinateRegion = .defaultRegion
+    @State private var showList: Bool = true
+
     private func resetCreate() {
         createData = CreateData()
         self.create = false
     }
 
     var body: some View {
-        List(persistenceController.observations, id: \.occurenceId) { observation in
-            NavigationLink(destination: ObservationView(observation: observation, controller: persistenceController)) {
-                ObservationListItemWithImageView(observation: observation)
+        SwiftUI.Group {
+            if(showList) {
+                List(persistenceController.observations, id: \.occurenceId) { observation in
+                    NavigationLink(destination: ObservationView(observation: observation, controller: persistenceController)) {
+                        ObservationListItemWithImageView(observation: observation)
+                    }
+                }
+                .refreshable {
+                    await sync()
+                }
+            } else {
+                Map(
+                    coordinateRegion: $region,
+                    annotationItems: persistenceController.observations.filter { $0.coords != nil
+                    }
+                ) { observation in
+                    MapAnnotation(coordinate: observation.coords!.location) {
+                        NavigationLink(
+                            destination: ObservationView(observation: observation, controller: persistenceController)
+                        ) {
+                            Image(systemName: "mappin")
+                        }
+                        .foregroundColor(.red)
+                    }
+                }
             }
-        }
-        .refreshable {
-            await sync()
         }
         .navigationTitle("Feldbuch")
         .toolbar {
@@ -40,6 +61,23 @@ struct ObservationListView: View {
                     Image(systemName: "plus")
                 }
                 .accessibilityLabel("New Observation")
+            }
+            ToolbarItem(placement: .navigation	) {
+                if(showList) {
+                    Button(action: {
+                        showList = false
+                    }) {
+                        Image(systemName: "map")
+                    }
+                    .accessibilityLabel("Show observations on map")
+                } else {
+                    Button(action: {
+                        showList = true
+                    }) {
+                        Image(systemName: "list.dash")
+                    }
+                    .accessibilityLabel("Show in list")
+                }
             }
         }
         .sheet(isPresented: $create) {

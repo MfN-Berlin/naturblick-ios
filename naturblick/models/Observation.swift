@@ -6,7 +6,7 @@
 import Foundation
 import SQLite
 
-struct Observation: Decodable {
+struct Observation: Decodable, Identifiable {
     let occurenceId: UUID
     let obsIdent: String?
     let obsType: ObsType
@@ -19,6 +19,10 @@ struct Observation: Decodable {
     let individuals: Int64?
     let behavior: String?
     let details: String?
+    
+    var id: UUID {
+        occurenceId
+    }
 }
 
 extension Observation {
