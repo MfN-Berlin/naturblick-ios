@@ -23,6 +23,7 @@ struct MenuView: View {
             CharactersView(group: group)
         }
     )
+    static let aboutDest = AboutView()
     
     var body: some View {
         Menu {
@@ -41,7 +42,10 @@ struct MenuView: View {
             Button("Einstellungen", action: toDo)
             Button("Feedback", action: toDo)
             Button("Impressum", action: toDo)
-            Button("Über Naturblick", action: toDo)
+            Button("Über Naturblick", action: {
+                navigateTo = AnyView(MenuView.aboutDest)
+                isNavigationActive = true
+            })
         } label: {
             Image(systemName: "ellipsis")
         }
