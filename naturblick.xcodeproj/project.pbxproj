@@ -31,6 +31,7 @@
 		134B72B32A04FBA300C1DCAD /* SyncInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134B72B22A04FBA300C1DCAD /* SyncInfo.swift */; };
 		134B72B52A05348000C1DCAD /* PatchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134B72B42A05348000C1DCAD /* PatchOperation.swift */; };
 		134B72B72A053A6300C1DCAD /* CreateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134B72B62A053A6300C1DCAD /* CreateData.swift */; };
+		134C75A72A2F32650046EEE4 /* IndvidualsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134C75A62A2F32650046EEE4 /* IndvidualsView.swift */; };
 		135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135E682E29EE805700192C4A /* ObservationListItemView.swift */; };
 		136C118B29D6E66E00805628 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 136C118A29D6E66E00805628 /* BottomSheet */; };
 		136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */; };
@@ -147,6 +148,7 @@
 		134B72B22A04FBA300C1DCAD /* SyncInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncInfo.swift; sourceTree = "<group>"; };
 		134B72B42A05348000C1DCAD /* PatchOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchOperation.swift; sourceTree = "<group>"; };
 		134B72B62A053A6300C1DCAD /* CreateData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateData.swift; sourceTree = "<group>"; };
+		134C75A62A2F32650046EEE4 /* IndvidualsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndvidualsView.swift; sourceTree = "<group>"; };
 		135E682E29EE805700192C4A /* ObservationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemView.swift; sourceTree = "<group>"; };
 		136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationPersistenceController.swift; sourceTree = "<group>"; };
 		136D907F29D18BBE00A00BD4 /* Portrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portrait.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */,
 				13316BD629C9F3860077292B /* SpeciesListView.swift */,
 				7BCCFD7629F2A62A00C71453 /* Style.swift */,
+				134C75A62A2F32650046EEE4 /* IndvidualsView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -596,6 +599,7 @@
 				135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */,
 				7B8839DA29D5762D006CB94E /* PortraitViewModel.swift in Sources */,
 				7BCD2E442A2DCF3E0083B310 /* ImageCropper.swift in Sources */,
+				134C75A72A2F32650046EEE4 /* IndvidualsView.swift in Sources */,
 				13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */,
 				7BA037CB29D703B600804AFE /* PortraitImageViewModel.swift in Sources */,
 				1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */,

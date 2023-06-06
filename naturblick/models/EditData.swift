@@ -12,6 +12,7 @@ struct EditData {
     var speciesId: Int64?
     var coords: Coordinates?
     var details: String
+    var individuals: Int64
     
     init(observation: Observation) {
         self.original = observation
@@ -19,6 +20,7 @@ struct EditData {
         self.speciesId = observation.newSpeciesId
         self.details = observation.details ?? ""
         self.coords = observation.coords
+        self.individuals = observation.individuals ?? 1
     }
 
     var region: MKCoordinateRegion {
@@ -34,11 +36,11 @@ struct EditData {
         let details = original.details != resolvedDetails ? self.details : nil
         let obsType = original.obsType != self.obsType ? self.obsType : nil
         let coords = original.coords != self.coords ? self.coords : nil
-
-        guard details != nil || obsType != nil || coords != nil else {
+        let individuals = original.individuals != self.individuals ? self.individuals : nil
+        guard details != nil || obsType != nil || coords != nil || individuals != nil else {
             return nil
         }
 
-        return PatchOperation(occurenceId: original.occurenceId, obsType: obsType, coords: coords, details: details)
+        return PatchOperation(occurenceId: original.occurenceId, obsType: obsType, coords: coords, details: details, individuals: individuals)
     }
 }

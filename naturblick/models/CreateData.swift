@@ -17,7 +17,7 @@ struct CreateData {
     var coords: Coordinates? = nil
     var details: String = ""
     var species: Species? = nil
-    
+    var individuals: Int64 = 1
     var img: UIImage? = nil
     var crop: UIImage? = nil
     var mediaId: UUID? 
@@ -38,6 +38,6 @@ struct CreateData {
         guard coords != nil || !details.isEmpty else {
             return nil
         }
-        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details)
+        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals)
     }
 }

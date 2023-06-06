@@ -12,6 +12,7 @@ struct PatchOperation: Encodable {
     let obsType: ObsType?
     let coords: Coordinates?
     let details: String?
+    let individuals: Int64?
 }
 
 extension PatchOperation {
@@ -23,6 +24,7 @@ extension PatchOperation {
         static let coordsLatitude = Expression<Double?>("coords_latitude")
         static let coordsLongitude = Expression<Double?>("coords_longitude")
         static let details = Expression<String?>("details")
+        static let individuals = Expression<Int64?>("individuals")
 
         static func setters(id: Int64, operation: PatchOperation) -> [Setter] {
             [
@@ -31,7 +33,8 @@ extension PatchOperation {
                 obsType <- operation.obsType?.rawValue,
                 coordsLatitude <- operation.coords?.latitude,
                 coordsLongitude <- operation.coords?.longitude,
-                details <- operation.details
+                details <- operation.details,
+                individuals <- operation.individuals
             ]
         }
 
@@ -48,7 +51,8 @@ extension PatchOperation {
                 occurenceId: try row.get(table[occurenceId]),
                 obsType:  type,
                 coords: coords,
-                details: try row.get(table[details])
+                details: try row.get(table[details]),
+                individuals: try row.get(table[individuals])
             )
         }
     }
