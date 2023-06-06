@@ -5,6 +5,7 @@
 
 import Foundation
 import SwiftUI
+import MapKit
 
 struct CreateData {
     var occurenceId: UUID = UUID()
@@ -21,6 +22,14 @@ struct CreateData {
     var crop: UIImage? = nil
     var mediaId: UUID? 
 
+    var region: MKCoordinateRegion {
+        if let coords = self.coords {
+            return coords.region
+        } else {
+            return .defaultRegion
+        }
+    }
+    
     var create: CreateOperation {
         CreateOperation(occurenceId: occurenceId, obsType: obsType, created: created, ccByName: ccByName, appVersion: appVersion, deviceIdentifier: deviceIdentifier, speciesId: species?.id)
     }

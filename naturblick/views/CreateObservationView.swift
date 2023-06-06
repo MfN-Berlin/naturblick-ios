@@ -4,6 +4,7 @@
 
 
 import SwiftUI
+import MapKit
 
 enum ObservationAction {
     case createImageObservation
@@ -28,6 +29,8 @@ struct CreateObservationView: View {
     @State private var isShowAskForPermission = LocationManager.shared.askForPermission()
     @State private var showImageId = false
     @State private var imageIdState: ImageIdState = .takePhoto
+    @State private var showPicker: Bool = false
+    @State private var region: MKCoordinateRegion = .defaultRegion
     
     fileprivate func isCreateImageObsAction() -> Bool {
         return obsAction == .createImageObservation
@@ -39,15 +42,19 @@ struct CreateObservationView: View {
                 if let species = data.species {
                     Text(species.sciname)
                 }
-                if let latitude = data.coords?.latitude,
-                   let longitude = data.coords?.longitude {
-                    Text("\(longitude), \(latitude)")
-                }
+                CoordinatesView(coordinates: data.coords)
+                    .onTapGesture {
+                        showPicker = true
+                    }
                 NBEditText(label: "Notes", iconAsset: "details", text: $data.details)
             }
         }.onChange(of: locationManager.userLocation) { location in
             if let location = location {
-                data.coords = Coordinates(location: location)
+                let coordinates = Coordinates(location: location)
+                if data.coords == nil {
+                    data.coords = coordinates
+                    region = coordinates.region
+                }
             }
         }
         .fullScreenCover(isPresented: $showImageId) {
@@ -63,6 +70,26 @@ struct CreateObservationView: View {
         }
         .sheet(isPresented: $isShowAskForPermission) {
             LocationRequestView()
+        }
+        .fullScreenCover(isPresented: $showPicker) {
+            NavigationView {
+                Map(coordinateRegion: $region)
+                    .picker()
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Dismiss") {
+                                region = data.region
+                                showPicker = false
+                            }
+                        }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Save") {
+                                data.coords = Coordinates(region: region)
+                                showPicker = false
+                            }
+                        }
+                    }
+            }
         }
         .task {
             if isCreateImageObsAction() {

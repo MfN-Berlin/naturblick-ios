@@ -18,17 +18,16 @@ struct EditObservationView: View {
     
     var body: some View {
         Form {
-            if let latitude = data.coords?.latitude,
-               let longitude = data.coords?.longitude {
-                Text("\(longitude), \(latitude)").onTapGesture {
+            CoordinatesView(coordinates: data.coords)
+                .onTapGesture {
                     showMap = true
                 }
-            }
             NBEditText(label: "Notes", iconAsset: "details", text: $data.details)
         }
         .fullScreenCover(isPresented: $showMap) {
             NavigationView {
                 Map(coordinateRegion: $region)
+                    .picker()
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
@@ -42,20 +41,6 @@ struct EditObservationView: View {
                                 showMap = false
                             }
                         }
-                        ToolbarItem(placement: .status) {
-                            Text("\(data.region.center.longitude), \(data.region.center.latitude)")
-                        }
-                    }
-                    .overlay(alignment: .center) {
-                        Rectangle()
-                            .fill(Color.white)
-                            .frame(width: 2, height: 50)
-                        Rectangle()
-                            .fill(Color.white)
-                            .frame(width: 50, height: 2)
-                        Circle()
-                            .fill(Color.white)
-                            .frame(width: 4, height: 4)
                     }
             }
         }
