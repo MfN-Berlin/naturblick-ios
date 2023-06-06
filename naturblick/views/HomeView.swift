@@ -71,12 +71,7 @@ struct HomeView: View {
                                 )
                                 Spacer()
                                 NavigationLink(
-                                    destination: GroupsView(
-                                        groups: Group.characterGroups,
-                                        destination: { group in
-                                            CharactersView(group: group)
-                                        }
-                                    )
+                                    destination: MenuView.charactersDest
                                 ) {
                                     HomeViewButton(text: "Merkmale auswählen",
                                                    color: Color.onPrimaryButtonPrimary,
@@ -86,7 +81,7 @@ struct HomeView: View {
                                 }
                                 Spacer()
                                 NavigationLink(
-                                    destination: ObservationListView(obsAction: .createImageObservation)) {
+                                    destination: MenuView.imageIdDest) {
                                         HomeViewButton(text: "Pflanze fotografieren",
                                                        color: Color.onPrimaryButtonPrimary,
                                                        image: Image("photo24"),
@@ -100,7 +95,7 @@ struct HomeView: View {
                             HStack(alignment: .top) {
                                 Spacer()
                                 NavigationLink(
-                                    destination: ObservationListView(obsAction: .createManualObservation)
+                                    destination: MenuView.fieldbookDestination
                                 ) {
                                     HomeViewButton(
                                         text: "Feldbuch",
@@ -111,12 +106,7 @@ struct HomeView: View {
                                 }
                                 Spacer()
                                 NavigationLink(
-                                    destination: GroupsView(
-                                        groups: Group.groups,
-                                        destination: { group in
-                                            SpeciesListView(filter: .group(group))
-                                        }
-                                    )
+                                    destination: MenuView.portraitDest
                                 ) {
                                     HomeViewButton(text: "Arten kennenlernen",
                                                    color: Color.onPrimaryButtonSecondary,

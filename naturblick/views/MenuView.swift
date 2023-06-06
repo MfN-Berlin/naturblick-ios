@@ -2,7 +2,6 @@
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
-
 import SwiftUI
 
 struct MenuView: View {
@@ -10,15 +9,30 @@ struct MenuView: View {
     @Binding var navigateTo: AnyView?
     @Binding var isNavigationActive: Bool
     
+    static let fieldbookDestination = ObservationListView(obsAction: .createManualObservation)
+    static let imageIdDest = ObservationListView(obsAction: .createImageObservation)
+    static let portraitDest = GroupsView(
+        groups: Group.groups,
+        destination: { group in
+            SpeciesListView(filter: .group(group))
+        }
+    )
+    static let charactersDest =  GroupsView(
+        groups: Group.characterGroups,
+        destination: { group in
+            CharactersView(group: group)
+        }
+    )
+    
     var body: some View {
         Menu {
             Button("Feldbuch", action: {
-                navigateTo = AnyView(ObservationListView(obsAction: .createManualObservation))
+                navigateTo = AnyView(MenuView.fieldbookDestination)
                 isNavigationActive = true
             })
             Button("Vogelstimmen aufnehmen", action: toDo)
             Button("Pflanze fotografieren", action: {
-                navigateTo = AnyView(ObservationListView(obsAction: .createImageObservation))
+                navigateTo = AnyView(MenuView.imageIdDest)
                 isNavigationActive = true
             })
             Button("Hilfe", action: toDo)
