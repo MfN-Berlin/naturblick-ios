@@ -9,7 +9,10 @@ struct HomeView: View {
     let firstRowWidthFactor: CGFloat = 4.5
     let secondRowWidthFactor: CGFloat = 5
     @Environment(\.colorScheme) var colorScheme
-
+    
+    @State var navigateTo: AnyView?
+    @State var isNavigationActive = false
+    
     var body: some View {
         BaseView(oneColor: true) {
             GeometryReader { geo in
@@ -43,6 +46,12 @@ struct HomeView: View {
                                 .frame(width: geo.size.width / 5)
                                 .foregroundColor(.gray)
                                 .padding(.defaultPadding)
+                        }
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                MenuView(navigateTo: $navigateTo, isNavigationActive: $isNavigationActive)
+                            }
+
                         }
                         RoundBottomView()
                             .frame(height: .roundBottomHeight)
@@ -129,7 +138,10 @@ struct HomeView: View {
                 }
 
             }
-        }
+        }.background(
+            NavigationLink(destination: self.navigateTo, isActive: $isNavigationActive) {
+                EmptyView()
+            })
     }
 }
 
