@@ -48,6 +48,7 @@ class ObservationPersistenceController: ObservableObject {
                         details TEXT,
                         coords_latitude DOUBLE,
                         coords_longitude DOUBLE,
+                        individuals INTEGER,
                         FOREIGN KEY(rowid) REFERENCES operation(rowid) ON DELETE CASCADE
                     );
                     CREATE TABLE observation (

@@ -102,6 +102,9 @@ extension Observation {
                 setters.append(coordsLatitude <- latitude)
                 setters.append(coordsLongitude <- longitude)
             }
+            if let newIndividuals = operation.individuals {
+                setters.append(individuals <- newIndividuals)
+            }
             return setters
         }
     }

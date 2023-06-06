@@ -23,6 +23,7 @@ struct EditObservationView: View {
                     showMap = true
                 }
             NBEditText(label: "Notes", iconAsset: "details", text: $data.details)
+            IndvidualsView(individuals: $data.individuals)
         }
         .fullScreenCover(isPresented: $showMap) {
             NavigationView {
