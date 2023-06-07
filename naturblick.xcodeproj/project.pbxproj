@@ -68,6 +68,7 @@
 		7B0FF7C62A0133EE005674E0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF7C52A0133EE005674E0 /* Coordinator.swift */; };
 		7B0FF7C82A0139D3005674E0 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */; };
 		7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B13663829F0122600F1DA30 /* SoundStreamController.swift */; };
+		7B2E70662A2F671900164C85 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E70652A2F671900164C85 /* AboutView.swift */; };
 		7B6515012A0A37470083D6F4 /* PermissionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6515002A0A37470083D6F4 /* PermissionInfoView.swift */; };
 		7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8008F129D5B66B00950839 /* PortraitImage.swift */; };
 		7B83703529E98EA10075D9F5 /* ColorTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B83703429E98EA10075D9F5 /* ColorTestView.swift */; };
@@ -185,6 +186,7 @@
 		7B0FF7C52A0133EE005674E0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		7B13663829F0122600F1DA30 /* SoundStreamController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundStreamController.swift; sourceTree = "<group>"; };
+		7B2E70652A2F671900164C85 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		7B6515002A0A37470083D6F4 /* PermissionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionInfoView.swift; sourceTree = "<group>"; };
 		7B8008F129D5B66B00950839 /* PortraitImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImage.swift; sourceTree = "<group>"; };
 		7B83703429E98EA10075D9F5 /* ColorTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTestView.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 				7BCCFD7629F2A62A00C71453 /* Style.swift */,
 				134C75A62A2F32650046EEE4 /* IndvidualsView.swift */,
 				7BCD2E472A2DFBE30083B310 /* MenuView.swift */,
+				7B2E70652A2F671900164C85 /* AboutView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BCD2E482A2DFBE30083B310 /* MenuView.swift in Sources */,
+				7B2E70662A2F671900164C85 /* AboutView.swift in Sources */,
 				7BB3DE1E29F2B0A100F0D387 /* RoundBottomView.swift in Sources */,
 				13A2923E29D33D3600AF772A /* CharactersViewModel.swift in Sources */,
 				7B0FF7C62A0133EE005674E0 /* Coordinator.swift in Sources */,
