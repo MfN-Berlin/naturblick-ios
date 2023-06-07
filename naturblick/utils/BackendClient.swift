@@ -9,9 +9,11 @@ import SwiftUI
 
 class BackendClient {
     let downloader: HTTPDownloader
+    let local: LocalFileDownloader
     private let encoder = JSONEncoder()
-    init(downloader: HTTPDownloader = URLSession.shared) {
+    init(downloader: HTTPDownloader = URLSession.shared, local: LocalFileDownloader = URLSession.shared) {
         self.downloader = downloader
+        self.local = local
     }
 
     private func dataFormField(named name: String,
@@ -57,12 +59,35 @@ class BackendClient {
         let (_, _) = try await URLSession.shared.data(for: request)
     }
     
+    func upload(sound: URL, mediaId: UUID) async throws {
+        var mpr = MultipartRequest()
+        mpr.add(
+            key: "file",
+            fileName: "\(mediaId).jpg",
+            fileMimeType: "audio/mp4",
+            fileData: try await local.download(url: sound)
+        )
+        
+        let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Configuration.deviceIdentifier)")
+        var request = mpr.urlRequest(url: url!, method: "PUT")
+        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
+        let (_, _) = try await URLSession.shared.data(for: request)
+    }
+    
     func imageId(mediaId: String) async throws -> [SpeciesResult] {
         let url = URL(string: Configuration.backendUrl + "androidimageid?mediaId=\(mediaId)")
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
         let speciesResults: [SpeciesResult] = try await downloader.httpJson(request: request)
         return speciesResults
+    }
+    
+    func spectrogram(mediaId: UUID) async throws -> UIImage {
+        let url = URL(string: Configuration.backendUrl + "/specgram/\(mediaId)")!
+        var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
+        let data = try await downloader.http(request: request)
+        return UIImage(data: data)!
     }
 
     func downloadCached(mediaId: UUID) async throws -> UIImage {
