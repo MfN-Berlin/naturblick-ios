@@ -22,7 +22,7 @@ struct AboutView: View {
                             UIApplication.shared.open(url)
                         }
                     } label: {
-                        Text("NUTZE UNSER FEEDBACKFORMULAR")
+                        Text("Nutze unser Feedbackformular")
                             .button()
                             .padding()
                     }.background(Color.onSecondaryButtonPrimary)
@@ -33,7 +33,7 @@ struct AboutView: View {
                             UIApplication.shared.open(url)
                         }
                     } label: {
-                        Text("SENDE EINE E-MAIL")
+                        Text("Sende eine E-Mail")
                             .button()
                             .padding()
                     }.background(Color.onSecondaryButtonPrimary)
