@@ -24,25 +24,29 @@ struct MenuView: View {
         }
     )
     static let aboutDest = AboutView()
+    static let imprintDest = ImprintView()
     
     var body: some View {
         Menu {
-            Button("Feldbuch", action: {
+            Button("Fieldbook", action: {
                 navigateTo = AnyView(MenuView.fieldbookDestination)
                 isNavigationActive = true
             })
-            Button("Vogelstimmen aufnehmen", action: toDo)
-            Button("Pflanze fotografieren", action: {
+            Button("Record a bird sound", action: toDo)
+            Button("Photograph a plant", action: {
                 navigateTo = AnyView(MenuView.imageIdDest)
                 isNavigationActive = true
             })
-            Button("Hilfe", action: toDo)
+            Button("Help", action: toDo)
             Divider()
             Button("Account", action: toDo)
-            Button("Einstellungen", action: toDo)
+            Button("Settings", action: toDo)
             Button("Feedback", action: toDo)
-            Button("Impressum", action: toDo)
-            Button("Über Naturblick", action: {
+            Button("Imprint", action: {
+                navigateTo = AnyView(MenuView.imprintDest)
+                isNavigationActive = true
+            })
+            Button("About Naturblick", action: {
                 navigateTo = AnyView(MenuView.aboutDest)
                 isNavigationActive = true
             })

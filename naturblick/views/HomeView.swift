@@ -57,14 +57,14 @@ struct HomeView: View {
                             .frame(height: .roundBottomHeight)
                         
                         VStack {
-                            Text("Bestimme Tieren und Pflanzen")
+                            Text("Identify animals and plants")
                                 .foregroundColor(.onPrimaryHighEmphasis)
                                 .font(.nbHeadline6)
                                 .padding(.defaultPadding)
                             
                             HStack(alignment: .top) {
                                 Spacer()
-                                HomeViewButton(text: "Vogelstimmen aufnehmen",
+                                HomeViewButton(text: "Record a bird sound",
                                                color: Color.onPrimaryButtonPrimary,
                                                image: Image("microphone"),
                                                size: topRowSize
@@ -73,7 +73,7 @@ struct HomeView: View {
                                 NavigationLink(
                                     destination: MenuView.charactersDest
                                 ) {
-                                    HomeViewButton(text: "Merkmale auswählen",
+                                    HomeViewButton(text: "Select characteristics",
                                                    color: Color.onPrimaryButtonPrimary,
                                                    image: Image("characteristics24"),
                                                    size: topRowSize
@@ -82,7 +82,7 @@ struct HomeView: View {
                                 Spacer()
                                 NavigationLink(
                                     destination: MenuView.imageIdDest) {
-                                        HomeViewButton(text: "Pflanze fotografieren",
+                                        HomeViewButton(text: "Photograph a plant",
                                                        color: Color.onPrimaryButtonPrimary,
                                                        image: Image("photo24"),
                                                        size: topRowSize
@@ -98,7 +98,7 @@ struct HomeView: View {
                                     destination: MenuView.fieldbookDestination
                                 ) {
                                     HomeViewButton(
-                                        text: "Feldbuch",
+                                        text: "Fieldbook",
                                         color: Color.onPrimaryButtonSecondary,
                                         image: Image("feldbuch24"),
                                         size: bottomRowSize
@@ -108,7 +108,7 @@ struct HomeView: View {
                                 NavigationLink(
                                     destination: MenuView.portraitDest
                                 ) {
-                                    HomeViewButton(text: "Arten kennenlernen",
+                                    HomeViewButton(text: "Learn about species",
                                                    color: Color.onPrimaryButtonSecondary,
                                                    image: Image("ic_specportraits"),
                                                    size: bottomRowSize
