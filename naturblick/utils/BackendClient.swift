@@ -63,7 +63,7 @@ class BackendClient {
         var mpr = MultipartRequest()
         mpr.add(
             key: "file",
-            fileName: "\(mediaId).jpg",
+            fileName: "\(mediaId).mp4",
             fileMimeType: "audio/mp4",
             fileData: try await local.download(url: sound)
         )
@@ -76,6 +76,14 @@ class BackendClient {
     
     func imageId(mediaId: String) async throws -> [SpeciesResult] {
         let url = URL(string: Configuration.backendUrl + "androidimageid?mediaId=\(mediaId)")
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        let speciesResults: [SpeciesResult] = try await downloader.httpJson(request: request)
+        return speciesResults
+    }
+    
+    func soundId(mediaId: String, start: Int, end: Int) async throws -> [SpeciesResult] {
+        let url = URL(string: Configuration.backendUrl + "androidsoundid?mediaId=\(mediaId)&segmentStart=\(start)&segmentEnd=\(end)")
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
         let speciesResults: [SpeciesResult] = try await downloader.httpJson(request: request)

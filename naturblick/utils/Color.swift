@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension Color {
-
+    
     static let onFeatureButtonPrimary = Color("On_Feature.Button_Primary")
     static let onFeatureButtonSecondary = Color("On_Feature.Button_Secondary")
     static let onFeatureDisabled = Color("On_Feature.Disabled")
@@ -44,4 +44,6 @@ extension Color {
     static let featureColor = Color("Feature")
     
     static let onImageSignalLow = Color.black.opacity(0.3)
+    static let whiteOpacity10 = Color.white.opacity(0.4)
+    static let whiteOpacity60 = Color.white.opacity(0.8)
 }

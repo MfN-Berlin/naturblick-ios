@@ -8,7 +8,7 @@ import SwiftUI
 
 enum HttpError: Error {
     case networkError
-    case serverError
+    case serverError(statusCode: Int, data: String)
 }
 
 extension HttpError {
