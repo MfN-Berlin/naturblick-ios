@@ -118,7 +118,7 @@ struct ObservationListView: View {
             self.error = error
             self.isPresented = true
         } catch {
-            preconditionFailure(error.localizedDescription)
+            preconditionFailure("\(error)")
         }
     }
 }
