@@ -119,6 +119,9 @@ class ObservationPersistenceController: ObservableObject {
     }
 
     func importObservations(from observations: [Observation]) throws {
+        guard !observations.isEmpty else {
+            return
+        }
         let observationSetters = observations.map({ observation in
             observation.settters
         })
