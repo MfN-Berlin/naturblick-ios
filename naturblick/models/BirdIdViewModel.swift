@@ -18,11 +18,10 @@ class BirdIdViewModel: ObservableObject {
         self.spectrogram = spectrogram
     }
     
-    func identify(sound: Sound, start: CGFloat, end: CGFloat) async throws {
+    func identify(sound: Sound, start: CGFloat, end: CGFloat) async throws -> [SpeciesResult] {
         guard let spectrogram = spectrogram else {
             preconditionFailure("Spectrogram is nil when calling identify")
         }
-        let result = try await client.soundId(mediaId: sound.id.uuidString, start: Int(start * spectrogram.size.width * 10), end: Int(end * spectrogram.size.width * 10))
-        print(result)
+        return try await client.soundId(mediaId: sound.id.uuidString, start: Int(start * spectrogram.size.width * 10), end: Int(end * spectrogram.size.width * 10))
     }
 }

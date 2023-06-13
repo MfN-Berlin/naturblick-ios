@@ -14,7 +14,7 @@ class ResultViewModel : ObservableObject {
     
     func identify(img: UIImage, data: CreateData) async -> UUID {
         if species != nil {
-            return data.mediaId!
+            return data.image.mediaId!
         }
         let mediaId = UUID()
         do {
@@ -75,7 +75,7 @@ struct ResultView: SwiftUI.View {
     var body: some SwiftUI.View {
         BaseView {
             VStack {
-                if let crop = data.crop {
+                if let crop = data.image.crop {
                     Image(uiImage: crop)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -110,8 +110,8 @@ struct ResultView: SwiftUI.View {
             }
         }
         .task {
-            if let img = data.crop {
-                await data.mediaId = resultViewModel.identify(img: img, data: data)
+            if let img = data.image.crop {
+                await data.image.mediaId = resultViewModel.identify(img: img, data: data)
             }
         }
     }

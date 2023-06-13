@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		13070CA82A053EC700A2046D /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13070CA72A053EC700A2046D /* Operation.swift */; };
+		130C04A22A39B36F00677BC2 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130C04A12A39B36F00677BC2 /* NavigationDestination.swift */; };
 		1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */; };
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
@@ -35,6 +36,7 @@
 		134C75A92A2F513E0046EEE4 /* BirdRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134C75A82A2F513E0046EEE4 /* BirdRecorderView.swift */; };
 		134C75AB2A2F515C0046EEE4 /* BirdRecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134C75AA2A2F515C0046EEE4 /* BirdRecorderViewModel.swift */; };
 		135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135E682E29EE805700192C4A /* ObservationListItemView.swift */; };
+		1368E2C42A374406001A2970 /* CreateFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1368E2C32A374406001A2970 /* CreateFlowView.swift */; };
 		136C118B29D6E66E00805628 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 136C118A29D6E66E00805628 /* BottomSheet */; };
 		136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */; };
 		136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D907F29D18BBE00A00BD4 /* Portrait.swift */; };
@@ -133,6 +135,7 @@
 
 /* Begin PBXFileReference section */
 		13070CA72A053EC700A2046D /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
+		130C04A12A39B36F00677BC2 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
 		1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Dimensions.swift"; sourceTree = "<group>"; };
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -163,6 +166,7 @@
 		134C75A82A2F513E0046EEE4 /* BirdRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdRecorderView.swift; sourceTree = "<group>"; };
 		134C75AA2A2F515C0046EEE4 /* BirdRecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdRecorderViewModel.swift; sourceTree = "<group>"; };
 		135E682E29EE805700192C4A /* ObservationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemView.swift; sourceTree = "<group>"; };
+		1368E2C32A374406001A2970 /* CreateFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFlowView.swift; sourceTree = "<group>"; };
 		136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationPersistenceController.swift; sourceTree = "<group>"; };
 		136D907F29D18BBE00A00BD4 /* Portrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portrait.swift; sourceTree = "<group>"; };
 		136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateObservationView.swift; sourceTree = "<group>"; };
@@ -363,6 +367,7 @@
 				13A2923529D3114500AF772A /* CharacterView.swift */,
 				7B83703429E98EA10075D9F5 /* ColorTestView.swift */,
 				132A91422A2DD52100AC405C /* CoordinatesView.swift */,
+				1368E2C32A374406001A2970 /* CreateFlowView.swift */,
 				136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */,
 				13B686AF2A093A75001FD28F /* EditObservationView.swift */,
 				7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */,
@@ -414,6 +419,7 @@
 				7BA037BE29D6C8E300804AFE /* GoodToKnow.swift */,
 				7BA037C029D6C9E800804AFE /* GoodToKnowViewModel.swift */,
 				7BCE46BE29C9DB3700C6C101 /* Group.swift */,
+				130C04A12A39B36F00677BC2 /* NavigationDestination.swift */,
 				137FE58429E5964100B397DF /* Observation.swift */,
 				13F9EF0A29ED92F100123758 /* ObservationListItemViewModel.swift */,
 				134B72B02A04FB6B00C1DCAD /* ObservationRequest.swift */,
@@ -621,6 +627,7 @@
 				1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */,
 				134B72B52A05348000C1DCAD /* PatchOperation.swift in Sources */,
 				7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */,
+				1368E2C42A374406001A2970 /* CreateFlowView.swift in Sources */,
 				13B686B22A09410A001FD28F /* Coordinates.swift in Sources */,
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
 				136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */,
@@ -659,6 +666,7 @@
 				132A91412A2DCF6C00AC405C /* Map+Picker.swift in Sources */,
 				13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */,
 				7BA037C929D7020500804AFE /* PortraitImageMeta.swift in Sources */,
+				130C04A22A39B36F00677BC2 /* NavigationDestination.swift in Sources */,
 				13316BD729C9F3860077292B /* SpeciesListView.swift in Sources */,
 				137690012A3093D30076F93A /* BirdIdView.swift in Sources */,
 				7BB3DE2329F68D4500F0D387 /* UnambiguousFeature.swift in Sources */,

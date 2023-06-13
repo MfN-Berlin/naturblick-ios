@@ -10,8 +10,7 @@ struct HomeView: View {
     let secondRowWidthFactor: CGFloat = 5
     @Environment(\.colorScheme) var colorScheme
     
-    @State var navigateTo: AnyView?
-    @State var isNavigationActive = false
+    @State var navigateTo: NavigationDestination? = nil
     
     var body: some View {
         BaseView(oneColor: true) {
@@ -49,9 +48,8 @@ struct HomeView: View {
                         }
                         .toolbar {
                             ToolbarItem(placement: .navigationBarLeading) {
-                                MenuView(navigateTo: $navigateTo, isNavigationActive: $isNavigationActive)
+                                MenuView(navigateTo: $navigateTo)
                             }
-
                         }
                         RoundBottomView()
                             .frame(height: .roundBottomHeight)
@@ -65,7 +63,10 @@ struct HomeView: View {
                             HStack(alignment: .top) {
                                 Spacer()
                                 NavigationLink(
-                                    destination: BirdIdView()) {
+                                    tag: .birdId, selection: $navigateTo,
+                                    destination: {
+                                        ObservationListView(initialCreateAction: .createSoundObservation)
+                                    }) {
                                         HomeViewButton(
                                             text: "Record a bird sound",
                                             color: Color.onPrimaryButtonPrimary,
@@ -74,7 +75,15 @@ struct HomeView: View {
                                     }
                                 Spacer()
                                 NavigationLink(
-                                    destination: MenuView.charactersDest
+                                    tag: .characteristics, selection: $navigateTo,
+                                    destination: {
+                                        GroupsView(
+                                            groups: Group.characterGroups,
+                                            destination: { group in
+                                                CharactersView(group: group)
+                                            }
+                                        )
+                                    }
                                 ) {
                                     HomeViewButton(text: "Select characteristics",
                                                    color: Color.onPrimaryButtonPrimary,
@@ -84,7 +93,10 @@ struct HomeView: View {
                                 }
                                 Spacer()
                                 NavigationLink(
-                                    destination: MenuView.imageIdDest) {
+                                    tag: .plantId, selection: $navigateTo,
+                                    destination: {
+                                        ObservationListView(initialCreateAction: .createImageObservation)
+                                    }) {
                                         HomeViewButton(text: "Photograph a plant",
                                                        color: Color.onPrimaryButtonPrimary,
                                                        image: Image("photo24"),
@@ -94,12 +106,12 @@ struct HomeView: View {
                                 Spacer()
                             }
                             .padding(.bottom, .defaultPadding)
-                        
+                            
                             HStack(alignment: .top) {
                                 Spacer()
-                                NavigationLink(
-                                    destination: MenuView.fieldbookDestination
-                                ) {
+                                NavigationLink(tag: .fieldbook, selection: $navigateTo, destination: {
+                                    ObservationListView(initialCreateAction: nil)
+                                }) {
                                     HomeViewButton(
                                         text: "Fieldbook",
                                         color: Color.onPrimaryButtonSecondary,
@@ -109,7 +121,14 @@ struct HomeView: View {
                                 }
                                 Spacer()
                                 NavigationLink(
-                                    destination: MenuView.portraitDest
+                                    tag: .species, selection: $navigateTo,
+                                    destination: {
+                                        GroupsView(
+                                            groups: Group.groups,
+                                            destination: { group in
+                                                SpeciesListView(filter: .group(group))
+                                            })
+                                    }
                                 ) {
                                     HomeViewButton(text: "Learn about species",
                                                    color: Color.onPrimaryButtonSecondary,
@@ -127,14 +146,26 @@ struct HomeView: View {
                                 .foregroundColor(.primaryColor)
                         }
                     }
-
                 }
-
+            }.background {
+                SwiftUI.Group {
+                    NavigationLink(
+                        tag: .about, selection: $navigateTo,
+                        destination: {
+                            AboutView()
+                        }
+                    ) {
+                    }
+                    NavigationLink(
+                        tag: .imprint, selection: $navigateTo,
+                        destination: {
+                            ImprintView()
+                        }
+                    ) {
+                    }
+                }
             }
-        }.background(
-            NavigationLink(destination: self.navigateTo, isActive: $isNavigationActive) {
-                EmptyView()
-            })
+        }
     }
 }
 

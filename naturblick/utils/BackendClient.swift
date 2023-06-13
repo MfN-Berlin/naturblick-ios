@@ -71,7 +71,7 @@ class BackendClient {
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Configuration.deviceIdentifier)")
         var request = mpr.urlRequest(url: url!, method: "PUT")
         request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
-        let (_, _) = try await URLSession.shared.data(for: request)
+        let _ = try await downloader.http(request: request)
     }
     
     func imageId(mediaId: String) async throws -> [SpeciesResult] {

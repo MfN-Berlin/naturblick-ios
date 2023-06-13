@@ -7,20 +7,16 @@ import SwiftUI
 import MapKit
 
 struct ObservationListView: View {
+    let initialCreateAction: CreateObservationAction?
     private let client = BackendClient()
-    @State var obsAction: ObservationAction
     @StateObject var persistenceController = ObservationPersistenceController()
-    @State private var create = false
-    @State private var createData = CreateData()
     @State private var isPresented: Bool = false
     @State private var error: HttpError? = nil
     @State private var region: MKCoordinateRegion = .defaultRegion
     @State private var showList: Bool = true
-
-    private func resetCreate() {
-        createData = CreateData()
-        self.create = false
-    }
+    @State var create: Bool = false
+    @State var evaluateAction: Bool = true
+    @State var createAction: CreateObservationAction = .createManualObservation
 
     var body: some View {
         SwiftUI.Group {
@@ -54,8 +50,7 @@ struct ObservationListView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button(action: {
-                    createData = CreateData()
-                    obsAction = .createManualObservation
+                    createAction = .createManualObservation
                     create = true
                 }) {
                     Image(systemName: "plus")
@@ -82,32 +77,26 @@ struct ObservationListView: View {
         }
         .sheet(isPresented: $create) {
             NavigationView {
-                CreateObservationView(obsAction: obsAction, data: $createData)
+                CreateFlowView(action: createAction, persistenceController: persistenceController)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
-                                resetCreate()
-                            }
-                        }
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Add") {
-                                do {
-                                    try persistenceController.insert(data: createData)
-                                    resetCreate()
-                                } catch {
-                                    fatalError(error.localizedDescription)
-                                }
+                                create = false
                             }
                         }
                     }
             }
         }
+        .alertHttpError(isPresented: $isPresented, error: error)
         .onAppear {
-            if (obsAction == .createImageObservation) {
-                create = true
+            if evaluateAction {
+                if let initial = initialCreateAction {
+                    createAction = initial
+                }
+                create = initialCreateAction != nil
+                evaluateAction = false
             }
         }
-        .alertHttpError(isPresented: $isPresented, error: error)
     }
 
     private func sync() async {
@@ -125,6 +114,6 @@ struct ObservationListView: View {
 
 struct ObservationListView_Previews: PreviewProvider {
     static var previews: some View {
-        ObservationListView(obsAction: .createManualObservation)
+        ObservationListView(initialCreateAction: nil)
     }
 }
