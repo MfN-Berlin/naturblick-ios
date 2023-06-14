@@ -64,11 +64,14 @@ struct HomeView: View {
                             
                             HStack(alignment: .top) {
                                 Spacer()
-                                HomeViewButton(text: "Record a bird sound",
-                                               color: Color.onPrimaryButtonPrimary,
-                                               image: Image("microphone"),
-                                               size: topRowSize
-                                )
+                                NavigationLink(
+                                    destination: BirdIdView()) {
+                                        HomeViewButton(
+                                            text: "Record a bird sound",
+                                            color: Color.onPrimaryButtonPrimary,
+                                            image: Image("microphone"),
+                                            size: topRowSize)
+                                    }
                                 Spacer()
                                 NavigationLink(
                                     destination: MenuView.charactersDest

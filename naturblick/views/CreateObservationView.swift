@@ -47,7 +47,7 @@ struct CreateObservationView: View {
                         showPicker = true
                     }
                 NBEditText(label: "Notes", iconAsset: "details", text: $data.details)
-                IndvidualsView(individuals: $data.individuals)
+                IndividualsView(individuals: $data.individuals)
             }
         }.onChange(of: locationManager.userLocation) { location in
             if let location = location {

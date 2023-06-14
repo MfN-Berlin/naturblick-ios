@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct IndvidualsView: View {
+struct IndividualsView: View {
     @Binding var individuals: Int64
     var body: some View {
         Stepper  {
@@ -24,8 +24,8 @@ struct IndvidualsView: View {
     }
 }
 
-struct IndvidualsView_Previews: PreviewProvider {
+struct IndividualsView_Previews: PreviewProvider {
     static var previews: some View {
-        IndvidualsView(individuals: .constant(2))
+        IndividualsView(individuals: .constant(2))
     }
 }

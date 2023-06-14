@@ -5,6 +5,7 @@
 
 import Foundation
 import Combine
+import os
 
 let validStatus = 200...299
 
@@ -14,30 +15,52 @@ protocol HTTPDownloader {
 }
 
 extension URLSession: HTTPDownloader {
+    private static let logger = Logger(
+        subsystem: Bundle.main.bundleIdentifier!,
+        category: String(describing: HTTPDownloader.self)
+    )
     func httpJson<T: Decodable>(request: URLRequest) async throws -> T {
         do {
             let (data, response) = try await self.data(for: request)
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, validStatus.contains(statusCode) else {
-                throw HttpError.serverError
+            let httpResponse = (response as! HTTPURLResponse)
+            let statusCode = httpResponse.statusCode
+            guard validStatus.contains(statusCode) else {
+                throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
             }
             let decoder = JSONDecoder()
             return try decoder.decode(T.self, from: data)
         } catch {
             switch error {
             case is URLError:
+                Self.logger.error("Network error \(error)")
                 throw HttpError.networkError
             case let httpError as HttpError:
+                Self.logger.error("Server error \(error)")
                 throw httpError
             default:
-                preconditionFailure(error.localizedDescription)
+                preconditionFailure("\(error)")
             }
         }
     }
     func http(request: URLRequest) async throws -> Data {
-        let (data, response) = try await URLSession.shared.data(for: request)
-        guard let statusCode = (response as? HTTPURLResponse)?.statusCode, validStatus.contains(statusCode) else {
-            throw HttpError.serverError
+        do {
+            let (data, response) = try await self.data(for: request)
+            let statusCode = (response as? HTTPURLResponse)!.statusCode
+            guard validStatus.contains(statusCode) else {
+                throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
+            }
+            return data
+        } catch {
+            switch error {
+            case is URLError:
+                Self.logger.error("Network error \(error)")
+                throw HttpError.networkError
+            case let httpError as HttpError:
+                Self.logger.error("Server error \(error)")
+                throw httpError
+            default:
+                preconditionFailure("\(error)")
+            }
         }
-        return data
     }
 }

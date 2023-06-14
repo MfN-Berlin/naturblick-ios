@@ -11,15 +11,14 @@ class ObservationPersistenceController: ObservableObject {
     @Published var observations: [Observation] = []
     init(inMemory: Bool = false) {
      
-        let path = NSSearchPathForDirectoriesInDomains(
-            .documentDirectory, .userDomainMask, true
-        ).first!
-
+        let supportDirURL = try! FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let fileURL = supportDirURL.appendingPathComponent("queue.sqlite3")
+        
         do {
             if inMemory {
                 self.queue = try Connection(.inMemory)
             } else {
-                self.queue = try Connection("\(path)/queue.sqlite3")
+                self.queue = try Connection(fileURL.absoluteString)
             }
             try self.queue.execute("PRAGMA foreign_keys = ON;")
             if self.queue.userVersion == 0 {
