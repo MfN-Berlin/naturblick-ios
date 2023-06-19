@@ -24,6 +24,7 @@
 		13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */; };
 		13316BE029C9FAF80077292B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 13316BDF29C9FAF80077292B /* SQLite */; };
 		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
+		133B39222A40598C00D48617 /* Connection+SpeciesDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */; };
 		1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C829DD94870075ACE3 /* HttpError.swift */; };
 		1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1CA29DD94F50075ACE3 /* BackendClient.swift */; };
 		1343D1D329DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1D229DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift */; };
@@ -152,6 +153,7 @@
 		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
 		13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewModel.swift; sourceTree = "<group>"; };
 		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
+		133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Connection+SpeciesDB.swift"; sourceTree = "<group>"; };
 		1343D1C629DD944D0075ACE3 /* HTTPDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPDownloader.swift; sourceTree = "<group>"; };
 		1343D1C829DD94870075ACE3 /* HttpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpError.swift; sourceTree = "<group>"; };
 		1343D1CA29DD94F50075ACE3 /* BackendClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendClient.swift; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */,
 				7B13663829F0122600F1DA30 /* SoundStreamController.swift */,
 				137963F129E6FFDB0043E64F /* View+alertError.swift */,
+				133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -620,6 +623,7 @@
 			files = (
 				7BCD2E482A2DFBE30083B310 /* MenuView.swift in Sources */,
 				7B2E70662A2F671900164C85 /* AboutView.swift in Sources */,
+				133B39222A40598C00D48617 /* Connection+SpeciesDB.swift in Sources */,
 				7BB3DE1E29F2B0A100F0D387 /* RoundBottomView.swift in Sources */,
 				13A2923E29D33D3600AF772A /* CharactersViewModel.swift in Sources */,
 				7B0FF7C62A0133EE005674E0 /* Coordinator.swift in Sources */,

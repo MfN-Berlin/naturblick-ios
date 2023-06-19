@@ -21,12 +21,8 @@ class SimilarSpeciesViewModel: ObservableObject {
         }
         
         func filter(portraitId: Int64) {
-            guard let path = Bundle.main.path(forResource: "strapi-db", ofType: "sqlite3") else {
-                preconditionFailure("Failed to find database file")
-            }
-            
             do {
-                let speciesDb = try Connection(path, readonly: true)
+                let speciesDb = Connection.speciesDB
                 mixups = try speciesDb.prepareRowIterator(
                     SimilarSpeciesViewModel.query(portraitId: portraitId)
                 )
