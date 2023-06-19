@@ -12,12 +12,6 @@ enum CreateObservationAction {
     case createManualObservation
 }
 
-enum ImageIdState {
-    case takePhoto
-    case crop
-    case chooseResult
-}
-
 struct CreateObservationView: View {
     @State private var isPermissionInfoDisplay = false
     @Binding var data: CreateData

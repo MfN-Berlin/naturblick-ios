@@ -28,8 +28,12 @@ struct CreateFlowView: View {
     }
     
     var body: some View {
-        if action == .createSoundObservation, data.sound.result == nil {
+        if action == .createSoundObservation, data.identified == nil {
             BirdIdView(data: $data.sound)
+        } else if action == .createImageObservation, data.identified == nil {
+            PlantIdView(data: $data.image)
+        } else if let identified = data.identified, data.species == nil {
+            SelectSpeciesView(results: identified.result, data: $data)
         } else {
             createObservationView
         }

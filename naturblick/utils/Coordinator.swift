@@ -8,19 +8,18 @@ import SwiftUI
 class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     var picker: ImagePickerView
-    var data: Binding<CreateData>
+    var data: Binding<CreateData.ImageData>
     
-    init(picker: ImagePickerView, data: Binding<CreateData>) {
+    init(picker: ImagePickerView, data: Binding<CreateData.ImageData>) {
         self.picker = picker
         self.data = data
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
-        data.wrappedValue.image.img = selectedImage
-        data.wrappedValue.image.crop = selectedImage
+        data.wrappedValue.image = NBImage(image: selectedImage)
+        data.wrappedValue.crop = nil
         UIImageWriteToSavedPhotosAlbum(selectedImage, nil, nil, nil)
-        self.picker.imageIdState = .crop
     }
     
 }

@@ -23,7 +23,7 @@ struct BirdIdView: View {
                                         Task {
                                             do {
                                                 let result = try await model.identify(sound: sound, start: data.start, end: data.end)
-                                                data.result = CreateData.SoundData.Result(species: result, selected: nil, thumbnailId: UUID())
+                                                data.result = result
                                             } catch is HttpError {
                                                 self.error = error
                                                 self.isPresented = true

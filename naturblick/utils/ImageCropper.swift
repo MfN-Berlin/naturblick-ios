@@ -6,8 +6,9 @@ import Mantis
 import SwiftUI
 
 struct ImageCropper: UIViewControllerRepresentable {
-    @Binding var imageIdState: ImageIdState
-    @Binding var image: UIImage?
+    @Environment(\.dismiss) var dismiss
+    let image: NBImage
+    @Binding var crop: NBImage?
         
     class Coordinator: CropViewControllerDelegate {
         var parent: ImageCropper
@@ -17,12 +18,11 @@ struct ImageCropper: UIViewControllerRepresentable {
         }
         
         func cropViewControllerDidCrop(_ cropViewController: Mantis.CropViewController, cropped: UIImage, transformation: Transformation, cropInfo: CropInfo) {
-            parent.image = cropped
-            parent.imageIdState = .chooseResult
+            parent.crop = NBImage(image: cropped)
         }
         
         func cropViewControllerDidCancel(_ cropViewController: Mantis.CropViewController, original: UIImage) {
-            parent.imageIdState = .chooseResult
+            parent.dismiss()
         }
     }
     
@@ -45,7 +45,7 @@ extension ImageCropper {
         var config = Mantis.Config()
         config.cropViewConfig.showAttachedRotationControlView = false
         config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1)
-        let cropViewController = Mantis.cropViewController(image: image!, config: config)
+        let cropViewController = Mantis.cropViewController(image: image.image, config: config)
         cropViewController.delegate = context.coordinator
 
         return cropViewController
