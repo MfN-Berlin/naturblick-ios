@@ -4,9 +4,9 @@
 
 
 import Foundation
+import SwiftUI
 
-
-struct SpeciesResult : Decodable, Identifiable {
-    let id: Int64
-    let score: Double
+struct NBImage {
+    let id: UUID = UUID()
+    let image: UIImage
 }

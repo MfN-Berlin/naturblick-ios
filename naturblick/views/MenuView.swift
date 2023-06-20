@@ -5,64 +5,46 @@
 import SwiftUI
 
 struct MenuView: View {
-    
-    @Binding var navigateTo: AnyView?
-    @Binding var isNavigationActive: Bool
-    
-    static let fieldbookDestination = ObservationListView(obsAction: .createManualObservation)
-    static let imageIdDest = ObservationListView(obsAction: .createImageObservation)
-    static let portraitDest = GroupsView(
-        groups: Group.groups,
-        destination: { group in
-            SpeciesListView(filter: .group(group))
-        }
-    )
-    static let charactersDest =  GroupsView(
-        groups: Group.characterGroups,
-        destination: { group in
-            CharactersView(group: group)
-        }
-    )
-    static let aboutDest = AboutView()
-    static let imprintDest = ImprintView()
+    @Binding var navigateTo: NavigationDestination?
     
     var body: some View {
         Menu {
-            Button("Fieldbook", action: {
-                navigateTo = AnyView(MenuView.fieldbookDestination)
-                isNavigationActive = true
-            })
-            Button("Record a bird sound", action: toDo)
-            Button("Photograph a plant", action: {
-                navigateTo = AnyView(MenuView.imageIdDest)
-                isNavigationActive = true
-            })
-            Button("Help", action: toDo)
+            Button("Fieldbook") {
+                navigateTo = .fieldbook
+            }
+            Button("Record a bird sound") {
+                navigateTo = .birdId
+            }
+            Button("Photograph a plant") {
+                navigateTo = .plantId
+            }
+            Button("Help")  {
+                navigateTo = .help
+            }
             Divider()
-            Button("Account", action: toDo)
-            Button("Settings", action: toDo)
-            Button("Feedback", action: toDo)
-            Button("Imprint", action: {
-                navigateTo = AnyView(MenuView.imprintDest)
-                isNavigationActive = true
-            })
-            Button("About Naturblick", action: {
-                navigateTo = AnyView(MenuView.aboutDest)
-                isNavigationActive = true
-            })
+            Button("Account") {
+                navigateTo = .account
+            }
+            Button("Settings") {
+                navigateTo = .settings
+            }
+            Button("Feedback") {
+                navigateTo = .feedback
+            }
+            Button("Imprint") {
+                navigateTo = .imprint
+            }
+            Button("About Naturblick") {
+                navigateTo = .about
+            }
         } label: {
             Image(systemName: "ellipsis")
         }
-    }
-
-    func toDo() {
-        navigateTo = AnyView(Text("ToDo"))
-        isNavigationActive = true
     }
 }
 
 struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuView(navigateTo: .constant(AnyView(Text("foo"))), isNavigationActive: .constant(false))
+        MenuView(navigateTo: .constant(nil))
     }
 }

@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct Sound {
+struct NBSound {
     let id: UUID
     
     init(id: UUID = UUID()) {

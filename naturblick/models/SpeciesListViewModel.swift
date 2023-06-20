@@ -13,12 +13,8 @@ class SpeciesListViewModel: ObservableObject {
 
     init(filter: SpeciesListFilter) {
         self.filter = filter
-        guard let path = Bundle.main.path(forResource: "strapi-db", ofType: "sqlite3") else {
-            preconditionFailure("Failed to find database file")
-        }
-
         do {
-            speciesDb = try Connection(path, readonly: true)
+            speciesDb = Connection.speciesDB
             $query.map { [self] searchQuery in
                 do {
                     if query.isEmpty {

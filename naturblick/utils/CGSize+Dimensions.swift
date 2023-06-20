@@ -5,8 +5,6 @@
 
 import Foundation
 
-
-struct SpeciesResult : Decodable, Identifiable {
-    let id: Int64
-    let score: Double
+extension CGSize {
+    static let thumbnail = CGSize(width: 448, height: 448)
 }

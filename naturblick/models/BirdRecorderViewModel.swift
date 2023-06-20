@@ -10,7 +10,7 @@ import Combine
 
 struct BirdRecorder {
     let audioRecorder: AVAudioRecorder
-    let sound: Sound
+    let sound: NBSound
 }
 
 class BirdRecorderViewModel: ObservableObject {
@@ -51,7 +51,7 @@ class BirdRecorderViewModel: ObservableObject {
         
         do {
             try audioSession.setActive(true)
-            let sound = Sound()
+            let sound = NBSound()
             let fileUrl = recorder?.sound.url
             let recorder = BirdRecorder(
                 audioRecorder: try AVAudioRecorder(url: sound.url, settings: [
@@ -69,7 +69,7 @@ class BirdRecorderViewModel: ObservableObject {
         }
     }
     
-    func stop() -> Sound? {
+    func stop() -> NBSound? {
         guard let recorder = self.recorder else {
             return nil
         }

@@ -7,7 +7,7 @@ import SwiftUI
 
 struct BirdRecorderView: View {
     @StateObject private var model = BirdRecorderViewModel()
-    @Binding var sound: Sound?
+    @Binding var sound: NBSound?
     var body: some View {
         if model.isAuthorized {
             Text("\(model.currentTime)")

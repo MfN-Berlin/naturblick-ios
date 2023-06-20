@@ -17,12 +17,8 @@ class CharactersViewModel: ObservableObject {
     @Published var bottomSheetPosition: BottomSheetPosition = .dynamicBottom
     
     func initializeCharacters(group: Group) {
-        guard let path = Bundle.main.path(forResource: "strapi-db", ofType: "sqlite3") else {
-            preconditionFailure("Failed to find database file")
-        }
-        
         do {
-            let speciesDb = try Connection(path, readonly: true)
+            let speciesDb = Connection.speciesDB
             
             let characters: [(Character, [CharacterValue])] = try Dictionary(
                 grouping: speciesDb.prepare(CharactersViewModel.query(group: group)),

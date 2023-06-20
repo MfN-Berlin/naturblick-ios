@@ -14,11 +14,8 @@ class ObservationViewModel: ObservableObject {
         guard let speciesId: Int64 = observation.newSpeciesId else {
             return
         }
-        guard let path = Bundle.main.path(forResource: "strapi-db", ofType: "sqlite3") else {
-            preconditionFailure("Failed to find database file")
-        }
         do {
-            let db = try Connection(path, readonly: true)
+            let db = Connection.speciesDB
             let rowOpt = try db.pluck(
                 Species.Definition.table.filter(Species.Definition.id == speciesId)
             )

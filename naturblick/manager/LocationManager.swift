@@ -11,7 +11,6 @@ class LocationManager: NSObject, ObservableObject {
     private let manager = CLLocationManager()
     @Published var userLocation: CLLocation?
     @Published var permissionStatus: CLAuthorizationStatus?
-    static let shared = LocationManager()
     
     override init() {
         super.init()

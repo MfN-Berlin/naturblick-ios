@@ -16,12 +16,8 @@ class UnambiguousFeatureViewModel: ObservableObject {
         }
         
         func filter(portraitId: Int64) {
-            guard let path = Bundle.main.path(forResource: "strapi-db", ofType: "sqlite3") else {
-                preconditionFailure("Failed to find database file")
-            }
-            
             do {
-                let speciesDb = try Connection(path, readonly: true)
+                let speciesDb = Connection.speciesDB
                 
                 features = try speciesDb.prepareRowIterator(
                     UnambiguousFeatureViewModel.query(portraitId: portraitId)
