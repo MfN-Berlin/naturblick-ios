@@ -15,7 +15,7 @@ struct ObservationListView: View {
     @State private var region: MKCoordinateRegion = .defaultRegion
     @State private var showList: Bool = true
     @State var create: Bool = false
-    @State var evaluateAction: Bool = true
+    @State var didRunOnce: Bool = false
     @State var createAction: CreateObservationAction = .createManualObservation
 
     var body: some View {
@@ -89,12 +89,12 @@ struct ObservationListView: View {
         }
         .alertHttpError(isPresented: $isPresented, error: error)
         .onAppear {
-            if evaluateAction {
+            if !didRunOnce {
                 if let initial = initialCreateAction {
                     createAction = initial
                 }
                 create = initialCreateAction != nil
-                evaluateAction = false
+                didRunOnce = true
             }
         }
     }
