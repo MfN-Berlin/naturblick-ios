@@ -15,8 +15,7 @@ enum CreateObservationAction {
 struct CreateObservationView: View {
     @State private var isPermissionInfoDisplay = false
     @Binding var data: CreateData
-    @StateObject private var locationManager = LocationManager.shared
-    @State private var isShowAskForPermission = LocationManager.shared.askForPermission()
+    @StateObject private var locationManager = LocationManager()
     @State private var showPicker: Bool = false
     @State private var region: MKCoordinateRegion = .defaultRegion
     
@@ -42,8 +41,10 @@ struct CreateObservationView: View {
                 }
             }
         }
-        .sheet(isPresented: $isShowAskForPermission) {
-            LocationRequestView()
+        .onAppear {
+            if(locationManager.askForPermission()) {
+                locationManager.requestLocation()
+            }
         }
         .fullScreenCover(isPresented: $showPicker) {
             NavigationView {

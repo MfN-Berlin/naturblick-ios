@@ -84,7 +84,6 @@
 		7B0FF7C82A0139D3005674E0 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */; };
 		7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B13663829F0122600F1DA30 /* SoundStreamController.swift */; };
 		7B2E70662A2F671900164C85 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E70652A2F671900164C85 /* AboutView.swift */; };
-		7B6515012A0A37470083D6F4 /* PermissionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6515002A0A37470083D6F4 /* PermissionInfoView.swift */; };
 		7B8008F229D5B66B00950839 /* PortraitImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8008F129D5B66B00950839 /* PortraitImage.swift */; };
 		7B83703529E98EA10075D9F5 /* ColorTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B83703429E98EA10075D9F5 /* ColorTestView.swift */; };
 		7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8839D729D5749B006CB94E /* PortraitView.swift */; };
@@ -107,7 +106,6 @@
 		7BB3DE2529F68DC700F0D387 /* UnambiguousFeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */; };
 		7BB3DE2729F68FE100F0D387 /* SpeciesFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */; };
 		7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */; };
-		7BBF7AF52A03C67400D184FA /* LocationRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBF7AF42A03C67400D184FA /* LocationRequestView.swift */; };
 		7BC46D762A050BB80020EAC6 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC46D752A050BB80020EAC6 /* CameraManager.swift */; };
 		7BC6100A2A3096A400185BAA /* ImprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC610092A3096A400185BAA /* ImprintView.swift */; };
 		7BC6100C2A30989900185BAA /* FurtherSourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */; };
@@ -218,7 +216,6 @@
 		7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		7B13663829F0122600F1DA30 /* SoundStreamController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundStreamController.swift; sourceTree = "<group>"; };
 		7B2E70652A2F671900164C85 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
-		7B6515002A0A37470083D6F4 /* PermissionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionInfoView.swift; sourceTree = "<group>"; };
 		7B8008F129D5B66B00950839 /* PortraitImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImage.swift; sourceTree = "<group>"; };
 		7B83703429E98EA10075D9F5 /* ColorTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTestView.swift; sourceTree = "<group>"; };
 		7B8839D729D5749B006CB94E /* PortraitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitView.swift; sourceTree = "<group>"; };
@@ -240,7 +237,6 @@
 		7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnambiguousFeatureViewModel.swift; sourceTree = "<group>"; };
 		7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesFeaturesView.swift; sourceTree = "<group>"; };
 		7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		7BBF7AF42A03C67400D184FA /* LocationRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRequestView.swift; sourceTree = "<group>"; };
 		7BC46D752A050BB80020EAC6 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		7BC610092A3096A400185BAA /* ImprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImprintView.swift; sourceTree = "<group>"; };
 		7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurtherSourcesView.swift; sourceTree = "<group>"; };
@@ -389,7 +385,6 @@
 				7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */,
 				7BC610092A3096A400185BAA /* ImprintView.swift */,
 				134C75A62A2F32650046EEE4 /* IndividualsView.swift */,
-				7BBF7AF42A03C67400D184FA /* LocationRequestView.swift */,
 				132A91402A2DCF6C00AC405C /* Map+Picker.swift */,
 				7BCD2E472A2DFBE30083B310 /* MenuView.swift */,
 				136DFABA29F9752100C8B8FF /* NBEditText.swift */,
@@ -397,7 +392,6 @@
 				13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */,
 				13EC572229DC83E900D56A77 /* ObservationListView.swift */,
 				13B686A92A0902D1001FD28F /* ObservationView.swift */,
-				7B6515002A0A37470083D6F4 /* PermissionInfoView.swift */,
 				133B39252A407B2D00D48617 /* PlantIdView.swift */,
 				7BA037CC29D705D200804AFE /* PortraitImageView.swift */,
 				7B8839D729D5749B006CB94E /* PortraitView.swift */,
@@ -664,11 +658,9 @@
 				13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */,
 				7BA037CB29D703B600804AFE /* PortraitImageViewModel.swift in Sources */,
 				1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */,
-				7B6515012A0A37470083D6F4 /* PermissionInfoView.swift in Sources */,
 				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
 				7BB3DE2529F68DC700F0D387 /* UnambiguousFeatureViewModel.swift in Sources */,
 				134B72B72A053A6300C1DCAD /* CreateData.swift in Sources */,
-				7BBF7AF52A03C67400D184FA /* LocationRequestView.swift in Sources */,
 				7BA037BD29D6C8BB00804AFE /* GoodToKnowView.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */,

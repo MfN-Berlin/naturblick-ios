@@ -14,6 +14,8 @@ struct SelectSpeciesView: View {
     var body: some View {
         VStack {
             Image(uiImage: thumbnail)
+                .resizable()
+                .scaledToFill()
             List(model.speciesResults, id: \.0.id) { (result, item) in
                 Button {
                     data.species = item
