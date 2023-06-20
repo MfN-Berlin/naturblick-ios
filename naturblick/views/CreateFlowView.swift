@@ -33,7 +33,7 @@ struct CreateFlowView: View {
         } else if action == .createImageObservation, data.identified == nil {
             PlantIdView(data: $data.image)
         } else if let identified = data.identified, data.species == nil {
-            SelectSpeciesView(results: identified.result, data: $data)
+            SelectSpeciesView(results: identified.result, thumbnail: identified.crop.image, data: $data)
         } else {
             createObservationView
         }

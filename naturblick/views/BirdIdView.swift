@@ -11,6 +11,35 @@ struct BirdIdView: View {
     @State private var isPresented: Bool = false
     @State private var error: HttpError? = nil
     
+    func identifyAndCrop(sound: NBSound, spectrogram: UIImage) {
+        Task {
+            do {
+                let crop = UIGraphicsImageRenderer(size: .thumbnail).image { _ in
+                    let cropRect = CGRect(
+                        x: spectrogram.size.width * data.start,
+                        y: 0,
+                        width: spectrogram.size.width * data.end,
+                        height: spectrogram.size.height
+                    )
+                    if let cgImage = spectrogram.cgImage {
+                        if let crop = cgImage.cropping(to: cropRect) {
+                            let uiImageCrop = UIImage(cgImage: crop, scale: spectrogram.scale, orientation: spectrogram.imageOrientation)
+                            uiImageCrop.draw(in: CGRect(origin: .zero, size: .thumbnail))
+                        }
+                    }
+                }
+                data.crop = NBImage(image: crop)
+                let result = try await model.identify(sound: sound, start: data.start, end: data.end)
+                data.result = result
+            } catch is HttpError {
+                self.error = error
+                self.isPresented = true
+            } catch {
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
+    
     var body: some View {
         SwiftUI.Group {
             if let sound = data.sound {
@@ -20,17 +49,7 @@ struct BirdIdView: View {
                             .toolbar {
                                 ToolbarItem(placement: .confirmationAction) {
                                     Button("Identify") {
-                                        Task {
-                                            do {
-                                                let result = try await model.identify(sound: sound, start: data.start, end: data.end)
-                                                data.result = result
-                                            } catch is HttpError {
-                                                self.error = error
-                                                self.isPresented = true
-                                            } catch {
-                                                preconditionFailure(error.localizedDescription)
-                                            }
-                                        }
+                                        identifyAndCrop(sound: sound, spectrogram: spectrogram)
                                     }
                                 }
                             }
