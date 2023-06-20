@@ -18,7 +18,10 @@ struct ImageCropper: UIViewControllerRepresentable {
         }
         
         func cropViewControllerDidCrop(_ cropViewController: Mantis.CropViewController, cropped: UIImage, transformation: Transformation, cropInfo: CropInfo) {
-            parent.crop = NBImage(image: cropped)
+            let thumbnail = UIGraphicsImageRenderer(size: .thumbnail).image { _ in
+                cropped.draw(in: CGRect(origin: .zero, size: .thumbnail))
+            }
+            parent.crop = NBImage(image: thumbnail)
         }
         
         func cropViewControllerDidCancel(_ cropViewController: Mantis.CropViewController, original: UIImage) {
