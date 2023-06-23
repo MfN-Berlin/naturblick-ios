@@ -80,6 +80,8 @@
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
 		13F9EF0B29ED92F100123758 /* ObservationListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9EF0A29ED92F100123758 /* ObservationListItemViewModel.swift */; };
 		13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */; };
+		7B02E4DA2A4993DF006406A1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B02E4D92A4993DF006406A1 /* Settings.swift */; };
+		7B02E4DC2A499BF8006406A1 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B02E4DB2A499BF8006406A1 /* AccountViewModel.swift */; };
 		7B0FF7C62A0133EE005674E0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF7C52A0133EE005674E0 /* Coordinator.swift */; };
 		7B0FF7C82A0139D3005674E0 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */; };
 		7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B13663829F0122600F1DA30 /* SoundStreamController.swift */; };
@@ -106,6 +108,7 @@
 		7BB3DE2529F68DC700F0D387 /* UnambiguousFeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */; };
 		7BB3DE2729F68FE100F0D387 /* SpeciesFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */; };
 		7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */; };
+		7BC11AFE2A4ACD4E00823D4F /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */; };
 		7BC46D762A050BB80020EAC6 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC46D752A050BB80020EAC6 /* CameraManager.swift */; };
 		7BC6100A2A3096A400185BAA /* ImprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC610092A3096A400185BAA /* ImprintView.swift */; };
 		7BC6100C2A30989900185BAA /* FurtherSourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */; };
@@ -123,6 +126,10 @@
 		7BD016232A0B723600B07A3E /* MultipartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016222A0B723600B07A3E /* MultipartRequest.swift */; };
 		7BD016252A0B8CC400B07A3E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016242A0B8CC400B07A3E /* Data.swift */; };
 		7BD016272A0BCE1F00B07A3E /* SpeciesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */; };
+		7BDD17E02A45BE84001B9DB4 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */; };
+		7BDD17E22A45C397001B9DB4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E12A45C397001B9DB4 /* LoginView.swift */; };
+		7BDD17E42A45C5AA001B9DB4 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */; };
+		7BDD17E62A45C7C3001B9DB4 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */; };
 		7BDF2D2B2A090EE8002EC35F /* PhotoLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF2D2A2A090EE8002EC35F /* PhotoLibraryManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -212,6 +219,8 @@
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		13F9EF0A29ED92F100123758 /* ObservationListItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemViewModel.swift; sourceTree = "<group>"; };
 		13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOperation.swift; sourceTree = "<group>"; };
+		7B02E4D92A4993DF006406A1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		7B02E4DB2A499BF8006406A1 /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		7B0FF7C52A0133EE005674E0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		7B13663829F0122600F1DA30 /* SoundStreamController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundStreamController.swift; sourceTree = "<group>"; };
@@ -237,6 +246,7 @@
 		7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnambiguousFeatureViewModel.swift; sourceTree = "<group>"; };
 		7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesFeaturesView.swift; sourceTree = "<group>"; };
 		7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		7BC46D752A050BB80020EAC6 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		7BC610092A3096A400185BAA /* ImprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImprintView.swift; sourceTree = "<group>"; };
 		7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurtherSourcesView.swift; sourceTree = "<group>"; };
@@ -254,6 +264,10 @@
 		7BD016222A0B723600B07A3E /* MultipartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartRequest.swift; sourceTree = "<group>"; };
 		7BD016242A0B8CC400B07A3E /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesResult.swift; sourceTree = "<group>"; };
+		7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		7BDD17E12A45C397001B9DB4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		7BDF2D2A2A090EE8002EC35F /* PhotoLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -364,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				7B2E70652A2F671900164C85 /* AboutView.swift */,
+				7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */,
 				137F8A102A0BB8A800421CA6 /* AsyncThumbnail.swift */,
 				7BCBBB5029EEDA07000DD344 /* BaseView.swift */,
 				137690002A3093D30076F93A /* BirdIdView.swift */,
@@ -375,7 +390,9 @@
 				132A91422A2DD52100AC405C /* CoordinatesView.swift */,
 				1368E2C32A374406001A2970 /* CreateFlowView.swift */,
 				136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */,
+				7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */,
 				13B686AF2A093A75001FD28F /* EditObservationView.swift */,
+				7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */,
 				7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */,
 				7BA037BC29D6C8BB00804AFE /* GoodToKnowView.swift */,
 				7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */,
@@ -385,6 +402,7 @@
 				7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */,
 				7BC610092A3096A400185BAA /* ImprintView.swift */,
 				134C75A62A2F32650046EEE4 /* IndividualsView.swift */,
+				7BDD17E12A45C397001B9DB4 /* LoginView.swift */,
 				132A91402A2DCF6C00AC405C /* Map+Picker.swift */,
 				7BCD2E472A2DFBE30083B310 /* MenuView.swift */,
 				136DFABA29F9752100C8B8FF /* NBEditText.swift */,
@@ -395,6 +413,7 @@
 				133B39252A407B2D00D48617 /* PlantIdView.swift */,
 				7BA037CC29D705D200804AFE /* PortraitImageView.swift */,
 				7B8839D729D5749B006CB94E /* PortraitView.swift */,
+				7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */,
 				7BB3DE1D29F2B0A100F0D387 /* RoundBottomView.swift */,
 				133B391F2A40517200D48617 /* SelectSpeciesView.swift */,
 				7BB3DE1F29F6695F00F0D387 /* SimilarSpeciesItemView.swift */,
@@ -412,6 +431,7 @@
 		7BCE46BD29C9DB1E00C6C101 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				7B02E4DB2A499BF8006406A1 /* AccountViewModel.swift */,
 				137690042A30A7740076F93A /* BirdIdViewModel.swift */,
 				134C75AA2A2F515C0046EEE4 /* BirdRecorderViewModel.swift */,
 				13A2923929D3123700AF772A /* Character.swift */,
@@ -476,6 +496,7 @@
 				7BD016222A0B723600B07A3E /* MultipartRequest.swift */,
 				137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */,
 				136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */,
+				7B02E4D92A4993DF006406A1 /* Settings.swift */,
 				7B13663829F0122600F1DA30 /* SoundStreamController.swift */,
 				137963F129E6FFDB0043E64F /* View+alertError.swift */,
 			);
@@ -497,7 +518,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 131E786C29C9BB25000DF928 /* Build configuration list for PBXNativeTarget "naturblick" */;
 			buildPhases = (
-				13A2923229D2F6FE00AF772A /* ShellScript */,
 				131E785A29C9BB24000DF928 /* Sources */,
 				131E785B29C9BB24000DF928 /* Frameworks */,
 				131E785C29C9BB24000DF928 /* Resources */,
@@ -602,26 +622,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		13A2923229D2F6FE00AF772A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library GenerateCharacterAssets.swift -o generate_character_assets && ./generate_character_assets\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		131E785A29C9BB24000DF928 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -638,6 +638,7 @@
 				133B392A2A4081A000D48617 /* NBImage.swift in Sources */,
 				1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */,
 				134B72B52A05348000C1DCAD /* PatchOperation.swift in Sources */,
+				7BDD17E42A45C5AA001B9DB4 /* RegisterView.swift in Sources */,
 				7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */,
 				1368E2C42A374406001A2970 /* CreateFlowView.swift in Sources */,
 				13B686B22A09410A001FD28F /* Coordinates.swift in Sources */,
@@ -687,6 +688,8 @@
 				7BC6100C2A30989900185BAA /* FurtherSourcesView.swift in Sources */,
 				7BB03C352A0CCA9900C3A885 /* HTTPDownloader.swift in Sources */,
 				137FE58E29E5AC1C00B397DF /* ObservationResponse.swift in Sources */,
+				7BDD17E62A45C7C3001B9DB4 /* ForgotPasswordView.swift in Sources */,
+				7BDD17E02A45BE84001B9DB4 /* AccountView.swift in Sources */,
 				7BB3DE2729F68FE100F0D387 /* SpeciesFeaturesView.swift in Sources */,
 				7B993F4929F16C3D0023315B /* SoundButton.swift in Sources */,
 				137FE59029E5B3A500B397DF /* NSMutableData+append.swift in Sources */,
@@ -695,9 +698,11 @@
 				7BB3DE2029F6695F00F0D387 /* SimilarSpeciesItemView.swift in Sources */,
 				13F9EF0B29ED92F100123758 /* ObservationListItemViewModel.swift in Sources */,
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
+				7BC11AFE2A4ACD4E00823D4F /* DeleteAccountView.swift in Sources */,
 				132A91432A2DD52100AC405C /* CoordinatesView.swift in Sources */,
 				136DFAB929F96E6500C8B8FF /* CreateObservationView.swift in Sources */,
 				13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */,
+				7B02E4DA2A4993DF006406A1 /* Settings.swift in Sources */,
 				133B39202A40517200D48617 /* SelectSpeciesView.swift in Sources */,
 				7BDF2D2B2A090EE8002EC35F /* PhotoLibraryManager.swift in Sources */,
 				137690032A30946F0076F93A /* SpectrogramView.swift in Sources */,
@@ -731,9 +736,11 @@
 				7BA037CD29D705D200804AFE /* PortraitImageView.swift in Sources */,
 				13316BD929C9F4150077292B /* Species.swift in Sources */,
 				7BD016252A0B8CC400B07A3E /* Data.swift in Sources */,
+				7BDD17E22A45C397001B9DB4 /* LoginView.swift in Sources */,
 				7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */,
 				137963F229E6FFDB0043E64F /* View+alertError.swift in Sources */,
 				13A2923829D3116200AF772A /* CharacterValueView.swift in Sources */,
+				7B02E4DC2A499BF8006406A1 /* AccountViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

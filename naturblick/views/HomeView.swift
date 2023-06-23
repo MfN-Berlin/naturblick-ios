@@ -163,6 +163,13 @@ struct HomeView: View {
                         }
                     ) {
                     }
+                    NavigationLink(
+                        tag: .account, selection: $navigateTo,
+                        destination: {
+                            AccountView()
+                        }
+                    ) {
+                    }
                 }
             }
         }
