@@ -19,28 +19,28 @@ struct RegisterView: View {
         BaseView {
             ScrollView {
                 VStack {
-                    Text("**Naturblick-Account erstellen**\n\nHier kannst du einen Naturblick-Account erstellen. Bitte, gib dafür eine E-Mail-Adresse an. Wir senden dir dann den Aktivierungslink an diese Adresse.")
+                    Text("**Create account**\n\nYou create a Naturblick account here. Please enter an email address. We will send you the activation link to this address.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
                     
-                    TextField("E-Mail-Adresse", text: $email).font(.nbBody1)
+                    TextField("Email address", text: $email).font(.nbBody1)
                         .padding()
-                    TextField("Passwort", text: $password).font(.nbBody1)
+                    TextField("Password", text: $password).font(.nbBody1)
                         .padding()
-                    Text("Das Passwort muss mindestens 9 Zeichen lang sein. Es muss aus Zahlen, Groß- und Kleinbuchstaben bestehen.").tint(Color.onSecondaryButtonPrimary)
+                    Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.").tint(Color.onSecondaryButtonPrimary)
                         .font(.nbCaption)
                         .padding([.leading, .trailing])
                     
-                    Text("**Datenschutzerklärung**\n\nFür die Registrierung benötigen wir deine E-Mail-Adresse. Die Anmeldung wird erst gültig, nachdem du in einer von uns an dich verschickten E-Mail einen Bestätigungslink angeklickt hast. Die E-Mail-Adresse wird von uns ausschließlich für die Verwaltung des Accounts verwendet. Die Registrierung/Anmeldung erfolgt freiwillig und kann jederzeit widerrufen werden. Deine personenbezogenen Daten werden mit dem Löschen des Accounts aus unserem System gelöscht.\n\nDie Verarbeitung der Daten erfolgt unter Beachtung der geltenden datenschutzrechtlichen Bestimmungen. Die Übertragung deiner Eingaben erfolgt verschlüsselt. Um die Daten vor Verlust, Manipulation oder Zugriff durch unberechtigte Personen zu schützen, werden durch das Museum für Naturkunde technisch-organisatorische Maßnahmen eingesetzt, die dem aktuellen Stand der Technik entsprechen.\n\nWir nehmen Datenschutz sehr wichtig. Weitere Informationen zum Datenschutz findest du im Impressum der App.")
+                    Text("**Privacy statement**\n\nFor the registration we need your email address. The registration is only valid after you have clicked on a confirmation link in an email sent to you by us. The email address will be used by us exclusively for the administration of the account. The registration/login is voluntary and can be revoked at any time. Your personal data will be deleted from our system when the account is deleted.\n\nThe processing of the data is carried out in compliance with the applicable data protection regulations. The transmission of your entries is encrypted. In order to protect your data from loss, manipulation or access by unauthorized persons, the Museum für Naturkunde Berlin uses state-of-the-art technical and organizational measures.\n\nWe take data protection very seriously. You can find more information about data protection in the app's imprint.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
                     
-                    Toggle("Ich habe die Datenschutzerklärung zur Kenntnis genommen.", isOn: $privacy).font(.nbBody1)
+                    Toggle("I have read and understood privacy statement.", isOn: $privacy).font(.nbBody1)
                         .padding()
                     
-                    Button("Registrieren") {
+                    Button("Register") {
                         model.register(email: email, password: password)
                         showRegisterSuccess = true
                     }.disabled(privacy)
@@ -50,11 +50,11 @@ struct RegisterView: View {
             }
         }.actionSheet(isPresented: $showRegisterSuccess) {
             ActionSheet(
-                title: Text("Vielen Dank"),
-                message: Text("Wir haben dir per E-Mail einen Aktivierungslink geschickt. Bitte öffne diesen Link um deine Registrierung abzuschließen. Der Link ist gültig für 12 Stunden."),
+                title: Text("Thank you!"),
+                message: Text("We have sent you an activation link by email. Please open this link to complete your registration. The link is valid for 12 hours."),
                 buttons: [
-                    .default(Text("Meine E-Mails öffnen"), action: {}),
-                    .destructive(Text("Weiter zum Login"), action: {
+                    .default(Text("Open my emails"), action: {}),
+                    .destructive(Text("Continue to login"), action: {
                         navigateTo = .login
                     })
                 ]

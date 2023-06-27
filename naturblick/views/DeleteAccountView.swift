@@ -15,18 +15,19 @@ struct DeleteAccountView: View {
     @EnvironmentObject private var model: AccountViewModel
     
     var body: some View {
-        Text("**Willst du deinen Account wirklich löschen?**\n\nMit dem Löschen deines Accounts wird die Verknüpfung zu anderen Geräten aufgehoben. Du verlierst dann die Verbindung zu Beobachtungen auf diesen Geräten.")
+        //TODO johannes check android-texts, they differ if obs or no obs.
+        Text("**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.")
             .tint(Color.onSecondaryButtonPrimary)
             .font(.nbBody1)
             .padding()
-        TextField("E-Mail-Adresse", text: $email)
-        TextField("Passwort", text: $password)
-        Button("Account löschen") {
+        TextField("Email address", text: $email)
+        TextField("Password", text: $password)
+        Button("Delete account") {
             model.deleteAccount(email: email, password: password)
             //TODO johannes sucess/ fail behandeln
         }.foregroundColor(.black)
             .buttonStyle(.bordered)
-        Button("Passwort vergessen") {
+        Button("Forgot Password") {
             navigateTo = .forgot
         }
     }
