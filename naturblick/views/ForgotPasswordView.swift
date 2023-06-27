@@ -15,14 +15,14 @@ struct ForgotPasswordView: View {
     var body: some View {
         BaseView {
             VStack {
-                TextField("E-Mail-Adresse", text: $email).font(.nbBody1)
+                TextField("Email address", text: $email).font(.nbBody1)
                     .padding()
                 
-                Button("Passwort zurücksetzen") {
+                Button("Reset password") {
                     showSendInfo = true
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
-                Text("**Hinweis Passwort vergessen**\n\nWenn du ein neues Passwort vergibst, werden alle Handys, die mit dem Account verknüpft sind, aus Sicherheitsgründen automatisch ausgeloggt. Alle deine Beobachtungen bleiben weiterhin mit deinem Account verknüpft und werden dir angezeigt.")
+                Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
                     .padding()
@@ -30,13 +30,13 @@ struct ForgotPasswordView: View {
             }
         }.actionSheet(isPresented: $showSendInfo) {
             ActionSheet(
-                title: Text("Neues Passwort"),
-                message: Text("Wir haben an die von dir angegebene E-Mail-Adresse einen Link zum Zurücksetzen des Passworts gesendet. Der Link ist gültig für 12 Stunden. Solltest du nach 10 Minuten keine E-Mail erhalten, ist uns die angegebene E-Mail-Adresse nicht bekannt."),
+                title: Text("New password"),
+                message: Text("We have sent a password reset link to the email address you provided. The link is valid for 12 hours. If you do not receive an email after 10 minutes, the email address you provided is not associated with an existing account."),
                 buttons: [
-                    .default(Text("Meine E-Mails öffnen"), action: {
+                    .default(Text("Open my emails"), action: {
                         //TODO johannes hier zum EMail Client
                     }),
-                    .destructive(Text("Zurück zum Login"), action: {
+                    .destructive(Text("Go back to login"), action: {
                         navigateTo = .login
                     })
                 ]

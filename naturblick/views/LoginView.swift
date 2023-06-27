@@ -19,19 +19,19 @@ struct LoginView: View {
         BaseView {
             VStack {
                 if (model.activated) {
-                    Text("Dein Naturblick-Account ist aktiviert. Logge dich mit deiner E-Mail-Adresse und Passwort auf allen Geräten ein, die du mit dem Account verbinden möchtest.")
+                    Text("Your Naturblick account is activated. Log in with your email address and password on all devices you want to connect to the account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
                 } else {
-                    Text("Verbinde alle Beobachtungen auf diesem Handy mit deinem Account.")
+                    Text("Connect all observations on this phone to your account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
                 }
                 
-                TextField("E-Mail-Adresse", text: $email)
-                TextField("Passwort", text: $password)
+                TextField("Email address", text: $email)
+                TextField("Password", text: $password)
                 
                 Button("Login") {
                     model.login(email: email, password: password)
@@ -39,12 +39,12 @@ struct LoginView: View {
                     dismiss()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
-                Button("Passwort vergessen") {
+                Button("Forgot Password") {
                     navigateTo = .forgot
                 }.buttonStyle(.bordered).foregroundColor(.black)
                 
                 if (!model.activated) {
-                    Text("**Hinweis Passwort vergessen**\n\nWenn du ein neues Passwort vergibst, werden alle Handys, die mit dem Account verknüpft sind, aus Sicherheitsgründen automatisch ausgeloggt. Alle deine Beobachtungen bleiben weiterhin mit deinem Account verknüpft und werden dir angezeigt.")
+                    Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
