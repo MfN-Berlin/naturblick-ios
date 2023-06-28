@@ -15,8 +15,7 @@ struct DeleteAccountView: View {
     @EnvironmentObject private var model: AccountViewModel
     
     var body: some View {
-        //TODO johannes check android-texts, they differ if obs or no obs.
-        Text("**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.")
+        Text("**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.\n\nPlease, confirm your wish to delete the account by entering your login details.")
             .tint(Color.onSecondaryButtonPrimary)
             .font(.nbBody1)
             .padding()
