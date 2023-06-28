@@ -121,7 +121,7 @@ enum GenerateCharacterAssets {
         let data = try await URLSession.shared.httpData(from: URL(string: "https://staging.naturblick.net/strapi/character-values?_limit=-1")!)
         let characters = try decoder.decode([CharacterValue].self, from: data)
         for character in characters {
-            guard character.image != nil || character.colors != nil else {
+            guard character.image != nil || (character.colors != nil && character.colors != "") else {
                 continue
             }
             let assetDir = generatedAssets.appendingPathComponent("character_\(character.id).imageset")
