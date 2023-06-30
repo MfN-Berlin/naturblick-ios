@@ -8,12 +8,29 @@ struct RegisterView: View {
     
     @Binding var navigateTo: AccountNavigationDestination?
     
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @State private var email: String = "johannes.ebbighausen@gmail.com"
+    @State private var password: String = "asdfAsdf1"
     @State private var privacy: Bool = false
     @State private var showRegisterSuccess: Bool = false
     
     @EnvironmentObject private var model: AccountViewModel
+    
+    @State private var isPresented: Bool = false
+    @State private var error: HttpError? = nil
+    
+    func register() {
+        Task {
+            do {
+                let _ = try await model.register(email: email, password: password)
+                showRegisterSuccess = true
+            } catch is HttpError {
+                self.error = error
+                self.isPresented = true
+            } catch {
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
     
     var body: some View {
         BaseView {
@@ -41,11 +58,11 @@ struct RegisterView: View {
                         .padding()
                     
                     Button("Register") {
-                        model.register(email: email, password: password)
-                        showRegisterSuccess = true
-                    }.disabled(privacy)
+                        register()
+                    }.disabled(!privacy)
                         .foregroundColor(.black)
                         .buttonStyle(.bordered)
+                    Spacer(minLength: 10)
                 }
             }
         }.actionSheet(isPresented: $showRegisterSuccess) {
@@ -60,6 +77,7 @@ struct RegisterView: View {
                 ]
             )
         }
+        .alertHttpError(isPresented: $isPresented, error: error)
     }
 }
 

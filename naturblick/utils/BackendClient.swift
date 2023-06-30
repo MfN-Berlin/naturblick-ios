@@ -112,4 +112,31 @@ class BackendClient {
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
     }
+    
+    func signUp(deviceId: String, email: String, password: String) async throws -> Int {
+                
+        let url = URL(string: Configuration.backendUrl + "signUp")
+        var request = URLRequest(url: url!)
+
+        var requestBody = URLComponents()
+        requestBody.queryItems = [
+            URLQueryItem(name: "deviceIdentifier", value: deviceId),
+            URLQueryItem(name: "email", value: email),
+            URLQueryItem(name: "password", value: password)
+        ]
+        
+        request.httpBody = requestBody.query?.data(using: .utf8)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        var statusCode: Int? = nil
+        
+        try await downloader.postPut(request: request) { data, response, error in
+            // print("data [ \(String(describing: data)) ] response [ \(String(describing: response)) ] error [ \(String(describing: error)) ]")
+            let x = response as? HTTPURLResponse
+            statusCode = x?.statusCode
+        }
+        
+        return statusCode!
+    }
 }

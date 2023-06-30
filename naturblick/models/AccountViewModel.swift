@@ -5,6 +5,7 @@
 
 import Foundation
 
+@MainActor
 class AccountViewModel: ObservableObject {
     
     @Published private(set) var neverSignedIn = true
@@ -13,6 +14,8 @@ class AccountViewModel: ObservableObject {
     @Published private(set) var fullySignedOut = true
     
     @Published private(set) var activated = true //TODO johannes 
+    
+    private let client = BackendClient()
     
     init() {
         email = Settings.getEmail()
@@ -28,8 +31,10 @@ class AccountViewModel: ObservableObject {
         Settings.clearEmail()
     }
     
-    func register(email: String, password: String) {
+    func register(email: String, password: String) async throws {
         self.email = email
+        
+        return try await client.signUp(deviceId: Configuration.deviceIdentifier, email: email, password: password)
     }
     
     func login(email: String, password: String) {

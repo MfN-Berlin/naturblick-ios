@@ -12,6 +12,7 @@ let validStatus = 200...299
 protocol HTTPDownloader {
     func httpJson<T: Decodable>(request: URLRequest) async throws -> T
     func http(request: URLRequest) async throws -> Data
+    func postPut(request: URLRequest, completionHandler: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void) async throws
 }
 
 extension URLSession: HTTPDownloader {
@@ -63,4 +64,9 @@ extension URLSession: HTTPDownloader {
             }
         }
     }
+    
+    func postPut(request: URLRequest, completionHandler: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void) async throws {
+        dataTask(with: request, completionHandler: completionHandler).resume()
+    }
+    
 }
