@@ -2,18 +2,39 @@
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
-
 import SwiftUI
 
 struct LoginView: View {
     
     @Binding var navigateTo: AccountNavigationDestination?
     
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @State private var email: String = Settings.EMAIL
+    @State private var password: String = Settings.PASSWORD
     
     @EnvironmentObject private var model: AccountViewModel
     @Environment(\.dismiss) var dismiss
+    
+    @State private var isPresented: Bool = false
+    @State private var error: HttpError? = nil
+    
+    @State private var showCredentialsWrong = false
+    @State private var showLoginSuccess = false
+    
+    private func signIn() -> Void {
+        Task {
+            do {
+                let _ = try await model.signIn(email: email, password: password)
+                showLoginSuccess = true
+            } catch HttpError.clientError(let statusCode) where statusCode == 400 {
+                showCredentialsWrong = true
+            } catch is HttpError {
+                self.error = error
+                self.isPresented = true
+            } catch {
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
     
     var body: some View {
         BaseView {
@@ -30,13 +51,17 @@ struct LoginView: View {
                         .padding()
                 }
                 
-                TextField("Email address", text: $email)
-                TextField("Password", text: $password)
+                TextField("Email address", text: $email).padding()
+                TextField("Password", text: $password).padding()
+                if showCredentialsWrong {
+                    Text("Credentials not recognized. Please validate your e-mail and password.")
+                        .foregroundColor(.onSecondarywarning)
+                        .font(.nbBody1)
+                        .padding()
+                }
                 
                 Button("Login") {
-                    model.login(email: email, password: password)
-                    //TODO johannes handle sucess/ fail
-                    dismiss()
+                    signIn()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
                 Button("Forgot Password") {
@@ -52,7 +77,17 @@ struct LoginView: View {
                 
                 Spacer()
             }
-        }
+        }.actionSheet(isPresented: $showLoginSuccess) {
+            ActionSheet(
+                title: Text("Success!"),
+                message: Text("You are signed in as: \(email)"),
+                buttons: [
+                    .default(Text("Ok"), action: {
+                        dismiss()
+                    })
+                ]
+            )
+        }.alertHttpError(isPresented: $isPresented, error: error)
     }
 }
 
