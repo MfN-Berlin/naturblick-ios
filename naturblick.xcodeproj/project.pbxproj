@@ -107,6 +107,8 @@
 		7BB3DE2329F68D4500F0D387 /* UnambiguousFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */; };
 		7BB3DE2529F68DC700F0D387 /* UnambiguousFeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */; };
 		7BB3DE2729F68FE100F0D387 /* SpeciesFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */; };
+		7BB68E482A544B7F00B1DC51 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB68E472A544B7F00B1DC51 /* RegisterViewModel.swift */; };
+		7BB68E4A2A545D5C00B1DC51 /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB68E492A545D5C00B1DC51 /* String+Validations.swift */; };
 		7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */; };
 		7BC11AFE2A4ACD4E00823D4F /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */; };
 		7BC46D762A050BB80020EAC6 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC46D752A050BB80020EAC6 /* CameraManager.swift */; };
@@ -245,6 +247,8 @@
 		7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnambiguousFeature.swift; sourceTree = "<group>"; };
 		7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnambiguousFeatureViewModel.swift; sourceTree = "<group>"; };
 		7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesFeaturesView.swift; sourceTree = "<group>"; };
+		7BB68E472A544B7F00B1DC51 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		7BB68E492A545D5C00B1DC51 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
 		7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		7BC46D752A050BB80020EAC6 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
@@ -459,6 +463,7 @@
 				7BA037C829D7020500804AFE /* PortraitImageMeta.swift */,
 				7BA037CA29D703B600804AFE /* PortraitImageViewModel.swift */,
 				7B8839D929D5762D006CB94E /* PortraitViewModel.swift */,
+				7BB68E472A544B7F00B1DC51 /* RegisterViewModel.swift */,
 				133B39232A4069BD00D48617 /* SelectSpeciesViewModel.swift */,
 				7BA037C229D6DFF800804AFE /* SimilarSpecies.swift */,
 				7BA037C429D6E11200804AFE /* SimilarSpeciesViewModel.swift */,
@@ -498,6 +503,7 @@
 				136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */,
 				7B02E4D92A4993DF006406A1 /* Settings.swift */,
 				7B13663829F0122600F1DA30 /* SoundStreamController.swift */,
+				7BB68E492A545D5C00B1DC51 /* String+Validations.swift */,
 				137963F129E6FFDB0043E64F /* View+alertError.swift */,
 			);
 			path = utils;
@@ -735,10 +741,12 @@
 				137FE58729E5996800B397DF /* ObsType.swift in Sources */,
 				137690052A30A7740076F93A /* BirdIdViewModel.swift in Sources */,
 				1367AA412A41AEB3006E0ACB /* CGSize+Dimensions.swift in Sources */,
+				7BB68E4A2A545D5C00B1DC51 /* String+Validations.swift in Sources */,
 				133B39262A407B2D00D48617 /* PlantIdView.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
 				7BC46D762A050BB80020EAC6 /* CameraManager.swift in Sources */,
 				13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */,
+				7BB68E482A544B7F00B1DC51 /* RegisterViewModel.swift in Sources */,
 				7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */,
 				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
 				7BD016272A0BCE1F00B07A3E /* SpeciesResult.swift in Sources */,

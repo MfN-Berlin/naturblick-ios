@@ -22,7 +22,7 @@ struct EditObservationView: View {
                 .onTapGesture {
                     showMap = true
                 }
-            NBEditText(label: "Notes", iconAsset: "details", text: $data.details)
+            NBEditText(label: "Notes", icon: Image("details"), text: $data.details)
             IndividualsView(individuals: $data.individuals)
         }
         .fullScreenCover(isPresented: $showMap) {

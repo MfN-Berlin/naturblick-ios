@@ -29,7 +29,7 @@ struct CreateObservationView: View {
                     .onTapGesture {
                         showPicker = true
                     }
-                NBEditText(label: "Notes", iconAsset: "details", text: $data.details)
+                NBEditText(label: "Notes", icon: Image("details"), text: $data.details)
                 IndividualsView(individuals: $data.individuals)
             }
         }.onChange(of: locationManager.userLocation) { location in
