@@ -9,8 +9,8 @@ struct DeleteAccountView: View {
     
     @Binding var navigateTo: AccountNavigationDestination?
     
-    @State private var email: String = Settings.EMAIL
-    @State private var password: String = Settings.PASSWORD
+    @State private var email: String = ""
+    @State private var password: String = ""
     
     @State private var showDeleteSuccess = false
     

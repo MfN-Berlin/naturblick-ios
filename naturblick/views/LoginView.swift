@@ -8,8 +8,8 @@ struct LoginView: View {
     
     @Binding var navigateTo: AccountNavigationDestination?
     
-    @State private var email: String = Settings.EMAIL
-    @State private var password: String = Settings.PASSWORD
+    @State private var email: String = ""
+    @State private var password: String = ""
     
     @EnvironmentObject private var model: AccountViewModel
     @Environment(\.dismiss) var dismiss
