@@ -38,7 +38,13 @@ class BackendClient {
         var mpr = MultipartRequest()
         mpr.addJson(key: "operations", jsonData: try encoder.encode(observationRequest))
         var request = mpr.urlRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!, method: "PUT")
-        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
+        
+        if let token = Settings.getToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        } else {
+            request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
+        }
+ 
         let response: ObservationResponse = try await downloader.httpJson(request: request)
         try controller.clearPendingOperations(ids: ids)
         return response
@@ -111,5 +117,82 @@ class BackendClient {
         let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
+    }
+    
+    func signUp(deviceId: String, email: String, password: String) async throws -> Data {
+                
+        let url = URL(string: Configuration.backendUrl + "signUp")
+        var request = URLRequest(url: url!)
+
+        var requestBody = URLComponents()
+        requestBody.queryItems = [
+            URLQueryItem(name: "deviceIdentifier", value: deviceId),
+            URLQueryItem(name: "email", value: email),
+            URLQueryItem(name: "password", value: password)
+        ]
+        
+        request.httpBody = requestBody.query?.data(using: .utf8)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        return try await downloader.http(request: request)
+    
+    }
+    
+    func signIn(email: String, password: String) async throws -> SigninResponse {
+                
+        let url = URL(string: Configuration.backendUrl + "signIn")
+        var request = URLRequest(url: url!)
+
+        var requestBody = URLComponents()
+        requestBody.queryItems = [
+            URLQueryItem(name: "username", value: email),
+            URLQueryItem(name: "password", value: password),
+            URLQueryItem(name: "grant_type", value: "password")
+        ]
+        
+        request.httpBody = requestBody.query?.data(using: .utf8)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+ 
+        let data = try await downloader.http(request: request)
+        let decoder = JSONDecoder()
+        let signInResponse = try decoder.decode(SigninResponse.self, from: data)
+        
+        return signInResponse
+    }
+    
+    func deleteAccount(email: String, password: String) async throws -> Void {
+                
+        let url = URL(string: Configuration.backendUrl + "account/delete")
+        var request = URLRequest(url: url!)
+
+        var requestBody = URLComponents()
+        requestBody.queryItems = [
+            URLQueryItem(name: "username", value: email),
+            URLQueryItem(name: "password", value: password),
+            URLQueryItem(name: "grant_type", value: "password")
+        ]
+        
+        request.httpBody = requestBody.query?.data(using: .utf8)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        let _ = try await downloader.http(request: request)
+    }
+    
+    func resetPassword(email: String) async throws -> Void {
+                
+        let url = URL(string: Configuration.backendUrl + "password/forgot")
+        var request = URLRequest(url: url!)
+
+        var requestBody = URLComponents()
+        requestBody.queryItems = [
+            URLQueryItem(name: "email", value: email)
+        ]
+        
+        request.httpBody = requestBody.query?.data(using: .utf8)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        let _ = try await downloader.http(request: request)
     }
 }

@@ -7,19 +7,38 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     
+    @EnvironmentObject private var model: AccountViewModel
+    
     @Binding var navigateTo: AccountNavigationDestination?
     
     @State private var email: String = ""
     @State private var showSendInfo: Bool = false
+        
+    @State private var isPresented: Bool = false
+    @State private var error: HttpError? = nil
+    
+    private func resetPassword() -> Void {
+        Task {
+            do {
+                try await model.resetPassword(email: email)
+                showSendInfo = true
+            } catch is HttpError {
+                self.error = error
+                self.isPresented = true
+            } catch {
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
     
     var body: some View {
         BaseView {
             VStack {
                 TextField("Email address", text: $email).font(.nbBody1)
                     .padding()
-                
+               
                 Button("Reset password") {
-                    showSendInfo = true
+                    resetPassword()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
                 Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
@@ -41,7 +60,7 @@ struct ForgotPasswordView: View {
                     })
                 ]
             )
-        }
+        }.alertHttpError(isPresented: $isPresented, error: error)
     }
 }
 

@@ -8,12 +8,34 @@ struct RegisterView: View {
     
     @Binding var navigateTo: AccountNavigationDestination?
     
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @State private var email: String = Settings.EMAIL
+    @State private var password: String = Settings.PASSWORD
+    
     @State private var privacy: Bool = false
     @State private var showRegisterSuccess: Bool = false
     
     @EnvironmentObject private var model: AccountViewModel
+    
+    @State private var isPresented: Bool = false
+    @State private var error: HttpError? = nil
+    
+    @State private var showAlreadyExists = false
+    
+    func signUp() {
+        Task {
+            do {
+                let _ = try await model.signUp(email: email, password: password)
+                showRegisterSuccess = true
+            } catch HttpError.clientError(let statusCode) where statusCode == 409 {
+                showAlreadyExists = true
+            } catch is HttpError {
+                self.error = error
+                self.isPresented = true
+            } catch {
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
     
     var body: some View {
         BaseView {
@@ -28,6 +50,12 @@ struct RegisterView: View {
                         .padding()
                     TextField("Password", text: $password).font(.nbBody1)
                         .padding()
+                    if showAlreadyExists {
+                        Text("Email already exists.")
+                            .foregroundColor(.onSecondarywarning)
+                            .font(.nbBody1)
+                            .padding()
+                    }
                     Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.").tint(Color.onSecondaryButtonPrimary)
                         .font(.nbCaption)
                         .padding([.leading, .trailing])
@@ -41,11 +69,11 @@ struct RegisterView: View {
                         .padding()
                     
                     Button("Register") {
-                        model.register(email: email, password: password)
-                        showRegisterSuccess = true
-                    }.disabled(privacy)
+                        signUp()
+                    }.disabled(!privacy)
                         .foregroundColor(.black)
                         .buttonStyle(.bordered)
+                    Spacer(minLength: 10)
                 }
             }
         }.actionSheet(isPresented: $showRegisterSuccess) {
@@ -60,6 +88,7 @@ struct RegisterView: View {
                 ]
             )
         }
+        .alertHttpError(isPresented: $isPresented, error: error)
     }
 }
 
