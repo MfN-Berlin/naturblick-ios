@@ -13,10 +13,6 @@ struct Settings {
     private static let neverSignedInKey = "neverSignedIn"
     private static let tokenKey = "token"
     
-    static let EMAIL = "johannes.ebbighausen@gmail.com"
-    static let PASSWORD = "asdfAsdf1"
-    
-    
     static func setEmailAndRequireSignIn(email: String) {
         setEmail(email: email)
         userDefault.set(true, forKey: neverSignedInKey)

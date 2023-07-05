@@ -119,7 +119,7 @@ class BackendClient {
         return UIImage(data: data)!
     }
     
-    func signUp(deviceId: String, email: String, password: String) async throws -> Data {
+    func signUp(deviceId: String, email: String, password: String) async throws {
                 
         let url = URL(string: Configuration.backendUrl + "signUp")
         var request = URLRequest(url: url!)
@@ -135,8 +135,7 @@ class BackendClient {
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        return try await downloader.http(request: request)
-    
+        let _ = try await downloader.http(request: request)
     }
     
     func signIn(email: String, password: String) async throws -> SigninResponse {
