@@ -103,7 +103,12 @@ struct ObservationListView: View {
         do {
             let response = try await client.sync(controller: persistenceController)
             try persistenceController.importObservations(from: response.data)
-        } catch is HttpError {
+        } catch HttpError.clientError(let statusCode) where statusCode == 401 {
+            Settings.setSignedOut()
+            self.error = error
+            self.isPresented = true
+        }
+        catch is HttpError {
             self.error = error
             self.isPresented = true
         } catch {

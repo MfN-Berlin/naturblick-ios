@@ -7,38 +7,16 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     
-    @EnvironmentObject private var model: AccountViewModel
-    
-    @Binding var navigateTo: AccountNavigationDestination?
-    
-    @State private var email: String = ""
-    @State private var showSendInfo: Bool = false
-        
-    @State private var isPresented: Bool = false
-    @State private var error: HttpError? = nil
-    
-    private func resetPassword() -> Void {
-        Task {
-            do {
-                try await model.resetPassword(email: email)
-                showSendInfo = true
-            } catch is HttpError {
-                self.error = error
-                self.isPresented = true
-            } catch {
-                preconditionFailure(error.localizedDescription)
-            }
-        }
-    }
-    
+    @ObservedObject private var forgotPasswordVM = ForgotPasswordViewModel()
+    @Binding var navigateTo: NavigationDestination?
+
     var body: some View {
         BaseView {
             VStack {
-                TextField("Email address", text: $email).font(.nbBody1)
-                    .padding()
+                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt).padding()
                
                 Button("Reset password") {
-                    resetPassword()
+                    forgotPasswordVM.resetPassword()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
                 Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
@@ -47,7 +25,7 @@ struct ForgotPasswordView: View {
                     .padding()
                 Spacer()
             }
-        }.actionSheet(isPresented: $showSendInfo) {
+        }.actionSheet(isPresented: $forgotPasswordVM.showSendInfo) {
             ActionSheet(
                 title: Text("New password"),
                 message: Text("We have sent a password reset link to the email address you provided. The link is valid for 12 hours. If you do not receive an email after 10 minutes, the email address you provided is not associated with an existing account."),
@@ -60,7 +38,7 @@ struct ForgotPasswordView: View {
                     })
                 ]
             )
-        }.alertHttpError(isPresented: $isPresented, error: error)
+        }.alertHttpError(isPresented: $forgotPasswordVM.isPresented, error: forgotPasswordVM.error)
     }
 }
 
