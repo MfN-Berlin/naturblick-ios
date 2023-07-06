@@ -6,7 +6,6 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @Binding var navigateTo: NavigationDestination?
     @Environment(\.dismiss) var dismiss
     
     @ObservedObject private var loginVM = LoginViewModel()
@@ -37,11 +36,12 @@ struct LoginView: View {
                 
                 Button("Login") {
                     loginVM.signIn()
-                }.foregroundColor(.black)
-                    .buttonStyle(.bordered)
-                Button("Forgot Password") {
-                    navigateTo = .forgot
-                }.buttonStyle(.bordered).foregroundColor(.black)
+                }.buttonStyle(.bordered)
+                    .background(Color.onPrimaryButtonSecondary)
+                    .foregroundColor(.onPrimaryHighEmphasis)
+                    .cornerRadius(4)
+                
+                AccountButton(text: "Forgot Password", destination: ForgotPasswordView())
                 
                 if (!loginVM.activated) {
                     Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
@@ -68,6 +68,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(navigateTo: .constant(.login))
+        LoginView()
     }
 }

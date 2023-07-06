@@ -7,8 +7,8 @@ import SwiftUI
 
 struct DeleteAccountView: View {
     
-    @Binding var navigateTo: NavigationDestination?
     @ObservedObject var deleteVM = DeleteAccountViewModel()
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         BaseView {
@@ -27,12 +27,13 @@ struct DeleteAccountView: View {
                 }
                 Button("Delete account") {
                     deleteVM.deleteAccount()
-                }.foregroundColor(.black)
-                    .buttonStyle(.bordered)
-                Button("Forgot Password") {
-                    navigateTo = .forgot
                 }.buttonStyle(.bordered)
-                    .foregroundColor(.black)
+                    .background(Color.onPrimaryButtonSecondary)
+                    .foregroundColor(.onPrimaryHighEmphasis)
+                    .cornerRadius(4)
+          
+                AccountButton(text: "Forgot Password", destination: ForgotPasswordView())
+                Spacer()
             }
         }.actionSheet(isPresented: $deleteVM.showDeleteSuccess) {
             ActionSheet(
@@ -40,7 +41,7 @@ struct DeleteAccountView: View {
                 message: Text("Your account was deleted."),
                 buttons: [
                     .default(Text("Ok"), action: {
-                        navigateTo = .account
+                        dismiss()
                     })
                 ]
             )
@@ -50,6 +51,6 @@ struct DeleteAccountView: View {
 
 struct DeleteAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        DeleteAccountView(navigateTo: .constant(.delete))
+        DeleteAccountView()
     }
 }

@@ -8,7 +8,7 @@ import SwiftUI
 struct ForgotPasswordView: View {
     
     @ObservedObject private var forgotPasswordVM = ForgotPasswordViewModel()
-    @Binding var navigateTo: NavigationDestination?
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         BaseView {
@@ -34,7 +34,7 @@ struct ForgotPasswordView: View {
                         //TODO johannes hier zum EMail Client
                     }),
                     .destructive(Text("Go back to login"), action: {
-                        navigateTo = .login
+                        dismiss()
                     })
                 ]
             )
@@ -44,6 +44,6 @@ struct ForgotPasswordView: View {
 
 struct ForgotPasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        ForgotPasswordView(navigateTo: .constant(.forgot))
+        ForgotPasswordView()
     }
 }

@@ -6,8 +6,8 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @Binding var navigateTo: NavigationDestination?
     @ObservedObject var registerVM = RegisterViewModel()
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         BaseView {
@@ -46,8 +46,10 @@ struct RegisterView: View {
                     Button("Register") {
                         registerVM.signUp()
                     }.disabled(!registerVM.isRegisterEnabled)
-                        .foregroundColor(.black)
                         .buttonStyle(.bordered)
+                        .background(Color.onPrimaryButtonSecondary)
+                        .foregroundColor(.onPrimaryHighEmphasis)
+                        .cornerRadius(4)
                         .opacity(registerVM.isRegisterEnabled ? 1 : 0.6)
                     Spacer(minLength: 10)
                 }
@@ -59,7 +61,7 @@ struct RegisterView: View {
                 buttons: [
                     .default(Text("Open my emails"), action: {}),
                     .destructive(Text("Continue to login"), action: {
-                        navigateTo = .login
+                        dismiss()
                     })
                 ]
             )
@@ -70,7 +72,7 @@ struct RegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView(navigateTo: .constant(.register))
+        RegisterView()
     }
 }
 
