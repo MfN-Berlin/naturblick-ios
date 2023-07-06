@@ -6,7 +6,7 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @Binding var navigateTo: AccountNavigationDestination?
+    @Binding var navigateTo: NavigationDestination?
     @ObservedObject var registerVM = RegisterViewModel()
     
     var body: some View {

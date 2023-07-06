@@ -7,35 +7,8 @@ import SwiftUI
 
 struct DeleteAccountView: View {
     
-    @Binding var navigateTo: AccountNavigationDestination?
-    
-    @State private var email: String = ""
-    @State private var password: String = ""
-    
-    @State private var showDeleteSuccess = false
-    
-    @State private var showCredentialsError = false
-    
-    @State private var isPresented: Bool = false
-    @State private var error: HttpError? = nil
-    
-    @EnvironmentObject private var model: AccountViewModel
-    
-    private func deleteAccount() {
-        Task {
-            do {
-                try await model.deleteAccount(email: email, password: password)
-                showDeleteSuccess = true
-            }  catch HttpError.clientError(let statusCode) where statusCode == 400 {
-                showCredentialsError = true
-            } catch is HttpError {
-                self.error = error
-                self.isPresented = true
-            } catch {
-                preconditionFailure(error.localizedDescription)
-            }
-        }
-    }
+    @Binding var navigateTo: NavigationDestination?
+    @ObservedObject var deleteVM = DeleteAccountViewModel()
     
     var body: some View {
         BaseView {
@@ -44,16 +17,16 @@ struct DeleteAccountView: View {
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
                     .padding()
-                TextField("Email address", text: $email).padding()
-                TextField("Password", text: $password).padding()
-                if showCredentialsError {
+                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $deleteVM.email, prompt: deleteVM.emailPrompt).padding()
+                NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $deleteVM.password, isSecure: true, prompt: deleteVM.passwordPrompt).padding()
+                if deleteVM.showCredentialsError {
                     Text("Credentials not recognized. Please validate your e-mail and password.")
                         .foregroundColor(.onSecondarywarning)
                         .font(.nbBody1)
                         .padding()
                 }
                 Button("Delete account") {
-                    deleteAccount()
+                    deleteVM.deleteAccount()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
                 Button("Forgot Password") {
@@ -61,17 +34,17 @@ struct DeleteAccountView: View {
                 }.buttonStyle(.bordered)
                     .foregroundColor(.black)
             }
-        }.actionSheet(isPresented: $showDeleteSuccess) {
+        }.actionSheet(isPresented: $deleteVM.showDeleteSuccess) {
             ActionSheet(
                 title: Text("Success!"),
                 message: Text("Your account was deleted."),
                 buttons: [
                     .default(Text("Ok"), action: {
-                        navigateTo = .login
+                        navigateTo = .account
                     })
                 ]
             )
-        }.alertHttpError(isPresented: $isPresented, error: error)
+        }.alertHttpError(isPresented: $deleteVM.isPresented, error: deleteVM.error)
     }
 }
 

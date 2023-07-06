@@ -5,35 +5,20 @@
 
 import Foundation
 
-@MainActor
-class RegisterViewModel: ObservableObject {
+
+class EmailWithPrompt: ObservableObject {
     @Published var email: String = ""
-    @Published var password: String = ""
-    @Published var privacyChecked: Bool = false
     
-    @Published var showRegisterSuccess: Bool = false
-    @Published var showAlreadyExists = false
-    
-    @Published var isPresented: Bool = false
-    var error: HttpError? = nil
-    
-    private let client = BackendClient()
-    
-    func signUp() {
-        Task {
-            do {
-                let _ = try await client.signUp(deviceId: Configuration.deviceIdentifier, email: email, password: password)
-                showRegisterSuccess = true
-            } catch HttpError.clientError(let statusCode) where statusCode == 409 {
-                showAlreadyExists = true
-            } catch is HttpError {
-                self.error = error
-                isPresented = true
-            } catch {
-                preconditionFailure(error.localizedDescription)
-            }
+    var emailPrompt: String? {
+        if (email.count > 0 && !email.isEmail()) {
+            return "Not a valid e-mail address"
         }
+        return nil
     }
+}
+
+class EmailAndPasswordWithPrompt: EmailWithPrompt {
+    @Published var password: String = ""
     
     func isPasswordValid() -> Bool {
         passwordPrompt == nil && !password.isEmpty
@@ -66,15 +51,38 @@ class RegisterViewModel: ObservableObject {
         
         return nil
     }
+}
+
+@MainActor
+class RegisterViewModel: EmailAndPasswordWithPrompt {
+    @Published var privacyChecked: Bool = false
+    
+    @Published var showRegisterSuccess: Bool = false
+    @Published var showAlreadyExists = false
+    
+    @Published var isPresented: Bool = false
+    var error: HttpError? = nil
+    
+    private let client = BackendClient()
+    
+    func signUp() {
+        Task {
+            do {
+                let _ = try await client.signUp(deviceId: Configuration.deviceIdentifier, email: email, password: password)
+                Settings.setEmail(email: email)
+                showRegisterSuccess = true
+            } catch HttpError.clientError(let statusCode) where statusCode == 409 {
+                showAlreadyExists = true
+            } catch is HttpError {
+                self.error = error
+                isPresented = true
+            } catch {
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
     
     var isRegisterEnabled: Bool {
         isPasswordValid() && privacyChecked
-    }
-    
-    var emailPrompt: String? {
-        if (email.count > 0 && !email.isEmail()) {
-            return "Not a valid e-mail address"
-        }
-        return nil
     }
 }

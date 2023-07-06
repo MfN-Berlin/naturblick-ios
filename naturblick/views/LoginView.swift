@@ -6,40 +6,15 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @Binding var navigateTo: AccountNavigationDestination?
-    
-    @State private var email: String = ""
-    @State private var password: String = ""
-    
-    @EnvironmentObject private var model: AccountViewModel
+    @Binding var navigateTo: NavigationDestination?
     @Environment(\.dismiss) var dismiss
     
-    @State private var isPresented: Bool = false
-    @State private var error: HttpError? = nil
-    
-    @State private var showCredentialsWrong = false
-    @State private var showLoginSuccess = false
-    
-    private func signIn() -> Void {
-        Task {
-            do {
-                let _ = try await model.signIn(email: email, password: password)
-                showLoginSuccess = true
-            } catch HttpError.clientError(let statusCode) where statusCode == 400 {
-                showCredentialsWrong = true
-            } catch is HttpError {
-                self.error = error
-                self.isPresented = true
-            } catch {
-                preconditionFailure(error.localizedDescription)
-            }
-        }
-    }
-    
+    @ObservedObject private var loginVM = LoginViewModel()
+
     var body: some View {
         BaseView {
             VStack {
-                if (model.activated) {
+                if (loginVM.activated) {
                     Text("Your Naturblick account is activated. Log in with your email address and password on all devices you want to connect to the account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
@@ -51,9 +26,9 @@ struct LoginView: View {
                         .padding()
                 }
                 
-                TextField("Email address", text: $email).padding()
-                TextField("Password", text: $password).padding()
-                if showCredentialsWrong {
+                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $loginVM.email, prompt: loginVM.emailPrompt).padding()
+                NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $loginVM.password, isSecure: true, prompt: loginVM.passwordPrompt).padding()
+                if loginVM.showCredentialsWrong {
                     Text("Credentials not recognized. Please validate your e-mail and password.")
                         .foregroundColor(.onSecondarywarning)
                         .font(.nbBody1)
@@ -61,14 +36,14 @@ struct LoginView: View {
                 }
                 
                 Button("Login") {
-                    signIn()
+                    loginVM.signIn()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
                 Button("Forgot Password") {
                     navigateTo = .forgot
                 }.buttonStyle(.bordered).foregroundColor(.black)
                 
-                if (!model.activated) {
+                if (!loginVM.activated) {
                     Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
@@ -77,17 +52,17 @@ struct LoginView: View {
                 
                 Spacer()
             }
-        }.actionSheet(isPresented: $showLoginSuccess) {
+        }.actionSheet(isPresented: $loginVM.showLoginSuccess) {
             ActionSheet(
                 title: Text("Success!"),
-                message: Text("You are signed in as: \(email)"),
+                message: Text("You are signed in as: \(loginVM.email)"),
                 buttons: [
                     .default(Text("Ok"), action: {
                         dismiss()
                     })
                 ]
             )
-        }.alertHttpError(isPresented: $isPresented, error: error)
+        }.alertHttpError(isPresented: $loginVM.isPresented, error: loginVM.error)
     }
 }
 

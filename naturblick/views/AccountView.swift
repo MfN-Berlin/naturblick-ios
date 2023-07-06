@@ -5,18 +5,11 @@
 
 import SwiftUI
 
-enum AccountNavigationDestination {
-    case login
-    case forgot
-    case register
-    case delete
-}
-
 struct AccountView: View {
     
     @StateObject private var model = AccountViewModel()
     
-    @State var navigateTo: AccountNavigationDestination? = nil
+    @Binding var navigateTo: NavigationDestination?
         
     var body: some View {
         BaseView {
@@ -26,7 +19,7 @@ struct AccountView: View {
                     .font(.nbBody1)
                     .padding()
                 
-                if (model.fullySignedOut) {
+                if (model.email == nil) {
                     Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nHowever, you can still use Naturblick without an account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
@@ -37,7 +30,7 @@ struct AccountView: View {
                     Button("Register now") {
                         navigateTo = .register
                     }.buttonStyle(.bordered).foregroundColor(.black)
-                } else if (model.email != nil && model.hasToken) {
+                } else if (model.hasToken) {
                     Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nYou are signed in as: \(model.email!)\n\n**Delete account**\n\nDeleting your account will remove the link to other devices and we will automatically delete the email address you provided.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
@@ -50,7 +43,7 @@ struct AccountView: View {
                         .font(.nbBody1)
                         .padding()
 
-                } else if (model.email != nil && !model.hasToken && !model.neverSignedIn) {
+                } else if (!model.hasToken && model.email != nil) {
                     Text("You have been logged out because you have reset your password or deleted your account.\n\n**New password**\n\nLog in with your new password to link your observations on this phone to your account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
@@ -66,49 +59,20 @@ struct AccountView: View {
                         navigateTo = .register
                     }.buttonStyle(.bordered).foregroundColor(.black)
                     Button("Continue without account") {
-                        model.signOutAfterRegister()
+                        model.signOut()
                     }.foregroundColor(.black)
                     .buttonStyle(.bordered)
                 }
                 Spacer()
             }
-        }.background {
-            SwiftUI.Group {
-                NavigationLink(
-                    tag: .login, selection: $navigateTo,
-                    destination: {
-                        LoginView(navigateTo: $navigateTo).environmentObject(model)
-                    }
-                ) {
-                }
-                NavigationLink(
-                    tag: .forgot, selection: $navigateTo,
-                    destination: {
-                        ForgotPasswordView(navigateTo: $navigateTo).environmentObject(model)
-                    }
-                ) {
-                }
-                NavigationLink(
-                    tag: .delete, selection: $navigateTo,
-                    destination: {
-                        DeleteAccountView(navigateTo: $navigateTo).environmentObject(model)
-                    }
-                ) {
-                }
-                NavigationLink(
-                    tag: .register, selection: $navigateTo,
-                    destination: {
-                        RegisterView(navigateTo: $navigateTo).environmentObject(model)
-                    }
-                ) {
-                }
-            }
+        }.onChange(of: navigateTo) { _ in
+            model.reInit()
         }
     }
 }
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView()
+        AccountView(navigateTo: .constant(.account))
     }
 }
