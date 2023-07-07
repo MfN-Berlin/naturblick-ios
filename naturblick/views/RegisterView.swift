@@ -56,15 +56,24 @@ struct RegisterView: View {
             ActionSheet(
                 title: Text("Thank you!"),
                 message: Text("We have sent you an activation link by email. Please open this link to complete your registration. The link is valid for 12 hours."),
-                buttons: [
-                    .default(Text("Open my emails"), action: {}),
-                    .destructive(Text("Continue to login"), action: {
-                        navigateTo = .login
-                    })
-                ]
+                buttons:
+                    registerSuccessButtons()
             )
         }
         .alertHttpError(isPresented: $registerVM.isPresented, error: registerVM.error)
+    }
+    
+    func registerSuccessButtons() -> [Alert.Button] {
+        var buttons: [Alert.Button] = [Alert.Button.destructive(Text("Continue to login"), action: {
+            navigateTo = .login
+        })]
+       
+        if (canOpenEmail()) {
+            buttons.append(
+                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in navigateTo = .login }) })
+            )
+        }
+        return buttons
     }
 }
 
