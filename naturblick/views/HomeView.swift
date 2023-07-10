@@ -6,6 +6,8 @@ import SwiftUI
 
 struct HomeView: View {
 
+     @State var foo: Int? = nil
+    
     let firstRowWidthFactor: CGFloat = 4.5
     let secondRowWidthFactor: CGFloat = 5
     @Environment(\.colorScheme) var colorScheme
@@ -147,7 +149,8 @@ struct HomeView: View {
                         }
                     }
                 }
-            }.background {
+            }
+            .background {
                 SwiftUI.Group {
                     NavigationLink(
                         tag: .about, selection: $navigateTo,
@@ -166,35 +169,7 @@ struct HomeView: View {
                     NavigationLink(
                         tag: .account, selection: $navigateTo,
                         destination: {
-                            AccountView(navigateTo: $navigateTo)
-                        }
-                    ) {
-                    }
-                    NavigationLink(
-                        tag: .login, selection: $navigateTo,
-                        destination: {
-                            LoginView(navigateTo: $navigateTo)
-                        }
-                    ) {
-                    }
-                    NavigationLink(
-                        tag: .forgot, selection: $navigateTo,
-                        destination: {
-                            ForgotPasswordView(navigateTo: $navigateTo)
-                        }
-                    ) {
-                    }
-                    NavigationLink(
-                        tag: .delete, selection: $navigateTo,
-                        destination: {
-                            DeleteAccountView(navigateTo: $navigateTo)
-                        }
-                    ) {
-                    }
-                    NavigationLink(
-                        tag: .register, selection: $navigateTo,
-                        destination: {
-                            RegisterView(navigateTo: $navigateTo)
+                            AccountView()
                         }
                     ) {
                     }

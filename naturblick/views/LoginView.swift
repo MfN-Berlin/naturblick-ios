@@ -6,7 +6,6 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @Binding var navigateTo: NavigationDestination?
     @Environment(\.dismiss) var dismiss
     
     @ObservedObject private var loginVM = LoginViewModel()
@@ -39,8 +38,9 @@ struct LoginView: View {
                     loginVM.signIn()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
-                Button("Forgot Password") {
-                    navigateTo = .forgot
+                
+                NavigationLink(destination: ForgotPasswordView()) {
+                    Text("Forgot Password")
                 }.buttonStyle(.bordered).foregroundColor(.black)
                 
                 if (!loginVM.activated) {
@@ -68,6 +68,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(navigateTo: .constant(.login))
+        LoginView()
     }
 }

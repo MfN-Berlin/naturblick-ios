@@ -7,10 +7,11 @@ import SwiftUI
 
 struct AccountView: View {
     
+    static let loginAction = "login"
+    static let accountAction = "account"
+    
     @StateObject private var model = AccountViewModel()
     
-    @Binding var navigateTo: NavigationDestination?
-        
     var body: some View {
         BaseView {
             VStack {
@@ -24,19 +25,19 @@ struct AccountView: View {
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
-                    Button("Go to login") {
-                        navigateTo = .login
+                    NavigationLink(destination: LoginView()) {
+                        Text("Go to login")
                     }.buttonStyle(.bordered).foregroundColor(.black)
-                    Button("Register now") {
-                        navigateTo = .register
+                    NavigationLink(destination: RegisterView()) {
+                        Text("Register now")
                     }.buttonStyle(.bordered).foregroundColor(.black)
                 } else if (model.hasToken) {
                     Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nYou are signed in as: \(model.email!)\n\n**Delete account**\n\nDeleting your account will remove the link to other devices and we will automatically delete the email address you provided.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
-                    Button("Go to delete account") {
-                        navigateTo = .delete
+                    NavigationLink(destination: DeleteAccountView()) {
+                        Text("Go to delete account")
                     }.buttonStyle(.bordered).foregroundColor(.black)
                     Text("**Advice for the connection with old devices**\n\nTo transfer observations from old devices to new ones, we recommend that you log in on both devices. If you pass on or recycle your phone, uninstall Naturblick on your phone or simply reset it to its default settings. This will not delete your old observations. Do not delete the account, as this would break the link between the observations.")
                         .tint(Color.onSecondaryButtonPrimary)
@@ -48,15 +49,15 @@ struct AccountView: View {
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
-                    Button("Go to login") {
-                        navigateTo = .login
+                    NavigationLink(destination: LoginView()) {
+                        Text("Go to login")
                     }.buttonStyle(.bordered).foregroundColor(.black)
                     Text("**Account deleted**\n\nRegister a new account or use Naturblick without an account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
-                    Button("Register") {
-                        navigateTo = .register
+                    NavigationLink(destination: RegisterView()) {
+                        Text("Register")
                     }.buttonStyle(.bordered).foregroundColor(.black)
                     Button("Continue without account") {
                         model.signOut()
@@ -65,14 +66,12 @@ struct AccountView: View {
                 }
                 Spacer()
             }
-        }.onChange(of: navigateTo) { _ in
-            model.reInit()
         }
     }
 }
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView(navigateTo: .constant(.account))
+        AccountView()
     }
 }

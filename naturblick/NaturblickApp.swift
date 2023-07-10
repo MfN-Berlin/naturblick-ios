@@ -4,8 +4,16 @@
 
 import SwiftUI
 
+enum DeepLink {
+    case resetPasswort(token: String)
+    case speciesPortrait(speciesId: Int)
+    case activateAccount(token: String)
+}
+
 @main
 struct NaturblickApp: App {
+    
+    @State var deepLink: DeepLink? = nil
     
     func navigationBarStyling() {
         let appearance = UINavigationBarAppearance()
@@ -38,6 +46,31 @@ struct NaturblickApp: App {
             }
             .accentColor(.onPrimaryHighEmphasis)
             .font(.nbHeadline6)
+            .onOpenURL { url in
+                let path: [String] = url.pathComponents
+                
+                if (path.count >= 3) {
+                    if (path[0] == "species") {
+                        if let speciesStr = url.pathComponents.last {
+                            let speciesId = Int(speciesStr)!
+                            deepLink = .speciesPortrait(speciesId: speciesId)
+                        } else {
+                            preconditionFailure("route to artportrait is invalid [\(url.pathComponents)]")
+                        }
+                    } else if (path[0] == "account") {
+                        let second = path[1]
+                        if let token = url.pathComponents.last {
+                            if (second == "activate") {
+                                deepLink = .activateAccount(token: token)
+                            } else if (second == "reset-password") {
+                                deepLink = .resetPasswort(token: token)
+                            }
+                        }
+                    }
+                } else {
+                    preconditionFailure("route is invalid [\(url.pathComponents)]")
+                }
+            }
         }
     }
     

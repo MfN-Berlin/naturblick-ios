@@ -8,15 +8,19 @@ import SwiftUI
 struct ForgotPasswordView: View {
     
     @ObservedObject private var forgotPasswordVM = ForgotPasswordViewModel()
-    @Binding var navigateTo: NavigationDestination?
-
+    @State var action: String?
+    
     var body: some View {
         BaseView {
             VStack {
+                
+                NavigationLink(destination: LoginView(), tag: AccountView.loginAction, selection: $action) {
+                    EmptyView()
+                }
                 NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt).padding()
                
                 Button("Reset password") {
-                    forgotPasswordVM.resetPassword()
+                    forgotPasswordVM.forgotPassword()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
                 Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
@@ -36,12 +40,12 @@ struct ForgotPasswordView: View {
     
     func forgotSuccessButtons() -> [Alert.Button] {
         var buttons: [Alert.Button] = [Alert.Button.destructive(Text("Go back to login"), action: {
-            navigateTo = .login
+            action = AccountView.loginAction
         })]
        
         if (canOpenEmail()) {
             buttons.append(
-                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in navigateTo = .login }) })
+                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in action = AccountView.loginAction }) })
             )
         }
         return buttons
@@ -50,6 +54,6 @@ struct ForgotPasswordView: View {
 
 struct ForgotPasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        ForgotPasswordView(navigateTo: .constant(.forgot))
+        ForgotPasswordView()
     }
 }
