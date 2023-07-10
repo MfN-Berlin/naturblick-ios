@@ -29,16 +29,22 @@ struct ForgotPasswordView: View {
             ActionSheet(
                 title: Text("New password"),
                 message: Text("We have sent a password reset link to the email address you provided. The link is valid for 12 hours. If you do not receive an email after 10 minutes, the email address you provided is not associated with an existing account."),
-                buttons: [
-                    .default(Text("Open my emails"), action: {
-                        //TODO johannes hier zum EMail Client
-                    }),
-                    .destructive(Text("Go back to login"), action: {
-                        navigateTo = .login
-                    })
-                ]
+                buttons: forgotSuccessButtons()
             )
         }.alertHttpError(isPresented: $forgotPasswordVM.isPresented, error: forgotPasswordVM.error)
+    }
+    
+    func forgotSuccessButtons() -> [Alert.Button] {
+        var buttons: [Alert.Button] = [Alert.Button.destructive(Text("Go back to login"), action: {
+            navigateTo = .login
+        })]
+       
+        if (canOpenEmail()) {
+            buttons.append(
+                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in navigateTo = .login }) })
+            )
+        }
+        return buttons
     }
 }
 
