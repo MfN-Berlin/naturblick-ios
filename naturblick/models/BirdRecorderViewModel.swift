@@ -52,7 +52,6 @@ class BirdRecorderViewModel: ObservableObject {
         do {
             try audioSession.setActive(true)
             let sound = NBSound()
-            let fileUrl = recorder?.sound.url
             let recorder = BirdRecorder(
                 audioRecorder: try AVAudioRecorder(url: sound.url, settings: [
                     AVFormatIDKey: kAudioFormatMPEG4AAC,

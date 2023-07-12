@@ -13,8 +13,7 @@ struct NBSound {
     }
     
     var url: URL {
-        let fileName = "naturblick_\(id.uuidString).mp4"
         let docDirURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        return docDirURL.appendingPathComponent(fileName)
+        return docDirURL.appendingPathComponent(id.filename(mime: .mp4))
     }
 }

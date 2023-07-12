@@ -37,6 +37,13 @@ class BackendClient {
         let observationRequest = ObservationRequest(operations: operations, syncInfo: SyncInfo(deviceIdentifier: Configuration.deviceIdentifier))
         var mpr = MultipartRequest()
         mpr.addJson(key: "operations", jsonData: try encoder.encode(observationRequest))
+        for operation in operations {
+            if case .upload(let upload) = operation {
+                let data = try await local.download(url: URL.uploadFileURL(id: upload.mediaId, mime: upload.mime))
+                mpr.add(key: upload.mediaId.uuidString.lowercased(), fileName: upload.mediaId.filename(mime: upload.mime), fileMimeType: upload.mime.rawValue, fileData: data)
+            }
+        }
+        
         var request = mpr.urlRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!, method: "PUT")
         
         if let token = Settings.getToken() {
@@ -47,6 +54,12 @@ class BackendClient {
  
         let response: ObservationResponse = try await downloader.httpJson(request: request)
         try controller.clearPendingOperations(ids: ids)
+        for operation in operations {
+            if case .upload(let upload) = operation {
+                // Ignore failures deleting the file uploaded
+                try? FileManager().removeItem(at: URL.uploadFileURL(id: upload.mediaId, mime: upload.mime))
+            }
+        }
         return response
     }
     
@@ -78,7 +91,7 @@ class BackendClient {
         var request = mpr.urlRequest(url: url!, method: "PUT")
         request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
         let _ = try await downloader.http(request: request)
-    }
+    }	
     
     func imageId(mediaId: String) async throws -> [SpeciesResult] {
         let url = URL(string: Configuration.backendUrl + "androidimageid?mediaId=\(mediaId)")
