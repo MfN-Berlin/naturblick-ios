@@ -20,7 +20,9 @@ struct DeleteAccountView: View {
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
                     .padding()
-                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $deleteVM.email, prompt: deleteVM.emailPrompt).padding()
+                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $deleteVM.email, prompt: deleteVM.emailPrompt)
+                    .padding()
+                    .keyboardType(.emailAddress)
                 NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $deleteVM.password, isSecure: true, prompt: deleteVM.passwordPrompt).padding()
                 if deleteVM.showCredentialsError {
                     Text("Credentials not recognized. Please validate your e-mail and password.")

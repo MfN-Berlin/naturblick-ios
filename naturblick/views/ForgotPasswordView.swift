@@ -17,7 +17,9 @@ struct ForgotPasswordView: View {
                 NavigationLink(destination: LoginView(), tag: AccountView.loginAction, selection: $action) {
                     EmptyView()
                 }
-                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt).padding()
+                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt)
+                    .padding()
+                    .keyboardType(.emailAddress)
                
                 Button("Reset password") {
                     forgotPasswordVM.forgotPassword()

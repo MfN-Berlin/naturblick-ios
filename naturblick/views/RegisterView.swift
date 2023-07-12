@@ -25,7 +25,9 @@ struct RegisterView: View {
                         .font(.nbBody1)
                         .padding()
                     
-                    NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $registerVM.email, prompt: registerVM.emailPrompt).padding()
+                    NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $registerVM.email, prompt: registerVM.emailPrompt)
+                        .padding()
+                        .keyboardType(.emailAddress)
                     if registerVM.showAlreadyExists {
                         Text("Email already exists.")
                             .foregroundColor(.onSecondarywarning)

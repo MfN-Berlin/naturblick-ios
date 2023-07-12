@@ -25,7 +25,9 @@ struct LoginView: View {
                         .padding()
                 }
                 
-                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $loginVM.email, prompt: loginVM.emailPrompt).padding()
+                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $loginVM.email, prompt: loginVM.emailPrompt)
+                    .padding()
+                    .keyboardType(.emailAddress)
                 NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $loginVM.password, isSecure: true, prompt: loginVM.passwordPrompt).padding()
                 if loginVM.showCredentialsWrong {
                     Text("Credentials not recognized. Please validate your e-mail and password.")
