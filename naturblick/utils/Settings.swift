@@ -10,6 +10,7 @@ struct Settings {
     
     private static let emailKey = "email"
     private static let tokenKey = "token"
+    private static let activated = "activated"
     
     static func setEmail(email: String?) {
         userDefault.set(email, forKey: emailKey)
@@ -30,6 +31,15 @@ struct Settings {
     static func setSignedOut() {
         userDefault.removeObject(forKey: tokenKey)
     }
+    
+    static func setAccountActivation(value: Bool) {
+        userDefault.set(value, forKey: activated)
+    }
+    
+    static func isAccountActive() -> Bool {
+        return userDefault.bool(forKey: activated)
+    }
+
     
     static func clearEmail() {
         userDefault.removeObject(forKey: tokenKey)

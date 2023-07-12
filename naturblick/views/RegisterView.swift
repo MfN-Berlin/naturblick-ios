@@ -6,19 +6,28 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @Binding var navigateTo: NavigationDestination?
     @ObservedObject var registerVM = RegisterViewModel()
+    
+    @State var action: String?
+    
     
     var body: some View {
         BaseView {
             ScrollView {
                 VStack {
+                    
+                    NavigationLink(destination: LoginView(), tag: AccountView.loginAction, selection: $action) {
+                        EmptyView()
+                    }
+                    
                     Text("**Create account**\n\nYou create a Naturblick account here. Please enter an email address. We will send you the activation link to this address.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
                     
-                    NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $registerVM.email, prompt: registerVM.emailPrompt).padding()
+                    NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $registerVM.email, prompt: registerVM.emailPrompt)
+                        .padding()
+                        .keyboardType(.emailAddress)
                     if registerVM.showAlreadyExists {
                         Text("Email already exists.")
                             .foregroundColor(.onSecondarywarning)
@@ -65,12 +74,12 @@ struct RegisterView: View {
     
     func registerSuccessButtons() -> [Alert.Button] {
         var buttons: [Alert.Button] = [Alert.Button.destructive(Text("Continue to login"), action: {
-            navigateTo = .login
+            action = AccountView.loginAction
         })]
        
         if (canOpenEmail()) {
             buttons.append(
-                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in navigateTo = .login }) })
+                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in action = AccountView.loginAction }) })
             )
         }
         return buttons
@@ -79,7 +88,7 @@ struct RegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView(navigateTo: .constant(.register))
+        RegisterView()
     }
 }
 

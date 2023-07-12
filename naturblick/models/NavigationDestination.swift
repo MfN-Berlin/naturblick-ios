@@ -17,8 +17,4 @@ enum NavigationDestination {
     case settings
     case imprint
     case about
-    case login
-    case forgot
-    case register
-    case delete
 }

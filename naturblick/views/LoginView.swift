@@ -6,7 +6,6 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @Binding var navigateTo: NavigationDestination?
     @Environment(\.dismiss) var dismiss
     
     @ObservedObject private var loginVM = LoginViewModel()
@@ -26,7 +25,9 @@ struct LoginView: View {
                         .padding()
                 }
                 
-                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $loginVM.email, prompt: loginVM.emailPrompt).padding()
+                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $loginVM.email, prompt: loginVM.emailPrompt)
+                    .padding()
+                    .keyboardType(.emailAddress)
                 NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $loginVM.password, isSecure: true, prompt: loginVM.passwordPrompt).padding()
                 if loginVM.showCredentialsWrong {
                     Text("Credentials not recognized. Please validate your e-mail and password.")
@@ -39,8 +40,9 @@ struct LoginView: View {
                     loginVM.signIn()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
-                Button("Forgot Password") {
-                    navigateTo = .forgot
+                
+                NavigationLink(destination: ForgotPasswordView()) {
+                    Text("Forgot Password")
                 }.buttonStyle(.bordered).foregroundColor(.black)
                 
                 if (!loginVM.activated) {
@@ -68,6 +70,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(navigateTo: .constant(.login))
+        LoginView()
     }
 }

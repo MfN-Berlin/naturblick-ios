@@ -5,26 +5,27 @@
 
 import Foundation
 
-@MainActor
-class ForgotPasswordViewModel : EmailWithPrompt {
+// email unused
+class ResetPasswordViewModel : EmailAndPasswordWithPrompt {
     
     private let client = BackendClient()
-    var error: HttpError? = nil
-    @Published var showSendInfo: Bool = false
-    @Published var isPresented: Bool = false
     
-    func forgotPassword() {
+    @Published var showResetSuccess: Bool = false
+    @Published var isPresented: Bool = false
+    var error: HttpError? = nil
+    
+    func resetPassword(token: String) {
         Task {
             do {
-                try await client.forgotPassword(email: email)
-                showSendInfo = true
-            } catch is HttpError {
+                try await client.resetPassword(token: token, password: password)
+                showResetSuccess = true
+            }
+            catch is HttpError {
                 self.error = error
-                self.isPresented = true
+                isPresented = true
             } catch {
                 preconditionFailure(error.localizedDescription)
             }
         }
     }
-    
 }

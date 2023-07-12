@@ -179,7 +179,7 @@ class BackendClient {
         let _ = try await downloader.http(request: request)
     }
     
-    func resetPassword(email: String) async throws -> Void {
+    func forgotPassword(email: String) async throws -> Void {
                 
         let url = URL(string: Configuration.backendUrl + "password/forgot")
         var request = URLRequest(url: url!)
@@ -192,6 +192,27 @@ class BackendClient {
         request.httpBody = requestBody.query?.data(using: .utf8)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        let _ = try await downloader.http(request: request)
+    }
+    
+    func activateAccount(token: String) async throws -> Void {
+        let url = URL(string: Configuration.backendUrl + "/account/activate/\(token)")!
+        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
+        let _ = try await downloader.http(request: request)
+    }
+    
+    func resetPassword(token: String, password: String) async throws -> Void {
+        let url = URL(string: Configuration.backendUrl + "/password/reset/\(token)")!
+        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
+        var requestBody = URLComponents()
+        requestBody.queryItems = [
+            URLQueryItem(name: "password", value: password)
+        ]
+        
+        request.httpBody = requestBody.query?.data(using: .utf8)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
         let _ = try await downloader.http(request: request)
     }
 }

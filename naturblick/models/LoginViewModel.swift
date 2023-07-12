@@ -16,7 +16,7 @@ class LoginViewModel : EmailAndPasswordWithPrompt {
     
     @Published var showCredentialsWrong = false
     @Published var showLoginSuccess = false
-    @Published private(set) var activated = Settings.getEmail() != nil
+    @Published private(set) var activated = Settings.isAccountActive()
     
     private let client = BackendClient()
     
@@ -26,6 +26,7 @@ class LoginViewModel : EmailAndPasswordWithPrompt {
                 let signInResponse = try await client.signIn(email: email, password: password)
                 Settings.setEmail(email: email)
                 Settings.setToken(token: signInResponse.access_token)
+                Settings.setAccountActivation(value: true)
                 activated = true
                 showLoginSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 400 {
