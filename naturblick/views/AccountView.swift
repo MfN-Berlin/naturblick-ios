@@ -45,24 +45,41 @@ struct AccountView: View {
                         .padding()
 
                 } else if (!model.hasToken && model.email != nil) {
-                    Text("You have been logged out because you have reset your password or deleted your account.\n\n**New password**\n\nLog in with your new password to link your observations on this phone to your account.")
-                        .tint(Color.onSecondaryButtonPrimary)
-                        .font(.nbBody1)
-                        .padding()
-                    NavigationLink(destination: LoginView()) {
-                        Text("Go to login")
-                    }.buttonStyle(.bordered).foregroundColor(.black)
-                    Text("**Account deleted**\n\nRegister a new account or use Naturblick without an account.")
-                        .tint(Color.onSecondaryButtonPrimary)
-                        .font(.nbBody1)
-                        .padding()
-                    NavigationLink(destination: RegisterView()) {
-                        Text("Register")
-                    }.buttonStyle(.bordered).foregroundColor(.black)
-                    Button("Continue without account") {
-                        model.signOut()
-                    }.foregroundColor(.black)
-                    .buttonStyle(.bordered)
+                    if (model.neverSignedIn) {
+                        Text("Log into your account.")
+                            .tint(Color.onSecondaryButtonPrimary)
+                            .font(.nbBody1)
+                            .padding()
+                        NavigationLink(destination: LoginView()) {
+                            Text("Go to login")
+                        }.buttonStyle(.bordered).foregroundColor(.black)
+                        Button("Continue without account") {
+                            model.signOut()
+                        }.buttonStyle(.bordered).foregroundColor(.black)
+                        Text("**Activation link**\n\nYou can access your Naturblick account only after confirming your registration. To do so, please click on the activation link that we have sent to your email address.")
+                            .tint(Color.onSecondaryButtonPrimary)
+                            .font(.caption)
+                            .padding()
+                    } else {
+                        Text("You have been logged out because you have reset your password or deleted your account.\n\n**New password**\n\nLog in with your new password to link your observations on this phone to your account.")
+                            .tint(Color.onSecondaryButtonPrimary)
+                            .font(.nbBody1)
+                            .padding()
+                        NavigationLink(destination: LoginView()) {
+                            Text("Go to login")
+                        }.buttonStyle(.bordered).foregroundColor(.black)
+                        Text("**Account deleted**\n\nRegister a new account or use Naturblick without an account.")
+                            .tint(Color.onSecondaryButtonPrimary)
+                            .font(.nbBody1)
+                            .padding()
+                        NavigationLink(destination: RegisterView()) {
+                            Text("Register")
+                        }.buttonStyle(.bordered).foregroundColor(.black)
+                        Button("Continue without account") {
+                            model.signOut()
+                        }.foregroundColor(.black)
+                        .buttonStyle(.bordered)
+                    }
                 }
                 Spacer()
             }

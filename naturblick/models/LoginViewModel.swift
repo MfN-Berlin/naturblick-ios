@@ -27,6 +27,7 @@ class LoginViewModel : EmailAndPasswordWithPrompt {
                 Settings.setEmail(email: email)
                 Settings.setToken(token: signInResponse.access_token)
                 Settings.setAccountActivation(value: true)
+                Settings.setSignedIn()
                 activated = true
                 showLoginSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 400 {

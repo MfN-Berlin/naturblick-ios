@@ -4,9 +4,9 @@
 
 import SwiftUI
 
-enum DeepLink {
+enum DeepLink : Equatable {
     case resetPasswort(token: String)
-    case speciesPortrait(speciesId: Int)
+    case speciesPortrait(speciesId: Int64)
     case activateAccount(token: String)
 }
 
@@ -42,27 +42,28 @@ struct NaturblickApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                HomeView()
+                HomeView(deeplink: $deepLink)
             }
             .accentColor(.onPrimaryHighEmphasis)
             .font(.nbHeadline6)
             .onOpenURL { url in
                 let path: [String] = url.pathComponents
-                
                 if (path.count >= 3) {
-                    if (path[0] == "species") {
+                    if (path[1] == "species") {
                         if let speciesStr = url.pathComponents.last {
-                            let speciesId = Int(speciesStr)!
+                            let speciesId = Int64(speciesStr)!
                             deepLink = .speciesPortrait(speciesId: speciesId)
                         } else {
                             preconditionFailure("route to artportrait is invalid [\(url.pathComponents)]")
                         }
-                    } else if (path[0] == "account") {
-                        let second = path[1]
-                        if let token = url.pathComponents.last {
-                            if (second == "activate") {
+                    } else if (path[1] == "account") {
+                        let second = path[2]
+                        if (second == "activate") {
+                            if let token = url.pathComponents.last {
                                 deepLink = .activateAccount(token: token)
-                            } else if (second == "reset-password") {
+                            }
+                        } else if (second == "reset-password") {
+                            if let token = url.valueOf("token") {
                                 deepLink = .resetPasswort(token: token)
                             }
                         }

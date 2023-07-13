@@ -6,13 +6,21 @@ import SwiftUI
 
 struct HomeView: View {
 
-     @State var foo: Int? = nil
+    @Binding var deeplink: DeepLink?
     
     let firstRowWidthFactor: CGFloat = 4.5
     let secondRowWidthFactor: CGFloat = 5
     @Environment(\.colorScheme) var colorScheme
     
     @State var navigateTo: NavigationDestination? = nil
+    
+    @State var isShowingPortrait = false
+    @State var speciesId: Int64? = nil
+    
+    @State var isShowingResetPassword = false
+    @State var token: String? = nil
+    
+    @State var isShowingLogin = false
     
     var body: some View {
         BaseView(oneColor: true) {
@@ -150,6 +158,28 @@ struct HomeView: View {
                     }
                 }
             }
+            .onChange(of: $deeplink.wrappedValue) { d in
+                if let d = d {
+                    switch d {
+                    case .speciesPortrait(let sid):
+                        speciesId = sid
+                        isShowingPortrait = true
+                    case .resetPasswort(let token):
+                        self.token = token
+                        isShowingResetPassword = true
+                    case .activateAccount(let token):
+                        Task {
+                            do {
+                                try await BackendClient().activateAccount(token: token)
+                                Settings.setAccountActivation(value: true)
+                                isShowingLogin = true
+                            } catch {
+                                preconditionFailure(error.localizedDescription)
+                            }
+                        }
+                    }
+                }
+            }
             .background {
                 SwiftUI.Group {
                     NavigationLink(
@@ -173,6 +203,24 @@ struct HomeView: View {
                         }
                     ) {
                     }
+                    NavigationLink(destination: PortraitView(speciesId: speciesId)
+                        .onDisappear {
+                            deeplink = nil
+                        }, isActive: $isShowingPortrait) {
+                            EmptyView()
+                        }
+                    NavigationLink(destination: ResetPasswordView(token: token)
+                        .onDisappear {
+                            deeplink = nil
+                        }, isActive: $isShowingResetPassword) {
+                            EmptyView()
+                        }
+                    NavigationLink(destination: LoginView()
+                        .onDisappear {
+                            deeplink = nil
+                        }, isActive: $isShowingLogin) {
+                            EmptyView()
+                        }
                 }
             }
         }
@@ -182,7 +230,7 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            HomeView()
+            HomeView(deeplink: .constant(nil))
         }
     }
 }
