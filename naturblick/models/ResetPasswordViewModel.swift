@@ -6,6 +6,7 @@
 import Foundation
 
 // email unused
+@MainActor
 class ResetPasswordViewModel : EmailAndPasswordWithPrompt {
     
     private let client = BackendClient()

@@ -7,7 +7,7 @@ import SwiftUI
 
 struct PortraitView: View {
     @StateObject var portraitViewModel = PortraitViewModel()
-    let speciesId: Int64
+    let speciesId: Int64?
     
     var body: some View {
         BaseView(oneColor: true) {
@@ -102,7 +102,9 @@ struct PortraitView: View {
                 }
             }
             .task {
-                portraitViewModel.filter(speciesId: speciesId)
+                if let speciesId = speciesId {
+                    portraitViewModel.filter(speciesId: speciesId)
+                }
             }
         }
     }
