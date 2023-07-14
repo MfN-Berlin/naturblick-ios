@@ -49,7 +49,7 @@ extension SpeciesListItem {
 }
 
 extension Species {
-    var toListItem: SpeciesListItem {
+    var listItem: SpeciesListItem {
         SpeciesListItem(
             speciesId: id,
             sciname: sciname,

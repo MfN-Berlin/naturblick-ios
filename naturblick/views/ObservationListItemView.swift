@@ -8,7 +8,6 @@ import SwiftUI
 
 struct ObservationListItemView: View {
     let observation: Observation
-    let species: Species?
     let image: Image
     var body: some View {
         HStack(alignment: .top) {
@@ -19,16 +18,16 @@ struct ObservationListItemView: View {
                 .frame(width: .avatarSize, height: .avatarSize)
                 .padding(.trailing, .defaultPadding)
             VStack(alignment: .leading) {
-                if let name = species?.gername {
+                if let name = observation.species?.gername {
                     Text(name)
                         .subtitle1()
                 } else {
-                    Text(species?.sciname ?? "No species")
+                    Text(observation.species?.sciname ?? "No species")
                         .subtitle1()
                 }
-                Text(observation.created.date.formatted())
+                Text(observation.observation.created.date.formatted())
                     .subtitle3()
-                if let details = observation.details {
+                if let details = observation.observation.details {
                     Text(details)
                 }
             }
@@ -40,9 +39,7 @@ struct ObservationListItemView: View {
 
 struct ObservationListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ObservationListItemView(
-            observation: Observation.sampleData,
-            species: Species.sampleData,
+        ObservationListItemView(observation: Observation(observation: DBObservation.sampleData, species: Species.sampleData),
             image: Image("placeholder")
         )
     }

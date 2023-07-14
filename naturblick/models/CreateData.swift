@@ -13,18 +13,6 @@ struct Identified {
 }
 
 struct CreateData {
-    struct SoundData {
-        var sound: NBSound? = nil
-        var crop: NBImage? = nil
-        var start: CGFloat = 0
-        var end: CGFloat = 1
-        var result: [SpeciesResult]? = nil
-    }
-    struct ImageData {
-        var image: NBImage? = nil
-        var crop: NBImage? = nil
-        var result: [SpeciesResult]? = nil
-    }
     var occurenceId: UUID = UUID()
     var created: ZonedDateTime = ZonedDateTime()
     var ccByName: String = "MfN Naturblick"
@@ -52,10 +40,10 @@ struct CreateData {
     }
     
     var identified: Identified? {
-        if let result = sound.result, let crop = sound.crop {
-            return Identified(crop: crop, result: result)
-        } else  if let result = image.result, let crop = image.crop {
-            return Identified(crop: crop, result: result)
+        if let identified = sound.identified {
+            return identified
+        } else if let identified = image.identified {
+            return identified
         } else {
             return nil
         }
@@ -88,6 +76,6 @@ struct CreateData {
         guard coords != nil || !details.isEmpty || mediaId != nil || thumbnailId != nil else {
             return nil
         }
-        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals, mediaId: mediaId, thumbnailId: thumbnailId)
+        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals, mediaId: mediaId, thumbnailId: thumbnailId, newSpeciesId: nil)
     }
 }

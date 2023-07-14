@@ -15,6 +15,7 @@ struct PatchOperation: Encodable {
     let individuals: Int64?
     let mediaId: UUID?
     let thumbnailId: UUID?
+    let newSpeciesId: Int64?
 }
 
 extension PatchOperation {
@@ -29,6 +30,7 @@ extension PatchOperation {
         static let individuals = Expression<Int64?>("individuals")
         static let mediaId = Expression<UUID?>("media_id")
         static let thumbnailId = Expression<UUID?>("thumbnail_id")
+        static let speciesId = Expression<Int64?>("species_id")
 
         static func setters(id: Int64, operation: PatchOperation) -> [Setter] {
             [
@@ -40,7 +42,8 @@ extension PatchOperation {
                 details <- operation.details,
                 individuals <- operation.individuals,
                 mediaId <- operation.mediaId,
-                thumbnailId <- operation.thumbnailId
+                thumbnailId <- operation.thumbnailId,
+                speciesId <- operation.newSpeciesId
             ]
         }
 
@@ -60,7 +63,8 @@ extension PatchOperation {
                 details: try row.get(table[details]),
                 individuals: try row.get(table[individuals]),
                 mediaId: try row.get(table[mediaId]),
-                thumbnailId: try row.get(table[thumbnailId])
+                thumbnailId: try row.get(table[thumbnailId]),
+                newSpeciesId: try row.get(table[speciesId])
             )
         }
     }

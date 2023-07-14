@@ -6,7 +6,7 @@
 import Foundation
 
 struct ObservationResponse: Decodable {
-    let data: [Observation]
+    let data: [DBObservation]
     let partial: Bool
     let syncId: Int64?
 }

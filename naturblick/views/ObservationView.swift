@@ -8,7 +8,6 @@ import SwiftUI
 struct ObservationView: View {
     let observation: Observation
     let controller: ObservationPersistenceController
-    @StateObject var model = ObservationViewModel()
     @State private var edit = false
     @State var editData: EditData
 
@@ -17,12 +16,12 @@ struct ObservationView: View {
     ) {
         self.observation = observation
         self.controller = controller
-        self._editData = State(initialValue: EditData(observation: observation))
+        self._editData = State(initialValue: EditData(observation: observation.observation, species: observation.species))
     }
 
     var body: some View {
         VStack {
-            AsyncThumbnail(speciesUrl: model.species?.maleUrl, thumbnailId: observation.thumbnailId) { image in
+            AsyncThumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
                 image
                     .resizable()
                     .scaledToFit()
@@ -31,8 +30,8 @@ struct ObservationView: View {
             } placeholder: {
                 Image("placeholder")
             }
-            Text(observation.created.date, formatter: .dateTime)
-            if let details = observation.details {
+            Text(observation.observation.created.date, formatter: .dateTime)
+            if let details = observation.observation.details {
                 Text(details)
             }
         }
@@ -48,7 +47,7 @@ struct ObservationView: View {
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
-                                editData = EditData(observation: observation)
+                                editData = EditData(observation: observation.observation, species: observation.species)
                                 edit = false
                             }
                         }
@@ -65,15 +64,11 @@ struct ObservationView: View {
                     }
             }
         }
-        .task {
-            await model.load(observation: observation)
-        }
-
     }
 }
 
 struct ObservationView_Previews: PreviewProvider {
     static var previews: some View {
-        ObservationView(observation: Observation.sampleData, controller: ObservationPersistenceController(inMemory: true))
+        ObservationView(observation: Observation(observation: DBObservation.sampleData, species: nil), controller: ObservationPersistenceController(inMemory: true))
     }
 }

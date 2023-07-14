@@ -27,8 +27,8 @@ struct AsyncThumbnail<Content: View, Placeholder: View> : View {
                 .onAppear {
                     if let thumbnailId = self.thumbnailId {
                         Task {
-                            let uiImage = try await BackendClient().downloadCached(mediaId: thumbnailId)
-                            self.uiImage = uiImage
+                            let image = try await BackendClient().downloadCached(mediaId: thumbnailId)
+                            self.uiImage = image.image
                         }
                     } else if let speciesUrl = speciesUrl {
                         Task {

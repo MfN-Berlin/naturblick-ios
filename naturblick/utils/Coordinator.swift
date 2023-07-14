@@ -8,9 +8,9 @@ import SwiftUI
 class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     var picker: ImagePickerView
-    var data: Binding<CreateData.ImageData>
+    var data: Binding<ImageData>
     
-    init(picker: ImagePickerView, data: Binding<CreateData.ImageData>) {
+    init(picker: ImagePickerView, data: Binding<ImageData>) {
         self.picker = picker
         self.data = data
     }

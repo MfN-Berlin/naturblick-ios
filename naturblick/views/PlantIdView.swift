@@ -9,7 +9,7 @@ struct PlantIdView: View {
     let client = BackendClient()
     @StateObject private var cameraManager = CameraManager()
     @StateObject private var photoLibraryManager = PhotoLibraryManager()
-    @Binding var data: CreateData.ImageData
+    @Binding var data: ImageData
     @State var authorized: Bool = false
     var body: some View {
         if authorized {
@@ -17,14 +17,14 @@ struct PlantIdView: View {
                 Text("Loading results")
                     .task {
                         do {
-                            try await client.upload(img: crop.image, mediaId: crop.id.uuidString)
+                            try await client.upload(image: crop)
                             data.result = try await client.imageId(mediaId: crop.id.uuidString)
                         } catch {
                             preconditionFailure("\(error)")
                         }
                     }
             } else if let image = data.image {
-                ImageCropper(image: image, crop: $data.crop)
+                ImageCropper(image: image.image, crop: $data.crop)
             } else {
                 ImagePickerView(data: $data)
             }
@@ -47,6 +47,6 @@ struct PlantIdView: View {
 
 struct PlantIdView_Previews: PreviewProvider {
     static var previews: some View {
-        PlantIdView(data: .constant(CreateData.ImageData()))
+        PlantIdView(data: .constant(ImageData()))
     }
 }
