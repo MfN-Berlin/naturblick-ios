@@ -9,7 +9,7 @@ import SQLite
 enum Operation: Encodable {
     case create(CreateOperation)
     case patch(PatchOperation)
-
+    case upload(UploadOperation)
     enum CodingKeys: String, CodingKey {
         case operation
         case data
@@ -24,6 +24,9 @@ enum Operation: Encodable {
         case .patch(let operation):
             try wrapper.encode("patch", forKey: .operation)
             try wrapper.encode(operation, forKey: .data)
+        case .upload(let operation):
+            try wrapper.encode("upload_media", forKey: .operation)
+            try wrapper.encode(operation, forKey: .data)
         }
     }
 
@@ -34,10 +37,14 @@ enum Operation: Encodable {
         static func instance(row: Row) throws -> (Int64, Operation) {
             let createId = try row.get(CreateOperation.D.table[Operation.D.optionalRowid])
             let patchId = try row.get(PatchOperation.D.table[Operation.D.optionalRowid])
+            let uploadId = try row.get(UploadOperation.D.table[Operation.D.optionalRowid])
+
             if createId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .create(try CreateOperation.D.instance(row: row)))
             } else if patchId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .patch(try PatchOperation.D.instance(row: row)))
+            } else if uploadId != nil {
+                return (try row.get(Operation.D.table[Operation.D.rowid]), .upload(try UploadOperation.D.instance(row: row)))
             } else {
                 preconditionFailure("Unknown operation")
             }

@@ -26,7 +26,6 @@ struct CreateData {
         var result: [SpeciesResult]? = nil
     }
     var occurenceId: UUID = UUID()
-    var obsType: ObsType = .manual
     var created: ZonedDateTime = ZonedDateTime()
     var ccByName: String = "MfN Naturblick"
     var appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
@@ -38,6 +37,20 @@ struct CreateData {
     var sound: SoundData = SoundData()
     var image: ImageData = ImageData()
 
+    var obsType: ObsType {
+        if image.image != nil && species != nil {
+            return .image
+        } else if image.image != nil {
+            return .unidentifiedimage
+        } else if sound.sound != nil && species != nil {
+            return .audio
+        } else if sound.sound != nil {
+            return .unidentifiedaudio
+        } else {
+            return .manual
+        }
+    }
+    
     var identified: Identified? {
         if let result = sound.result, let crop = sound.crop {
             return Identified(crop: crop, result: result)
@@ -61,9 +74,20 @@ struct CreateData {
     }
 
     var patch: PatchOperation? {
-        guard coords != nil || !details.isEmpty else {
+        var mediaId: UUID? = nil
+        var thumbnailId: UUID? = nil
+        
+        if image.image != nil {
+            mediaId = image.image?.id
+            thumbnailId = image.crop?.id
+        } else if sound.sound != nil {
+            mediaId = sound.sound?.id
+            thumbnailId = sound.crop?.id
+        }
+
+        guard coords != nil || !details.isEmpty || mediaId != nil || thumbnailId != nil else {
             return nil
         }
-        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals)
+        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals, mediaId: mediaId, thumbnailId: thumbnailId)
     }
 }

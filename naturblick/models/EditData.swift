@@ -41,6 +41,6 @@ struct EditData {
             return nil
         }
 
-        return PatchOperation(occurenceId: original.occurenceId, obsType: obsType, coords: coords, details: details, individuals: individuals)
+        return PatchOperation(occurenceId: original.occurenceId, obsType: obsType, coords: coords, details: details, individuals: individuals, mediaId: nil, thumbnailId: nil)
     }
 }

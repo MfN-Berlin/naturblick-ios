@@ -40,6 +40,11 @@
 		134C75A72A2F32650046EEE4 /* IndividualsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134C75A62A2F32650046EEE4 /* IndividualsView.swift */; };
 		134C75A92A2F513E0046EEE4 /* BirdRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134C75A82A2F513E0046EEE4 /* BirdRecorderView.swift */; };
 		134C75AB2A2F515C0046EEE4 /* BirdRecorderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134C75AA2A2F515C0046EEE4 /* BirdRecorderViewModel.swift */; };
+		134F54902A5EB60F00A079EC /* UploadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F548F2A5EB60F00A079EC /* UploadOperation.swift */; };
+		134F54922A5EB67B00A079EC /* MimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F54912A5EB67B00A079EC /* MimeType.swift */; };
+		134F54942A5ED78E00A079EC /* CGFloat+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F54932A5ED78E00A079EC /* CGFloat+Constants.swift */; };
+		134F54962A5EDC3600A079EC /* UUID+Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F54952A5EDC3600A079EC /* UUID+Media.swift */; };
+		134F54982A5EDC8100A079EC /* URL+SupportDir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F54972A5EDC8100A079EC /* URL+SupportDir.swift */; };
 		135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135E682E29EE805700192C4A /* ObservationListItemView.swift */; };
 		1367AA412A41AEB3006E0ACB /* CGSize+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1367AA402A41AEB3006E0ACB /* CGSize+Dimensions.swift */; };
 		1368E2C42A374406001A2970 /* CreateFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1368E2C32A374406001A2970 /* CreateFlowView.swift */; };
@@ -188,6 +193,11 @@
 		134C75A62A2F32650046EEE4 /* IndividualsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualsView.swift; sourceTree = "<group>"; };
 		134C75A82A2F513E0046EEE4 /* BirdRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdRecorderView.swift; sourceTree = "<group>"; };
 		134C75AA2A2F515C0046EEE4 /* BirdRecorderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdRecorderViewModel.swift; sourceTree = "<group>"; };
+		134F548F2A5EB60F00A079EC /* UploadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadOperation.swift; sourceTree = "<group>"; };
+		134F54912A5EB67B00A079EC /* MimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeType.swift; sourceTree = "<group>"; };
+		134F54932A5ED78E00A079EC /* CGFloat+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Constants.swift"; sourceTree = "<group>"; };
+		134F54952A5EDC3600A079EC /* UUID+Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UUID+Media.swift"; sourceTree = "<group>"; };
+		134F54972A5EDC8100A079EC /* URL+SupportDir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+SupportDir.swift"; sourceTree = "<group>"; };
 		135E682E29EE805700192C4A /* ObservationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemView.swift; sourceTree = "<group>"; };
 		1367AA402A41AEB3006E0ACB /* CGSize+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Dimensions.swift"; sourceTree = "<group>"; };
 		1368E2C32A374406001A2970 /* CreateFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFlowView.swift; sourceTree = "<group>"; };
@@ -466,6 +476,7 @@
 				7BA037C029D6C9E800804AFE /* GoodToKnowViewModel.swift */,
 				7BCE46BE29C9DB3700C6C101 /* Group.swift */,
 				7BCB02762A554EE9005A4737 /* LoginViewModel.swift */,
+				134F54912A5EB67B00A079EC /* MimeType.swift */,
 				130C04A12A39B36F00677BC2 /* NavigationDestination.swift */,
 				133B39292A4081A000D48617 /* NBImage.swift */,
 				137690062A30D3F40076F93A /* NBSound.swift */,
@@ -494,6 +505,7 @@
 				134B72B22A04FBA300C1DCAD /* SyncInfo.swift */,
 				7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */,
 				7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */,
+				134F548F2A5EB60F00A079EC /* UploadOperation.swift */,
 				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
 			);
 			path = models;
@@ -503,6 +515,7 @@
 			isa = PBXGroup;
 			children = (
 				1343D1CA29DD94F50075ACE3 /* BackendClient.swift */,
+				134F54932A5ED78E00A079EC /* CGFloat+Constants.swift */,
 				1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */,
 				1367AA402A41AEB3006E0ACB /* CGSize+Dimensions.swift */,
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
@@ -523,6 +536,8 @@
 				7B02E4D92A4993DF006406A1 /* Settings.swift */,
 				7B13663829F0122600F1DA30 /* SoundStreamController.swift */,
 				7BB68E492A545D5C00B1DC51 /* String+Validations.swift */,
+				134F54972A5EDC8100A079EC /* URL+SupportDir.swift */,
+				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				137963F129E6FFDB0043E64F /* View+alertError.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 			);
@@ -683,6 +698,7 @@
 				7B0FF7C62A0133EE005674E0 /* Coordinator.swift in Sources */,
 				137690072A30D3F40076F93A /* NBSound.swift in Sources */,
 				7BCB02772A554EE9005A4737 /* LoginViewModel.swift in Sources */,
+				134F54922A5EB67B00A079EC /* MimeType.swift in Sources */,
 				133B392A2A4081A000D48617 /* NBImage.swift in Sources */,
 				1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */,
 				134B72B52A05348000C1DCAD /* PatchOperation.swift in Sources */,
@@ -719,6 +735,7 @@
 				136DFABB29F9752100C8B8FF /* NBEditText.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
 				134C75AB2A2F515C0046EEE4 /* BirdRecorderViewModel.swift in Sources */,
+				134F54982A5EDC8100A079EC /* URL+SupportDir.swift in Sources */,
 				1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */,
 				13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */,
 				7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */,
@@ -728,7 +745,9 @@
 				7BA037C929D7020500804AFE /* PortraitImageMeta.swift in Sources */,
 				130C04A22A39B36F00677BC2 /* NavigationDestination.swift in Sources */,
 				13316BD729C9F3860077292B /* SpeciesListView.swift in Sources */,
+				134F54962A5EDC3600A079EC /* UUID+Media.swift in Sources */,
 				137690012A3093D30076F93A /* BirdIdView.swift in Sources */,
+				134F54942A5ED78E00A079EC /* CGFloat+Constants.swift in Sources */,
 				7BB3DE2329F68D4500F0D387 /* UnambiguousFeature.swift in Sources */,
 				7B83703529E98EA10075D9F5 /* ColorTestView.swift in Sources */,
 				7BA037C729D6E36E00804AFE /* SimilarSpeciesView.swift in Sources */,
@@ -783,6 +802,7 @@
 				13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */,
 				7B0FF7C82A0139D3005674E0 /* ImagePickerView.swift in Sources */,
 				134B72B12A04FB6B00C1DCAD /* ObservationRequest.swift in Sources */,
+				134F54902A5EB60F00A079EC /* UploadOperation.swift in Sources */,
 				7BAFDA572A580800005D8B20 /* View+mail.swift in Sources */,
 				13B686AE2A091951001FD28F /* Formatter.swift in Sources */,
 				7BCCFD7729F2A62A00C71453 /* Style.swift in Sources */,
