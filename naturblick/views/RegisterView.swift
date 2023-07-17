@@ -7,9 +7,33 @@ import SwiftUI
 struct RegisterView: View {
     
     @ObservedObject var registerVM = RegisterViewModel()
+    @EnvironmentObject var sharedSettings: SharedSettings
     
     @State var action: String?
     
+    @State var showRegisterSuccess: Bool = false
+    @State var showAlreadyExists = false
+    
+    @State var isPresented: Bool = false
+    @State var error: HttpError? = nil
+    
+    func signUp() {
+        let client = BackendClient()
+        Task {
+            do {
+                let _ = try await client.signUp(deviceId: Configuration.deviceIdentifier, email: registerVM.email, password: registerVM.password)
+                sharedSettings.setEmail(email: registerVM.email)
+                showRegisterSuccess = true
+            } catch HttpError.clientError(let statusCode) where statusCode == 409 {
+                showAlreadyExists = true
+            } catch is HttpError {
+                self.error = error
+                isPresented = true
+            } catch {
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
     
     var body: some View {
         BaseView {
@@ -28,7 +52,7 @@ struct RegisterView: View {
                     NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $registerVM.email, prompt: registerVM.emailPrompt)
                         .padding()
                         .keyboardType(.emailAddress)
-                    if registerVM.showAlreadyExists {
+                    if showAlreadyExists {
                         Text("Email already exists.")
                             .foregroundColor(.onSecondarywarning)
                             .font(.nbBody1)
@@ -53,7 +77,7 @@ struct RegisterView: View {
                         .padding()
                     
                     Button("Register") {
-                        registerVM.signUp()
+                        signUp()
                     }.disabled(!registerVM.isRegisterEnabled)
                         .foregroundColor(.black)
                         .buttonStyle(.bordered)
@@ -61,7 +85,7 @@ struct RegisterView: View {
                     Spacer(minLength: 10)
                 }
             }
-        }.actionSheet(isPresented: $registerVM.showRegisterSuccess) {
+        }.actionSheet(isPresented: $showRegisterSuccess) {
             ActionSheet(
                 title: Text("Thank you!"),
                 message: Text("We have sent you an activation link by email. Please open this link to complete your registration. The link is valid for 12 hours."),
@@ -69,7 +93,7 @@ struct RegisterView: View {
                     registerSuccessButtons()
             )
         }
-        .alertHttpError(isPresented: $registerVM.isPresented, error: registerVM.error)
+        .alertHttpError(isPresented: $isPresented, error: error)
     }
     
     func registerSuccessButtons() -> [Alert.Button] {

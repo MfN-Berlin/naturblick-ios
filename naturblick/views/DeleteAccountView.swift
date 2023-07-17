@@ -7,8 +7,35 @@ import SwiftUI
 
 struct DeleteAccountView: View {
     
-    @ObservedObject var deleteVM = DeleteAccountViewModel()
+    @ObservedObject var deleteVM = EmailAndPasswordWithPrompt()
+    @EnvironmentObject var sharedSettings: SharedSettings
     @State var action: String?
+    
+    @State var showDeleteSuccess = false
+    
+    @State var showCredentialsError = false
+    
+    @State var isPresented: Bool = false
+    @State var error: HttpError? = nil
+            
+    func deleteAccount() {
+        let client = BackendClient()
+        Task {
+            do {
+                try await client.deleteAccount(email: deleteVM.email, password: deleteVM.password)
+                sharedSettings.setSignedOut()
+                sharedSettings.setEmail(email: nil)
+                showDeleteSuccess = true
+            }  catch HttpError.clientError(let statusCode) where statusCode == 400 {
+                showCredentialsError = true
+            } catch is HttpError {
+                self.error = error
+                self.isPresented = true
+            } catch {
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
     
     var body: some View {
         BaseView {
@@ -24,21 +51,21 @@ struct DeleteAccountView: View {
                     .padding()
                     .keyboardType(.emailAddress)
                 NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $deleteVM.password, isSecure: true, prompt: deleteVM.passwordPrompt).padding()
-                if deleteVM.showCredentialsError {
+                if showCredentialsError {
                     Text("Credentials not recognized. Please validate your e-mail and password.")
                         .foregroundColor(.onSecondarywarning)
                         .font(.nbBody1)
                         .padding()
                 }
                 Button("Delete account") {
-                    deleteVM.deleteAccount()
+                    deleteAccount()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
                 NavigationLink(destination: ForgotPasswordView()) {
                     Text("Forgot Password")
                 }.buttonStyle(.bordered).foregroundColor(.black)
             }
-        }.actionSheet(isPresented: $deleteVM.showDeleteSuccess) {
+        }.actionSheet(isPresented: $showDeleteSuccess) {
             ActionSheet(
                 title: Text("Success!"),
                 message: Text("Your account was deleted."),
@@ -48,7 +75,7 @@ struct DeleteAccountView: View {
                     })
                 ]
             )
-        }.alertHttpError(isPresented: $deleteVM.isPresented, error: deleteVM.error)
+        }.alertHttpError(isPresented: $isPresented, error: error)
     }
 }
 

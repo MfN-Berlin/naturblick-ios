@@ -7,13 +7,31 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     
-    @ObservedObject private var forgotPasswordVM = ForgotPasswordViewModel()
+    @ObservedObject private var forgotPasswordVM = EmailAndPasswordWithPrompt()
     @State var action: String?
+    
+    @State var error: HttpError? = nil
+    @State var showSendInfo: Bool = false
+    @State var isPresented: Bool = false
+    
+    func forgotPassword() {
+        let client = BackendClient()
+        Task {
+            do {
+                try await client.forgotPassword(email: forgotPasswordVM.email)
+                showSendInfo = true
+            } catch is HttpError {
+                self.error = error
+                self.isPresented = true
+            } catch {
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
     
     var body: some View {
         BaseView {
             VStack {
-                
                 NavigationLink(destination: LoginView(), tag: AccountView.loginAction, selection: $action) {
                     EmptyView()
                 }
@@ -22,7 +40,7 @@ struct ForgotPasswordView: View {
                     .keyboardType(.emailAddress)
                
                 Button("Reset password") {
-                    forgotPasswordVM.forgotPassword()
+                    forgotPassword()
                 }.foregroundColor(.black)
                     .buttonStyle(.bordered)
                 Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
@@ -31,13 +49,13 @@ struct ForgotPasswordView: View {
                     .padding()
                 Spacer()
             }
-        }.actionSheet(isPresented: $forgotPasswordVM.showSendInfo) {
+        }.actionSheet(isPresented: $showSendInfo) {
             ActionSheet(
                 title: Text("New password"),
                 message: Text("We have sent a password reset link to the email address you provided. The link is valid for 12 hours. If you do not receive an email after 10 minutes, the email address you provided is not associated with an existing account."),
                 buttons: forgotSuccessButtons()
             )
-        }.alertHttpError(isPresented: $forgotPasswordVM.isPresented, error: forgotPasswordVM.error)
+        }.alertHttpError(isPresented: $isPresented, error: error)
     }
     
     func forgotSuccessButtons() -> [Alert.Button] {

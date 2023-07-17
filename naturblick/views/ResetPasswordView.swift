@@ -16,8 +16,28 @@ struct ResetPasswordView: View {
     let token: String?
     
     @Environment(\.dismiss) var dismiss
-    @ObservedObject private var resetPasswordVM = ResetPasswordViewModel()
+    @ObservedObject private var resetPasswordVM = EmailAndPasswordWithPrompt()
     @State private var action: ResetPasswordAction = .Reset
+    
+    @State var showResetSuccess: Bool = false
+    @State var isPresented: Bool = false
+    @State var error: HttpError? = nil
+    
+    func resetPassword(token: String) {
+        let client = BackendClient()
+        Task {
+            do {
+                try await client.resetPassword(token: token, password: resetPasswordVM.password)
+                showResetSuccess = true
+            }
+            catch is HttpError {
+                self.error = error
+                isPresented = true
+            } catch {
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
     
     var body: some View {
         BaseView {
@@ -34,11 +54,10 @@ struct ResetPasswordView: View {
                         
                         if let token = token {
                             Button("Reset password") {
-                                resetPasswordVM.resetPassword(token: token)
+                                resetPassword(token: token)
                             }.foregroundColor(.black)
                                 .buttonStyle(.bordered)
                         }
-                        
                         Spacer()
                     }
                 } else if action == .Login {
@@ -50,7 +69,7 @@ struct ResetPasswordView: View {
                 }
             }
         }
-        .actionSheet(isPresented: $resetPasswordVM.showResetSuccess) {
+        .actionSheet(isPresented: $showResetSuccess) {
             ActionSheet(
                 title: Text("Reset password"),
                 message: Text("Password reset was successful."),
@@ -62,7 +81,7 @@ struct ResetPasswordView: View {
                     ]
             )
         }
-        .alertHttpError(isPresented: $resetPasswordVM.isPresented, error: resetPasswordVM.error)
+        .alertHttpError(isPresented: $isPresented, error: error)
     }
 }
 

@@ -5,6 +5,53 @@
 
 import Foundation
 
+class SharedSettings : ObservableObject {
+ 
+    @Published var email: String?
+    @Published var hasToken: Bool
+    @Published var neverSignedIn: Bool
+    @Published var activated: Bool
+        
+    init(email: String?, hasToken: Bool, neverSignedIn: Bool, activated: Bool) {
+        self.email = email
+        self.hasToken = hasToken
+        self.neverSignedIn = neverSignedIn
+        self.activated = activated
+    }
+    
+    func signOut() {
+        email = nil
+        hasToken = false
+        neverSignedIn = true
+        Settings.clearEmail()
+    }
+    
+    func setEmail(email: String?) {
+        self.email = email
+        Settings.setEmail(email: email)
+    }
+    
+    func setToken(token: String) {
+        self.hasToken = true
+        Settings.setToken(token: token)
+    }
+    
+    func setSignedIn() {
+        self.neverSignedIn = false
+        Settings.setSignedIn()
+    }
+    
+    func setSignedOut() {
+        self.hasToken = false
+        Settings.setSignedOut()
+    }
+    
+    func setActivated(value: Bool) {
+        self.activated = value
+        Settings.setAccountActivation(value: value)
+    }
+}
+
 struct Settings {
     private static let userDefault = UserDefaults.standard
     
