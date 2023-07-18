@@ -7,7 +7,7 @@ import SwiftUI
 
 struct DeleteAccountView: View {
     
-    @ObservedObject var deleteVM = EmailAndPasswordWithPrompt()
+    @StateObject var deleteVM = EmailAndPasswordWithPrompt()
     @EnvironmentObject var sharedSettings: SharedSettings
     @State var action: String?
     

@@ -14,7 +14,7 @@ enum DeepLink : Equatable {
 struct NaturblickApp: App {
     
     @State var deepLink: DeepLink? = nil
-    @StateObject var sharedSettings = Settings.sharedSettings()
+    @StateObject var sharedSettings = SharedSettings()
     
     func navigationBarStyling() {
         let appearance = UINavigationBarAppearance()

@@ -12,11 +12,11 @@ class SharedSettings : ObservableObject {
     @Published var neverSignedIn: Bool
     @Published var activated: Bool
         
-    init(email: String?, hasToken: Bool, neverSignedIn: Bool, activated: Bool) {
-        self.email = email
-        self.hasToken = hasToken
-        self.neverSignedIn = neverSignedIn
-        self.activated = activated
+    init() {
+        self.email = Settings.getEmail()
+        self.hasToken = Settings.getToken() != nil
+        self.neverSignedIn = Settings.neverSignedIn()
+        self.activated = Settings.isAccountActive()
     }
     
     func signOut() {
@@ -104,10 +104,4 @@ struct Settings {
         userDefault.set(false, forKey: neverSignedInKey)
     }
     
-    static func sharedSettings() -> SharedSettings {
-        return SharedSettings(email: Settings.getEmail(),
-            hasToken: Settings.getToken() != nil,
-            neverSignedIn: Settings.neverSignedIn(),
-            activated: Settings.isAccountActive())
-    }
 }

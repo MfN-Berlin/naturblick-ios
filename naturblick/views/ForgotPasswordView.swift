@@ -7,7 +7,7 @@ import SwiftUI
 
 struct ForgotPasswordView: View {
     
-    @ObservedObject private var forgotPasswordVM = EmailAndPasswordWithPrompt()
+    @StateObject private var forgotPasswordVM = EmailAndPasswordWithPrompt()
     @State var action: String?
     
     @State var error: HttpError? = nil

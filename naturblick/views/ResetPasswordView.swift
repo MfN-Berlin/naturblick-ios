@@ -16,7 +16,7 @@ struct ResetPasswordView: View {
     let token: String?
     
     @Environment(\.dismiss) var dismiss
-    @ObservedObject private var resetPasswordVM = EmailAndPasswordWithPrompt()
+    @StateObject private var resetPasswordVM = EmailAndPasswordWithPrompt()
     @State private var action: ResetPasswordAction = .Reset
     
     @State var showResetSuccess: Bool = false

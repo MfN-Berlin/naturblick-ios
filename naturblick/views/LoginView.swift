@@ -13,7 +13,7 @@ struct LoginView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var sharedSettings: SharedSettings
     
-    @ObservedObject private var loginVM = EmailAndPasswordWithPrompt()
+    @StateObject private var loginVM = EmailAndPasswordWithPrompt()
     
     @State  var isPresented: Bool = false
     @State  var error: HttpError? = nil

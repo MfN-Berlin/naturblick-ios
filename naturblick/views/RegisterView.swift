@@ -6,7 +6,7 @@ import SwiftUI
 
 struct RegisterView: View {
     
-    @ObservedObject var registerVM = RegisterViewModel()
+    @StateObject var registerVM = RegisterViewModel()
     @EnvironmentObject var sharedSettings: SharedSettings
     
     @State var action: String?
