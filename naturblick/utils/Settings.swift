@@ -60,11 +60,11 @@ struct Settings {
     private static let activatedKey = "activated"
     private static let neverSignedInKey = "neverSignedIn"
     
-    static func setEmail(email: String?) {
+    static fileprivate func setEmail(email: String?) {
         userDefault.set(email, forKey: emailKey)
     }
     
-    static func getEmail() -> String? {
+    static fileprivate func getEmail() -> String? {
         userDefault.string(forKey: emailKey)
     }
     
@@ -72,35 +72,42 @@ struct Settings {
         userDefault.string(forKey: tokenKey)
     }
     
-    static func setToken(token: String) {
+    static fileprivate func setToken(token: String) {
         userDefault.set(token, forKey: tokenKey)
     }
     
-    static func setSignedOut() {
+    static fileprivate func setSignedOut() {
         userDefault.removeObject(forKey: tokenKey)
     }
     
-    static func setAccountActivation(value: Bool) {
+    static fileprivate func setAccountActivation(value: Bool) {
         userDefault.set(value, forKey: activatedKey)
     }
     
-    static func isAccountActive() -> Bool {
+    static fileprivate func isAccountActive() -> Bool {
         return userDefault.bool(forKey: activatedKey)
     }
 
     
-    static func clearEmail() {
+    static fileprivate func clearEmail() {
         userDefault.removeObject(forKey: tokenKey)
         userDefault.removeObject(forKey: emailKey)
         userDefault.removeObject(forKey: activatedKey)
         userDefault.removeObject(forKey: neverSignedInKey)
     }
     
-    static func neverSignedIn() -> Bool {
+    static fileprivate func neverSignedIn() -> Bool {
         return (userDefault.value(forKey: neverSignedInKey) as? Bool) ?? true
     }
     
-    static func setSignedIn() {
+    static fileprivate func setSignedIn() {
         userDefault.set(false, forKey: neverSignedInKey)
+    }
+    
+    static func sharedSettings() -> SharedSettings {
+        return SharedSettings(email: Settings.getEmail(),
+            hasToken: Settings.getToken() != nil,
+            neverSignedIn: Settings.neverSignedIn(),
+            activated: Settings.isAccountActive())
     }
 }

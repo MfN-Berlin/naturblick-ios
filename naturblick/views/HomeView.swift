@@ -22,6 +22,8 @@ struct HomeView: View {
     
     @State var isShowingLogin = false
     
+    @EnvironmentObject var sharedSettings: SharedSettings
+    
     var body: some View {
         BaseView(oneColor: true) {
             GeometryReader { geo in
@@ -171,7 +173,7 @@ struct HomeView: View {
                         Task {
                             do {
                                 try await BackendClient().activateAccount(token: token)
-                                Settings.setAccountActivation(value: true)
+                                sharedSettings.setActivated(value: true)
                                 isShowingLogin = true
                             } catch {
                                 preconditionFailure(error.localizedDescription)
