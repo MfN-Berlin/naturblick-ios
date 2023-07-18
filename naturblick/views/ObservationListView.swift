@@ -17,6 +17,7 @@ struct ObservationListView: View {
     @State var create: Bool = false
     @State var didRunOnce: Bool = false
     @State var createAction: CreateObservationAction = .createManualObservation
+    @EnvironmentObject var sharedSettings: SharedSettings
 
     var body: some View {
         SwiftUI.Group {
@@ -104,7 +105,7 @@ struct ObservationListView: View {
             let response = try await client.sync(controller: persistenceController)
             try persistenceController.importObservations(from: response.data)
         } catch HttpError.clientError(let statusCode) where statusCode == 401 {
-            Settings.setSignedOut()
+            sharedSettings.setSignedOut()
             self.error = error
             self.isPresented = true
         }
