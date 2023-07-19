@@ -13,16 +13,16 @@ struct EditData {
     var coords: Coordinates?
     var details: String
     var individuals: Int64
-    var thumbnailId: UUID?
+    var thumbnail: NBImage?
     
-    init(observation: DBObservation, species: Species?) {
-        self.original = observation
-        self.obsType = observation.obsType
-        self.species = species?.listItem
-        self.details = observation.details ?? ""
-        self.coords = observation.coords
-        self.individuals = observation.individuals ?? 1
-        self.thumbnailId = observation.thumbnailId
+    init(observation: Observation, thumbnail: NBImage?) {
+        self.original = observation.observation
+        self.obsType = observation.observation.obsType
+        self.species = observation.species?.listItem
+        self.details = observation.observation.details ?? ""
+        self.coords = observation.observation.coords
+        self.individuals = observation.observation.individuals ?? 1
+        self.thumbnail = thumbnail
     }
 
     var speciesChanged: Bool {
@@ -44,7 +44,7 @@ struct EditData {
         let coords = original.coords != self.coords ? self.coords : nil
         let individuals = original.individuals != self.individuals ? self.individuals : nil
         let speciesId = speciesChanged ? self.species?.speciesId : nil
-        let thumbnailId = thumbnailId != original.thumbnailId ? thumbnailId : nil
+        let thumbnailId = thumbnail?.id != original.thumbnailId ? thumbnail?.id : nil
         guard details != nil || obsType != nil || coords != nil || individuals != nil || speciesId != nil || thumbnailId != nil else {
             return nil
         }

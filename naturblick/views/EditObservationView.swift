@@ -67,7 +67,7 @@ struct EditObservationView: View {
                     if let identified = imageData.identified {
                         SelectSpeciesView(results: identified.result, thumbnail: identified.crop.image) { species in
                             data.species = species
-                            data.thumbnailId = identified.crop.id
+                            data.thumbnail = identified.crop
                             showImageId = false
                         }
                     } else if !data.speciesChanged {
@@ -89,7 +89,7 @@ struct EditObservationView: View {
                     if let identified = soundData.identified {
                         SelectSpeciesView(results: identified.result, thumbnail: identified.crop.image) { species in
                             data.species = species
-                            data.thumbnailId = identified.crop.id
+                            data.thumbnail = identified.crop
                             showSoundId = false
                         }
                     } else if !data.speciesChanged {
@@ -130,6 +130,6 @@ struct EditObservationView: View {
 
 struct EditObsevationView_Previews: PreviewProvider {
     static var previews: some View {
-        EditObservationView(data: .constant(EditData(observation: DBObservation.sampleData, species: nil)))
+        EditObservationView(data: .constant(EditData(observation: Observation(observation: DBObservation.sampleData, species: nil), thumbnail: nil)))
     }
 }

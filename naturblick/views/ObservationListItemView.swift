@@ -12,10 +12,7 @@ struct ObservationListItemView: View {
     var body: some View {
         HStack(alignment: .top) {
             image
-                .resizable()
-                .scaledToFit()
-                .clipShape(Circle())
-                .frame(width: .avatarSize, height: .avatarSize)
+                .avatar()
                 .padding(.trailing, .defaultPadding)
             VStack(alignment: .leading) {
                 if let name = observation.species?.gername {

@@ -225,6 +225,10 @@ class ObservationPersistenceController: ObservableObject {
 
     func insert(data: EditData) throws {
         try queue.transaction {
+            if let thumbnail = data.thumbnail {
+                try insert(occurenceId: data.original.occurenceId, image: thumbnail)
+            }
+            
             if let patch = data.patch {
                 let patchId = try queue.run(Operation.D.table.insert())
                 try queue.run(
