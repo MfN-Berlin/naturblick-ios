@@ -20,23 +20,21 @@ struct AsyncThumbnail<Content: View, Placeholder: View> : View {
     }
 
     var body: some View {
-        if let uiImage = self.uiImage {
-            content(Image(uiImage: uiImage))
-        } else {
-            placeholder()
-                .onAppear {
-                    if let thumbnailId = self.thumbnailId {
-                        Task {
-                            let uiImage = try await BackendClient().downloadCached(mediaId: thumbnailId)
-                            self.uiImage = uiImage
-                        }
-                    } else if let speciesUrl = speciesUrl {
-                        Task {
-                            let uiImage = try await BackendClient().downloadCached(speciesUrl: speciesUrl)
-                            self.uiImage = uiImage
-                        }
-                    }
-                }
+        SwiftUI.Group {
+            if let uiImage = self.uiImage {
+                content(Image(uiImage: uiImage))
+            } else {
+                placeholder()
+            }
+        }
+        .task(id: thumbnailId) {
+            if let thumbnailId = self.thumbnailId {
+                let image = try? await BackendClient().downloadCached(mediaId: thumbnailId)
+                self.uiImage = image?.image
+            } else if let speciesUrl = speciesUrl {
+                let uiImage = try? await BackendClient().downloadCached(speciesUrl: speciesUrl)
+                self.uiImage = uiImage
+            }
         }
     }
 }

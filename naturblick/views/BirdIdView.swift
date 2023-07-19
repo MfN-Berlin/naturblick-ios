@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct BirdIdView: View {
-    @Binding var data: CreateData.SoundData
+    @Binding var data: SoundData
     @StateObject private var model = BirdIdViewModel()
     @State private var isPresented: Bool = false
     @State private var error: HttpError? = nil
@@ -14,7 +14,7 @@ struct BirdIdView: View {
     func identifyAndCrop(sound: NBSound, spectrogram: UIImage) {
         Task {
             do {
-                let crop = UIGraphicsImageRenderer(size: .thumbnail).image { _ in
+                let crop = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
                     let cropRect = CGRect(
                         x: spectrogram.size.width * data.start,
                         y: 0,
@@ -77,6 +77,6 @@ struct BirdIdView: View {
 
 struct BirdIdView_Previews: PreviewProvider {
     static var previews: some View {
-        BirdIdView(data: .constant(CreateData.SoundData()))
+        BirdIdView(data: .constant(SoundData()))
     }
 }

@@ -63,13 +63,14 @@ class BackendClient {
         return response
     }
     
-    func upload(img: UIImage, mediaId: String) async throws {
+    func upload(image: NBImage) async throws {
+        let mediaId = image.id.uuidString.lowercased()
         var mpr = MultipartRequest()
         mpr.add(
             key: "file",
             fileName: "\(mediaId).jpg",
             fileMimeType: "image/jpeg",
-            fileData: img.jpegData(compressionQuality: 0.81)!
+            fileData: image.image.jpegData(compressionQuality: 0.81)!
         )
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Configuration.deviceIdentifier)")
@@ -117,12 +118,12 @@ class BackendClient {
         return UIImage(data: data)!
     }
 
-    func downloadCached(mediaId: UUID) async throws -> UIImage {
+    func downloadCached(mediaId: UUID) async throws -> NBImage {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
         request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
         let data = try await downloader.http(request: request)
-        return UIImage(data: data)!
+        return NBImage(id: mediaId, image: UIImage(data: data)!)
     }
 
     func downloadCached(speciesUrl: String) async throws -> UIImage {

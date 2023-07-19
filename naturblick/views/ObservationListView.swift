@@ -22,7 +22,7 @@ struct ObservationListView: View {
     var body: some View {
         SwiftUI.Group {
             if(showList) {
-                List(persistenceController.observations, id: \.occurenceId) { observation in
+                List(persistenceController.observations) { observation in
                     NavigationLink(destination: ObservationView(observation: observation, controller: persistenceController)) {
                         ObservationListItemWithImageView(observation: observation)
                     }
@@ -33,10 +33,10 @@ struct ObservationListView: View {
             } else {
                 Map(
                     coordinateRegion: $region,
-                    annotationItems: persistenceController.observations.filter { $0.coords != nil
+                    annotationItems: persistenceController.observations.filter { $0.observation.coords != nil
                     }
                 ) { observation in
-                    MapAnnotation(coordinate: observation.coords!.location) {
+                    MapAnnotation(coordinate: observation.observation.coords!.location) {
                         NavigationLink(
                             destination: ObservationView(observation: observation, controller: persistenceController)
                         ) {

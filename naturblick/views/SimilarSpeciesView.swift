@@ -12,13 +12,13 @@ struct SimilarSpeciesView: View {
     var body: some View {
         VStack(alignment: .leading) {
             ForEach(similarSpeciesViewModel.mixups) { mix in
-                NavigationLink(destination: PortraitView(speciesId: mix.species.toListItem.speciesId)) {
+                NavigationLink(destination: PortraitView(speciesId: mix.species.id)) {
                     VStack(alignment: .leading) {
                         if let url = mix.species.maleUrl {
                             AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                                SimilarSpeciesItemView(species: mix.species.toListItem, avatar: image)
+                                SimilarSpeciesItemView(species: mix.species.listItem, avatar: image)
                             } placeholder: {
-                                SimilarSpeciesItemView(species: mix.species.toListItem, avatar: Image("placeholder"))
+                                SimilarSpeciesItemView(species: mix.species.listItem, avatar: Image("placeholder"))
                             }
                         }
                         Text(mix.differences)

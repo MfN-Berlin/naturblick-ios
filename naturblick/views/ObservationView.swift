@@ -8,7 +8,6 @@ import SwiftUI
 struct ObservationView: View {
     let observation: Observation
     let controller: ObservationPersistenceController
-    @StateObject var model = ObservationViewModel()
     @State private var edit = false
     @State var editData: EditData
 
@@ -17,26 +16,40 @@ struct ObservationView: View {
     ) {
         self.observation = observation
         self.controller = controller
-        self._editData = State(initialValue: EditData(observation: observation))
+        self._editData = State(initialValue: EditData(observation: observation, thumbnail: nil))
     }
 
+    private func updateThumbnail() async {
+        if let thumbnailId = observation.observation.thumbnailId {
+            let thumbnail = try? await BackendClient().downloadCached(mediaId: thumbnailId)
+            if editData.thumbnail == nil {
+                editData.thumbnail = thumbnail
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
-            AsyncThumbnail(speciesUrl: model.species?.maleUrl, thumbnailId: observation.thumbnailId) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .frame(width: .avatarSize, height: .avatarSize)
-            } placeholder: {
+            if let thumbnail = editData.thumbnail {
+                Image(uiImage: thumbnail.image)
+                    .avatar()
+            } else if observation.observation.thumbnailId != nil {
                 Image("placeholder")
+                    .avatar()
+            } else if let url = observation.species?.maleUrl {
+                AsyncImage(url: URL(string: Configuration.strapiUrl + url)) { image in
+                    image
+                        .avatar()
+                } placeholder: {
+                    Image("placeholder")
+                        .avatar()
+                }
             }
-            Text(observation.created.date, formatter: .dateTime)
-            if let details = observation.details {
+            Text(observation.observation.created.date, formatter: .dateTime)
+            if let details = observation.observation.details {
                 Text(details)
             }
         }
-        .navigationTitle("Observation")
         .toolbar {
             Button("Edit") {
                 edit = true
@@ -48,8 +61,11 @@ struct ObservationView: View {
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
-                                editData = EditData(observation: observation)
+                                editData = EditData(observation: observation, thumbnail: nil)
                                 edit = false
+                                Task {
+                                    await updateThumbnail()
+                                }
                             }
                         }
                         ToolbarItem(placement: .confirmationAction) {
@@ -66,14 +82,14 @@ struct ObservationView: View {
             }
         }
         .task {
-            await model.load(observation: observation)
+            await updateThumbnail()
         }
-
+        .navigationTitle("Observation")
     }
 }
 
 struct ObservationView_Previews: PreviewProvider {
     static var previews: some View {
-        ObservationView(observation: Observation.sampleData, controller: ObservationPersistenceController(inMemory: true))
+        ObservationView(observation: Observation(observation: DBObservation.sampleData, species: nil), controller: ObservationPersistenceController(inMemory: true))
     }
 }

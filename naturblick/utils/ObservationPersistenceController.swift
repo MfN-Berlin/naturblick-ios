@@ -49,6 +49,7 @@ class ObservationPersistenceController: ObservableObject {
                         individuals INTEGER,
                         media_id TEXT,
                         thumbnail_id TEXT,
+                        species_id INTEGER,
                         FOREIGN KEY(rowid) REFERENCES operation(rowid) ON DELETE CASCADE
                     );
                     CREATE TABLE upload_operation (
@@ -101,20 +102,44 @@ class ObservationPersistenceController: ObservableObject {
     }
 
     func refresh() throws {
-        observations = try queue.prepareRowIterator(
-            Observation.D.observation.select(*).order(Observation.D.created.desc)
-        ).map(Observation.D.instance)
+        let obs = try queue.prepareRowIterator(
+            DBObservation.D.observation.select(*).order(DBObservation.D.created.desc)
+        ).map(DBObservation.D.instance)
+        let speciesDb = Connection.speciesDB
+        observations = try obs.map { observation in
+            guard let speciesId = observation.newSpeciesId else {
+                return Observation(observation: observation, species: nil)
+            }
+            guard let row = try speciesDb.pluck(Species.Definition.table.filter(Species.Definition.id == speciesId)) else {
+                return Observation(observation: observation, species: nil)
+            }
+            let species = Species(
+                id: row[Species.Definition.id],
+                group: row[Species.Definition.group],
+                sciname: row[Species.Definition.sciname],
+                gername: row[Species.Definition.gername],
+                engname: row[Species.Definition.engname],
+                wikipedia: row[Species.Definition.wikipedia],
+                maleUrl: row[Species.Definition.maleUrl],
+                femaleUrl: row[Species.Definition.femaleUrl],
+                gersynonym: row[Species.Definition.gersynonym],
+                engsynonym: row[Species.Definition.engsynonym],
+                redListGermany: row[Species.Definition.redListGermany],
+                iucnCategory: row[Species.Definition.iucnCategory]
+            )
+            return Observation(observation: observation, species: species)
+        }
     }
     
     func update() throws {
-        try queue.run(Observation.D.observation.delete())
-        try queue.run(Observation.D.observation.insert(Observation.D.backendObservation.select(*)))
+        try queue.run(DBObservation.D.observation.delete())
+        try queue.run(DBObservation.D.observation.insert(DBObservation.D.backendObservation.select(*)))
         for operation in try getPendingOperations().1 {
             switch(operation) {
             case .create(let create):
-                try queue.run(Observation.D.observation.insert(or: .replace, Observation.D.setters(operation: create)))
+                try queue.run(DBObservation.D.observation.insert(or: .replace, DBObservation.D.setters(operation: create)))
             case .patch(let patch):
-                try queue.run(Observation.D.observation.filter(Observation.D.occurenceId == patch.occurenceId).update(Observation.D.setters(operation: patch)))
+                try queue.run(DBObservation.D.observation.filter(DBObservation.D.occurenceId == patch.occurenceId).update(DBObservation.D.setters(operation: patch)))
             case .upload:
                 do {} // No need to change observation due to uploading media
             }
@@ -126,7 +151,7 @@ class ObservationPersistenceController: ObservableObject {
         try refresh()
     }
 
-    func importObservations(from observations: [Observation]) throws {
+    func importObservations(from observations: [DBObservation]) throws {
         guard !observations.isEmpty else {
             return
         }
@@ -134,15 +159,16 @@ class ObservationPersistenceController: ObservableObject {
             observation.settters
         })
         try queue.transaction {
-            try queue.run(Observation.D.backendObservation.delete())
-            try queue.run(Observation.D.backendObservation.insertMany(observationSetters))
+            try queue.run(DBObservation.D.backendObservation.delete())
+            try queue.run(DBObservation.D.backendObservation.insertMany(observationSetters))
             try updateAndRefresh()
         }
     }
 
     private func insert(occurenceId: UUID, image: NBImage) throws {
+        let uiImage = image.image
         let upload = UploadOperation(occurenceId: occurenceId, mediaId: image.id, mime: .jpeg)
-        let size = image.image.size
+        let size = uiImage.size
         let widthRatio  = .maxResolution / size.width
         let heightRatio = .maxResolution / size.height
         var newSize: CGSize
@@ -153,7 +179,7 @@ class ObservationPersistenceController: ObservableObject {
         }
         
         UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.image.draw(in: CGRect(origin: .zero, size: newSize))
+        uiImage.draw(in: CGRect(origin: .zero, size: newSize))
         let data = UIGraphicsGetImageFromCurrentImageContext()?.jpegData(compressionQuality: .jpegQuality)
         UIGraphicsEndImageContext()
 
@@ -199,6 +225,10 @@ class ObservationPersistenceController: ObservableObject {
 
     func insert(data: EditData) throws {
         try queue.transaction {
+            if let thumbnail = data.thumbnail {
+                try insert(occurenceId: data.original.occurenceId, image: thumbnail)
+            }
+            
             if let patch = data.patch {
                 let patchId = try queue.run(Operation.D.table.insert())
                 try queue.run(

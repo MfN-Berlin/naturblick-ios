@@ -9,7 +9,14 @@ import SwiftUI
 struct SelectSpeciesView: View {
     let results: [SpeciesResult]
     let thumbnail: UIImage
-    @Binding var data: CreateData
+    let action: (SpeciesListItem) -> ()
+    
+    init(results: [SpeciesResult], thumbnail: UIImage, action: @escaping (SpeciesListItem) -> ()) {
+        self.results = results
+        self.thumbnail = thumbnail
+        self.action = action
+    }
+    
     @StateObject var model: SelectSpeciesViewModel = SelectSpeciesViewModel()
     var body: some View {
         VStack {
@@ -18,7 +25,7 @@ struct SelectSpeciesView: View {
                 .scaledToFill()
             List(model.speciesResults, id: \.0.id) { (result, item) in
                 Button {
-                    data.species = item
+                    action(item)
                 } label: {
                     Text(item.sciname)
                         .padding()
@@ -33,6 +40,6 @@ struct SelectSpeciesView: View {
 
 struct SelectSpeciesView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectSpeciesView(results: [], thumbnail: UIImage(named: "placeholder")!, data: .constant(CreateData()))
+        SelectSpeciesView(results: [], thumbnail: UIImage(named: "placeholder")!, action: {_ in })
     }
 }

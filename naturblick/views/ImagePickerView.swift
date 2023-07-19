@@ -8,7 +8,7 @@ import UIKit
 
 struct ImagePickerView: UIViewControllerRepresentable, View {
     
-    @Binding var data: CreateData.ImageData
+    @Binding var data: ImageData
         
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
