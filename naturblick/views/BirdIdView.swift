@@ -14,7 +14,7 @@ struct BirdIdView: View {
     func identifyAndCrop(sound: NBSound, spectrogram: UIImage) {
         Task {
             do {
-                let crop = UIGraphicsImageRenderer(size: .thumbnail).image { _ in
+                let crop = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
                     let cropRect = CGRect(
                         x: spectrogram.size.width * data.start,
                         y: 0,

@@ -55,6 +55,7 @@
 		136DFAB929F96E6500C8B8FF /* CreateObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */; };
 		136DFABB29F9752100C8B8FF /* NBEditText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DFABA29F9752100C8B8FF /* NBEditText.swift */; };
 		13743F6A2A6803AA00ABCCB1 /* Image+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13743F692A6803AA00ABCCB1 /* Image+Style.swift */; };
+		13743F6C2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13743F6B2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift */; };
 		137690012A3093D30076F93A /* BirdIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690002A3093D30076F93A /* BirdIdView.swift */; };
 		137690032A30946F0076F93A /* SpectrogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690022A30946F0076F93A /* SpectrogramView.swift */; };
 		137690052A30A7740076F93A /* BirdIdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690042A30A7740076F93A /* BirdIdViewModel.swift */; };
@@ -206,6 +207,7 @@
 		136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateObservationView.swift; sourceTree = "<group>"; };
 		136DFABA29F9752100C8B8FF /* NBEditText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBEditText.swift; sourceTree = "<group>"; };
 		13743F692A6803AA00ABCCB1 /* Image+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Style.swift"; sourceTree = "<group>"; };
+		13743F6B2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGraphicsImageRendererFormat+noScale.swift"; sourceTree = "<group>"; };
 		137690002A3093D30076F93A /* BirdIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdIdView.swift; sourceTree = "<group>"; };
 		137690022A30946F0076F93A /* SpectrogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramView.swift; sourceTree = "<group>"; };
 		137690042A30A7740076F93A /* BirdIdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdIdViewModel.swift; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 				7B02E4D92A4993DF006406A1 /* Settings.swift */,
 				7B13663829F0122600F1DA30 /* SoundStreamController.swift */,
 				7BB68E492A545D5C00B1DC51 /* String+Validations.swift */,
+				13743F6B2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift */,
 				7BB777152A612B9100EA844C /* URL+Query.swift */,
 				134F54972A5EDC8100A079EC /* URL+SupportDir.swift */,
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
@@ -770,6 +773,7 @@
 				13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */,
 				7B02E4DA2A4993DF006406A1 /* Settings.swift in Sources */,
 				133B39202A40517200D48617 /* SelectSpeciesView.swift in Sources */,
+				13743F6C2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift in Sources */,
 				7BDF2D2B2A090EE8002EC35F /* PhotoLibraryManager.swift in Sources */,
 				137690032A30946F0076F93A /* SpectrogramView.swift in Sources */,
 				7BCBBB5129EEDA07000DD344 /* BaseView.swift in Sources */,
