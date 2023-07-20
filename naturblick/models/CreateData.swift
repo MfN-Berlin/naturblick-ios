@@ -17,7 +17,7 @@ struct CreateData {
     var created: ZonedDateTime = ZonedDateTime()
     var ccByName: String = "MfN Naturblick"
     var appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
-    var deviceIdentifier: String = Configuration.deviceIdentifier
+    var deviceIdentifier: String = Settings.deviceId()
     var coords: Coordinates? = nil
     var details: String = ""
     var species: SpeciesListItem? = nil

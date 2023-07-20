@@ -34,7 +34,7 @@ class BackendClient {
 
     func sync(controller: ObservationPersistenceController) async throws -> ObservationResponse {
         let (ids, operations) = try controller.getPendingOperations()
-        let observationRequest = ObservationRequest(operations: operations, syncInfo: SyncInfo(deviceIdentifier: Configuration.deviceIdentifier))
+        let observationRequest = ObservationRequest(operations: operations, syncInfo: SyncInfo(deviceIdentifier: Settings.deviceId()))
         var mpr = MultipartRequest()
         mpr.addJson(key: "operations", jsonData: try encoder.encode(observationRequest))
         for operation in operations {
@@ -49,7 +49,7 @@ class BackendClient {
         if let token = Settings.getToken() {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         } else {
-            request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
+            request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
         }
  
         let response: ObservationResponse = try await downloader.httpJson(request: request)
@@ -63,6 +63,28 @@ class BackendClient {
         return response
     }
     
+    func deviceConnect(token: String) async throws {
+    
+        struct ConnectDevice: Encodable {
+            let deviceIdentifier: String
+        }
+        
+        let url = URL(string: Configuration.backendUrl + "device-connect")!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "PUT"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        let deviceId = Settings.deviceId()
+        
+        guard let encoded = try? JSONEncoder().encode(ConnectDevice(deviceIdentifier: deviceId)) else {
+            print("Failed to encode ConnectDevice")
+            return
+        }
+        
+        let _ = try await downloader.httpSend(request: request, data: encoded)
+    }
+
     func upload(image: NBImage) async throws {
         let mediaId = image.id.uuidString.lowercased()
         var mpr = MultipartRequest()
@@ -73,9 +95,9 @@ class BackendClient {
             fileData: image.image.jpegData(compressionQuality: 0.81)!
         )
         
-        let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Configuration.deviceIdentifier)")
+        let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
         let (_, _) = try await URLSession.shared.data(for: request)
     }
     
@@ -88,9 +110,9 @@ class BackendClient {
             fileData: try await local.download(url: sound)
         )
         
-        let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Configuration.deviceIdentifier)")
+        let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
         let _ = try await downloader.http(request: request)
     }	
     
@@ -113,7 +135,7 @@ class BackendClient {
     func spectrogram(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/specgram/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
     }
@@ -121,7 +143,7 @@ class BackendClient {
     func downloadCached(mediaId: UUID) async throws -> NBImage {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setValue(Configuration.deviceIdentifier, forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
         let data = try await downloader.http(request: request)
         return NBImage(id: mediaId, image: UIImage(data: data)!)
     }
@@ -171,6 +193,8 @@ class BackendClient {
         let data = try await downloader.http(request: request)
         let decoder = JSONDecoder()
         let signInResponse = try decoder.decode(SigninResponse.self, from: data)
+        
+        try await deviceConnect(token: signInResponse.access_token)
         
         return signInResponse
     }
@@ -228,5 +252,38 @@ class BackendClient {
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         let _ = try await downloader.http(request: request)
+    }
+    
+    
+    func register() async throws {
+        
+        struct RegisterDevice: Encodable {
+            let deviceIdentifier: String
+            let model: String
+            let platform: String
+            let osVersion: String
+            let appVersion: String
+        }
+        
+        let url = URL(string: Configuration.backendUrl + "device")!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "PUT"
+        
+        let deviceId = Settings.deviceId()
+        
+        guard let encoded = try? await JSONEncoder().encode(
+            RegisterDevice(
+                deviceIdentifier: deviceId,
+                model: UIDevice.modelName,
+                platform: "ios",
+                osVersion: UIDevice.current.systemVersion,
+                appVersion: UIApplication.appVersion!))
+        else {
+            print("Failed to encode RegisterDevice")
+            return
+        }
+        
+        let _ = try await downloader.httpSend(request: request, data: encoded)
     }
 }

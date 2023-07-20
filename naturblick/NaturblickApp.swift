@@ -78,6 +78,13 @@ struct NaturblickApp: App {
     }
     
     init() {
+        Task {
+            do {
+                try await BackendClient().register()
+            } catch {
+                preconditionFailure("could not register device")
+            }
+        }
         navigationBarStyling()
     }
 }

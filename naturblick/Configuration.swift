@@ -7,5 +7,4 @@ import Foundation
 struct Configuration {
     static let strapiUrl = "https://staging.naturblick.net/strapi/"
     static let backendUrl = "https://staging.naturblick.net/api/"
-    static let deviceIdentifier = "testtesttesttesttesttesttesttest"
 }
