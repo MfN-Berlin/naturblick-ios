@@ -21,7 +21,7 @@ struct RegisterView: View {
         let client = BackendClient()
         Task {
             do {
-                let _ = try await client.signUp(deviceId: Configuration.deviceIdentifier, email: registerVM.email, password: registerVM.password)
+                let _ = try await client.signUp(deviceId: Settings.deviceId(), email: registerVM.email, password: registerVM.password)
                 sharedSettings.setEmail(email: registerVM.email)
                 showRegisterSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 409 {

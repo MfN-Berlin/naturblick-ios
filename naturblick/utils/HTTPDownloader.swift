@@ -13,6 +13,7 @@ let clientError = 400...499
 protocol HTTPDownloader {
     func httpJson<T: Decodable>(request: URLRequest) async throws -> T
     func http(request: URLRequest) async throws -> Data
+    func httpSend(request: URLRequest, data: Data) async throws -> Data
 }
 
 extension URLSession: HTTPDownloader {
@@ -67,6 +68,33 @@ extension URLSession: HTTPDownloader {
                 throw HttpError.networkError
             case let httpError as HttpError:
                 Self.logger.error("Http error \(error)")
+                throw httpError
+            default:
+                preconditionFailure("\(error)")
+            }
+        }
+    }
+
+    func httpSend(request: URLRequest, data: Data) async throws -> Data {
+        do {
+            let (responseData, response) = try await self.upload(for: request, from: data)
+            let httpResponse = (response as! HTTPURLResponse)
+            let statusCode = httpResponse.statusCode
+            guard validStatus.contains(statusCode) else {
+                if clientError.contains(statusCode) {
+                    throw HttpError.clientError(statusCode: statusCode)
+                } else {
+                    throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
+                }
+            }
+            return responseData
+        } catch {
+            switch error {
+            case is URLError:
+                Self.logger.error("Network error \(error)")
+                throw HttpError.networkError
+            case let httpError as HttpError:
+                Self.logger.error("Server error \(error)")
                 throw httpError
             default:
                 preconditionFailure("\(error)")
