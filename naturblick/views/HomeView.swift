@@ -21,8 +21,8 @@ struct HomeView: View {
     @State var token: String? = nil
     
     @State var isShowingLogin = false
-    
-    @EnvironmentObject var sharedSettings: SharedSettings
+        
+    @AppStorage("activated") var activated: Bool = false
     
     var body: some View {
         BaseView(oneColor: true) {
@@ -173,7 +173,7 @@ struct HomeView: View {
                         Task {
                             do {
                                 try await BackendClient().activateAccount(token: token)
-                                sharedSettings.setActivated(value: true)
+                                activated = true
                                 isShowingLogin = true
                             } catch {
                                 preconditionFailure(error.localizedDescription)

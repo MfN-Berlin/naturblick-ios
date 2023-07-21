@@ -10,8 +10,13 @@ struct SigninResponse : Decodable {
 
 struct LoginView: View {
     
+    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
+    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
+    @AppStorage("activated") var activated: Bool = false
+    @AppStorage("hasToken") var hasToken: Bool = false 
+    
     @Environment(\.dismiss) var dismiss
-    @EnvironmentObject var sharedSettings: SharedSettings
     
     @StateObject private var loginVM = EmailAndPasswordWithPrompt()
     
@@ -26,10 +31,11 @@ struct LoginView: View {
         Task {
             do {
                 let signInResponse = try await client.signIn(email: loginVM.email, password: loginVM.password)
-                sharedSettings.setEmail(email: loginVM.email)
-                sharedSettings.setToken(token: signInResponse.access_token)
-                sharedSettings.setSignedIn()
-                sharedSettings.setActivated(value: true)
+                email = loginVM.email
+                bearerToken = signInResponse.access_token
+                neverSignedIn = false
+                activated = true
+                hasToken = true
                 showLoginSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 400 {
                 showCredentialsWrong = true
@@ -45,7 +51,7 @@ struct LoginView: View {
     var body: some View {
         BaseView {
             VStack {
-                if (sharedSettings.activated) {
+                if (activated) {
                     Text("Your Naturblick account is activated. Log in with your email address and password on all devices you want to connect to the account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
@@ -77,7 +83,7 @@ struct LoginView: View {
                     Text("Forgot Password")
                 }.buttonStyle(.bordered).foregroundColor(.black)
                 
-                if (!sharedSettings.activated) {
+                if (!activated) {
                     Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
@@ -97,6 +103,11 @@ struct LoginView: View {
                 ]
             )
         }.alertHttpError(isPresented: $isPresented, error: error)
+        .onAppear {
+            if let email = email {
+                loginVM.email = email
+            }
+        }
     }
 }
 

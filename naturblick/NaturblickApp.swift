@@ -14,7 +14,6 @@ enum DeepLink : Equatable {
 struct NaturblickApp: App {
     
     @State var deepLink: DeepLink? = nil
-    @StateObject var sharedSettings = SharedSettings()
     
     func navigationBarStyling() {
         let appearance = UINavigationBarAppearance()
@@ -45,7 +44,6 @@ struct NaturblickApp: App {
             NavigationView {
                 HomeView(deeplink: $deepLink)
             }
-            .environmentObject(sharedSettings)
             .accentColor(.onPrimaryHighEmphasis)
             .font(.nbHeadline6)
             .onOpenURL { url in

@@ -7,6 +7,7 @@ import SwiftUI
 import MapKit
 
 struct ObservationListView: View {
+    
     let initialCreateAction: CreateObservationAction?
     private let client = BackendClient()
     @StateObject var persistenceController = ObservationPersistenceController()
@@ -17,8 +18,9 @@ struct ObservationListView: View {
     @State var create: Bool = false
     @State var didRunOnce: Bool = false
     @State var createAction: CreateObservationAction = .createManualObservation
-    @EnvironmentObject var sharedSettings: SharedSettings
-
+    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    @AppStorage("hasToken") var hasToken: Bool = false
+    
     var body: some View {
         SwiftUI.Group {
             if(showList) {
@@ -105,7 +107,8 @@ struct ObservationListView: View {
             let response = try await client.sync(controller: persistenceController)
             try persistenceController.importObservations(from: response.data)
         } catch HttpError.clientError(let statusCode) where statusCode == 401 {
-            sharedSettings.setSignedOut()
+            bearerToken = nil
+            hasToken = false
             self.error = error
             self.isPresented = true
         }
