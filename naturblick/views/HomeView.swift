@@ -205,6 +205,13 @@ struct HomeView: View {
                         }
                     ) {
                     }
+                    NavigationLink(
+                        tag: .settings, selection: $navigateTo,
+                        destination: {
+                            SettingsView()
+                        }
+                    ) {
+                    }
                     NavigationLink(destination: PortraitView(speciesId: speciesId)
                         .onDisappear {
                             deeplink = nil

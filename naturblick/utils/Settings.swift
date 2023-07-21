@@ -35,4 +35,8 @@ struct Settings {
         let deviceId = UIDevice.current.identifierForVendor?.uuidString
         return deviceId!
     }
+    
+    static func ccByName() -> String {
+        return userDefault.string(forKey: "ccByName") ?? "MfN Naturblick"
+    }
 }

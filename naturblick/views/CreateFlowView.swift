@@ -10,7 +10,7 @@ struct CreateFlowView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var persistenceController: ObservationPersistenceController
     @State var data: CreateData = CreateData()
-    
+
     var createObservationView: some View {
         CreateObservationView(data: $data)
             .toolbar {

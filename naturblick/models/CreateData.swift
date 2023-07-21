@@ -15,7 +15,7 @@ struct Identified {
 struct CreateData {
     var occurenceId: UUID = UUID()
     var created: ZonedDateTime = ZonedDateTime()
-    var ccByName: String = "MfN Naturblick"
+    var ccByName: String = Settings.ccByName()
     var appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
     var deviceIdentifier: String = Settings.deviceId()
     var coords: Coordinates? = nil
