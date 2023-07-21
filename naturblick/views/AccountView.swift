@@ -10,7 +10,6 @@ struct AccountView: View {
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
     
-    @AppStorage("hasToken") var hasToken: Bool = false
     @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
     @AppStorage("activated") var activated: Bool = false
     
@@ -22,7 +21,6 @@ struct AccountView: View {
         neverSignedIn = true
         bearerToken = nil
         activated = false
-        hasToken = false
     }
     
     var body: some View {
@@ -44,7 +42,7 @@ struct AccountView: View {
                     NavigationLink(destination: RegisterView()) {
                         Text("Register now")
                     }.buttonStyle(.bordered).foregroundColor(.black)
-                } else if (hasToken) {
+                } else if (bearerToken != nil) {
                     Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nYou are signed in as: \(email!)\n\n**Delete account**\n\nDeleting your account will remove the link to other devices and we will automatically delete the email address you provided.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
@@ -57,7 +55,7 @@ struct AccountView: View {
                         .font(.nbBody1)
                         .padding()
 
-                } else if (!hasToken && email != nil) {
+                } else if (bearerToken == nil && email != nil) {
                     if (neverSignedIn) {
                         Text("Log into your account.")
                             .tint(Color.onSecondaryButtonPrimary)

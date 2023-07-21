@@ -14,7 +14,6 @@ struct LoginView: View {
     @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
     @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
     @AppStorage("activated") var activated: Bool = false
-    @AppStorage("hasToken") var hasToken: Bool = false 
     
     @Environment(\.dismiss) var dismiss
     
@@ -35,7 +34,6 @@ struct LoginView: View {
                 bearerToken = signInResponse.access_token
                 neverSignedIn = false
                 activated = true
-                hasToken = true
                 showLoginSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 400 {
                 showCredentialsWrong = true
