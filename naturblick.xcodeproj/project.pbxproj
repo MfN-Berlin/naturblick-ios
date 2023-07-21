@@ -124,6 +124,9 @@
 		7BC46D762A050BB80020EAC6 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC46D752A050BB80020EAC6 /* CameraManager.swift */; };
 		7BC6100A2A3096A400185BAA /* ImprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC610092A3096A400185BAA /* ImprintView.swift */; };
 		7BC6100C2A30989900185BAA /* FurtherSourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */; };
+		7BC77E852A6A4DCB00B489C2 /* AppSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E842A6A4DCB00B489C2 /* AppSecureStorage.swift */; };
+		7BC77E872A6A4F2700B489C2 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E862A6A4F2700B489C2 /* KeychainWrapper.swift */; };
+		7BC77E8A2A6A4FC400B489C2 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E892A6A4FC400B489C2 /* KeychainItemAccessibility.swift */; };
 		7BCBBB5129EEDA07000DD344 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCBBB5029EEDA07000DD344 /* BaseView.swift */; };
 		7BCCB4CF2A5D427E0072841B /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCB4CE2A5D427E0072841B /* ResetPasswordView.swift */; };
 		7BCCFD7729F2A62A00C71453 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCFD7629F2A62A00C71453 /* Style.swift */; };
@@ -277,6 +280,9 @@
 		7BC46D752A050BB80020EAC6 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		7BC610092A3096A400185BAA /* ImprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImprintView.swift; sourceTree = "<group>"; };
 		7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurtherSourcesView.swift; sourceTree = "<group>"; };
+		7BC77E842A6A4DCB00B489C2 /* AppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecureStorage.swift; sourceTree = "<group>"; };
+		7BC77E862A6A4F2700B489C2 /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
+		7BC77E892A6A4FC400B489C2 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		7BCAE7BF2A5BF6A300B27370 /* naturblick.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = naturblick.entitlements; sourceTree = "<group>"; };
 		7BCBBB5029EEDA07000DD344 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		7BCCB4CE2A5D427E0072841B /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -406,6 +412,16 @@
 			path = manager;
 			sourceTree = "<group>";
 		};
+		7BC77E882A6A4F7A00B489C2 /* secure */ = {
+			isa = PBXGroup;
+			children = (
+				7BC77E842A6A4DCB00B489C2 /* AppSecureStorage.swift */,
+				7BC77E862A6A4F2700B489C2 /* KeychainWrapper.swift */,
+				7BC77E892A6A4FC400B489C2 /* KeychainItemAccessibility.swift */,
+			);
+			path = secure;
+			sourceTree = "<group>";
+		};
 		7BCE46A229C9D90300C6C101 /* views */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,6 +531,7 @@
 		7BCE46C029C9DC5E00C6C101 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				7BC77E882A6A4F7A00B489C2 /* secure */,
 				1343D1CA29DD94F50075ACE3 /* BackendClient.swift */,
 				134F54932A5ED78E00A079EC /* CGFloat+Constants.swift */,
 				1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */,
@@ -723,6 +740,7 @@
 				7BCEFCC82A690FC800EAC332 /* UIDevice.swift in Sources */,
 				13A2923429D3110C00AF772A /* CharactersView.swift in Sources */,
 				135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */,
+				7BC77E852A6A4DCB00B489C2 /* AppSecureStorage.swift in Sources */,
 				13743F6A2A6803AA00ABCCB1 /* Image+Style.swift in Sources */,
 				7B8839DA29D5762D006CB94E /* PortraitViewModel.swift in Sources */,
 				7BCCB4CF2A5D427E0072841B /* ResetPasswordView.swift in Sources */,
@@ -759,6 +777,7 @@
 				7BB3DE2329F68D4500F0D387 /* UnambiguousFeature.swift in Sources */,
 				7B83703529E98EA10075D9F5 /* ColorTestView.swift in Sources */,
 				7BA037C729D6E36E00804AFE /* SimilarSpeciesView.swift in Sources */,
+				7BC77E8A2A6A4FC400B489C2 /* KeychainItemAccessibility.swift in Sources */,
 				13B686AA2A0902D1001FD28F /* ObservationView.swift in Sources */,
 				134C75A92A2F513E0046EEE4 /* BirdRecorderView.swift in Sources */,
 				7BA037BF29D6C8E300804AFE /* GoodToKnow.swift in Sources */,
@@ -798,6 +817,7 @@
 				7BC46D762A050BB80020EAC6 /* CameraManager.swift in Sources */,
 				13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */,
 				7BB68E482A544B7F00B1DC51 /* RegisterViewModel.swift in Sources */,
+				7BC77E872A6A4F2700B489C2 /* KeychainWrapper.swift in Sources */,
 				7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */,
 				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
 				7BD016272A0BCE1F00B07A3E /* SpeciesResult.swift in Sources */,

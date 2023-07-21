@@ -11,11 +11,13 @@ class BackendClient {
     let downloader: HTTPDownloader
     let local: LocalFileDownloader
     private let encoder = JSONEncoder()
+    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    
     init(downloader: HTTPDownloader = URLSession.shared, local: LocalFileDownloader = URLSession.shared) {
         self.downloader = downloader
         self.local = local
     }
-
+    
     private func dataFormField(named name: String,
                                data: Data,
                                contentType: String,
@@ -46,7 +48,7 @@ class BackendClient {
         
         var request = mpr.urlRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!, method: "PUT")
         
-        if let token = Settings.getToken() {
+        if let token = bearerToken {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         } else {
             request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")

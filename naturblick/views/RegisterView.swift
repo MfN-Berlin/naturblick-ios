@@ -6,8 +6,8 @@ import SwiftUI
 
 struct RegisterView: View {
     
+    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
     @StateObject var registerVM = RegisterViewModel()
-    @EnvironmentObject var sharedSettings: SharedSettings
     
     @State var action: String?
     
@@ -22,7 +22,7 @@ struct RegisterView: View {
         Task {
             do {
                 let _ = try await client.signUp(deviceId: Settings.deviceId(), email: registerVM.email, password: registerVM.password)
-                sharedSettings.setEmail(email: registerVM.email)
+                email = registerVM.email
                 showRegisterSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 409 {
                 showAlreadyExists = true

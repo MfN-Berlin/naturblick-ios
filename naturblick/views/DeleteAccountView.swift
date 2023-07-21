@@ -8,7 +8,6 @@ import SwiftUI
 struct DeleteAccountView: View {
     
     @StateObject var deleteVM = EmailAndPasswordWithPrompt()
-    @EnvironmentObject var sharedSettings: SharedSettings
     @State var action: String?
     
     @State var showDeleteSuccess = false
@@ -17,14 +16,25 @@ struct DeleteAccountView: View {
     
     @State var isPresented: Bool = false
     @State var error: HttpError? = nil
-            
+    
+    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
+    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
+    @AppStorage("activated") var activated: Bool = false
+    
+    private func signOut() {
+        email = nil
+        neverSignedIn = true
+        bearerToken = nil
+        activated = false
+    }
+    
     func deleteAccount() {
         let client = BackendClient()
         Task {
             do {
                 try await client.deleteAccount(email: deleteVM.email, password: deleteVM.password)
-                sharedSettings.setSignedOut()
-                sharedSettings.setEmail(email: nil)
+                signOut()
                 showDeleteSuccess = true
             }  catch HttpError.clientError(let statusCode) where statusCode == 400 {
                 showCredentialsError = true

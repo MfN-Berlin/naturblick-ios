@@ -14,6 +14,8 @@ struct ForgotPasswordView: View {
     @State var showSendInfo: Bool = false
     @State var isPresented: Bool = false
     
+    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
+    
     func forgotPassword() {
         let client = BackendClient()
         Task {
@@ -56,6 +58,11 @@ struct ForgotPasswordView: View {
                 buttons: forgotSuccessButtons()
             )
         }.alertHttpError(isPresented: $isPresented, error: error)
+            .onAppear {
+                if let email = email {
+                    forgotPasswordVM.email = email
+                }
+            }
     }
     
     func forgotSuccessButtons() -> [Alert.Button] {

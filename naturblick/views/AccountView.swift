@@ -7,10 +7,23 @@ import SwiftUI
 
 struct AccountView: View {
     
+    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
+    
+    @AppStorage("hasToken") var hasToken: Bool = false
+    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
+    @AppStorage("activated") var activated: Bool = false
+    
     static let loginAction = "login"
     static let accountAction = "account"
     
-    @EnvironmentObject var sharedSettings: SharedSettings
+    private func signOut() {
+        email = nil
+        neverSignedIn = true
+        bearerToken = nil
+        activated = false
+        hasToken = false
+    }
     
     var body: some View {
         BaseView {
@@ -20,7 +33,7 @@ struct AccountView: View {
                     .font(.nbBody1)
                     .padding()
                 
-                if (sharedSettings.email == nil) {
+                if (email == nil) {
                     Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nHowever, you can still use Naturblick without an account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
@@ -31,8 +44,8 @@ struct AccountView: View {
                     NavigationLink(destination: RegisterView()) {
                         Text("Register now")
                     }.buttonStyle(.bordered).foregroundColor(.black)
-                } else if (sharedSettings.hasToken) {
-                    Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nYou are signed in as: \(sharedSettings.email!)\n\n**Delete account**\n\nDeleting your account will remove the link to other devices and we will automatically delete the email address you provided.")
+                } else if (hasToken) {
+                    Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nYou are signed in as: \(email!)\n\n**Delete account**\n\nDeleting your account will remove the link to other devices and we will automatically delete the email address you provided.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
@@ -44,8 +57,8 @@ struct AccountView: View {
                         .font(.nbBody1)
                         .padding()
 
-                } else if (!sharedSettings.hasToken && sharedSettings.email != nil) {
-                    if (sharedSettings.neverSignedIn) {
+                } else if (bearerToken == nil && email != nil) {
+                    if (neverSignedIn) {
                         Text("Log into your account.")
                             .tint(Color.onSecondaryButtonPrimary)
                             .font(.nbBody1)
@@ -54,7 +67,7 @@ struct AccountView: View {
                             Text("Go to login")
                         }.buttonStyle(.bordered).foregroundColor(.black)
                         Button("Continue without account") {
-                            sharedSettings.signOut()
+                            signOut()
                         }.buttonStyle(.bordered).foregroundColor(.black)
                         Text("**Activation link**\n\nYou can access your Naturblick account only after confirming your registration. To do so, please click on the activation link that we have sent to your email address.")
                             .tint(Color.onSecondaryButtonPrimary)
@@ -76,7 +89,7 @@ struct AccountView: View {
                             Text("Register")
                         }.buttonStyle(.bordered).foregroundColor(.black)
                         Button("Continue without account") {
-                            sharedSettings.signOut()
+                            signOut()
                         }.foregroundColor(.black)
                         .buttonStyle(.bordered)
                     }
