@@ -57,7 +57,7 @@ struct AccountView: View {
                         .font(.nbBody1)
                         .padding()
 
-                } else if (bearerToken == nil && email != nil) {
+                } else if (!hasToken && email != nil) {
                     if (neverSignedIn) {
                         Text("Log into your account.")
                             .tint(Color.onSecondaryButtonPrimary)

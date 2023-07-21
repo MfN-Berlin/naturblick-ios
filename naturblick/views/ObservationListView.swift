@@ -19,6 +19,7 @@ struct ObservationListView: View {
     @State var didRunOnce: Bool = false
     @State var createAction: CreateObservationAction = .createManualObservation
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    @AppStorage("hasToken") var hasToken: Bool = false
     
     var body: some View {
         SwiftUI.Group {
@@ -107,6 +108,7 @@ struct ObservationListView: View {
             try persistenceController.importObservations(from: response.data)
         } catch HttpError.clientError(let statusCode) where statusCode == 401 {
             bearerToken = nil
+            hasToken = false
             self.error = error
             self.isPresented = true
         }
