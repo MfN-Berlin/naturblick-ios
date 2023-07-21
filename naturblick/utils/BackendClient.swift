@@ -78,8 +78,7 @@ class BackendClient {
         let deviceId = Settings.deviceId()
         
         guard let encoded = try? JSONEncoder().encode(ConnectDevice(deviceIdentifier: deviceId)) else {
-            print("Failed to encode ConnectDevice")
-            return
+            preconditionFailure("Failed to encode ConnectDevice")
         }
         
         let _ = try await downloader.httpSend(request: request, data: encoded)
@@ -280,8 +279,7 @@ class BackendClient {
                 osVersion: UIDevice.current.systemVersion,
                 appVersion: UIApplication.appVersion!))
         else {
-            print("Failed to encode RegisterDevice")
-            return
+            preconditionFailure("Failed to encode RegisterDevice")
         }
         
         let _ = try await downloader.httpSend(request: request, data: encoded)
