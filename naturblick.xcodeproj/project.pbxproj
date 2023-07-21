@@ -127,6 +127,7 @@
 		7BC77E852A6A4DCB00B489C2 /* AppSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E842A6A4DCB00B489C2 /* AppSecureStorage.swift */; };
 		7BC77E872A6A4F2700B489C2 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E862A6A4F2700B489C2 /* KeychainWrapper.swift */; };
 		7BC77E8A2A6A4FC400B489C2 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E892A6A4FC400B489C2 /* KeychainItemAccessibility.swift */; };
+		7BC77E8C2A6AA4A300B489C2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E8B2A6AA4A300B489C2 /* SettingsView.swift */; };
 		7BCBBB5129EEDA07000DD344 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCBBB5029EEDA07000DD344 /* BaseView.swift */; };
 		7BCCB4CF2A5D427E0072841B /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCB4CE2A5D427E0072841B /* ResetPasswordView.swift */; };
 		7BCCFD7729F2A62A00C71453 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCFD7629F2A62A00C71453 /* Style.swift */; };
@@ -283,6 +284,7 @@
 		7BC77E842A6A4DCB00B489C2 /* AppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecureStorage.swift; sourceTree = "<group>"; };
 		7BC77E862A6A4F2700B489C2 /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		7BC77E892A6A4FC400B489C2 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
+		7BC77E8B2A6AA4A300B489C2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7BCAE7BF2A5BF6A300B27370 /* naturblick.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = naturblick.entitlements; sourceTree = "<group>"; };
 		7BCBBB5029EEDA07000DD344 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		7BCCB4CE2A5D427E0072841B /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 				13316BD629C9F3860077292B /* SpeciesListView.swift */,
 				137690022A30946F0076F93A /* SpectrogramView.swift */,
 				7BCCFD7629F2A62A00C71453 /* Style.swift */,
+				7BC77E8B2A6AA4A300B489C2 /* SettingsView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */,
 				132A91412A2DCF6C00AC405C /* Map+Picker.swift in Sources */,
 				13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */,
+				7BC77E8C2A6AA4A300B489C2 /* SettingsView.swift in Sources */,
 				7BA037C929D7020500804AFE /* PortraitImageMeta.swift in Sources */,
 				130C04A22A39B36F00677BC2 /* NavigationDestination.swift in Sources */,
 				13316BD729C9F3860077292B /* SpeciesListView.swift in Sources */,
