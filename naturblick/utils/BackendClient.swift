@@ -100,8 +100,7 @@ class BackendClient {
         var request = mpr.urlRequest(url: url!, method: "PUT")
         let deviceId: String = Settings.deviceId()
         request.setValue(deviceId, forHTTPHeaderField: "X-MfN-Device-Id")
-        let (_, r) = try await URLSession.shared.data(for: request)
-        print("\(r.description)")
+        let (_, _) = try await URLSession.shared.data(for: request)
     }
     
     func upload(sound: URL, mediaId: UUID) async throws {
