@@ -467,6 +467,7 @@
 				7BCCB4CE2A5D427E0072841B /* ResetPasswordView.swift */,
 				7BB3DE1D29F2B0A100F0D387 /* RoundBottomView.swift */,
 				133B391F2A40517200D48617 /* SelectSpeciesView.swift */,
+				7BC77E8B2A6AA4A300B489C2 /* SettingsView.swift */,
 				7BB3DE1F29F6695F00F0D387 /* SimilarSpeciesItemView.swift */,
 				7BA037C629D6E36E00804AFE /* SimilarSpeciesView.swift */,
 				7B993F4829F16C3D0023315B /* SoundButton.swift */,
@@ -475,7 +476,6 @@
 				13316BD629C9F3860077292B /* SpeciesListView.swift */,
 				137690022A30946F0076F93A /* SpectrogramView.swift */,
 				7BCCFD7629F2A62A00C71453 /* Style.swift */,
-				7BC77E8B2A6AA4A300B489C2 /* SettingsView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -534,7 +534,6 @@
 		7BCE46C029C9DC5E00C6C101 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				7BC77E882A6A4F7A00B489C2 /* secure */,
 				1343D1CA29DD94F50075ACE3 /* BackendClient.swift */,
 				134F54932A5ED78E00A079EC /* CGFloat+Constants.swift */,
 				1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */,
@@ -555,17 +554,18 @@
 				7BD016222A0B723600B07A3E /* MultipartRequest.swift */,
 				137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */,
 				136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */,
+				7BC77E882A6A4F7A00B489C2 /* secure */,
 				7B02E4D92A4993DF006406A1 /* Settings.swift */,
 				7B13663829F0122600F1DA30 /* SoundStreamController.swift */,
 				7BB68E492A545D5C00B1DC51 /* String+Validations.swift */,
+				7BCEFCC52A690F4800EAC332 /* UIApplication.swift */,
+				7BCEFCC72A690FC800EAC332 /* UIDevice.swift */,
 				13743F6B2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift */,
 				7BB777152A612B9100EA844C /* URL+Query.swift */,
 				134F54972A5EDC8100A079EC /* URL+SupportDir.swift */,
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				137963F129E6FFDB0043E64F /* View+alertError.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
-				7BCEFCC52A690F4800EAC332 /* UIApplication.swift */,
-				7BCEFCC72A690FC800EAC332 /* UIDevice.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";

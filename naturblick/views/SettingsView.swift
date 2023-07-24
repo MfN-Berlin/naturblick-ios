@@ -18,13 +18,6 @@ struct SettingsView: View {
                         .font(.nbBody1)
                         .padding()
                     NBEditText(label: "Name (Synonym)", icon: Image(systemName: "pencil"), text: $ccByName)
-                    
-                    // speichern button
-                    Text("**Information about linked devices**\n\nThis is the list of devices that were used with Naturblick.")
-                        .tint(Color.onSecondaryButtonPrimary)
-                        .font(.nbBody1)
-                        .padding()
-                    Text("TODO johannes")
                 }
             }
         }
