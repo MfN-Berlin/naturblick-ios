@@ -33,8 +33,15 @@ struct ObservationView: View {
     var body: some View {
         VStack {
             if let thumbnail = editData.thumbnail {
-                Image(uiImage: thumbnail.image)
+                HStack {
+                    Image(uiImage: thumbnail.image)
                     .avatar()
+                    if (observation.observation.obsType == .audio) {
+                        if let mediaId = observation.observation.mediaId {
+                            SoundButton(url: NBSound(id: mediaId).url).frame(width: 100)
+                        }
+                    }
+                }
             } else if observation.observation.thumbnailId != nil {
                 Image("placeholder")
                     .avatar()

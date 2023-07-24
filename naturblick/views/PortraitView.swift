@@ -20,8 +20,8 @@ struct PortraitView: View {
                             }
                             VStack {
                                 Spacer()
-                                if let url = portrait.audioUrl {
-                                    SoundButton(url: url)
+                                if let urlPart = portrait.audioUrl {
+                                    SoundButton(url: URL(string: Configuration.strapiUrl + urlPart)!)
                                         .frame(height: .fabSize)
                                         .padding(.horizontal, .defaultPadding)
                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)

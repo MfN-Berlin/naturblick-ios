@@ -13,7 +13,6 @@ struct NBSound {
     }
     
     var url: URL {
-        let docDirURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-        return docDirURL.appendingPathComponent(id.filename(mime: .mp4))
+        return getDocumentsDirectory().appendingPathComponent(id.filename(mime: .mp4))
     }
 }
