@@ -7,7 +7,7 @@ import SwiftUI
 import AVFoundation
 
 struct SoundButton: View {
-    let url: String
+    let url: URL
     @StateObject private var soundStream = SoundStreamController()
     
     func buttonIcon() -> Image {
@@ -37,7 +37,7 @@ struct SoundButton: View {
         }
         .onTapGesture {
             if (soundStream.currentStatus == AVPlayer.TimeControlStatus.paused) {
-                soundStream.play(sound: url)
+                soundStream.play(url: url)
             } else {
                 soundStream.stop()
             }
@@ -50,6 +50,7 @@ struct SoundButton: View {
 
 struct SoundButton_Previews: PreviewProvider {
     static var previews: some View {
-        SoundButton(url: "/uploads/bird_33905da8_c19adc870e.mp3")
+        let url = URL(string: Configuration.strapiUrl + "/uploads/bird_33905da8_c19adc870e.mp3")!
+        SoundButton(url: url)
     }
 }
