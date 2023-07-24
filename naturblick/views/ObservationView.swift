@@ -21,9 +21,11 @@ struct ObservationView: View {
 
     private func updateThumbnail() async {
         if let thumbnailId = observation.observation.thumbnailId {
-            let thumbnail = try? await BackendClient().downloadCached(mediaId: thumbnailId)
             if editData.thumbnail == nil {
-                editData.thumbnail = thumbnail
+                let thumbnail = try? await NBImage(id: thumbnailId)
+                if let thumbnail = thumbnail {
+                    editData.thumbnail = thumbnail
+                }
             }
         }
     }

@@ -11,7 +11,7 @@ struct ObservationListItemWithImageView: View {
     let observation: Observation
 
     var body: some View {
-        AsyncThumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
+        Thumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
             ObservationListItemView(observation: observation, image: image)
         } placeholder: {
             ObservationListItemView(observation: observation, image: Image("placeholder"))

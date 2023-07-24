@@ -22,10 +22,9 @@ struct EditObservationView: View {
     
     func identifyImage() {
         Task {
-            let client = BackendClient()
             if let mediaId = data.original.mediaId {
-                let image = try await client.downloadCached(mediaId: mediaId)
-                imageData = ImageData(image: image)
+                let origImage = try await NBImage(id: mediaId)
+                imageData = ImageData(image: origImage)
                 showImageId = true
             }
         }

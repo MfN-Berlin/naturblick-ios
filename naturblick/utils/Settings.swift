@@ -33,7 +33,7 @@ struct Settings {
     
     static func deviceId() -> String {
         let deviceId = UIDevice.current.identifierForVendor?.uuidString
-        return deviceId!
+        return deviceId!.md5().lowercased()
     }
     
     static func ccByName() -> String {

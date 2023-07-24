@@ -98,8 +98,10 @@ class BackendClient {
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
-        let (_, _) = try await URLSession.shared.data(for: request)
+        let deviceId: String = Settings.deviceId()
+        request.setValue(deviceId, forHTTPHeaderField: "X-MfN-Device-Id")
+        let (_, r) = try await URLSession.shared.data(for: request)
+        print("\(r.description)")
     }
     
     func upload(sound: URL, mediaId: UUID) async throws {
@@ -141,12 +143,12 @@ class BackendClient {
         return UIImage(data: data)!
     }
 
-    func downloadCached(mediaId: UUID) async throws -> NBImage {
+    func downloadCached(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
         request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
         let data = try await downloader.http(request: request)
-        return NBImage(id: mediaId, image: UIImage(data: data)!)
+        return UIImage(data: data)!
     }
 
     func downloadCached(speciesUrl: String) async throws -> UIImage {

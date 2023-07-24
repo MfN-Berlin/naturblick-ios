@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct AsyncThumbnail<Content: View, Placeholder: View> : View {
+struct Thumbnail<Content: View, Placeholder: View> : View {
     let speciesUrl: String?
     let thumbnailId: UUID?
     @State var uiImage: UIImage? = nil
@@ -29,19 +29,17 @@ struct AsyncThumbnail<Content: View, Placeholder: View> : View {
         }
         .task(id: thumbnailId) {
             if let thumbnailId = self.thumbnailId {
-                let image = try? await BackendClient().downloadCached(mediaId: thumbnailId)
-                self.uiImage = image?.image
+                self.uiImage = try? await NBImage(id: thumbnailId).image
             } else if let speciesUrl = speciesUrl {
-                let uiImage = try? await BackendClient().downloadCached(speciesUrl: speciesUrl)
-                self.uiImage = uiImage
+                self.uiImage = try? await BackendClient().downloadCached(speciesUrl: speciesUrl)
             }
         }
     }
 }
 
-struct AsyncThumbnail_Previews: PreviewProvider {
+struct Thumbnail_Previews: PreviewProvider {
     static var previews: some View {
-        AsyncThumbnail(
+        Thumbnail(
             speciesUrl: nil,
             thumbnailId: nil
         ) { image in
