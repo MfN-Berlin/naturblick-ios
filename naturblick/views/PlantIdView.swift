@@ -7,10 +7,12 @@ import SwiftUI
 
 struct PlantIdView: View {
     let client = BackendClient()
+    var sourceType: UIImagePickerController.SourceType = .camera
     @StateObject private var cameraManager = CameraManager()
     @StateObject private var photoLibraryManager = PhotoLibraryManager()
     @Binding var data: ImageData
     @State var authorized: Bool = false
+    
     var body: some View {
         if authorized {
             if let crop = data.crop {
@@ -26,7 +28,7 @@ struct PlantIdView: View {
             } else if let image = data.image {
                 ImageCropper(image: image.image, crop: $data.crop)
             } else {
-                ImagePickerView(data: $data)
+                ImagePickerView(sourceType: sourceType, data: $data)
             }
         } else {
             Text("Naturblick requires permissions")

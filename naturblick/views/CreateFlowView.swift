@@ -6,11 +6,11 @@
 import SwiftUI
 
 struct CreateFlowView: View {
-    let action: CreateObservationAction
+    @Binding var action: CreateObservationAction?
     @Environment(\.dismiss) var dismiss
     @ObservedObject var persistenceController: ObservationPersistenceController
     @State var data: CreateData = CreateData()
-
+    
     var createObservationView: some View {
         CreateObservationView(data: $data)
             .toolbar {
@@ -31,7 +31,9 @@ struct CreateFlowView: View {
         if action == .createSoundObservation, data.identified == nil {
             BirdIdView(data: $data.sound)
         } else if action == .createImageObservation, data.identified == nil {
-            PlantIdView(data: $data.image)
+            PlantIdView(sourceType: .camera, data: $data.image)
+        } else if action == .createImageFromPhotosObservation, data.identified == nil {
+            PlantIdView(sourceType: .photoLibrary, data: $data.image)
         } else if let identified = data.identified, data.species == nil {
             SelectSpeciesView(results: identified.result, thumbnail: identified.crop.image) { species in
                 data.species = species
@@ -44,6 +46,6 @@ struct CreateFlowView: View {
 
 struct CreateFlowView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateFlowView(action: .createManualObservation, persistenceController: ObservationPersistenceController(inMemory: true))
+        CreateFlowView(action: .constant(.createManualObservation), persistenceController: ObservationPersistenceController(inMemory: true))
     }
 }
