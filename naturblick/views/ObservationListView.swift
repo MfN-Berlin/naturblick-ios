@@ -51,13 +51,44 @@ struct ObservationListView: View {
         .navigationTitle("Feldbuch")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
+            Menu(content: {
+                Button(action: {
+                    createAction = .createImageObservation
+                    create = true
+                }) {
+                    HStack {
+                        Text("Identify photo from a plant")
+                        Image("details")
+                    }
+                }
+                Button(action: {
+                    createAction = .createSoundObservation
+                    create = true
+                }) {
+                    HStack {
+                        Text("Record a bird sound")
+                        Image("microphone")
+                    }
+                }
+                Button(action: {
+                    createAction = .createImageObservation
+                    create = true
+                }) {
+                    HStack {
+                        Text("Photograph a plant")
+                        Image("photo24")
+                    }
+                }
                 Button(action: {
                     createAction = .createManualObservation
                     create = true
                 }) {
-                    Image(systemName: "plus")
+                    Text("Create observation")
+                    Image("logo24")
                 }
-                .accessibilityLabel("New Observation")
+                }, label: {
+                    Image(systemName: "plus")
+                })
             }
             ToolbarItem(placement: .navigation	) {
                 if(showList) {
