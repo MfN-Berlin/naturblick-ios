@@ -8,11 +8,12 @@ import UIKit
 
 struct ImagePickerView: UIViewControllerRepresentable, View {
     
+    let sourceType: UIImagePickerController.SourceType
     @Binding var data: ImageData
         
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .camera
+        imagePicker.sourceType = sourceType
         imagePicker.delegate = context.coordinator
         return imagePicker
     }

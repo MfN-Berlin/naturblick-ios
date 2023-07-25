@@ -10,6 +10,7 @@ enum CreateObservationAction {
     case createImageObservation
     case createSoundObservation
     case createManualObservation
+    case createImageFromPhotosObservation
 }
 
 struct CreateObservationView: View {

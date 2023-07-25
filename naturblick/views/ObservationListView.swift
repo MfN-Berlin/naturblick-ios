@@ -17,9 +17,9 @@ struct ObservationListView: View {
     @State private var showList: Bool = true
     @State var create: Bool = false
     @State var didRunOnce: Bool = false
-    @State var createAction: CreateObservationAction = .createManualObservation
+    @State var createAction: CreateObservationAction? = nil
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
-    
+        
     var body: some View {
         SwiftUI.Group {
             if(showList) {
@@ -51,13 +51,44 @@ struct ObservationListView: View {
         .navigationTitle("Feldbuch")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button(action: {
-                    createAction = .createManualObservation
-                    create = true
-                }) {
+                Menu(content: {
+                    Button(action: {
+                        createAction = .createImageFromPhotosObservation
+                        create = true
+                    }) {
+                        HStack {
+                            Text("Identify photo from a plant")
+                            Image("details")
+                        }
+                    }
+                    Button(action: {
+                        createAction = .createSoundObservation
+                        create = true
+                    }) {
+                        HStack {
+                            Text("Record a bird sound")
+                            Image("microphone")
+                        }
+                    }
+                    Button(action: {
+                        createAction = .createImageObservation
+                        create = true
+                    }) {
+                        HStack {
+                            Text("Photograph a plant")
+                            Image("photo24")
+                        }
+                    }
+                    Button(action: {
+                        createAction = .createManualObservation
+                        create = true
+                    }) {
+                        Text("Create observation")
+                        Image("logo24")
+                    }
+                }, label: {
                     Image(systemName: "plus")
-                }
-                .accessibilityLabel("New Observation")
+                })
             }
             ToolbarItem(placement: .navigation	) {
                 if(showList) {
@@ -79,7 +110,7 @@ struct ObservationListView: View {
         }
         .sheet(isPresented: $create) {
             NavigationView {
-                CreateFlowView(action: createAction, persistenceController: persistenceController)
+                CreateFlowView(action: $createAction, persistenceController: persistenceController)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
