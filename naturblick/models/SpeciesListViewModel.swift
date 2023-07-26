@@ -13,23 +13,19 @@ class SpeciesListViewModel: ObservableObject {
 
     init(filter: SpeciesListFilter) {
         self.filter = filter
-        do {
-            speciesDb = Connection.speciesDB
-            $query.map { [self] searchQuery in
-                do {
-                    if query.isEmpty {
-                        return try SpeciesListViewModel.query(db: speciesDb, filter: filter, searchQuery: nil)
-                    } else {
-                        return try SpeciesListViewModel.query(db: speciesDb, filter: filter, searchQuery: searchQuery)
-                    }
-                } catch {
-                    preconditionFailure(error.localizedDescription)
+        speciesDb = Connection.speciesDB
+        $query.map { [self] searchQuery in
+            do {
+                if query.isEmpty {
+                    return try SpeciesListViewModel.query(db: speciesDb, filter: filter, searchQuery: nil)
+                } else {
+                    return try SpeciesListViewModel.query(db: speciesDb, filter: filter, searchQuery: searchQuery)
                 }
+            } catch {
+                preconditionFailure(error.localizedDescription)
             }
-            .assign(to: &$species)
-        } catch {
-            preconditionFailure(error.localizedDescription)
         }
+        .assign(to: &$species)
     }
 
     private static func query(db: Connection, filter: SpeciesListFilter, searchQuery: String?) throws -> [SpeciesListItem] {
@@ -66,6 +62,20 @@ class SpeciesListViewModel: ObservableObject {
                         femaleUrl: row[Species.Definition.femaleUrl],
                         gersynonym: row[Species.Definition.gersynonym],
                         isFemale: row[Species.Definition.isFemale]
+                    )
+                }
+        case .all:
+            let query = Species.Definition.table
+            return try db.prepareRowIterator(query.order(Species.Definition.gername))
+                .map { row in
+                    SpeciesListItem(
+                        speciesId: row[Species.Definition.id],
+                        sciname: row[Species.Definition.sciname],
+                        gername: row[Species.Definition.gername],
+                        maleUrl: row[Species.Definition.maleUrl],
+                        femaleUrl: row[Species.Definition.femaleUrl],
+                        gersynonym: row[Species.Definition.gersynonym],
+                        isFemale: nil
                     )
                 }
         }

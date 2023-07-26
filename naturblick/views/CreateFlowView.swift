@@ -28,7 +28,9 @@ struct CreateFlowView: View {
     }
     
     var body: some View {
-        if action == .createSoundObservation, data.identified == nil {
+        if action == .createManualObservation {
+            SpeciesListView(filter: .all, createData: $data)
+        } else if action == .createSoundObservation, data.identified == nil {
             BirdIdView(data: $data.sound)
         } else if action == .createImageObservation, data.identified == nil {
             PlantIdView(sourceType: .camera, data: $data.image)

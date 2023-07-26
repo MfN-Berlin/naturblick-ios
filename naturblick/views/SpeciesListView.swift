@@ -6,8 +6,11 @@ import SwiftUI
 
 struct SpeciesListView: View {
     @StateObject var speciesListViewModel: SpeciesListViewModel
-    init(filter: SpeciesListFilter) {
+    var createData: Binding<CreateData>?
+    
+    init(filter: SpeciesListFilter, createData: Binding<CreateData>? = nil) {
         _speciesListViewModel = StateObject(wrappedValue:  SpeciesListViewModel(filter: filter))
+        self.createData = createData
     }
 
     var body: some View {
@@ -17,14 +20,14 @@ struct SpeciesListView: View {
                     // When used, AsyncImage has to be the outermost element
                     // or it will not properly load in List
                     AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                        SpeciesListItemView(species: species, avatar: image)
+                        SpeciesListItemView(species: species, avatar: image, createData: createData)
                     } placeholder: {
-                        SpeciesListItemView(species: species, avatar: Image("placeholder"))
+                        SpeciesListItemView(species: species, avatar: Image("placeholder"), createData: createData)
                     }
                     .listRowInsets(.nbInsets)
                     .listRowBackground(Color.secondaryColor)
                 } else {
-                    SpeciesListItemView(species: species, avatar: Image("placeholder"))
+                    SpeciesListItemView(species: species, avatar: Image("placeholder"), createData: createData)
                         .listRowInsets(.nbInsets)
                         .listRowBackground(Color.secondaryColor)
                 }
@@ -37,6 +40,6 @@ struct SpeciesListView: View {
 
 struct SpeciesListView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesListView(filter: .group(Group.groups[0]))
+        SpeciesListView(filter: .group(Group.groups[0]), createData: nil)
     }
 }
