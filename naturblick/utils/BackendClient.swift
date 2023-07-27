@@ -7,6 +7,35 @@ import Foundation
 import Combine
 import SwiftUI
 
+struct Chunk {
+    
+    private let MAX_CHUNK_SIZE = 5 * 1024 * 1024 // 5 MB
+    
+    private(set) var size: Int = 0
+    private(set) var ids: [Int64] = []
+    private(set) var operations: [Operation] = []
+    
+    mutating func addOperation(id: Int64, operation: Operation) {
+        operations.append(operation)
+        ids.append(id)
+        
+        guard let encoded = try? JSONEncoder().encode(operation) else {
+            preconditionFailure("Failed to encode operation")
+        }
+        
+        size += encoded.count
+
+        if case .upload(let upload) = operation {
+            let fileUrl = URL.uploadFileURL(id: upload.mediaId, mime: upload.mime)
+            size += fileUrl.fileSizeBytes()
+        }
+    }
+    
+    func exceedsMaxSize() -> Bool {
+        size > MAX_CHUNK_SIZE
+    }
+}
+
 class BackendClient {
     let downloader: HTTPDownloader
     let local: LocalFileDownloader
@@ -34,14 +63,35 @@ class BackendClient {
         return fieldData as Data
     }
 
-    func sync(controller: ObservationPersistenceController) async throws -> ObservationResponse {
+    func sync(controller: ObservationPersistenceController) async throws -> [ObservationResponse] {
         let (ids, operations) = try controller.getPendingOperations()
-        let observationRequest = ObservationRequest(operations: operations, syncInfo: SyncInfo(deviceIdentifier: Settings.deviceId()))
+        
+        var chunk = Chunk()
+        var responses: [ObservationResponse] = []
+        
+        for (i, o) in zip(ids, operations) {
+            chunk.addOperation(id: i, operation: o)
+            if chunk.exceedsMaxSize() {
+                responses.append(try await syncChunk(chunk: chunk, controller: controller))
+                chunk = Chunk()
+            }
+        }
+        if !chunk.ids.isEmpty {
+            responses.append(try await syncChunk(chunk: chunk, controller: controller))
+        }
+        
+        return responses
+    }
+    
+    private func syncChunk(chunk: Chunk, controller: ObservationPersistenceController) async throws -> ObservationResponse {
+        print("syncing chunk of size [ \(chunk.size) ] with [ \(chunk.operations.count) ] operations")
+        let observationRequest = ObservationRequest(operations: chunk.operations, syncInfo: SyncInfo(deviceIdentifier: Settings.deviceId()))
         var mpr = MultipartRequest()
         mpr.addJson(key: "operations", jsonData: try encoder.encode(observationRequest))
-        for operation in operations {
+        for operation in chunk.operations {
             if case .upload(let upload) = operation {
-                let data = try await local.download(url: URL.uploadFileURL(id: upload.mediaId, mime: upload.mime))
+                let fileUrl = URL.uploadFileURL(id: upload.mediaId, mime: upload.mime)
+                let data = try await local.download(url: fileUrl)
                 mpr.add(key: upload.mediaId.uuidString.lowercased(), fileName: upload.mediaId.filename(mime: upload.mime), fileMimeType: upload.mime.rawValue, fileData: data)
             }
         }
@@ -55,8 +105,8 @@ class BackendClient {
         }
  
         let response: ObservationResponse = try await downloader.httpJson(request: request)
-        try controller.clearPendingOperations(ids: ids)
-        for operation in operations {
+        try controller.clearPendingOperations(ids: chunk.ids)
+        for operation in chunk.operations {
             if case .upload(let upload) = operation {
                 // Ignore failures deleting the file uploaded
                 try? FileManager().removeItem(at: URL.uploadFileURL(id: upload.mediaId, mime: upload.mime))

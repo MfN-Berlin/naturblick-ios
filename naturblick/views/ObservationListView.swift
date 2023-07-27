@@ -134,8 +134,10 @@ struct ObservationListView: View {
 
     private func sync() async {
         do {
-            let response = try await client.sync(controller: persistenceController)
-            try persistenceController.importObservations(from: response.data)
+            let responses = try await client.sync(controller: persistenceController)
+            for response in responses {
+                try persistenceController.importObservations(from: response.data)
+            }
         } catch HttpError.clientError(let statusCode) where statusCode == 401 {
             bearerToken = nil
             self.error = error
