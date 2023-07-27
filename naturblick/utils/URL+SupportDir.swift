@@ -10,4 +10,13 @@ extension URL {
     static func uploadFileURL(id: UUID, mime: MimeType) -> URL {
         return supportDir.appendingPathComponent(id.filename(mime: mime))
     }
+    
+    func fileSizeBytes() -> Int {
+        do {
+            let resources = try self.resourceValues(forKeys:[.fileSizeKey])
+            return resources.fileSize!
+        } catch {
+            preconditionFailure("failed URL.fileSizeBytes")
+        }
+    }
 }
