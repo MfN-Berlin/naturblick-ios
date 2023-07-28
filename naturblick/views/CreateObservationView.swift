@@ -6,7 +6,11 @@
 import SwiftUI
 import MapKit
 
-enum CreateObservationAction {
+enum CreateObservationAction: Identifiable {
+    var id: Self {
+        return self
+    }
+    
     case createImageObservation
     case createSoundObservation
     case createManualObservation

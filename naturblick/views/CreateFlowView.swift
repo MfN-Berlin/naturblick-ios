@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct CreateFlowView: View {
-    @Binding var action: CreateObservationAction?
+    var action: CreateObservationAction
     @Environment(\.dismiss) var dismiss
     @ObservedObject var persistenceController: ObservationPersistenceController
     @State var data: CreateData = CreateData()
@@ -46,6 +46,6 @@ struct CreateFlowView: View {
 
 struct CreateFlowView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateFlowView(action: .constant(.createManualObservation), persistenceController: ObservationPersistenceController(inMemory: true))
+        CreateFlowView(action: .createManualObservation, persistenceController: ObservationPersistenceController(inMemory: true))
     }
 }
