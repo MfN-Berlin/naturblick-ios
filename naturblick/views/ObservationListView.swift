@@ -15,7 +15,6 @@ struct ObservationListView: View {
     @State private var error: HttpError? = nil
     @State private var region: MKCoordinateRegion = .defaultRegion
     @State private var showList: Bool = true
-    @State var create: Bool = false
     @State var didRunOnce: Bool = false
     @State var createAction: CreateObservationAction? = nil
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
@@ -54,7 +53,6 @@ struct ObservationListView: View {
                 Menu(content: {
                     Button(action: {
                         createAction = .createImageFromPhotosObservation
-                        create = true
                     }) {
                         HStack {
                             Text("Identify photo from a plant")
@@ -63,7 +61,6 @@ struct ObservationListView: View {
                     }
                     Button(action: {
                         createAction = .createSoundObservation
-                        create = true
                     }) {
                         HStack {
                             Text("Record a bird sound")
@@ -72,7 +69,6 @@ struct ObservationListView: View {
                     }
                     Button(action: {
                         createAction = .createImageObservation
-                        create = true
                     }) {
                         HStack {
                             Text("Photograph a plant")
@@ -81,7 +77,6 @@ struct ObservationListView: View {
                     }
                     Button(action: {
                         createAction = .createManualObservation
-                        create = true
                     }) {
                         Text("Create observation")
                         Image("logo24")
@@ -108,13 +103,13 @@ struct ObservationListView: View {
                 }
             }
         }
-        .sheet(isPresented: $create) {
+        .sheet(item: $createAction) { action in
             NavigationView {
-                CreateFlowView(action: $createAction, persistenceController: persistenceController)
+                CreateFlowView(action: action, persistenceController: persistenceController)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
-                                create = false
+                                createAction = nil
                             }
                         }
                     }
@@ -126,7 +121,6 @@ struct ObservationListView: View {
                 if let initial = initialCreateAction {
                     createAction = initial
                 }
-                create = initialCreateAction != nil
                 didRunOnce = true
             }
         }
