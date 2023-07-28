@@ -10,9 +10,11 @@ extension URL {
     static func uploadFileURL(id: UUID, mime: MimeType) -> URL {
         return supportDir.appendingPathComponent(id.filename(mime: mime))
     }
-    
+
     static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            
+    static func fileURL(id: UUID, mime: MimeType) -> URL {
+        return documentsDirectory.appendingPathComponent(id.filename(mime: mime))
+    }
     func fileSizeBytes() -> Int {
         do {
             let resources = try self.resourceValues(forKeys:[.fileSizeKey])

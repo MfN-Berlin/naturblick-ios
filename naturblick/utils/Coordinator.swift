@@ -17,9 +17,13 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
-        data.wrappedValue.image = NBImage(image: selectedImage)
-        data.wrappedValue.image?.write()
-        data.wrappedValue.crop = nil
-        UIImageWriteToSavedPhotosAlbum(selectedImage, nil, nil, nil)
+        do {
+            let image = NBImage(image: selectedImage)
+            try image.writeToAlbum()
+            data.wrappedValue.image = image
+            data.wrappedValue.crop = nil
+        } catch {
+            preconditionFailure("\(error)")
+        }
     }
 }

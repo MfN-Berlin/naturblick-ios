@@ -28,8 +28,9 @@ struct BirdIdView: View {
                         }
                     }
                 }
-                data.crop = NBImage(image: crop)
-                data.crop?.write()
+                let thumbnail = NBImage(image: crop)
+                try thumbnail.write()
+                data.crop = thumbnail
                 let result = try await model.identify(sound: sound, start: data.start, end: data.end)
                 data.result = result
             } catch is HttpError {

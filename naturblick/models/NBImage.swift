@@ -4,6 +4,7 @@
 
 import Foundation
 import SwiftUI
+import Photos
 
 struct NBImage {
     let id: UUID
@@ -25,15 +26,25 @@ struct NBImage {
             }
             self.image = img
         } catch {
-            self.image = try await BackendClient().downloadCached(mediaId: id)
-            write()
+            self.image = try await BackendClient().download(mediaId: id)
+            try write()
         }
     }
     
-    func write() {
+    var url: URL {
+        URL.fileURL(id: id, mime: .jpeg)
+    }
+    
+    func write() throws {
         if let data = image.jpegData(compressionQuality: 0.81) {
-            let filename = URL.documentsDirectory.appendingPathComponent(id.filename(mime: .jpeg))
-            try? data.write(to: filename, options: [.withoutOverwriting])
+            try data.write(to: url, options: [.atomic])
+        }
+    }
+    
+    func writeToAlbum() throws {
+        try write()
+        PHPhotoLibrary.shared().performChanges {
+            PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: url)
         }
     }
 }
