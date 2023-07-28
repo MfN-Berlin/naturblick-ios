@@ -594,6 +594,7 @@
 				131E785A29C9BB24000DF928 /* Sources */,
 				131E785B29C9BB24000DF928 /* Frameworks */,
 				131E785C29C9BB24000DF928 /* Resources */,
+				7BA4DA102A73BD0E00AEC0A4 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -694,6 +695,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7BA4DA102A73BD0E00AEC0A4 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library GenerateCharacterAssets.swift -o generate_character_assets && ./generate_character_assets\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		131E785A29C9BB24000DF928 /* Sources */ = {
