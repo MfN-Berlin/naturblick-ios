@@ -19,6 +19,7 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
         data.wrappedValue.image = NBImage(image: selectedImage)
         data.wrappedValue.image?.write()
+        data.wrappedValue.crop = nil
         UIImageWriteToSavedPhotosAlbum(selectedImage, nil, nil, nil)
     }
 }
