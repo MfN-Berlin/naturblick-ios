@@ -54,7 +54,6 @@ struct ObservationListView: View {
                 Menu(content: {
                     Button(action: {
                         createAction = .createImageFromPhotosObservation
-                        //create = true
                     }) {
                         HStack {
                             Text("Identify photo from a plant")
@@ -63,7 +62,6 @@ struct ObservationListView: View {
                     }
                     Button(action: {
                         createAction = .createSoundObservation
-                        //create = true
                     }) {
                         HStack {
                             Text("Record a bird sound")
@@ -72,7 +70,6 @@ struct ObservationListView: View {
                     }
                     Button(action: {
                         createAction = .createImageObservation
-                        //create = true
                     }) {
                         HStack {
                             Text("Photograph a plant")
@@ -81,7 +78,6 @@ struct ObservationListView: View {
                     }
                     Button(action: {
                         createAction = .createManualObservation
-                        //create = true
                     }) {
                         Text("Create observation")
                         Image("logo24")
