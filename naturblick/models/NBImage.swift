@@ -17,7 +17,7 @@ struct NBImage {
     init(id: UUID) async throws {
         self.id = id
         
-        let filename = getDocumentsDirectory().appendingPathComponent(id.filename(mime: .jpeg))
+        let filename = URL.documentsDirectory.appendingPathComponent(id.filename(mime: .jpeg))
         do {
             let data = try Data(contentsOf: filename)
             guard let img = UIImage(data: data) else {
@@ -32,7 +32,7 @@ struct NBImage {
     
     func write() {
         if let data = image.jpegData(compressionQuality: 0.81) {
-            let filename = getDocumentsDirectory().appendingPathComponent(id.filename(mime: .jpeg))
+            let filename = URL.documentsDirectory.appendingPathComponent(id.filename(mime: .jpeg))
             try? data.write(to: filename, options: [.withoutOverwriting])
         }
     }

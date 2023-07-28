@@ -11,6 +11,8 @@ extension URL {
         return supportDir.appendingPathComponent(id.filename(mime: mime))
     }
     
+    static let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            
     func fileSizeBytes() -> Int {
         do {
             let resources = try self.resourceValues(forKeys:[.fileSizeKey])
