@@ -15,7 +15,6 @@ struct ObservationListView: View {
     @State private var error: HttpError? = nil
     @State private var region: MKCoordinateRegion = .defaultRegion
     @State private var showList: Bool = true
-    // @State var create: Bool = false
     @State var didRunOnce: Bool = false
     @State var createAction: CreateObservationAction? = nil
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
