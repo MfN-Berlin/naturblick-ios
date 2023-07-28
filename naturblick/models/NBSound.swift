@@ -13,6 +13,6 @@ struct NBSound {
     }
     
     var url: URL {
-        return getDocumentsDirectory().appendingPathComponent(id.filename(mime: .mp4))
+        return URL.documentsDirectory.appendingPathComponent(id.filename(mime: .mp4))
     }
 }
