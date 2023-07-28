@@ -12,8 +12,9 @@ struct LoginView: View {
     
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
-    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
-    @AppStorage("activated") var activated: Bool = false
+    @AppStorage(ConstantsEnum.appStorageneverSignedIn) var neverSignedIn: Bool = true
+    @AppStorage(ConstantsEnum.appStorageActivated) var activated: Bool = false
+    @EnvironmentObject var persistenceController: ObservationPersistenceController
     
     @Environment(\.dismiss) var dismiss
     
@@ -29,7 +30,7 @@ struct LoginView: View {
         let client = BackendClient()
         Task {
             do {
-                let signInResponse = try await client.signIn(email: loginVM.email, password: loginVM.password)
+                let signInResponse = try await client.signIn(email: loginVM.email, password: loginVM.password, controller: persistenceController)
                 email = loginVM.email
                 bearerToken = signInResponse.access_token
                 neverSignedIn = false

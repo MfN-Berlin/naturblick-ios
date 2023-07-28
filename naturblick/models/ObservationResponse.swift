@@ -8,5 +8,5 @@ import Foundation
 struct ObservationResponse: Decodable {
     let data: [DBObservation]
     let partial: Bool
-    let syncId: Int64?
+    let syncId: Int?
 }

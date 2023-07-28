@@ -19,8 +19,8 @@ struct DeleteAccountView: View {
     
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
-    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
-    @AppStorage("activated") var activated: Bool = false
+    @AppStorage(ConstantsEnum.appStorageneverSignedIn) var neverSignedIn: Bool = true
+    @AppStorage(ConstantsEnum.appStorageActivated) var activated: Bool = false
     
     private func signOut() {
         email = nil

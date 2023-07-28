@@ -10,7 +10,7 @@ struct ObservationListView: View {
     
     let initialCreateAction: CreateObservationAction?
     private let client = BackendClient()
-    @StateObject var persistenceController = ObservationPersistenceController()
+    @EnvironmentObject var persistenceController: ObservationPersistenceController
     @State private var isPresented: Bool = false
     @State private var error: HttpError? = nil
     @State private var region: MKCoordinateRegion = .defaultRegion
@@ -19,12 +19,13 @@ struct ObservationListView: View {
     @State var didRunOnce: Bool = false
     @State var createAction: CreateObservationAction? = nil
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
-        
+    @AppStorage(ConstantsEnum.appStorageSyncId) var syncId: Int?
+    
     var body: some View {
         SwiftUI.Group {
             if(showList) {
                 List(persistenceController.observations) { observation in
-                    NavigationLink(destination: ObservationView(observation: observation, controller: persistenceController)) {
+                    NavigationLink(destination: ObservationView(observation: observation)) {
                         ObservationListItemWithImageView(observation: observation)
                     }
                 }
@@ -39,7 +40,7 @@ struct ObservationListView: View {
                 ) { observation in
                     MapAnnotation(coordinate: observation.observation.coords!.location) {
                         NavigationLink(
-                            destination: ObservationView(observation: observation, controller: persistenceController)
+                            destination: ObservationView(observation: observation)
                         ) {
                             Image(systemName: "mappin")
                         }
@@ -110,7 +111,7 @@ struct ObservationListView: View {
         }
         .sheet(isPresented: $create) {
             NavigationView {
-                CreateFlowView(action: $createAction, persistenceController: persistenceController)
+                CreateFlowView(action: $createAction)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
@@ -155,5 +156,6 @@ struct ObservationListView: View {
 struct ObservationListView_Previews: PreviewProvider {
     static var previews: some View {
         ObservationListView(initialCreateAction: nil)
+            .environmentObject(ObservationPersistenceController(inMemory: true))
     }
 }

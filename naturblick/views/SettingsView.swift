@@ -7,7 +7,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @AppStorage("ccByName") var ccByName: String = "MfN Naturblick"
+    @AppStorage(ConstantsEnum.appStorageCcByName) var ccByName: String = "MfN Naturblick"
     
     var body: some View {
         BaseView {

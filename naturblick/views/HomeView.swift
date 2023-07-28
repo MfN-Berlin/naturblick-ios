@@ -22,7 +22,7 @@ struct HomeView: View {
     
     @State var isShowingLogin = false
         
-    @AppStorage("activated") var activated: Bool = false
+    @AppStorage(ConstantsEnum.appStorageActivated) var activated: Bool = false
     
     var body: some View {
         BaseView(oneColor: true) {

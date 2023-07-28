@@ -10,8 +10,8 @@ struct AccountView: View {
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
     
-    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
-    @AppStorage("activated") var activated: Bool = false
+    @AppStorage(ConstantsEnum.appStorageneverSignedIn) var neverSignedIn: Bool = true
+    @AppStorage(ConstantsEnum.appStorageActivated) var activated: Bool = false
     
     static let loginAction = "login"
     static let accountAction = "account"

@@ -7,15 +7,13 @@ import SwiftUI
 
 struct ObservationView: View {
     let observation: Observation
-    let controller: ObservationPersistenceController
+    @EnvironmentObject var controller: ObservationPersistenceController
     @State private var edit = false
     @State var editData: EditData
 
-    init(observation: Observation,
-         controller: ObservationPersistenceController
+    init(observation: Observation
     ) {
         self.observation = observation
-        self.controller = controller
         self._editData = State(initialValue: EditData(observation: observation, thumbnail: nil))
     }
 
@@ -99,6 +97,6 @@ struct ObservationView: View {
 
 struct ObservationView_Previews: PreviewProvider {
     static var previews: some View {
-        ObservationView(observation: Observation(observation: DBObservation.sampleData, species: nil), controller: ObservationPersistenceController(inMemory: true))
+        ObservationView(observation: Observation(observation: DBObservation.sampleData, species: nil)).environmentObject(ObservationPersistenceController(inMemory: true))
     }
 }

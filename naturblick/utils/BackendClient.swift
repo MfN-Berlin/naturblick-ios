@@ -41,6 +41,7 @@ class BackendClient {
     let local: LocalFileDownloader
     private let encoder = JSONEncoder()
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    @AppStorage(ConstantsEnum.appStorageSyncId) var syncId: Int?
     
     init(downloader: HTTPDownloader = URLSession.shared, local: LocalFileDownloader = URLSession.shared) {
         self.downloader = downloader
@@ -76,16 +77,13 @@ class BackendClient {
                 chunk = Chunk()
             }
         }
-        if !chunk.ids.isEmpty {
-            responses.append(try await syncChunk(chunk: chunk, controller: controller))
-        }
-        
+        responses.append(try await syncChunk(chunk: chunk, controller: controller))
+                
         return responses
     }
     
     private func syncChunk(chunk: Chunk, controller: ObservationPersistenceController) async throws -> ObservationResponse {
-        print("syncing chunk of size [ \(chunk.size) ] with [ \(chunk.operations.count) ] operations")
-        let observationRequest = ObservationRequest(operations: chunk.operations, syncInfo: SyncInfo(deviceIdentifier: Settings.deviceId()))
+        let observationRequest = ObservationRequest(operations: chunk.operations, syncInfo: SyncInfo(deviceIdentifier: Settings.deviceId(), syncId: syncId))
         var mpr = MultipartRequest()
         mpr.addJson(key: "operations", jsonData: try encoder.encode(observationRequest))
         for operation in chunk.operations {
@@ -111,6 +109,9 @@ class BackendClient {
                 // Ignore failures deleting the file uploaded
                 try? FileManager().removeItem(at: URL.uploadFileURL(id: upload.mediaId, mime: upload.mime))
             }
+        }
+        if let syncId = response.syncId {
+            self.syncId = syncId
         }
         return response
     }
@@ -226,7 +227,7 @@ class BackendClient {
         let _ = try await downloader.http(request: request)
     }
     
-    func signIn(email: String, password: String) async throws -> SigninResponse {
+    func signIn(email: String, password: String, controller: ObservationPersistenceController) async throws -> SigninResponse {
                 
         let url = URL(string: Configuration.backendUrl + "signIn")
         var request = URLRequest(url: url!)
@@ -247,6 +248,9 @@ class BackendClient {
         let signInResponse = try decoder.decode(SigninResponse.self, from: data)
         
         try await deviceConnect(token: signInResponse.access_token)
+        
+        Settings.userDefault.removeObject(forKey: ConstantsEnum.appStorageSyncId)
+        let _ = try await sync(controller: controller)
         
         return signInResponse
     }

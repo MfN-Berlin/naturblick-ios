@@ -8,7 +8,7 @@ import UIKit
 
 
 struct Settings {
-    private static let userDefault = UserDefaults.standard
+    static let userDefault = UserDefaults.standard
     private static let deviceIdsKey = "deviceIds"
     
     private static func checkOwnDeviceId() {
