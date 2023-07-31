@@ -5,6 +5,7 @@
 import SwiftUI
 
 struct PickSpeciesListView: View {
+    @Binding var picked: SpeciesListItem?
     @State var species:  [SpeciesListItem] = []
     @State var page: Int = 0
     @State var query: String = ""
@@ -41,8 +42,14 @@ struct PickSpeciesListView: View {
                     // or it will not properly load in List
                     AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
                         SpeciesListItemView(species: current, avatar: image)
+                            .onTapGesture {
+                                picked = current
+                            }
                     } placeholder: {
                         SpeciesListItemView(species: current, avatar: Image("placeholder"))
+                            .onTapGesture {
+                                picked = current
+                            }
                     }
                     .listRowInsets(.nbInsets)
                     .listRowBackground(Color.secondaryColor)
@@ -51,6 +58,9 @@ struct PickSpeciesListView: View {
                     }
                 } else {
                     SpeciesListItemView(species: current, avatar: Image("placeholder"))
+                        .onTapGesture {
+                            picked = current
+                        }
                         .listRowInsets(.nbInsets)
                         .listRowBackground(Color.secondaryColor)
                         .onAppear {
@@ -75,6 +85,6 @@ struct PickSpeciesListView: View {
 
 struct PaginatedSpeciesListView_Previews: PreviewProvider {
     static var previews: some View {
-        PickSpeciesListView()
+        PickSpeciesListView(picked: .constant(nil))
     }
 }
