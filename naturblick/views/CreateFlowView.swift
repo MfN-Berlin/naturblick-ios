@@ -38,6 +38,8 @@ struct CreateFlowView: View {
             SelectSpeciesView(results: identified.result, thumbnail: identified.crop.image) { species in
                 data.species = species
             }
+        } else if action == .createManualObservation, data.species == nil {
+            PickSpeciesListView(picked: $data.species)
         } else {
             createObservationView
         }
