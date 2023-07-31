@@ -21,8 +21,13 @@ struct ImageCropper: UIViewControllerRepresentable {
             let thumbnail = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
                 cropped.draw(in: CGRect(origin: .zero, size: .thumbnail))
             }
-            parent.crop = NBImage(image: thumbnail)
-            parent.crop?.write()
+            do {
+                let crop = NBImage(image: thumbnail)
+                try crop.write()
+                parent.crop = crop
+            } catch {
+                preconditionFailure("\(error)")
+            }
         }
         
         func cropViewControllerDidCancel(_ cropViewController: Mantis.CropViewController, original: UIImage) {
