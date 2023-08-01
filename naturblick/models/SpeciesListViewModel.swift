@@ -32,7 +32,9 @@ class SpeciesListViewModel: ObservableObject {
                         maleUrl: row[Species.Definition.maleUrl],
                         femaleUrl: row[Species.Definition.femaleUrl],
                         gersynonym: row[Species.Definition.gersynonym],
-                        isFemale: nil
+                        isFemale: nil,
+                        wikipedia: row[Species.Definition.wikipedia],
+                        hasPortrait: true
                     )
                 }
         case .characters(let number, let query):
@@ -46,7 +48,9 @@ class SpeciesListViewModel: ObservableObject {
                         maleUrl: row[Species.Definition.maleUrl],
                         femaleUrl: row[Species.Definition.femaleUrl],
                         gersynonym: row[Species.Definition.gersynonym],
-                        isFemale: row[Species.Definition.isFemale]
+                        isFemale: row[Species.Definition.isFemale],
+                        wikipedia: row[Species.Definition.wikipedia],
+                        hasPortrait: true
                     )
                 }
         }
@@ -54,18 +58,20 @@ class SpeciesListViewModel: ObservableObject {
     
     func query(search: String, page: Int) throws -> [SpeciesListItem] {
         let searchString = searchOrNil(search: search)
-        let query = Species.Definition.table
+        let query = Species.Definition.baseQuery
         let queryWithSearch = searchString != nil ? query.filter(Species.Definition.gername.like(searchString!)) : query
         return try speciesDb.prepare(queryWithSearch.order(Species.Definition.gername).limit(SpeciesListViewModel.pageSize, offset: page * SpeciesListViewModel.pageSize))
             .map { row in
                 SpeciesListItem(
-                    speciesId: row[Species.Definition.id],
+                    speciesId: row[Species.Definition.table[Species.Definition.id]],
                     sciname: row[Species.Definition.sciname],
                     gername: row[Species.Definition.gername],
                     maleUrl: row[Species.Definition.maleUrl],
                     femaleUrl: row[Species.Definition.femaleUrl],
                     gersynonym: row[Species.Definition.gersynonym],
-                    isFemale: nil
+                    isFemale: nil,
+                    wikipedia: row[Species.Definition.wikipedia],
+                    hasPortrait: row[Species.Definition.optionalPortraitId] != nil
                 )
             }
     }

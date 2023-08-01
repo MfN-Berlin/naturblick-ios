@@ -34,6 +34,8 @@ struct SpeciesListItem: Identifiable {
     let femaleUrl: String?
     let gersynonym: String?
     let isFemale: Bool?
+    let wikipedia: String?
+    let hasPortrait: Bool
 }
 
 extension SpeciesListItem {
@@ -44,7 +46,9 @@ extension SpeciesListItem {
         maleUrl: "/uploads/crop_d60f7f6c98b0fcf1aa52e7b0_f0b5f2e568.jpg",
         femaleUrl: nil,
         gersynonym: nil,
-        isFemale: nil
+        isFemale: nil,
+        wikipedia: "https://de.wikipedia.org/wiki/Teichmolch",
+        hasPortrait: true
     )
 }
 
@@ -57,7 +61,9 @@ extension Species {
             maleUrl: maleUrl,
             femaleUrl: femaleUrl,
             gersynonym: gersynonym,
-            isFemale: nil
+            isFemale: nil,
+            wikipedia: wikipedia,
+            hasPortrait: hasPortrait
         )
     }
 }

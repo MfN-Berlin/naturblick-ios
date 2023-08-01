@@ -12,12 +12,14 @@ class SimilarSpeciesViewModel: ObservableObject {
     
     private static func query(portraitId: Int64) -> QueryType {
         return SimilarSpecies.Definition.table
+            .select(SimilarSpecies.Definition.table[*], Species.Definition.table[*], Species.Definition.optionalPortraitId)
             .join(
                 Species.Definition.table,
-                on: Species.Definition.id == SimilarSpecies.Definition.similarToId
+                on: Species.Definition.table[Species.Definition.id] == SimilarSpecies.Definition.similarToId
             )
+            .join(.leftOuter, Portrait.Definition.table, on: Species.Definition.table[Species.Definition.id] == Portrait.Definition.speciesId)
+            .filter(Species.Definition.optionalLanguage == 1 || Species.Definition.optionalLanguage == nil)
             .filter(SimilarSpecies.Definition.portraitId == portraitId)
-
         }
         
         func filter(portraitId: Int64) {
@@ -43,7 +45,8 @@ class SimilarSpeciesViewModel: ObservableObject {
                             gersynonym: row[Species.Definition.gersynonym],
                             engsynonym: row[Species.Definition.engsynonym],
                             redListGermany: row[Species.Definition.redListGermany],
-                            iucnCategory: row[Species.Definition.iucnCategory]
+                            iucnCategory: row[Species.Definition.iucnCategory],
+                            hasPortrait: row[Species.Definition.optionalPortraitId] != nil
                         )
                     )
                 }

@@ -18,6 +18,7 @@ struct Species: Identifiable {
     let engsynonym: String?
     let redListGermany: String?
     let iucnCategory: String?
+    let hasPortrait: Bool
 }
 
 extension Species {
@@ -36,6 +37,13 @@ extension Species {
         static let redListGermany = Expression<String?>("red_list_germany")
         static let iucnCategory = Expression<String?>("iucn_category")
         static let isFemale = Expression<Bool?>("female")
+        static let hasPortrait = Expression<Bool>("has_portrait")
+        static let optionalPortraitId = Portrait.Definition.table[Expression<Int64?>("rowid")]
+        static let optionalLanguage = Portrait.Definition.table[Expression<Int64?>("language")]
+        static let baseQuery = table
+            .select(table[*], optionalPortraitId)
+            .join(.leftOuter, Portrait.Definition.table, on: table[id] == Portrait.Definition.speciesId)
+            .filter(optionalLanguage == 1 || optionalLanguage == nil)
     }
 }
 
@@ -52,6 +60,7 @@ extension Species {
         gersynonym: nil,
         engsynonym: nil,
         redListGermany: "gefahrdet",
-        iucnCategory: "LC"
+        iucnCategory: "LC",
+        hasPortrait: true
     )
 }
