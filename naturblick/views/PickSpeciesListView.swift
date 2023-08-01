@@ -10,7 +10,8 @@ struct PickSpeciesListView: View {
     @State var page: Int = 0
     @State var query: String = ""
     @StateObject var speciesListViewModel = SpeciesListViewModel()
-
+    @State var showInfo: SpeciesInfo? = nil
+    
     func reloadSpecies() {
         Task {
             do {
@@ -43,12 +44,12 @@ struct PickSpeciesListView: View {
                     AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
                         SpeciesListItemView(species: current, avatar: image)
                             .onTapGesture {
-                                picked = current
+                                showInfo = SpeciesInfo(species: current, avatar: image)
                             }
                     } placeholder: {
                         SpeciesListItemView(species: current, avatar: Image("placeholder"))
                             .onTapGesture {
-                                picked = current
+                                showInfo = SpeciesInfo(species: current, avatar: Image("placeholder"))
                             }
                     }
                     .listRowInsets(.nbInsets)
@@ -59,7 +60,7 @@ struct PickSpeciesListView: View {
                 } else {
                     SpeciesListItemView(species: current, avatar: Image("placeholder"))
                         .onTapGesture {
-                            picked = current
+                            showInfo = SpeciesInfo(species: current, avatar: Image("placeholder"))
                         }
                         .listRowInsets(.nbInsets)
                         .listRowBackground(Color.secondaryColor)
@@ -77,6 +78,24 @@ struct PickSpeciesListView: View {
             .onAppear {
                 if species.isEmpty {
                     reloadSpecies()
+                }
+            }
+            .popover(item: $showInfo) { info in
+                NavigationView {
+                    SpeciesInfoView(info: info)
+                        .navigationTitle(info.species.name != nil ? info.species.name! : info.species.sciname)
+                        .toolbar {
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Select") {
+                                    picked = info.species
+                                }
+                            }
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Close") {
+                                    showInfo = nil
+                                }
+                            }
+                        }
                 }
             }
         }
