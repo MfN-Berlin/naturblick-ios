@@ -47,6 +47,7 @@
 		134F54982A5EDC8100A079EC /* URL+SupportDir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134F54972A5EDC8100A079EC /* URL+SupportDir.swift */; };
 		13535CEB2A77CFB600501DFA /* SpeciesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13535CEA2A77CFB600501DFA /* SpeciesListView.swift */; };
 		13535CED2A77E4FE00501DFA /* SpeciesInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13535CEC2A77E4FE00501DFA /* SpeciesInfoView.swift */; };
+		13561BE32A7937F700968A03 /* Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13561BE22A7937F700968A03 /* Behavior.swift */; };
 		135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135E682E29EE805700192C4A /* ObservationListItemView.swift */; };
 		1366FA952A654B8500436EF1 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1366FA942A654B8500436EF1 /* Observation.swift */; };
 		1367AA412A41AEB3006E0ACB /* CGSize+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1367AA402A41AEB3006E0ACB /* CGSize+Dimensions.swift */; };
@@ -210,6 +211,7 @@
 		134F54972A5EDC8100A079EC /* URL+SupportDir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+SupportDir.swift"; sourceTree = "<group>"; };
 		13535CEA2A77CFB600501DFA /* SpeciesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListView.swift; sourceTree = "<group>"; };
 		13535CEC2A77E4FE00501DFA /* SpeciesInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesInfoView.swift; sourceTree = "<group>"; };
+		13561BE22A7937F700968A03 /* Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Behavior.swift; sourceTree = "<group>"; };
 		135E682E29EE805700192C4A /* ObservationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemView.swift; sourceTree = "<group>"; };
 		1366FA942A654B8500436EF1 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		1367AA402A41AEB3006E0ACB /* CGSize+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Dimensions.swift"; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 				7BA037BC29D6C8BB00804AFE /* GoodToKnowView.swift */,
 				7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */,
 				7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */,
+				7BA4DA112A73EC5600AEC0A4 /* HelpView.swift */,
 				7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */,
 				7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */,
 				7B0FF7C72A0139D3005674E0 /* ImagePickerView.swift */,
@@ -480,13 +483,12 @@
 				7BA037C629D6E36E00804AFE /* SimilarSpeciesView.swift */,
 				7B993F4829F16C3D0023315B /* SoundButton.swift */,
 				7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */,
+				13535CEC2A77E4FE00501DFA /* SpeciesInfoView.swift */,
 				13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */,
 				13535CEA2A77CFB600501DFA /* SpeciesListView.swift */,
 				137690022A30946F0076F93A /* SpectrogramView.swift */,
 				7BCCFD7629F2A62A00C71453 /* Style.swift */,
 				7B572DD82A6E758F008F50C5 /* Thumbnail.swift */,
-				7BA4DA112A73EC5600AEC0A4 /* HelpView.swift */,
-				13535CEC2A77E4FE00501DFA /* SpeciesInfoView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -494,6 +496,7 @@
 		7BCE46BD29C9DB1E00C6C101 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				13561BE22A7937F700968A03 /* Behavior.swift */,
 				137690042A30A7740076F93A /* BirdIdViewModel.swift */,
 				134C75AA2A2F515C0046EEE4 /* BirdRecorderViewModel.swift */,
 				13A2923929D3123700AF772A /* Character.swift */,
@@ -755,6 +758,7 @@
 				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
 				13B686B02A093A75001FD28F /* EditObservationView.swift in Sources */,
 				7BCEFCC82A690FC800EAC332 /* UIDevice.swift in Sources */,
+				13561BE32A7937F700968A03 /* Behavior.swift in Sources */,
 				13A2923429D3110C00AF772A /* CharactersView.swift in Sources */,
 				135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */,
 				7BC77E852A6A4DCB00B489C2 /* AppSecureStorage.swift in Sources */,

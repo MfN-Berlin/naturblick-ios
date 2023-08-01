@@ -25,7 +25,8 @@ class SelectSpeciesViewModel: ObservableObject {
                         gersynonym: row[Species.Definition.gersynonym],
                         isFemale: nil,
                         wikipedia: row[Species.Definition.wikipedia],
-                        hasPortrait: row[Species.Definition.optionalPortraitId] != nil
+                        hasPortrait: row[Species.Definition.optionalPortraitId] != nil,
+                        group: row[Species.Definition.group]
                     ))
                 }
         } catch {

@@ -16,6 +16,7 @@ struct PatchOperation: Encodable {
     let mediaId: UUID?
     let thumbnailId: UUID?
     let newSpeciesId: Int64?
+    let behavior: Behavior?
 }
 
 extension PatchOperation {
@@ -31,7 +32,8 @@ extension PatchOperation {
         static let mediaId = Expression<UUID?>("media_id")
         static let thumbnailId = Expression<UUID?>("thumbnail_id")
         static let speciesId = Expression<Int64?>("species_id")
-
+        static let behavior = Expression<String?>("behavior")
+        
         static func setters(id: Int64, operation: PatchOperation) -> [Setter] {
             [
                 rowid <- id,
@@ -43,7 +45,8 @@ extension PatchOperation {
                 individuals <- operation.individuals,
                 mediaId <- operation.mediaId,
                 thumbnailId <- operation.thumbnailId,
-                speciesId <- operation.newSpeciesId
+                speciesId <- operation.newSpeciesId,
+                behavior <- operation.behavior?.rawValue
             ]
         }
 
@@ -56,6 +59,11 @@ extension PatchOperation {
             if let latitude = try row.get(table[coordsLatitude]), let longitude = try row.get(table[coordsLongitude]) {
                 coords = Coordinates(latitude: latitude, longitude: longitude)
             }
+            var behaviorEnum: Behavior? = nil
+            if let behaviorStr = try row.get(behavior) {
+                behaviorEnum = Behavior(rawValue: behaviorStr)
+            }
+            
             return PatchOperation(
                 occurenceId: try row.get(table[occurenceId]),
                 obsType:  type,
@@ -64,7 +72,8 @@ extension PatchOperation {
                 individuals: try row.get(table[individuals]),
                 mediaId: try row.get(table[mediaId]),
                 thumbnailId: try row.get(table[thumbnailId]),
-                newSpeciesId: try row.get(table[speciesId])
+                newSpeciesId: try row.get(table[speciesId]),
+                behavior: behaviorEnum
             )
         }
     }

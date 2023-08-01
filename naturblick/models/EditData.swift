@@ -14,6 +14,7 @@ struct EditData {
     var details: String
     var individuals: Int64
     var thumbnail: NBImage?
+    var behavior: Behavior?
     
     init(observation: Observation, thumbnail: NBImage?) {
         self.original = observation.observation
@@ -23,6 +24,7 @@ struct EditData {
         self.coords = observation.observation.coords
         self.individuals = observation.observation.individuals ?? 1
         self.thumbnail = thumbnail
+        self.behavior = observation.observation.behavior
     }
 
     var speciesChanged: Bool {
@@ -45,10 +47,11 @@ struct EditData {
         let individuals = original.individuals != self.individuals ? self.individuals : nil
         let speciesId = speciesChanged ? self.species?.speciesId : nil
         let thumbnailId = thumbnail?.id != original.thumbnailId ? thumbnail?.id : nil
-        guard details != nil || obsType != nil || coords != nil || individuals != nil || speciesId != nil || thumbnailId != nil else {
+        let behavior = original.behavior != self.behavior ? self.behavior : nil
+        guard details != nil || obsType != nil || coords != nil || individuals != nil || speciesId != nil || thumbnailId != nil || behavior != nil else {
             return nil
         }
 
-        return PatchOperation(occurenceId: original.occurenceId, obsType: obsType, coords: coords, details: details, individuals: individuals, mediaId: nil, thumbnailId: thumbnailId, newSpeciesId: speciesId)
+        return PatchOperation(occurenceId: original.occurenceId, obsType: obsType, coords: coords, details: details, individuals: individuals, mediaId: nil, thumbnailId: thumbnailId, newSpeciesId: speciesId, behavior: behavior)
     }
 }

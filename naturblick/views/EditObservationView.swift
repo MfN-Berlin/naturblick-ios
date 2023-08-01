@@ -58,6 +58,11 @@ struct EditObservationView: View {
                     }
                 }
             NBEditText(label: "Notes", icon: Image("details"), text: $data.details)
+            Picker("Behavior", selection: $data.behavior) {
+                ForEach([Behavior].forGroup(group: data.species?.group)) {
+                    Text($0.rawValue).tag($0 as Behavior?)
+                }
+            }
             IndividualsView(individuals: $data.individuals)
         }
         .sheet(isPresented: $showImageId) {

@@ -17,7 +17,7 @@ struct DBObservation: Decodable, Identifiable {
     let localMediaId: String?
     let coords: Coordinates?
     let individuals: Int64?
-    let behavior: String?
+    let behavior: Behavior?
     let details: String?
     
     var id: UUID {
@@ -56,7 +56,7 @@ extension DBObservation {
                 coordsLatitude <- observation.coords?.latitude,
                 coordsLongitude <- observation.coords?.longitude,
                 individuals <- observation.individuals,
-                behavior <- observation.behavior,
+                behavior <- observation.behavior?.rawValue,
                 details <- observation.details
             ]
         }
@@ -65,6 +65,10 @@ extension DBObservation {
             var coords: Coordinates? = nil
             if let latitude = try row.get(coordsLatitude), let longitude = try row.get(coordsLongitude) {
                 coords = Coordinates(latitude: latitude, longitude: longitude)
+            }
+            var behaviorEnum: Behavior? = nil
+            if let behaviorStr = try row.get(behavior) {
+                behaviorEnum = Behavior(rawValue: behaviorStr)
             }
             return DBObservation(
                 occurenceId: try row.get(occurenceId),
@@ -76,7 +80,7 @@ extension DBObservation {
                 localMediaId: try row.get(localMediaId),
                 coords: coords,
                 individuals: try row.get(individuals),
-                behavior: try row.get(behavior),
+                behavior: behaviorEnum,
                 details: try row.get(details)
             )
         }
@@ -114,6 +118,9 @@ extension DBObservation {
             }
             if let newThumbnail = operation.thumbnailId {
                 setters.append(thumbnailId <- newThumbnail)
+            }
+            if let newBehavior = operation.behavior {
+                setters.append(behavior <- newBehavior.rawValue)
             }
             return setters
         }
