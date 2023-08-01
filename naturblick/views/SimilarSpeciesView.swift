@@ -11,20 +11,49 @@ struct SimilarSpeciesView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
+            if !similarSpeciesViewModel.mixups.isEmpty {
+                Text("Verwechslungsarten")
+                    .font(.nbHeadline4)
+            }
             ForEach(similarSpeciesViewModel.mixups) { mix in
-                NavigationLink(destination: PortraitView(speciesId: mix.species.id)) {
-                    VStack(alignment: .leading) {
-                        if let url = mix.species.maleUrl {
-                            AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                                SimilarSpeciesItemView(species: mix.species.listItem, avatar: image)
-                            } placeholder: {
-                                SimilarSpeciesItemView(species: mix.species.listItem, avatar: Image("placeholder"))
-                            }
+                if mix.species.hasPortrait {
+                    NavigationLink(destination: PortraitView(speciesId: mix.species.id)) {
+                        VStack(alignment: .leading) {
+                            SimilarSpeciesItemView(species: mix.species.listItem)
+                            Text(mix.differences)
+                                .font(.nbBody1)
+                                .padding(.top, .halfPadding)
                         }
+                        .frame(maxWidth: .infinity)
+                        .padding(.defaultPadding)
+                        .background {
+                            RoundedRectangle(cornerRadius: .smallCornerRadius)
+                                .foregroundColor(.secondaryColor)
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle()) // to prevent defualt link-text-styling
+                } else if let wikipedia = mix.species.wikipedia {
+                    Link(destination: URL(string: wikipedia)!) {
+                        VStack(alignment: .leading) {
+                            SimilarSpeciesItemView(species: mix.species.listItem)
+                            Text(mix.differences)
+                                .font(.nbBody1)
+                                .padding(.top, .halfPadding)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.defaultPadding)
+                        .background {
+                            RoundedRectangle(cornerRadius: .smallCornerRadius)
+                                .foregroundColor(.secondaryColor)
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle()) // to prevent defualt link-text-styling
+                } else {
+                    VStack(alignment: .leading) {
+                        SimilarSpeciesItemView(species: mix.species.listItem)
                         Text(mix.differences)
                             .font(.nbBody1)
                             .padding(.top, .halfPadding)
-                            
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.defaultPadding)
@@ -33,7 +62,6 @@ struct SimilarSpeciesView: View {
                             .foregroundColor(.secondaryColor)
                     }
                 }
-                .buttonStyle(PlainButtonStyle()) // to prevent defualt link-text-styling
             }
             .padding(.top, .halfPadding)
         }

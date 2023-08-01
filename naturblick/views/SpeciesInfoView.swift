@@ -29,8 +29,12 @@ struct SpeciesInfoView: View {
             } else {
                 Text(info.species.sciname)
             }
-            NavigationLink(destination: PortraitView(speciesId: info.species.speciesId)) {
-                Text("Visit artportrait")
+            if info.species.hasPortrait {
+                NavigationLink(destination: PortraitView(speciesId: info.species.speciesId)) {
+                    Text("Visit artportrait")
+                }
+            } else if let wikipedia = info.species.wikipedia {
+                Link("Visit wikipedia", destination: URL(string: wikipedia)!)
             }
         }.padding(.defaultPadding)
     }

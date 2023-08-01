@@ -12,10 +12,10 @@ class SelectSpeciesViewModel: ObservableObject {
     func resolveSpecies(results: [SpeciesResult]) {
         do {
             let speciesDb = Connection.speciesDB
-            let query = Species.Definition.table.filter(results.map { r in r.id }.contains(Species.Definition.id))
+            let query = Species.Definition.baseQuery.filter(results.map { r in r.id }.contains(Species.Definition.table[Species.Definition.id]))
             speciesResults = try speciesDb.prepareRowIterator(query)
                 .map { row in
-                    let id = row[Species.Definition.id]
+                    let id = row[Species.Definition.table[Species.Definition.id]]
                     return (results.filter { r in r.id == id}.first!, SpeciesListItem(
                         speciesId: id,
                         sciname: row[Species.Definition.sciname],
@@ -23,7 +23,9 @@ class SelectSpeciesViewModel: ObservableObject {
                         maleUrl: row[Species.Definition.maleUrl],
                         femaleUrl: row[Species.Definition.femaleUrl],
                         gersynonym: row[Species.Definition.gersynonym],
-                        isFemale: nil
+                        isFemale: nil,
+                        wikipedia: row[Species.Definition.wikipedia],
+                        hasPortrait: row[Species.Definition.optionalPortraitId] != nil
                     ))
                 }
         } catch {

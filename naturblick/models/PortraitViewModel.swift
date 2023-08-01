@@ -61,7 +61,8 @@ class PortraitViewModel: ObservableObject {
                             gersynonym: row[Species.Definition.table[Species.Definition.gersynonym]],
                             engsynonym: row[Species.Definition.table[Species.Definition.engsynonym]],
                             redListGermany: row[Species.Definition.table[Species.Definition.redListGermany]],
-                            iucnCategory: row[Species.Definition.table[Species.Definition.iucnCategory]]
+                            iucnCategory: row[Species.Definition.table[Species.Definition.iucnCategory]],
+                            hasPortrait: true
                         ),
                         description: row[Portrait.Definition.description],
                         descriptionImage: row[Portrait.Definition.descriptionImage] != nil

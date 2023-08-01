@@ -125,7 +125,8 @@ class ObservationPersistenceController: ObservableObject {
                 gersynonym: row[Species.Definition.gersynonym],
                 engsynonym: row[Species.Definition.engsynonym],
                 redListGermany: row[Species.Definition.redListGermany],
-                iucnCategory: row[Species.Definition.iucnCategory]
+                iucnCategory: row[Species.Definition.iucnCategory],
+                hasPortrait: false
             )
             return Observation(observation: observation, species: species)
         }

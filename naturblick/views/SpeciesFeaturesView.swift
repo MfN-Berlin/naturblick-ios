@@ -13,14 +13,7 @@ struct SpeciesFeaturesView: View {
     var body: some View {
         
         VStack(alignment: .leading) {
-            if let url = species.maleUrl {
-                AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                    SimilarSpeciesItemView(species: species.listItem, avatar: image)
-                } placeholder: {
-                    SimilarSpeciesItemView(species: species.listItem, avatar: Image("placeholder"))
-                }
-            }
-            
+            SimilarSpeciesItemView(species: species.listItem)
             ForEach(featureViewModel.features) { feature in
                 Text(feature.description)
                     .font(.nbBody2)
