@@ -50,6 +50,7 @@ class ObservationPersistenceController: ObservableObject {
                         media_id TEXT,
                         thumbnail_id TEXT,
                         species_id INTEGER,
+                        behavior TEXT,
                         FOREIGN KEY(rowid) REFERENCES operation(rowid) ON DELETE CASCADE
                     );
                     CREATE TABLE upload_operation (

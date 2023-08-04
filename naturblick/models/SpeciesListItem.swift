@@ -36,6 +36,7 @@ struct SpeciesListItem: Identifiable {
     let isFemale: Bool?
     let wikipedia: String?
     let hasPortrait: Bool
+    let group: String
 }
 
 extension SpeciesListItem {
@@ -48,7 +49,8 @@ extension SpeciesListItem {
         gersynonym: nil,
         isFemale: nil,
         wikipedia: "https://de.wikipedia.org/wiki/Teichmolch",
-        hasPortrait: true
+        hasPortrait: true,
+        group: Group.groups[0].id
     )
 }
 
@@ -63,7 +65,8 @@ extension Species {
             gersynonym: gersynonym,
             isFemale: nil,
             wikipedia: wikipedia,
-            hasPortrait: hasPortrait
+            hasPortrait: hasPortrait,
+            group: group
         )
     }
 }

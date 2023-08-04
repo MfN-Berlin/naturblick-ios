@@ -22,6 +22,7 @@ struct CreateData {
     var details: String = ""
     var species: SpeciesListItem? = nil
     var individuals: Int64 = 1
+    var behavior: Behavior? = nil
     var sound: SoundData = SoundData()
     var image: ImageData = ImageData()
 
@@ -73,9 +74,9 @@ struct CreateData {
             thumbnailId = sound.crop?.id
         }
 
-        guard coords != nil || !details.isEmpty || mediaId != nil || thumbnailId != nil else {
+        guard coords != nil || !details.isEmpty || mediaId != nil || thumbnailId != nil || behavior != nil else {
             return nil
         }
-        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals, mediaId: mediaId, thumbnailId: thumbnailId, newSpeciesId: nil)
+        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals, mediaId: mediaId, thumbnailId: thumbnailId, newSpeciesId: nil, behavior: behavior)
     }
 }

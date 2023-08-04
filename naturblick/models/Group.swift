@@ -44,3 +44,9 @@ extension Group {
     static let characterGroups = groups.filter( { characterGroupIds.contains($0.id) } )
     
 }
+
+extension String {
+    var isPlant: Bool {
+        self == "herb" || self == "tree" || self == "conifer"
+    }
+}

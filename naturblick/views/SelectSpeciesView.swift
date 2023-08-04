@@ -63,7 +63,8 @@ struct SelectSpeciesView: View {
                         .toolbar {
                             ToolbarItem(placement: .confirmationAction) {
                                 Button("Select") {
-                                   action(info.species)
+                                    action(info.species)
+                                    showInfo = nil
                                 }
                             }
                             ToolbarItem(placement: .cancellationAction) {
