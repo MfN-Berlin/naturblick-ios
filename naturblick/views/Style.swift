@@ -16,6 +16,11 @@ extension Text {
             .foregroundColor(Color.onSecondarySignalLow)
     }
     
+    func subtitle3(color: Color) -> some View {
+        self.font(.nbSubtitle3)
+            .foregroundColor(color)
+    }
+    
     func body2() -> some View {
         self.font(.nbBody2)
             .foregroundColor(.onSecondaryMediumEmphasis)

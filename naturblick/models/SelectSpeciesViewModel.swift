@@ -29,6 +29,7 @@ class SelectSpeciesViewModel: ObservableObject {
                         group: row[Species.Definition.group]
                     ))
                 }
+                .sorted { $0.0.score > $1.0.score }
         } catch {
             preconditionFailure("\(error)")
         }
