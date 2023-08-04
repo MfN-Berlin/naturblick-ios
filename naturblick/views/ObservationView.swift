@@ -36,11 +36,6 @@ struct ObservationView: View {
                 HStack {
                     Image(uiImage: thumbnail.image)
                     .avatar()
-                    if (observation.observation.obsType == .audio) {
-                        if let mediaId = observation.observation.mediaId {
-                            SoundButton(url: NBSound(id: mediaId).url).frame(width: 100)
-                        }
-                    }
                 }
             } else if observation.observation.thumbnailId != nil {
                 Image("placeholder")
@@ -57,6 +52,18 @@ struct ObservationView: View {
             Text(observation.observation.created.date, formatter: .dateTime)
             if let details = observation.observation.details {
                 Text(details)
+            }
+            if let mediaId = observation.observation.mediaId {
+                switch(observation.observation.obsType) {
+                case .audio, .unidentifiedaudio:
+                    SoundButton(url: NBSound(id: mediaId).url).frame(width: 40)
+                case .image, .unidentifiedimage:
+                    NavigationLink(destination: FullscreenView(imageId: mediaId)) {
+                        FABView("zoom")
+                    }
+                case .manual:
+                    do {}
+                }
             }
         }
         .toolbar {

@@ -10,31 +10,21 @@ struct SoundButton: View {
     let url: URL
     @StateObject private var soundStream = SoundStreamController()
     
-    func buttonIcon() -> Image {
+    func buttonIcon() -> FABView {
         switch soundStream.currentStatus {
             case .waitingToPlayAtSpecifiedRate:
-                return Image(systemName: "clock.circle") // placeholder icon
+                return FABView(systemName: "clock.circle") // placeholder icon
             case .paused:
-                return Image("ic_play_circle_outline")
+                return FABView("ic_play_circle_outline")
             case .playing:
-                return Image("ic_pause_circle_outline")
+                return FABView("ic_pause_circle_outline")
             default:
-                return Image(systemName: "clock.circle")
+                return FABView(systemName: "clock.circle")
         }
     }
     
     var body: some View {
-        VStack {
-            Circle()
-                .fill(Color.primaryColor)
-                .overlay {
-                    buttonIcon()
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.onPrimaryHighEmphasis)
-                    .padding(.fabIconPadding)
-                }
-        }
+        buttonIcon()
         .onTapGesture {
             if (soundStream.currentStatus == AVPlayer.TimeControlStatus.paused) {
                 soundStream.play(url: url)
