@@ -23,34 +23,28 @@ struct SelectSpeciesView: View {
             Image(uiImage: thumbnail)
                 .resizable()
                 .scaledToFit()
-            List(model.speciesResults, id: \.0.id) { (result, item) in
-                if let url = item.url {
-                    // When used, AsyncImage has to be the outermost element
-                    // or it will not properly load in List
-                    AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                        SpeciesListItemView(species: item, avatar: image)
-                            .listRowInsets(.nbInsets)
-                            .listRowBackground(Color.secondaryColor)
-                            .onTapGesture {
-                                showInfo = SpeciesInfo(species: item, avatar: image)
-                            }
-                    } placeholder: {
-                        SpeciesListItemView(species: item, avatar: Image("placeholder"))
-                            .listRowInsets(.nbInsets)
-                            .listRowBackground(Color.secondaryColor)
+            VStack(alignment: .leading) {
+                ForEach(model.speciesResults, id: \.0.id) { (result, item) in
+                    if let url = item.url {
+                        // When used, AsyncImage has to be the outermost element
+                        // or it will not properly load in List
+                        AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                            SpeciesResultView(result: result, species: item, avatar: image)
+                                .onTapGesture {
+                                    showInfo = SpeciesInfo(species: item, avatar: image)
+                                }
+                        } placeholder: {
+                            SpeciesResultView(result: result, species: item, avatar: Image("placeholder"))
+                                .onTapGesture {
+                                    showInfo = SpeciesInfo(species: item, avatar: Image("placeholder"))
+                                }
+                        }
+                    } else {
+                        SpeciesResultView(result: result, species: item, avatar: Image("placeholder"))
                             .onTapGesture {
                                 showInfo = SpeciesInfo(species: item, avatar: Image("placeholder"))
                             }
                     }
-                    .listRowInsets(.nbInsets)
-                    .listRowBackground(Color.secondaryColor)
-                } else {
-                    SpeciesListItemView(species: item, avatar: Image("placeholder"))
-                        .listRowInsets(.nbInsets)
-                        .listRowBackground(Color.secondaryColor)
-                        .onTapGesture {
-                            showInfo = SpeciesInfo(species: item, avatar: Image("placeholder"))
-                        }
                 }
             }
             .onAppear {
