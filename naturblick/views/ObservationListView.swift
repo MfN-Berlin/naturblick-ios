@@ -40,7 +40,7 @@ struct ObservationListView: View {
                         NavigationLink(
                             destination: ObservationView(observation: observation, controller: persistenceController)
                         ) {
-                            Image(systemName: "mappin")
+                            Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
                         }
                         .foregroundColor(.red)
                     }
