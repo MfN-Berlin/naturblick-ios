@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "spiders.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
