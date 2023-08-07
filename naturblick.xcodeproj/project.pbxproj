@@ -605,8 +605,8 @@
 			buildPhases = (
 				131E785A29C9BB24000DF928 /* Sources */,
 				131E785B29C9BB24000DF928 /* Frameworks */,
-				131E785C29C9BB24000DF928 /* Resources */,
 				7BA4DA102A73BD0E00AEC0A4 /* Run Script */,
+				131E785C29C9BB24000DF928 /* Resources */,
 			);
 			buildRules = (
 			);
