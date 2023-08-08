@@ -14,7 +14,9 @@ struct EditObservationView: View {
     @State private var showSoundId: Bool = false
     @State private var soundData: SoundData = SoundData()
     @State private var region: MKCoordinateRegion
-    
+    @State private var userTrackingMode: MapUserTrackingMode = .none
+    @StateObject private var locationManager = LocationManager()
+
     init(data: Binding<EditData>) {
         self._data = data
         self._region = State(initialValue: data.wrappedValue.region)
@@ -111,8 +113,9 @@ struct EditObservationView: View {
         }
         .fullScreenCover(isPresented: $showMap) {
             NavigationView {
-                Map(coordinateRegion: $region)
+                Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: $userTrackingMode)
                     .picker()
+                    .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
@@ -125,6 +128,11 @@ struct EditObservationView: View {
                                 data.coords = Coordinates(region: region)
                                 showMap = false
                             }
+                        }
+                    }
+                    .onAppear {
+                        if locationManager.askForPermission() {
+                            locationManager.requestLocation()
                         }
                     }
             }

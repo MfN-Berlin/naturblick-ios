@@ -12,7 +12,7 @@
 		1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */; };
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
-		132A91412A2DCF6C00AC405C /* Map+Picker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132A91402A2DCF6C00AC405C /* Map+Picker.swift */; };
+		132A91412A2DCF6C00AC405C /* Map+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132A91402A2DCF6C00AC405C /* Map+Extensions.swift */; };
 		132A91432A2DD52100AC405C /* CoordinatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132A91422A2DD52100AC405C /* CoordinatesView.swift */; };
 		132B0D9629CDD5C500B80C9E /* Font+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132B0D9529CDD5C500B80C9E /* Font+Lato.swift */; };
 		132B0D9B29CDD78600B80C9E /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 132B0D9829CDD78600B80C9E /* lato_black.ttf */; };
@@ -177,7 +177,7 @@
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		131E786829C9BB25000DF928 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		132A91402A2DCF6C00AC405C /* Map+Picker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Map+Picker.swift"; sourceTree = "<group>"; };
+		132A91402A2DCF6C00AC405C /* Map+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Map+Extensions.swift"; sourceTree = "<group>"; };
 		132A91422A2DD52100AC405C /* CoordinatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesView.swift; sourceTree = "<group>"; };
 		132B0D9529CDD5C500B80C9E /* Font+Lato.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Lato.swift"; sourceTree = "<group>"; };
 		132B0D9829CDD78600B80C9E /* lato_black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_black.ttf; sourceTree = "<group>"; };
@@ -469,7 +469,7 @@
 				7BC610092A3096A400185BAA /* ImprintView.swift */,
 				134C75A62A2F32650046EEE4 /* IndividualsView.swift */,
 				7BDD17E12A45C397001B9DB4 /* LoginView.swift */,
-				132A91402A2DCF6C00AC405C /* Map+Picker.swift */,
+				132A91402A2DCF6C00AC405C /* Map+Extensions.swift */,
 				7BCD2E472A2DFBE30083B310 /* MenuView.swift */,
 				136DFABA29F9752100C8B8FF /* NBEditText.swift */,
 				135E682E29EE805700192C4A /* ObservationListItemView.swift */,
@@ -798,7 +798,7 @@
 				1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */,
 				13ACC80329C9BCBA0054BB91 /* NaturblickApp.swift in Sources */,
 				7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */,
-				132A91412A2DCF6C00AC405C /* Map+Picker.swift in Sources */,
+				132A91412A2DCF6C00AC405C /* Map+Extensions.swift in Sources */,
 				13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */,
 				7B572DDB2A6E9F65008F50C5 /* String+MD5.swift in Sources */,
 				7BC77E8C2A6AA4A300B489C2 /* SettingsView.swift in Sources */,

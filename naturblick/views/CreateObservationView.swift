@@ -21,6 +21,7 @@ struct CreateObservationView: View {
     @State private var isPermissionInfoDisplay = false
     @Binding var data: CreateData
     @StateObject private var locationManager = LocationManager()
+    @State private var userTrackingMode: MapUserTrackingMode = .none
     @State private var showPicker: Bool = false
     @State private var region: MKCoordinateRegion = .defaultRegion
     
@@ -58,8 +59,11 @@ struct CreateObservationView: View {
         }
         .fullScreenCover(isPresented: $showPicker) {
             NavigationView {
-                Map(coordinateRegion: $region)
+                Map(coordinateRegion: $region,
+                    showsUserLocation: true,
+                    userTrackingMode: $userTrackingMode)
                     .picker()
+                    .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
