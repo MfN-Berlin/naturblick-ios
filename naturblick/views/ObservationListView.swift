@@ -10,10 +10,12 @@ struct ObservationListView: View {
     
     let initialCreateAction: CreateObservationAction?
     private let client = BackendClient()
+    @StateObject private var locationManager = LocationManager()
     @StateObject var persistenceController = ObservationPersistenceController()
     @State private var isPresented: Bool = false
     @State private var error: HttpError? = nil
     @State private var region: MKCoordinateRegion = .defaultRegion
+    @State private var userTrackingMode: MapUserTrackingMode = .none
     @State private var showList: Bool = true
     @State var didRunOnce: Bool = false
     @State var createAction: CreateObservationAction? = nil
@@ -33,6 +35,8 @@ struct ObservationListView: View {
             } else {
                 Map(
                     coordinateRegion: $region,
+                    showsUserLocation: true,
+                    userTrackingMode: $userTrackingMode,
                     annotationItems: persistenceController.observations.filter { $0.observation.coords != nil
                     }
                 ) { observation in
@@ -43,6 +47,12 @@ struct ObservationListView: View {
                             Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
                         }
                         .foregroundColor(.red)
+                    }
+                }
+                .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
+                .onAppear {
+                    if(locationManager.askForPermission()) {
+                        locationManager.requestLocation()
                     }
                 }
             }
