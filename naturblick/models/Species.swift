@@ -41,7 +41,7 @@ extension Species {
         static let optionalPortraitId = Portrait.Definition.table[Expression<Int64?>("rowid")]
         static let optionalLanguage = Portrait.Definition.table[Expression<Int64?>("language")]
         static let baseQuery = table
-            .select(table[*], optionalPortraitId)
+            .select(table[*], optionalPortraitId, Portrait.Definition.audioUrl)
             .join(.leftOuter, Portrait.Definition.table, on: table[id] == Portrait.Definition.speciesId)
             .filter(optionalLanguage == 1 || optionalLanguage == nil)
     }

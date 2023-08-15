@@ -26,7 +26,8 @@ class SelectSpeciesViewModel: ObservableObject {
                         isFemale: nil,
                         wikipedia: row[Species.Definition.wikipedia],
                         hasPortrait: row[Species.Definition.optionalPortraitId] != nil,
-                        group: row[Species.Definition.group]
+                        group: row[Species.Definition.group],
+                        audioUrl: row[Portrait.Definition.audioUrl]
                     ))
                 }
                 .sorted { $0.0.score > $1.0.score }
