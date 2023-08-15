@@ -37,6 +37,7 @@ struct SpeciesListItem: Identifiable {
     let wikipedia: String?
     let hasPortrait: Bool
     let group: String
+    let audioUrl: String?
 }
 
 extension SpeciesListItem {
@@ -50,7 +51,8 @@ extension SpeciesListItem {
         isFemale: nil,
         wikipedia: "https://de.wikipedia.org/wiki/Teichmolch",
         hasPortrait: true,
-        group: Group.groups[0].id
+        group: Group.groups[0].id,
+        audioUrl: nil
     )
 }
 
@@ -66,7 +68,8 @@ extension Species {
             isFemale: nil,
             wikipedia: wikipedia,
             hasPortrait: hasPortrait,
-            group: group
+            group: group,
+            audioUrl: nil
         )
     }
 }

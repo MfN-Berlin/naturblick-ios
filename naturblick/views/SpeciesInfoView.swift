@@ -36,6 +36,10 @@ struct SpeciesInfoView: View {
             } else if let wikipedia = info.species.wikipedia {
                 Link("Visit wikipedia", destination: URL(string: wikipedia)!)
             }
+            
+            if let audioUrl = info.species.audioUrl {
+                SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!)
+            }
         }.padding(.defaultPadding)
     }
 }

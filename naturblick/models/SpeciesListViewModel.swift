@@ -35,7 +35,8 @@ class SpeciesListViewModel: ObservableObject {
                         isFemale: nil,
                         wikipedia: row[Species.Definition.wikipedia],
                         hasPortrait: true,
-                        group: row[Species.Definition.group]
+                        group: row[Species.Definition.group],
+                        audioUrl: row[Portrait.Definition.audioUrl]
                     )
                 }
         case .characters(let number, let query):
@@ -52,7 +53,8 @@ class SpeciesListViewModel: ObservableObject {
                         isFemale: row[Species.Definition.isFemale],
                         wikipedia: row[Species.Definition.wikipedia],
                         hasPortrait: true,
-                        group: row[Species.Definition.group]
+                        group: row[Species.Definition.group],
+                        audioUrl: row[Portrait.Definition.audioUrl]
                     )
                 }
         }
@@ -74,7 +76,8 @@ class SpeciesListViewModel: ObservableObject {
                     isFemale: nil,
                     wikipedia: row[Species.Definition.wikipedia],
                     hasPortrait: row[Species.Definition.optionalPortraitId] != nil,
-                    group: row[Species.Definition.group]
+                    group: row[Species.Definition.group],
+                    audioUrl: row[Portrait.Definition.audioUrl]
                 )
             }
     }
