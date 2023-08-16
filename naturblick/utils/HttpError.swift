@@ -16,11 +16,25 @@ extension HttpError {
     var localizedDescription: String {
         switch(self) {
         case .networkError:
-            return "Network error"
+            return "Can not connect to server, please check your connectivity."
         case .serverError:
-            return "Server error"
+            return "The server responded with an error, please try again later."
         case .clientError:
-            return "Client error"
+            return "The server responded with an error, please try again later."
         }
     }
+}
+
+extension View {
+    func alertHttpError(isPresented: Binding<Bool>, error: HttpError?) -> some View {
+        return self.alertHttpError(isPresented: isPresented, error: error) { details in
+        } message: { error in
+            Text(error.localizedDescription)
+        }
+    }
+    
+    func alertHttpError<A, M>(isPresented: Binding<Bool>, error: HttpError?, @ViewBuilder actions: (HttpError) -> A, @ViewBuilder message: (HttpError) -> M) -> some View where A : View, M : View {
+        return self.alert("Error", isPresented: isPresented, presenting: error, actions: actions, message: message)
+    }
+    
 }

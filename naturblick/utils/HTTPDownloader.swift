@@ -38,10 +38,8 @@ extension URLSession: HTTPDownloader {
         } catch {
             switch error {
             case is URLError:
-                Self.logger.error("Network error \(error)")
                 throw HttpError.networkError
             case let httpError as HttpError:
-                Self.logger.error("Server error \(error)")
                 throw httpError
             default:
                 preconditionFailure("\(error)")
@@ -64,10 +62,8 @@ extension URLSession: HTTPDownloader {
         } catch {
             switch error {
             case is URLError:
-                Self.logger.error("Network error \(error)")
                 throw HttpError.networkError
             case let httpError as HttpError:
-                Self.logger.error("Http error \(error)")
                 throw httpError
             default:
                 preconditionFailure("\(error)")
@@ -91,10 +87,8 @@ extension URLSession: HTTPDownloader {
         } catch {
             switch error {
             case is URLError:
-                Self.logger.error("Network error \(error)")
                 throw HttpError.networkError
             case let httpError as HttpError:
-                Self.logger.error("Server error \(error)")
                 throw httpError
             default:
                 preconditionFailure("\(error)")

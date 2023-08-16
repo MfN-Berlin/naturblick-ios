@@ -12,17 +12,21 @@ struct PlantIdView: View {
     @StateObject private var photoLibraryManager = PhotoLibraryManager()
     @Binding var data: ImageData
     @State var authorized: Bool = false
+    @StateObject private var errorHandler = HttpErrorViewModel()
     
     var body: some View {
         if authorized {
             if let crop = data.crop {
                 Text("Loading results")
-                    .task {
-                        do {
-                            try await client.upload(image: crop)
-                            data.result = try await client.imageId(mediaId: crop.id.uuidString)
-                        } catch {
-                            preconditionFailure("\(error)")
+                    .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)
+                    .onAppear {
+                        Task {
+                            do {
+                                try await client.upload(image: crop)
+                                data.result = try await client.imageId(mediaId: crop.id.uuidString)
+                            } catch {
+                                errorHandler.handle(error)
+                            }
                         }
                     }
             } else if let image = data.image {

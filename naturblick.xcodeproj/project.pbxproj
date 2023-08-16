@@ -24,6 +24,7 @@
 		13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */; };
 		13316BE029C9FAF80077292B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 13316BDF29C9FAF80077292B /* SQLite */; };
 		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
+		1337159A2A8CFBC2009E31E0 /* HttpErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133715992A8CFBC2009E31E0 /* HttpErrorViewModel.swift */; };
 		1337D96D2A7A982700712B8F /* SpeciesResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1337D96C2A7A982700712B8F /* SpeciesResultView.swift */; };
 		133B39202A40517200D48617 /* SelectSpeciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B391F2A40517200D48617 /* SelectSpeciesView.swift */; };
 		133B39222A40598C00D48617 /* Connection+SpeciesDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */; };
@@ -67,7 +68,6 @@
 		137690052A30A7740076F93A /* BirdIdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690042A30A7740076F93A /* BirdIdViewModel.swift */; };
 		137690072A30D3F40076F93A /* NBSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690062A30D3F40076F93A /* NBSound.swift */; };
 		137690092A30DC5A0076F93A /* LocalFileDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690082A30DC5A0076F93A /* LocalFileDownloader.swift */; };
-		137963F229E6FFDB0043E64F /* View+alertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137963F129E6FFDB0043E64F /* View+alertError.swift */; };
 		137ACD2A2A6171A000C370CF /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137ACD292A6171A000C370CF /* ImageData.swift */; };
 		137ACD2C2A6171BD00C370CF /* SoundData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137ACD2B2A6171BD00C370CF /* SoundData.swift */; };
 		137FE58529E5964100B397DF /* DBObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58429E5964100B397DF /* DBObservation.swift */; };
@@ -189,6 +189,7 @@
 		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
 		13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewModel.swift; sourceTree = "<group>"; };
 		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
+		133715992A8CFBC2009E31E0 /* HttpErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpErrorViewModel.swift; sourceTree = "<group>"; };
 		1337D96C2A7A982700712B8F /* SpeciesResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesResultView.swift; sourceTree = "<group>"; };
 		133B391F2A40517200D48617 /* SelectSpeciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpeciesView.swift; sourceTree = "<group>"; };
 		133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Connection+SpeciesDB.swift"; sourceTree = "<group>"; };
@@ -233,7 +234,6 @@
 		137690042A30A7740076F93A /* BirdIdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdIdViewModel.swift; sourceTree = "<group>"; };
 		137690062A30D3F40076F93A /* NBSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBSound.swift; sourceTree = "<group>"; };
 		137690082A30DC5A0076F93A /* LocalFileDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileDownloader.swift; sourceTree = "<group>"; };
-		137963F129E6FFDB0043E64F /* View+alertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+alertError.swift"; sourceTree = "<group>"; };
 		137ACD292A6171A000C370CF /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
 		137ACD2B2A6171BD00C370CF /* SoundData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundData.swift; sourceTree = "<group>"; };
 		137FE58429E5964100B397DF /* DBObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBObservation.swift; sourceTree = "<group>"; };
@@ -550,6 +550,7 @@
 				7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */,
 				134F548F2A5EB60F00A079EC /* UploadOperation.swift */,
 				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
+				133715992A8CFBC2009E31E0 /* HttpErrorViewModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -587,7 +588,6 @@
 				7BB777152A612B9100EA844C /* URL+Query.swift */,
 				134F54972A5EDC8100A079EC /* URL+SupportDir.swift */,
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
-				137963F129E6FFDB0043E64F /* View+alertError.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				7B572DDA2A6E9F65008F50C5 /* String+MD5.swift */,
 			);
@@ -756,6 +756,7 @@
 				7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */,
 				1368E2C42A374406001A2970 /* CreateFlowView.swift in Sources */,
 				13B686B22A09410A001FD28F /* Coordinates.swift in Sources */,
+				1337159A2A8CFBC2009E31E0 /* HttpErrorViewModel.swift in Sources */,
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
 				136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */,
 				13A2923629D3114500AF772A /* CharacterView.swift in Sources */,
@@ -879,7 +880,6 @@
 				7BDD17E22A45C397001B9DB4 /* LoginView.swift in Sources */,
 				7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */,
 				1366FA952A654B8500436EF1 /* Observation.swift in Sources */,
-				137963F229E6FFDB0043E64F /* View+alertError.swift in Sources */,
 				13A2923829D3116200AF772A /* CharacterValueView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
