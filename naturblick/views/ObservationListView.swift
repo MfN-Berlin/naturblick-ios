@@ -142,7 +142,9 @@ struct ObservationListView: View {
                 try persistenceController.importObservations(from: response.data)
             }
         } catch {
-            errorHandler.handle(error)
+            if(errorHandler.handle(error)) {
+                bearerToken = nil
+            }
         }
     }
 }

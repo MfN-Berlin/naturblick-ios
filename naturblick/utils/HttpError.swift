@@ -10,6 +10,7 @@ enum HttpError: Error {
     case networkError
     case serverError(statusCode: Int, data: String)
     case clientError(statusCode: Int)
+    case loggedOut
 }
 
 extension HttpError {
@@ -21,6 +22,8 @@ extension HttpError {
             return "The server responded with an error, please try again later."
         case .clientError:
             return "The server responded with an error, please try again later."
+        case .loggedOut:
+            return "You have been logged out because you have reset your password or deleted your account."
         }
     }
 }

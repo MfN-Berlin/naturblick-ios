@@ -10,13 +10,15 @@ class HttpErrorViewModel: ObservableObject {
     @Published var isPresented = false
     @Published var error: HttpError? = nil
     
-    func handle(_ anyError: Error) {
-        if case HttpError.clientError(statusCode: 401) = anyError {
-            error = .clientError(statusCode: 401)
+    func handle(_ anyError: Error) -> Bool {
+        if case HttpError.loggedOut = anyError {
+            error = .loggedOut
             isPresented = true
+            return true
         } else if let httpError = anyError as? HttpError {
             error = httpError
             isPresented = true
+            return false
         } else {
             preconditionFailure("\(anyError)")
         }

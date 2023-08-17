@@ -27,7 +27,9 @@ extension URLSession: HTTPDownloader {
             let httpResponse = (response as! HTTPURLResponse)
             let statusCode = httpResponse.statusCode
             guard validStatus.contains(statusCode) else {
-                if clientError.contains(statusCode) {
+                if statusCode == 401 {
+                    throw HttpError.loggedOut
+                } else if clientError.contains(statusCode) {
                     throw HttpError.clientError(statusCode: statusCode)
                 } else {
                     throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
@@ -52,7 +54,9 @@ extension URLSession: HTTPDownloader {
             let statusCode = (response as? HTTPURLResponse)!.statusCode
            
             guard validStatus.contains(statusCode) else {
-                if clientError.contains(statusCode) {
+                if statusCode == 401 {
+                    throw HttpError.loggedOut
+                } else if clientError.contains(statusCode) {
                     throw HttpError.clientError(statusCode: statusCode)
                 } else {
                     throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
@@ -77,7 +81,9 @@ extension URLSession: HTTPDownloader {
             let httpResponse = (response as! HTTPURLResponse)
             let statusCode = httpResponse.statusCode
             guard validStatus.contains(statusCode) else {
-                if clientError.contains(statusCode) {
+                if statusCode == 401 {
+                    throw HttpError.loggedOut
+                } else if clientError.contains(statusCode) {
                     throw HttpError.clientError(statusCode: statusCode)
                 } else {
                     throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
