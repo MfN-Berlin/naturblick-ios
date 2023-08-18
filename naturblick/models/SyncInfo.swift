@@ -7,4 +7,5 @@ import Foundation
 
 struct SyncInfo: Encodable {
     let deviceIdentifier: String
+    let syncId: Int64?
 }

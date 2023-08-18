@@ -137,10 +137,7 @@ struct ObservationListView: View {
     
     private func sync() async {
         do {
-            let responses = try await client.sync(controller: persistenceController)
-            for response in responses {
-                try persistenceController.importObservations(from: response.data)
-            }
+            try await client.sync(controller: persistenceController)
         } catch {
             if(errorHandler.handle(error)) {
                 bearerToken = nil

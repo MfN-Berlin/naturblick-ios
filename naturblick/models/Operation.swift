@@ -10,6 +10,8 @@ enum Operation: Encodable {
     case create(CreateOperation)
     case patch(PatchOperation)
     case upload(UploadOperation)
+    case delete(DeleteOperation)
+    
     enum CodingKeys: String, CodingKey {
         case operation
         case data
@@ -27,6 +29,9 @@ enum Operation: Encodable {
         case .upload(let operation):
             try wrapper.encode("upload_media", forKey: .operation)
             try wrapper.encode(operation, forKey: .data)
+        case .delete(let operation):
+            try wrapper.encode("delete", forKey: .operation)
+            try wrapper.encode(operation, forKey: .data)
         }
     }
 
@@ -38,13 +43,16 @@ enum Operation: Encodable {
             let createId = try row.get(CreateOperation.D.table[Operation.D.optionalRowid])
             let patchId = try row.get(PatchOperation.D.table[Operation.D.optionalRowid])
             let uploadId = try row.get(UploadOperation.D.table[Operation.D.optionalRowid])
-
+            let deleteId = try row.get(DeleteOperation.D.table[Operation.D.optionalRowid])
+            
             if createId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .create(try CreateOperation.D.instance(row: row)))
             } else if patchId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .patch(try PatchOperation.D.instance(row: row)))
             } else if uploadId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .upload(try UploadOperation.D.instance(row: row)))
+            }  else if deleteId != nil {
+                return (try row.get(Operation.D.table[Operation.D.rowid]), .delete(try DeleteOperation.D.instance(row: row)))
             } else {
                 preconditionFailure("Unknown operation")
             }
