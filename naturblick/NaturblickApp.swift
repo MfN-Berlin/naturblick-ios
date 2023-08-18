@@ -79,6 +79,8 @@ struct NaturblickApp: App {
         Task {
             do {
                 try await BackendClient().register()
+            } catch is HttpError {
+                // Ignore
             } catch {
                 preconditionFailure("could not register device")
             }

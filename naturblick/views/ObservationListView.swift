@@ -12,15 +12,14 @@ struct ObservationListView: View {
     private let client = BackendClient()
     @StateObject private var locationManager = LocationManager()
     @StateObject var persistenceController = ObservationPersistenceController()
-    @State private var isPresented: Bool = false
-    @State private var error: HttpError? = nil
+    @StateObject private var errorHandler = HttpErrorViewModel()
     @State private var region: MKCoordinateRegion = .defaultRegion
     @State private var userTrackingMode: MapUserTrackingMode = .none
     @State private var showList: Bool = true
     @State var didRunOnce: Bool = false
     @State var createAction: CreateObservationAction? = nil
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
-        
+    
     var body: some View {
         SwiftUI.Group {
             if(showList) {
@@ -125,7 +124,7 @@ struct ObservationListView: View {
                     }
             }
         }
-        .alertHttpError(isPresented: $isPresented, error: error)
+        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)
         .onAppear {
             if !didRunOnce {
                 if let initial = initialCreateAction {
@@ -135,23 +134,17 @@ struct ObservationListView: View {
             }
         }
     }
-
+    
     private func sync() async {
         do {
             let responses = try await client.sync(controller: persistenceController)
             for response in responses {
                 try persistenceController.importObservations(from: response.data)
             }
-        } catch HttpError.clientError(let statusCode) where statusCode == 401 {
-            bearerToken = nil
-            self.error = error
-            self.isPresented = true
-        }
-        catch is HttpError {
-            self.error = error
-            self.isPresented = true
         } catch {
-            preconditionFailure("\(error)")
+            if(errorHandler.handle(error)) {
+                bearerToken = nil
+            }
         }
     }
 }

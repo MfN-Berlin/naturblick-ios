@@ -76,9 +76,7 @@ class BackendClient {
                 chunk = Chunk()
             }
         }
-        if !chunk.ids.isEmpty {
-            responses.append(try await syncChunk(chunk: chunk, controller: controller))
-        }
+        responses.append(try await syncChunk(chunk: chunk, controller: controller))
         
         return responses
     }
@@ -150,7 +148,7 @@ class BackendClient {
         var request = mpr.urlRequest(url: url!, method: "PUT")
         let deviceId: String = Settings.deviceId()
         request.setValue(deviceId, forHTTPHeaderField: "X-MfN-Device-Id")
-        let (_, _) = try await URLSession.shared.data(for: request)
+        let _ = try await downloader.http(request: request)
     }
     
     func upload(sound: URL, mediaId: UUID) async throws {

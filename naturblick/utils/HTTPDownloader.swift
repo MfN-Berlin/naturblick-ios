@@ -27,7 +27,9 @@ extension URLSession: HTTPDownloader {
             let httpResponse = (response as! HTTPURLResponse)
             let statusCode = httpResponse.statusCode
             guard validStatus.contains(statusCode) else {
-                if clientError.contains(statusCode) {
+                if statusCode == 401 {
+                    throw HttpError.loggedOut
+                } else if clientError.contains(statusCode) {
                     throw HttpError.clientError(statusCode: statusCode)
                 } else {
                     throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
@@ -38,10 +40,8 @@ extension URLSession: HTTPDownloader {
         } catch {
             switch error {
             case is URLError:
-                Self.logger.error("Network error \(error)")
                 throw HttpError.networkError
             case let httpError as HttpError:
-                Self.logger.error("Server error \(error)")
                 throw httpError
             default:
                 preconditionFailure("\(error)")
@@ -54,7 +54,9 @@ extension URLSession: HTTPDownloader {
             let statusCode = (response as? HTTPURLResponse)!.statusCode
            
             guard validStatus.contains(statusCode) else {
-                if clientError.contains(statusCode) {
+                if statusCode == 401 {
+                    throw HttpError.loggedOut
+                } else if clientError.contains(statusCode) {
                     throw HttpError.clientError(statusCode: statusCode)
                 } else {
                     throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
@@ -64,10 +66,8 @@ extension URLSession: HTTPDownloader {
         } catch {
             switch error {
             case is URLError:
-                Self.logger.error("Network error \(error)")
                 throw HttpError.networkError
             case let httpError as HttpError:
-                Self.logger.error("Http error \(error)")
                 throw httpError
             default:
                 preconditionFailure("\(error)")
@@ -81,7 +81,9 @@ extension URLSession: HTTPDownloader {
             let httpResponse = (response as! HTTPURLResponse)
             let statusCode = httpResponse.statusCode
             guard validStatus.contains(statusCode) else {
-                if clientError.contains(statusCode) {
+                if statusCode == 401 {
+                    throw HttpError.loggedOut
+                } else if clientError.contains(statusCode) {
                     throw HttpError.clientError(statusCode: statusCode)
                 } else {
                     throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
@@ -91,10 +93,8 @@ extension URLSession: HTTPDownloader {
         } catch {
             switch error {
             case is URLError:
-                Self.logger.error("Network error \(error)")
                 throw HttpError.networkError
             case let httpError as HttpError:
-                Self.logger.error("Server error \(error)")
                 throw httpError
             default:
                 preconditionFailure("\(error)")

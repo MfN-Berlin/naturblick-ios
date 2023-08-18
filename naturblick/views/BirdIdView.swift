@@ -8,8 +8,7 @@ import SwiftUI
 struct BirdIdView: View {
     @Binding var data: SoundData
     @StateObject private var model = BirdIdViewModel()
-    @State private var isPresented: Bool = false
-    @State private var error: HttpError? = nil
+    @StateObject private var errorHandler = HttpErrorViewModel()
     
     func identifyAndCrop(sound: NBSound, spectrogram: UIImage) {
         Task {
@@ -33,11 +32,18 @@ struct BirdIdView: View {
                 data.crop = thumbnail
                 let result = try await model.identify(sound: sound, start: data.start, end: data.end)
                 data.result = result
-            } catch is HttpError {
-                self.error = error
-                self.isPresented = true
             } catch {
-                preconditionFailure(error.localizedDescription)
+                errorHandler.handle(error)
+            }
+        }
+    }
+    
+    func downloadSpectrogram(sound: NBSound) {
+        Task {
+            do {
+                try await model.downloadSpectrogram(sound: sound)
+            } catch {
+                errorHandler.handle(error)
             }
         }
     }
@@ -57,19 +63,12 @@ struct BirdIdView: View {
                             }
                     } else {
                         Text("Downloading spectrogram")
-                            .task {
-                                do {
-                                    try await model.downloadSpectrogram(sound: sound)
-                                } catch is HttpError {
-                                    self.error = error
-                                    self.isPresented = true
-                                } catch {
-                                    preconditionFailure("\(error)")
-                                }
+                            .onAppear {
+                                downloadSpectrogram(sound: sound)
                             }
                     }
                 }
-                .alertHttpError(isPresented: $isPresented, error: error)
+                .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)
             } else {
                 BirdRecorderView(sound: $data.sound)
             }
