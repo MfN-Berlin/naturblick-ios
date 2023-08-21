@@ -6,6 +6,6 @@
 import Foundation
 
 extension CGFloat {
-    static let jpegQuality: CGFloat = 77
+    static let jpegQuality: CGFloat = 0.77
     static let maxResolution: CGFloat = 2048
 }

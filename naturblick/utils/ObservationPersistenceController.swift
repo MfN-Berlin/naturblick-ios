@@ -204,20 +204,22 @@ class ObservationPersistenceController: ObservableObject {
         let uiImage = image.image
         let upload = UploadOperation(occurenceId: occurenceId, mediaId: image.id, mime: .jpeg)
         let size = uiImage.size
-        let widthRatio  = .maxResolution / size.width
-        let heightRatio = .maxResolution / size.height
-        var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-        } else {
-            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        var resultImage = uiImage
+        if size.width > .maxResolution || size.height > .maxResolution {
+            let widthRatio  = .maxResolution / size.width
+            let heightRatio = .maxResolution / size.height
+            var newSize: CGSize
+            if(widthRatio > heightRatio) {
+                newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+            } else {
+                newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+            }
+            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+            uiImage.draw(in: CGRect(origin: .zero, size: newSize))
+            resultImage = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
         }
-        
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        uiImage.draw(in: CGRect(origin: .zero, size: newSize))
-        let data = UIGraphicsGetImageFromCurrentImageContext()?.jpegData(compressionQuality: .jpegQuality)
-        UIGraphicsEndImageContext()
-
+        let data = resultImage.jpegData(compressionQuality: .jpegQuality)
         try data!.write(to: URL.uploadFileURL(id: image.id, mime: upload.mime))
         let uploadId = try queue.run(Operation.D.table.insert())
         try queue.run(UploadOperation.D.table.insert(upload.setters(id: uploadId)))

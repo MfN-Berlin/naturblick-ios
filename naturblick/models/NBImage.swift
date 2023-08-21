@@ -36,7 +36,7 @@ struct NBImage {
     }
     
     func write() throws {
-        if let data = image.jpegData(compressionQuality: 0.81) {
+        if let data = image.jpegData(compressionQuality: .jpegQuality) {
             try data.write(to: url, options: [.atomic])
         }
     }
