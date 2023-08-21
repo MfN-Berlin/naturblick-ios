@@ -10,6 +10,7 @@ import UIKit
 class ObservationPersistenceController: ObservableObject {
     private var queue: Connection
     @Published var observations: [Observation] = []
+        
     init(inMemory: Bool = false) {
         let fileURL = URL.supportDir.appendingPathComponent("queue.sqlite3")
         
@@ -59,6 +60,11 @@ class ObservationPersistenceController: ObservableObject {
                         media_id TEXT NOT NULL,
                         mime TEXT NOT NULL
                     );
+                    CREATE TABLE delete_operation (
+                        rowid INTEGER PRIMARY KEY NOT NULL,
+                        occurence_id TEXT NOT NULL,
+                        FOREIGN KEY(rowid) REFERENCES operation(rowid) ON DELETE CASCADE
+                    );
                     CREATE TABLE observation (
                         occurence_id TEXT UNIQUE NOT NULL,
                         created TEXT NOT NULL,
@@ -90,6 +96,9 @@ class ObservationPersistenceController: ObservableObject {
                         individuals INTEGER,
                         behavior TEXT,
                         details TEXT
+                    );
+                    CREATE TABLE sync (
+                        sync_id INTEGER PRIMARY KEY NOT NULL
                     );
                     PRAGMA user_version = 1;
                     COMMIT TRANSACTION;
@@ -133,6 +142,18 @@ class ObservationPersistenceController: ObservableObject {
         }
     }
     
+    func getSync() throws -> Sync? {
+        try queue.prepare(Sync.D.sync.select(*)).map(Sync.D.instance).first
+    }
+    
+    private func setSyncId(syncId: Int64?) throws {
+        try queue.run(Sync.D.sync.delete())
+        guard let syncId = syncId else {
+            return
+        }
+        try queue.run(Sync.D.sync.insert(Sync(syncId: syncId).settters))
+    }
+    
     func update() throws {
         try queue.run(DBObservation.D.observation.delete())
         try queue.run(DBObservation.D.observation.insert(DBObservation.D.backendObservation.select(*)))
@@ -144,6 +165,8 @@ class ObservationPersistenceController: ObservableObject {
                 try queue.run(DBObservation.D.observation.filter(DBObservation.D.occurenceId == patch.occurenceId).update(DBObservation.D.setters(operation: patch)))
             case .upload:
                 do {} // No need to change observation due to uploading media
+            case .delete(let delete):
+                try queue.run(DBObservation.D.observation.filter(DBObservation.D.occurenceId == delete.occurenceId).delete())
             }
         }
     }
@@ -153,17 +176,27 @@ class ObservationPersistenceController: ObservableObject {
         try refresh()
     }
 
-    func importObservations(from observations: [DBObservation]) throws {
+    private func importObservations(from observations: [DBObservation]) throws {
         guard !observations.isEmpty else {
             return
         }
         let observationSetters = observations.map({ observation in
             observation.settters
         })
+        
+        try queue.run(DBObservation.D.backendObservation.insertMany(observationSetters))
+        try updateAndRefresh()
+    }
+    
+    func truncateObservations() throws {
+        try queue.run(DBObservation.D.backendObservation.delete())
+    }
+    
+    func handleChunk(from observations: [DBObservation], ids: [Int64], syncId: Int64?) throws {
         try queue.transaction {
-            try queue.run(DBObservation.D.backendObservation.delete())
-            try queue.run(DBObservation.D.backendObservation.insertMany(observationSetters))
-            try updateAndRefresh()
+            try importObservations(from: observations)
+            try clearPendingOperations(ids: ids)
+            try setSyncId(syncId: syncId)
         }
     }
 
@@ -195,6 +228,13 @@ class ObservationPersistenceController: ObservableObject {
         let upload = UploadOperation(occurenceId: occurenceId, mediaId: sound.id, mime: .mp4)
         let uploadId = try queue.run(Operation.D.table.insert())
         try queue.run(UploadOperation.D.table.insert(upload.setters(id: uploadId)))
+    }
+    
+    func delete(occurenceId: UUID) throws {
+        let delete = DeleteOperation(occurenceId: occurenceId)
+        let deleteId = try queue.run(Operation.D.table.insert())
+        try queue.run(DeleteOperation.D.table.insert(delete.setters(id: deleteId)))
+        try updateAndRefresh()
     }
     
     func insert(data: CreateData) throws {
@@ -259,13 +299,18 @@ class ObservationPersistenceController: ObservableObject {
                     UploadOperation.D.table,
                     on: Operation.D.table[Operation.D.rowid] == UploadOperation.D.table[UploadOperation.D.rowid]
                 )
+                .join(
+                    .leftOuter,
+                    DeleteOperation.D.table,
+                    on: Operation.D.table[Operation.D.rowid] == DeleteOperation.D.table[DeleteOperation.D.rowid]
+                )
                 .select(*)
                 .order(Operation.D.rowid.asc))
         .map(Operation.D.instance)
         return (operationAndId.map { $0.0 }, operationAndId.map { $0.1 })
     }
 
-    func clearPendingOperations(ids: [Int64]) throws {
+    private func clearPendingOperations(ids: [Int64]) throws {
         try queue.run(Operation.D.table.filter(ids.contains(Operation.D.rowid)).delete())
     }
 }

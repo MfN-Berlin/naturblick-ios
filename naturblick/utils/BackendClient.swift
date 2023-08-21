@@ -63,29 +63,26 @@ class BackendClient {
         return fieldData as Data
     }
 
-    func sync(controller: ObservationPersistenceController) async throws -> [ObservationResponse] {
+    func sync(controller: ObservationPersistenceController) async throws {
         let (ids, operations) = try controller.getPendingOperations()
-        
         var chunk = Chunk()
-        var responses: [ObservationResponse] = []
         
         for (i, o) in zip(ids, operations) {
             chunk.addOperation(id: i, operation: o)
             if chunk.exceedsMaxSize() {
-                responses.append(try await syncChunk(chunk: chunk, controller: controller))
+                try await syncChunk(chunk: chunk, controller: controller)
                 chunk = Chunk()
             }
         }
-        responses.append(try await syncChunk(chunk: chunk, controller: controller))
-        
-        return responses
+        try await syncChunk(chunk: chunk, controller: controller)
     }
     
-    private func syncChunk(chunk: Chunk, controller: ObservationPersistenceController) async throws -> ObservationResponse {
-        print("syncing chunk of size [ \(chunk.size) ] with [ \(chunk.operations.count) ] operations")
-        let observationRequest = ObservationRequest(operations: chunk.operations, syncInfo: SyncInfo(deviceIdentifier: Settings.deviceId()))
+    private func syncChunk(chunk: Chunk, controller: ObservationPersistenceController) async throws {
+        let sync = try controller.getSync()
+        let observationRequest = ObservationRequest(operations: chunk.operations, syncInfo: SyncInfo(deviceIdentifier: Settings.deviceId(), syncId: sync?.syncId))
         var mpr = MultipartRequest()
-        mpr.addJson(key: "operations", jsonData: try encoder.encode(observationRequest))
+        let json = try encoder.encode(observationRequest)
+        mpr.addJson(key: "operations", jsonData: json)
         for operation in chunk.operations {
             if case .upload(let upload) = operation {
                 let fileUrl = URL.uploadFileURL(id: upload.mediaId, mime: upload.mime)
@@ -103,14 +100,19 @@ class BackendClient {
         }
  
         let response: ObservationResponse = try await downloader.httpJson(request: request)
-        try controller.clearPendingOperations(ids: chunk.ids)
+        
+        if (!response.partial) {
+            try controller.truncateObservations()
+        }
+        
+        try controller.handleChunk(from: response.data, ids: chunk.ids, syncId: response.syncId)
+        
         for operation in chunk.operations {
             if case .upload(let upload) = operation {
                 // Ignore failures deleting the file uploaded
                 try? FileManager().removeItem(at: URL.uploadFileURL(id: upload.mediaId, mime: upload.mime))
             }
         }
-        return response
     }
     
     func deviceConnect(token: String) async throws {

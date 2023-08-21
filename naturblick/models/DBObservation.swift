@@ -94,6 +94,12 @@ extension DBObservation {
                 species <- operation.speciesId
             ]
         }
+        
+        static func setters(operation: DeleteOperation) -> [Setter] {
+            [
+                occurenceId <- operation.occurenceId
+            ]
+        }
 
         static func setters(operation: PatchOperation) -> [Setter] {
             var setters: [Setter] = []

@@ -67,8 +67,19 @@ struct ObservationView: View {
             }
         }
         .toolbar {
-            Button("Edit") {
-                edit = true
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Edit") {
+                    edit = true
+                }
+            }
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Delete") {
+                    do {
+                        try controller.delete(occurenceId: observation.id)
+                    } catch {
+                        fatalError(error.localizedDescription)
+                    }
+                }
             }
         }
         .sheet(isPresented: $edit) {
