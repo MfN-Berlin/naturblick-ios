@@ -14,6 +14,7 @@ enum DeepLink : Equatable {
 struct NaturblickApp: App {
     
     @State var deepLink: DeepLink? = nil
+    @AppStorage("savedAppVersion") var savedAppVersion: String = "unknown"
     
     func navigationBarStyling() {
         let appearance = UINavigationBarAppearance()
@@ -71,20 +72,22 @@ struct NaturblickApp: App {
                 } else {
                     preconditionFailure("route is invalid [\(url.pathComponents)]")
                 }
+            }.task {
+                do {
+                    if (savedAppVersion != UIApplication.appVersion) {
+                        try await BackendClient().register()
+                        savedAppVersion = UIApplication.appVersion
+                    }
+                } catch is HttpError {
+                    // Ignore
+                } catch {
+                    preconditionFailure("could not register device")
+                }
             }
         }
     }
     
     init() {
-        Task {
-            do {
-                try await BackendClient().register()
-            } catch is HttpError {
-                // Ignore
-            } catch {
-                preconditionFailure("could not register device")
-            }
-        }
         navigationBarStyling()
     }
 }

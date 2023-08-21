@@ -16,7 +16,7 @@ struct AboutView: View {
                         .padding()
                     Button {
                         let deviceName = "ios"
-                        let appVersion = "1"
+                        let appVersion = UIApplication.appVersion
                         let survey = "https://survey.naturkundemuseum-berlin.de/de/Feedback%20Naturblick?device_name=\(deviceName)&version=\(appVersion)"
                         if let url = URL(string: survey) {
                             UIApplication.shared.open(url)

@@ -7,7 +7,7 @@ import SwiftUI
 
 struct ImprintView: View {
     
-    private let appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
+    private let appVersion: String = UIApplication.appVersion
     
     var body: some View {
         BaseView {
