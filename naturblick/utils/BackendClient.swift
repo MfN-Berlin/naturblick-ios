@@ -330,7 +330,7 @@ class BackendClient {
                 model: UIDevice.modelName,
                 platform: "ios",
                 osVersion: UIDevice.current.systemVersion,
-                appVersion: UIApplication.appVersion!))
+                appVersion: UIApplication.appVersion))
         else {
             preconditionFailure("Failed to encode RegisterDevice")
         }
