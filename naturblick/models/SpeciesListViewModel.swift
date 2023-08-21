@@ -54,7 +54,7 @@ class SpeciesListViewModel: ObservableObject {
                         wikipedia: row[Species.Definition.wikipedia],
                         hasPortrait: true,
                         group: row[Species.Definition.group],
-                        audioUrl: row[Portrait.Definition.audioUrl]
+                        audioUrl: nil
                     )
                 }
         }
