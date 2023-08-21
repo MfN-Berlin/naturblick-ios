@@ -14,7 +14,6 @@ enum DeepLink : Equatable {
 struct NaturblickApp: App {
     
     @State var deepLink: DeepLink? = nil
-    @AppStorage("savedAppVersion") var savedAppVersion: String = "unknown"
     
     func navigationBarStyling() {
         let appearance = UINavigationBarAppearance()
