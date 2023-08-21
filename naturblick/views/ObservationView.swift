@@ -10,6 +10,8 @@ struct ObservationView: View {
     let controller: ObservationPersistenceController
     @State private var edit = false
     @State var editData: EditData
+    @State private var presentConfirmationDialog = false
+
 
     init(observation: Observation,
          controller: ObservationPersistenceController
@@ -88,10 +90,10 @@ struct ObservationView: View {
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
-                                editData = EditData(observation: observation, thumbnail: nil)
-                                edit = false
-                                Task {
-                                    await updateThumbnail()
+                                if (editData.hasChanged) {
+                                    presentConfirmationDialog = true
+                                } else {
+                                    dismissEditView()
                                 }
                             }
                         }
@@ -106,12 +108,28 @@ struct ObservationView: View {
                             }
                         }
                     }
+                    .confirmationDialog("save_changes_message", isPresented: $presentConfirmationDialog){
+                        Button("Continue") {
+                            presentConfirmationDialog = false
+                            dismissEditView()
+                        }
+                    } message: {
+                        Text("There are changes that have not been saved.")
+                    }
             }
         }
         .task {
             await updateThumbnail()
         }
         .navigationTitle("Observation")
+    }
+    
+    private func dismissEditView() {
+        editData = EditData(observation: observation, thumbnail: nil)
+        edit = false
+        Task {
+            await updateThumbnail()
+        }
     }
 }
 
