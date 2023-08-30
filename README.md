@@ -20,3 +20,6 @@ xcrun --sdk macosx swiftc -parse-as-library AddColors.swift -o add_colors && ./a
 ```
 
 It is assumed that every color exists in global and dark.
+
+# Syncing strapi data during build time
+A large part of the content data is synced via ktor from Strapi during buildtime. If the schema has to change (species ie) one has to change it at all places accordingly (strapi, ktor, android, ios).
