@@ -28,27 +28,12 @@ struct BaseView<Content : View>: View {
     }
     
     var body: some View {
-        ZStack {
-            Color.primaryColor.edgesIgnoringSafeArea([.top])
-            let view = ZStack {
-                secondaryColor
-                content()
-            }.edgesIgnoringSafeArea([.bottom])
-            if let n = navTitle {
-                view.navigationTitle(n)
-            } else {
-                view
-            }
-        }
+        content()
+            .background(Color.primaryColor)
+            .background(ignoresSafeAreaEdges: [.bottom])
     }
     
     init(navTitle: String? = nil, oneColor: Bool = false, content: @escaping () -> Content) {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.backgroundColor: UIColor(.primaryColor)]
-        UINavigationBar.appearance().titleTextAttributes = [.backgroundColor: UIColor(.primaryColor)]
-        
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(.onPrimaryHighEmphasis)]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(.onPrimaryHighEmphasis)]
-        
         self.navTitle = navTitle
         self.content = content
         self.oneColor = oneColor
@@ -65,3 +50,4 @@ struct BaseView_Previews: PreviewProvider {
         }
     }
 }
+

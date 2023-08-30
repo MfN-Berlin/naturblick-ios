@@ -4,13 +4,15 @@
 
 import SwiftUI
 
-struct GroupsView<Content>: View where Content: View {
+struct GroupsView<Content>: NavigatableView where Content: View {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var title: String? = "Arten kennenlernen"
     
     let groups: [Group]
     let destination: (Group) -> Content
     
     var body: some View {
-        BaseView(navTitle: "Arten kennenlernen", oneColor: true) {
+        BaseView(oneColor: true) {
             ScrollView {
                 Image("artportraits24")
                     .resizable()
