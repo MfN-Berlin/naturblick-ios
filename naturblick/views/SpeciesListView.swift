@@ -5,7 +5,11 @@
 
 import SwiftUI
 
-struct SpeciesListView: View {
+struct SpeciesListView: NavigatableView {
+    
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var title: String? = "Species"
+    
     @State var species:  [SpeciesListItem] = []
     @State var query: String = ""
     @StateObject var speciesListViewModel: SpeciesListViewModel = SpeciesListViewModel()

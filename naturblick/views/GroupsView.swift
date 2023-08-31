@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct GroupsView<Content>: NavigatableView where Content: View {
+struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var title: String? = "Arten kennenlernen"
     
@@ -28,8 +28,9 @@ struct GroupsView<Content>: NavigatableView where Content: View {
                     GridItem(spacing: .defaultPadding)
                 ], spacing: .defaultPadding) {
                     ForEach(groups) { group in
-                        NavigationLink(destination: destination(group)) {
-                            GroupButton(group: group)
+                        GroupButton(group: group).onTapGesture {
+                            let nextViewController = destination(group).setUpViewController()
+                            viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                         }
                     }
                 }.padding(.defaultPadding)
@@ -39,10 +40,23 @@ struct GroupsView<Content>: NavigatableView where Content: View {
 }
 
 struct GroupsView_Previews: PreviewProvider {
+    
+    struct T : NavigatableView {
+        let str: String
+        
+        var holder: ViewControllerHolder = ViewControllerHolder()
+        
+        var body: some View {
+            Text("Clicked on \(str)")
+        }
+        
+        
+    }
+    
     static var previews: some View {
         NavigationView {
             GroupsView(groups: Group.groups) { group in
-                Text("Clicked on \(group.gerName)")
+                T(str: "Clicked on \(group.gerName)")
             }
         }
     }

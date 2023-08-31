@@ -138,21 +138,17 @@ struct HomeView: NavigatableView {
                                     )
                                 }
                                 Spacer()
-                                NavigationLink(
-                                    tag: .species, selection: $navigateTo,
-                                    destination: {
-                                        GroupsView(
-                                            groups: Group.groups,
-                                            destination: { group in
-                                                SpeciesListView(filter: .group(group))
-                                            })
-                                    }
-                                ) {
-                                    HomeViewButton(text: "Learn about species",
-                                                   color: Color.onPrimaryButtonSecondary,
-                                                   image: Image("ic_specportraits"),
-                                                   size: bottomRowSize
-                                    )
+                                HomeViewButton(text: "Learn about species",
+                                               color: Color.onPrimaryButtonSecondary,
+                                               image: Image("ic_specportraits"),
+                                               size: bottomRowSize
+                                ).onTapGesture {
+                                    let nextViewController = GroupsView(
+                                        groups: Group.groups,
+                                        destination: { group in
+                                            SpeciesListView(filter: .group(group))
+                                        }).setUpViewController()
+                                    viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                                 }
                                 Spacer()
                             }

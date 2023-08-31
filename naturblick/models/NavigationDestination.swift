@@ -11,7 +11,6 @@ enum NavigationDestination {
     case birdId
     case fieldbook
     case plantId
-    case species
     case help
     case account
     case settings
