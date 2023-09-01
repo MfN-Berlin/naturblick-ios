@@ -4,14 +4,23 @@
 
 import SwiftUI
 
-struct HomeView: View {
-
-    @Binding var deeplink: DeepLink?
+struct HomeView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    
+    func configureNavigationItem(item: UINavigationItem) -> UINavigationItem {
+        let appearance = item.standardAppearance
+        appearance?.configureWithTransparentBackground()
+        item.standardAppearance = appearance
+        item.compactAppearance = nil
+        item.scrollEdgeAppearance = nil
+        item.compactScrollEdgeAppearance = nil
+        return item
+    }
     
     let firstRowWidthFactor: CGFloat = 4.5
     let secondRowWidthFactor: CGFloat = 5
     @Environment(\.colorScheme) var colorScheme
-    
+    	
     @State var navigateTo: NavigationDestination? = nil
     
     @State var isShowingPortrait = false
@@ -86,23 +95,20 @@ struct HomeView: View {
                                             size: topRowSize)
                                     }
                                 Spacer()
-                                NavigationLink(
-                                    tag: .characteristics, selection: $navigateTo,
-                                    destination: {
-                                        GroupsView(
-                                            groups: Group.characterGroups,
-                                            destination: { group in
-                                                CharactersView(group: group)
-                                            }
-                                        )
-                                    }
-                                ) {
                                     HomeViewButton(text: "Select characteristics",
                                                    color: Color.onPrimaryButtonPrimary,
                                                    image: Image("characteristics24"),
                                                    size: topRowSize
                                     )
-                                }
+                                    .onTapGesture {
+                                        let nextViewController = GroupsView(
+                                            groups: Group.characterGroups,
+                                            destination: { group in
+                                                CharactersView(group: group)
+                                            }
+                                        ).setUpViewController()
+                                        viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+                                    }
                                 Spacer()
                                 NavigationLink(
                                     tag: .plantId, selection: $navigateTo,
@@ -132,21 +138,17 @@ struct HomeView: View {
                                     )
                                 }
                                 Spacer()
-                                NavigationLink(
-                                    tag: .species, selection: $navigateTo,
-                                    destination: {
-                                        GroupsView(
-                                            groups: Group.groups,
-                                            destination: { group in
-                                                SpeciesListView(filter: .group(group))
-                                            })
-                                    }
-                                ) {
-                                    HomeViewButton(text: "Learn about species",
-                                                   color: Color.onPrimaryButtonSecondary,
-                                                   image: Image("ic_specportraits"),
-                                                   size: bottomRowSize
-                                    )
+                                HomeViewButton(text: "Learn about species",
+                                               color: Color.onPrimaryButtonSecondary,
+                                               image: Image("ic_specportraits"),
+                                               size: bottomRowSize
+                                ).onTapGesture {
+                                    let nextViewController = GroupsView(
+                                        groups: Group.groups,
+                                        destination: { group in
+                                            SpeciesListView(filter: .group(group))
+                                        }).setUpViewController()
+                                    viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                                 }
                                 Spacer()
                             }
@@ -156,28 +158,6 @@ struct HomeView: View {
                         .background {
                             Rectangle()
                                 .foregroundColor(.primaryColor)
-                        }
-                    }
-                }
-            }
-            .onChange(of: $deeplink.wrappedValue) { d in
-                if let d = d {
-                    switch d {
-                    case .speciesPortrait(let sid):
-                        speciesId = sid
-                        isShowingPortrait = true
-                    case .resetPasswort(let token):
-                        self.token = token
-                        isShowingResetPassword = true
-                    case .activateAccount(let token):
-                        Task {
-                            do {
-                                try await BackendClient().activateAccount(token: token)
-                                activated = true
-                                isShowingLogin = true
-                            } catch {
-                                preconditionFailure(error.localizedDescription)
-                            }
                         }
                     }
                 }
@@ -219,24 +199,6 @@ struct HomeView: View {
                         }
                     ) {
                     }
-                    NavigationLink(destination: PortraitView(speciesId: speciesId)
-                        .onDisappear {
-                            deeplink = nil
-                        }, isActive: $isShowingPortrait) {
-                            EmptyView()
-                        }
-                    NavigationLink(destination: ResetPasswordView(token: token)
-                        .onDisappear {
-                            deeplink = nil
-                        }, isActive: $isShowingResetPassword) {
-                            EmptyView()
-                        }
-                    NavigationLink(destination: LoginView()
-                        .onDisappear {
-                            deeplink = nil
-                        }, isActive: $isShowingLogin) {
-                            EmptyView()
-                        }
                 }
             }
         }
@@ -246,7 +208,7 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            HomeView(deeplink: .constant(nil))
+            HomeView()
         }
     }
 }
