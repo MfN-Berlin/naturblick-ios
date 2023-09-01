@@ -1,39 +1,60 @@
 import Foundation
 
 struct Component : Encodable {
-    let alpha: String
+    let alphaFloat: String
     let blue: String
     let green: String
     let red: String
+
+    var redFloat: String
+    var blueFloat: String
+    var greenFloat: String
+
+    private static func toCgFloat(s: String) -> String {
+        let decimal = UInt8(s, radix: 16) 
+        let opacity: Double = Double(decimal!) / 255
+        return String(format: "%.3f", opacity) 
+    }
 
     init(hex: String) {
         let rstart = hex.index(hex.startIndex, offsetBy: 1)
         let rend = hex.index(hex.startIndex, offsetBy: 3)
         let rrange = rstart..<rend
         red = "0x\(hex[rrange].uppercased())"
+        redFloat = Component.toCgFloat(s: String(hex[rrange])) 
 
         let gstart = hex.index(hex.startIndex, offsetBy: 3)
         let gend = hex.index(hex.startIndex, offsetBy: 5)
         let grange = gstart..<gend
         green = "0x\(hex[grange].uppercased())"
+        greenFloat = Component.toCgFloat(s: String(hex[grange])) 
 
         let bstart = hex.index(hex.startIndex, offsetBy: 5)
         let bend = hex.index(hex.startIndex, offsetBy: 7)
         let brange = bstart..<bend
         blue = "0x\(hex[brange].uppercased())"
+        blueFloat = Component.toCgFloat(s: String(hex[brange])) 
 
         if (hex.count == 9) {
             let astart = hex.index(hex.startIndex, offsetBy: 7)
             let aend = hex.index(hex.startIndex, offsetBy: 9)
             let arange = astart..<aend
-
-            let decimal = UInt8(hex[arange], radix: 16) 
-            let opacity: Double = Double(decimal!) / 255
-            alpha = String(format: "%.3f", opacity) 
-            
+            alphaFloat = Component.toCgFloat(s: String(hex[arange])) 
         } else {
-            alpha = "1.000"
+            alphaFloat = "1.000"
         }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case alpha, blue, green, red
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(alphaFloat, forKey: .alpha)
+        try container.encode(blue, forKey: .blue)
+        try container.encode(green, forKey: .green)
+        try container.encode(red, forKey: .red)
     }
 }
 
@@ -77,6 +98,7 @@ struct Token : Encodable {
 
 let resources = URL(fileURLWithPath: FileManager().currentDirectoryPath).appendingPathComponent("resources")
 let assets = URL(fileURLWithPath: FileManager().currentDirectoryPath).appendingPathComponent("naturblick/Assets.xcassets")
+let colorSwift = URL(fileURLWithPath: FileManager().currentDirectoryPath).appendingPathComponent("naturblick/utils/Color.swift")
 
 func loadJson(filename fileName: String) throws -> NSDictionary {
     let data = try Data(contentsOf: resources.appendingPathComponent(fileName))
@@ -159,11 +181,79 @@ enum AddColors {
         }
         
         let jsonEncoder: JSONEncoder = JSONEncoder()
+        var uiColors = ""
+        var swiftColors: String = ""
 
         tokens.forEach { token in
-             let data: Data = try! jsonEncoder.encode(token)
-             try! FileManager().createDirectory(at: assets.appendingPathComponent(token.filename), withIntermediateDirectories: true)
-             try! data.write(to: assets.appendingPathComponent("\(token.filename)/Contents.json"))
+            let data: Data = try! jsonEncoder.encode(token)
+            try! FileManager().createDirectory(at: assets.appendingPathComponent(token.filename), withIntermediateDirectories: true)
+            try! data.write(to: assets.appendingPathComponent("\(token.filename)/Contents.json"))
+
+            let lightColor = token.colors[0].color.components
+            let darkColor = token.colors[1].color.components
+            
+            let (lr, lg, lb, la) = (lightColor.redFloat, lightColor.greenFloat, lightColor.blueFloat, lightColor.alphaFloat)
+            let (dr, dg, db, da) = (darkColor.redFloat, darkColor.greenFloat, darkColor.blueFloat, darkColor.alphaFloat)
+
+            var varName = token.filename.replacingOccurrences(of: "_", with: "")
+                .replacingOccurrences(of: ".colorset", with: "") 
+                .replacingOccurrences(of: ".", with: "") 
+            varName = varName.replacingOccurrences(of: String(varName.first!), with: String(varName.first!.lowercased()))
+
+            swiftColors += """
+            static let \(varName) = Color("\(token.filename.replacingOccurrences(of: ".colorset", with: ""))")
+
+            """
+
+            uiColors += """
+                static var \(varName)Ui: UIColor {
+                    return UIColor { (traits) -> UIColor in
+                        return traits.userInterfaceStyle == .dark ?
+                            UIColor(red: \(dr), green: \(dg), blue: \(db), alpha: \(da)) :
+                            UIColor(red: \(lr), green: \(lg), blue: \(lb), alpha: \(la))
+                    }
+                }
+
+            """
         } 
+
+        swiftColors += """
+            
+            static let primaryColor = Color("Primary")
+            static let primaryHomeColor = Color("PrimaryHome")
+            static let secondaryColor = Color("Secondary")
+            static let tertiaryColor = Color("tertiary")
+            static let backdropColor = Color("backdrop")
+            static let featureColor = Color("Feature")
+
+            static let onImageSignalLow = Color.black.opacity(0.3)
+            static let whiteOpacity10 = Color.white.opacity(0.4)
+            static let whiteOpacity60 = Color.white.opacity(0.8)
+        """
+        
+        let colorFileContent: String = """
+            import SwiftUI
+
+            
+            /* ===================================
+               = File is generated automatically =
+               = see AddColors.swift             =
+               ===================================*/
+
+
+            extension Color {
+
+                \(swiftColors)
+
+                \(uiColors)
+            }
+        """
+
+        do {
+            try FileManager().removeItem(at: colorSwift) 
+        } catch {
+            print("couldn't delete colors file")
+        }
+        try! colorFileContent.data(using: .utf8)!.write(to: colorSwift)
     }
 }
