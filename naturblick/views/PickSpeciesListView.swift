@@ -82,7 +82,7 @@ struct PickSpeciesListView: View {
             }
             .popover(item: $showInfo) { info in
                 NavigationView {
-                    SpeciesInfoView(info: info)
+                    Text("Test")
                         .navigationTitle(info.species.name != nil ? info.species.name! : info.species.sciname)
                         .toolbar {
                             ToolbarItem(placement: .confirmationAction) {

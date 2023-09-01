@@ -5,41 +5,8 @@
 
 import SwiftUI
 
-public class ViewControllerHolder {
-    public weak var viewController: UIViewController?
-    
-    public init() {}
-}
-
-public protocol NavigatableView: View {
-    var holder: ViewControllerHolder { get set }
-    var title: String? { get }
-    func configureNavigationItem(item: UINavigationItem) -> UINavigationItem
-}
-
-public extension NavigatableView {
-    func setUpViewController() -> UIViewController {
-        let viewController = HostingController(rootView: self)
-        self.holder.viewController = viewController
-        return viewController
-    }
-    
-    var viewController: UIViewController? {
-        return holder.viewController
-    }
-
-    var title: String? {
-        nil
-    }
-
-    func configureNavigationItem(item: UINavigationItem) -> UINavigationItem {
-        return item
-    }
-}
-
-public class HostingController<ContentView>: UIHostingController<ContentView> where ContentView: NavigatableView {
-    public override var navigationItem: UINavigationItem {
-        var item = super.navigationItem
+extension UIViewController {
+    func setUpDefaultNavigationItemApperance() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = Color.onPrimaryButtonSecondaryUi
@@ -57,14 +24,69 @@ public class HostingController<ContentView>: UIHostingController<ContentView> wh
         ]
         appearance.titleTextAttributes = attrs
         appearance.largeTitleTextAttributes = attrs
-        item.standardAppearance = appearance
-        item.compactAppearance = appearance
-        item.scrollEdgeAppearance = appearance
-        item.compactScrollEdgeAppearance = appearance
-        if let title = rootView.title {
-            item.title = title
-        }
-        return rootView.configureNavigationItem(item: item)
+        navigationItem.standardAppearance = appearance
+        navigationItem.compactAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactScrollEdgeAppearance = appearance
+    }
+}
+
+public class ViewControllerHolder {
+    public weak var viewController: UIViewController?
+    
+    public init() {}
+}
+
+public protocol NavigatableView: View {
+    var holder: ViewControllerHolder { get set }
+    var title: String? { get }
+    func configureNavigationItem(item: UINavigationItem)
+}
+
+public extension NavigatableView {
+    func setUpViewController() -> UIViewController {
+        let viewController = HostingController(rootView: self)
+        self.holder.viewController = viewController
+        return viewController
+    }
+    
+    var viewController: UIViewController? {
+        return holder.viewController
     }
 
+    func withNavigation(block: (_ navigation: UINavigationController) -> Void) {
+        if let navigation = viewController?.navigationController {
+            block(navigation)
+        }
+    }
+    
+    var title: String? {
+        nil
+    }
+
+    func configureNavigationItem(item: UINavigationItem) {
+    }
+}
+
+public class HostingController<ContentView>: UIHostingController<ContentView> where ContentView: NavigatableView {
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpDefaultNavigationItemApperance()
+        if let title = rootView.title {
+            navigationItem.title = title
+        }
+        rootView.configureNavigationItem(item: navigationItem)
+    }
+
+    
+    public override init(rootView: ContentView) {
+        super.init(rootView: rootView)
+    }
+    
+    // Called when initialized from storyboard
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("NSCoding not supported")
+    }
+    
 }

@@ -7,14 +7,13 @@ import SwiftUI
 struct HomeView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
-    func configureNavigationItem(item: UINavigationItem) -> UINavigationItem {
-        let appearance = item.standardAppearance
+    func configureNavigationItem(item: UINavigationItem) {
+        let appearance = item.standardAppearance?.copy()
         appearance?.configureWithTransparentBackground()
         item.standardAppearance = appearance
         item.compactAppearance = nil
         item.scrollEdgeAppearance = nil
         item.compactScrollEdgeAppearance = nil
-        return item
     }
     
     let firstRowWidthFactor: CGFloat = 4.5
@@ -30,8 +29,15 @@ struct HomeView: NavigatableView {
     @State var token: String? = nil
     
     @State var isShowingLogin = false
-        
     @AppStorage("activated") var activated: Bool = false
+    @StateObject var persistenceController: ObservationPersistenceController
+    @StateObject var createFlow: CreateFlowViewModel
+
+    init() {
+        let persistenceController = ObservationPersistenceController()
+        self._persistenceController = StateObject(wrappedValue: persistenceController)
+        self._createFlow = StateObject(wrappedValue: CreateFlowViewModel(persistenceController: persistenceController))
+    }
     
     var body: some View {
         BaseView(oneColor: true) {
@@ -110,17 +116,17 @@ struct HomeView: NavigatableView {
                                         viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                                     }
                                 Spacer()
-                                NavigationLink(
-                                    tag: .plantId, selection: $navigateTo,
-                                    destination: {
-                                        ObservationListView(initialCreateAction: .createImageObservation)
-                                    }) {
+                               
                                         HomeViewButton(text: "Photograph a plant",
                                                        color: Color.onPrimaryButtonPrimary,
                                                        image: Image("photo24"),
                                                        size: topRowSize
                                         )
-                                    }
+                                        .onTapGesture {
+                                            if let navigation = viewController?.navigationController {
+                                                createFlow.takePhoto(navigation: navigation)
+                                            }
+                                        }
                                 Spacer()
                             }
                             .padding(.bottom, .defaultPadding)
@@ -200,6 +206,15 @@ struct HomeView: NavigatableView {
                     ) {
                     }
                 }
+            }
+        }
+        .onReceive(createFlow.$openCropperView) { imageOpt in
+            if let navigation = viewController?.navigationController, let image = imageOpt {
+                createFlow.cropPhoto(navigation: navigation, image: image)
+            }
+        }.onReceive(createFlow.$openResultView) { thumbnailOpt in
+            if let navigation = viewController?.navigationController, let thumbnail = thumbnailOpt {
+                createFlow.selectSpecies(navigation: navigation, thumbnail: thumbnail)
             }
         }
     }

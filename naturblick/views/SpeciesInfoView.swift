@@ -13,8 +13,10 @@ struct SpeciesInfo: Identifiable {
     let avatar: Image
 }
 
-struct SpeciesInfoView: View {
+struct SpeciesInfoView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
     let info: SpeciesInfo
+    let select: () -> Void
     var body: some View {
         VStack {
             info.avatar
@@ -40,12 +42,20 @@ struct SpeciesInfoView: View {
             if let audioUrl = info.species.audioUrl {
                 SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!)
             }
+            Button("Cancel") {
+                viewController?.dismiss(animated: true)
+            }
+            Button("Select") {
+                viewController?.dismiss(animated: true)
+                select()
+            }
         }.padding(.defaultPadding)
     }
 }
 
 struct SpeciesInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesInfoView(info: SpeciesInfo(species: .sampleData, avatar: Image("placeholder")))
+        SpeciesInfoView(info: SpeciesInfo(species: .sampleData, avatar: Image("placeholder"))) { 
+        }
     }
 }
