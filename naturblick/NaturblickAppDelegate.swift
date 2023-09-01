@@ -9,7 +9,6 @@ import SwiftUI
 class NaturblickAppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        print("LAUNCHED")
         return true
     }
  

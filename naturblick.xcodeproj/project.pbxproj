@@ -386,10 +386,10 @@
 				7BCE46BD29C9DB1E00C6C101 /* models */,
 				7BCAE7BF2A5BF6A300B27370 /* naturblick.entitlements */,
 				13C880FE2A98BB91007DEC0B /* NaturblickAppDelegate.swift */,
+				13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */,
 				131E786729C9BB25000DF928 /* Preview Content */,
 				7BCE46C029C9DC5E00C6C101 /* utils */,
 				7BCE46A229C9D90300C6C101 /* views */,
-				13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */,
 			);
 			path = naturblick;
 			sourceTree = "<group>";
@@ -466,7 +466,9 @@
 				136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */,
 				7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */,
 				13B686AF2A093A75001FD28F /* EditObservationView.swift */,
+				13709A842A7D1C0E00B81108 /* FABView.swift */,
 				7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */,
+				13709A822A7CFE2600B81108 /* FullscreenView.swift */,
 				7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */,
 				7BA037BC29D6C8BB00804AFE /* GoodToKnowView.swift */,
 				7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */,
@@ -480,6 +482,7 @@
 				7BDD17E12A45C397001B9DB4 /* LoginView.swift */,
 				132A91402A2DCF6C00AC405C /* Map+Extensions.swift */,
 				7BCD2E472A2DFBE30083B310 /* MenuView.swift */,
+				13F08DE02A9F674600874264 /* NavigatableView.swift */,
 				136DFABA29F9752100C8B8FF /* NBEditText.swift */,
 				135E682E29EE805700192C4A /* ObservationListItemView.swift */,
 				13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */,
@@ -501,13 +504,10 @@
 				13535CEC2A77E4FE00501DFA /* SpeciesInfoView.swift */,
 				13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */,
 				13535CEA2A77CFB600501DFA /* SpeciesListView.swift */,
+				1337D96C2A7A982700712B8F /* SpeciesResultView.swift */,
 				137690022A30946F0076F93A /* SpectrogramView.swift */,
 				7BCCFD7629F2A62A00C71453 /* Style.swift */,
 				7B572DD82A6E758F008F50C5 /* Thumbnail.swift */,
-				1337D96C2A7A982700712B8F /* SpeciesResultView.swift */,
-				13709A822A7CFE2600B81108 /* FullscreenView.swift */,
-				13709A842A7D1C0E00B81108 /* FABView.swift */,
-				13F08DE02A9F674600874264 /* NavigatableView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
