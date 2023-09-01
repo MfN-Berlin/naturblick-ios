@@ -42,7 +42,7 @@ public class HostingController<ContentView>: UIHostingController<ContentView> wh
         var item = super.navigationItem
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(.onPrimaryButtonSecondary)
+        appearance.backgroundColor = Color.onPrimaryButtonSecondaryUi
         guard let latoBlack19 = UIFont(name: "Lato-Black", size: 19) else {
             fatalError("""
                        Failed to load the "Lato-Black" font.
@@ -52,7 +52,7 @@ public class HostingController<ContentView>: UIHostingController<ContentView> wh
         }
         
         let attrs: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor(.onPrimaryHighEmphasis),
+            .foregroundColor: Color.onPrimaryHighEmphasisUi,
             .font: latoBlack19
         ]
         appearance.titleTextAttributes = attrs
