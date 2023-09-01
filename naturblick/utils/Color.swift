@@ -46,4 +46,20 @@ extension Color {
     static let onImageSignalLow = Color.black.opacity(0.3)
     static let whiteOpacity10 = Color.white.opacity(0.4)
     static let whiteOpacity60 = Color.white.opacity(0.8)
+    
+    static var onPrimaryButtonSecondaryUi: UIColor {
+        return UIColor { (traits) -> UIColor in
+            return traits.userInterfaceStyle == .dark ?
+                UIColor(red: 0.063, green: 0.247, blue: 0.373, alpha: 1.000) :
+                UIColor(red: 0.055, green: 0.220, blue: 0.333, alpha: 1.000)
+        }
+    }
+
+    static var onPrimaryHighEmphasisUi: UIColor {
+        return UIColor { (traits) -> UIColor in
+            return traits.userInterfaceStyle == .dark ?
+                UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000) :
+                UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
+        }
+    }
 }
