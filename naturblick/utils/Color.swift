@@ -78,7 +78,8 @@ static let onSecondaryHighEmphasis = Color("On_Secondary.High_Emphasis")
                 UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 0.502)
         }
     }
-    static var onPrimaryButtonSecondaryUi: UIColor {
+    static var onPrimaryButtonSecondaryUi: UIColor
+        {
         return UIColor { (traits) -> UIColor in
             return traits.userInterfaceStyle == .dark ?
                 UIColor(red: 0.063, green: 0.247, blue: 0.373, alpha: 1.000) :

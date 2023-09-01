@@ -52,7 +52,7 @@ public class HostingController<ContentView>: UIHostingController<ContentView> wh
         }
         
         let attrs: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor(.onPrimaryHighEmphasis),
+            .foregroundColor: Color.onPrimaryHighEmphasisUi,
             .font: latoBlack19
         ]
         appearance.titleTextAttributes = attrs
