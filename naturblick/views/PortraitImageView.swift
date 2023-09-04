@@ -23,20 +23,23 @@ struct PortraitImageView: View {
                     } placeholder: {
                         Image("placeholder")
                     }
-                    Circle()
-                        .fill(Color.onImageSignalLow)
-                        .overlay {
-                            Image("ic_copyright")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.onPrimaryHighEmphasis)
-                                .padding(.fabIconPadding)
-                        }
-                        .frame(height: .fabSize)
-                        .padding([.top, .horizontal], .defaultPadding)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                    Button(action: {
+                        print("[Source](\(meta.source)) \(Licence.licenceToLink(licence: meta.license)) \(meta.owner)")
+                    }) {
+                        Circle()
+                            .fill(Color.onImageSignalLow)
+                            .overlay {
+                                Image("ic_copyright")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .foregroundColor(.onPrimaryHighEmphasis)
+                                    .padding(.fabIconMiniPadding)
+                            }
+                            .frame(height: .fabMiniSize)
+                            .padding([.top, .horizontal], .defaultPadding)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                    }
                 }
-                
                 if showText {
                     Text(meta.text)
                         .font(.nbBody1)
