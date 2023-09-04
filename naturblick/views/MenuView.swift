@@ -9,33 +9,35 @@ struct MenuView: View {
     
     var body: some View {
         Menu {
-            Button("Fieldbook") {
-                navigateTo = .fieldbook
-            }
-            Button("Record a bird sound") {
-                navigateTo = .birdId
-            }
-            Button("Photograph a plant") {
-                navigateTo = .plantId
-            }
-            Button("Help")  {
+            Button(action: {
                 navigateTo = .help
+            }) {
+                Label("Help", systemImage: "questionmark.circle")
             }
-            Divider()
-            Button("Account") {
+            Button(action: {
                 navigateTo = .account
+            }) {
+                Label("Account", systemImage: "person")
             }
-            Button("Settings") {
+            Button(action: {
                 navigateTo = .settings
+            }) {
+                Label("Settings", systemImage: "gearshape")
             }
-            Button("Feedback") {
+            Button(action: {
                 navigateTo = .feedback
+            }) {
+                Label("Feedback", systemImage: "square.and.pencil")
             }
-            Button("Imprint") {
+            Button(action: {
                 navigateTo = .imprint
+            }) {
+                Label("Imprint", systemImage: "shield")
             }
-            Button("About Naturblick") {
+            Button(action: {
                 navigateTo = .about
+            }) {
+                Label("About Naturblick", systemImage: "info.circle")
             }
         } label: {
             Image(systemName: "gearshape")
