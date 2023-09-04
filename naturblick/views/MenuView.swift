@@ -38,7 +38,8 @@ struct MenuView: View {
                 navigateTo = .about
             }
         } label: {
-            Image(systemName: "ellipsis")
+            Image(systemName: "gearshape")
+                .foregroundColor(.onPrimaryHighEmphasis)
         }
     }
 }
