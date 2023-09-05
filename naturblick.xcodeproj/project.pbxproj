@@ -761,7 +761,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "curl --compressed -L https://naturblick.museumfuernaturkunde.berlin/ktor-strapidb -o resources/strapi-db.sqlite3\n";
+			shellScript = "cp /Users/$USER/Tmp/strapi-db.sqlite3 resources/strapi-db.sqlite3 || curl --compressed -L https://naturblick.museumfuernaturkunde.berlin/ktor-strapidb -o resources/strapi-db.sqlite3\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
