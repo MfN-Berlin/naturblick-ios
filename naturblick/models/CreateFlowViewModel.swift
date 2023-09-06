@@ -11,7 +11,6 @@ class CreateFlowViewModel: NSObject, ObservableObject, UINavigationControllerDel
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     let persistenceController: ObservationPersistenceController
-    let client = BackendClient()
     @Published var data = CreateData()
     
     init(persistenceController: ObservationPersistenceController) {
@@ -81,14 +80,6 @@ class CreateFlowViewModel: NSObject, ObservableObject, UINavigationControllerDel
             let crop = NBImage(image: thumbnail)
             try crop.write()
             data.image.crop = crop
-            Task {
-                do {
-                    try await client.upload(image: crop)
-                    updateResult(result: try await client.imageId(mediaId: crop.id.uuidString))
-                } catch {
-                    print("\(error)")
-                }
-            }
             withNavigation { navigation in
                 selectSpecies(thumbnail: crop)
             }
