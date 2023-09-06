@@ -5,6 +5,38 @@
 
 import SwiftUI
 
+
+public class ViewControllerHolder {
+    public weak var viewController: UIViewController?
+    
+    public init() {}
+}
+
+public protocol HoldingViewController {
+    var holder: ViewControllerHolder { get set }
+    func setViewController(controller: UIViewController)
+}
+
+extension HoldingViewController {
+    func setViewController(controller: UIViewController) {
+        holder.viewController = controller
+    }
+    
+    var viewController: UIViewController? {
+        return holder.viewController
+    }
+    
+    var navigationController: UINavigationController? {
+        return viewController?.navigationController
+    }
+    
+    func withNavigation(block: (_ navigation: UINavigationController) -> Void) {
+        if let navigation = navigationController {
+            block(navigation)
+        }
+    }
+}
+
 extension UIViewController {
     func setUpDefaultNavigationItemApperance() {
         let appearance = UINavigationBarAppearance()
@@ -31,33 +63,15 @@ extension UIViewController {
     }
 }
 
-public class ViewControllerHolder {
-    public weak var viewController: UIViewController?
-    
-    public init() {}
-}
-
-public protocol NavigatableView: View {
-    var holder: ViewControllerHolder { get set }
+public protocol NavigatableView: View, HoldingViewController {
     var title: String? { get }
     func configureNavigationItem(item: UINavigationItem)
 }
 
 public extension NavigatableView {
     func setUpViewController() -> UIViewController {
-        let viewController = HostingController(rootView: self)
-        self.holder.viewController = viewController
+        let viewController = NavigatableHostingController(rootView: self)
         return viewController
-    }
-    
-    var viewController: UIViewController? {
-        return holder.viewController
-    }
-
-    func withNavigation(block: (_ navigation: UINavigationController) -> Void) {
-        if let navigation = viewController?.navigationController {
-            block(navigation)
-        }
     }
     
     var title: String? {
@@ -68,7 +82,7 @@ public extension NavigatableView {
     }
 }
 
-public class HostingController<ContentView>: UIHostingController<ContentView> where ContentView: NavigatableView {
+public class NavigatableHostingController<ContentView>: UIHostingController<ContentView> where ContentView: NavigatableView {
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUpDefaultNavigationItemApperance()
@@ -77,10 +91,10 @@ public class HostingController<ContentView>: UIHostingController<ContentView> wh
         }
         rootView.configureNavigationItem(item: navigationItem)
     }
-
     
     public override init(rootView: ContentView) {
         super.init(rootView: rootView)
+        rootView.setViewController(controller: self)
     }
     
     // Called when initialized from storyboard

@@ -13,10 +13,35 @@ struct SpeciesInfo: Identifiable {
     let avatar: Image
 }
 
+class SpeciesInfoViewController: NavigatableHostingController<SpeciesInfoView> {
+    let createFlow: CreateFlowViewModel
+    let species: SpeciesListItem
+    init(info: SpeciesInfo, createFlow: CreateFlowViewModel) {
+        self.species = info.species
+        self.createFlow = createFlow
+        let view = SpeciesInfoView(info: info)
+        super.init(rootView: view)
+    }
+    
+    @objc func createObservation() {
+        createFlow.createObservation(species: species)
+        dismiss(animated: true)
+    }
+    
+    @objc func cancel() {
+        dismiss(animated: true)
+    }
+}
+
 struct SpeciesInfoView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
+    
+    func configureNavigationItem(item: UINavigationItem) {
+        item.rightBarButtonItem = UIBarButtonItem(title: "Choose", style: .done, target: viewController, action: #selector(SpeciesInfoViewController.createObservation))
+        item.leftBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .done, target: viewController, action: #selector(SpeciesInfoViewController.cancel))
+    }
+    
     let info: SpeciesInfo
-    let select: () -> Void
     var body: some View {
         VStack {
             info.avatar
@@ -42,20 +67,13 @@ struct SpeciesInfoView: NavigatableView {
             if let audioUrl = info.species.audioUrl {
                 SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!)
             }
-            Button("Cancel") {
-                viewController?.dismiss(animated: true)
-            }
-            Button("Select") {
-                viewController?.dismiss(animated: true)
-                select()
-            }
         }.padding(.defaultPadding)
     }
 }
 
 struct SpeciesInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesInfoView(info: SpeciesInfo(species: .sampleData, avatar: Image("placeholder"))) { 
-        }
+        SpeciesInfoView(info: SpeciesInfo(species: .sampleData, avatar: Image("placeholder")))
     }
 }
+

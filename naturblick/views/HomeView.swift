@@ -4,6 +4,18 @@
 
 import SwiftUI
 
+class HomeViewController: NavigatableHostingController<HomeView> {
+    let persistenceController: ObservationPersistenceController
+    let createFlow: CreateFlowViewModel
+    init() {
+        persistenceController = ObservationPersistenceController()
+        createFlow = CreateFlowViewModel(persistenceController: persistenceController)
+        let view = HomeView(persistenceController: persistenceController, createFlow: createFlow)
+        super.init(rootView: view)
+        createFlow.setViewController(controller: self)
+    }
+}
+
 struct HomeView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
@@ -30,15 +42,9 @@ struct HomeView: NavigatableView {
     
     @State var isShowingLogin = false
     @AppStorage("activated") var activated: Bool = false
-    @StateObject var persistenceController: ObservationPersistenceController
-    @StateObject var createFlow: CreateFlowViewModel
+    @ObservedObject var persistenceController: ObservationPersistenceController
+    @ObservedObject var createFlow: CreateFlowViewModel
 
-    init() {
-        let persistenceController = ObservationPersistenceController()
-        self._persistenceController = StateObject(wrappedValue: persistenceController)
-        self._createFlow = StateObject(wrappedValue: CreateFlowViewModel(persistenceController: persistenceController))
-    }
-    
     var body: some View {
         BaseView(oneColor: true) {
             GeometryReader { geo in
@@ -123,9 +129,7 @@ struct HomeView: NavigatableView {
                                                        size: topRowSize
                                         )
                                         .onTapGesture {
-                                            if let navigation = viewController?.navigationController {
-                                                createFlow.takePhoto(navigation: navigation)
-                                            }
+                                            createFlow.takePhoto()
                                         }
                                 Spacer()
                             }
@@ -208,22 +212,6 @@ struct HomeView: NavigatableView {
                 }
             }
         }
-        .onReceive(createFlow.$openCropperView) { imageOpt in
-            if let navigation = viewController?.navigationController, let image = imageOpt {
-                createFlow.cropPhoto(navigation: navigation, image: image)
-            }
-        }.onReceive(createFlow.$openResultView) { thumbnailOpt in
-            if let navigation = viewController?.navigationController, let thumbnail = thumbnailOpt {
-                createFlow.selectSpecies(navigation: navigation, thumbnail: thumbnail)
-            }
-        }
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            HomeView()
-        }
-    }
-}

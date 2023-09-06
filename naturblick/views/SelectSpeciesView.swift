@@ -11,24 +11,13 @@ struct SelectSpeciesView: NavigatableView {
     
     @ObservedObject var createFlow: CreateFlowViewModel
     let thumbnail: NBImage
-    let action: (SpeciesListItem) -> ()
-    
-    init(createFlow: CreateFlowViewModel, thumbnail: NBImage, action: @escaping (SpeciesListItem) -> ()) {
-        self.createFlow = createFlow
-        self.thumbnail = thumbnail
-        self.action = action
-    }
     @State var showInfo: SpeciesInfo? = nil
     @StateObject var model: SelectSpeciesViewModel = SelectSpeciesViewModel()
     
     func openSpeciesInfo(species: SpeciesListItem, image: Image) {
-        let info = SpeciesInfoView(info: SpeciesInfo(species: species, avatar: image)) { 
-            withNavigation { navigation in
-                createFlow.createObservation(navigation: navigation, species: species)
-            }
-        }
+        let info = SpeciesInfoViewController(info: SpeciesInfo(species: species, avatar: image), createFlow: createFlow)
         withNavigation { navigation in
-            navigation.present(info.setUpViewController(), animated: true)
+            navigation.present(UINavigationController(rootViewController: info), animated: true)
         }
     }
     

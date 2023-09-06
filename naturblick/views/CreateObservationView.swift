@@ -17,32 +17,12 @@ enum CreateObservationAction: Identifiable {
     case createImageFromPhotosObservation
 }
 
-class CreateObservationViewController: HostingController<CreateObservationView> {
-    let createFlow: CreateFlowViewModel
-    public init(createFlow: CreateFlowViewModel) {
-        self.createFlow = createFlow
-        let view = CreateObservationView(createFlow: createFlow)
-        super.init(rootView: view)
-        view.holder.viewController = self
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(CreateObservationViewController.save))
-        if let navigation = navigationController {
-            createFlow.takePhoto(navigation: navigation)
-        }
-    }
-    
-    @objc func save() {
-        if let navigation = navigationController {
-            createFlow.saveObservation(navigation: navigation)
-        }
-    }
-}
-
 struct CreateObservationView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
+    
+    func configureNavigationItem(item: UINavigationItem) {
+        item.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: createFlow, action: #selector(CreateFlowViewModel.saveObservation))
+    }
     
     @State private var isPermissionInfoDisplay = false
     @ObservedObject var createFlow: CreateFlowViewModel

@@ -7,52 +7,52 @@ import Foundation
 import UIKit
 import Mantis
 
-class CreateFlowViewModel: NSObject, ObservableObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate {
+class CreateFlowViewModel: NSObject, ObservableObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, HoldingViewController {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    
     let persistenceController: ObservationPersistenceController
     let client = BackendClient()
-    var didCapture = false
     @Published var data = CreateData()
-    @Published var openResultView: NBImage? = nil
-    @Published var openCropperView: NBImage? = nil
     
     init(persistenceController: ObservationPersistenceController) {
         self.persistenceController = persistenceController
     }
     
-    @MainActor func takePhoto(navigation: UINavigationController) {
-        guard !didCapture else {
-            return
-        }
+    @MainActor func takePhoto() {
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .camera
         imagePicker.delegate = self
-        navigation.present(imagePicker, animated: true) {
-            self.didCapture = true
+        withNavigation { navigation in
+            navigation.present(imagePicker, animated: true)
         }
     }
     
-    @MainActor func cropPhoto(navigation: UINavigationController, image: NBImage) {
+    private func cropPhoto(image: NBImage) {
         var config = Mantis.Config()
         config.cropViewConfig.showAttachedRotationControlView = false
         config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1)
         let cropViewController: NBMantisController = Mantis.cropViewController(image: image.image, config: config)
         cropViewController.delegate = self
-        navigation.pushViewController(cropViewController, animated: true)
-    }
-    
-    @MainActor func selectSpecies(navigation: UINavigationController, thumbnail: NBImage) {
-        let resultView = SelectSpeciesView(createFlow: self, thumbnail: thumbnail) {_ in
-            
+        withNavigation { navigation in
+            navigation.pushViewController(cropViewController, animated: true)
         }
-        navigation.pushViewController(resultView.setUpViewController(), animated: false)
     }
     
-    @MainActor func createObservation(navigation: UINavigationController, species: SpeciesListItem) {
+    func selectSpecies(thumbnail: NBImage) {
+        let resultView = SelectSpeciesView(createFlow: self, thumbnail: thumbnail)
+        withNavigation { navigation in
+            navigation.pushViewController(resultView.setUpViewController(), animated: false)
+        }
+    }
+    
+    @MainActor func createObservation(species: SpeciesListItem) {
         data.species = species
-        let create = CreateObservationViewController(createFlow: self)
-        navigation.popViewController(animated: false)
-        navigation.popViewController(animated: false)
-        navigation.pushViewController(create, animated: false)
+        let create = CreateObservationView(createFlow: self)
+        withNavigation { navigation in
+            navigation.popViewController(animated: false)
+            navigation.popViewController(animated: false)
+            navigation.pushViewController(create.setUpViewController(), animated: false)
+        }
     }
     
     @MainActor func updateResult(result: [SpeciesResult]) {
@@ -66,7 +66,7 @@ class CreateFlowViewModel: NSObject, ObservableObject, UINavigationControllerDel
             try image.writeToAlbum()
             data.image.image = image
             data.image.crop = nil
-            openCropperView = image
+            cropPhoto(image: image)
             picker.dismiss(animated: true)
         } catch {
             preconditionFailure("\(error)")
@@ -81,7 +81,6 @@ class CreateFlowViewModel: NSObject, ObservableObject, UINavigationControllerDel
             let crop = NBImage(image: thumbnail)
             try crop.write()
             data.image.crop = crop
-            openResultView = crop
             Task {
                 do {
                     try await client.upload(image: crop)
@@ -90,21 +89,26 @@ class CreateFlowViewModel: NSObject, ObservableObject, UINavigationControllerDel
                     print("\(error)")
                 }
             }
+            withNavigation { navigation in
+                selectSpecies(thumbnail: crop)
+            }
         } catch {
             preconditionFailure("\(error)")
         }
     }
     
-    @MainActor func cropViewControllerDidCancel(_ cropViewController: Mantis.CropViewController, original: UIImage) {
+    func cropViewControllerDidCancel(_ cropViewController: Mantis.CropViewController, original: UIImage) {
         cropViewController.navigationController?.popViewController(animated: true)
     }
     
-    @MainActor 	func saveObservation(navigation: UINavigationController) {
-        do {
-            try persistenceController.insert(data: data)
-            navigation.popViewController(animated: true)
-        } catch {
-            preconditionFailure("\(error)")
+    @objc func saveObservation() {
+        withNavigation { navigation in
+            do {
+                try persistenceController.insert(data: data)
+                navigation.popViewController(animated: true)
+            } catch {
+                preconditionFailure("\(error)")
+            }
         }
     }
 }
