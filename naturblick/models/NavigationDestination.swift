@@ -6,14 +6,6 @@
 import Foundation
 
 enum NavigationDestination {
-    case feedback
-    case characteristics
     case birdId
     case fieldbook
-    case plantId
-    case help
-    case account
-    case settings
-    case imprint
-    case about
 }

@@ -5,7 +5,10 @@
 
 import SwiftUI
 
-struct HelpView: View {
+struct HelpView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var title: String? = "HelpwithNavigation"
+    
     var body: some View {
         BaseView {
             ScrollView {
