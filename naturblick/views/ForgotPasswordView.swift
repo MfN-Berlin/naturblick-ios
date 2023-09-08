@@ -32,25 +32,23 @@ struct ForgotPasswordView: View {
     }
     
     var body: some View {
-        BaseView {
-            VStack {
-                NavigationLink(destination: LoginView(), tag: AccountView.loginAction, selection: $action) {
-                    EmptyView()
-                }
-                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt)
-                    .padding()
-                    .keyboardType(.emailAddress)
-               
-                Button("Reset password") {
-                    forgotPassword()
-                }.foregroundColor(.black)
-                    .buttonStyle(.bordered)
-                Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
-                    .tint(Color.onSecondaryButtonPrimary)
-                    .font(.nbBody1)
-                    .padding()
-                Spacer()
+        VStack {
+            NavigationLink(destination: LoginView(), tag: AccountView.loginAction, selection: $action) {
+                EmptyView()
             }
+            NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt)
+                .padding()
+                .keyboardType(.emailAddress)
+           
+            Button("Reset password") {
+                forgotPassword()
+            }.foregroundColor(.black)
+                .buttonStyle(.bordered)
+            Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
+                .tint(Color.onSecondaryButtonPrimary)
+                .font(.nbBody1)
+                .padding()
+            Spacer()
         }.actionSheet(isPresented: $showSendInfo) {
             ActionSheet(
                 title: Text("New password"),

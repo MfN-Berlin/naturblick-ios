@@ -40,14 +40,14 @@ struct ResetPasswordView: View {
     }
     
     var body: some View {
-        BaseView {
-            SwiftUI.Group {
+        SwiftUI.Group {
                 if action == .Reset {
                     VStack {
                         NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $resetPasswordVM.password, isSecure: true, prompt: resetPasswordVM.passwordPrompt).padding()
                         if resetPasswordVM.passwordPrompt == nil {
                             Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.")
                                 .tint(Color.onSecondaryButtonPrimary)
+                                .foregroundColor(.onPrimaryHighEmphasis)
                                 .font(.nbCaption)
                                 .padding([.leading, .trailing])
                         }
@@ -67,21 +67,19 @@ struct ResetPasswordView: View {
                 } else if action == .Account {
                     AccountView()
                 }
+            }.actionSheet(isPresented: $showResetSuccess) {
+                ActionSheet(
+                    title: Text("Reset password"),
+                    message: Text("Password reset was successful."),
+                    buttons:
+                        [
+                            .default(Text("Ok"), action: {
+                                dismiss()
+                            })
+                        ]
+                )
             }
+            .alertHttpError(isPresented: $isPresented, error: error)
         }
-        .actionSheet(isPresented: $showResetSuccess) {
-            ActionSheet(
-                title: Text("Reset password"),
-                message: Text("Password reset was successful."),
-                buttons:
-                    [
-                        .default(Text("Ok"), action: {
-                            dismiss()
-                        })
-                    ]
-            )
-        }
-        .alertHttpError(isPresented: $isPresented, error: error)
-    }
 }
 

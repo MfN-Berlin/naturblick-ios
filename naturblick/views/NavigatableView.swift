@@ -133,6 +133,7 @@ private class NavigatableHostingController<ContentView>: UIHostingController<Con
         if let title = rootView.title {
             navigationItem.title = title
         }
+        view.backgroundColor = UIColor.primaryColor
         rootView.configureNavigationItem(item: navigationItem)
     }
     

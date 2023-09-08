@@ -32,7 +32,7 @@ struct NBEditText: View {
                 Text(prompt)
                     .font(.nbCaption)
             }
-        }
+        }.foregroundColor(.onPrimaryHighEmphasis)
     }
 }
 
