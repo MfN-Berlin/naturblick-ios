@@ -4,26 +4,26 @@
 
 import SwiftUI
 
-struct MenuView: View {
-    let navigationController: UINavigationController
+struct MenuView: View, HoldingViewController {
+    var holder: ViewControllerHolder
     
     var body: some View {
         Menu {
             Button(action: {
                 let helpViewController = HelpView().setUpViewController()
-                navigationController.pushViewController(helpViewController, animated: true)
+                navigationController?.pushViewController(helpViewController, animated: true)
             }) {
                 Label("Help", systemImage: "questionmark.circle")
             }
             Button(action: {
                 let accountViewController = AccountView().setUpViewController()
-                navigationController.pushViewController(accountViewController, animated: true)
+                navigationController?.pushViewController(accountViewController, animated: true)
             }) {
                 Label("Account", systemImage: "person")
             }
             Button(action: {
                 let settingViewController = SettingsView().setUpViewController()
-                navigationController.pushViewController(settingViewController, animated: true)
+                navigationController?.pushViewController(settingViewController, animated: true)
             }) {
                 Label("Settings", systemImage: "gearshape")
             }
@@ -34,13 +34,13 @@ struct MenuView: View {
             }
             Button(action: {
                 let imprintViewController = ImprintView().setUpViewController()
-                navigationController.pushViewController(imprintViewController, animated: true)
+                navigationController?.pushViewController(imprintViewController, animated: true)
             }) {
                 Label("Imprint", systemImage: "shield")
             }
             Button(action: {
                 let aboutViewController = AboutView().setUpViewController()
-                navigationController.pushViewController(aboutViewController, animated: true)
+                navigationController?.pushViewController(aboutViewController, animated: true)
             }) {
                 Label("About Naturblick", systemImage: "info.circle")
             }

@@ -81,9 +81,8 @@ struct HomeView: NavigatableView {
                         }
                         .toolbar {
                             ToolbarItem(placement: .navigationBarTrailing) {
-                                if let navigationController = navigationController {
-                                    MenuView(navigationController: navigationController)
-                                }
+                                MenuView(holder: holder)
+                                
                             }
                         }
                         RoundBottomView()
