@@ -13,7 +13,34 @@ struct SpeciesInfo: Identifiable {
     let avatar: Image
 }
 
-struct SpeciesInfoView: View {
+class SpeciesInfoViewController: NavigatableHostingController<SpeciesInfoView> {
+    let createFlow: CreateFlowViewModel
+    let species: SpeciesListItem
+    init(info: SpeciesInfo, createFlow: CreateFlowViewModel) {
+        self.species = info.species
+        self.createFlow = createFlow
+        let view = SpeciesInfoView(info: info)
+        super.init(rootView: view)
+    }
+    
+    @objc func createObservation() {
+        createFlow.createObservation(species: species)
+        dismiss(animated: true)
+    }
+    
+    @objc func cancel() {
+        dismiss(animated: true)
+    }
+}
+
+struct SpeciesInfoView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    
+    func configureNavigationItem(item: UINavigationItem) {
+        item.rightBarButtonItem = UIBarButtonItem(title: "Choose", style: .done, target: viewController, action: #selector(SpeciesInfoViewController.createObservation))
+        item.leftBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .done, target: viewController, action: #selector(SpeciesInfoViewController.cancel))
+    }
+    
     let info: SpeciesInfo
     var body: some View {
         VStack {
@@ -49,3 +76,4 @@ struct SpeciesInfoView_Previews: PreviewProvider {
         SpeciesInfoView(info: SpeciesInfo(species: .sampleData, avatar: Image("placeholder")))
     }
 }
+

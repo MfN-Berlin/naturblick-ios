@@ -4,17 +4,28 @@
 
 import SwiftUI
 
+class HomeViewController: NavigatableHostingController<HomeView> {
+    let persistenceController: ObservationPersistenceController
+    let createFlow: CreateFlowViewModel
+    init() {
+        persistenceController = ObservationPersistenceController()
+        createFlow = CreateFlowViewModel(persistenceController: persistenceController)
+        let view = HomeView(persistenceController: persistenceController, createFlow: createFlow)
+        super.init(rootView: view)
+        createFlow.setViewController(controller: self)
+    }
+}
+
 struct HomeView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
-    func configureNavigationItem(item: UINavigationItem) -> UINavigationItem {
-        let appearance = item.standardAppearance
+    func configureNavigationItem(item: UINavigationItem) {
+        let appearance = item.standardAppearance?.copy()
         appearance?.configureWithTransparentBackground()
         item.standardAppearance = appearance
         item.compactAppearance = nil
         item.scrollEdgeAppearance = nil
         item.compactScrollEdgeAppearance = nil
-        return item
     }
     
     let firstRowWidthFactor: CGFloat = 4.5
@@ -30,9 +41,10 @@ struct HomeView: NavigatableView {
     @State var token: String? = nil
     
     @State var isShowingLogin = false
-        
     @AppStorage("activated") var activated: Bool = false
-    
+    @ObservedObject var persistenceController: ObservationPersistenceController
+    @ObservedObject var createFlow: CreateFlowViewModel
+
     var body: some View {
         BaseView(oneColor: true) {
             GeometryReader { geo in
@@ -110,17 +122,15 @@ struct HomeView: NavigatableView {
                                         viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                                     }
                                 Spacer()
-                                NavigationLink(
-                                    tag: .plantId, selection: $navigateTo,
-                                    destination: {
-                                        ObservationListView(initialCreateAction: .createImageObservation)
-                                    }) {
+                               
                                         HomeViewButton(text: "Photograph a plant",
                                                        color: Color.onPrimaryButtonPrimary,
                                                        image: Image("photo24"),
                                                        size: topRowSize
                                         )
-                                    }
+                                        .onTapGesture {
+                                            createFlow.takePhoto()
+                                        }
                                 Spacer()
                             }
                             .padding(.bottom, .defaultPadding)
@@ -205,10 +215,3 @@ struct HomeView: NavigatableView {
     }
 }
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            HomeView()
-        }
-    }
-}

@@ -114,14 +114,7 @@ struct ObservationListView: View {
         }
         .sheet(item: $createAction) { action in
             NavigationView {
-                CreateFlowView(action: action, persistenceController: persistenceController)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Dismiss") {
-                                createAction = nil
-                            }
-                        }
-                    }
+               Text("Test")
             }
         }
         .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)

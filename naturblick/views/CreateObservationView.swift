@@ -17,9 +17,15 @@ enum CreateObservationAction: Identifiable {
     case createImageFromPhotosObservation
 }
 
-struct CreateObservationView: View {
+struct CreateObservationView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    
+    func configureNavigationItem(item: UINavigationItem) {
+        item.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: createFlow, action: #selector(CreateFlowViewModel.saveObservation))
+    }
+    
     @State private var isPermissionInfoDisplay = false
-    @Binding var data: CreateData
+    @ObservedObject var createFlow: CreateFlowViewModel
     @StateObject private var locationManager = LocationManager()
     @State private var userTrackingMode: MapUserTrackingMode = .none
     @State private var showPicker: Bool = false
@@ -28,26 +34,26 @@ struct CreateObservationView: View {
     var body: some View {
         SwiftUI.Group {
             Form {
-                if let species = data.species {
+                if let species = createFlow.data.species {
                     Text(species.sciname)
                 }
-                CoordinatesView(coordinates: data.coords)
+                CoordinatesView(coordinates: createFlow.data.coords)
                     .onTapGesture {
                         showPicker = true
                     }
-                NBEditText(label: "Notes", icon: Image("details"), text: $data.details)
-                Picker("Behavior", selection: $data.behavior) {
-                    ForEach([Behavior].forGroup(group: data.species?.group)) {
+                NBEditText(label: "Notes", icon: Image("details"), text: $createFlow.data.details)
+                Picker("Behavior", selection: $createFlow.data.behavior) {
+                    ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
                         Text($0.rawValue).tag($0 as Behavior?)
                     }
                 }
-                IndividualsView(individuals: $data.individuals)
+                IndividualsView(individuals: $createFlow.data.individuals)
             }
         }.onChange(of: locationManager.userLocation) { location in
             if let location = location {
                 let coordinates = Coordinates(location: location)
-                if data.coords == nil {
-                    data.coords = coordinates
+                if createFlow.data.coords == nil {
+                    createFlow.data.coords = coordinates
                     region = coordinates.region
                 }
             }
@@ -67,13 +73,13 @@ struct CreateObservationView: View {
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Dismiss") {
-                                region = data.region
+                                region = createFlow.data.region
                                 showPicker = false
                             }
                         }
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Save") {
-                                data.coords = Coordinates(region: region)
+                                createFlow.data.coords = Coordinates(region: region)
                                 showPicker = false
                             }
                         }
@@ -85,6 +91,6 @@ struct CreateObservationView: View {
 
 struct CreateObservationView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateObservationView(data: .constant(CreateData()))
+        CreateObservationView(createFlow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
     }
 }

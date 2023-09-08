@@ -71,13 +71,9 @@ struct EditObservationView: View {
             NavigationView {
                 SwiftUI.Group {
                     if let identified = imageData.identified {
-                        SelectSpeciesView(results: identified.result, thumbnail: identified.crop.image) { species in
-                            data.species = species
-                            data.thumbnail = identified.crop
-                            showImageId = false
-                        }
+                       Text("Test")
                     } else if !data.speciesChanged {
-                        PlantIdView(data: $imageData)
+                        Text("Test")
                     }
                 }
                 .toolbar {
@@ -93,11 +89,7 @@ struct EditObservationView: View {
             NavigationView {
                 SwiftUI.Group {
                     if let identified = soundData.identified {
-                        SelectSpeciesView(results: identified.result, thumbnail: identified.crop.image) { species in
-                            data.species = species
-                            data.thumbnail = identified.crop
-                            showSoundId = false
-                        }
+                        Text("test")
                     } else if !data.speciesChanged {
                         BirdIdView(data: $soundData)
                     }
