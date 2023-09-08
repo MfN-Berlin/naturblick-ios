@@ -4,41 +4,47 @@
 
 import SwiftUI
 
-struct MenuView: View {
-    @Binding var navigateTo: NavigationDestination?
+struct MenuView: View, HoldingViewController {
+    var holder: ViewControllerHolder
     
     var body: some View {
         Menu {
             Button(action: {
-                navigateTo = .help
+                let helpViewController = HelpView().setUpViewController()
+                navigationController?.pushViewController(helpViewController, animated: true)
             }) {
                 Label("Help", systemImage: "questionmark.circle")
             }
             Button(action: {
-                navigateTo = .account
+                let accountViewController = AccountView().setUpViewController()
+                navigationController?.pushViewController(accountViewController, animated: true)
             }) {
                 Label("Account", systemImage: "person")
             }
             Button(action: {
-                navigateTo = .settings
+                let settingViewController = SettingsView().setUpViewController()
+                navigationController?.pushViewController(settingViewController, animated: true)
             }) {
                 Label("Settings", systemImage: "gearshape")
             }
             Button(action: {
-                navigateTo = .feedback
+                print("Here comes the feedback-view")
             }) {
                 Label("Feedback", systemImage: "square.and.pencil")
             }
             Button(action: {
-                navigateTo = .imprint
+                let imprintViewController = ImprintView().setUpViewController()
+                navigationController?.pushViewController(imprintViewController, animated: true)
             }) {
                 Label("Imprint", systemImage: "shield")
             }
             Button(action: {
-                navigateTo = .about
+                let aboutViewController = AboutView().setUpViewController()
+                navigationController?.pushViewController(aboutViewController, animated: true)
             }) {
                 Label("About Naturblick", systemImage: "info.circle")
             }
+            
         } label: {
             Image(systemName: "gearshape")
                 .foregroundColor(.onPrimaryHighEmphasis)
@@ -46,8 +52,3 @@ struct MenuView: View {
     }
 }
 
-struct MenuView_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuView(navigateTo: .constant(nil))
-    }
-}

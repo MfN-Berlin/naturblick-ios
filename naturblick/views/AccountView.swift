@@ -5,7 +5,9 @@
 
 import SwiftUI
 
-struct AccountView: View {
+struct AccountView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var title: String? = "Account"
     
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?

@@ -81,7 +81,8 @@ struct HomeView: NavigatableView {
                         }
                         .toolbar {
                             ToolbarItem(placement: .navigationBarTrailing) {
-                                MenuView(navigateTo: $navigateTo)
+                                MenuView(holder: holder)
+                                
                             }
                         }
                         RoundBottomView()
@@ -169,45 +170,6 @@ struct HomeView: NavigatableView {
                             Rectangle()
                                 .foregroundColor(.primaryColor)
                         }
-                    }
-                }
-            }
-            .background {
-                SwiftUI.Group {
-                    NavigationLink(
-                        tag: .about, selection: $navigateTo,
-                        destination: {
-                            AboutView()
-                        }
-                    ) {
-                    }
-                    NavigationLink(
-                        tag: .imprint, selection: $navigateTo,
-                        destination: {
-                            ImprintView()
-                        }
-                    ) {
-                    }
-                    NavigationLink(
-                        tag: .account, selection: $navigateTo,
-                        destination: {
-                            AccountView()
-                        }
-                    ) {
-                    }
-                    NavigationLink(
-                        tag: .settings, selection: $navigateTo,
-                        destination: {
-                            SettingsView()
-                        }
-                    ) {
-                    }
-                    NavigationLink(
-                        tag: .help, selection: $navigateTo,
-                        destination: {
-                            HelpView()
-                        }
-                    ) {
                     }
                 }
             }

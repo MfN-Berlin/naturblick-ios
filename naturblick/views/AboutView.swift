@@ -5,7 +5,13 @@
 
 import SwiftUI
 
-struct AboutView: View {
+struct AboutView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var title: String? = "About"
+    
+    func configureNavigationItem(item: UINavigationItem) {
+    }
+    
     var body: some View {
         BaseView {
             ScrollView {
