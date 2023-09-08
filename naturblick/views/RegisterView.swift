@@ -83,7 +83,9 @@ struct RegisterView: View {
                     .opacity(registerVM.isRegisterEnabled ? 1 : 0.6)
                 Spacer(minLength: 10)
             }
-        }.actionSheet(isPresented: $showRegisterSuccess) {
+        }
+        .foregroundColor(.onSecondaryHighEmphasis)
+        .actionSheet(isPresented: $showRegisterSuccess) {
             ActionSheet(
                 title: Text("Thank you!"),
                 message: Text("We have sent you an activation link by email. Please open this link to complete your registration. The link is valid for 12 hours."),

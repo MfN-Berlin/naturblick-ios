@@ -49,7 +49,9 @@ struct ForgotPasswordView: View {
                 .font(.nbBody1)
                 .padding()
             Spacer()
-        }.actionSheet(isPresented: $showSendInfo) {
+        }
+        .foregroundColor(.onSecondaryHighEmphasis)
+        .actionSheet(isPresented: $showSendInfo) {
             ActionSheet(
                 title: Text("New password"),
                 message: Text("We have sent a password reset link to the email address you provided. The link is valid for 12 hours. If you do not receive an email after 10 minutes, the email address you provided is not associated with an existing account."),

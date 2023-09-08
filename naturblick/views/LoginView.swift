@@ -88,7 +88,9 @@ struct LoginView: View {
             }
             
             Spacer()
-        }.actionSheet(isPresented: $showLoginSuccess) {
+        }
+        .foregroundColor(.onSecondaryHighEmphasis)
+        .actionSheet(isPresented: $showLoginSuccess) {
             ActionSheet(
                 title: Text("Success!"),
                 message: Text("You are signed in as: \(loginVM.email)"),

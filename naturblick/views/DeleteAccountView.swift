@@ -54,7 +54,6 @@ struct DeleteAccountView: View {
             }
             Text("**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.\n\nPlease, confirm your wish to delete the account by entering your login details.")
                 .tint(Color.onSecondaryButtonPrimary)
-                .foregroundColor(.onPrimaryHighEmphasis)
                 .font(.nbBody1)
                 .padding()
             NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $deleteVM.email, prompt: deleteVM.emailPrompt)
@@ -74,7 +73,9 @@ struct DeleteAccountView: View {
             NavigationLink(destination: ForgotPasswordView()) {
                 Text("Forgot Password")
             }.buttonStyle(.bordered).foregroundColor(.black)
-        }.actionSheet(isPresented: $showDeleteSuccess) {
+        }
+        .foregroundColor(.onSecondaryHighEmphasis)
+        .actionSheet(isPresented: $showDeleteSuccess) {
             ActionSheet(
                 title: Text("Success!"),
                 message: Text("Your account was deleted."),
