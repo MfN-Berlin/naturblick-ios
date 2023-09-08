@@ -47,7 +47,6 @@ struct ResetPasswordView: View {
                         if resetPasswordVM.passwordPrompt == nil {
                             Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.")
                                 .tint(Color.onSecondaryButtonPrimary)
-                                .foregroundColor(.onPrimaryHighEmphasis)
                                 .font(.nbCaption)
                                 .padding([.leading, .trailing])
                         }
@@ -67,7 +66,9 @@ struct ResetPasswordView: View {
                 } else if action == .Account {
                     AccountView()
                 }
-            }.actionSheet(isPresented: $showResetSuccess) {
+            }
+        .foregroundColor(.onSecondaryHighEmphasis)
+        .actionSheet(isPresented: $showResetSuccess) {
                 ActionSheet(
                     title: Text("Reset password"),
                     message: Text("Password reset was successful."),

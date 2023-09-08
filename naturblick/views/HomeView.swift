@@ -11,6 +11,7 @@ class HomeViewController: HostingController<HomeView> {
         persistenceController = ObservationPersistenceController()
         createFlow = CreateFlowViewModel(persistenceController: persistenceController)
         let view = HomeView(persistenceController: persistenceController, createFlow: createFlow)
+        view.viewController?.view.backgroundColor = .primaryHome
         super.init(rootView: view)
         createFlow.setViewController(controller: self)
     }

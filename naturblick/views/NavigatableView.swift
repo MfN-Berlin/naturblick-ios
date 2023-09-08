@@ -111,7 +111,7 @@ public class HostingController<ContentView>: UIHostingController<ContentView>  w
         if let title = rootView.title {
             navigationItem.title = title
         }
-        view.backgroundColor = UIColor.primaryColor
+        view.backgroundColor = UIColor.secondary
         rootView.configureNavigationItem(item: navigationItem)
     }
     
@@ -134,7 +134,7 @@ private class NavigatableHostingController<ContentView>: UIHostingController<Con
         if let title = rootView.title {
             navigationItem.title = title
         }
-        view.backgroundColor = UIColor.primaryColor
+        view.backgroundColor = UIColor.secondary
         rootView.configureNavigationItem(item: navigationItem)
     }
     

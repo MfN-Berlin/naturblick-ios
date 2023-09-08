@@ -17,7 +17,8 @@ struct HelpView: NavigatableView {
                     .font(.nbBody1)
                     .padding()
             }
-        }.foregroundColor(.onPrimaryHighEmphasis)
+        }
+        .foregroundColor(.onSecondaryHighEmphasis)
     }
 }
 

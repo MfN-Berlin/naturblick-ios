@@ -95,7 +95,7 @@ struct AccountView: NavigatableView {
                 }
             }
             Spacer()
-        }.foregroundColor(.onPrimaryHighEmphasis)
+        }.foregroundColor(.onSecondaryHighEmphasis)
     }
 }
 

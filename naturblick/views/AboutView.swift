@@ -44,7 +44,7 @@ struct AboutView: NavigatableView {
                 }.background(Color.onSecondaryButtonPrimary)
                     .padding()
             }
-        }.foregroundColor(.onPrimaryHighEmphasis)
+        }.foregroundColor(.onSecondaryHighEmphasis)
     }
 }
 
