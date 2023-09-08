@@ -80,7 +80,7 @@ struct HomeView: NavigatableView {
                                 .padding(.defaultPadding)
                         }
                         .toolbar {
-                            ToolbarItem(placement: .navigationBarLeading) {
+                            ToolbarItem(placement: .navigationBarTrailing) {
                                 MenuView(navigateTo: $navigateTo)
                             }
                         }
