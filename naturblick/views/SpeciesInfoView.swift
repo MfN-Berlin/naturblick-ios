@@ -13,7 +13,7 @@ struct SpeciesInfo: Identifiable {
     let avatar: Image
 }
 
-class SpeciesInfoViewController: NavigatableHostingController<SpeciesInfoView> {
+class SpeciesInfoViewController: HostingController<SpeciesInfoView> {
     let createFlow: CreateFlowViewModel
     let species: SpeciesListItem
     init(info: SpeciesInfo, createFlow: CreateFlowViewModel) {
@@ -25,20 +25,15 @@ class SpeciesInfoViewController: NavigatableHostingController<SpeciesInfoView> {
     
     @objc func createObservation() {
         createFlow.createObservation(species: species)
-        dismiss(animated: true)
     }
     
-    @objc func cancel() {
-        dismiss(animated: true)
-    }
 }
 
-struct SpeciesInfoView: NavigatableView {
+struct SpeciesInfoView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     func configureNavigationItem(item: UINavigationItem) {
         item.rightBarButtonItem = UIBarButtonItem(title: "Choose", style: .done, target: viewController, action: #selector(SpeciesInfoViewController.createObservation))
-        item.leftBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .done, target: viewController, action: #selector(SpeciesInfoViewController.cancel))
     }
     
     let info: SpeciesInfo
@@ -57,8 +52,11 @@ struct SpeciesInfoView: NavigatableView {
                 Text(info.species.sciname)
             }
             if info.species.hasPortrait {
-                NavigationLink(destination: PortraitView(speciesId: info.species.speciesId)) {
-                    Text("Visit artportrait")
+                Button("Visit artportrait") {
+                    let view = PortraitView(speciesId: info.species.speciesId)
+                    withNavigation { navigation in
+                        navigation.pushViewController(view.setUpViewController(), animated: true)
+                    }
                 }
             } else if let wikipedia = info.species.wikipedia {
                 Link("Visit wikipedia", destination: URL(string: wikipedia)!)

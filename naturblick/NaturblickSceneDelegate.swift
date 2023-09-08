@@ -12,7 +12,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
-        UINavigationBar.appearance().tintColor = UIColor(.onPrimaryHighEmphasis)
+        UINavigationBar.appearance().tintColor = .onPrimaryHighEmphasis
 
         let window = UIWindow(windowScene: windowScene)
         let navigationController = UINavigationController(rootViewController: HomeViewController())
