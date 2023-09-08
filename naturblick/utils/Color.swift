@@ -72,4 +72,12 @@ extension UIColor {
             UIColor(red: 0.070, green: 0.273, blue: 0.414, alpha: 1.000)
         }
     }
+    
+    static var primaryColor: UIColor {
+        return UIColor { (traits) -> UIColor in
+            traits.userInterfaceStyle == .dark ?
+            UIColor(red: 0.086, green: 0.329, blue: 0.498, alpha: 1.000) :
+            UIColor(red: 0.071, green: 0.275, blue: 0.416, alpha: 1.000)
+        }
+    }
 }

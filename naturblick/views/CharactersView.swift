@@ -20,30 +20,28 @@ struct CharactersView: NavigatableView {
     @StateObject private var charactersViewModel = CharactersViewModel()
 
     var body: some View {
-        BaseView(navTitle: group.gerName) {
-            ScrollView {
-                VStack {
-                    ForEach(charactersViewModel.characters, id: \.0.id) { character, values in
-                        CharacterView(character: character, values: values, selected: $charactersViewModel.selected)
-                        if character.id != charactersViewModel.characters.last?.0.id {
-                            Divider()
-                        }
+        ScrollView {
+            VStack {
+                ForEach(charactersViewModel.characters, id: \.0.id) { character, values in
+                    CharacterView(character: character, values: values, selected: $charactersViewModel.selected)
+                    if character.id != charactersViewModel.characters.last?.0.id {
+                        Divider()
                     }
                 }
             }
-            .task {
-                charactersViewModel.configure(group: group)
+        }
+        .task {
+            charactersViewModel.configure(group: group)
+        }
+        .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
+            NavigationLink(destination: SpeciesListView(filter: charactersViewModel.filter)) {
+                Text("\(charactersViewModel.count) Ergebnissse anzeigen")
             }
-            .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
-                NavigationLink(destination: SpeciesListView(filter: charactersViewModel.filter)) {
-                    Text("\(charactersViewModel.count) Ergebnissse anzeigen")
-                }
-                .accentColor(Color.onPrimaryButtonPrimary)
-                .buttonStyle(.borderedProminent)
-                .padding(.defaultPadding)
-                .padding(.bottom, .defaultPadding * 2)
-                .disabled(charactersViewModel.selected.isEmpty)
-            }
+            .accentColor(Color.onPrimaryButtonPrimary)
+            .buttonStyle(.borderedProminent)
+            .padding(.defaultPadding)
+            .padding(.bottom, .defaultPadding * 2)
+            .disabled(charactersViewModel.selected.isEmpty)
         }
     }
 }

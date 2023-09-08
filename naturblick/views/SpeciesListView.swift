@@ -26,39 +26,37 @@ struct SpeciesListView: NavigatableView {
     }
     
     var body: some View {
-        BaseView {
-            List(species) { current in
-                if let url = current.url {
-                    // When used, AsyncImage has to be the outermost element
-                    // or it will not properly load in List
-                    AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                        NavigationLink(destination: PortraitView(speciesId: current.speciesId)) {
-                            SpeciesListItemView(species: current, avatar: image)
-                        }
-                    } placeholder: {
-                        NavigationLink(destination: PortraitView(speciesId: current.speciesId)) {
-                            SpeciesListItemView(species: current, avatar: Image("placeholder"))
-                        }
+        List(species) { current in
+            if let url = current.url {
+                // When used, AsyncImage has to be the outermost element
+                // or it will not properly load in List
+                AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                    NavigationLink(destination: PortraitView(speciesId: current.speciesId)) {
+                        SpeciesListItemView(species: current, avatar: image)
                     }
-                    .listRowInsets(.nbInsets)
-                    .listRowBackground(Color.secondaryColor)
-                } else {
+                } placeholder: {
                     NavigationLink(destination: PortraitView(speciesId: current.speciesId)) {
                         SpeciesListItemView(species: current, avatar: Image("placeholder"))
-                            .listRowInsets(.nbInsets)
-                            .listRowBackground(Color.secondaryColor)
                     }
                 }
-            }
-            .listStyle(.plain)
-            .searchable(text: $query)
-            .onChange(of: query) { query in
-                updateFilter()
-            }
-            .onAppear {
-                if species.isEmpty {
-                    updateFilter()
+                .listRowInsets(.nbInsets)
+                .listRowBackground(Color.secondaryColor)
+            } else {
+                NavigationLink(destination: PortraitView(speciesId: current.speciesId)) {
+                    SpeciesListItemView(species: current, avatar: Image("placeholder"))
+                        .listRowInsets(.nbInsets)
+                        .listRowBackground(Color.secondaryColor)
                 }
+            }
+        }
+        .listStyle(.plain)
+        .searchable(text: $query)
+        .onChange(of: query) { query in
+            updateFilter()
+        }
+        .onAppear {
+            if species.isEmpty {
+                updateFilter()
             }
         }
     }

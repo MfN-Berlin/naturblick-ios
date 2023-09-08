@@ -48,33 +48,32 @@ struct DeleteAccountView: View {
     }
     
     var body: some View {
-        BaseView {
-            VStack {
-                NavigationLink(destination: AccountView(), tag: AccountView.accountAction, selection: $action) {
-                    EmptyView()
-                }
-                Text("**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.\n\nPlease, confirm your wish to delete the account by entering your login details.")
-                    .tint(Color.onSecondaryButtonPrimary)
+        VStack {
+            NavigationLink(destination: AccountView(), tag: AccountView.accountAction, selection: $action) {
+                EmptyView()
+            }
+            Text("**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.\n\nPlease, confirm your wish to delete the account by entering your login details.")
+                .tint(Color.onSecondaryButtonPrimary)
+                .foregroundColor(.onPrimaryHighEmphasis)
+                .font(.nbBody1)
+                .padding()
+            NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $deleteVM.email, prompt: deleteVM.emailPrompt)
+                .padding()
+                .keyboardType(.emailAddress)
+            NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $deleteVM.password, isSecure: true, prompt: deleteVM.passwordPrompt).padding()
+            if showCredentialsError {
+                Text("Credentials not recognized. Please validate your e-mail and password.")
+                    .foregroundColor(.onSecondarywarning)
                     .font(.nbBody1)
                     .padding()
-                NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $deleteVM.email, prompt: deleteVM.emailPrompt)
-                    .padding()
-                    .keyboardType(.emailAddress)
-                NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $deleteVM.password, isSecure: true, prompt: deleteVM.passwordPrompt).padding()
-                if showCredentialsError {
-                    Text("Credentials not recognized. Please validate your e-mail and password.")
-                        .foregroundColor(.onSecondarywarning)
-                        .font(.nbBody1)
-                        .padding()
-                }
-                Button("Delete account") {
-                    deleteAccount()
-                }.foregroundColor(.black)
-                    .buttonStyle(.bordered)
-                NavigationLink(destination: ForgotPasswordView()) {
-                    Text("Forgot Password")
-                }.buttonStyle(.bordered).foregroundColor(.black)
             }
+            Button("Delete account") {
+                deleteAccount()
+            }.foregroundColor(.black)
+                .buttonStyle(.bordered)
+            NavigationLink(destination: ForgotPasswordView()) {
+                Text("Forgot Password")
+            }.buttonStyle(.bordered).foregroundColor(.black)
         }.actionSheet(isPresented: $showDeleteSuccess) {
             ActionSheet(
                 title: Text("Success!"),

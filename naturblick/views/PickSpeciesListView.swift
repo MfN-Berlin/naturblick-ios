@@ -36,67 +36,65 @@ struct PickSpeciesListView: View {
     }
     
     var body: some View {
-        BaseView {
-            List(species) { current in
-                if let url = current.url {
-                    // When used, AsyncImage has to be the outermost element
-                    // or it will not properly load in List
-                    AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                        SpeciesListItemView(species: current, avatar: image)
-                            .onTapGesture {
-                                showInfo = SpeciesInfo(species: current, avatar: image)
-                            }
-                    } placeholder: {
-                        SpeciesListItemView(species: current, avatar: Image("placeholder"))
-                            .onTapGesture {
-                                showInfo = SpeciesInfo(species: current, avatar: Image("placeholder"))
-                            }
+        List(species) { current in
+            if let url = current.url {
+                // When used, AsyncImage has to be the outermost element
+                // or it will not properly load in List
+                AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                    SpeciesListItemView(species: current, avatar: image)
+                        .onTapGesture {
+                            showInfo = SpeciesInfo(species: current, avatar: image)
+                        }
+                } placeholder: {
+                    SpeciesListItemView(species: current, avatar: Image("placeholder"))
+                        .onTapGesture {
+                            showInfo = SpeciesInfo(species: current, avatar: Image("placeholder"))
+                        }
+                }
+                .listRowInsets(.nbInsets)
+                .listRowBackground(Color.secondaryColor)
+                .onAppear {
+                    itemAppear(item: current)
+                }
+            } else {
+                SpeciesListItemView(species: current, avatar: Image("placeholder"))
+                    .onTapGesture {
+                        showInfo = SpeciesInfo(species: current, avatar: Image("placeholder"))
                     }
                     .listRowInsets(.nbInsets)
                     .listRowBackground(Color.secondaryColor)
                     .onAppear {
                         itemAppear(item: current)
                     }
-                } else {
-                    SpeciesListItemView(species: current, avatar: Image("placeholder"))
-                        .onTapGesture {
-                            showInfo = SpeciesInfo(species: current, avatar: Image("placeholder"))
-                        }
-                        .listRowInsets(.nbInsets)
-                        .listRowBackground(Color.secondaryColor)
-                        .onAppear {
-                            itemAppear(item: current)
-                        }
-                }
             }
-            .listStyle(.plain)
-            .searchable(text: $query)
-            .onChange(of: query) { query in
-                page = 0
+        }
+        .listStyle(.plain)
+        .searchable(text: $query)
+        .onChange(of: query) { query in
+            page = 0
+            reloadSpecies()
+        }
+        .onAppear {
+            if species.isEmpty {
                 reloadSpecies()
             }
-            .onAppear {
-                if species.isEmpty {
-                    reloadSpecies()
-                }
-            }
-            .popover(item: $showInfo) { info in
-                NavigationView {
-                    Text("Test")
-                        .navigationTitle(info.species.name != nil ? info.species.name! : info.species.sciname)
-                        .toolbar {
-                            ToolbarItem(placement: .confirmationAction) {
-                                Button("Select") {
-                                    picked = info.species
-                                }
-                            }
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Close") {
-                                    showInfo = nil
-                                }
+        }
+        .popover(item: $showInfo) { info in
+            NavigationView {
+                Text("Test")
+                    .navigationTitle(info.species.name != nil ? info.species.name! : info.species.sciname)
+                    .toolbar {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Select") {
+                                picked = info.species
                             }
                         }
-                }
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Close") {
+                                showInfo = nil
+                            }
+                        }
+                    }
             }
         }
     }

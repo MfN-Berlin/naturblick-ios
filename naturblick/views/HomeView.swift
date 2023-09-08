@@ -46,134 +46,132 @@ struct HomeView: HostedView {
     @ObservedObject var createFlow: CreateFlowViewModel
 
     var body: some View {
-        BaseView(oneColor: true) {
-            GeometryReader { geo in
-                
-                let topRowSize = geo.size.width * 0.25
-                let bottomRowSize = geo.size.width * 0.2
-                
-                ZStack {
+        GeometryReader { geo in
+            
+            let topRowSize = geo.size.width * 0.25
+            let bottomRowSize = geo.size.width * 0.2
+            
+            ZStack {
+                VStack {
+                    Image("Kingfisher")
+                        .resizable()
+                        .scaledToFit()
+                        .clipped()
+                        .ignoresSafeArea()
+                        .padding(.bottom, -geo.safeAreaInsets.top)
+                    Spacer()
+                }
+                VStack {
                     VStack {
-                        Image("Kingfisher")
+                        Image("logo24")
                             .resizable()
                             .scaledToFit()
-                            .clipped()
-                            .ignoresSafeArea()
-                            .padding(.bottom, -geo.safeAreaInsets.top)
-                        Spacer()
+                            .frame(width: geo.size.width / 4, alignment: .center)
+                            .foregroundColor(.onPrimaryHighEmphasis)
                     }
-                    VStack {
-                        VStack {
-                            Image("logo24")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: geo.size.width / 4, alignment: .center)
-                                .foregroundColor(.onPrimaryHighEmphasis)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .overlay(alignment: .bottomLeading) {
-                            Image("mfn_logo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: geo.size.width / 5)
-                                .foregroundColor(.gray)
-                                .padding(.defaultPadding)
-                        }
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                MenuView(holder: holder)
-                                
-                            }
-                        }
-                        RoundBottomView()
-                            .frame(height: .roundBottomHeight)
-                        
-                        VStack {
-                            Text("Identify animals and plants")
-                                .foregroundColor(.onPrimaryHighEmphasis)
-                                .font(.nbHeadline6)
-                                .padding(.defaultPadding)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .overlay(alignment: .bottomLeading) {
+                        Image("mfn_logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geo.size.width / 5)
+                            .foregroundColor(.gray)
+                            .padding(.defaultPadding)
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            MenuView(holder: holder)
                             
-                            HStack(alignment: .top) {
-                                Spacer()
-                                NavigationLink(
-                                    tag: .birdId, selection: $navigateTo,
-                                    destination: {
-                                        ObservationListView(initialCreateAction: .createSoundObservation)
-                                    }) {
-                                        HomeViewButton(
-                                            text: "Record a bird sound",
-                                            color: Color.onPrimaryButtonPrimary,
-                                            image: Image("microphone"),
-                                            size: topRowSize)
-                                    }
-                                Spacer()
-                                    HomeViewButton(text: "Select characteristics",
+                        }
+                    }
+                    RoundBottomView()
+                        .frame(height: .roundBottomHeight)
+                    
+                    VStack {
+                        Text("Identify animals and plants")
+                            .foregroundColor(.onPrimaryHighEmphasis)
+                            .font(.nbHeadline6)
+                            .padding(.defaultPadding)
+                        
+                        HStack(alignment: .top) {
+                            Spacer()
+                            NavigationLink(
+                                tag: .birdId, selection: $navigateTo,
+                                destination: {
+                                    ObservationListView(initialCreateAction: .createSoundObservation)
+                                }) {
+                                    HomeViewButton(
+                                        text: "Record a bird sound",
+                                        color: Color.onPrimaryButtonPrimary,
+                                        image: Image("microphone"),
+                                        size: topRowSize)
+                                }
+                            Spacer()
+                                HomeViewButton(text: "Select characteristics",
+                                               color: Color.onPrimaryButtonPrimary,
+                                               image: Image("characteristics24"),
+                                               size: topRowSize
+                                )
+                                .onTapGesture {
+                                    let nextViewController = GroupsView(
+                                        groups: Group.characterGroups,
+                                        destination: { group in
+                                            CharactersView(group: group)
+                                        }
+                                    ).setUpViewController()
+                                    viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+                                }
+                            Spacer()
+                           
+                                    HomeViewButton(text: "Photograph a plant",
                                                    color: Color.onPrimaryButtonPrimary,
-                                                   image: Image("characteristics24"),
+                                                   image: Image("photo24"),
                                                    size: topRowSize
                                     )
                                     .onTapGesture {
-                                        let nextViewController = GroupsView(
-                                            groups: Group.characterGroups,
-                                            destination: { group in
-                                                CharactersView(group: group)
-                                            }
-                                        ).setUpViewController()
-                                        viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+                                        createFlow.takePhoto()
                                     }
-                                Spacer()
-                               
-                                        HomeViewButton(text: "Photograph a plant",
-                                                       color: Color.onPrimaryButtonPrimary,
-                                                       image: Image("photo24"),
-                                                       size: topRowSize
-                                        )
-                                        .onTapGesture {
-                                            createFlow.takePhoto()
-                                        }
-                                Spacer()
-                            }
-                            .padding(.bottom, .defaultPadding)
-                            
-                            HStack(alignment: .top) {
-                                Spacer()
-                                NavigationLink(tag: .fieldbook, selection: $navigateTo, destination: {
-                                    ObservationListView(initialCreateAction: nil)
-                                }) {
-                                    HomeViewButton(
-                                        text: "Fieldbook",
-                                        color: Color.onPrimaryButtonSecondary,
-                                        image: Image("feldbuch24"),
-                                        size: bottomRowSize
-                                    )
-                                }
-                                Spacer()
-                                HomeViewButton(text: "Learn about species",
-                                               color: Color.onPrimaryButtonSecondary,
-                                               image: Image("ic_specportraits"),
-                                               size: bottomRowSize
-                                ).onTapGesture {
-                                    let nextViewController = GroupsView(
-                                        groups: Group.groups,
-                                        destination: { group in
-                                            SpeciesListView(filter: .group(group))
-                                        }).setUpViewController()
-                                    viewController?.navigationController?.pushViewController(nextViewController, animated: true)
-                                }
-                                Spacer()
-                            }
-                            .padding(.bottom, .defaultPadding * 2)
+                            Spacer()
                         }
-                        .frame(width: geo.size.width)
-                        .background {
-                            Rectangle()
-                                .foregroundColor(.primaryColor)
+                        .padding(.bottom, .defaultPadding)
+                        
+                        HStack(alignment: .top) {
+                            Spacer()
+                            NavigationLink(tag: .fieldbook, selection: $navigateTo, destination: {
+                                ObservationListView(initialCreateAction: nil)
+                            }) {
+                                HomeViewButton(
+                                    text: "Fieldbook",
+                                    color: Color.onPrimaryButtonSecondary,
+                                    image: Image("feldbuch24"),
+                                    size: bottomRowSize
+                                )
+                            }
+                            Spacer()
+                            HomeViewButton(text: "Learn about species",
+                                           color: Color.onPrimaryButtonSecondary,
+                                           image: Image("ic_specportraits"),
+                                           size: bottomRowSize
+                            ).onTapGesture {
+                                let nextViewController = GroupsView(
+                                    groups: Group.groups,
+                                    destination: { group in
+                                        SpeciesListView(filter: .group(group))
+                                    }).setUpViewController()
+                                viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+                            }
+                            Spacer()
                         }
+                        .padding(.bottom, .defaultPadding * 2)
+                    }
+                    .frame(width: geo.size.width)
+                    .background {
+                        Rectangle()
+                            .foregroundColor(.primaryColor)
                     }
                 }
             }
-        }
+        }.edgesIgnoringSafeArea([.bottom])
     }
 }
 
