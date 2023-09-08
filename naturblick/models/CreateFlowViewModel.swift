@@ -30,6 +30,7 @@ class CreateFlowViewModel: NSObject, ObservableObject, UINavigationControllerDel
         var config = Mantis.Config()
         config.cropViewConfig.showAttachedRotationControlView = false
         config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1)
+        config.cropToolbarConfig.mode = .embedded
         let cropViewController: NBMantisController = Mantis.cropViewController(image: image.image, config: config)
         cropViewController.delegate = self
         withNavigation { navigation in
@@ -40,17 +41,15 @@ class CreateFlowViewModel: NSObject, ObservableObject, UINavigationControllerDel
     func selectSpecies(thumbnail: NBImage) {
         let resultView = SelectSpeciesView(createFlow: self, thumbnail: thumbnail)
         withNavigation { navigation in
-            navigation.pushViewController(resultView.setUpViewController(), animated: false)
+            navigation.pushViewController(resultView.setUpViewController(), animated: true)
         }
     }
     
     @MainActor func createObservation(species: SpeciesListItem) {
         data.species = species
         let create = CreateObservationView(createFlow: self)
-        withNavigation { navigation in
-            navigation.popViewController(animated: false)
-            navigation.popViewController(animated: false)
-            navigation.pushViewController(create.setUpViewController(), animated: false)
+        if let navigation = viewController?.navigationController {
+            navigation.pushViewController(create.setUpViewController(), animated: true)
         }
     }
     
@@ -93,10 +92,11 @@ class CreateFlowViewModel: NSObject, ObservableObject, UINavigationControllerDel
     }
     
     @objc func saveObservation() {
-        withNavigation { navigation in
+        if let controller = viewController, let navigation = controller.navigationController {
             do {
                 try persistenceController.insert(data: data)
-                navigation.popViewController(animated: true)
+                navigation.popToViewController(controller, animated: true)
+                data = CreateData()
             } catch {
                 preconditionFailure("\(error)")
             }

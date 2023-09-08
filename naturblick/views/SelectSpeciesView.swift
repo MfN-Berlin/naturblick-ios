@@ -18,7 +18,7 @@ struct SelectSpeciesView: NavigatableView {
     func openSpeciesInfo(species: SpeciesListItem, image: Image) {
         let info = SpeciesInfoViewController(info: SpeciesInfo(species: species, avatar: image), createFlow: createFlow)
         withNavigation { navigation in
-            navigation.present(UINavigationController(rootViewController: info), animated: true)
+            navigation.pushViewController(info, animated: true)
         }
     }
     

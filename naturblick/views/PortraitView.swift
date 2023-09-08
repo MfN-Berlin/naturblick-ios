@@ -5,7 +5,9 @@
 
 import SwiftUI
 
-struct PortraitView: View {
+struct PortraitView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    
     @StateObject var portraitViewModel = PortraitViewModel()
     let speciesId: Int64?
     

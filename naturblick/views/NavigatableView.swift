@@ -41,7 +41,7 @@ extension UIViewController {
     func setUpDefaultNavigationItemApperance() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = Color.onPrimaryButtonSecondaryUi
+        appearance.backgroundColor = UIColor.onPrimaryButtonSecondary
         guard let latoBlack19 = UIFont(name: "Lato-Black", size: 19) else {
             fatalError("""
                        Failed to load the "Lato-Black" font.
@@ -51,15 +51,37 @@ extension UIViewController {
         }
         
         let attrs: [NSAttributedString.Key: Any] = [
-            .foregroundColor: Color.onPrimaryHighEmphasisUi,
+            .foregroundColor: UIColor.onPrimaryHighEmphasis,
             .font: latoBlack19
         ]
+        let buttonAppearance = UIBarButtonItemAppearance()
+        buttonAppearance.normal.titleTextAttributes = attrs
+        buttonAppearance.disabled.titleTextAttributes = attrs
+        buttonAppearance.focused.titleTextAttributes = attrs
+        buttonAppearance.highlighted.titleTextAttributes = attrs
+        appearance.buttonAppearance = buttonAppearance
+        appearance.backButtonAppearance = buttonAppearance
+        appearance.doneButtonAppearance = buttonAppearance
         appearance.titleTextAttributes = attrs
         appearance.largeTitleTextAttributes = attrs
         navigationItem.standardAppearance = appearance
         navigationItem.compactAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
         navigationItem.compactScrollEdgeAppearance = appearance
+    }
+}
+
+public protocol HostedView: View, HoldingViewController {
+    var title: String? { get }
+    func configureNavigationItem(item: UINavigationItem)
+}
+
+public extension HostedView {
+    var title: String? {
+        nil
+    }
+
+    func configureNavigationItem(item: UINavigationItem) {
     }
 }
 
@@ -82,7 +104,29 @@ public extension NavigatableView {
     }
 }
 
-public class NavigatableHostingController<ContentView>: UIHostingController<ContentView> where ContentView: NavigatableView {
+public class HostingController<ContentView>: UIHostingController<ContentView>  where ContentView: HostedView {
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpDefaultNavigationItemApperance()
+        if let title = rootView.title {
+            navigationItem.title = title
+        }
+        rootView.configureNavigationItem(item: navigationItem)
+    }
+    
+    public override init(rootView: ContentView) {
+        super.init(rootView: rootView)
+        rootView.setViewController(controller: self)
+    }
+    
+    // Called when initialized from storyboard
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("NSCoding not supported")
+    }
+}
+
+private class NavigatableHostingController<ContentView>: UIHostingController<ContentView> where ContentView: NavigatableView {
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUpDefaultNavigationItemApperance()

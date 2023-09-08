@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-class HomeViewController: NavigatableHostingController<HomeView> {
+class HomeViewController: HostingController<HomeView> {
     let persistenceController: ObservationPersistenceController
     let createFlow: CreateFlowViewModel
     init() {
@@ -16,7 +16,7 @@ class HomeViewController: NavigatableHostingController<HomeView> {
     }
 }
 
-struct HomeView: NavigatableView {
+struct HomeView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     func configureNavigationItem(item: UINavigationItem) {
