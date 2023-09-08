@@ -13,27 +13,31 @@ struct SpeciesInfo: Identifiable {
     let avatar: Image
 }
 
-class SpeciesInfoViewController: HostingController<SpeciesInfoView> {
-    let createFlow: CreateFlowViewModel
+class SpeciesInfoViewController<Flow>: HostingController<SpeciesInfoView<Flow>> where Flow: IdFlow {
+    let createFlow: Flow
     let species: SpeciesListItem
-    init(info: SpeciesInfo, createFlow: CreateFlowViewModel) {
+    init(info: SpeciesInfo, createFlow: Flow) {
         self.species = info.species
         self.createFlow = createFlow
-        let view = SpeciesInfoView(info: info)
+        let view = SpeciesInfoView<Flow>(info: info)
         super.init(rootView: view)
     }
     
-    @objc func createObservation() {
-        createFlow.createObservation(species: species)
+    @objc func selectSpecies() {
+        createFlow.selectSpecies(species: species)
     }
     
 }
 
-struct SpeciesInfoView: HostedView {
+struct SpeciesInfoView<Flow>: HostedView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
+    var viewName: String? {
+        "Choose species"
+    }
+    
     func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(title: "Choose", style: .done, target: viewController, action: #selector(SpeciesInfoViewController.createObservation))
+        item.rightBarButtonItem = UIBarButtonItem(title: "Choose", style: .done, target: viewController, action: #selector(SpeciesInfoViewController<Flow>.selectSpecies))
     }
     
     let info: SpeciesInfo
@@ -71,7 +75,7 @@ struct SpeciesInfoView: HostedView {
 
 struct SpeciesInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesInfoView(info: SpeciesInfo(species: .sampleData, avatar: Image("placeholder")))
+        SpeciesInfoView<CreateFlowViewModel>(info: SpeciesInfo(species: .sampleData, avatar: Image("placeholder")))
     }
 }
 

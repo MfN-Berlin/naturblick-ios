@@ -6,28 +6,47 @@
 import SwiftUI
 import MapKit
 
-struct ObservationListView: View {
+class ObservationListViewController: HostingController<ObservationListView> {
+    let persistenceController: ObservationPersistenceController
+    let createFlow: CreateFlowViewModel
+    init() {
+        persistenceController = ObservationPersistenceController()
+        createFlow = CreateFlowViewModel(persistenceController: persistenceController)
+        let view = ObservationListView(persistenceController: persistenceController, createFlow: createFlow)
+        super.init(rootView: view)
+        createFlow.setViewController(controller: self)
+    }
+}
+
+struct ObservationListView: HostedView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
     
-    let initialCreateAction: CreateObservationAction?
+    var viewName: String? {
+        "Feldbuch"
+    }
+    
     private let client = BackendClient()
     @StateObject private var locationManager = LocationManager()
-    @StateObject var persistenceController = ObservationPersistenceController()
     @StateObject private var errorHandler = HttpErrorViewModel()
     @State private var region: MKCoordinateRegion = .defaultRegion
     @State private var userTrackingMode: MapUserTrackingMode = .none
     @State private var showList: Bool = true
-    @State var didRunOnce: Bool = false
-    @State var createAction: CreateObservationAction? = nil
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    @ObservedObject var persistenceController: ObservationPersistenceController
+    @ObservedObject var createFlow: CreateFlowViewModel
     
     var body: some View {
         SwiftUI.Group {
             if(showList) {
                 List(persistenceController.observations) { observation in
-                    NavigationLink(destination: ObservationView(observation: observation, controller: persistenceController)) {
-                        ObservationListItemWithImageView(observation: observation)
-                    }
+                    ObservationListItemWithImageView(observation: observation)
+                        .listRowInsets(.nbInsets)
+                        .listRowBackground(Color.secondaryColor)
+                        .onTapGesture {
+                            navigationController?.pushViewController(EditObservationViewController(observation: observation, persistenceController: persistenceController), animated: true)
+                        }
                 }
+                .listStyle(.plain)
                 .refreshable {
                     await sync()
                 }
@@ -40,12 +59,10 @@ struct ObservationListView: View {
                     }
                 ) { observation in
                     MapAnnotation(coordinate: observation.observation.coords!.location) {
-                        NavigationLink(
-                            destination: ObservationView(observation: observation, controller: persistenceController)
-                        ) {
-                            Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
-                        }
-                        .foregroundColor(.red)
+                        Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
+                            .onTapGesture {
+                                navigationController?.pushViewController(EditObservationViewController(observation: observation, persistenceController: persistenceController), animated: true)
+                            }
                     }
                 }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
@@ -56,12 +73,10 @@ struct ObservationListView: View {
                 }
             }
         }
-        .navigationTitle("Feldbuch")
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Menu(content: {
                     Button(action: {
-                        createAction = .createImageFromPhotosObservation
                     }) {
                         HStack {
                             Text("Identify photo from a plant")
@@ -69,7 +84,6 @@ struct ObservationListView: View {
                         }
                     }
                     Button(action: {
-                        createAction = .createSoundObservation
                     }) {
                         HStack {
                             Text("Record a bird sound")
@@ -77,7 +91,7 @@ struct ObservationListView: View {
                         }
                     }
                     Button(action: {
-                        createAction = .createImageObservation
+                        createFlow.takePhoto()
                     }) {
                         HStack {
                             Text("Photograph a plant")
@@ -85,7 +99,6 @@ struct ObservationListView: View {
                         }
                     }
                     Button(action: {
-                        createAction = .createManualObservation
                     }) {
                         Text("Create observation")
                         Image("logo24")
@@ -93,6 +106,7 @@ struct ObservationListView: View {
                 }, label: {
                     Image(systemName: "plus")
                 })
+                .tint(.onPrimaryHighEmphasis)
             }
             ToolbarItem(placement: .navigation	) {
                 if(showList) {
@@ -102,6 +116,7 @@ struct ObservationListView: View {
                         Image(systemName: "map")
                     }
                     .accessibilityLabel("Show observations on map")
+                    .tint(.onPrimaryHighEmphasis)
                 } else {
                     Button(action: {
                         showList = true
@@ -109,23 +124,11 @@ struct ObservationListView: View {
                         Image(systemName: "list.dash")
                     }
                     .accessibilityLabel("Show in list")
+                    .tint(.onPrimaryHighEmphasis)
                 }
-            }
-        }
-        .sheet(item: $createAction) { action in
-            NavigationView {
-               Text("Test")
             }
         }
         .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)
-        .onAppear {
-            if !didRunOnce {
-                if let initial = initialCreateAction {
-                    createAction = initial
-                }
-                didRunOnce = true
-            }
-        }
     }
     
     private func sync() async {
@@ -141,6 +144,7 @@ struct ObservationListView: View {
 
 struct ObservationListView_Previews: PreviewProvider {
     static var previews: some View {
-        ObservationListView(initialCreateAction: nil)
+        let persistenceController = ObservationPersistenceController(inMemory: true)
+        ObservationListView(persistenceController: persistenceController, createFlow: CreateFlowViewModel(persistenceController: persistenceController))
     }
 }

@@ -16,14 +16,13 @@ struct EditData {
     var thumbnail: NBImage?
     var behavior: Behavior?
     
-    init(observation: Observation, thumbnail: NBImage?) {
+    init(observation: Observation) {
         self.original = observation.observation
         self.obsType = observation.observation.obsType
         self.species = observation.species?.listItem
         self.details = observation.observation.details ?? ""
         self.coords = observation.observation.coords
         self.individuals = observation.observation.individuals ?? 1
-        self.thumbnail = thumbnail
         self.behavior = observation.observation.behavior
     }
 

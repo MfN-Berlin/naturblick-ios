@@ -8,7 +8,7 @@ import SwiftUI
 struct SpeciesListView: NavigatableView {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var title: String? = "Species"
+    var viewName: String? = "Species"
     
     @State var species:  [SpeciesListItem] = []
     @State var query: String = ""

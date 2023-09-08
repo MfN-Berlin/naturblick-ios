@@ -6,7 +6,7 @@ import SwiftUI
 
 struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var title: String? = "Arten kennenlernen"
+    var viewName: String? = "Arten kennenlernen"
     
     let groups: [Group]
     let destination: (Group) -> Content
