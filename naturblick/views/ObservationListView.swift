@@ -6,6 +6,10 @@
 import SwiftUI
 import MapKit
 
+class ObservationListViewModel: ObservableObject {
+    @Published var showList = true
+}
+
 class ObservationListViewController: HostingController<ObservationListView> {
     let persistenceController: ObservationPersistenceController
     let createFlow: CreateFlowViewModel
@@ -30,14 +34,38 @@ struct ObservationListView: HostedView {
     @StateObject private var errorHandler = HttpErrorViewModel()
     @State private var region: MKCoordinateRegion = .defaultRegion
     @State private var userTrackingMode: MapUserTrackingMode = .none
-    @State private var showList: Bool = true
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var createFlow: CreateFlowViewModel
+    @StateObject var model = ObservationListViewModel()
+    
+    func configureNavigationItem(item: UINavigationItem, showList: Bool) {
+        item.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: "plus"), menu: UIMenu(children: [
+                UIAction(title: "Identify photo from a plant", image: UIImage(named: "details")) {_ in
+                },
+                UIAction(title: "Record a bird sound", image: UIImage(named: "microphone")) {_ in
+                },
+                UIAction(title: "Photograph a plant", image: UIImage(named: "photo24")) {_ in
+                    createFlow.takePhoto()
+                },
+                UIAction(title: "Create observation", image:  UIImage(named: "logo24")) {_ in
+                }
+            ])
+            ),
+            UIBarButtonItem(primaryAction: UIAction(image: UIImage(systemName: showList ? "map" : "list.dash")) {action in
+                model.showList.toggle()
+            })
+        ]
+    }
+    
+    func configureNavigationItem(item: UINavigationItem) {
+        configureNavigationItem(item: item, showList: true)
+    }
     
     var body: some View {
         SwiftUI.Group {
-            if(showList) {
+            if(model.showList) {
                 List(persistenceController.observations) { observation in
                     ObservationListItemWithImageView(observation: observation)
                         .listRowInsets(.nbInsets)
@@ -73,59 +101,9 @@ struct ObservationListView: HostedView {
                 }
             }
         }
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Menu(content: {
-                    Button(action: {
-                    }) {
-                        HStack {
-                            Text("Identify photo from a plant")
-                            Image("details")
-                        }
-                    }
-                    Button(action: {
-                    }) {
-                        HStack {
-                            Text("Record a bird sound")
-                            Image("microphone")
-                        }
-                    }
-                    Button(action: {
-                        createFlow.takePhoto()
-                    }) {
-                        HStack {
-                            Text("Photograph a plant")
-                            Image("photo24")
-                        }
-                    }
-                    Button(action: {
-                    }) {
-                        Text("Create observation")
-                        Image("logo24")
-                    }
-                }, label: {
-                    Image(systemName: "plus")
-                })
-                .tint(.onPrimaryHighEmphasis)
-            }
-            ToolbarItem(placement: .navigation	) {
-                if(showList) {
-                    Button(action: {
-                        showList = false
-                    }) {
-                        Image(systemName: "map")
-                    }
-                    .accessibilityLabel("Show observations on map")
-                    .tint(.onPrimaryHighEmphasis)
-                } else {
-                    Button(action: {
-                        showList = true
-                    }) {
-                        Image(systemName: "list.dash")
-                    }
-                    .accessibilityLabel("Show in list")
-                    .tint(.onPrimaryHighEmphasis)
-                }
+        .onReceive(model.$showList) { showList in
+            if let item = viewController?.navigationItem {
+                configureNavigationItem(item: item, showList: showList)
             }
         }
         .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)
