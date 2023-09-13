@@ -17,23 +17,13 @@ enum CreateObservationAction: Identifiable {
     case createImageFromPhotosObservation
 }
 
-class CreateObservationViewController: HostingController<CreateObservationView> {
-    let createFlow: CreateFlowViewModel
-    
-    init(createFlow: CreateFlowViewModel) {
-        self.createFlow = createFlow
-        super.init(rootView: CreateObservationView(createFlow: createFlow))
-    }
-    @objc func saveObservation() {
-        createFlow.saveObservation()
-    }
-}
-
-struct CreateObservationView: HostedView {
+struct CreateObservationView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: viewController, action: #selector(CreateObservationViewController.saveObservation))
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Save") {_ in
+            createFlow.saveObservation()
+        })
     }
     
     @State private var isPermissionInfoDisplay = false
@@ -49,7 +39,7 @@ struct CreateObservationView: HostedView {
                 }
                 CoordinatesView(coordinates: createFlow.data.coords)
                     .onTapGesture {
-                        navigationController?.pushViewController(PickerViewController(flow: createFlow), animated: true)
+                        navigationController?.pushViewController(PickerView(flow: createFlow).setUpViewController(), animated: true)
                     }
                 NBEditText(label: "Notes", icon: Image("details"), text: $createFlow.data.details)
                 Picker("Behavior", selection: $createFlow.data.behavior) {

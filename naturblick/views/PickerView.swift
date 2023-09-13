@@ -6,20 +6,7 @@
 import SwiftUI
 import MapKit
 
-class PickerViewController<Flow>: HostingController<PickerView<Flow>> where Flow: PickerFlow {
-    let flow: Flow
-    init(flow: Flow) {
-        self.flow = flow
-        super.init(rootView: PickerView(flow: flow))
-    }
-    
-    @objc func pick() {
-        flow.pickCoordinate()
-        navigationController?.popViewController(animated: true)
-    }
-}
-
-struct PickerView<Flow>: HostedView where Flow: PickerFlow {
+struct PickerView<Flow>: NavigatableView where Flow: PickerFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     @ObservedObject var flow: Flow
@@ -27,7 +14,10 @@ struct PickerView<Flow>: HostedView where Flow: PickerFlow {
     @StateObject private var locationManager = LocationManager()
 
     func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(title: "Pick", style: .done, target: viewController, action: #selector(PickerViewController<Flow>.pick))
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Pick") {_ in
+            flow.pickCoordinate()
+            navigationController?.popViewController(animated: true)
+        })
     }
     
     var body: some View {

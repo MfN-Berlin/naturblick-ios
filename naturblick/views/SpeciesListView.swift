@@ -8,7 +8,14 @@ import SwiftUI
 struct SpeciesListView: NavigatableView {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Species"
+    var viewName: String? {
+        switch(filter) {
+        case .group(let group):
+            return group.gerName
+        case .characters(_, _):
+            return "Species"
+        }
+    }
     
     @State var species:  [SpeciesListItem] = []
     @State var query: String = ""
@@ -25,28 +32,35 @@ struct SpeciesListView: NavigatableView {
         }
     }
     
+    func showSpecies(species: SpeciesListItem) {
+        navigationController?.pushViewController(PortraitView(species: species).setUpViewController(), animated: true)
+    }
+    
     var body: some View {
         List(species) { current in
             if let url = current.url {
                 // When used, AsyncImage has to be the outermost element
                 // or it will not properly load in List
                 AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                    NavigationLink(destination: PortraitView(speciesId: current.speciesId)) {
-                        SpeciesListItemView(species: current, avatar: image)
-                    }
+                    SpeciesListItemView(species: current, avatar: image)
+                        .onTapGesture {
+                            showSpecies(species: current)
+                        }
                 } placeholder: {
-                    NavigationLink(destination: PortraitView(speciesId: current.speciesId)) {
-                        SpeciesListItemView(species: current, avatar: Image("placeholder"))
-                    }
+                    SpeciesListItemView(species: current, avatar: Image("placeholder"))
+                        .onTapGesture {
+                            showSpecies(species: current)
+                        }
                 }
                 .listRowInsets(.nbInsets)
                 .listRowBackground(Color.secondaryColor)
             } else {
-                NavigationLink(destination: PortraitView(speciesId: current.speciesId)) {
-                    SpeciesListItemView(species: current, avatar: Image("placeholder"))
-                        .listRowInsets(.nbInsets)
-                        .listRowBackground(Color.secondaryColor)
-                }
+                SpeciesListItemView(species: current, avatar: Image("placeholder"))
+                    .listRowInsets(.nbInsets)
+                    .listRowBackground(Color.secondaryColor)
+                    .onTapGesture {
+                        showSpecies(species: current)
+                    }
             }
         }
         .listStyle(.plain)

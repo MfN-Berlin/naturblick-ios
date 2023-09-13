@@ -20,7 +20,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     @StateObject private var errorHandler = HttpErrorViewModel()
 
     func openSpeciesInfo(species: SpeciesListItem, image: Image) {
-        let info = SpeciesInfoViewController(info: SpeciesInfo(species: species, avatar: image), createFlow: createFlow)
+        let info = SpeciesInfoView(info: SpeciesInfo(species: species, avatar: image), flow: createFlow).setUpViewController()
         withNavigation { navigation in
             navigation.pushViewController(info, animated: true)
         }

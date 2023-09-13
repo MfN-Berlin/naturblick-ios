@@ -8,15 +8,11 @@ import BottomSheet
 
 struct CharactersView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? 
-    
-    let group: Group
-    
-    init(group: Group) {
-        self.viewName = group.gerName
-        self.group = group
+    var viewName: String? {
+        group.gerName
     }
     
+    let group: Group
     @StateObject private var charactersViewModel = CharactersViewModel()
 
     var body: some View {
@@ -34,8 +30,8 @@ struct CharactersView: NavigatableView {
             charactersViewModel.configure(group: group)
         }
         .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
-            NavigationLink(destination: SpeciesListView(filter: charactersViewModel.filter)) {
-                Text("\(charactersViewModel.count) Ergebnissse anzeigen")
+            Button("\(charactersViewModel.count) Ergebnissse anzeigen") {
+                navigationController?.pushViewController(SpeciesListView(filter: charactersViewModel.filter).setUpViewController(), animated: true)
             }
             .accentColor(Color.onPrimaryButtonPrimary)
             .buttonStyle(.borderedProminent)
