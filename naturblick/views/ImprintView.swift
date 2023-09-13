@@ -7,7 +7,7 @@ import SwiftUI
 
 struct ImprintView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var title: String? = "Imprint"
+    var viewName: String? = "Imprint"
         
     var body: some View {
         ScrollView {

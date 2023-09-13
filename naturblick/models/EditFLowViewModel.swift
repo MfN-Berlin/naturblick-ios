@@ -5,40 +5,44 @@
 
 import Foundation
 import UIKit
-import Mantis
 import MapKit
+import Mantis
 
-class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController {
-    
+class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController {
     var holder: ViewControllerHolder = ViewControllerHolder()
     let client = BackendClient()
     @Published private(set) var result: [SpeciesResult]? = nil
     let persistenceController: ObservationPersistenceController
-    @Published var data = CreateData()
-    @Published var region: MKCoordinateRegion = .defaultRegion
-
-    init(persistenceController: ObservationPersistenceController) {
+    @Published var data: EditData
+    @Published var imageData: ImageData = ImageData()
+    @Published var editing: Bool = false
+    @Published var region: MKCoordinateRegion
+    init(persistenceController: ObservationPersistenceController, observation: Observation) {
         self.persistenceController = persistenceController
+        let data = EditData(observation: observation)
+        self.data = data
+        self.region = data.region
         super.init()
         
-        $data.map { data in
-            data.image.result
-          }.assign(to: &$result)
-    }
-    
-    @MainActor func takePhoto() {
-        data = CreateData()
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .camera
-        imagePicker.delegate = self
-        withNavigation { navigation in
-            navigation.present(imagePicker, animated: true)
+        $imageData.map { data in
+            data.result
+        }.assign(to: &$result)
+        
+        if let thumbnailId = observation.observation.thumbnailId {
+            Task {
+                let thumbnail = try await NBImage(id: thumbnailId)
+                await setThumbnail(thumbnail: thumbnail)
+            }
         }
     }
     
-    @MainActor private func cropPhoto(image: NBImage) {
-        data.image.image = image
-        data.image.crop = nil
+    @MainActor private func setThumbnail(thumbnail: NBImage) async {
+        data.thumbnail = thumbnail
+    }
+
+    @MainActor func cropPhoto(image: NBImage) {
+        imageData.image = image
+        imageData.crop = nil
         var config = Mantis.Config()
         config.cropViewConfig.showAttachedRotationControlView = false
         config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1)
@@ -59,32 +63,20 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     @MainActor func selectSpecies(species: SpeciesListItem) {
         data.species = species
-        let create = CreateObservationViewController(createFlow: self)
-        if let navigation = viewController?.navigationController {
-            navigation.pushViewController(create, animated: true)
+        if let controller = viewController, let navigation = controller.navigationController {
+            navigation.popToViewController(controller, animated: true)
         }
     }
     
-    @MainActor private func updateResult(result: [SpeciesResult]) {
-        data.image.result = result
+    @MainActor private func updateResult(result: [SpeciesResult]) async {
+        imageData.result = result
     }
     
     func identify() async throws {
-        if let thumbnail = data.image.crop {
+        if let thumbnail = imageData.crop {
             try await client.upload(image: thumbnail)
-            updateResult(result: try await client.imageId(mediaId: thumbnail.id.uuidString))
-        }
-    }
-    
-    @MainActor func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let selectedImage = info[.originalImage] as? UIImage else { return }
-        do {
-            let image = NBImage(image: selectedImage)
-            try image.writeToAlbum()
-            cropPhoto(image: image)
-            picker.dismiss(animated: true)
-        } catch {
-            preconditionFailure("\(error)")
+            let result = try await client.imageId(mediaId: thumbnail.id.uuidString)
+            await updateResult(result: result)
         }
     }
     
@@ -95,8 +87,8 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         do {
             let crop = NBImage(image: thumbnail)
             try crop.write()
-            data.image.crop = crop
-            data.image.result = nil
+            imageData.crop = crop
+            imageData.result = nil
             withNavigation { navigation in
                 cropDone(thumbnail: crop)
             }
@@ -110,22 +102,24 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     func saveObservation() {
-        if let controller = viewController, let navigation = controller.navigationController {
+        if let navigation = navigationController {
             do {
                 try persistenceController.insert(data: data)
-                navigation.popToViewController(controller, animated: true)
+                navigation.popViewController(animated: true)
             } catch {
                 preconditionFailure("\(error)")
             }
         }
     }
     
-    
+    @MainActor
     func resetRegion() {
         region = data.region
     }
     
+    @MainActor
     func pickCoordinate() {
         data.coords = Coordinates(region: region)
+        region = data.region
     }
 }

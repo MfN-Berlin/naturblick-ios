@@ -8,12 +8,12 @@ import BottomSheet
 
 struct CharactersView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var title: String? 
+    var viewName: String? 
     
     let group: Group
     
     init(group: Group) {
-        self.title = group.gerName
+        self.viewName = group.gerName
         self.group = group
     }
     

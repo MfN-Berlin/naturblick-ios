@@ -6,10 +6,14 @@
 import SwiftUI
 
 
-struct SelectSpeciesView: NavigatableView {
+struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    let client = BackendClient()
-    @ObservedObject var createFlow: CreateFlowViewModel
+    
+    var viewName: String? {
+        "Choose species"
+    }
+    
+    @ObservedObject var createFlow: Flow
     let thumbnail: NBImage
     @State var showInfo: SpeciesInfo? = nil
     @StateObject var model: SelectSpeciesViewModel = SelectSpeciesViewModel()
@@ -25,8 +29,7 @@ struct SelectSpeciesView: NavigatableView {
     func identify() {
         Task {
             do {
-                try await client.upload(image: thumbnail)
-                createFlow.updateResult(result: try await client.imageId(mediaId: thumbnail.id.uuidString))
+                try await createFlow.identify()
             } catch {
                 let _ = errorHandler.handle(error)
             }
@@ -38,7 +41,7 @@ struct SelectSpeciesView: NavigatableView {
             Image(uiImage: thumbnail.image)
                 .resizable()
                 .scaledToFit()
-            if let rs = createFlow.data.image.result {
+            if let rs = createFlow.result {
                 VStack(alignment: .leading) {
                     ForEach(model.speciesResults, id: \.0.id) { (result, item) in
                         if let url = item.url {

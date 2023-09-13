@@ -20,6 +20,10 @@ class HomeViewController: HostingController<HomeView> {
 struct HomeView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
+    var viewName: String? {
+        "Home"
+    }
+    
     func configureNavigationItem(item: UINavigationItem) {
         let appearance = item.standardAppearance?.copy()
         appearance?.configureWithTransparentBackground()
@@ -99,7 +103,7 @@ struct HomeView: HostedView {
                             NavigationLink(
                                 tag: .birdId, selection: $navigateTo,
                                 destination: {
-                                    ObservationListView(initialCreateAction: .createSoundObservation)
+                                    Text("Test")
                                 }) {
                                     HomeViewButton(
                                         text: "Record a bird sound",
@@ -138,15 +142,16 @@ struct HomeView: HostedView {
                         
                         HStack(alignment: .top) {
                             Spacer()
-                            NavigationLink(tag: .fieldbook, selection: $navigateTo, destination: {
-                                ObservationListView(initialCreateAction: nil)
-                            }) {
-                                HomeViewButton(
-                                    text: "Fieldbook",
-                                    color: Color.onPrimaryButtonSecondary,
-                                    image: Image("feldbuch24"),
-                                    size: bottomRowSize
-                                )
+                            HomeViewButton(
+                                text: "Fieldbook",
+                                color: Color.onPrimaryButtonSecondary,
+                                image: Image("feldbuch24"),
+                                size: bottomRowSize
+                            )
+                            .onTapGesture {
+                                withNavigation { navigation in
+                                    navigation.pushViewController(ObservationListViewController(), animated: true)
+                                }
                             }
                             Spacer()
                             HomeViewButton(text: "Learn about species",

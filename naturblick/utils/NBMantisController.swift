@@ -11,6 +11,8 @@ class NBMantisController: Mantis.CropViewController {
         super.viewDidLoad()
         setUpDefaultNavigationItemApperance()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Crop", style: .done, target: self, action: #selector(NBMantisController.createCrop))
+        navigationItem.title = "Crop"
+        navigationItem.titleView = UIView()
     }
     
     @objc func createCrop() {

@@ -7,7 +7,7 @@ import SwiftUI
 
 struct AboutView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var title: String? = "About"
+    var viewName: String? = "About"
     
     func configureNavigationItem(item: UINavigationItem) {
     }

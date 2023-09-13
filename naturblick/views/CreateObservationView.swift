@@ -17,19 +17,29 @@ enum CreateObservationAction: Identifiable {
     case createImageFromPhotosObservation
 }
 
-struct CreateObservationView: NavigatableView {
+class CreateObservationViewController: HostingController<CreateObservationView> {
+    let createFlow: CreateFlowViewModel
+    
+    init(createFlow: CreateFlowViewModel) {
+        self.createFlow = createFlow
+        super.init(rootView: CreateObservationView(createFlow: createFlow))
+    }
+    @objc func saveObservation() {
+        createFlow.saveObservation()
+    }
+}
+
+struct CreateObservationView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: createFlow, action: #selector(CreateFlowViewModel.saveObservation))
+        item.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: viewController, action: #selector(CreateObservationViewController.saveObservation))
     }
     
     @State private var isPermissionInfoDisplay = false
     @ObservedObject var createFlow: CreateFlowViewModel
     @StateObject private var locationManager = LocationManager()
     @State private var userTrackingMode: MapUserTrackingMode = .none
-    @State private var showPicker: Bool = false
-    @State private var region: MKCoordinateRegion = .defaultRegion
     
     var body: some View {
         SwiftUI.Group {
@@ -39,7 +49,7 @@ struct CreateObservationView: NavigatableView {
                 }
                 CoordinatesView(coordinates: createFlow.data.coords)
                     .onTapGesture {
-                        showPicker = true
+                        navigationController?.pushViewController(PickerViewController(flow: createFlow), animated: true)
                     }
                 NBEditText(label: "Notes", icon: Image("details"), text: $createFlow.data.details)
                 Picker("Behavior", selection: $createFlow.data.behavior) {
@@ -54,36 +64,13 @@ struct CreateObservationView: NavigatableView {
                 let coordinates = Coordinates(location: location)
                 if createFlow.data.coords == nil {
                     createFlow.data.coords = coordinates
-                    region = coordinates.region
+                    createFlow.resetRegion()
                 }
             }
         }
         .onAppear {
             if(locationManager.askForPermission()) {
                 locationManager.requestLocation()
-            }
-        }
-        .fullScreenCover(isPresented: $showPicker) {
-            NavigationView {
-                Map(coordinateRegion: $region,
-                    showsUserLocation: true,
-                    userTrackingMode: $userTrackingMode)
-                    .picker()
-                    .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Dismiss") {
-                                region = createFlow.data.region
-                                showPicker = false
-                            }
-                        }
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Save") {
-                                createFlow.data.coords = Coordinates(region: region)
-                                showPicker = false
-                            }
-                        }
-                    }
             }
         }
     }

@@ -6,35 +6,56 @@
 import SwiftUI
 import MapKit
 
-struct EditObservationView: View {
-    @Binding var data: EditData
+
+class EditObservationViewController: HostingController<EditObservationView> {
+    let flow: EditFlowViewModel
+    
+    init(observation: Observation, persistenceController: ObservationPersistenceController) {
+        self.flow = EditFlowViewModel(persistenceController: persistenceController, observation: observation)
+        super.init(rootView: EditObservationView(flow: flow))
+        flow.setViewController(controller: self)
+    }
+    
+    @objc func setEdit() {
+        flow.editing = true
+    }
+    
+    @objc func saveObservation() {
+        flow.saveObservation()
+    }
+}
+
+struct EditObservationView: HostedView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    
+    @ObservedObject var flow: EditFlowViewModel
     @State private var showMap: Bool = false
-    @State private var showImageId: Bool = false
     @State private var imageData: ImageData = ImageData()
     @State private var showSoundId: Bool = false
     @State private var soundData: SoundData = SoundData()
-    @State private var region: MKCoordinateRegion
-    @State private var userTrackingMode: MapUserTrackingMode = .none
-    @StateObject private var locationManager = LocationManager()
 
-    init(data: Binding<EditData>) {
-        self._data = data
-        self._region = State(initialValue: data.wrappedValue.region)
+    @State private var isEditing = false
+
+    init(flow: EditFlowViewModel) {
+        self.flow = flow
+    }
+    
+    func configureNavigationItem(item: UINavigationItem) {
+        item.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: viewController, action: #selector(EditObservationViewController.setEdit))
     }
     
     func identifyImage() {
         Task {
-            if let mediaId = data.original.mediaId {
+            if let mediaId = flow.data.original.mediaId {
                 let origImage = try await NBImage(id: mediaId)
-                imageData = ImageData(image: origImage)
-                showImageId = true
+                flow.cropPhoto(image: origImage)
             }
         }
     }
     
     func identifySound() {
         Task {
-          if let mediaId = data.original.mediaId {
+            if let mediaId = flow.data.original.mediaId {
               let sound = NBSound(id: mediaId)
               soundData = SoundData(sound: sound)
               showSoundId = true
@@ -43,90 +64,82 @@ struct EditObservationView: View {
     }
     
     var body: some View {
-        Form {
-            CoordinatesView(coordinates: data.coords)
-                .onTapGesture {
-                    showMap = true
+        VStack {
+            if let thumbnail = flow.data.thumbnail {
+                HStack {
+                    Image(uiImage: thumbnail.image)
+                        .avatar()
                 }
-            Text("Change species")
-                .onTapGesture {
-                    switch(data.obsType) {
-                    case .image, .unidentifiedimage:
-                        identifyImage()
-                    case .audio, .unidentifiedaudio:
-                        identifySound()
-                    case .manual:
-                        do {}
-                    }
-                }
-            NBEditText(label: "Notes", icon: Image("details"), text: $data.details)
-            Picker("Behavior", selection: $data.behavior) {
-                ForEach([Behavior].forGroup(group: data.species?.group)) {
-                    Text($0.rawValue).tag($0 as Behavior?)
-                }
+            } else  {
+                Image("placeholder")
+                    .avatar()
             }
-            IndividualsView(individuals: $data.individuals)
-        }
-        .sheet(isPresented: $showImageId) {
-            NavigationView {
-                SwiftUI.Group {
-                    if let identified = imageData.identified {
-                       Text("Test")
-                    } else if !data.speciesChanged {
-                        Text("Test")
-                    }
-                }
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Dismiss") {
-                            showImageId = false
+            Text(flow.data.original.created.date, formatter: .dateTime)
+            ZStack {
+                if isEditing {
+                    Form {
+                        CoordinatesView(coordinates: flow.data.coords)
+                            .onTapGesture {
+                                navigationController?.pushViewController(PickerViewController(flow: flow), animated: true)
+                            }
+                        if let name = flow.data.species?.gername {
+                            Text(name)
+                                .onTapGesture {
+                                    switch(flow.data.obsType) {
+                                    case .image, .unidentifiedimage:
+                                        identifyImage()
+                                    case .audio, .unidentifiedaudio:
+                                        identifySound()
+                                    case .manual:
+                                        do {}
+                                    }
+                                }
+                        } else {
+                            Text("Unknown species")
+                                .onTapGesture {
+                                    switch(flow.data.obsType) {
+                                    case .image, .unidentifiedimage:
+                                        identifyImage()
+                                    case .audio, .unidentifiedaudio:
+                                        identifySound()
+                                    case .manual:
+                                        do {}
+                                    }
+                                }
                         }
-                    }
-                }
-            }
-        }
-        .sheet(isPresented: $showSoundId) {
-            NavigationView {
-                SwiftUI.Group {
-                    if let identified = soundData.identified {
-                        Text("test")
-                    } else if !data.speciesChanged {
-                        BirdIdView(data: $soundData)
-                    }
-                }
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Dismiss") {
-                            showSoundId = false
-                        }
-                    }
-                }
-            }
-        }
-        .fullScreenCover(isPresented: $showMap) {
-            NavigationView {
-                Map(coordinateRegion: $region, showsUserLocation: true, userTrackingMode: $userTrackingMode)
-                    .picker()
-                    .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Dismiss") {
-                                region = data.region
-                                showMap = false
+                        NBEditText(label: "Notes", icon: Image("details"), text: $flow.data.details)
+                        Picker("Behavior", selection: $flow.data.behavior) {
+                            ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
+                                Text($0.rawValue).tag($0 as Behavior?)
                             }
                         }
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Save") {
-                                data.coords = Coordinates(region: region)
-                                showMap = false
-                            }
-                        }
+                        IndividualsView(individuals: $flow.data.individuals)
                     }
-                    .onAppear {
-                        if locationManager.askForPermission() {
-                            locationManager.requestLocation()
+                } else {
+                    Form {
+                        CoordinatesView(coordinates: flow.data.coords)
+                        if let name = flow.data.species?.gername {
+                            Text(name)
+                        } else {
+                            Text("Unknown species")
                         }
+                        if !flow.data.details.isEmpty {
+                            NBText(label: "Notes", icon: Image("details"), text: flow.data.details)
+                        }
+                        if let behavior = flow.data.behavior?.rawValue {
+                            Text(behavior)
+                        }
+                        Text(String(flow.data.individuals))
                     }
+                }
+            }
+        }
+        .onReceive(flow.$editing) { editing in
+            if editing {
+                withAnimation(.easeInOut(duration: 1.0)) {
+                    isEditing = editing
+                    viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: viewController, action: #selector(EditObservationViewController.saveObservation))
+                }
             }
         }
     }
@@ -134,6 +147,6 @@ struct EditObservationView: View {
 
 struct EditObsevationView_Previews: PreviewProvider {
     static var previews: some View {
-        EditObservationView(data: .constant(EditData(observation: Observation(observation: DBObservation.sampleData, species: nil), thumbnail: nil)))
+        EditObservationView(flow: EditFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true), observation: Observation(observation: DBObservation.sampleData, species: nil)))
     }
 }

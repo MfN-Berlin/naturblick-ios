@@ -42,6 +42,7 @@ extension UIViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.onPrimaryButtonSecondary
+
         guard let latoBlack19 = UIFont(name: "Lato-Black", size: 19) else {
             fatalError("""
                        Failed to load the "Lato-Black" font.
@@ -49,7 +50,6 @@ extension UIViewController {
                        """
             )
         }
-        
         let attrs: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.onPrimaryHighEmphasis,
             .font: latoBlack19
@@ -72,12 +72,12 @@ extension UIViewController {
 }
 
 public protocol HostedView: View, HoldingViewController {
-    var title: String? { get }
+    var viewName: String? { get }
     func configureNavigationItem(item: UINavigationItem)
 }
 
 public extension HostedView {
-    var title: String? {
+    var viewName: String? {
         nil
     }
 
@@ -86,7 +86,7 @@ public extension HostedView {
 }
 
 public protocol NavigatableView: View, HoldingViewController {
-    var title: String? { get }
+    var viewName: String? { get }
     func configureNavigationItem(item: UINavigationItem)
 }
 
@@ -96,7 +96,7 @@ public extension NavigatableView {
         return viewController
     }
     
-    var title: String? {
+    var viewName: String? {
         nil
     }
 
@@ -108,9 +108,10 @@ public class HostingController<ContentView>: UIHostingController<ContentView>  w
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUpDefaultNavigationItemApperance()
-        if let title = rootView.title {
+        if let title = rootView.viewName {
             navigationItem.title = title
         }
+        navigationItem.titleView = UIView()
         view.backgroundColor = UIColor.secondary
         rootView.configureNavigationItem(item: navigationItem)
     }
@@ -131,9 +132,10 @@ private class NavigatableHostingController<ContentView>: UIHostingController<Con
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUpDefaultNavigationItemApperance()
-        if let title = rootView.title {
+        if let title = rootView.viewName {
             navigationItem.title = title
         }
+        navigationItem.titleView = UIView()
         view.backgroundColor = UIColor.secondary
         rootView.configureNavigationItem(item: navigationItem)
     }
