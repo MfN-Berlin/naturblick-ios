@@ -62,9 +62,7 @@ struct HomeView: HostedView {
     let firstRowWidthFactor: CGFloat = 4.5
     let secondRowWidthFactor: CGFloat = 5
     @Environment(\.colorScheme) var colorScheme
-    	
-    @State var navigateTo: NavigationDestination? = nil
-    
+
     @State var isShowingPortrait = false
     @State var speciesId: Int64? = nil
     
@@ -120,17 +118,12 @@ struct HomeView: HostedView {
                         
                         HStack(alignment: .top) {
                             Spacer()
-                            NavigationLink(
-                                tag: .birdId, selection: $navigateTo,
-                                destination: {
-                                    Text("Test")
-                                }) {
+
                                     HomeViewButton(
                                         text: "Record a bird sound",
                                         color: Color.onPrimaryButtonPrimary,
                                         image: Image("microphone"),
                                         size: topRowSize)
-                                }
                             Spacer()
                                 HomeViewButton(text: "Select characteristics",
                                                color: Color.onPrimaryButtonPrimary,

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		13070CA82A053EC700A2046D /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13070CA72A053EC700A2046D /* Operation.swift */; };
-		130C04A22A39B36F00677BC2 /* NavigationDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130C04A12A39B36F00677BC2 /* NavigationDestination.swift */; };
 		1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */; };
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
@@ -176,7 +175,6 @@
 
 /* Begin PBXFileReference section */
 		13070CA72A053EC700A2046D /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
-		130C04A12A39B36F00677BC2 /* NavigationDestination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationDestination.swift; sourceTree = "<group>"; };
 		1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Dimensions.swift"; sourceTree = "<group>"; };
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -532,7 +530,6 @@
 				134939392AAB42F800A50BF1 /* IdFlow.swift */,
 				137ACD292A6171A000C370CF /* ImageData.swift */,
 				134F54912A5EB67B00A079EC /* MimeType.swift */,
-				130C04A12A39B36F00677BC2 /* NavigationDestination.swift */,
 				133B39292A4081A000D48617 /* NBImage.swift */,
 				137690062A30D3F40076F93A /* NBSound.swift */,
 				1366FA942A654B8500436EF1 /* Observation.swift */,
@@ -837,7 +834,6 @@
 				7B572DDB2A6E9F65008F50C5 /* String+MD5.swift in Sources */,
 				7BC77E8C2A6AA4A300B489C2 /* SettingsView.swift in Sources */,
 				7BA037C929D7020500804AFE /* PortraitImageMeta.swift in Sources */,
-				130C04A22A39B36F00677BC2 /* NavigationDestination.swift in Sources */,
 				13316BD729C9F3860077292B /* PickSpeciesListView.swift in Sources */,
 				134F54962A5EDC3600A079EC /* UUID+Media.swift in Sources */,
 				13F08DE12A9F674600874264 /* NavigatableView.swift in Sources */,

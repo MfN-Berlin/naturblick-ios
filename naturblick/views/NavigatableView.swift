@@ -73,6 +73,7 @@ extension UIViewController {
 
 public protocol HostedView: View, HoldingViewController {
     var viewName: String? { get }
+    var alwaysDarkBackground: Bool { get }
     func configureNavigationItem(item: UINavigationItem)
 }
 
@@ -80,13 +81,16 @@ public extension HostedView {
     var viewName: String? {
         nil
     }
-
+    var alwaysDarkBackground: Bool  {
+        false
+    }
     func configureNavigationItem(item: UINavigationItem) {
     }
 }
 
 public protocol NavigatableView: View, HoldingViewController {
     var viewName: String? { get }
+    var alwaysDarkBackground: Bool { get }
     func configureNavigationItem(item: UINavigationItem)
 }
 
@@ -100,6 +104,10 @@ public extension NavigatableView {
         nil
     }
 
+    var alwaysDarkBackground: Bool  {
+        false
+    }
+    
     func configureNavigationItem(item: UINavigationItem) {
     }
 }
@@ -112,10 +120,10 @@ public class HostingController<ContentView>: UIHostingController<ContentView>  w
             navigationItem.title = title
         }
         navigationItem.titleView = UIView()
-        view.backgroundColor = UIColor.secondary
+        view.backgroundColor = rootView.alwaysDarkBackground ? .primaryHome : .secondary
         rootView.configureNavigationItem(item: navigationItem)
     }
-    
+        
     public override init(rootView: ContentView) {
         super.init(rootView: rootView)
         rootView.setViewController(controller: self)
@@ -136,7 +144,7 @@ private class NavigatableHostingController<ContentView>: UIHostingController<Con
             navigationItem.title = title
         }
         navigationItem.titleView = UIView()
-        view.backgroundColor = UIColor.secondary
+        view.backgroundColor = rootView.alwaysDarkBackground ? .primaryHome : .secondary
         rootView.configureNavigationItem(item: navigationItem)
     }
     
