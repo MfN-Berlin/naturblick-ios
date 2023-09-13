@@ -7,9 +7,11 @@ import SwiftUI
 
 struct PortraitView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    
+    var viewName: String? {
+        species.name
+    }
     @StateObject var portraitViewModel = PortraitViewModel()
-    let speciesId: Int64?
+    let species: SpeciesListItem
     
     var body: some View {
         ScrollView {
@@ -52,7 +54,7 @@ struct PortraitView: NavigatableView {
                         
                         VStack(alignment: .leading) { // similar species
                             SpeciesFeaturesView(portraitId: portrait.id, species: portrait.species)
-                            SimilarSpeciesView(portraitId: portrait.id)
+                            SimilarSpeciesView(portraitId: portrait.id, holder: holder)
                         }
                         .padding(.defaultPadding)
                         .background {
@@ -101,15 +103,13 @@ struct PortraitView: NavigatableView {
             }
         }
         .task {
-            if let speciesId = speciesId {
-                portraitViewModel.filter(speciesId: speciesId)
-            }
+            portraitViewModel.filter(speciesId: species.speciesId)
         }
     }
 }
 
 struct PortraitView_Previews: PreviewProvider {
     static var previews: some View {
-        PortraitView(speciesId: Species.sampleData.id)
+        PortraitView(species: SpeciesListItem.sampleData)
     }
 }

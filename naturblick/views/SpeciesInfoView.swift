@@ -45,7 +45,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
             }
             if info.species.hasPortrait {
                 Button("Visit artportrait") {
-                    let view = PortraitView(speciesId: info.species.speciesId)
+                    let view = PortraitView(species: info.species)
                     withNavigation { navigation in
                         navigation.pushViewController(view.setUpViewController(), animated: true)
                     }
