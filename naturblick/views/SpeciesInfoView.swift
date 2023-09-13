@@ -13,23 +13,8 @@ struct SpeciesInfo: Identifiable {
     let avatar: Image
 }
 
-class SpeciesInfoViewController<Flow>: HostingController<SpeciesInfoView<Flow>> where Flow: IdFlow {
-    let createFlow: Flow
-    let species: SpeciesListItem
-    init(info: SpeciesInfo, createFlow: Flow) {
-        self.species = info.species
-        self.createFlow = createFlow
-        let view = SpeciesInfoView<Flow>(info: info)
-        super.init(rootView: view)
-    }
-    
-    @objc func selectSpecies() {
-        createFlow.selectSpecies(species: species)
-    }
-    
-}
 
-struct SpeciesInfoView<Flow>: HostedView where Flow: IdFlow {
+struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
@@ -37,10 +22,13 @@ struct SpeciesInfoView<Flow>: HostedView where Flow: IdFlow {
     }
     
     func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(title: "Choose", style: .done, target: viewController, action: #selector(SpeciesInfoViewController<Flow>.selectSpecies))
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Choose") {_ in
+            flow.selectSpecies(species: info.species)
+        })
     }
     
     let info: SpeciesInfo
+    @ObservedObject var flow: Flow
     var body: some View {
         VStack {
             info.avatar
@@ -75,7 +63,7 @@ struct SpeciesInfoView<Flow>: HostedView where Flow: IdFlow {
 
 struct SpeciesInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesInfoView<CreateFlowViewModel>(info: SpeciesInfo(species: .sampleData, avatar: Image("placeholder")))
+        SpeciesInfoView(info: SpeciesInfo(species: .sampleData, avatar: Image("placeholder")), flow: IdFlowSample())
     }
 }
 

@@ -11,3 +11,13 @@ protocol IdFlow: ObservableObject {
     func identify() async throws
     func selectSpecies(species: SpeciesListItem)
 }
+
+class IdFlowSample: IdFlow {
+    var result: [SpeciesResult]? = nil
+    
+    func identify() async throws {
+    }
+    
+    func selectSpecies(species: SpeciesListItem) {
+    }
+}

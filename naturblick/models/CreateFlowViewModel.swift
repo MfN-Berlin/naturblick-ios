@@ -59,7 +59,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     @MainActor func selectSpecies(species: SpeciesListItem) {
         data.species = species
-        let create = CreateObservationViewController(createFlow: self)
+        let create = CreateObservationView(createFlow: self).setUpViewController()
         if let navigation = viewController?.navigationController {
             navigation.pushViewController(create, animated: true)
         }

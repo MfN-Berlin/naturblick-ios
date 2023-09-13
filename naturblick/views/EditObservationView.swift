@@ -80,7 +80,7 @@ struct EditObservationView: HostedView {
                     Form {
                         CoordinatesView(coordinates: flow.data.coords)
                             .onTapGesture {
-                                navigationController?.pushViewController(PickerViewController(flow: flow), animated: true)
+                                navigationController?.pushViewController(PickerView(flow: flow).setUpViewController(), animated: true)
                             }
                         if let name = flow.data.species?.gername {
                             Text(name)
