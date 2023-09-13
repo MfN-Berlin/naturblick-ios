@@ -96,6 +96,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             let crop = NBImage(image: thumbnail)
             try crop.write()
             data.image.crop = crop
+            data.image.result = nil
             withNavigation { navigation in
                 cropDone(thumbnail: crop)
             }

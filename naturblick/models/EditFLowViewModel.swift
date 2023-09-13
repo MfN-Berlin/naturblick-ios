@@ -88,6 +88,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
             let crop = NBImage(image: thumbnail)
             try crop.write()
             imageData.crop = crop
+            imageData.result = nil
             withNavigation { navigation in
                 cropDone(thumbnail: crop)
             }
