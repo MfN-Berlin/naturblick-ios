@@ -31,6 +31,32 @@ struct HomeView: HostedView {
         item.compactAppearance = nil
         item.scrollEdgeAppearance = nil
         item.compactScrollEdgeAppearance = nil
+        item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape"), menu: UIMenu(children: [
+            UIAction(title: "Help", image: UIImage(named: "questionmark.circle")) {_ in
+                let helpViewController = HelpView().setUpViewController()
+                navigationController?.pushViewController(helpViewController, animated: true)
+            },
+            UIAction(title: "Account", image: UIImage(named: "person")) {_ in
+                let accountViewController = AccountView().setUpViewController()
+                navigationController?.pushViewController(accountViewController, animated: true)
+            },
+            UIAction(title: "Settings", image: UIImage(named: "gearshape")) {_ in
+                let settingViewController = SettingsView().setUpViewController()
+                navigationController?.pushViewController(settingViewController, animated: true)
+                
+            },
+            UIAction(title: "Feedback", image:  UIImage(named: "square.and.pencil")) {_ in
+                print("Here comes the feedback-view")
+            },
+            UIAction(title: "Imprint", image:  UIImage(named: "shield")) {_ in
+                let imprintViewController = ImprintView().setUpViewController()
+                navigationController?.pushViewController(imprintViewController, animated: true)
+            },
+            UIAction(title: "About Naturblick", image:  UIImage(named: "info.circle")) {_ in
+                let aboutViewController = AboutView().setUpViewController()
+                navigationController?.pushViewController(aboutViewController, animated: true)
+            }
+        ]))
     }
     
     let firstRowWidthFactor: CGFloat = 4.5
@@ -82,12 +108,6 @@ struct HomeView: HostedView {
                             .frame(width: geo.size.width / 5)
                             .foregroundColor(.gray)
                             .padding(.defaultPadding)
-                    }
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            MenuView(holder: holder)
-                            
-                        }
                     }
                     RoundBottomView()
                         .frame(height: .roundBottomHeight)
