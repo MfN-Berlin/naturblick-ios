@@ -99,6 +99,7 @@ struct ObservationListView: HostedView {
                         locationManager.requestLocation()
                     }
                 }
+                .ignoresSafeArea(edges: .bottom)
             }
         }
         .onReceive(model.$showList) { showList in

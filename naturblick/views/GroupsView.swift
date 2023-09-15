@@ -7,24 +7,25 @@ import SwiftUI
 struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = "Arten kennenlernen"
-    
+    var alwaysDarkBackground: Bool = true
     let groups: [Group]
     let destination: (Group) -> Content
     
     var body: some View {
-        ScrollView {
+        ScrollView() {
             Image("artportraits24")
                 .resizable()
                 .scaledToFit()
                 .foregroundColor(.onPrimarySignalHigh)
                 .frame(width: .headerIconSize, height: .headerIconSize)
+                .padding(.top, .defaultPadding)
             Text("Wähle eine Gruppe")
                 .font(.nbHeadline3)
                 .foregroundColor(.onPrimaryHighEmphasis)
             LazyVGrid(columns: [
-                GridItem(spacing: .defaultPadding),
-                GridItem(spacing: .defaultPadding),
-                GridItem(spacing: .defaultPadding)
+                GridItem(spacing: .defaultPadding + .halfPadding, alignment: .top),
+                GridItem(spacing: .defaultPadding + .halfPadding, alignment: .top),
+                GridItem(spacing: .defaultPadding + .halfPadding, alignment: .top)
             ], spacing: .defaultPadding) {
                 ForEach(groups) { group in
                     GroupButton(group: group).onTapGesture {
@@ -32,7 +33,9 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
                         viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                     }
                 }
-            }.padding(.defaultPadding)
+            }
+            .padding(.leading, .defaultPadding)
+            .padding(.trailing, .defaultPadding)
         }
     }
 }
