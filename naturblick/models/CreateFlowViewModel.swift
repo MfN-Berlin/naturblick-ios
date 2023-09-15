@@ -57,6 +57,37 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         }
     }
     
+    @MainActor func recordSound() {
+        data = CreateData()
+        withNavigation { navigation in
+            let soundRecorder = BirdRecorderView(flow: self)
+            navigation.pushViewController(soundRecorder.setUpViewController(), animated: true)
+        }
+    }
+    
+    @MainActor func soundRecorded(sound: NBSound) {
+        data.sound.sound = sound
+        withNavigation { navigation in
+            var viewControllers = navigation.viewControllers
+            viewControllers[viewControllers.count - 1] = SpectrogramView(sound: sound, flow: self).setUpViewController()
+            navigation.setViewControllers(viewControllers, animated: true)
+        }
+    }
+    
+    @MainActor func spectrogramDownloaded(spectrogram: UIImage) {
+        data.sound.spectrogram = spectrogram
+    }
+    
+    @MainActor func spectrogramCropDone(crop: NBImage, start: CGFloat, end: CGFloat) {
+        data.sound.crop = crop
+        data.sound.start = start
+        data.sound.end = end
+        let resultView = SelectSpeciesView(createFlow: self, thumbnail: crop)
+        withNavigation { navigation in
+            navigation.pushViewController(resultView.setUpViewController(), animated: true)
+        }
+    }
+    
     @MainActor func selectSpecies(species: SpeciesListItem) {
         data.species = species
         let create = CreateObservationView(createFlow: self).setUpViewController()
@@ -73,6 +104,9 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         if let thumbnail = data.image.crop {
             try await client.upload(image: thumbnail)
             updateResult(result: try await client.imageId(mediaId: thumbnail.id.uuidString))
+        } else if let sound = data.sound.sound, let start = data.sound.start, let end = data.sound.end, let spectrogram = data.sound.spectrogram {
+            let result = try await client.soundId(mediaId: sound.id.uuidString, start: Int(start * spectrogram.size.width * 10), end: Int(end * spectrogram.size.width * 10))
+            updateResult(result: result)
         }
     }
     

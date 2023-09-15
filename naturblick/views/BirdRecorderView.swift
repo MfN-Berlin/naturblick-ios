@@ -5,14 +5,16 @@
 
 import SwiftUI
 
-struct BirdRecorderView: View {
+struct BirdRecorderView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    
     @StateObject private var model = BirdRecorderViewModel()
-    @Binding var sound: NBSound?
+    @ObservedObject var flow: CreateFlowViewModel
     var body: some View {
         if model.isAuthorized {
             Text("\(model.currentTime)")
                 .onTapGesture {
-                    sound = model.stop()
+                    flow.soundRecorded(sound: model.stop()!)
                 }
                 .onAppear {
                     model.record()
@@ -30,6 +32,6 @@ struct BirdRecorderView: View {
 
 struct BirdRecorderView_Previews: PreviewProvider {
     static var previews: some View {
-        BirdRecorderView(sound: .constant(nil))
+        BirdRecorderView(flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
     }
 }

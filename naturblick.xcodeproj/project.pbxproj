@@ -62,9 +62,7 @@
 		13709A852A7D1C0E00B81108 /* FABView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13709A842A7D1C0E00B81108 /* FABView.swift */; };
 		13743F6A2A6803AA00ABCCB1 /* Image+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13743F692A6803AA00ABCCB1 /* Image+Style.swift */; };
 		13743F6C2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13743F6B2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift */; };
-		137690012A3093D30076F93A /* BirdIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690002A3093D30076F93A /* BirdIdView.swift */; };
 		137690032A30946F0076F93A /* SpectrogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690022A30946F0076F93A /* SpectrogramView.swift */; };
-		137690052A30A7740076F93A /* BirdIdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690042A30A7740076F93A /* BirdIdViewModel.swift */; };
 		137690072A30D3F40076F93A /* NBSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690062A30D3F40076F93A /* NBSound.swift */; };
 		137690092A30DC5A0076F93A /* LocalFileDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690082A30DC5A0076F93A /* LocalFileDownloader.swift */; };
 		137ACD2A2A6171A000C370CF /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137ACD292A6171A000C370CF /* ImageData.swift */; };
@@ -231,9 +229,7 @@
 		13709A842A7D1C0E00B81108 /* FABView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FABView.swift; sourceTree = "<group>"; };
 		13743F692A6803AA00ABCCB1 /* Image+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Style.swift"; sourceTree = "<group>"; };
 		13743F6B2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGraphicsImageRendererFormat+noScale.swift"; sourceTree = "<group>"; };
-		137690002A3093D30076F93A /* BirdIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdIdView.swift; sourceTree = "<group>"; };
 		137690022A30946F0076F93A /* SpectrogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramView.swift; sourceTree = "<group>"; };
-		137690042A30A7740076F93A /* BirdIdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirdIdViewModel.swift; sourceTree = "<group>"; };
 		137690062A30D3F40076F93A /* NBSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBSound.swift; sourceTree = "<group>"; };
 		137690082A30DC5A0076F93A /* LocalFileDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileDownloader.swift; sourceTree = "<group>"; };
 		137ACD292A6171A000C370CF /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
@@ -452,7 +448,6 @@
 			children = (
 				7B2E70652A2F671900164C85 /* AboutView.swift */,
 				7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */,
-				137690002A3093D30076F93A /* BirdIdView.swift */,
 				134C75A82A2F513E0046EEE4 /* BirdRecorderView.swift */,
 				13A2923329D3110C00AF772A /* CharactersView.swift */,
 				13A2923729D3116200AF772A /* CharacterValueView.swift */,
@@ -510,7 +505,6 @@
 			isa = PBXGroup;
 			children = (
 				13561BE22A7937F700968A03 /* Behavior.swift */,
-				137690042A30A7740076F93A /* BirdIdViewModel.swift */,
 				134C75AA2A2F515C0046EEE4 /* BirdRecorderViewModel.swift */,
 				13A2923929D3123700AF772A /* Character.swift */,
 				13A2923D29D33D3600AF772A /* CharactersViewModel.swift */,
@@ -837,7 +831,6 @@
 				13316BD729C9F3860077292B /* PickSpeciesListView.swift in Sources */,
 				134F54962A5EDC3600A079EC /* UUID+Media.swift in Sources */,
 				13F08DE12A9F674600874264 /* NavigatableView.swift in Sources */,
-				137690012A3093D30076F93A /* BirdIdView.swift in Sources */,
 				134F54942A5ED78E00A079EC /* CGFloat+Constants.swift in Sources */,
 				7BB3DE2329F68D4500F0D387 /* UnambiguousFeature.swift in Sources */,
 				7B83703529E98EA10075D9F5 /* ColorTestView.swift in Sources */,
@@ -877,7 +870,6 @@
 				13AFFA5C2AAF568700ABF4F9 /* NBText.swift in Sources */,
 				137FE58729E5996800B397DF /* ObsType.swift in Sources */,
 				7BAC5BC82A8F629400160DEC /* DeleteOperation.swift in Sources */,
-				137690052A30A7740076F93A /* BirdIdViewModel.swift in Sources */,
 				1367AA412A41AEB3006E0ACB /* CGSize+Dimensions.swift in Sources */,
 				7BB68E4A2A545D5C00B1DC51 /* String+Validations.swift in Sources */,
 				7BA4DA122A73EC5600AEC0A4 /* HelpView.swift in Sources */,
