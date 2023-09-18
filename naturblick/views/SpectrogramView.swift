@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct SpectrogramView: NavigatableView {
+struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
     let client = BackendClient()
     let sound: NBSound
@@ -13,7 +13,7 @@ struct SpectrogramView: NavigatableView {
     @State private var endOffset: CGFloat = 0
     @State private var start: CGFloat = 0
     @State private var end: CGFloat = 1
-    @ObservedObject var flow: CreateFlowViewModel
+    @ObservedObject var flow: Flow
     
     func configureNavigationItem(item: UINavigationItem) {
         item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Identify") {_ in
@@ -22,27 +22,26 @@ struct SpectrogramView: NavigatableView {
     }
     
     func crop() {
-        guard let spectrogram = flow.data.sound.spectrogram else {
+        guard let spectrogram = flow.spectrogram else {
             return
         }
         Task {
-                let crop = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
-                    let cropRect = CGRect(
-                        x: spectrogram.size.width * start,
-                        y: 0,
-                        width: spectrogram.size.width * end,
-                        height: spectrogram.size.height
-                    )
-                    if let cgImage = spectrogram.cgImage {
-                        if let crop = cgImage.cropping(to: cropRect) {
-                            let uiImageCrop = UIImage(cgImage: crop, scale: spectrogram.scale, orientation: spectrogram.imageOrientation)
-                            uiImageCrop.draw(in: CGRect(origin: .zero, size: .thumbnail))
-                        }
+            let crop = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
+                let cropRect = CGRect(
+                    x: spectrogram.size.width * start,
+                    y: 0,
+                    width: spectrogram.size.width * end,
+                    height: spectrogram.size.height
+                )
+                if let cgImage = spectrogram.cgImage {
+                    if let crop = cgImage.cropping(to: cropRect) {
+                        let uiImageCrop = UIImage(cgImage: crop, scale: spectrogram.scale, orientation: spectrogram.imageOrientation)
+                        uiImageCrop.draw(in: CGRect(origin: .zero, size: .thumbnail))
                     }
                 }
-                let thumbnail = NBImage(image: crop)
-                try thumbnail.write()
-              
+            }
+            let thumbnail = NBImage(image: crop)
+            try thumbnail.write()
             flow.spectrogramCropDone(crop: thumbnail, start: start, end: end)
         }
     }
@@ -170,7 +169,7 @@ struct SpectrogramView: NavigatableView {
     }
     
     var body: some View {
-        if let spectrogram = flow.data.sound.spectrogram {
+        if let spectrogram = flow.spectrogram {
             Image(uiImage: spectrogram)
                 .resizable()
                 .overlay {

@@ -13,14 +13,14 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
         "Choose species"
     }
     
-    @ObservedObject var createFlow: Flow
+    @ObservedObject var flow: Flow
     let thumbnail: NBImage
     @State var showInfo: SpeciesInfo? = nil
     @StateObject var model: SelectSpeciesViewModel = SelectSpeciesViewModel()
     @StateObject private var errorHandler = HttpErrorViewModel()
 
     func openSpeciesInfo(species: SpeciesListItem, image: Image) {
-        let info = SpeciesInfoView(info: SpeciesInfo(species: species, avatar: image), flow: createFlow).setUpViewController()
+        let info = SpeciesInfoView(info: SpeciesInfo(species: species, avatar: image), flow: flow).setUpViewController()
         withNavigation { navigation in
             navigation.pushViewController(info, animated: true)
         }
@@ -29,7 +29,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     func identify() {
         Task {
             do {
-                try await createFlow.identify()
+                try await flow.identify()
             } catch {
                 let _ = errorHandler.handle(error)
             }
@@ -41,7 +41,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
             Image(uiImage: thumbnail.image)
                 .resizable()
                 .scaledToFit()
-            if let rs = createFlow.result {
+            if let rs = flow.result {
                 VStack(alignment: .leading) {
                     ForEach(model.speciesResults, id: \.0.id) { (result, item) in
                         if let url = item.url {

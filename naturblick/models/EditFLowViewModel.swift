@@ -7,6 +7,7 @@ import Foundation
 import UIKit
 import MapKit
 import Mantis
+import Combine
 
 class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController {
     var holder: ViewControllerHolder = ViewControllerHolder()
@@ -15,6 +16,8 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     let persistenceController: ObservationPersistenceController
     @Published var data: EditData
     @Published var imageData: ImageData = ImageData()
+    @Published var soundData: SoundData = SoundData()
+    @Published var spectrogram: UIImage? = nil
     @Published var editing: Bool = false
     @Published var region: MKCoordinateRegion
     init(persistenceController: ObservationPersistenceController, observation: Observation) {
@@ -24,9 +27,15 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         self.region = data.region
         super.init()
         
-        $imageData.map { data in
-            data.result
-        }.assign(to: &$result)
+        Publishers.Merge(
+            $imageData.map { data in
+                data.result
+            },
+            $soundData.map { data in
+                data.result
+            }
+        )
+        .assign(to: &$result)
         
         if let thumbnailId = observation.observation.thumbnailId {
             Task {
@@ -55,7 +64,28 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     }
     
     func cropDone(thumbnail: NBImage) {
-        let resultView = SelectSpeciesView(createFlow: self, thumbnail: thumbnail)
+        let resultView = SelectSpeciesView(flow: self, thumbnail: thumbnail)
+        withNavigation { navigation in
+            navigation.pushViewController(resultView.setUpViewController(), animated: true)
+        }
+    }
+    
+    @MainActor func soundRecorded(sound: NBSound) {
+        soundData.sound = sound
+        withNavigation { navigation in
+            navigation.pushViewController(SpectrogramView(sound: sound, flow: self).setUpViewController(), animated: true)
+        }
+    }
+    
+    @MainActor func spectrogramDownloaded(spectrogram: UIImage) {
+        self.spectrogram = spectrogram
+    }
+    
+    @MainActor func spectrogramCropDone(crop: NBImage, start: CGFloat, end: CGFloat) {
+        soundData.crop = crop
+        soundData.start = start
+        soundData.end = end
+        let resultView = SelectSpeciesView(flow: self, thumbnail: crop)
         withNavigation { navigation in
             navigation.pushViewController(resultView.setUpViewController(), animated: true)
         }
@@ -76,6 +106,9 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         if let thumbnail = imageData.crop {
             try await client.upload(image: thumbnail)
             let result = try await client.imageId(mediaId: thumbnail.id.uuidString)
+            await updateResult(result: result)
+        } else if let sound = soundData.sound, let start = soundData.start, let end = soundData.end, let spectrogram = spectrogram {
+            let result = try await client.soundId(mediaId: sound.id.uuidString, start: Int(start * spectrogram.size.width * 10), end: Int(end * spectrogram.size.width * 10))
             await updateResult(result: result)
         }
     }

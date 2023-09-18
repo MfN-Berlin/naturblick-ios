@@ -4,11 +4,9 @@
 
 
 import Foundation
-import SwiftUI
 
 struct SoundData {
     var sound: NBSound? = nil
-    var spectrogram: UIImage? = nil
     var crop: NBImage? = nil
     var start: CGFloat? = nil
     var end: CGFloat? = nil
