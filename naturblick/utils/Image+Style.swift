@@ -13,4 +13,12 @@ extension Image {
             .clipShape(Circle())
             .frame(width: .avatarSize, height: .avatarSize)
     }
+    
+    func observationProperty() -> some View {
+        self
+            .resizable()
+            .frame(width: .editTextIconSize, height: .editTextIconSize)
+            .padding(.leading, .avatarOffsetPadding)
+            .padding(.trailing, .avatarOffsetPadding + .defaultPadding)
+    }
 }

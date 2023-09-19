@@ -5,7 +5,7 @@
 
 import SwiftUI
 import MapKit
-
+import BottomSheet
 
 class EditObservationViewController: HostingController<EditObservationView> {
     let flow: EditFlowViewModel
@@ -27,10 +27,11 @@ class EditObservationViewController: HostingController<EditObservationView> {
 
 struct EditObservationView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    
+    var hideNavigationBarShadow: Bool = true
     @ObservedObject var flow: EditFlowViewModel
     @State private var isEditing = false
-
+    @State private var sheetPosition: BottomSheetPosition = .dynamic
+    
     init(flow: EditFlowViewModel) {
         self.flow = flow
     }
@@ -55,79 +56,128 @@ struct EditObservationView: HostedView {
     }
     
     var body: some View {
-        VStack {
-            if let thumbnail = flow.data.thumbnail {
-                HStack {
-                    Image(uiImage: thumbnail.image)
-                        .avatar()
-                }
-            } else  {
-                Image("placeholder")
-                    .avatar()
+        GeometryReader { geo in
+            VStack(alignment: .center) {
+                ObservationInfoView(thumbnail: flow.data.thumbnail, species: flow.data.species, width: geo.size.width, created: flow.data.original.created)
             }
-            Text(flow.data.original.created.date, formatter: .dateTime)
-            ZStack {
-                if isEditing {
-                    Form {
+            .frame(maxWidth: .infinity)
+        }
+        .bottomSheet(bottomSheetPosition: $sheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
+            if isEditing {
+                VStack(alignment: .leading) {
+                    Thumbnail(speciesUrl: flow.data.species?.url, thumbnailId: nil) { thumbnail in
+                        HStack {
+                            thumbnail
+                                .avatar()
+                                .padding(.trailing, .defaultPadding)
+                            Text(flow.data.species?.sciname ?? "Unknown species")
+                        }
+                        .onTapGesture {
+                            switch(flow.data.obsType) {
+                            case .image, .unidentifiedimage:
+                                identifyImage()
+                            case .audio, .unidentifiedaudio:
+                                identifySound()
+                            case .manual:
+                                do {}
+                            }
+                        }
+                    }
+                    Divider()
+                    HStack {
+                        Image("placeholder")
+                            .observationProperty()
                         CoordinatesView(coordinates: flow.data.coords)
                             .onTapGesture {
                                 navigationController?.pushViewController(PickerView(flow: flow).setUpViewController(), animated: true)
                             }
-                        if let name = flow.data.species?.gername {
-                            Text(name)
-                                .onTapGesture {
-                                    switch(flow.data.obsType) {
-                                    case .image, .unidentifiedimage:
-                                        identifyImage()
-                                    case .audio, .unidentifiedaudio:
-                                        identifySound()
-                                    case .manual:
-                                        do {}
-                                    }
-                                }
-                        } else {
-                            Text("Unknown species")
-                                .onTapGesture {
-                                    switch(flow.data.obsType) {
-                                    case .image, .unidentifiedimage:
-                                        identifyImage()
-                                    case .audio, .unidentifiedaudio:
-                                        identifySound()
-                                    case .manual:
-                                        do {}
-                                    }
-                                }
-                        }
-                        NBEditText(label: "Notes", icon: Image("details"), text: $flow.data.details)
+                    }
+                    Divider()
+                    HStack {
+                        Image("details")
+                            .observationProperty()
+                        TextField("Notes", text: $flow.data.details)
+                    }
+                    Divider()
+                    HStack {
+                        Image("placeholder")
+                            .observationProperty()
                         Picker("Behavior", selection: $flow.data.behavior) {
                             ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
                                 Text($0.rawValue).tag($0 as Behavior?)
                             }
                         }
+                    }
+                    Divider()
+                    HStack {
+                        Image("placeholder")
+                            .observationProperty()
                         IndividualsView(individuals: $flow.data.individuals)
                     }
-                } else {
-                    Form {
+                }
+                .padding(.defaultPadding)
+                .padding(.bottom, .defaultPadding * 2)
+            } else {
+                VStack(alignment: .leading) {
+                    Thumbnail(speciesUrl: flow.data.species?.url, thumbnailId: nil) { thumbnail in
+                        HStack {
+                            thumbnail
+                                .avatar()
+                                .padding(.trailing, .defaultPadding)
+                            Text(flow.data.species?.sciname ?? "Unknown species")
+                        }
+                        .onTapGesture {
+                            if let species = flow.data.species {
+                                navigationController?.pushViewController(PortraitView(species: species).setUpViewController(), animated: true)
+                            }
+                        }
+                    }
+                    Divider()
+                    HStack {
+                        Image("placeholder")
+                            .observationProperty()
                         CoordinatesView(coordinates: flow.data.coords)
-                        if let name = flow.data.species?.gername {
-                            Text(name)
+                    }
+                    Divider()
+                    HStack {
+                        Image("details")
+                            .observationProperty()
+                        if flow.data.details.isEmpty {
+                            Text(" ")
                         } else {
-                            Text("Unknown species")
+                            Text(flow.data.details)
                         }
-                        if !flow.data.details.isEmpty {
-                            NBText(label: "Notes", icon: Image("details"), text: flow.data.details)
-                        }
+                    }
+                    Divider()
+                    HStack {
+                        Image("placeholder")
+                            .observationProperty()
                         if let behavior = flow.data.behavior?.rawValue {
                             Text(behavior)
+                        } else {
+                            Text(" ")
                         }
+                    }
+                    Divider()
+                    HStack {
+                        Image("placeholder")
+                            .observationProperty()
                         Text(String(flow.data.individuals))
                     }
                 }
+                .padding(.defaultPadding)
+                .padding(.bottom, .defaultPadding * 2)
             }
         }
+        .customBackground(
+            RoundedRectangle(cornerRadius: .largeCornerRadius)
+                .fill(Color.secondaryColor)
+                .nbShadow()
+        )
+        .background(Color(uiColor: .onPrimaryButtonSecondary))
         .onReceive(flow.$editing) { editing in
             if editing {
-                withAnimation(.easeInOut(duration: 1.0)) {
+                withAnimation {
                     isEditing = editing
                     viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: viewController, action: #selector(EditObservationViewController.saveObservation))
                 }

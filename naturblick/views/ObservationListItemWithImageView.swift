@@ -13,8 +13,6 @@ struct ObservationListItemWithImageView: View {
     var body: some View {
         Thumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
             ObservationListItemView(observation: observation, image: image)
-        } placeholder: {
-            ObservationListItemView(observation: observation, image: Image("placeholder"))
         }
         .listRowBackground(Color.secondaryColor)
     }

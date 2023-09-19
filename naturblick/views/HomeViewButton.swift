@@ -23,6 +23,7 @@ struct HomeViewButton: View {
                         .padding(16)
                 }
                 .frame(width: size, height: size)
+                .nbShadow()
             Text(text)
                 .foregroundColor(.onPrimaryHighEmphasis)
                 .multilineTextAlignment(.center)

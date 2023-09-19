@@ -46,6 +46,11 @@ extension Color {
     static let onImageSignalLow = Color.black.opacity(0.3)
     static let whiteOpacity10 = Color.white.opacity(0.4)
     static let whiteOpacity60 = Color.white.opacity(0.8)
+    static let shadowBlackOpacity10 = Color.black.opacity(0.1)
+    static let shadowBlackOpacity5 = Color.black.opacity(0.05)
+    static let shadowGreyOpacity5 = Color("ShadowGreyOpacity5")
+
+
 }
 
 extension UIColor {

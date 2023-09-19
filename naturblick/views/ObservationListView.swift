@@ -45,6 +45,7 @@ struct ObservationListView: HostedView {
                 UIAction(title: "Identify photo from a plant", image: UIImage(named: "details")) {_ in
                 },
                 UIAction(title: "Record a bird sound", image: UIImage(named: "microphone")) {_ in
+                    createFlow.recordSound()
                 },
                 UIAction(title: "Photograph a plant", image: UIImage(named: "photo24")) {_ in
                     createFlow.takePhoto()
