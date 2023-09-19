@@ -14,6 +14,7 @@ struct GroupButton: View {
                 .resizable()
                 .clipShape(Circle())
                 .scaledToFit()
+                .nbShadow()
             Text(group.gerName)
                 .multilineTextAlignment(TextAlignment.center)
                 .foregroundColor(.onPrimaryHighEmphasis)
