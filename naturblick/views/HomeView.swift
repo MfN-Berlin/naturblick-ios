@@ -124,6 +124,9 @@ struct HomeView: HostedView {
                                         color: Color.onPrimaryButtonPrimary,
                                         image: Image("microphone"),
                                         size: topRowSize)
+                                    .onTapGesture {
+                                        createFlow.recordSound()
+                                    }
                             Spacer()
                                 HomeViewButton(text: "Select characteristics",
                                                color: Color.onPrimaryButtonPrimary,

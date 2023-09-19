@@ -8,8 +8,8 @@ import Foundation
 struct SoundData {
     var sound: NBSound? = nil
     var crop: NBImage? = nil
-    var start: CGFloat = 0
-    var end: CGFloat = 1
+    var start: CGFloat? = nil
+    var end: CGFloat? = nil
     var result: [SpeciesResult]? = nil
     
     var identified: Identified? {

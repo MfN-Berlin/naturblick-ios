@@ -15,7 +15,7 @@ class EditObservationViewController: HostingController<EditObservationView> {
         super.init(rootView: EditObservationView(flow: flow))
         flow.setViewController(controller: self)
     }
-    
+
     @objc func setEdit() {
         flow.editing = true
     }
@@ -29,11 +29,6 @@ struct EditObservationView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     @ObservedObject var flow: EditFlowViewModel
-    @State private var showMap: Bool = false
-    @State private var imageData: ImageData = ImageData()
-    @State private var showSoundId: Bool = false
-    @State private var soundData: SoundData = SoundData()
-
     @State private var isEditing = false
 
     init(flow: EditFlowViewModel) {
@@ -54,12 +49,8 @@ struct EditObservationView: HostedView {
     }
     
     func identifySound() {
-        Task {
-            if let mediaId = flow.data.original.mediaId {
-              let sound = NBSound(id: mediaId)
-              soundData = SoundData(sound: sound)
-              showSoundId = true
-          }
+        if let mediaId = flow.data.original.mediaId {
+            flow.soundRecorded(sound: NBSound(id: mediaId))
         }
     }
     

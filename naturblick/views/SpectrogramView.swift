@@ -5,12 +5,46 @@
 
 import SwiftUI
 
-struct SpectrogramView: View {
-    let spectrogram: UIImage
+struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    let client = BackendClient()
+    let sound: NBSound
     @State private var startOffset: CGFloat = 0
     @State private var endOffset: CGFloat = 0
-    @Binding var start: CGFloat
-    @Binding var end: CGFloat
+    @State private var start: CGFloat = 0
+    @State private var end: CGFloat = 1
+    @ObservedObject var flow: Flow
+    
+    func configureNavigationItem(item: UINavigationItem) {
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Identify") {_ in
+            crop()
+        })
+    }
+    
+    func crop() {
+        guard let spectrogram = flow.spectrogram else {
+            return
+        }
+        Task {
+            let crop = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
+                let cropRect = CGRect(
+                    x: spectrogram.size.width * start,
+                    y: 0,
+                    width: spectrogram.size.width * end,
+                    height: spectrogram.size.height
+                )
+                if let cgImage = spectrogram.cgImage {
+                    if let crop = cgImage.cropping(to: cropRect) {
+                        let uiImageCrop = UIImage(cgImage: crop, scale: spectrogram.scale, orientation: spectrogram.imageOrientation)
+                        uiImageCrop.draw(in: CGRect(origin: .zero, size: .thumbnail))
+                    }
+                }
+            }
+            let thumbnail = NBImage(image: crop)
+            try thumbnail.write()
+            flow.spectrogramCropDone(crop: thumbnail, start: start, end: end)
+        }
+    }
     
     func updateStartOffset(translation: CGSize, width: CGFloat, minWidth: CGFloat) {
         let startOffset = translation.width
@@ -135,29 +169,43 @@ struct SpectrogramView: View {
     }
     
     var body: some View {
-        
-        Image(uiImage: spectrogram)
-            .resizable()
-            .overlay {
-                GeometryReader { geo in
-                    let minWidth = (400 / spectrogram.size.width) * geo.size.width
-                    let minWidthOrWidth = minWidth < geo.size.width ? minWidth : geo.size.width
-                    selectedRectangle(width: geo.size.width, height: geo.size.height)
-                        .overlay {
-                            startHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
-                            endHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
-                        }
+        if let spectrogram = flow.spectrogram {
+            Image(uiImage: spectrogram)
+                .resizable()
+                .overlay {
+                    GeometryReader { geo in
+                        let minWidth = (400 / spectrogram.size.width) * geo.size.width
+                        let minWidthOrWidth = minWidth < geo.size.width ? minWidth : geo.size.width
+                        selectedRectangle(width: geo.size.width, height: geo.size.height)
+                            .overlay {
+                                startHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
+                                endHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
+                            }
+                    }
                 }
-            }
-            .onAppear {
-                let initialStart = 1 - 400 / spectrogram.size.width
-                start = initialStart > 0 ? initialStart : 0
-            }
+                .onAppear {
+                    let initialStart = 1 - 400 / spectrogram.size.width
+                    start = initialStart > 0 ? initialStart : 0
+                }
+        } else {
+            Text("Downloading spectrogram")
+                .onAppear {
+                    Task {
+                        do {
+                            try await client.upload(sound: sound.url, mediaId: sound.id)
+                            let spectrogram = try await client.spectrogram(mediaId: sound.id)
+                            flow.spectrogramDownloaded(spectrogram: spectrogram)
+                        } catch {
+                            //errorHandler.handle(error)
+                        }
+                    }
+                }
+        }
     }
 }
 
 struct SpectrogramView_Previews: PreviewProvider {
-    static var previews: some		 View {
-        SpectrogramView(spectrogram: UIImage(systemName: "map")!, start: .constant(0), end: .constant(1))
+    static var previews: some View {
+        SpectrogramView(sound: NBSound(), flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
     }
 }
