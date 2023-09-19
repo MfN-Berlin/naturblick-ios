@@ -38,11 +38,11 @@ extension HoldingViewController {
 }
 
 extension UIViewController {
-    func setUpDefaultNavigationItemApperance() {
+    func setUpDefaultNavigationItemApperance(hideShadow: Bool) {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.onPrimaryButtonSecondary
-
+        
         guard let latoBlack19 = UIFont(name: "Lato-Black", size: 19) else {
             fatalError("""
                        Failed to load the "Lato-Black" font.
@@ -64,6 +64,9 @@ extension UIViewController {
         appearance.doneButtonAppearance = buttonAppearance
         appearance.titleTextAttributes = attrs
         appearance.largeTitleTextAttributes = attrs
+        if hideShadow {
+            appearance.shadowColor = .clear
+        }
         navigationItem.standardAppearance = appearance
         navigationItem.compactAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
@@ -74,6 +77,7 @@ extension UIViewController {
 public protocol HostedView: View, HoldingViewController {
     var viewName: String? { get }
     var alwaysDarkBackground: Bool { get }
+    var hideNavigationBarShadow: Bool { get }
     func configureNavigationItem(item: UINavigationItem)
 }
 
@@ -84,6 +88,9 @@ public extension HostedView {
     var alwaysDarkBackground: Bool  {
         false
     }
+    var hideNavigationBarShadow: Bool {
+        false
+    }
     func configureNavigationItem(item: UINavigationItem) {
     }
 }
@@ -91,6 +98,7 @@ public extension HostedView {
 public protocol NavigatableView: View, HoldingViewController {
     var viewName: String? { get }
     var alwaysDarkBackground: Bool { get }
+    var hideNavigationBarShadow: Bool { get }
     func configureNavigationItem(item: UINavigationItem)
 }
 
@@ -107,7 +115,11 @@ public extension NavigatableView {
     var alwaysDarkBackground: Bool  {
         false
     }
-    
+
+    var hideNavigationBarShadow: Bool {
+        false
+    }
+
     func configureNavigationItem(item: UINavigationItem) {
     }
 }
@@ -115,7 +127,7 @@ public extension NavigatableView {
 public class HostingController<ContentView>: UIHostingController<ContentView>  where ContentView: HostedView {
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setUpDefaultNavigationItemApperance()
+        setUpDefaultNavigationItemApperance(hideShadow: rootView.hideNavigationBarShadow)
         if let title = rootView.viewName {
             navigationItem.title = title
         }
@@ -139,7 +151,7 @@ public class HostingController<ContentView>: UIHostingController<ContentView>  w
 private class NavigatableHostingController<ContentView>: UIHostingController<ContentView> where ContentView: NavigatableView {
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setUpDefaultNavigationItemApperance()
+        setUpDefaultNavigationItemApperance(hideShadow: rootView.hideNavigationBarShadow)
         if let title = rootView.viewName {
             navigationItem.title = title
         }

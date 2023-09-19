@@ -5,18 +5,16 @@
 
 import SwiftUI
 
-struct Thumbnail<Content: View, Placeholder: View> : View {
+struct Thumbnail<Content: View> : View {
     let speciesUrl: String?
     let thumbnailId: UUID?
     @State var uiImage: UIImage? = nil
     let content: (Image) -> Content
-    let placeholder: () -> Placeholder
 
-    init(speciesUrl: String?, thumbnailId: UUID?, @ViewBuilder content: @escaping (Image) -> Content, @ViewBuilder placeholder: @escaping () -> Placeholder) {
+    init(speciesUrl: String?, thumbnailId: UUID?, @ViewBuilder content: @escaping (Image) -> Content) {
         self.speciesUrl = speciesUrl
         self.thumbnailId = thumbnailId
         self.content = content
-        self.placeholder = placeholder
     }
 
     var body: some View {
@@ -24,7 +22,7 @@ struct Thumbnail<Content: View, Placeholder: View> : View {
             if let uiImage = self.uiImage {
                 content(Image(uiImage: uiImage))
             } else {
-                placeholder()
+                content(Image("placeholder"))
             }
         }
         .task(id: thumbnailId) {
@@ -44,8 +42,6 @@ struct Thumbnail_Previews: PreviewProvider {
             thumbnailId: nil
         ) { image in
             image
-        } placeholder: {
-            Text("Loading...")
         }
     }
 }

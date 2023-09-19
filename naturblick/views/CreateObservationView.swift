@@ -5,6 +5,7 @@
 
 import SwiftUI
 import MapKit
+import BottomSheet
 
 enum CreateObservationAction: Identifiable {
     var id: Self {
@@ -19,7 +20,7 @@ enum CreateObservationAction: Identifiable {
 
 struct CreateObservationView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    
+    var hideNavigationBarShadow: Bool = true
     func configureNavigationItem(item: UINavigationItem) {
         item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Save") {_ in
             createFlow.saveObservation()
@@ -30,26 +31,66 @@ struct CreateObservationView: NavigatableView {
     @ObservedObject var createFlow: CreateFlowViewModel
     @StateObject private var locationManager = LocationManager()
     @State private var userTrackingMode: MapUserTrackingMode = .none
-    
+    @State private var sheetPosition : BottomSheetPosition = .dynamic
     var body: some View {
-        SwiftUI.Group {
-            Form {
-                if let species = createFlow.data.species {
-                    Text(species.sciname)
-                }
-                CoordinatesView(coordinates: createFlow.data.coords)
-                    .onTapGesture {
-                        navigationController?.pushViewController(PickerView(flow: createFlow).setUpViewController(), animated: true)
-                    }
-                NBEditText(label: "Notes", icon: Image("details"), text: $createFlow.data.details)
-                Picker("Behavior", selection: $createFlow.data.behavior) {
-                    ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
-                        Text($0.rawValue).tag($0 as Behavior?)
-                    }
-                }
-                IndividualsView(individuals: $createFlow.data.individuals)
+        GeometryReader { geo in
+            VStack(alignment: .center) {
+                ObservationInfoView(thumbnail: createFlow.data.image.crop ?? createFlow.data.sound.crop, species: createFlow.data.species, width: geo.size.width, created: createFlow.data.created)
             }
-        }.onChange(of: locationManager.userLocation) { location in
+            .frame(maxWidth: .infinity)
+        }
+        .bottomSheet(bottomSheetPosition: $sheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
+            VStack(alignment: .leading) {
+                Thumbnail(speciesUrl: createFlow.data.species?.url, thumbnailId: nil) { thumbnail in
+                    HStack {
+                        thumbnail
+                            .avatar()
+                            .padding(.trailing, .defaultPadding)
+                        Text(createFlow.data.species?.sciname ?? "Unknown species")
+                    }
+                }
+                Divider()
+                HStack {
+                    Image("placeholder")
+                        .observationProperty()
+                    CoordinatesView(coordinates: createFlow.data.coords)
+                        .onTapGesture {
+                            navigationController?.pushViewController(PickerView(flow: createFlow).setUpViewController(), animated: true)
+                        }
+                }
+                Divider()
+                HStack {
+                    Image("details")
+                        .observationProperty()
+                    TextField("Notes", text: $createFlow.data.details)
+                }
+                Divider()
+                HStack {
+                    Image("placeholder")
+                        .observationProperty()
+                    Picker("Behavior", selection: $createFlow.data.behavior) {
+                        ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
+                            Text($0.rawValue).tag($0 as Behavior?)
+                        }
+                    }
+                }
+                Divider()
+                HStack {
+                    Image("placeholder")
+                        .observationProperty()
+                    IndividualsView(individuals: $createFlow.data.individuals)
+                }
+            }
+            .padding(.defaultPadding)
+            .padding(.bottom, .defaultPadding * 2)
+        }
+        .customBackground(
+            RoundedRectangle(cornerRadius: .largeCornerRadius)
+                .fill(Color.secondaryColor)
+                .nbShadow()
+        )
+        .background(Color(uiColor: .onPrimaryButtonSecondary))
+        .onChange(of: locationManager.userLocation) { location in
             if let location = location {
                 let coordinates = Coordinates(location: location)
                 if createFlow.data.coords == nil {

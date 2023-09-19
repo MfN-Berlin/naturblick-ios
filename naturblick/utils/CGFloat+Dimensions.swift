@@ -14,6 +14,7 @@ extension CGFloat {
     static let fabIconPadding: CGFloat = 12
     static let fabIconMiniPadding: CGFloat = 6
     static let avatarTextOffset: CGFloat = 12
+    static let avatarOffsetPadding: CGFloat = 20
     static let headerIconSize: CGFloat = 24
     static let smallCornerRadius: CGFloat = 4
     static let largeCornerRadius: CGFloat = 8

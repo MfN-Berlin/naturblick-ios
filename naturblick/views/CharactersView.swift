@@ -39,6 +39,11 @@ struct CharactersView: NavigatableView {
             .padding(.bottom, .defaultPadding * 2)
             .disabled(charactersViewModel.selected.isEmpty)
         }
+        .customBackground(
+            RoundedRectangle(cornerRadius: .largeCornerRadius)
+                .fill(Color.secondaryColor)
+                .nbShadow()
+        )
     }
 }
 
