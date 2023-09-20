@@ -25,38 +25,45 @@ struct HomeView: HostedView {
     }
     
     func configureNavigationItem(item: UINavigationItem) {
+        
         let appearance = item.standardAppearance?.copy()
         appearance?.configureWithTransparentBackground()
         item.standardAppearance = appearance
         item.compactAppearance = nil
         item.scrollEdgeAppearance = nil
         item.compactScrollEdgeAppearance = nil
-        item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape"), menu: UIMenu(children: [
-            UIAction(title: "Help", image: UIImage(named: "questionmark.circle")) {_ in
-                let helpViewController = HelpView().setUpViewController()
-                navigationController?.pushViewController(helpViewController, animated: true)
-            },
-            UIAction(title: "Account", image: UIImage(named: "person")) {_ in
-                let accountViewController = AccountView().setUpViewController()
-                navigationController?.pushViewController(accountViewController, animated: true)
-            },
-            UIAction(title: "Settings", image: UIImage(named: "gearshape")) {_ in
-                let settingViewController = SettingsView().setUpViewController()
-                navigationController?.pushViewController(settingViewController, animated: true)
-                
-            },
-            UIAction(title: "Feedback", image:  UIImage(named: "square.and.pencil")) {_ in
-                print("Here comes the feedback-view")
-            },
-            UIAction(title: "Imprint", image:  UIImage(named: "shield")) {_ in
-                let imprintViewController = ImprintView().setUpViewController()
-                navigationController?.pushViewController(imprintViewController, animated: true)
-            },
-            UIAction(title: "About Naturblick", image:  UIImage(named: "info.circle")) {_ in
-                let aboutViewController = AboutView().setUpViewController()
-                navigationController?.pushViewController(aboutViewController, animated: true)
-            }
-        ]))
+        
+        item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape"), primaryAction: UIAction(image:  UIImage(systemName: "gearshape")) { action in
+            let menuVC = MenuController(entries: [
+                MenuEntry(title: "Help", image: UIImage(systemName: "questionmark.circle")!) {
+                    let view = HelpView().setUpViewController()
+                    navigationController?.pushViewController(view, animated: true)
+                },
+                MenuEntry(title: "Account", image: UIImage(systemName: "person")!) {
+                    let view = AccountView().setUpViewController()
+                    navigationController?.pushViewController(view, animated: true)
+                },
+                MenuEntry(title: "Settings", image: UIImage(systemName: "gearshape")!) {
+                    let view = SettingsView().setUpViewController()
+                    navigationController?.pushViewController(view, animated: true)
+                },
+                MenuEntry(title: "FeedbackTODO", image: UIImage(systemName: "square.and.pencil")!) {
+                    let view = HelpView().setUpViewController()
+                    navigationController?.pushViewController(view, animated: true)
+                },
+                MenuEntry(title: "Imprint", image: UIImage(systemName: "shield")!) {
+                    let view = ImprintView().setUpViewController()
+                    navigationController?.pushViewController(view, animated: true)
+                },
+                MenuEntry(title: "About Naturblick", image: UIImage(systemName: "info.circle")!) {
+                    let view = AboutView().setUpViewController()
+                    navigationController?.pushViewController(view, animated: true)
+                }
+            ]);
+            
+            menuVC.popoverPresentationController?.barButtonItem = action.sender as? UIBarButtonItem
+            navigationController?.present(menuVC, animated: true)
+        })
     }
     
     let firstRowWidthFactor: CGFloat = 4.5
