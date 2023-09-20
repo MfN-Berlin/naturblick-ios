@@ -9,11 +9,11 @@ struct Portrait {
     let id: Int64
     let species: Species
     let description: String
-    let descriptionImage: PortraitImageMeta?
+    let descriptionImage: PortraitImage?
     let language: Int
     let inTheCity: String
-    let inTheCityImage: PortraitImageMeta?
-    let goodToKnowImage:PortraitImageMeta?
+    let inTheCityImage: PortraitImage?
+    let goodToKnowImage:PortraitImage?
     let sources: String?
     let audioUrl: String?
     let landscape: Bool
@@ -39,4 +39,3 @@ extension Portrait {
         static let focus = Expression<Double>("focus")
     }
 }
-
