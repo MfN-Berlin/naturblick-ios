@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		13070CA82A053EC700A2046D /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13070CA72A053EC700A2046D /* Operation.swift */; };
-		1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */; };
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
 		132A91412A2DCF6C00AC405C /* Map+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132A91402A2DCF6C00AC405C /* Map+Extensions.swift */; };
@@ -53,7 +52,6 @@
 		1358D5EE2AA5D86300B48C01 /* NBMantisController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */; };
 		135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135E682E29EE805700192C4A /* ObservationListItemView.swift */; };
 		1366FA952A654B8500436EF1 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1366FA942A654B8500436EF1 /* Observation.swift */; };
-		1367AA412A41AEB3006E0ACB /* CGSize+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1367AA402A41AEB3006E0ACB /* CGSize+Dimensions.swift */; };
 		136C118B29D6E66E00805628 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 136C118A29D6E66E00805628 /* BottomSheet */; };
 		136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */; };
 		136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D907F29D18BBE00A00BD4 /* Portrait.swift */; };
@@ -131,6 +129,9 @@
 		7BB3DE2729F68FE100F0D387 /* SpeciesFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */; };
 		7BB68E482A544B7F00B1DC51 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB68E472A544B7F00B1DC51 /* RegisterViewModel.swift */; };
 		7BB68E4A2A545D5C00B1DC51 /* String+Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB68E492A545D5C00B1DC51 /* String+Validations.swift */; };
+		7BB74B592ABAE834002C4493 /* UIFont+Lato.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB74B582ABAE834002C4493 /* UIFont+Lato.swift */; };
+		7BB74B5B2ABB2E34002C4493 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB74B5A2ABB2E34002C4493 /* MenuController.swift */; };
+		7BB74B5D2ABB3915002C4493 /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB74B5C2ABB3915002C4493 /* Dimensions.swift */; };
 		7BB777162A612B9100EA844C /* URL+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB777152A612B9100EA844C /* URL+Query.swift */; };
 		7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */; };
 		7BC11AFE2A4ACD4E00823D4F /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */; };
@@ -175,7 +176,6 @@
 
 /* Begin PBXFileReference section */
 		13070CA72A053EC700A2046D /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
-		1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Dimensions.swift"; sourceTree = "<group>"; };
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		131E786829C9BB25000DF928 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -223,7 +223,6 @@
 		1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBMantisController.swift; sourceTree = "<group>"; };
 		135E682E29EE805700192C4A /* ObservationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemView.swift; sourceTree = "<group>"; };
 		1366FA942A654B8500436EF1 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
-		1367AA402A41AEB3006E0ACB /* CGSize+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Dimensions.swift"; sourceTree = "<group>"; };
 		136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationPersistenceController.swift; sourceTree = "<group>"; };
 		136D907F29D18BBE00A00BD4 /* Portrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portrait.swift; sourceTree = "<group>"; };
 		136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateObservationView.swift; sourceTree = "<group>"; };
@@ -299,6 +298,9 @@
 		7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesFeaturesView.swift; sourceTree = "<group>"; };
 		7BB68E472A544B7F00B1DC51 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		7BB68E492A545D5C00B1DC51 /* String+Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validations.swift"; sourceTree = "<group>"; };
+		7BB74B582ABAE834002C4493 /* UIFont+Lato.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Lato.swift"; sourceTree = "<group>"; };
+		7BB74B5A2ABB2E34002C4493 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
+		7BB74B5C2ABB3915002C4493 /* Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dimensions.swift; sourceTree = "<group>"; };
 		7BB777152A612B9100EA844C /* URL+Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Query.swift"; sourceTree = "<group>"; };
 		7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
@@ -568,8 +570,6 @@
 			children = (
 				1343D1CA29DD94F50075ACE3 /* BackendClient.swift */,
 				134F54932A5ED78E00A079EC /* CGFloat+Constants.swift */,
-				1315655929CDF92F00D34499 /* CGFloat+Dimensions.swift */,
-				1367AA402A41AEB3006E0ACB /* CGSize+Dimensions.swift */,
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
 				133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */,
 				7BD016242A0B8CC400B07A3E /* Data.swift */,
@@ -599,6 +599,9 @@
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
+				7BB74B582ABAE834002C4493 /* UIFont+Lato.swift */,
+				7BB74B5A2ABB2E34002C4493 /* MenuController.swift */,
+				7BB74B5C2ABB3915002C4493 /* Dimensions.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -792,7 +795,6 @@
 				13EC572129DC80AD00D56A77 /* ObservationListItemWithImageView.swift in Sources */,
 				13A2923C29D317A300AF772A /* CharacterValue.swift in Sources */,
 				7B572DD92A6E758F008F50C5 /* Thumbnail.swift in Sources */,
-				1315655A29CDF92F00D34499 /* CGFloat+Dimensions.swift in Sources */,
 				13B686B02A093A75001FD28F /* EditObservationView.swift in Sources */,
 				7BCEFCC82A690FC800EAC332 /* UIDevice.swift in Sources */,
 				13561BE32A7937F700968A03 /* Behavior.swift in Sources */,
@@ -816,6 +818,7 @@
 				7BA037BD29D6C8BB00804AFE /* GoodToKnowView.swift in Sources */,
 				7BD263522A8E654300CB4FE0 /* Sync.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
+				7BB74B5B2ABB2E34002C4493 /* MenuController.swift in Sources */,
 				7BCEFCC62A690F4800EAC332 /* UIApplication.swift in Sources */,
 				13535CEB2A77CFB600501DFA /* SpeciesListView.swift in Sources */,
 				13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */,
@@ -828,6 +831,7 @@
 				134F54982A5EDC8100A079EC /* URL+SupportDir.swift in Sources */,
 				1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */,
 				1358D5EE2AA5D86300B48C01 /* NBMantisController.swift in Sources */,
+				7BB74B592ABAE834002C4493 /* UIFont+Lato.swift in Sources */,
 				7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */,
 				132A91412A2DCF6C00AC405C /* Map+Extensions.swift in Sources */,
 				13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */,
@@ -878,7 +882,6 @@
 				13AFFA5C2AAF568700ABF4F9 /* NBText.swift in Sources */,
 				137FE58729E5996800B397DF /* ObsType.swift in Sources */,
 				7BAC5BC82A8F629400160DEC /* DeleteOperation.swift in Sources */,
-				1367AA412A41AEB3006E0ACB /* CGSize+Dimensions.swift in Sources */,
 				7BB68E4A2A545D5C00B1DC51 /* String+Validations.swift in Sources */,
 				7BA4DA122A73EC5600AEC0A4 /* HelpView.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
@@ -910,6 +913,7 @@
 				7BCE46C229C9DC7800C6C101 /* Color.swift in Sources */,
 				1366FA952A654B8500436EF1 /* Observation.swift in Sources */,
 				13A2923829D3116200AF772A /* CharacterValueView.swift in Sources */,
+				7BB74B5D2ABB3915002C4493 /* Dimensions.swift in Sources */,
 				7B2CEA142AA5DAA8004B4276 /* Licence.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

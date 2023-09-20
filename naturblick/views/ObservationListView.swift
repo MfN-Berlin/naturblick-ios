@@ -41,19 +41,24 @@ struct ObservationListView: HostedView {
     
     func configureNavigationItem(item: UINavigationItem, showList: Bool) {
         item.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(systemName: "plus"), menu: UIMenu(children: [
-                UIAction(title: "Identify photo from a plant", image: UIImage(named: "details")) {_ in
-                },
-                UIAction(title: "Record a bird sound", image: UIImage(named: "microphone")) {_ in
-                    createFlow.recordSound()
-                },
-                UIAction(title: "Photograph a plant", image: UIImage(named: "photo24")) {_ in
-                    createFlow.takePhoto()
-                },
-                UIAction(title: "Create observation", image:  UIImage(named: "logo24")) {_ in
-                }
-            ])
-            ),
+            UIBarButtonItem(image: UIImage(systemName: "plus"), primaryAction: UIAction(image:  UIImage(systemName: "plus")) { action in
+               let menuVC = MenuController(entries: [
+                   MenuEntry(title: "Identify photo from a plant", image: UIImage(named: "details")!) {
+                      
+                   },
+                   MenuEntry(title: "Record a bird sound", image: UIImage(named: "microphone")!) {
+                       createFlow.recordSound()
+                   },
+                   MenuEntry(title: "Photograph a plant", image: UIImage(named: "photo24")!) {
+                       createFlow.takePhoto()
+                   },
+                   MenuEntry(title: "Create observation", image: UIImage(named: "logo24")!) {
+                       
+                   }
+               ]);
+               menuVC.popoverPresentationController?.barButtonItem = action.sender as? UIBarButtonItem
+               navigationController?.present(menuVC, animated: true)
+           }), 
             UIBarButtonItem(primaryAction: UIAction(image: UIImage(systemName: showList ? "map" : "list.dash")) {action in
                 model.showList.toggle()
             })
