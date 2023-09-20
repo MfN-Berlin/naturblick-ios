@@ -4,7 +4,6 @@
 
 
 import SwiftUI
-import CachedAsyncImage
 
 struct SpeciesListView: NavigatableView {
     
@@ -39,30 +38,12 @@ struct SpeciesListView: NavigatableView {
     
     var body: some View {
         List(species) { current in
-            if let url = current.url {
-                // When used, AsyncImage has to be the outermost element
-                // or it will not properly load in List
-                CachedAsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                    SpeciesListItemView(species: current, avatar: image)
-                        .onTapGesture {
-                            showSpecies(species: current)
-                        }
-                } placeholder: {
-                    SpeciesListItemView(species: current, avatar: Image("placeholder"))
-                        .onTapGesture {
-                            showSpecies(species: current)
-                        }
+            SpeciesListItemView(species: current)
+                .onTapGesture {
+                    showSpecies(species: current)
                 }
                 .listRowInsets(.nbInsets)
                 .listRowBackground(Color.secondaryColor)
-            } else {
-                SpeciesListItemView(species: current, avatar: Image("placeholder"))
-                    .listRowInsets(.nbInsets)
-                    .listRowBackground(Color.secondaryColor)
-                    .onTapGesture {
-                        showSpecies(species: current)
-                    }
-            }
         }
         .listStyle(.plain)
         .searchable(text: $query)
