@@ -4,13 +4,14 @@
 
 
 import SwiftUI
+import CachedAsyncImage
 
 struct SimilarSpeciesItemView: View {
     let species: SpeciesListItem
     var body: some View {
         HStack(alignment: .top) {
             if let url = species.maleUrl {
-                AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                CachedAsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
                     image
                         .resizable()
                         .scaledToFit()

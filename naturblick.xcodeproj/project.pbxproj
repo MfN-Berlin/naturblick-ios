@@ -157,6 +157,7 @@
 		7BD016252A0B8CC400B07A3E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016242A0B8CC400B07A3E /* Data.swift */; };
 		7BD016272A0BCE1F00B07A3E /* SpeciesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */; };
 		7BD263522A8E654300CB4FE0 /* Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD263512A8E654300CB4FE0 /* Sync.swift */; };
+		7BDA8FBE2ABC5E94002E93C9 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDA8FBD2ABC5E94002E93C9 /* CachedAsyncImage */; };
 		7BDD17E02A45BE84001B9DB4 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */; };
 		7BDD17E22A45C397001B9DB4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E12A45C397001B9DB4 /* LoginView.swift */; };
 		7BDD17E42A45C5AA001B9DB4 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */; };
@@ -340,6 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BB350DB2A2A32A8005065E4 /* Mantis in Frameworks */,
+				7BDA8FBE2ABC5E94002E93C9 /* CachedAsyncImage in Frameworks */,
 				13316BE029C9FAF80077292B /* SQLite in Frameworks */,
 				136C118B29D6E66E00805628 /* BottomSheet in Frameworks */,
 			);
@@ -636,6 +638,7 @@
 				13316BDF29C9FAF80077292B /* SQLite */,
 				136C118A29D6E66E00805628 /* BottomSheet */,
 				7BB350DA2A2A32A8005065E4 /* Mantis */,
+				7BDA8FBD2ABC5E94002E93C9 /* CachedAsyncImage */,
 			);
 			productName = naturblick;
 			productReference = 131E785E29C9BB24000DF928 /* naturblick.app */;
@@ -692,6 +695,7 @@
 				13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 				136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 				7BB350D92A2A32A8005065E4 /* XCRemoteSwiftPackageReference "Mantis" */,
+				7BDA8FBC2ABC5E93002E93C9 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 			);
 			productRefGroup = 131E785F29C9BB24000DF928 /* Products */;
 			projectDirPath = "";
@@ -1230,6 +1234,14 @@
 				version = 2.10.0;
 			};
 		};
+		7BDA8FBC2ABC5E93002E93C9 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1247,6 +1259,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7BB350D92A2A32A8005065E4 /* XCRemoteSwiftPackageReference "Mantis" */;
 			productName = Mantis;
+		};
+		7BDA8FBD2ABC5E94002E93C9 /* CachedAsyncImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BDA8FBC2ABC5E93002E93C9 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */;
+			productName = CachedAsyncImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

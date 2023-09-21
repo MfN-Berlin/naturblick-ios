@@ -4,6 +4,7 @@
 
 
 import SwiftUI
+import CachedAsyncImage
 
 struct PortraitImageView: View {
     @StateObject var portraitImageViewModel = PortraitImageViewModel()
@@ -15,7 +16,7 @@ struct PortraitImageView: View {
             if let item = portraitImageViewModel.image {
                 
                 ZStack {
-                    AsyncImage(url: URL(string: Configuration.strapiUrl + item.url)!) { image in
+                    CachedAsyncImage(url: URL(string: Configuration.strapiUrl + item.url)!) { image in
                         image
                             .resizable()
                             .scaledToFit()
