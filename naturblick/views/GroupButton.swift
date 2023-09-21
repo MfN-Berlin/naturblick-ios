@@ -7,18 +7,21 @@ import SwiftUI
 struct GroupButton: View {
 
     let group: Group
+    let geo: GeometryProxy
 
     var body: some View {
         VStack() {
-            Image(group.image).resizable()
+            Image(group.image)
                 .resizable()
+                .imageScale(.small)
                 .clipShape(Circle())
                 .scaledToFit()
+                .frame(width: geo.size.width * .topRowFactor)
                 .nbShadow()
             Text(group.gerName)
                 .multilineTextAlignment(TextAlignment.center)
                 .foregroundColor(.onPrimaryHighEmphasis)
-                .font(.nbBody1)
+                .font(.nbCaption)
             Spacer()
         }
     }
@@ -26,6 +29,8 @@ struct GroupButton: View {
 
 struct GroupButton_Previews: PreviewProvider {
     static var previews: some View {
-        GroupButton(group: Group.groups[0])
+        GeometryReader { geo in
+            GroupButton(group: Group.groups[0], geo: geo)
+        }
     }
 }
