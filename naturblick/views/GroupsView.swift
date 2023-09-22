@@ -24,9 +24,9 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
                 .foregroundColor(.onPrimaryHighEmphasis)
             GeometryReader { geo in
                 LazyVGrid(columns: [
-                    GridItem(spacing: .defaultPadding + .halfPadding, alignment: .top),
-                    GridItem(spacing: .defaultPadding + .halfPadding, alignment: .top),
-                    GridItem(spacing: .defaultPadding + .halfPadding, alignment: .top)
+                    GridItem(spacing: .defaultPadding, alignment: .top),
+                    GridItem(spacing: .defaultPadding, alignment: .top),
+                    GridItem(spacing: .defaultPadding, alignment: .top)
                 ], spacing: .defaultPadding) {
                     ForEach(groups) { group in
                         GroupButton(group: group, geo: geo).onTapGesture {
