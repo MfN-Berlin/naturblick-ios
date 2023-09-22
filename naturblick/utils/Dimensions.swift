@@ -21,7 +21,8 @@ extension CGFloat {
     static let checkedSize: CGFloat = 20
     static let roundBottomHeight: CGFloat = 30
     static let editTextIconSize: CGFloat = 24
-    
+    static let topRowFactor: CGFloat = 0.25
+    static let bottomRowFactor: CGFloat = 0.2
 }
 
 extension CGSize {

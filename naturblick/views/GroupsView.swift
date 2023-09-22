@@ -22,20 +22,22 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
             Text("Wähle eine Gruppe")
                 .font(.nbHeadline3)
                 .foregroundColor(.onPrimaryHighEmphasis)
-            LazyVGrid(columns: [
-                GridItem(spacing: .defaultPadding + .halfPadding, alignment: .top),
-                GridItem(spacing: .defaultPadding + .halfPadding, alignment: .top),
-                GridItem(spacing: .defaultPadding + .halfPadding, alignment: .top)
-            ], spacing: .defaultPadding) {
-                ForEach(groups) { group in
-                    GroupButton(group: group).onTapGesture {
-                        let nextViewController = destination(group).setUpViewController()
-                        viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+            GeometryReader { geo in
+                LazyVGrid(columns: [
+                    GridItem(spacing: .defaultPadding, alignment: .top),
+                    GridItem(spacing: .defaultPadding, alignment: .top),
+                    GridItem(spacing: .defaultPadding, alignment: .top)
+                ], spacing: .defaultPadding) {
+                    ForEach(groups) { group in
+                        GroupButton(group: group, geo: geo).onTapGesture {
+                            let nextViewController = destination(group).setUpViewController()
+                            viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+                        }
                     }
                 }
+                .padding(.leading, .defaultPadding)
+                .padding(.trailing, .defaultPadding)
             }
-            .padding(.leading, .defaultPadding)
-            .padding(.trailing, .defaultPadding)
         }
     }
 }

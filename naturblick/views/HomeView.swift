@@ -66,8 +66,6 @@ struct HomeView: HostedView {
         })
     }
     
-    let firstRowWidthFactor: CGFloat = 4.5
-    let secondRowWidthFactor: CGFloat = 5
     @Environment(\.colorScheme) var colorScheme
 
     @State var isShowingPortrait = false
@@ -84,8 +82,8 @@ struct HomeView: HostedView {
     var body: some View {
         GeometryReader { geo in
             
-            let topRowSize = geo.size.width * 0.25
-            let bottomRowSize = geo.size.width * 0.2
+            let topRowSize = geo.size.width * .topRowFactor
+            let bottomRowSize = geo.size.width * .bottomRowFactor
             
             ZStack {
                 VStack {
