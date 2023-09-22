@@ -4,6 +4,7 @@
 
 
 import SwiftUI
+import CachedAsyncImage
 
 struct SpeciesListView: NavigatableView {
     
@@ -41,7 +42,7 @@ struct SpeciesListView: NavigatableView {
             if let url = current.url {
                 // When used, AsyncImage has to be the outermost element
                 // or it will not properly load in List
-                AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                CachedAsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
                     SpeciesListItemView(species: current, avatar: image)
                         .onTapGesture {
                             showSpecies(species: current)

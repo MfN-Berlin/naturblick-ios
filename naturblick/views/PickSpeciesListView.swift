@@ -3,6 +3,8 @@
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
 import SwiftUI
+import CachedAsyncImage
+
 
 struct PickSpeciesListView: View {
     @Binding var picked: SpeciesListItem?
@@ -40,7 +42,7 @@ struct PickSpeciesListView: View {
             if let url = current.url {
                 // When used, AsyncImage has to be the outermost element
                 // or it will not properly load in List
-                AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                CachedAsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
                     SpeciesListItemView(species: current, avatar: image)
                         .onTapGesture {
                             showInfo = SpeciesInfo(species: current, avatar: image)

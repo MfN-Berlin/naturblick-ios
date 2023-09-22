@@ -4,7 +4,7 @@
 
 
 import SwiftUI
-
+import CachedAsyncImage
 
 struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
@@ -47,7 +47,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                         if let url = item.url {
                             // When used, AsyncImage has to be the outermost element
                             // or it will not properly load in List
-                            AsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                            CachedAsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
                                 SpeciesResultView(result: result, species: item, avatar: image)
                                     .onTapGesture {
                                         openSpeciesInfo(species: item, image: image)
