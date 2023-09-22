@@ -47,8 +47,8 @@ struct HomeView: HostedView {
                     let view = SettingsView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 },
-                MenuEntry(title: "FeedbackTODO", image: UIImage(systemName: "square.and.pencil")!) {
-                    let view = HelpView().setUpViewController()
+                MenuEntry(title: "Feedback", image: UIImage(systemName: "square.and.pencil")!) {
+                    let view = FeedbackView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 },
                 MenuEntry(title: "Imprint", image: UIImage(systemName: "shield")!) {
