@@ -28,36 +28,21 @@ struct SimilarSpeciesItemView: View {
                 }
             }
             VStack(alignment: .leading) {
-                if let gername = species.name {
+                if let name = species.name {
                     Text(species.sciname)
                         .font(.nbSubtitle3)
-                        .foregroundColor(.onSecondarySignalHigh)
-                    Text(gername)
-                        .font(.nbSubtitle1)
-                        .foregroundColor(.onSecondaryHighEmphasis)
-                } else if let name = species.name {
-                    Text(species.sciname)
-                        .font(.nbSubtitle3)
-                        .foregroundColor(.onSecondarySignalLow)
-                        .padding(.bottom, .defaultPadding)
+                        .foregroundColor(.onFeatureSignalHigh)
                     Text(name)
                         .font(.nbSubtitle1)
-                        .foregroundColor(.onSecondaryHighEmphasis)
-                } else if let gersynonym = species.gersynonym {
-                    Text(species.sciname)
-                        .font(.nbSubtitle1)
-                        .foregroundColor(.onSecondaryHighEmphasis)
-                    Text(gersynonym)
-                        .font(.nbSubtitle3)
-                        .padding(.bottom, .defaultPadding)
-                        .foregroundColor(.onSecondarySignalLow)
+                        .foregroundColor(.onFeatureHighEmphasis)
                 } else {
                     Text(species.sciname)
                         .font(.nbSubtitle1)
-                        .foregroundColor(.onSecondaryHighEmphasis)
+                        .foregroundColor(.onFeatureSignalHigh)
                 }
             }
             .padding(.top, .avatarTextOffset)
+            Spacer()
         }
     }
 }

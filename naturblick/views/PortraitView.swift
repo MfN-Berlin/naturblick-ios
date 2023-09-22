@@ -60,8 +60,7 @@ struct PortraitView: NavigatableView {
                             }
                             .padding(.defaultPadding)
                             .background {
-                                Rectangle()
-                                    .foregroundColor(.featureColor)
+                                RoundedRectangle(cornerRadius: .largeCornerRadius)                                    .foregroundColor(.featureColor)
                             }
                             
                             VStack(alignment: .leading) {
