@@ -4,60 +4,85 @@
 
 
 import SwiftUI
-import CachedAsyncImage
 
 struct PortraitImageView: View {
-    @StateObject var portraitImageViewModel = PortraitImageViewModel()
-    let meta: PortraitImageMeta
-    let showText: Bool
+    let geo: GeometryProxy
+    let image: PortraitImage
+    let headerImage: Bool
+    @Environment(\.displayScale) private var displayScale: CGFloat
+    @State var preview: UIImage? = nil
+    @State var full: UIImage? = nil
     
     var body: some View {
         VStack {
-            if let item = portraitImageViewModel.image {
-                
-                ZStack {
-                    CachedAsyncImage(url: URL(string: Configuration.strapiUrl + item.url)!) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(showText ? .smallCornerRadius : 0.0)
-                    } placeholder: {
-                        Image("placeholder")
-                    }
-                    Button(action: {
-                        print("[Source](\(meta.source)) \(Licence.licenceToLink(licence: meta.license)) \(meta.owner)")
-                    }) {
-                        Circle()
-                            .fill(Color.onImageSignalLow)
-                            .overlay {
-                                Image("ic_copyright")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .foregroundColor(.onPrimaryHighEmphasis)
-                                    .padding(.fabIconMiniPadding)
-                            }
-                            .frame(height: .fabMiniSize)
-                            .padding([.top, .horizontal], .defaultPadding)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-                    }
+            SwiftUI.Group {
+                if let full = self.full {
+                    Image(uiImage: full)
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
+                } else if let preview = self.preview {
+                    Image(uiImage: preview)
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
+                } else {
+                    Image("placeholder")
+                        .resizable()
+                        .scaledToFill()
+                        .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
                 }
-                if showText {
-                    Text(meta.text)
-                        .font(.nbBody1)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                }
-            } else {
-                Text("No Image available")
             }
-        }
-        .task {
-            portraitImageViewModel.filter(portraitImgId: meta.id)
+     .overlay(alignment: headerImage ? .bottomTrailing : .topTrailing) {
+                Button(action: {
+                    print("[Source](\(image.source)) \(Licence.licenceToLink(licence: image.license)) \(image.owner)")
+                }) {
+                    Circle()
+                        .fill(Color.onImageSignalLow)
+                        .overlay {
+                            Image("ic_copyright")
+                                .resizable()
+                                .scaledToFill()
+                                .foregroundColor(.onPrimaryHighEmphasis)
+                                .padding(.fabIconMiniPadding)
+                        }
+                        .frame(width: .fabMiniSize, height: .fabMiniSize)
+                        .padding(headerImage ? [.horizontal] : [.top, .horizontal], .defaultPadding)
+                        .padding(headerImage ? [.bottom] : [], .roundBottomHeight + .defaultPadding)
+                }
+            }
+            if !headerImage {
+                Text(image.text)
+                    .font(.nbBody1)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+        }.onAppear {
+            let previewUrl = URL(string: Configuration.strapiUrl + image.bestImage(geo: geo, displayScale: displayScale * .previewScale).url)!
+            let fullUrl = URL(string: Configuration.strapiUrl + image.bestImage(geo: geo, displayScale: displayScale).url)!
+            if previewUrl != fullUrl {
+                Task {
+                    if let image = await URLSession.shared.cachedImage(url: previewUrl) {
+                        Task.detached { @MainActor in
+                            self.preview = image
+                        }
+                    }
+                }
+            }
+            Task {
+                if let image = await URLSession.shared.cachedImage(url: fullUrl) {
+                    Task.detached { @MainActor in
+                        self.preview = image
+                    }
+                }
+            }
         }
     }
 }
 
 struct PortraitImageView_Previews: PreviewProvider {
     static var previews: some View {
-        PortraitImageView(meta: PortraitImageMeta.sampleData, showText: true)
+        GeometryReader { geo in
+            PortraitImageView(geo: geo, image: PortraitImage.sampleData, headerImage: true)
+        }
     }
 }

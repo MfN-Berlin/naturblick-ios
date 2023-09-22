@@ -3,18 +3,36 @@
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
 import SwiftUI
+import CachedAsyncImage
 
 struct SpeciesListItemView: View {
     let species: SpeciesListItem
-    let avatar: Image
+
+    var urlRequest: URLRequest? {
+        if let urlstr = species.url, let url = URL(string: Configuration.strapiUrl + urlstr) {
+            return URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+        } else {
+            return nil
+        }
+    }
+    
     var body: some View {
         HStack(alignment: .top) {
-            avatar
-                .resizable()
-                .scaledToFit()
-                .clipShape(Circle())
-                .frame(width: .avatarSize, height: .avatarSize)
-                .padding(.trailing, .defaultPadding)
+            CachedAsyncImage(urlRequest: urlRequest) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .frame(width: .avatarSize, height: .avatarSize)
+                    .padding(.trailing, .defaultPadding)
+            } placeholder: {
+                Image("placeholder")
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .frame(width: .avatarSize, height: .avatarSize)
+                    .padding(.trailing, .defaultPadding)
+            }
             VStack(alignment: .leading) {
                 if let gername = species.name, let gersynonym = species.gersynonym {
                     Text(gername)
@@ -48,6 +66,6 @@ struct SpeciesListItemView: View {
 
 struct SpeciesListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesListItemView(species: SpeciesListItem.sampleData, avatar: Image("placeholder"))
+        SpeciesListItemView(species: SpeciesListItem.sampleData)
     }
 }

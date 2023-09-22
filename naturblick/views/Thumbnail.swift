@@ -29,7 +29,7 @@ struct Thumbnail<Content: View> : View {
             if let thumbnailId = self.thumbnailId {
                 self.uiImage = try? await NBImage(id: thumbnailId).image
             } else if let speciesUrl = speciesUrl {
-                self.uiImage = try? await BackendClient().downloadCached(speciesUrl: speciesUrl)
+                self.uiImage = await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!)
             }
         }
     }

@@ -3,8 +3,6 @@
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
 import SwiftUI
-import CachedAsyncImage
-
 
 struct PickSpeciesListView: View {
     @Binding var picked: SpeciesListItem?
@@ -12,7 +10,7 @@ struct PickSpeciesListView: View {
     @State var page: Int = 0
     @State var query: String = ""
     @StateObject var speciesListViewModel = SpeciesListViewModel()
-    @State var showInfo: SpeciesInfo? = nil
+    @State var showInfo: SpeciesListItem? = nil
     
     func reloadSpecies() {
         Task {
@@ -39,36 +37,15 @@ struct PickSpeciesListView: View {
     
     var body: some View {
         List(species) { current in
-            if let url = current.url {
-                // When used, AsyncImage has to be the outermost element
-                // or it will not properly load in List
-                CachedAsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
-                    SpeciesListItemView(species: current, avatar: image)
-                        .onTapGesture {
-                            showInfo = SpeciesInfo(species: current, avatar: image)
-                        }
-                } placeholder: {
-                    SpeciesListItemView(species: current, avatar: Image("placeholder"))
-                        .onTapGesture {
-                            showInfo = SpeciesInfo(species: current, avatar: Image("placeholder"))
-                        }
+            SpeciesListItemView(species: current)
+                .onTapGesture {
+                    showInfo = current
                 }
                 .listRowInsets(.nbInsets)
                 .listRowBackground(Color.secondaryColor)
                 .onAppear {
                     itemAppear(item: current)
                 }
-            } else {
-                SpeciesListItemView(species: current, avatar: Image("placeholder"))
-                    .onTapGesture {
-                        showInfo = SpeciesInfo(species: current, avatar: Image("placeholder"))
-                    }
-                    .listRowInsets(.nbInsets)
-                    .listRowBackground(Color.secondaryColor)
-                    .onAppear {
-                        itemAppear(item: current)
-                    }
-            }
         }
         .listStyle(.plain)
         .searchable(text: $query)
@@ -81,14 +58,14 @@ struct PickSpeciesListView: View {
                 reloadSpecies()
             }
         }
-        .popover(item: $showInfo) { info in
+        .popover(item: $showInfo) { species in
             NavigationView {
                 Text("Test")
-                    .navigationTitle(info.species.name != nil ? info.species.name! : info.species.sciname)
+                    .navigationTitle(species.name != nil ? species.name! : species.sciname)
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Select") {
-                                picked = info.species
+                                picked = species
                             }
                         }
                         ToolbarItem(placement: .cancellationAction) {

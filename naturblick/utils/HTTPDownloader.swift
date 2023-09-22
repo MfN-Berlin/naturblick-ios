@@ -6,6 +6,7 @@
 import Foundation
 import Combine
 import os
+import UIKit
 
 let validStatus = 200...299
 let clientError = 400...499
@@ -102,4 +103,14 @@ extension URLSession: HTTPDownloader {
         }
     }
 
+}
+
+extension URLSession {
+    func cachedImage(url: URL) async -> UIImage? {
+        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+        guard let data = try? await URLSession.shared.data(for: request).0 else {
+            return nil
+        }
+        return UIImage(data: data)
+    }
 }

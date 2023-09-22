@@ -4,15 +4,7 @@
 
 
 import SwiftUI
-
-struct SpeciesInfo: Identifiable {
-    var id: String {
-        species.id
-    }
-    let species: SpeciesListItem
-    let avatar: Image
-}
-
+import CachedAsyncImage
 
 struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
@@ -23,47 +15,64 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
     
     func configureNavigationItem(item: UINavigationItem) {
         item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Choose") {_ in
-            flow.selectSpecies(species: info.species)
+            flow.selectSpecies(species: species)
         })
     }
     
-    let info: SpeciesInfo
+    let species: SpeciesListItem
     @ObservedObject var flow: Flow
+    
+    var urlRequest: URLRequest? {
+        if let urlstr = species.url, let url = URL(string: Configuration.strapiUrl + urlstr) {
+            return URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+        } else {
+            return nil
+        }
+    }
+    
     var body: some View {
         VStack {
-            info.avatar
-                .resizable()
-                .scaledToFit()
-                .clipShape(Circle())
-                .padding(.trailing, .defaultPadding)
-            
-            if let name = info.species.name {
-                Text(info.species.sciname)
+            CachedAsyncImage(urlRequest: urlRequest) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .padding(.trailing, .defaultPadding)
+            } placeholder: {
+                Image("placeholder")
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .padding(.trailing, .defaultPadding)
+            }
+            if let name = species.name {
+                Text(species.sciname)
                 Text(name)
             } else {
-                Text(info.species.sciname)
+                Text(species.sciname)
             }
-            if info.species.hasPortrait {
+            if species.hasPortrait {
                 Button("Visit artportrait") {
-                    let view = PortraitView(species: info.species)
+                    let view = PortraitView(species: species)
                     withNavigation { navigation in
                         navigation.pushViewController(view.setUpViewController(), animated: true)
                     }
                 }
-            } else if let wikipedia = info.species.wikipedia {
+            } else if let wikipedia = species.wikipedia {
                 Link("Visit wikipedia", destination: URL(string: wikipedia)!)
             }
             
-            if let audioUrl = info.species.audioUrl {
+            if let audioUrl = species.audioUrl {
                 SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!)
             }
-        }.padding(.defaultPadding)
+        }
+        .padding(.defaultPadding)
     }
 }
 
 struct SpeciesInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesInfoView(info: SpeciesInfo(species: .sampleData, avatar: Image("placeholder")), flow: IdFlowSample())
+        SpeciesInfoView(species: .sampleData, flow: IdFlowSample())
     }
 }
 

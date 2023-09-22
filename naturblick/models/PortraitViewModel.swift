@@ -9,9 +9,13 @@ class PortraitViewModel: ObservableObject {
     
     @Published private(set) var portrait: Portrait?
     
-    static let descImg = PortraitImageMeta.Definition.table.alias("descImg")
-    static let cityImg = PortraitImageMeta.Definition.table.alias("cityImg")
-    static let goodImg = PortraitImageMeta.Definition.table.alias("goodImg")
+    static let descImg = PortraitImage.Definition.table.alias("desc_img")
+    static let cityImg = PortraitImage.Definition.table.alias("city_img")
+    static let goodImg = PortraitImage.Definition.table.alias("good_img")
+    
+    static let descImgSizes = PortraitImageSize.Definition.table.alias("desc_img_size")
+    static let cityImgSizes = PortraitImageSize.Definition.table.alias("city_img_size")
+    static let goodImgSizes = PortraitImageSize.Definition.table.alias("good_img_size")
     
     private static func query(speciesId: Int64) -> QueryType {
         return Portrait.Definition.table
@@ -23,86 +27,105 @@ class PortraitViewModel: ObservableObject {
             .join(
                 .leftOuter,
                 descImg,
-                on: descImg[PortraitImageMeta.Definition.id] == Portrait.Definition.descriptionImage
+                on: descImg[PortraitImage.Definition.id] == Portrait.Definition.descriptionImage
+            )
+            .join(
+                .leftOuter,
+                descImgSizes,
+                on: descImgSizes[PortraitImageSize.Definition.portraitImageId] == Portrait.Definition.descriptionImage
             )
             .join(
                 .leftOuter,
                 cityImg,
-                on: cityImg[PortraitImageMeta.Definition.id] == Portrait.Definition.intTheCityImage
+                on: cityImg[PortraitImage.Definition.id] == Portrait.Definition.intTheCityImage
+            )
+            .join(
+                .leftOuter,
+                cityImgSizes,
+                on: cityImgSizes[PortraitImageSize.Definition.portraitImageId] == Portrait.Definition.intTheCityImage
             )
             .join(
                 .leftOuter,
                 goodImg,
-                on: goodImg[PortraitImageMeta.Definition.id] == Portrait.Definition.goodToKnowImage
+                on: goodImg[PortraitImage.Definition.id] == Portrait.Definition.goodToKnowImage
+            )
+            .join(
+                .leftOuter,
+                goodImgSizes,
+                on: goodImgSizes[PortraitImageSize.Definition.portraitImageId] == Portrait.Definition.goodToKnowImage
             )
             .filter(Portrait.Definition.speciesId == speciesId)
             .filter(Portrait.Definition.language == 1) // Only in german to start with
         }
-        
+         
+    private func portraitImage(imgTable: Table, sizesTable: Table, rows: [Row]) -> PortraitImage? {
+        Dictionary(grouping: rows, by: { $0[sizesTable[PortraitImageSize.Definition.portraitImageIdOpt]] })
+            .compactMap { imageIdOpt, imageRows in
+                guard let imageId = imageIdOpt else {
+                    return nil
+                }
+                let sizes: [PortraitImageSize] = Dictionary(grouping: imageRows, by: { $0[sizesTable[PortraitImageSize.Definition.width]]})
+                    .map { width, sizeRows in
+                        let row = sizeRows[0]
+                        return PortraitImageSize(
+                            width: width,
+                            height: row[sizesTable[PortraitImageSize.Definition.height]],
+                            url: row[sizesTable[PortraitImageSize.Definition.url]]
+                        )
+                    }
+            let row = imageRows[0]
+            return PortraitImage(
+                id: imageId,
+                owner: row[imgTable[PortraitImage.Definition.owner]],
+                ownerLink: row[imgTable[PortraitImage.Definition.ownerLink]],
+                source: row[imgTable[PortraitImage.Definition.source]],
+                text: row[imgTable[PortraitImage.Definition.text]],
+                license: row[imgTable[PortraitImage.Definition.license]],
+                sizes: sizes
+            )
+            }.first
+    }
+    
         func filter(speciesId: Int64) {
             do {
                 
                 let speciesDb = Connection.speciesDB
-                portrait = try speciesDb.pluck(
+                let result = try speciesDb.prepare(
                     PortraitViewModel.query(speciesId: speciesId)
                 )
-                .map { row in
-                    Portrait(
-                        id: row[Portrait.Definition.table[Portrait.Definition.id]],
-                        species: Species(
-                            id: row[Portrait.Definition.speciesId],
-                            group: row[Species.Definition.table[Species.Definition.group]],
-                            sciname: row[Species.Definition.table[Species.Definition.sciname]],
-                            gername: row[Species.Definition.table[Species.Definition.gername]],
-                            engname: row[Species.Definition.table[Species.Definition.engname]],
-                            wikipedia: row[Species.Definition.table[Species.Definition.wikipedia]],
-                            maleUrl: row[Species.Definition.table[Species.Definition.maleUrl]],
-                            femaleUrl: row[Species.Definition.table[Species.Definition.femaleUrl]],
-                            gersynonym: row[Species.Definition.table[Species.Definition.gersynonym]],
-                            engsynonym: row[Species.Definition.table[Species.Definition.engsynonym]],
-                            redListGermany: row[Species.Definition.table[Species.Definition.redListGermany]],
-                            iucnCategory: row[Species.Definition.table[Species.Definition.iucnCategory]],
-                            hasPortrait: true
-                        ),
-                        description: row[Portrait.Definition.description],
-                        descriptionImage: row[Portrait.Definition.descriptionImage] != nil
-                            ? PortraitImageMeta(
-                                id: row[Portrait.Definition.descriptionImage]!,
-                                owner: row[PortraitViewModel.descImg[PortraitImageMeta.Definition.owner]],
-                                ownerLink: row[PortraitViewModel.descImg[PortraitImageMeta.Definition.ownerLink]],
-                                source: row[PortraitViewModel.descImg[PortraitImageMeta.Definition.source]],
-                                text: row[PortraitViewModel.descImg[PortraitImageMeta.Definition.text]],
-                                license: row[PortraitViewModel.descImg[PortraitImageMeta.Definition.license]]
-                            )
-                            : nil,
-                        language: row[Portrait.Definition.language],
-                        inTheCity: row[Portrait.Definition.inTheCity],
-                        inTheCityImage: row[Portrait.Definition.intTheCityImage] != nil
-                            ? PortraitImageMeta(
-                                id: row[Portrait.Definition.intTheCityImage]!,
-                                owner: row[PortraitViewModel.cityImg[PortraitImageMeta.Definition.owner]],
-                                ownerLink: row[PortraitViewModel.cityImg[PortraitImageMeta.Definition.ownerLink]],
-                                source: row[PortraitViewModel.cityImg[PortraitImageMeta.Definition.source]],
-                                text: row[PortraitViewModel.cityImg[PortraitImageMeta.Definition.text]],
-                                license: row[PortraitViewModel.cityImg[PortraitImageMeta.Definition.license]]
-                            )
-                            : nil,
-                        goodToKnowImage: row[Portrait.Definition.goodToKnowImage] != nil
-                            ? PortraitImageMeta(
-                                id: row[Portrait.Definition.goodToKnowImage]!,
-                                owner: row[PortraitViewModel.goodImg[PortraitImageMeta.Definition.owner]],
-                                ownerLink: row[PortraitViewModel.goodImg[PortraitImageMeta.Definition.ownerLink]],
-                                source: row[PortraitViewModel.goodImg[PortraitImageMeta.Definition.source]],
-                                text: row[PortraitViewModel.goodImg[PortraitImageMeta.Definition.text]],
-                                license: row[PortraitViewModel.goodImg[PortraitImageMeta.Definition.license]]
-                            )
-                            : nil,
-                        sources: row[Portrait.Definition.sources],
-                        audioUrl: row[Portrait.Definition.audioUrl],
-                        landscape: row[Portrait.Definition.landscape],
-                        focus: row[Portrait.Definition.focus]
-                    )
-                }
+                
+                portrait = Dictionary(grouping: result, by: { $0[Portrait.Definition.table[Portrait.Definition.id]] })
+                    .map { portraitId, rows in
+                        let row = rows[0]
+                        return Portrait(
+                            id: row[Portrait.Definition.table[Portrait.Definition.id]],
+                            species: Species(
+                                id: row[Portrait.Definition.speciesId],
+                                group: row[Species.Definition.table[Species.Definition.group]],
+                                sciname: row[Species.Definition.table[Species.Definition.sciname]],
+                                gername: row[Species.Definition.table[Species.Definition.gername]],
+                                engname: row[Species.Definition.table[Species.Definition.engname]],
+                                wikipedia: row[Species.Definition.table[Species.Definition.wikipedia]],
+                                maleUrl: row[Species.Definition.table[Species.Definition.maleUrl]],
+                                femaleUrl: row[Species.Definition.table[Species.Definition.femaleUrl]],
+                                gersynonym: row[Species.Definition.table[Species.Definition.gersynonym]],
+                                engsynonym: row[Species.Definition.table[Species.Definition.engsynonym]],
+                                redListGermany: row[Species.Definition.table[Species.Definition.redListGermany]],
+                                iucnCategory: row[Species.Definition.table[Species.Definition.iucnCategory]],
+                                hasPortrait: true
+                            ),
+                            description: row[Portrait.Definition.description],
+                            descriptionImage: portraitImage(imgTable: PortraitViewModel.descImg, sizesTable: PortraitViewModel.descImgSizes, rows: rows),
+                            language: row[Portrait.Definition.language],
+                            inTheCity: row[Portrait.Definition.inTheCity],
+                            inTheCityImage: portraitImage(imgTable: PortraitViewModel.cityImg, sizesTable: PortraitViewModel.cityImgSizes, rows: rows),
+                            goodToKnowImage: portraitImage(imgTable: PortraitViewModel.goodImg, sizesTable: PortraitViewModel.goodImgSizes, rows: rows),
+                            sources: row[Portrait.Definition.sources],
+                            audioUrl: row[Portrait.Definition.audioUrl],
+                            landscape: row[Portrait.Definition.landscape],
+                            focus: row[Portrait.Definition.focus]
+                        )
+                    }.first
             } catch {
                 preconditionFailure(error.localizedDescription)
             }
