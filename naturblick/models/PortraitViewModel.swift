@@ -90,6 +90,7 @@ class PortraitViewModel: ObservableObject {
             do {
                 
                 let speciesDb = Connection.speciesDB
+                let souresTranslations = try Dictionary(speciesDB: speciesDb, language: 1)
                 let result = try speciesDb.prepare(
                     PortraitViewModel.query(speciesId: speciesId)
                 )
@@ -120,7 +121,7 @@ class PortraitViewModel: ObservableObject {
                             inTheCity: row[Portrait.Definition.inTheCity],
                             inTheCityImage: portraitImage(imgTable: PortraitViewModel.cityImg, sizesTable: PortraitViewModel.cityImgSizes, rows: rows),
                             goodToKnowImage: portraitImage(imgTable: PortraitViewModel.goodImg, sizesTable: PortraitViewModel.goodImgSizes, rows: rows),
-                            sources: row[Portrait.Definition.sources],
+                            sources: souresTranslations.replaceAll(text:row[Portrait.Definition.sources]),
                             audioUrl: row[Portrait.Definition.audioUrl],
                             landscape: row[Portrait.Definition.landscape],
                             focus: row[Portrait.Definition.focus]
