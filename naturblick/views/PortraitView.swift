@@ -94,11 +94,10 @@ struct PortraitView: NavigatableView {
                                     }
                                 }
                                 .padding(.bottom, .defaultPadding)
-
-                                Text("Quellen")
-                                    .font(.nbHeadline4)
                                 
                                 if let sources = portrait.sources {
+                                    Text("Quellen")
+                                        .font(.nbHeadline4)
                                     Text(sources)
                                         .font(.nbBody1)
                                 }
@@ -109,7 +108,6 @@ struct PortraitView: NavigatableView {
                             RoundedRectangle(cornerRadius: .largeCornerRadius)
                                 .foregroundColor(.secondaryColor)
                         }
-                        
                     } else {
                         Text("Sorry No Portrait")
                     }
