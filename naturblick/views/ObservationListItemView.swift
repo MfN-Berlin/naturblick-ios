@@ -29,7 +29,9 @@ struct ObservationListItemView: View {
                 }
             }
             .padding(.top, .avatarTextOffset)
+            Spacer()
         }
+        .contentShape(Rectangle())
     }
 }
 
