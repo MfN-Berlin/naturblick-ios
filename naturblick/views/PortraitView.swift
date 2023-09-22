@@ -83,10 +83,21 @@ struct PortraitView: NavigatableView {
                                 Text("Wissenswertes")
                                     .font(.nbHeadline4)
                                     .padding(.bottom, .defaultPadding)
-                                GoodToKnowView(portraitId: portrait.id)
-                                
+                                ForEach(portrait.goodToKnows, id: \.self) { goodToKnow in
+                                    HStack {
+                                        Rectangle()
+                                            .fill(Color.onSecondarySignalLow)
+                                            .frame(width: .goodToKnowLineWidth)
+                                            .frame(maxHeight: .infinity)
+                                        Text(goodToKnow)
+                                            .padding(.leading, .defaultPadding)
+                                    }
+                                }
+                                .padding(.bottom, .defaultPadding)
+
                                 Text("Quellen")
                                     .font(.nbHeadline4)
+                                
                                 if let sources = portrait.sources {
                                     Text(sources)
                                         .font(.nbBody1)

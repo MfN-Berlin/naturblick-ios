@@ -109,9 +109,6 @@
 		7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8839D729D5749B006CB94E /* PortraitView.swift */; };
 		7B8839DA29D5762D006CB94E /* PortraitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8839D929D5762D006CB94E /* PortraitViewModel.swift */; };
 		7B993F4929F16C3D0023315B /* SoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B993F4829F16C3D0023315B /* SoundButton.swift */; };
-		7BA037BD29D6C8BB00804AFE /* GoodToKnowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037BC29D6C8BB00804AFE /* GoodToKnowView.swift */; };
-		7BA037BF29D6C8E300804AFE /* GoodToKnow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037BE29D6C8E300804AFE /* GoodToKnow.swift */; };
-		7BA037C129D6C9E800804AFE /* GoodToKnowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037C029D6C9E800804AFE /* GoodToKnowViewModel.swift */; };
 		7BA037C329D6DFF800804AFE /* SimilarSpecies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037C229D6DFF800804AFE /* SimilarSpecies.swift */; };
 		7BA037C529D6E11200804AFE /* SimilarSpeciesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037C429D6E11200804AFE /* SimilarSpeciesViewModel.swift */; };
 		7BA037C729D6E36E00804AFE /* SimilarSpeciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA037C629D6E36E00804AFE /* SimilarSpeciesView.swift */; };
@@ -281,9 +278,6 @@
 		7B8839D729D5749B006CB94E /* PortraitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitView.swift; sourceTree = "<group>"; };
 		7B8839D929D5762D006CB94E /* PortraitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitViewModel.swift; sourceTree = "<group>"; };
 		7B993F4829F16C3D0023315B /* SoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundButton.swift; sourceTree = "<group>"; };
-		7BA037BC29D6C8BB00804AFE /* GoodToKnowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodToKnowView.swift; sourceTree = "<group>"; };
-		7BA037BE29D6C8E300804AFE /* GoodToKnow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodToKnow.swift; sourceTree = "<group>"; };
-		7BA037C029D6C9E800804AFE /* GoodToKnowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodToKnowViewModel.swift; sourceTree = "<group>"; };
 		7BA037C229D6DFF800804AFE /* SimilarSpecies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarSpecies.swift; sourceTree = "<group>"; };
 		7BA037C429D6E11200804AFE /* SimilarSpeciesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarSpeciesViewModel.swift; sourceTree = "<group>"; };
 		7BA037C629D6E36E00804AFE /* SimilarSpeciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarSpeciesView.swift; sourceTree = "<group>"; };
@@ -468,10 +462,10 @@
 				7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */,
 				13B686AF2A093A75001FD28F /* EditObservationView.swift */,
 				13709A842A7D1C0E00B81108 /* FABView.swift */,
+				7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */,
 				7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */,
 				13709A822A7CFE2600B81108 /* FullscreenView.swift */,
 				7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */,
-				7BA037BC29D6C8BB00804AFE /* GoodToKnowView.swift */,
 				7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */,
 				7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */,
 				7BA4DA112A73EC5600AEC0A4 /* HelpView.swift */,
@@ -508,7 +502,6 @@
 				137690022A30946F0076F93A /* SpectrogramView.swift */,
 				7BCCFD7629F2A62A00C71453 /* Style.swift */,
 				7B572DD82A6E758F008F50C5 /* Thumbnail.swift */,
-				7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -529,8 +522,6 @@
 				7BAC5BC72A8F629400160DEC /* DeleteOperation.swift */,
 				13B686AB2A09055C001FD28F /* EditData.swift */,
 				13AFFA592AAF0A0B00ABF4F9 /* EditFlowViewModel.swift */,
-				7BA037BE29D6C8E300804AFE /* GoodToKnow.swift */,
-				7BA037C029D6C9E800804AFE /* GoodToKnowViewModel.swift */,
 				7BCE46BE29C9DB3700C6C101 /* Group.swift */,
 				133715992A8CFBC2009E31E0 /* HttpErrorViewModel.swift */,
 				134939392AAB42F800A50BF1 /* IdFlow.swift */,
@@ -554,6 +545,7 @@
 				7BA037C229D6DFF800804AFE /* SimilarSpecies.swift */,
 				7BA037C429D6E11200804AFE /* SimilarSpeciesViewModel.swift */,
 				137ACD2B2A6171BD00C370CF /* SoundData.swift */,
+				13839FBD2ABDBE0A00DE2A5B /* SourcesTranslation.swift */,
 				13316BD829C9F4150077292B /* Species.swift */,
 				13316BDA29C9F6030077292B /* SpeciesListFilter.swift */,
 				13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */,
@@ -565,7 +557,6 @@
 				7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */,
 				134F548F2A5EB60F00A079EC /* UploadOperation.swift */,
 				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
-				13839FBD2ABDBE0A00DE2A5B /* SourcesTranslation.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -578,6 +569,7 @@
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
 				133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */,
 				7BD016242A0B8CC400B07A3E /* Data.swift */,
+				7BB74B5C2ABB3915002C4493 /* Dimensions.swift */,
 				13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */,
 				132B0D9529CDD5C500B80C9E /* Font+Lato.swift */,
 				13B686AD2A091951001FD28F /* Formatter.swift */,
@@ -587,6 +579,7 @@
 				7BCD2E432A2DCF3D0083B310 /* ImageCropper.swift */,
 				7B2CEA132AA5DAA8004B4276 /* Licence.swift */,
 				137690082A30DC5A0076F93A /* LocalFileDownloader.swift */,
+				7BB74B5A2ABB2E34002C4493 /* MenuController.swift */,
 				7BD016222A0B723600B07A3E /* MultipartRequest.swift */,
 				1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */,
 				137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */,
@@ -598,15 +591,13 @@
 				7BB68E492A545D5C00B1DC51 /* String+Validations.swift */,
 				7BCEFCC52A690F4800EAC332 /* UIApplication.swift */,
 				7BCEFCC72A690FC800EAC332 /* UIDevice.swift */,
+				7BB74B582ABAE834002C4493 /* UIFont+Lato.swift */,
 				13743F6B2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift */,
 				7BB777152A612B9100EA844C /* URL+Query.swift */,
 				134F54972A5EDC8100A079EC /* URL+SupportDir.swift */,
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
-				7BB74B582ABAE834002C4493 /* UIFont+Lato.swift */,
-				7BB74B5A2ABB2E34002C4493 /* MenuController.swift */,
-				7BB74B5C2ABB3915002C4493 /* Dimensions.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -823,7 +814,6 @@
 				1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */,
 				7BB3DE2529F68DC700F0D387 /* UnambiguousFeatureViewModel.swift in Sources */,
 				134B72B72A053A6300C1DCAD /* CreateData.swift in Sources */,
-				7BA037BD29D6C8BB00804AFE /* GoodToKnowView.swift in Sources */,
 				7BD263522A8E654300CB4FE0 /* Sync.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
 				7BB74B5B2ABB2E34002C4493 /* MenuController.swift in Sources */,
@@ -857,7 +847,6 @@
 				7BA037C729D6E36E00804AFE /* SimilarSpeciesView.swift in Sources */,
 				7BC77E8A2A6A4FC400B489C2 /* KeychainItemAccessibility.swift in Sources */,
 				134C75A92A2F513E0046EEE4 /* BirdRecorderView.swift in Sources */,
-				7BA037BF29D6C8E300804AFE /* GoodToKnow.swift in Sources */,
 				7BC6100C2A30989900185BAA /* FurtherSourcesView.swift in Sources */,
 				7BB03C352A0CCA9900C3A885 /* HTTPDownloader.swift in Sources */,
 				1337D96D2A7A982700712B8F /* SpeciesResultView.swift in Sources */,
@@ -903,7 +892,6 @@
 				7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */,
 				13B686AC2A09055C001FD28F /* EditData.swift in Sources */,
 				7BA037C529D6E11200804AFE /* SimilarSpeciesViewModel.swift in Sources */,
-				7BA037C129D6C9E800804AFE /* GoodToKnowViewModel.swift in Sources */,
 				7BC6100A2A3096A400185BAA /* ImprintView.swift in Sources */,
 				13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */,
 				134B72B12A04FB6B00C1DCAD /* ObservationRequest.swift in Sources */,

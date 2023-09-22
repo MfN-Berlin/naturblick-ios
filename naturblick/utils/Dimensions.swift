@@ -23,6 +23,7 @@ extension CGFloat {
     static let editTextIconSize: CGFloat = 24
     static let topRowFactor: CGFloat = 0.25
     static let bottomRowFactor: CGFloat = 0.2
+    static let goodToKnowLineWidth: CGFloat = 2
 }
 
 extension CGSize {
