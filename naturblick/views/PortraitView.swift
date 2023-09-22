@@ -10,16 +10,6 @@ struct PortraitView: NavigatableView {
     var viewName: String? {
         species.name
     }
-    func configureNavigationItem(item: UINavigationItem) {
-        let defaultAppearannce = item.standardAppearance?.copy()
-        let appearance = item.standardAppearance?.copy()
-        appearance?.configureWithTransparentBackground()
-        
-        item.standardAppearance = defaultAppearannce
-        item.compactAppearance = defaultAppearannce
-        item.scrollEdgeAppearance = appearance
-        item.compactScrollEdgeAppearance = appearance
-    }
     
     @StateObject var portraitViewModel = PortraitViewModel()
     let species: SpeciesListItem
