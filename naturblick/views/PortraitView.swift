@@ -77,18 +77,19 @@ struct PortraitView: NavigatableView {
                             VStack(alignment: .leading) {
                                 if let meta = portrait.inTheCityImage {
                                     PortraitImageView(geo: geo, image: meta, headerImage: false)
-                                        .padding([.top, .bottom], .halfPadding)
+                                        .padding(.top, .halfPadding)
                                 }
                                 Text("In der Stadt")
                                     .font(.nbHeadline4)
-                                    .padding(.bottom, .defaultPadding)
+                                    .padding([.top, .bottom], .defaultPadding)
                                 Text(portrait.inTheCity)
                                     .font(.nbBody1)
-                                
+                                    .padding(.bottom, .defaultPadding)
+
                                 
                                 if let meta = portrait.goodToKnowImage {
                                     PortraitImageView(geo: geo, image: meta, headerImage: false)
-                                        .padding([.top, .bottom], .halfPadding)
+                                        .padding(.bottom, .halfPadding)
                                 }
                                 Text("Wissenswertes")
                                     .font(.nbHeadline4)
