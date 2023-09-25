@@ -41,12 +41,12 @@ struct ObservationListView: HostedView {
     
     func configureNavigationItem(item: UINavigationItem, showList: Bool) {
         item.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(systemName: "plus"), primaryAction: UIAction(image:  UIImage(systemName: "plus")) { action in
+            UIBarButtonItem(image: UIImage(named: "add_24"), primaryAction: UIAction(image:  UIImage(named: "add_24")) { action in
                let menuVC = MenuController(entries: [
                    MenuEntry(title: "Identify photo from a plant", image: UIImage(named: "details")!) {
                       
                    },
-                   MenuEntry(title: "Record a bird sound", image: UIImage(named: "microphone")!) {
+                   MenuEntry(title: "Record a bird sound", image: UIImage(named: "audio24")!) {
                        createFlow.recordSound()
                    },
                    MenuEntry(title: "Photograph a plant", image: UIImage(named: "photo24")!) {
@@ -59,7 +59,7 @@ struct ObservationListView: HostedView {
                menuVC.popoverPresentationController?.barButtonItem = action.sender as? UIBarButtonItem
                navigationController?.present(menuVC, animated: true)
            }), 
-            UIBarButtonItem(primaryAction: UIAction(image: UIImage(systemName: showList ? "map" : "list.dash")) {action in
+            UIBarButtonItem(primaryAction: UIAction(image: UIImage(named: showList ? "map" : "format_list_bulleted")) {action in
                 model.showList.toggle()
             })
         ]
