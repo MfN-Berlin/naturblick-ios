@@ -35,7 +35,7 @@ struct PortraitImageView: View {
                             .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
                     }
                 }
-         .overlay(alignment: headerImage ? .bottomTrailing : .topTrailing) {
+         .overlay(alignment: .topTrailing) {
                     Button(action: {
                         showCCByInfo.toggle()
                     }) {
@@ -49,8 +49,7 @@ struct PortraitImageView: View {
                                     .padding(.fabIconMiniPadding)
                             }
                             .frame(width: .fabMiniSize, height: .fabMiniSize)
-                            .padding(headerImage ? [.horizontal] : [.top, .horizontal], .defaultPadding)
-                            .padding(headerImage ? [.bottom] : [], .roundBottomHeight + .defaultPadding)
+                            .padding(.defaultPadding)
                     }
                 }
                 if !headerImage {
