@@ -12,8 +12,8 @@ protocol IdFlow: ObservableObject {
     var spectrogram: UIImage? {get}
     func spectrogramDownloaded(spectrogram: UIImage)
     func spectrogramCropDone(crop: NBImage, start: CGFloat, end: CGFloat)
-    func identify() async throws
-    func selectSpecies(species: SpeciesListItem)
+    func identify() async throws -> [SpeciesResult]
+    func selectSpecies(species: SpeciesListItem?)
 }
 
 class IdFlowSample: IdFlow {
@@ -21,6 +21,6 @@ class IdFlowSample: IdFlow {
     var spectrogram: UIImage? = nil
     func spectrogramDownloaded(spectrogram: UIImage) {}
     func spectrogramCropDone(crop: NBImage, start: CGFloat, end: CGFloat) {}
-    func identify() async throws {}
-    func selectSpecies(species: SpeciesListItem) {}
+    func identify() async throws -> [SpeciesResult] {[]}
+    func selectSpecies(species: SpeciesListItem?) {}
 }

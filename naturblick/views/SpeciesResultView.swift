@@ -4,11 +4,11 @@
 
 
 import SwiftUI
+import CachedAsyncImage
 
 struct SpeciesResultView: View {
     let result: SpeciesResult
     let species: SpeciesListItem
-    let avatar: Image
     
     var color: Color {
         if result.score > 50 {
@@ -17,14 +17,32 @@ struct SpeciesResultView: View {
             return .onSecondarySignalLow
         }
     }
+    
+    var urlRequest: URLRequest? {
+        if let urlstr = species.url, let url = URL(string: Configuration.strapiUrl + urlstr) {
+            return URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+        } else {
+            return nil
+        }
+    }
+    
     var body: some View {
         HStack {
-            avatar
-                .resizable()
-                .scaledToFit()
-                .clipShape(Circle())
-                .frame(width: .avatarSize, height: .avatarSize)
-                .padding(.trailing, .defaultPadding)
+            CachedAsyncImage(urlRequest: urlRequest) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .frame(width: .avatarSize, height: .avatarSize)
+                    .padding(.trailing, .defaultPadding)
+            } placeholder: {
+                Image("placeholder")
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(Circle())
+                    .frame(width: .avatarSize, height: .avatarSize)
+                    .padding(.trailing, .defaultPadding)
+            }
             VStack(alignment: .leading) {
                 if let gername = species.name {
                     Text(gername)
@@ -36,12 +54,14 @@ struct SpeciesResultView: View {
                 Text(String(format: "Score: %.0f%%", result.score.rounded()))
                     .subtitle3(color: color)
             }
+            Spacer()
         }
+        .contentShape(Rectangle())
     }
 }
 
 struct SpeciesResultView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesResultView(result: .init(id: 1, score: 42), species: .sampleData, avatar: Image("placeholder"))
+        SpeciesResultView(result: .init(id: 1, score: 42), species: .sampleData)
     }
 }
