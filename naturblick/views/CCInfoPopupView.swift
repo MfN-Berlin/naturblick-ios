@@ -58,11 +58,13 @@ struct CCInfoPopupView : View {
         
             Button("Close") {
                 present = false
-            }.foregroundColor(.onPrimaryButtonSecondary)
-        }.foregroundColor(.black)
+            }
+            .foregroundColor(.onSecondaryHighEmphasis)
+        }
+        .foregroundColor(.onSecondaryHighEmphasis)
         .padding()
         .background(RoundedRectangle(cornerRadius: .smallCornerRadius)
-            .fill(.white)
+            .fill(Color.secondaryColor)
             .nbShadow())
     }
 }
