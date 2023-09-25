@@ -33,7 +33,7 @@ struct HomeView: HostedView {
         item.scrollEdgeAppearance = nil
         item.compactScrollEdgeAppearance = nil
         
-        item.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape"), primaryAction: UIAction(image:  UIImage(systemName: "gearshape")) { action in
+        item.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), primaryAction: UIAction(image:  UIImage(systemName: "gearshape")) { action in
             let menuVC = MenuController(entries: [
                 MenuEntry(title: "Help", image: UIImage(systemName: "questionmark.circle")!) {
                     let view = HelpView().setUpViewController()
@@ -43,7 +43,7 @@ struct HomeView: HostedView {
                     let view = AccountView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 },
-                MenuEntry(title: "Settings", image: UIImage(systemName: "gearshape")!) {
+                MenuEntry(title: "Settings", image: UIImage(named: "settings")!) {
                     let view = SettingsView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 },
@@ -127,7 +127,7 @@ struct HomeView: HostedView {
                                     HomeViewButton(
                                         text: "Record a bird sound",
                                         color: Color.onPrimaryButtonPrimary,
-                                        image: Image("microphone"),
+                                        image: Image("audio24"),
                                         size: topRowSize)
                                     .onTapGesture {
                                         createFlow.recordSound()
