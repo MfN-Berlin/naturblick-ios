@@ -10,6 +10,7 @@ struct PortraitView: NavigatableView {
     var viewName: String? {
         species.name
     }
+    var alwaysDarkBackground: Bool = true
     
     @StateObject var portraitViewModel = PortraitViewModel()
     let species: SpeciesListItem
@@ -38,13 +39,23 @@ struct PortraitView: NavigatableView {
                         
                         VStack { // names
                             Text(portrait.species.sciname)
-                                .font(.nbSubtitle3)
+                                .font(.nbOverline)
                                 .foregroundColor(.onPrimarySignalHigh)
                                 .italic()
+                                .multilineTextAlignment(.center)
                             Text(portrait.species.gername?.uppercased() ?? "ARTNAME")
-                                .font(.nbHeadline2)
+                                .font(.nbHeadline4)
                                 .foregroundColor(.onPrimaryHighEmphasis)
+                                .multilineTextAlignment(.center)
+                            if let synonym = portrait.species.gersynonym {
+                                Text("also: \(synonym)")
+                                    .font(.nbCaption)
+                                    .foregroundColor(.onPrimarySignalLow)
+                                    .multilineTextAlignment(.center)
+                            }
                         }
+                        .padding(.bottom, .defaultPadding * 2)
+                        .padding([.top, .horizontal], .defaultPadding)
                         
                         
                         VStack(alignment: .leading) { // description
@@ -97,8 +108,10 @@ struct PortraitView: NavigatableView {
                                 if let sources = portrait.sources {
                                     Text("Quellen")
                                         .font(.nbHeadline4)
+                                        .padding(.bottom, .defaultPadding)
                                     Text(sources)
                                         .font(.nbBody1)
+                                        .padding(.bottom, .defaultPadding)
                                 }
                             }
                         }
@@ -106,6 +119,7 @@ struct PortraitView: NavigatableView {
                         .background {
                             RoundedRectangle(cornerRadius: .largeCornerRadius)
                                 .foregroundColor(.secondaryColor)
+                                .nbShadow()
                         }
                     } else {
                         Text("Sorry No Portrait")
