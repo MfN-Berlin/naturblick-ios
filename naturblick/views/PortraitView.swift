@@ -60,8 +60,7 @@ struct PortraitView: NavigatableView {
                             }
                             .padding(.defaultPadding)
                             .background {
-                                Rectangle()
-                                    .foregroundColor(.featureColor)
+                                RoundedRectangle(cornerRadius: .largeCornerRadius)                                    .foregroundColor(.featureColor)
                             }
                             
                             VStack(alignment: .leading) {
@@ -83,11 +82,21 @@ struct PortraitView: NavigatableView {
                                 Text("Wissenswertes")
                                     .font(.nbHeadline4)
                                     .padding(.bottom, .defaultPadding)
-                                GoodToKnowView(portraitId: portrait.id)
+                                ForEach(portrait.goodToKnows, id: \.self) { goodToKnow in
+                                    HStack {
+                                        Rectangle()
+                                            .fill(Color.onSecondarySignalLow)
+                                            .frame(width: .goodToKnowLineWidth)
+                                            .frame(maxHeight: .infinity)
+                                        Text(goodToKnow)
+                                            .padding(.leading, .defaultPadding)
+                                    }
+                                }
+                                .padding(.bottom, .defaultPadding)
                                 
-                                Text("Quellen")
-                                    .font(.nbHeadline4)
                                 if let sources = portrait.sources {
+                                    Text("Quellen")
+                                        .font(.nbHeadline4)
                                     Text(sources)
                                         .font(.nbBody1)
                                 }
@@ -98,7 +107,6 @@ struct PortraitView: NavigatableView {
                             RoundedRectangle(cornerRadius: .largeCornerRadius)
                                 .foregroundColor(.secondaryColor)
                         }
-                        
                     } else {
                         Text("Sorry No Portrait")
                     }

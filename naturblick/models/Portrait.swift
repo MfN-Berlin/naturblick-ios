@@ -18,6 +18,7 @@ struct Portrait {
     let audioUrl: String?
     let landscape: Bool
     let focus: Double
+    let goodToKnows: [String]
 }
 
 extension Portrait {
@@ -33,9 +34,13 @@ extension Portrait {
         static let goodToKnowImage = Expression<Int64?>("good_to_know_image_id")
         static let sources = Expression<String?>("sources")
         static let audioUrl = Expression<String?>("audio_url")
-
+        
         // Focus punkt for header image ("description_image")
         static let landscape = Expression<Bool>("landscape")
         static let focus = Expression<Double>("focus")
+        
+        static let gtkTable = Table("good_to_know")
+        static let gtkPortraitId = Expression<Int64>("portrait_id")
+        static let gtkFact = Expression<String>("fact")
     }
 }

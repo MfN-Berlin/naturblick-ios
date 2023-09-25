@@ -18,12 +18,14 @@ struct SpeciesFeaturesView: View {
                 Text(feature.description)
                     .font(.nbBody2)
                     .padding(.halfPadding)
+                    .foregroundColor(.onFeatureHighEmphasis)
                     .background {
                         RoundedRectangle(cornerRadius: .smallCornerRadius)
-                            .foregroundColor(.onFeatureSignalLow)
+                            .foregroundColor(.onPrimaryMediumEmphasis)
                     }
             }
         }
+        .frame(maxWidth: .infinity)
         .padding(.bottom, .halfPadding)
         .task {
             featureViewModel.filter(portraitId: portraitId)

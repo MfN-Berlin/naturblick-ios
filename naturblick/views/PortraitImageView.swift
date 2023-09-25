@@ -20,17 +20,17 @@ struct PortraitImageView: View {
                     Image(uiImage: full)
                         .resizable()
                         .scaledToFit()
-                        .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
+                        .cornerRadius(headerImage ? 0.0 : .largeCornerRadius)
                 } else if let preview = self.preview {
                     Image(uiImage: preview)
                         .resizable()
                         .scaledToFit()
-                        .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
+                        .cornerRadius(headerImage ? 0.0 : .largeCornerRadius)
                 } else {
                     Image("placeholder")
                         .resizable()
                         .scaledToFill()
-                        .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
+                        .cornerRadius(headerImage ? 0.0 : .largeCornerRadius)
                 }
             }
      .overlay(alignment: headerImage ? .bottomTrailing : .topTrailing) {
