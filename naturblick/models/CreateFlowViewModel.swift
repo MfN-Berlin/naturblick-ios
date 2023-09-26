@@ -29,6 +29,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     @MainActor func takePhoto() {
         data = CreateData()
+        region = .defaultRegion
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .camera
         imagePicker.delegate = self
@@ -60,6 +61,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     @MainActor func recordSound() {
         data = CreateData()
+        region = .defaultRegion
         withNavigation { navigation in
             let soundRecorder = BirdRecorderView(flow: self)
             navigation.pushViewController(soundRecorder.setUpViewController(), animated: true)
@@ -68,6 +70,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     @MainActor func soundRecorded(sound: NBSound) {
         data.sound.sound = sound
+        spectrogram = nil
         withNavigation { navigation in
             var viewControllers = navigation.viewControllers
             viewControllers[viewControllers.count - 1] = SpectrogramView(sound: sound, flow: self).setUpViewController()

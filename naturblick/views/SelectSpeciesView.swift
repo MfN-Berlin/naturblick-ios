@@ -104,11 +104,15 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     .nbShadow()
             )
             .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { details in
-                Button("Retry") {
+                Button("Try again") {
                     identify()
                 }
-            } message: { error in
-                Text(error.localizedDescription)
+                Button("Browse species") {
+                    
+                }
+                Button("Save as unknown species") {
+                    flow.selectSpecies(species: nil)
+                }
             }
             .alert("Do you want to identify the species in another way?", isPresented: $presentAlternativesDialog) {
                 Button("Use another part of the image") {
