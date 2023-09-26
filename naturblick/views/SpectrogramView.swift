@@ -14,6 +14,19 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
     @State private var start: CGFloat = 0
     @State private var end: CGFloat = 1
     @ObservedObject var flow: Flow
+    @StateObject private var errorHandler = HttpErrorViewModel()
+
+    func downloadSpectrogram() {
+        Task {
+            do {
+                try await client.upload(sound: sound.url, mediaId: sound.id)
+                let spectrogram = try await client.spectrogram(mediaId: sound.id)
+                flow.spectrogramDownloaded(spectrogram: spectrogram)
+            } catch {
+                let _ = errorHandler.handle(error)
+            }
+        }
+    }
     
     func configureNavigationItem(item: UINavigationItem) {
         item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Identify") {_ in
@@ -169,37 +182,49 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
     }
     
     var body: some View {
-        if let spectrogram = flow.spectrogram {
-            Image(uiImage: spectrogram)
-                .resizable()
-                .overlay {
-                    GeometryReader { geo in
-                        let minWidth = (400 / spectrogram.size.width) * geo.size.width
-                        let minWidthOrWidth = minWidth < geo.size.width ? minWidth : geo.size.width
-                        selectedRectangle(width: geo.size.width, height: geo.size.height)
-                            .overlay {
-                                startHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
-                                endHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
-                            }
-                    }
-                }
-                .onAppear {
-                    let initialStart = 1 - 400 / spectrogram.size.width
-                    start = initialStart > 0 ? initialStart : 0
-                }
-        } else {
-            Text("Downloading spectrogram")
-                .onAppear {
-                    Task {
-                        do {
-                            try await client.upload(sound: sound.url, mediaId: sound.id)
-                            let spectrogram = try await client.spectrogram(mediaId: sound.id)
-                            flow.spectrogramDownloaded(spectrogram: spectrogram)
-                        } catch {
-                            //errorHandler.handle(error)
+        SwiftUI.Group {
+            if let spectrogram = flow.spectrogram {
+                Image(uiImage: spectrogram)
+                    .resizable()
+                    .overlay {
+                        GeometryReader { geo in
+                            let minWidth = (400 / spectrogram.size.width) * geo.size.width
+                            let minWidthOrWidth = minWidth < geo.size.width ? minWidth : geo.size.width
+                            selectedRectangle(width: geo.size.width, height: geo.size.height)
+                                .overlay {
+                                    startHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
+                                    endHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
+                                }
                         }
                     }
+                    .onAppear {
+                        let initialStart = 1 - 400 / spectrogram.size.width
+                        start = initialStart > 0 ? initialStart : 0
+                    }
+            } else {
+                ProgressView {
+                    Text("Downloading spectrogram")
+                        .font(.nbButton)
+                        .foregroundColor(.onSecondaryMediumEmphasis)
                 }
+                .progressViewStyle(.circular)
+                .foregroundColor(.onSecondaryHighEmphasis)
+                .controlSize(.large)
+                .onAppear {
+                    downloadSpectrogram()
+                }
+            }
+        }
+        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { details in
+            Button("Try again") {
+                downloadSpectrogram()
+            }
+            Button("Browse species") {
+                
+            }
+            Button("Save as unknown species") {
+                flow.selectSpecies(species: nil)
+            }
         }
     }
 }
