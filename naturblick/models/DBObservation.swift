@@ -19,6 +19,8 @@ struct DBObservation: Decodable, Identifiable {
     let individuals: Int64?
     let behavior: Behavior?
     let details: String?
+    let segmStart: Int64?
+    let segmEnd: Int64?
     
     var id: UUID {
         occurenceId
@@ -43,6 +45,8 @@ extension DBObservation {
         static let individuals = Expression<Int64?>("individuals")
         static let behavior = Expression<String?>("behavior")
         static let details = Expression<String?>("details")
+        static let segmStart = Expression<Int64?>("segm_start")
+        static let segmEnd = Expression<Int64?>("segm_end")
 
         static func setters(observation: DBObservation) -> [Setter] {
             [
@@ -57,7 +61,9 @@ extension DBObservation {
                 coordsLongitude <- observation.coords?.longitude,
                 individuals <- observation.individuals,
                 behavior <- observation.behavior?.rawValue,
-                details <- observation.details
+                details <- observation.details,
+                segmStart <- observation.segmStart,
+                segmEnd <- observation.segmEnd
             ]
         }
 
@@ -81,7 +87,9 @@ extension DBObservation {
                 coords: coords,
                 individuals: try row.get(individuals),
                 behavior: behaviorEnum,
-                details: try row.get(details)
+                details: try row.get(details),
+                segmStart: try row.get(segmStart),
+                segmEnd: try row.get(segmEnd)
             )
         }
 
@@ -128,6 +136,12 @@ extension DBObservation {
             if let newBehavior = operation.behavior {
                 setters.append(behavior <- newBehavior.rawValue)
             }
+            if let sStart = operation.segmStart {
+                setters.append(segmStart <- sStart)
+            }
+            if let sEnd = operation.segmEnd {
+                setters.append(segmEnd <- sEnd)
+            }
             return setters
         }
     }
@@ -150,6 +164,8 @@ extension DBObservation {
         coords: nil,
         individuals: nil,
         behavior: nil,
-        details: "details"
+        details: "details",
+        segmStart: nil,
+        segmEnd: nil
     )
 }

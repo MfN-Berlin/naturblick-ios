@@ -35,7 +35,9 @@ struct CreateObservationView: NavigatableView {
     var body: some View {
         GeometryReader { geo in
             VStack(alignment: .center) {
-                ObservationInfoView(thumbnail: createFlow.data.image.crop ?? createFlow.data.sound.crop, species: createFlow.data.species, width: geo.size.width, created: createFlow.data.created)
+                ObservationInfoView(width: geo.size.width, observationInfoVM: ObservationInfoViewModel(createFlowVM: createFlow)) { view in
+                    navigationController?.pushViewController(view, animated: true)
+                }
             }
             .frame(maxWidth: .infinity)
         }

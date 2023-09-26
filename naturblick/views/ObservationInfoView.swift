@@ -6,19 +6,44 @@
 import SwiftUI
 
 struct ObservationInfoView: View {
-    let thumbnail: NBImage?
-    let species: SpeciesListItem?
     let width: CGFloat
-    let created: ZonedDateTime
+    @ObservedObject var observationInfoVM: ObservationInfoViewModel
+    
+    let navigate: (UIViewController) -> Void
+    
+    private func avatar(image: UIImage) -> some View {
+        return Image(uiImage: image)
+            .resizable()
+            .scaledToFit()
+            .clipShape(Circle())
+            .frame(width: width * 0.4, height: width * 0.4)
+            .padding(.bottom, .defaultPadding)
+    }
+    
     var body: some View {
         VStack() {
-            if let thumbnail = thumbnail {
-                    Image(uiImage: thumbnail.image)
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(Circle())
-                        .frame(width: width * 0.4, height: width * 0.4)
-                        .padding(.bottom, .defaultPadding)
+            if let thumbnail = observationInfoVM.thumbnail?.image {
+                if let fullScreen = observationInfoVM.fullscreenImage {
+                    avatar(image: thumbnail).overlay(alignment: .bottomTrailing) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.onPrimaryButtonPrimary)
+                                .frame(width: 40, height: 40)
+                            Image("zoom")
+                                .foregroundColor(.onPrimaryHighEmphasis)
+                        }.onTapGesture {
+                            navigate(FullscreenView(imageId: fullScreen.id).setUpViewController())
+                        }
+                    }
+                } else if let sound = observationInfoVM.sound {
+                    avatar(image: thumbnail)
+                        .overlay(alignment: .bottomTrailing) {
+                            SoundButton(url: sound.url)
+                            //TODO johannes start / end
+                        }
+                } else {
+                    avatar(image: thumbnail)
+                }
             } else  {
                 Image("placeholder")
                     .resizable()
@@ -26,29 +51,23 @@ struct ObservationInfoView: View {
                     .clipShape(Circle())
                     .frame(width: width * 0.4, height: width * 0.4)
                     .padding(.bottom, .defaultPadding)
-            }
-            if let sciname = species?.sciname {
+            } 
+            if let sciname = observationInfoVM.species?.sciname {
                 Text(sciname)
                     .font(.nbOverline)
                     .foregroundColor(.onPrimarySignalHigh)
                     .multilineTextAlignment(TextAlignment.center)
             }
-            Text(species?.name ?? "Unknown species")
+            Text(observationInfoVM.species?.name ?? "Unknown species")
                 .font(.nbHeadline2)
                 .foregroundColor(.onPrimaryHighEmphasis)
                 .multilineTextAlignment(TextAlignment.center)
-            Text(created.date, formatter: .dateTime)
+            Text(observationInfoVM.created.date, formatter: .dateTime)
                 .font(.caption)
                 .foregroundColor(.onPrimarySignalLow)
                 .multilineTextAlignment(TextAlignment.center)
         }
         .padding(.defaultPadding)
         .background(Color(uiColor: .onPrimaryButtonSecondary))
-    }
-}
-
-struct ObservationInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        ObservationInfoView(thumbnail: NBImage(image: UIImage(named: "placeholder")!), species: SpeciesListItem.sampleData, width: 800, created: ZonedDateTime())
     }
 }

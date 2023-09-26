@@ -77,6 +77,7 @@ struct CreateData {
         guard coords != nil || !details.isEmpty || mediaId != nil || thumbnailId != nil || behavior != nil else {
             return nil
         }
-        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals, mediaId: mediaId, thumbnailId: thumbnailId, newSpeciesId: nil, behavior: behavior)
+        
+        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals, mediaId: mediaId, thumbnailId: thumbnailId, newSpeciesId: nil, behavior: behavior, segmStart: sound.start.map { s in Int64(s) } ?? nil, segmEnd: sound.end.map { s in Int64(s) } ?? nil)
     }
 }

@@ -51,7 +51,7 @@ struct EditData {
             return nil
         }
 
-        return PatchOperation(occurenceId: original.occurenceId, obsType: obsType, coords: coords, details: details, individuals: individuals, mediaId: nil, thumbnailId: thumbnailId, newSpeciesId: speciesId, behavior: behavior)
+        return PatchOperation(occurenceId: original.occurenceId, obsType: obsType, coords: coords, details: details, individuals: individuals, mediaId: nil, thumbnailId: thumbnailId, newSpeciesId: speciesId, behavior: behavior, segmStart: nil, segmEnd: nil)
     }
     
     var hasChanged: Bool {

@@ -52,6 +52,8 @@ class ObservationPersistenceController: ObservableObject {
                         thumbnail_id TEXT,
                         species_id INTEGER,
                         behavior TEXT,
+                        segm_start REAL,
+                        segm_end REAL,
                         FOREIGN KEY(rowid) REFERENCES operation(rowid) ON DELETE CASCADE
                     );
                     CREATE TABLE upload_operation (
@@ -79,7 +81,9 @@ class ObservationPersistenceController: ObservableObject {
                         coords_longitude DOUBLE,
                         individuals INTEGER,
                         behavior TEXT,
-                        details TEXT
+                        details TEXT,
+                        segm_start INTEGER,
+                        segm_end INTEGER
                     );
                     CREATE TABLE backend_observation (
                         occurence_id TEXT UNIQUE NOT NULL,
@@ -95,7 +99,9 @@ class ObservationPersistenceController: ObservableObject {
                         coords_longitude DOUBLE,
                         individuals INTEGER,
                         behavior TEXT,
-                        details TEXT
+                        details TEXT,
+                        segm_start INTEGER,
+                        segm_end INTEGER
                     );
                     CREATE TABLE sync (
                         sync_id INTEGER PRIMARY KEY NOT NULL
