@@ -89,7 +89,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         }
     }
     
-    @MainActor func selectSpecies(species: SpeciesListItem) {
+    @MainActor func selectSpecies(species: SpeciesListItem?) {
         data.species = species
         let create = CreateObservationView(createFlow: self).setUpViewController()
         if let navigation = viewController?.navigationController {
@@ -101,13 +101,18 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         data.image.result = result
     }
     
-    func identify() async throws {
+    func identify() async throws -> [SpeciesResult] {
         if let thumbnail = data.image.crop {
             try await client.upload(image: thumbnail)
-            updateResult(result: try await client.imageId(mediaId: thumbnail.id.uuidString))
+            let result = try await client.imageId(mediaId: thumbnail.id.uuidString)
+            updateResult(result: result)
+            return result
         } else if let sound = data.sound.sound, let start = data.sound.start, let end = data.sound.end, let spectrogram = spectrogram {
             let result = try await client.soundId(mediaId: sound.id.uuidString, start: Int(start * spectrogram.size.width * 10), end: Int(end * spectrogram.size.width * 10))
             updateResult(result: result)
+            return result
+        } else {
+            preconditionFailure("Can not identify sound or image without complete data")
         }
     }
     

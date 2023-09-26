@@ -7,7 +7,7 @@ import Foundation
 import SQLite
 
 class SelectSpeciesViewModel: ObservableObject {
-    @Published var speciesResults: [(SpeciesResult, SpeciesListItem)] = []
+    @Published var speciesResults: [(SpeciesResult, SpeciesListItem)]? = nil
     
     func resolveSpecies(results: [SpeciesResult]) {
         do {

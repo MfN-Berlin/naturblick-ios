@@ -91,7 +91,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         }
     }
     
-    @MainActor func selectSpecies(species: SpeciesListItem) {
+    @MainActor func selectSpecies(species: SpeciesListItem?) {
         data.species = species
         if let controller = viewController, let navigation = controller.navigationController {
             navigation.popToViewController(controller, animated: true)
@@ -102,14 +102,19 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         imageData.result = result
     }
     
-    func identify() async throws {
+    func identify() async throws -> [SpeciesResult] {
         if let thumbnail = imageData.crop {
             try await client.upload(image: thumbnail)
             let result = try await client.imageId(mediaId: thumbnail.id.uuidString)
             await updateResult(result: result)
+            return result
         } else if let sound = soundData.sound, let start = soundData.start, let end = soundData.end, let spectrogram = spectrogram {
             let result = try await client.soundId(mediaId: sound.id.uuidString, start: Int(start * spectrogram.size.width * 10), end: Int(end * spectrogram.size.width * 10))
             await updateResult(result: result)
+            return result
+        } else {
+            preconditionFailure("Can not identify sound or image without complete data")
+
         }
     }
     

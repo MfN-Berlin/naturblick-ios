@@ -5,6 +5,7 @@
 
 import SwiftUI
 import CachedAsyncImage
+import BottomSheet
 
 struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
@@ -16,9 +17,11 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     @ObservedObject var flow: Flow
     let thumbnail: NBImage
     @State var showInfo: SpeciesListItem? = nil
+    @State private var sheetPosition: BottomSheetPosition = .dynamic
+    @State private var presentAlternativesDialog: Bool = false
     @StateObject var model: SelectSpeciesViewModel = SelectSpeciesViewModel()
     @StateObject private var errorHandler = HttpErrorViewModel()
-
+    
     func openSpeciesInfo(species: SpeciesListItem) {
         let info = SpeciesInfoView(species: species, flow: flow).setUpViewController()
         withNavigation { navigation in
@@ -29,58 +32,98 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     func identify() {
         Task {
             do {
-                try await flow.identify()
+                model.resolveSpecies(results: try await flow.identify())
             } catch {
                 let _ = errorHandler.handle(error)
             }
         }
     }
     
-    func urlRequest(species: SpeciesListItem) -> URLRequest? {
-        if let urlstr = species.url, let url = URL(string: Configuration.strapiUrl + urlstr) {
-            return URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        } else {
-            return nil
-        }
-    }
-    
     var body: some View {
-        VStack {
-            Image(uiImage: thumbnail.image)
-                .resizable()
-                .scaledToFit()
-            if let rs = flow.result {
-                VStack(alignment: .leading) {
-                    ForEach(model.speciesResults, id: \.0.id) { (result, item) in
-                        CachedAsyncImage(urlRequest: urlRequest(species: item)) { image in
-                            SpeciesResultView(result: result, species: item, avatar: image)
+        GeometryReader { geo in
+            VStack {
+                Image(uiImage: thumbnail.image)
+                    .resizable()
+                    .frame(width: geo.size.width, height: geo.size.width)
+                Spacer()
+            }
+            .bottomSheet(bottomSheetPosition: $sheetPosition, switchablePositions: [.dynamic, .dynamicBottom]) {
+                VStack {
+                    
+                    if let results = model.speciesResults {
+                        Text("The list suggests wild plants found in the city. The suggestions are created by comparing photos of over 2000 species. The closer the score is to 100%, the more likely the match is.")
+                            .font(.nbBody2)
+                            .foregroundColor(.onSecondaryMediumEmphasis)
+                            .padding(.bottom, .defaultPadding)
+                        ForEach(results, id: \.0.id) { (result, item) in
+                            SpeciesResultView(result: result, species: item)
+                                .listRowInsets(.nbInsets)
                                 .onTapGesture {
                                     openSpeciesInfo(species: item)
                                 }
-                        } placeholder: {
-                            SpeciesResultView(result: result, species: item, avatar: Image("placeholder"))
-                                .onTapGesture {
-                                    openSpeciesInfo(species: item)
-                                }
+                            Divider()
+                        }
+                        HStack(alignment: .center) {
+                                Image("unknown_species")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .clipShape(Circle())
+                                    .frame(width: .avatarSize, height: .avatarSize)
+                                    .padding(.trailing, .defaultPadding)
+                                    .foregroundColor(.onSecondaryHighEmphasis)
+                                Text("None of the above")
+                                    .subtitle1()
+                                Spacer()
+                        }
+                        .contentShape(Rectangle())
+                        .listRowInsets(.nbInsets)
+                        .onTapGesture {
+                            presentAlternativesDialog = true
+                        }
+                    } else {
+                        ProgressView {
+                            Text("Identifying species")
+                                .font(.nbButton)
+                                .foregroundColor(.onSecondaryMediumEmphasis)
+                        }
+                        .progressViewStyle(.circular)
+                        .foregroundColor(.onSecondaryHighEmphasis)
+                        .controlSize(.large)
+                        .onAppear {
+                            identify()
                         }
                     }
                 }
-                .onAppear {
-                    model.resolveSpecies(results: rs)
+                .frame(minHeight: geo.size.height - geo.size.width + geo.safeAreaInsets.bottom)
+                .padding(.horizontal, .defaultPadding)
+                .padding(.bottom, geo.safeAreaInsets.bottom)
+            }
+            .customBackground(
+                RoundedRectangle(cornerRadius: .largeCornerRadius)
+                    .fill(Color.secondaryColor)
+                    .nbShadow()
+            )
+            .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { details in
+                Button("Retry") {
+                    identify()
                 }
-            } else {
-                Text("Loading ...")
-                    .onAppear {
-                        identify()
-                    }
+            } message: { error in
+                Text(error.localizedDescription)
+            }
+            .alert("Do you want to identify the species in another way?", isPresented: $presentAlternativesDialog) {
+                Button("Use another part of the image") {
+                    navigationController?.popViewController(animated: true)
+                }
+                Button("Browse species") {
+                    print("Browse species")
+                }
+                Button("Save as unknown species") {
+                    flow.selectSpecies(species: nil)
+                }
+                Button("Cancel", role: .cancel) {
+                }
             }
         }
-        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { details in
-            Button("Retry") {
-                identify()
-            }
-        } message: { error in
-            Text(error.localizedDescription)
-        }
+       
     }
 }
