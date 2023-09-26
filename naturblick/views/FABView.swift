@@ -7,18 +7,20 @@ import SwiftUI
 
 struct FABView: View {
     let image: Image
-    
-    init(_ asset: String) {
+    let color: Color
+    init(_ asset: String, color: Color = Color.primaryColor) {
         self.image = Image(asset)
+        self.color = color
     }
     
-    init(systemName: String) {
+    init(systemName: String, color: Color = Color.primaryColor) {
         self.image = Image(systemName: systemName)
+        self.color = color
     }
     
     var body: some View {
         Circle()
-            .fill(Color.primaryColor)
+            .fill(color)
             .overlay {
                 image
                 .resizable()
@@ -26,7 +28,8 @@ struct FABView: View {
                 .foregroundColor(.onPrimaryHighEmphasis)
                 .padding(.fabIconPadding)
             }
-            .frame(width: .fabSize)
+            .frame(width: .fabSize, height: .fabSize)
+            .nbShadow()
     }
 }
 

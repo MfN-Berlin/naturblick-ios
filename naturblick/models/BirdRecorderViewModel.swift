@@ -17,7 +17,7 @@ class BirdRecorderViewModel: ObservableObject {
     @Published private(set) var isAuthorized: Bool = false
     @Published private(set) var isBusy: Bool = false
     @Published private(set) var isDenied: Bool = false
-    @Published private(set) var currentTime: Double = 0
+    @Published private(set) var currentTime: String = "00:00.0"
     private var recorder: BirdRecorder? = nil
     let audioSession: AVAudioSession
     init() {
@@ -37,9 +37,9 @@ class BirdRecorderViewModel: ObservableObject {
             Timer.publish(every: 0.1, on: .main, in: .default)
                 .autoconnect()
                 .map { [weak self] t in
-                    return self?.recorder?.audioRecorder.currentTime ?? 0
-            }
-            .assign(to: &$currentTime)
+                    (self?.recorder?.audioRecorder.currentTime ?? 0).toTimeString
+                }
+                .assign(to: &$currentTime)
         } catch {
             preconditionFailure(error.localizedDescription)
         }
@@ -92,5 +92,15 @@ class BirdRecorderViewModel: ObservableObject {
         } catch {
                 /* Ignore errors when canceling */
         }
+    }
+}
+
+extension Double {
+    var toTimeString: String {
+        let time = Int(self)
+        let ms = Int((self.truncatingRemainder(dividingBy: 1)) * 10)
+        let seconds = time % 60
+        let minutes = (time / 60) % 60
+        return String(format: "%0.2d:%0.2d.%d",minutes,seconds,ms)
     }
 }

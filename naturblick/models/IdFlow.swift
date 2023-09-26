@@ -9,18 +9,14 @@ import SwiftUI
 
 protocol IdFlow: ObservableObject {
     var result: [SpeciesResult]? {get}
-    var spectrogram: UIImage? {get}
-    func spectrogramDownloaded(spectrogram: UIImage)
-    func spectrogramCropDone(crop: NBImage, start: CGFloat, end: CGFloat)
+    func spectrogramCropDone(crop: NBImage, start: Int, end: Int)
     func identify() async throws -> [SpeciesResult]
     func selectSpecies(species: SpeciesListItem?)
 }
 
 class IdFlowSample: IdFlow {
     var result: [SpeciesResult]? = nil
-    var spectrogram: UIImage? = nil
-    func spectrogramDownloaded(spectrogram: UIImage) {}
-    func spectrogramCropDone(crop: NBImage, start: CGFloat, end: CGFloat) {}
+    func spectrogramCropDone(crop: NBImage, start: Int, end: Int) {}
     func identify() async throws -> [SpeciesResult] {[]}
     func selectSpecies(species: SpeciesListItem?) {}
 }

@@ -31,6 +31,11 @@ extension Text {
             .foregroundColor(.onPrimaryButtonSecondary)
     }
     
+    func caption(color: Color) -> some View {
+        self.font(.caption)
+            .foregroundColor(color)
+    }
+    
     func headline6() -> some View {
         self.font(.nbHeadline6)
             .foregroundColor(.onPrimaryHighEmphasis)

@@ -16,7 +16,6 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     let persistenceController: ObservationPersistenceController
     @Published var data = CreateData()
     @Published var region: MKCoordinateRegion = .defaultRegion
-    @Published var spectrogram: UIImage? = nil
     
     init(persistenceController: ObservationPersistenceController) {
         self.persistenceController = persistenceController
@@ -70,7 +69,6 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     @MainActor func soundRecorded(sound: NBSound) {
         data.sound.sound = sound
-        spectrogram = nil
         withNavigation { navigation in
             var viewControllers = navigation.viewControllers
             viewControllers[viewControllers.count - 1] = SpectrogramView(sound: sound, flow: self).setUpViewController()
@@ -78,11 +76,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         }
     }
     
-    @MainActor func spectrogramDownloaded(spectrogram: UIImage) {
-        self.spectrogram = spectrogram
-    }
-    
-    @MainActor func spectrogramCropDone(crop: NBImage, start: CGFloat, end: CGFloat) {
+    @MainActor func spectrogramCropDone(crop: NBImage, start: Int, end: Int) {
         data.sound.crop = crop
         data.sound.start = start
         data.sound.end = end
@@ -110,8 +104,8 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             let result = try await client.imageId(mediaId: thumbnail.id.uuidString)
             updateResult(result: result)
             return result
-        } else if let sound = data.sound.sound, let start = data.sound.start, let end = data.sound.end, let spectrogram = spectrogram {
-            let result = try await client.soundId(mediaId: sound.id.uuidString, start: Int(start * spectrogram.size.width * 10), end: Int(end * spectrogram.size.width * 10))
+        } else if let sound = data.sound.sound, let start = data.sound.start, let end = data.sound.end {
+            let result = try await client.soundId(mediaId: sound.id.uuidString, start: start, end: end)
             updateResult(result: result)
             return result
         } else {
