@@ -38,6 +38,7 @@ struct ObservationListView: HostedView {
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var createFlow: CreateFlowViewModel
     @StateObject var model = ObservationListViewModel()
+    @State var showMapInfo = false
     
     func configureNavigationItem(item: UINavigationItem, showList: Bool) {
         item.rightBarButtonItems = [
@@ -93,10 +94,18 @@ struct ObservationListView: HostedView {
                     }
                 ) { observation in
                     MapAnnotation(coordinate: observation.observation.coords!.location) {
-                        Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
-                            .onTapGesture {
-                                navigationController?.pushViewController(EditObservationViewController(observation: observation, persistenceController: persistenceController), animated: true)
+                        ZStack {
+                            Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
+                                .onTapGesture {
+                                    showMapInfo.toggle()
                             }
+                            if (showMapInfo) {
+                                MapInfoBox(present: $showMapInfo, observation: observation) { obs in
+                                    navigationController?.pushViewController(EditObservationViewController(observation: obs, persistenceController: persistenceController), animated: true)
+                                }
+                            }
+                        }
+                        
                     }
                 }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)

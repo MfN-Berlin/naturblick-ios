@@ -36,9 +36,11 @@ extension View {
                             case .follow:
                                 Image(systemName: "location.fill")
                                     .padding(.fabIconPadding)
+                                    .foregroundColor(.primaryColor)
                             default:
                                 Image(systemName: "location")
                                     .padding(.fabIconPadding)
+                                    .foregroundColor(.primaryColor)
                             }
                         }
                         .onTapGesture {
