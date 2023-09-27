@@ -14,7 +14,8 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
     @State private var end: CGFloat = 1
     @ObservedObject var flow: Flow
     @StateObject private var model: SpectrogramViewModel
-
+    @StateObject private var streamController = SoundStreamController()
+    
     init(sound: NBSound, flow: Flow) {
         self._model = StateObject(wrappedValue: SpectrogramViewModel(sound: sound))
         self.flow = flow
@@ -197,6 +198,9 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                     }
                 HStack {
                     FABView("ic_play_circle_outline", color: .onPrimaryButtonPrimary)
+                        .onTapGesture {
+                            streamController.play(url: model.sound.url)
+                        }
                     Text(timeText(spectrogram: spectrogram))
                         .font(.nbHeadline3)
                         .foregroundColor(.onPrimaryHighEmphasis)

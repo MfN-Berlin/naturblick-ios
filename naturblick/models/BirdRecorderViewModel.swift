@@ -93,6 +93,14 @@ class BirdRecorderViewModel: ObservableObject {
                 /* Ignore errors when canceling */
         }
     }
+    
+    deinit {
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+        } catch {
+            /* Ignore errors when canceling */
+        }
+    }
 }
 
 extension Double {
