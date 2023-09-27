@@ -25,6 +25,8 @@ extension CGFloat {
     static let bottomRowFactor: CGFloat = 0.2
     static let goodToKnowLineWidth: CGFloat = 2
     static let mapInfoSize: CGFloat = 250
+    static let stopButtonSize: CGFloat = 116
+    static let pixelToMsFactor: CGFloat = 10
 }
 
 extension CGSize {

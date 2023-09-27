@@ -7,43 +7,31 @@ import SwiftUI
 
 struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    let client = BackendClient()
-    let sound: NBSound
+    var alwaysDarkBackground: Bool = true
     @State private var startOffset: CGFloat = 0
     @State private var endOffset: CGFloat = 0
     @State private var start: CGFloat = 0
     @State private var end: CGFloat = 1
     @ObservedObject var flow: Flow
-    @StateObject private var errorHandler = HttpErrorViewModel()
+    @StateObject private var model: SpectrogramViewModel
 
-    func downloadSpectrogram() {
-        Task {
-            do {
-                try await client.upload(sound: sound.url, mediaId: sound.id)
-                let spectrogram = try await client.spectrogram(mediaId: sound.id)
-                flow.spectrogramDownloaded(spectrogram: spectrogram)
-            } catch {
-                let _ = errorHandler.handle(error)
-            }
-        }
-    }
-    
-    func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Identify") {_ in
-            crop()
-        })
+    init(sound: NBSound, flow: Flow) {
+        self._model = StateObject(wrappedValue: SpectrogramViewModel(sound: sound))
+        self.flow = flow
     }
     
     func crop() {
-        guard let spectrogram = flow.spectrogram else {
+        guard let spectrogram = model.spectrogram else {
             return
         }
         Task {
+            let startPx = spectrogram.size.width * start
+            let endPx = spectrogram.size.width * end
             let crop = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
                 let cropRect = CGRect(
-                    x: spectrogram.size.width * start,
+                    x: startPx,
                     y: 0,
-                    width: spectrogram.size.width * end,
+                    width: endPx,
                     height: spectrogram.size.height
                 )
                 if let cgImage = spectrogram.cgImage {
@@ -55,7 +43,7 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
             }
             let thumbnail = NBImage(image: crop)
             try thumbnail.write()
-            flow.spectrogramCropDone(crop: thumbnail, start: start, end: end)
+            flow.spectrogramCropDone(crop: thumbnail, start: Int(startPx * .pixelToMsFactor), end: Int(endPx * .pixelToMsFactor))
         }
     }
     
@@ -181,9 +169,19 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
             )
     }
     
+    func timeText(spectrogram: UIImage) -> String {
+        Double((((end - start) * spectrogram.size.width) * .pixelToMsFactor) / 1000).toTimeString
+    }
+    
     var body: some View {
-        SwiftUI.Group {
-            if let spectrogram = flow.spectrogram {
+        VStack {
+            if let spectrogram = model.spectrogram {
+                Text("Choose section")
+                    .headline6()
+                    .padding([.horizontal, .top], .defaultPadding)
+                Text("Please select a section that best represents the bird\'s sound. Our pattern recognition gives the best results for recordings that are under 10 seconds.")
+                    .caption(color: .onPrimaryLowEmphasis)
+                    .padding([.horizontal, .bottom], .defaultPadding)
                 Image(uiImage: spectrogram)
                     .resizable()
                     .overlay {
@@ -197,10 +195,14 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                                 }
                         }
                     }
-                    .onAppear {
-                        let initialStart = 1 - 400 / spectrogram.size.width
-                        start = initialStart > 0 ? initialStart : 0
-                    }
+                HStack {
+                    FABView("ic_play_circle_outline", color: .onPrimaryButtonPrimary)
+                    Text(timeText(spectrogram: spectrogram))
+                        .font(.nbHeadline3)
+                        .foregroundColor(.onPrimaryHighEmphasis)
+                }
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.defaultPadding)
             } else {
                 ProgressView {
                     Text("Downloading spectrogram")
@@ -210,20 +212,45 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                 .progressViewStyle(.circular)
                 .foregroundColor(.onSecondaryHighEmphasis)
                 .controlSize(.large)
-                .onAppear {
-                    downloadSpectrogram()
+            }
+            Spacer()
+            VStack {
+                HStack {
+                    Button("Discard") {
+                        navigationController?.popToRootViewController(animated: true)
+                    }
+                    .buttonStyle(DestructiveButton())
+                    Button("Identify species") {
+                        crop()
+                    }
+                    .buttonStyle(ConfirmButton())
+                    .padding(.leading, .defaultPadding)
                 }
+                .padding(.defaultPadding)
+                .padding(.bottom, .defaultPadding * 2)
+            }
+            .background {
+                RoundedRectangle(cornerRadius: .largeCornerRadius)
+                    .fill(Color.secondaryColor)
+                    .nbShadow()
             }
         }
-        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { details in
+        .ignoresSafeArea(edges: .bottom)
+        .alertHttpError(isPresented: $model.isPresented, error: model.error) { details in
             Button("Try again") {
-                downloadSpectrogram()
+                model.downloadSpectrogram()
             }
             Button("Browse species") {
                 
             }
             Button("Save as unknown species") {
                 flow.selectSpecies(species: nil)
+            }
+        }
+        .onReceive(model.$spectrogram) { spectrogramOpt in
+            if let spectrogram = spectrogramOpt {
+                let initialStart = 1 - 400 / spectrogram.size.width
+                start = initialStart > 0 ? initialStart : 0
             }
         }
     }

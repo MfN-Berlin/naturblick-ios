@@ -17,7 +17,6 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     @Published var data: EditData
     @Published var imageData: ImageData = ImageData()
     @Published var soundData: SoundData = SoundData()
-    @Published var spectrogram: UIImage? = nil
     @Published var editing: Bool = false
     @Published var region: MKCoordinateRegion
     init(persistenceController: ObservationPersistenceController, observation: Observation) {
@@ -77,11 +76,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         }
     }
     
-    @MainActor func spectrogramDownloaded(spectrogram: UIImage) {
-        self.spectrogram = spectrogram
-    }
-    
-    @MainActor func spectrogramCropDone(crop: NBImage, start: CGFloat, end: CGFloat) {
+    @MainActor func spectrogramCropDone(crop: NBImage, start: Int, end: Int) {
         soundData.crop = crop
         soundData.start = start
         soundData.end = end
@@ -108,8 +103,8 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
             let result = try await client.imageId(mediaId: thumbnail.id.uuidString)
             await updateResult(result: result)
             return result
-        } else if let sound = soundData.sound, let start = soundData.start, let end = soundData.end, let spectrogram = spectrogram {
-            let result = try await client.soundId(mediaId: sound.id.uuidString, start: Int(start * spectrogram.size.width * 10), end: Int(end * spectrogram.size.width * 10))
+        } else if let sound = soundData.sound, let start = soundData.start, let end = soundData.end {
+            let result = try await client.soundId(mediaId: sound.id.uuidString, start: start, end: end)
             await updateResult(result: result)
             return result
         } else {
