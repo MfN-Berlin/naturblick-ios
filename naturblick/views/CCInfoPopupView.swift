@@ -6,8 +6,6 @@ import SwiftUI
 
 struct CCInfoPopupView : View {
     
-    @Binding var present: Bool
-    
     private func textAndSourceAsLink(source: String) -> String {
         return "[Source](\(source)/)"
     }
@@ -50,27 +48,19 @@ struct CCInfoPopupView : View {
     let imageLicense: String
     
     var body: some View {
-        VStack(spacing: .defaultPadding) {
+        VStack {
             // Links build by string interpolation must be wrapped into AttributedString
             if let txt = try? AttributedString(markdown: "\(textAndSourceAsLink(source: imageSource)) (\(licenceToLink(licence: imageLicense))) \(imageOwner)") {
                 Text(txt)
             }
-        
-            Button("Close") {
-                present = false
-            }
-            .foregroundColor(.onSecondaryHighEmphasis)
         }
         .foregroundColor(.onSecondaryHighEmphasis)
         .padding()
-        .background(RoundedRectangle(cornerRadius: .smallCornerRadius)
-            .fill(Color.secondaryColor)
-            .nbShadow())
     }
 }
 
 struct CCInfoPopupView_Preview : PreviewProvider {
     static var previews: some View {
-        CCInfoPopupView(present: .constant(true), imageSource: "https://commons.wikimedia.org/wiki/File:FooBar.jpg", imageOwner: "John Jana Josen", imageLicense: "CC BY-SA 3.0")
+        CCInfoPopupView(imageSource: "https://commons.wikimedia.org/wiki/File:FooBar.jpg", imageOwner: "John Jana Josen", imageLicense: "CC BY-SA 3.0")
     }
 }

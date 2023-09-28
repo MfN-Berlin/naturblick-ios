@@ -4,6 +4,7 @@
 
 
 import SwiftUI
+import BottomSheet
 
 struct PortraitView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
@@ -15,6 +16,10 @@ struct PortraitView: NavigatableView {
     @StateObject var portraitViewModel = PortraitViewModel()
     let species: SpeciesListItem
     
+    @State var bottomSheetPosition: BottomSheetPosition = .hidden
+    
+    @State var license: PortraitImage?
+    
     var body: some View {
         GeometryReader { geo in
             ScrollView {
@@ -22,7 +27,7 @@ struct PortraitView: NavigatableView {
                     if let portrait = portraitViewModel.portrait {
                         ZStack { // header
                             if let meta = portrait.descriptionImage {
-                                PortraitImageView(geo: geo, image: meta, headerImage: true)
+                                PortraitImageView(geo: geo, image: meta, headerImage: true, bottomSheetPosition: $bottomSheetPosition, license: $license)
                             }
                             VStack {
                                 Spacer()
@@ -71,12 +76,13 @@ struct PortraitView: NavigatableView {
                             }
                             .padding(.defaultPadding)
                             .background {
-                                RoundedRectangle(cornerRadius: .largeCornerRadius)                                    .foregroundColor(.featureColor)
+                                RoundedRectangle(cornerRadius: .largeCornerRadius)
+                                    .foregroundColor(.featureColor)
                             }
                             
                             VStack(alignment: .leading) {
                                 if let meta = portrait.inTheCityImage {
-                                    PortraitImageView(geo: geo, image: meta, headerImage: false)
+                                    PortraitImageView(geo: geo, image: meta, headerImage: false, bottomSheetPosition: $bottomSheetPosition, license: $license)
                                         .padding(.top, .halfPadding)
                                 }
                                 Text("In der Stadt")
@@ -88,7 +94,7 @@ struct PortraitView: NavigatableView {
 
                                 
                                 if let meta = portrait.goodToKnowImage {
-                                    PortraitImageView(geo: geo, image: meta, headerImage: false)
+                                    PortraitImageView(geo: geo, image: meta, headerImage: false, bottomSheetPosition: $bottomSheetPosition, license: $license)
                                         .padding(.bottom, .halfPadding)
                                 }
                                 Text("Wissenswertes")
@@ -127,6 +133,20 @@ struct PortraitView: NavigatableView {
                     }
                 }
             }
+            .bottomSheet(bottomSheetPosition: $bottomSheetPosition, switchablePositions: [.dynamic, .hidden], title: "Licence") {
+                if let license = license {
+                    CCInfoPopupView(imageSource: license.source,
+                                    imageOwner: license.owner,
+                                    imageLicense: license.license)
+                }
+             }
+                .isResizable(false)
+                .showCloseButton(true)
+                .customBackground(
+                    RoundedRectangle(cornerRadius: .largeCornerRadius)
+                        .fill(Color.secondaryColor)
+                        .nbShadow()
+                )
             .task {
                 portraitViewModel.filter(speciesId: species.speciesId)
             }
