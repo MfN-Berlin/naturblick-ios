@@ -13,6 +13,8 @@ struct CreateOperation: Encodable {
     let appVersion: String
     let deviceIdentifier: String
     let speciesId: Int64?
+    let segmStart: Int64?
+    let segmEnd: Int64?
 }
 
 extension CreateOperation {
@@ -27,6 +29,8 @@ extension CreateOperation {
         static let appVersion = Expression<String>("app_version")
         static let deviceIdentifier = Expression<String>("device_identifier")
         static let speciesId = Expression<Int64?>("species_id")
+        static let segmStart = Expression<Int64?>("segm_start")
+        static let segmEnd = Expression<Int64?>("segm_end")
 
         static func setters(id: Int64, operation: CreateOperation) -> [Setter] {
             [
@@ -38,7 +42,9 @@ extension CreateOperation {
                 ccByName <- operation.ccByName,
                 appVersion <- operation.appVersion,
                 deviceIdentifier <- operation.deviceIdentifier,
-                speciesId <- operation.speciesId
+                speciesId <- operation.speciesId,
+                segmStart <- operation.segmStart,
+                segmEnd <- operation.segmEnd
             ]
         }
 
@@ -50,7 +56,9 @@ extension CreateOperation {
                 ccByName: try row.get(table[ccByName]),
                 appVersion: try row.get(table[appVersion]),
                 deviceIdentifier: try row.get(table[deviceIdentifier]),
-                speciesId: try row.get(table[speciesId])
+                speciesId: try row.get(table[speciesId]),
+                segmStart: try row.get(table[segmStart]),
+                segmEnd: try row.get(table[segmEnd])
             )
         }
     }

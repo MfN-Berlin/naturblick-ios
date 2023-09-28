@@ -38,6 +38,8 @@ class ObservationPersistenceController: ObservableObject {
                         app_version TEXT NOT NULL,
                         device_identifier TEXT NOT NULL,
                         species_id INTEGER,
+                        segm_start REAL,
+                        segm_end REAL,
                         FOREIGN KEY(rowid) REFERENCES operation(rowid) ON DELETE CASCADE
                     );
                     CREATE TABLE patch_operation (
@@ -52,8 +54,6 @@ class ObservationPersistenceController: ObservableObject {
                         thumbnail_id TEXT,
                         species_id INTEGER,
                         behavior TEXT,
-                        segm_start REAL,
-                        segm_end REAL,
                         FOREIGN KEY(rowid) REFERENCES operation(rowid) ON DELETE CASCADE
                     );
                     CREATE TABLE upload_operation (

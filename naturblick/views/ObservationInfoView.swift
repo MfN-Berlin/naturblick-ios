@@ -39,7 +39,6 @@ struct ObservationInfoView: View {
                     avatar(image: thumbnail)
                         .overlay(alignment: .bottomTrailing) {
                             SoundButton(url: sound.url)
-                            //TODO johannes start / end
                         }
                 } else {
                     avatar(image: thumbnail)

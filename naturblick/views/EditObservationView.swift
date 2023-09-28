@@ -58,7 +58,7 @@ struct EditObservationView: HostedView {
     var body: some View {
         GeometryReader { geo in
             VStack(alignment: .center) {
-                ObservationInfoView(width: geo.size.width, observationInfoVM: ObservationInfoViewModel(editFlowVM: flow))  { view in
+                ObservationInfoView(width: geo.size.width, observationInfoVM: ObservationInfoViewModel(data: flow.data))  { view in
                     navigationController?.pushViewController(view, animated: true)
                 }
             }

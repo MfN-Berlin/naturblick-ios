@@ -94,13 +94,20 @@ extension DBObservation {
         }
 
         static func setters(operation: CreateOperation) -> [Setter] {
-            [
+            var setters: [Setter] = [
                 occurenceId <- operation.occurenceId,
                 obsType <- operation.obsType.rawValue,
                 created <- operation.created.date,
                 createdTz <- operation.created.tz.identifier,
                 species <- operation.speciesId
             ]
+            if let sStart = operation.segmStart {
+                setters.append(segmStart <- sStart)
+            }
+            if let sEnd = operation.segmEnd {
+                setters.append(segmEnd <- sEnd)
+            }
+            return setters
         }
         
         static func setters(operation: DeleteOperation) -> [Setter] {
@@ -135,12 +142,6 @@ extension DBObservation {
             }
             if let newBehavior = operation.behavior {
                 setters.append(behavior <- newBehavior.rawValue)
-            }
-            if let sStart = operation.segmStart {
-                setters.append(segmStart <- sStart)
-            }
-            if let sEnd = operation.segmEnd {
-                setters.append(segmEnd <- sEnd)
             }
             return setters
         }
