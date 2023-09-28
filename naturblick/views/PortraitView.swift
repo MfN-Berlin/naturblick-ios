@@ -133,7 +133,7 @@ struct PortraitView: NavigatableView {
                     }
                 }
             }
-            .bottomSheet(bottomSheetPosition: $bottomSheetPosition, switchablePositions: [.dynamic, .hidden], title: "Licence") {
+            .bottomSheet(bottomSheetPosition: $bottomSheetPosition, switchablePositions: [.dynamic, .hidden], title: "License") {
                 if let license = license {
                     CCInfoPopupView(imageSource: license.source,
                                     imageOwner: license.owner,

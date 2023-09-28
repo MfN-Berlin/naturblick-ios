@@ -5,6 +5,7 @@
 
 import SwiftUI
 import MapKit
+import BottomSheet
 
 class ObservationListViewModel: ObservableObject {
     @Published var showList = true
@@ -39,6 +40,8 @@ struct ObservationListView: HostedView {
     @ObservedObject var createFlow: CreateFlowViewModel
     @StateObject var model = ObservationListViewModel()
     @State var showMapInfo = false
+    @State var bottomSheetPosition: BottomSheetPosition = .hidden
+    @State var mapInfoBox: MapInfoBox?
     
     func configureNavigationItem(item: UINavigationItem, showList: Bool) {
         item.rightBarButtonItems = [
@@ -97,15 +100,12 @@ struct ObservationListView: HostedView {
                         ZStack {
                             Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
                                 .onTapGesture {
-                                    showMapInfo.toggle()
-                            }
-                            if (showMapInfo) {
-                                MapInfoBox(present: $showMapInfo, observation: observation) { obs in
-                                    navigationController?.pushViewController(EditObservationViewController(observation: obs, persistenceController: persistenceController), animated: true)
-                                }
+                                    mapInfoBox = MapInfoBox(present: $showMapInfo, observation: observation) { obs in
+                                        navigationController?.pushViewController(EditObservationViewController(observation: obs, persistenceController: persistenceController), animated: true)
+                                    }
+                                    bottomSheetPosition = .dynamic
                             }
                         }
-                        
                     }
                 }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
@@ -123,6 +123,18 @@ struct ObservationListView: HostedView {
             }
         }
         .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)
+        .bottomSheet(bottomSheetPosition: $bottomSheetPosition, switchablePositions: [.dynamic, .hidden], title: "Observation") {
+            if let v = mapInfoBox {
+                v
+            }
+         }
+            .isResizable(false)
+            .showCloseButton(true)
+            .customBackground(
+                RoundedRectangle(cornerRadius: .largeCornerRadius)
+                    .fill(Color.secondaryColor)
+                    .nbShadow()
+            )
     }
     
     private func sync() async {

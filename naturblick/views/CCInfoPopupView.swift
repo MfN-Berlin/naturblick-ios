@@ -10,37 +10,37 @@ struct CCInfoPopupView : View {
         return "[Source](\(source)/)"
     }
     
-    private func licenceToLink(licence: String) -> String {
+    private func licenseToLink(license: String) -> String {
 
-        func sa(licence: String) -> String {
-            if (licence.contains("sa")) {
+        func sa(license: String) -> String {
+            if (license.contains("sa")) {
                 return "-sa"
             }
             return ""
         }
 
-        func version(licence: String) -> String {
-            if (licence.contains("1.0")) {
+        func version(license: String) -> String {
+            if (license.contains("1.0")) {
                 return  "1.0"
-            } else if (licence.contains("2.0")) {
+            } else if (license.contains("2.0")) {
                 return  "2.0"
-            } else if (licence.contains("2.5")) {
+            } else if (license.contains("2.5")) {
                 return  "2.5"
-            } else if (licence.contains("3.0")) {
+            } else if (license.contains("3.0")) {
                 return  "3.0"
-            } else if (licence.contains("4.0")) {
+            } else if (license.contains("4.0")) {
                 return  "4.0"
             }
             return ""
         }
 
-        let l = licence.lowercased()
+        let l = license.lowercased()
         if (l.contains("cc0") || l.contains("cc 0")) {
-            return "[\(licence)](https://creativecommons.org/publicdomain/zero/1.0/)"
+            return "[\(license)](https://creativecommons.org/publicdomain/zero/1.0/)"
         } else if (l.contains("cc") && l.contains("by")) {
-            return "[\(licence)](https://creativecommons.org/licenses/by\(sa(licence: l))/\(version(licence: l))/)"
+            return "[\(license)](https://creativecommons.org/licenses/by\(sa(license: l))/\(version(license: l))/)"
         }
-        return "(\(licence))"
+        return "(\(license))"
     }
     
     let imageSource: String
@@ -50,7 +50,7 @@ struct CCInfoPopupView : View {
     var body: some View {
         VStack {
             // Links build by string interpolation must be wrapped into AttributedString
-            if let txt = try? AttributedString(markdown: "\(textAndSourceAsLink(source: imageSource)) (\(licenceToLink(licence: imageLicense))) \(imageOwner)") {
+            if let txt = try? AttributedString(markdown: "\(textAndSourceAsLink(source: imageSource)) (\(licenseToLink(license: imageLicense))) \(imageOwner)") {
                 Text(txt)
             }
         }
