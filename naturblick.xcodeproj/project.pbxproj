@@ -16,7 +16,6 @@
 		132B0D9B29CDD78600B80C9E /* lato_black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 132B0D9829CDD78600B80C9E /* lato_black.ttf */; };
 		132B0D9C29CDD78600B80C9E /* lato_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 132B0D9929CDD78600B80C9E /* lato_regular.ttf */; };
 		132B0D9D29CDD78600B80C9E /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 132B0D9A29CDD78600B80C9E /* lato_italic.ttf */; };
-		13316BD729C9F3860077292B /* PickSpeciesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BD629C9F3860077292B /* PickSpeciesListView.swift */; };
 		13316BD929C9F4150077292B /* Species.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BD829C9F4150077292B /* Species.swift */; };
 		13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDA29C9F6030077292B /* SpeciesListFilter.swift */; };
 		13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */; };
@@ -162,6 +161,8 @@
 		7BDA8FBB2ABC241E002E93C9 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */; };
 		7BDA8FBE2ABC5E94002E93C9 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDA8FBD2ABC5E94002E93C9 /* CachedAsyncImage */; };
 		7BDA8FC22ABC6AF6002E93C9 /* CCInfoPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDA8FC12ABC6AF6002E93C9 /* CCInfoPopupView.swift */; };
+		7BDCC0EB2AD0458C0089A4C6 /* PickSpeciesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDCC0EA2AD0458C0089A4C6 /* PickSpeciesListView.swift */; };
+		7BDCC0ED2AD045B20089A4C6 /* PickSpeciesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDCC0EC2AD045B20089A4C6 /* PickSpeciesListViewModel.swift */; };
 		7BDD17E02A45BE84001B9DB4 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */; };
 		7BDD17E22A45C397001B9DB4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E12A45C397001B9DB4 /* LoginView.swift */; };
 		7BDD17E42A45C5AA001B9DB4 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */; };
@@ -191,7 +192,6 @@
 		132B0D9929CDD78600B80C9E /* lato_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_regular.ttf; sourceTree = "<group>"; };
 		132B0D9A29CDD78600B80C9E /* lato_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = lato_italic.ttf; sourceTree = "<group>"; };
 		132B0D9E29CDD90B00B80C9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		13316BD629C9F3860077292B /* PickSpeciesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSpeciesListView.swift; sourceTree = "<group>"; };
 		13316BD829C9F4150077292B /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
 		13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewModel.swift; sourceTree = "<group>"; };
@@ -336,6 +336,8 @@
 		7BD2DFBD2AC324C3007DA520 /* ObservationInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationInfoViewModel.swift; sourceTree = "<group>"; };
 		7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		7BDA8FC12ABC6AF6002E93C9 /* CCInfoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCInfoPopupView.swift; sourceTree = "<group>"; };
+		7BDCC0EA2AD0458C0089A4C6 /* PickSpeciesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSpeciesListView.swift; sourceTree = "<group>"; };
+		7BDCC0EC2AD045B20089A4C6 /* PickSpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSpeciesListViewModel.swift; sourceTree = "<group>"; };
 		7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		7BDD17E12A45C397001B9DB4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
@@ -497,7 +499,7 @@
 				13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */,
 				13EC572229DC83E900D56A77 /* ObservationListView.swift */,
 				13C02EBD2AB059FE001F8D4B /* PickerView.swift */,
-				13316BD629C9F3860077292B /* PickSpeciesListView.swift */,
+				7BDCC0EA2AD0458C0089A4C6 /* PickSpeciesListView.swift */,
 				7BA037CC29D705D200804AFE /* PortraitImageView.swift */,
 				7B8839D729D5749B006CB94E /* PortraitView.swift */,
 				7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */,
@@ -552,6 +554,7 @@
 				13070CA72A053EC700A2046D /* Operation.swift */,
 				134B72B42A05348000C1DCAD /* PatchOperation.swift */,
 				13C02EBF2AB06313001F8D4B /* PickerFlow.swift */,
+				7BDCC0EC2AD045B20089A4C6 /* PickSpeciesListViewModel.swift */,
 				136D907F29D18BBE00A00BD4 /* Portrait.swift */,
 				7BA037C829D7020500804AFE /* PortraitImage.swift */,
 				7B8008F129D5B66B00950839 /* PortraitImageSize.swift */,
@@ -846,6 +849,7 @@
 				136DFABB29F9752100C8B8FF /* NBEditText.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
 				134C75AB2A2F515C0046EEE4 /* BirdRecorderViewModel.swift in Sources */,
+				7BDCC0EB2AD0458C0089A4C6 /* PickSpeciesListView.swift in Sources */,
 				134F54982A5EDC8100A079EC /* URL+SupportDir.swift in Sources */,
 				1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */,
 				1358D5EE2AA5D86300B48C01 /* NBMantisController.swift in Sources */,
@@ -857,7 +861,6 @@
 				7B572DDB2A6E9F65008F50C5 /* String+MD5.swift in Sources */,
 				7BC77E8C2A6AA4A300B489C2 /* SettingsView.swift in Sources */,
 				7BA037C929D7020500804AFE /* PortraitImage.swift in Sources */,
-				13316BD729C9F3860077292B /* PickSpeciesListView.swift in Sources */,
 				134F54962A5EDC3600A079EC /* UUID+Media.swift in Sources */,
 				13F08DE12A9F674600874264 /* NavigatableView.swift in Sources */,
 				134F54942A5ED78E00A079EC /* CGFloat+Constants.swift in Sources */,
@@ -884,6 +887,7 @@
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
 				7BC11AFE2A4ACD4E00823D4F /* DeleteAccountView.swift in Sources */,
 				132A91432A2DD52100AC405C /* CoordinatesView.swift in Sources */,
+				7BDCC0ED2AD045B20089A4C6 /* PickSpeciesListViewModel.swift in Sources */,
 				139DA94C2AB99E6F00C8C238 /* View+Shadow.swift in Sources */,
 				13C850DC2AA20CE30006FA1A /* CreateFlowViewModel.swift in Sources */,
 				136DFAB929F96E6500C8B8FF /* CreateObservationView.swift in Sources */,

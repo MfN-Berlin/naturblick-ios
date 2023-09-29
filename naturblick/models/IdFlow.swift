@@ -7,11 +7,16 @@ import Foundation
 import Mantis
 import SwiftUI
 
+import UIKit
+import MapKit
+import Combine
+
 protocol IdFlow: ObservableObject {
     var result: [SpeciesResult]? {get}
     func spectrogramCropDone(crop: NBImage, start: Int, end: Int)
     func identify() async throws -> [SpeciesResult]
     func selectSpecies(species: SpeciesListItem?)
+    func searchSpecies()
 }
 
 class IdFlowSample: IdFlow {
@@ -19,4 +24,5 @@ class IdFlowSample: IdFlow {
     func spectrogramCropDone(crop: NBImage, start: Int, end: Int) {}
     func identify() async throws -> [SpeciesResult] {[]}
     func selectSpecies(species: SpeciesListItem?) {}
+    func searchSpecies() {}
 }
