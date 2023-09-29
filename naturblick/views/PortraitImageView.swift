@@ -2,7 +2,6 @@
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
-
 import SwiftUI
 import BottomSheet
 
@@ -85,12 +84,11 @@ struct PortraitImageView: View {
     }
 }
 
-/*
- struct PortraitImageView_Previews: PreviewProvider {
- static var previews: some View {
- GeometryReader { geo in
- PortraitImageView(geo: geo, image: PortraitImage.sampleData, headerImage: true, bottomSheetPosition: .constant(.hidden))
- }
- }
- }
- */
+
+struct PortraitImageView_Previews: PreviewProvider {
+    static var previews: some View {
+        GeometryReader { geo in
+            PortraitImageView(geo: geo, image: PortraitImage.sampleData, headerImage: true, bottomSheetPosition: .constant(.hidden), license: .constant(nil))
+        }
+    }
+}
