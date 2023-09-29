@@ -26,7 +26,7 @@ struct ObservationListView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
-        "Feldbuch"
+        "Fieldbook"
     }
     
     private let client = BackendClient()

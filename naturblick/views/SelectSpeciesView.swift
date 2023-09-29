@@ -11,7 +11,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
-        "Choose species"
+        "Choice"
     }
     
     @ObservedObject var flow: Flow

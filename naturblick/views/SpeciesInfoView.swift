@@ -10,7 +10,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
-        "Choose species"
+        "Profile"
     }
     
     func configureNavigationItem(item: UINavigationItem) {
