@@ -71,10 +71,14 @@ struct CreateObservationView: NavigatableView {
                     Image("placeholder")
                         .observationProperty()
                     Picker("Behavior", selection: $createFlow.data.behavior) {
+                        Text("None").tag(nil as Behavior?)
                         ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
                             Text($0.rawValue).tag($0 as Behavior?)
                         }
                     }
+                    .pickerStyle(MenuPickerStyle())
+                    .tint(.onSecondaryHighEmphasis)
+                    .accentColor(.onSecondaryHighEmphasis)
                 }
                 Divider()
                 HStack {
