@@ -5,7 +5,6 @@
 
 import SwiftUI
 import CachedAsyncImage
-import BottomSheet
 
 struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
@@ -17,7 +16,6 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     @ObservedObject var flow: Flow
     let thumbnail: NBImage
     @State var showInfo: SpeciesListItem? = nil
-    @State private var sheetPosition: BottomSheetPosition = .dynamic
     @State private var presentAlternativesDialog: Bool = false
     @StateObject var model: SelectSpeciesViewModel = SelectSpeciesViewModel()
     @StateObject private var errorHandler = HttpErrorViewModel()
@@ -39,29 +37,29 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     
     var body: some View {
         GeometryReader { geo in
-            VStack {
-                Image(uiImage: thumbnail.image)
-                    .resizable()
-                    .frame(width: geo.size.width, height: geo.size.width)
-                Spacer()
-            }
-            .bottomSheet(bottomSheetPosition: $sheetPosition, switchablePositions: [.dynamic, .dynamicBottom]) {
-                VStack {
-                    
-                    if let results = model.speciesResults {
-                        Text("The list suggests wild plants found in the city. The suggestions are created by comparing photos of over 2000 species. The closer the score is to 100%, the more likely the match is.")
-                            .font(.nbBody2)
-                            .foregroundColor(.onSecondaryMediumEmphasis)
-                            .padding(.bottom, .defaultPadding)
-                        ForEach(results, id: \.0.id) { (result, item) in
-                            SpeciesResultView(result: result, species: item)
-                                .listRowInsets(.nbInsets)
-                                .onTapGesture {
-                                    openSpeciesInfo(species: item)
-                                }
-                            Divider()
-                        }
-                        HStack(alignment: .center) {
+            ZStack {}
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .overlay(alignment: .top) {
+                    Image(uiImage: thumbnail.image)
+                        .resizable()
+                        .frame(width: geo.size.width, height: geo.size.width)
+                }
+                .overlay(alignment: .bottom) {
+                    VStack {
+                        if let results = model.speciesResults {
+                            Text("The list suggests wild plants found in the city. The suggestions are created by comparing photos of over 2000 species. The closer the score is to 100%, the more likely the match is.")
+                                .font(.nbBody2)
+                                .foregroundColor(.onSecondaryMediumEmphasis)
+                                .padding(.bottom, .defaultPadding)
+                            ForEach(results, id: \.0.id) { (result, item) in
+                                SpeciesResultView(result: result, species: item)
+                                    .listRowInsets(.nbInsets)
+                                    .onTapGesture {
+                                        openSpeciesInfo(species: item)
+                                    }
+                                Divider()
+                            }
+                            HStack(alignment: .center) {
                                 Image("unknown_species")
                                     .resizable()
                                     .scaledToFit()
@@ -72,60 +70,60 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                                 Text("None of the above")
                                     .subtitle1()
                                 Spacer()
-                        }
-                        .contentShape(Rectangle())
-                        .listRowInsets(.nbInsets)
-                        .onTapGesture {
-                            presentAlternativesDialog = true
-                        }
-                    } else {
-                        ProgressView {
-                            Text("Identifying species")
-                                .font(.nbButton)
-                                .foregroundColor(.onSecondaryMediumEmphasis)
-                        }
-                        .progressViewStyle(.circular)
-                        .foregroundColor(.onSecondaryHighEmphasis)
-                        .controlSize(.large)
-                        .onAppear {
-                            identify()
+                            }
+                            .contentShape(Rectangle())
+                            .listRowInsets(.nbInsets)
+                            .onTapGesture {
+                                presentAlternativesDialog = true
+                            }
+                        } else {
+                            ProgressView {
+                                Text("Identifying species")
+                                    .font(.nbButton)
+                                    .foregroundColor(.onSecondaryMediumEmphasis)
+                            }
+                            .progressViewStyle(.circular)
+                            .foregroundColor(.onSecondaryHighEmphasis)
+                            .controlSize(.large)
+                            .onAppear {
+                                identify()
+                            }
                         }
                     }
+                    .frame(maxWidth: .infinity, minHeight: geo.size.height - geo.size.width + geo.safeAreaInsets.bottom)
+                    .padding(.defaultPadding)
+                    .padding(.bottom, geo.safeAreaInsets.bottom)
+                    .background(
+                        RoundedRectangle(cornerRadius: .largeCornerRadius)
+                            .fill(Color.secondaryColor)
+                            .nbShadow()
+                    )
                 }
-                .frame(minHeight: geo.size.height - geo.size.width + geo.safeAreaInsets.bottom)
-                .padding(.horizontal, .defaultPadding)
-                .padding(.bottom, geo.safeAreaInsets.bottom)
-            }
-            .customBackground(
-                RoundedRectangle(cornerRadius: .largeCornerRadius)
-                    .fill(Color.secondaryColor)
-                    .nbShadow()
-            )
-            .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { details in
-                Button("Try again") {
-                    identify()
+                .ignoresSafeArea(edges: .bottom)
+                .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { details in
+                    Button("Try again") {
+                        identify()
+                    }
+                    Button("Browse species") {
+                        flow.searchSpecies()
+                    }
+                    Button("Save as unknown species") {
+                        flow.selectSpecies(species: nil)
+                    }
                 }
-                Button("Browse species") {
-                    flow.searchSpecies()
+                .alert("Do you want to identify the species in another way?", isPresented: $presentAlternativesDialog) {
+                    Button("Use another part of the image") {
+                        navigationController?.popViewController(animated: true)
+                    }
+                    Button("Browse species") {
+                        flow.searchSpecies()
+                    }
+                    Button("Save as unknown species") {
+                        flow.selectSpecies(species: nil)
+                    }
+                    Button("Cancel", role: .cancel) {
+                    }
                 }
-                Button("Save as unknown species") {
-                    flow.selectSpecies(species: nil)
-                }
-            }
-            .alert("Do you want to identify the species in another way?", isPresented: $presentAlternativesDialog) {
-                Button("Use another part of the image") {
-                    navigationController?.popViewController(animated: true)
-                }
-                Button("Browse species") {
-                    flow.searchSpecies()
-                }
-                Button("Save as unknown species") {
-                    flow.selectSpecies(species: nil)
-                }
-                Button("Cancel", role: .cancel) {
-                }
-            }
         }
-       
     }
 }
