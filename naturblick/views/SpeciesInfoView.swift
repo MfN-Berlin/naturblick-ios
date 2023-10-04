@@ -10,7 +10,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
-        "Choose species"
+        species.name
     }
     
     func configureNavigationItem(item: UINavigationItem) {
@@ -31,25 +31,41 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
     }
     
     var body: some View {
-        VStack {
-            CachedAsyncImage(urlRequest: urlRequest) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .padding(.trailing, .defaultPadding)
-            } placeholder: {
-                Image("placeholder")
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .padding(.trailing, .defaultPadding)
+        VStack(alignment: .center) {
+            SwiftUI.Group {
+                CachedAsyncImage(urlRequest: urlRequest) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(RoundedRectangle(cornerRadius: .largeCornerRadius))
+                } placeholder: {
+                    Image("placeholder")
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(Circle())
+                }
             }
-            if let name = species.name {
-                Text(species.sciname)
-                Text(name)
-            } else {
-                Text(species.sciname)
+            .overlay(alignment: .bottomTrailing) {
+                if let audioUrl = species.audioUrl {
+                    SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!)
+                        .frame(height: .fabSize)
+                        .padding(.defaultPadding)
+                }
+            }
+            Text(species.sciname)
+                .font(.nbOverline)
+                .foregroundColor(.onSecondarySignalHigh)
+                .italic()
+                .multilineTextAlignment(.center)
+            Text(species.gername?.uppercased() ?? "ARTNAME")
+                .font(.nbHeadline4)
+                .foregroundColor(.onSecondaryHighEmphasis)
+                .multilineTextAlignment(.center)
+            if let synonym = species.gersynonym {
+                Text("also: \(synonym)")
+                    .font(.nbCaption)
+                    .foregroundColor(.onSecondaryLowEmphasis)
+                    .multilineTextAlignment(.center)
             }
             if species.hasPortrait {
                 Button("Visit artportrait") {
@@ -58,12 +74,10 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
                         navigation.pushViewController(view.setUpViewController(), animated: true)
                     }
                 }
+                .buttonStyle(AuxiliaryOnSecondaryButton())
             } else if let wikipedia = species.wikipedia {
                 Link("Visit wikipedia", destination: URL(string: wikipedia)!)
-            }
-            
-            if let audioUrl = species.audioUrl {
-                SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!)
+                    .buttonStyle(AuxiliaryOnSecondaryButton())
             }
         }
         .padding(.defaultPadding)

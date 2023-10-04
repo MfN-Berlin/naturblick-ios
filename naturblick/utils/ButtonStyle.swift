@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct ConfirmButton: ButtonStyle {
+struct ConfirmFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .font(.nbButton)
@@ -17,7 +17,18 @@ struct ConfirmButton: ButtonStyle {
     }
 }
 
-struct DestructiveButton: ButtonStyle {
+struct AuxiliaryOnSecondaryButton: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(.nbButton)
+            .padding(.defaultPadding)
+            .foregroundStyle(Color.onSecondaryHighEmphasis)
+            .border(Color.onSecondaryMinimumEmphasis)
+            .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+    }
+}
+
+struct DestructiveFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .font(.nbButton)

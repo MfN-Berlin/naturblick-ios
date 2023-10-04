@@ -11,7 +11,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
-        "Choose species"
+        "Results"
     }
     
     @ObservedObject var flow: Flow
@@ -24,9 +24,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     
     func openSpeciesInfo(species: SpeciesListItem) {
         let info = SpeciesInfoView(species: species, flow: flow).setUpViewController()
-        withNavigation { navigation in
-            navigation.pushViewController(info, animated: true)
-        }
+        navigationController?.pushViewController(info, animated: true)
     }
     
     func identify() {

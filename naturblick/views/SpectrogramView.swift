@@ -224,11 +224,11 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                 Button("Discard") {
                     navigationController?.popToRootViewController(animated: true)
                 }
-                .buttonStyle(DestructiveButton())
+                .buttonStyle(DestructiveFullWidthButton())
                 Button("Identify species") {
                     crop()
                 }
-                .buttonStyle(ConfirmButton())
+                .buttonStyle(ConfirmFullWidthButton())
                 .padding(.leading, .defaultPadding)
             }
         }
