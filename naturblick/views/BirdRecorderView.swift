@@ -12,7 +12,7 @@ struct BirdRecorderView: NavigatableView {
     @ObservedObject var flow: CreateFlowViewModel
 
     var body: some View {
-        VStack {
+        StaticBottomSheetView {
             HStack(alignment: .center) {
                 if model.isAuthorized {
                     Text("\(model.currentTime)")
@@ -30,8 +30,7 @@ struct BirdRecorderView: NavigatableView {
                     Text("Naturblick requires recording")
                 }
             }
-            .frame(maxHeight: .infinity)
-            VStack {
+        } sheet: {
                 Circle()
                     .stroke(Color.onSecondaryHighEmphasis, lineWidth: .goodToKnowLineWidth)
                     .overlay {
@@ -40,20 +39,11 @@ struct BirdRecorderView: NavigatableView {
                             .padding(.defaultPadding * 2)
                     }
                     .frame(width: .stopButtonSize, height: .stopButtonSize)
-                    .padding(.defaultPadding * 2)
                     .onTapGesture {
                         flow.soundRecorded(sound: model.stop()!)
                     }
-            }
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: .largeCornerRadius)
-                    .fill(Color.secondaryColor)
-                    .nbShadow()
-            )
+                    .padding(.defaultPadding)
         }
-        .ignoresSafeArea(edges: .bottom)
-        
     }
 }
 
