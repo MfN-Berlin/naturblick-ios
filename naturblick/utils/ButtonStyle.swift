@@ -14,6 +14,7 @@ struct ConfirmFullWidthButton: ButtonStyle {
             .background(Color.onPrimaryButtonPrimary)
             .foregroundStyle(Color.onPrimaryHighEmphasis)
             .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .nbShadow()
     }
 }
 
@@ -25,6 +26,7 @@ struct AuxiliaryOnSecondaryButton: ButtonStyle {
             .foregroundStyle(Color.onSecondaryHighEmphasis)
             .border(Color.onSecondaryMinimumEmphasis)
             .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .nbShadow()
     }
 }
 
@@ -37,5 +39,19 @@ struct DestructiveFullWidthButton: ButtonStyle {
             .foregroundStyle(Color.onSecondarywarning)
             .border(Color.onSecondarywarning)
             .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .nbShadow()
+    }
+}
+
+struct FABReplacementFullWidthButton: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(.nbButton)
+            .padding(.defaultPadding)
+            .frame(maxWidth: .infinity)
+            .background(Color.onSecondaryButtonSecondary)
+            .foregroundStyle(Color.onPrimaryHighEmphasis)
+            .clipShape(Capsule())
+            .nbShadow()
     }
 }

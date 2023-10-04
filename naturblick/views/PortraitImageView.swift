@@ -35,7 +35,7 @@ struct PortraitImageView: View {
                             .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
                     }
                 }
-         .overlay(alignment: .topTrailing) {
+                .overlay(alignment: .topTrailing) {
                     Button(action: {
                         showCCByInfo.toggle()
                     }) {

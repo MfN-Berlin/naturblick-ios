@@ -116,13 +116,13 @@ class ObservationPersistenceController: ObservableObject {
             fatalError(error.localizedDescription)
         }
     }
-
+    
     func refresh() throws {
         let obs = try queue.prepareRowIterator(
             DBObservation.D.observation.select(*).order(DBObservation.D.created.desc)
         ).map(DBObservation.D.instance)
         let speciesDb = Connection.speciesDB
-        observations = try obs.map { observation in
+        let observations = try obs.map { observation in
             guard let speciesId = observation.newSpeciesId else {
                 return Observation(observation: observation, species: nil)
             }
@@ -145,6 +145,9 @@ class ObservationPersistenceController: ObservableObject {
                 hasPortrait: false
             )
             return Observation(observation: observation, species: species)
+        }
+        Task { @MainActor in
+            self.observations = observations
         }
     }
     

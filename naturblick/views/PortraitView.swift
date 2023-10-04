@@ -5,7 +5,17 @@
 
 import SwiftUI
 
-struct PortraitView: NavigatableView {
+class PortraitViewController: HostingController<PortraitView> {
+    let createFlow: CreateFlowViewModel
+    init(species: SpeciesListItem, inSelectionFlow: Bool) {
+        createFlow = CreateFlowViewModel(persistenceController: ObservationPersistenceController())
+        let view = PortraitView(flow: createFlow, species: species, inSelectionFlow: inSelectionFlow)
+        super.init(rootView: view)
+        createFlow.setViewController(controller: self)
+    }
+}
+
+struct PortraitView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? {
         species.name
@@ -13,7 +23,9 @@ struct PortraitView: NavigatableView {
     var alwaysDarkBackground: Bool = true
     
     @StateObject var portraitViewModel = PortraitViewModel()
+    @ObservedObject var flow: CreateFlowViewModel
     let species: SpeciesListItem
+    let inSelectionFlow: Bool
     
     var body: some View {
         GeometryReader { geo in
@@ -32,6 +44,7 @@ struct PortraitView: NavigatableView {
                                         .padding(.horizontal, .defaultPadding)
                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                                 }
+                                
                                 RoundBottomView()
                                     .frame(height: .roundBottomHeight)
                             }
@@ -57,17 +70,32 @@ struct PortraitView: NavigatableView {
                         .padding(.bottom, .defaultPadding * 2)
                         .padding([.top, .horizontal], .defaultPadding)
                         
-                        
                         VStack(alignment: .leading) { // description
+                            if !inSelectionFlow {
+                                Button(action: {
+                                    flow.selectManual(species: species)
+                                }) {
+                                    HStack {
+                                        Image("add_24")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(height: .fabMiniSize)
+                                        Text("Observed here")
+                                            .font(.nbButton)
+                                            .foregroundColor(.onPrimaryHighEmphasis)
+                                    }
+                                }
+                                .buttonStyle(FABReplacementFullWidthButton())
+                            }
                             Text("Beschreibung")
                                 .font(.nbHeadline4)
-                                .padding([.top, .bottom], .defaultPadding)
+                                .padding(.bottom, .defaultPadding)
                             Text(portrait.description)
                                 .font(.nbBody1)
                             
                             VStack(alignment: .leading) { // similar species
                                 SpeciesFeaturesView(portraitId: portrait.id, species: portrait.species)
-                                SimilarSpeciesView(portraitId: portrait.id, holder: holder)
+                                SimilarSpeciesView(portraitId: portrait.id, holder: holder, inSelectionFlow: inSelectionFlow)
                             }
                             .padding(.defaultPadding)
                             .background {
@@ -136,6 +164,6 @@ struct PortraitView: NavigatableView {
 
 struct PortraitView_Previews: PreviewProvider {
     static var previews: some View {
-        PortraitView(species: SpeciesListItem.sampleData)
+        PortraitView(flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)), species: SpeciesListItem.sampleData, inSelectionFlow: false)
     }
 }

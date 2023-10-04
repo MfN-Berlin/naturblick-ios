@@ -69,10 +69,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
             }
             if species.hasPortrait {
                 Button("Visit artportrait") {
-                    let view = PortraitView(species: species)
-                    withNavigation { navigation in
-                        navigation.pushViewController(view.setUpViewController(), animated: true)
-                    }
+                    navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
                 }
                 .buttonStyle(AuxiliaryOnSecondaryButton())
             } else if let wikipedia = species.wikipedia {
