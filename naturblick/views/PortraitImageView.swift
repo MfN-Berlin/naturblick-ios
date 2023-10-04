@@ -14,6 +14,11 @@ struct PortraitImageView: View {
     @State var full: UIImage? = nil
     @State var showCCByInfo: Bool = false
     
+    var aspectRatio: CGFloat {
+        let size = image.sizes.first!
+        return CGFloat(size.width) / CGFloat(size.height)
+    }
+    
     var body: some View {
         ZStack {
             VStack {
@@ -29,9 +34,8 @@ struct PortraitImageView: View {
                             .scaledToFit()
                             .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
                     } else {
-                        Image("placeholder")
-                            .resizable()
-                            .scaledToFill()
+                        Spacer()
+                            .aspectRatio(aspectRatio, contentMode: .fit)
                             .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
                     }
                 }
