@@ -138,7 +138,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         if let navigation = navigationController {
             do {
                 try persistenceController.insert(data: data)
-                navigation.popViewController(animated: true)
+                navigation.forcePopViewController(animated: true)
             } catch {
                 preconditionFailure("\(error)")
             }

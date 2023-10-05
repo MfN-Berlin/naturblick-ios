@@ -19,10 +19,7 @@ class EditObservationViewController: HostingController<EditObservationView> {
     @objc func setEdit() {
         flow.editing = true
     }
-    
-    @objc func saveObservation() {
-        flow.saveObservation()
-    }
+
 }
 
 struct EditObservationView: HostedView {
@@ -31,9 +28,28 @@ struct EditObservationView: HostedView {
     @ObservedObject var flow: EditFlowViewModel
     @State private var isEditing = false
     @State private var sheetPosition: BottomSheetPosition = .dynamic
-    
     init(flow: EditFlowViewModel) {
         self.flow = flow
+    }
+    
+    func pop() -> Bool {
+        if flow.data.hasChanged {
+            let discard = UIAlertAction(title: "Discard changes", style: .destructive) { (action) in
+                self.navigationController?.forcePopViewController(animated: true)
+            }
+            let save = UIAlertAction(title: "Save", style: .default) { (action) in
+                flow.saveObservation()
+            }
+            let cancel = UIAlertAction(title: "Continue editing", style: .cancel) { (action) in}
+            let alert = UIAlertController(title: "Unsaved changes", message: "There are changes that have not been saved.", preferredStyle: .actionSheet)
+            alert.addAction(discard)
+            alert.addAction(save)
+            alert.addAction(cancel)
+            viewController?.present(alert, animated: true)
+            return false
+        } else {
+            return true
+        }
     }
     
     func configureNavigationItem(item: UINavigationItem) {
@@ -179,7 +195,9 @@ struct EditObservationView: HostedView {
             if editing {
                 withAnimation {
                     isEditing = editing
-                    viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: viewController, action: #selector(EditObservationViewController.saveObservation))
+                    viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Save") {_ in
+                        flow.saveObservation()
+                    })
                 }
             }
         }
