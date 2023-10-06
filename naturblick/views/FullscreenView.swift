@@ -5,7 +5,9 @@
 
 import SwiftUI
 
-struct FullscreenView: View {
+struct FullscreenView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    
     let imageId: UUID
     @State var image: NBImage? = nil
     var body: some View {

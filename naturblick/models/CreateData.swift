@@ -59,7 +59,7 @@ struct CreateData {
     }
     
     var create: CreateOperation {
-        CreateOperation(occurenceId: occurenceId, obsType: obsType, created: created, ccByName: ccByName, appVersion: appVersion, deviceIdentifier: deviceIdentifier, speciesId: species?.speciesId)
+        CreateOperation(occurenceId: occurenceId, obsType: obsType, created: created, ccByName: ccByName, appVersion: appVersion, deviceIdentifier: deviceIdentifier, speciesId: species?.speciesId, segmStart: sound.start.map { s in Int64(s) } ?? nil, segmEnd: sound.end.map { s in Int64(s) } ?? nil)
     }
 
     var patch: PatchOperation? {
@@ -77,6 +77,7 @@ struct CreateData {
         guard coords != nil || !details.isEmpty || mediaId != nil || thumbnailId != nil || behavior != nil else {
             return nil
         }
+        
         return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals, mediaId: mediaId, thumbnailId: thumbnailId, newSpeciesId: nil, behavior: behavior)
     }
 }
