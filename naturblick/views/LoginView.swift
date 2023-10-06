@@ -8,7 +8,9 @@ struct SigninResponse : Decodable {
     let access_token: String
 }
 
-struct LoginView: View {
+struct LoginView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var viewName: String? = "Login"
     
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?

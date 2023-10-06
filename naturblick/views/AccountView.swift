@@ -37,9 +37,15 @@ struct AccountView: NavigatableView {
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
                     .padding()
-                NavigationLink(destination: LoginView()) {
+                
+                Button {
                     Text("Go to login")
+                }.onTapGesture {
+                    navigationController?.pushViewController(LoginView().setUpViewController(), animated: true)
                 }.buttonStyle(.bordered).foregroundColor(.black)
+                
+                
+                
                 NavigationLink(destination: RegisterView()) {
                     Text("Register now")
                 }.buttonStyle(.bordered).foregroundColor(.black)
