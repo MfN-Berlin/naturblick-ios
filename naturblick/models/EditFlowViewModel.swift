@@ -155,4 +155,11 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         data.coords = Coordinates(region: region)
         region = data.region
     }
+    
+    func searchSpecies() {
+        withNavigation { navigation in
+            let view = PickSpeciesListView(flow: self)
+            navigation.pushViewController(view.setUpViewController(), animated: true)
+        }
+    }
 }

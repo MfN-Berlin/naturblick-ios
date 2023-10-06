@@ -7,10 +7,17 @@ import SQLite
 
 class SpeciesListViewModel: ObservableObject {
     let speciesDb: Connection = Connection.speciesDB
-    static let pageSize: Int = 50
-
+  
     private func searchOrNil(search: String) -> String? {
         return search.isEmpty ? nil : "%\(search)%"
+    }
+    
+    private func filterSearchString(_ query: Table, _ searchString: String?) -> Table {
+        return query.filter(Species.Definition.gername.like(searchString!) ||
+                            Species.Definition.sciname.like(searchString!) ||
+                            Species.Definition.gersynonym.like(searchString!) ||
+                            Species.Definition.engname.like(searchString!) ||
+                            Species.Definition.engsynonym.like(searchString!))
     }
     
     func query(filter: SpeciesListFilter, search: String) throws -> [SpeciesListItem] {
@@ -18,11 +25,12 @@ class SpeciesListViewModel: ObservableObject {
         switch filter {
         case .group(let group):
             let query = Species.Definition.table
-                .join(Portrait.Definition.table,
+                .join(.leftOuter, Portrait.Definition.table,
                       on: Portrait.Definition.speciesId == Species.Definition.table[Species.Definition.id])
                 .filter(Species.Definition.group == group.id)
                 .filter(Portrait.Definition.language == 1)
-            let queryWithSearch = searchString != nil ? query.filter(Species.Definition.gername.like(searchString!)) : query
+                .order(Species.Definition.gername)
+            let queryWithSearch = searchString != nil ? filterSearchString(query, searchString) : query
             return try speciesDb.prepareRowIterator(queryWithSearch.order(Species.Definition.gername))
                 .map { row in
                     SpeciesListItem(
@@ -58,27 +66,5 @@ class SpeciesListViewModel: ObservableObject {
                     )
                 }
         }
-    }
-    
-    func query(search: String, page: Int) throws -> [SpeciesListItem] {
-        let searchString = searchOrNil(search: search)
-        let query = Species.Definition.baseQuery
-        let queryWithSearch = searchString != nil ? query.filter(Species.Definition.gername.like(searchString!)) : query
-        return try speciesDb.prepare(queryWithSearch.order(Species.Definition.gername).limit(SpeciesListViewModel.pageSize, offset: page * SpeciesListViewModel.pageSize))
-            .map { row in
-                SpeciesListItem(
-                    speciesId: row[Species.Definition.table[Species.Definition.id]],
-                    sciname: row[Species.Definition.sciname],
-                    gername: row[Species.Definition.gername],
-                    maleUrl: row[Species.Definition.maleUrl],
-                    femaleUrl: row[Species.Definition.femaleUrl],
-                    gersynonym: row[Species.Definition.gersynonym],
-                    isFemale: nil,
-                    wikipedia: row[Species.Definition.wikipedia],
-                    hasPortrait: row[Species.Definition.optionalPortraitId] != nil,
-                    group: row[Species.Definition.group],
-                    audioUrl: row[Portrait.Definition.audioUrl]
-                )
-            }
     }
 }

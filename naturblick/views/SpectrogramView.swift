@@ -237,7 +237,7 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                 model.downloadSpectrogram()
             }
             Button("Browse species") {
-                
+                flow.searchSpecies()
             }
             Button("Save as unknown species") {
                 flow.selectSpecies(species: nil)

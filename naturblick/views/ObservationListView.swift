@@ -40,23 +40,27 @@ struct ObservationListView: HostedView {
     @StateObject var model = ObservationListViewModel()
     @State var showMapInfo = false
     
+    fileprivate func extractedFunc() -> [MenuEntry] {
+        return [
+            MenuEntry(title: "Identify photo from a plant", image: UIImage(named: "details")!) {
+                
+            },
+            MenuEntry(title: "Record a bird sound", image: UIImage(named: "audio24")!) {
+                createFlow.recordSound()
+            },
+            MenuEntry(title: "Photograph a plant", image: UIImage(named: "photo24")!) {
+                createFlow.takePhoto()
+            },
+            MenuEntry(title: "Create observation", image: UIImage(named: "logo24")!) {
+                createFlow.searchSpecies()
+            }
+        ]
+    }
+    
     func configureNavigationItem(item: UINavigationItem, showList: Bool) {
         item.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "add_24"), primaryAction: UIAction(image:  UIImage(named: "add_24")) { action in
-               let menuVC = MenuController(entries: [
-                   MenuEntry(title: "Identify photo from a plant", image: UIImage(named: "details")!) {
-                      
-                   },
-                   MenuEntry(title: "Record a bird sound", image: UIImage(named: "audio24")!) {
-                       createFlow.recordSound()
-                   },
-                   MenuEntry(title: "Photograph a plant", image: UIImage(named: "photo24")!) {
-                       createFlow.takePhoto()
-                   },
-                   MenuEntry(title: "Create observation", image: UIImage(named: "logo24")!) {
-                       
-                   }
-               ]);
+                let menuVC = MenuController(entries: extractedFunc());
                menuVC.popoverPresentationController?.barButtonItem = action.sender as? UIBarButtonItem
                navigationController?.present(menuVC, animated: true)
            }), 

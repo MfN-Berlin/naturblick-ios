@@ -2,85 +2,77 @@
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
+
 import SwiftUI
 
-struct PickSpeciesListView: View {
-    @Binding var picked: SpeciesListItem?
-    @State var species:  [SpeciesListItem] = []
-    @State var page: Int = 0
-    @State var query: String = ""
-    @StateObject var speciesListViewModel = SpeciesListViewModel()
-    @State var showInfo: SpeciesListItem? = nil
+struct PickSpeciesListView<Flow>: NavigatableView where Flow: IdFlow {
     
-    func reloadSpecies() {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var viewName: String? = "Species"
+    
+    @State var page: Int = 0
+    @State var species:  [SpeciesListItem] = []
+    @State var query: String = ""
+    @StateObject var pickSpeciesListViewModel: PickSpeciesListViewModel = PickSpeciesListViewModel()
+   
+    var flow: Flow
+    
+    func updateSpecies() {
         Task {
             do {
-                species = try speciesListViewModel.query(search: query, page: page)
+                species = try pickSpeciesListViewModel.query(search: query, page: page)
             } catch {
                 preconditionFailure("\(error)")
             }
         }
     }
     
-    func itemAppear(item: SpeciesListItem) {
-        if let lastId = species.last?.id, lastId == item.id {
-            page = page + 1
-            Task {
-                do {
-                    species.append(contentsOf: try speciesListViewModel.query(search: query, page: page))
-                } catch {
-                    preconditionFailure("\(error)")
-                }
-            }
-        }
+    func showSpecies(species: SpeciesListItem) {
+        navigationController?.pushViewController(SpeciesInfoView(species: species, flow: flow)
+            .setUpViewController(), animated: true)
     }
     
     var body: some View {
         List(species) { current in
             SpeciesListItemView(species: current)
                 .onTapGesture {
-                    showInfo = current
+                    showSpecies(species: current)
                 }
                 .listRowInsets(.nbInsets)
                 .listRowBackground(Color.secondaryColor)
                 .onAppear {
-                    itemAppear(item: current)
+                    allSpeciesPagination(item: current)
                 }
         }
         .listStyle(.plain)
-        .searchable(text: $query)
+        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always))
         .onChange(of: query) { query in
             page = 0
-            reloadSpecies()
+            updateSpecies()
         }
         .onAppear {
             if species.isEmpty {
-                reloadSpecies()
+                updateSpecies()
             }
         }
-        .popover(item: $showInfo) { species in
-            NavigationView {
-                Text("Test")
-                    .navigationTitle(species.name != nil ? species.name! : species.sciname)
-                    .toolbar {
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Select") {
-                                picked = species
-                            }
-                        }
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Close") {
-                                showInfo = nil
-                            }
-                        }
-                    }
+    }
+    
+    func allSpeciesPagination(item: SpeciesListItem) {
+        if let lastId = species.last?.id, lastId == item.id {
+            page = page + 1
+            Task {
+                do {
+                    species.append(contentsOf: try pickSpeciesListViewModel.query(search: query, page: page))
+                } catch {
+                    preconditionFailure("\(error)")
+                }
             }
         }
     }
 }
 
-struct PaginatedSpeciesListView_Previews: PreviewProvider {
+struct AllSpeciesListView_Previews: PreviewProvider {
     static var previews: some View {
-        PickSpeciesListView(picked: .constant(nil))
+        PickSpeciesListView(flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
     }
 }

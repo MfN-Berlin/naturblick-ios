@@ -106,7 +106,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     identify()
                 }
                 Button("Browse species") {
-                    
+                    flow.searchSpecies()
                 }
                 Button("Save as unknown species") {
                     flow.selectSpecies(species: nil)
@@ -117,7 +117,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     navigationController?.popViewController(animated: true)
                 }
                 Button("Browse species") {
-                    print("Browse species")
+                    flow.searchSpecies()
                 }
                 Button("Save as unknown species") {
                     flow.selectSpecies(species: nil)

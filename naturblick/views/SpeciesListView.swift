@@ -2,7 +2,6 @@
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
-
 import SwiftUI
 
 struct SpeciesListView: NavigatableView {
@@ -12,7 +11,7 @@ struct SpeciesListView: NavigatableView {
         switch(filter) {
         case .group(let group):
             return group.gerName
-        case .characters(_, _):
+        case _:
             return "Species"
         }
     }
@@ -46,7 +45,7 @@ struct SpeciesListView: NavigatableView {
                 .listRowBackground(Color.secondaryColor)
         }
         .listStyle(.plain)
-        .searchable(text: $query)
+        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always))
         .onChange(of: query) { query in
             updateFilter()
         }

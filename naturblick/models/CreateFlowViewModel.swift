@@ -162,12 +162,18 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         }
     }
     
-    
     func resetRegion() {
         region = data.region
     }
     
     func pickCoordinate() {
         data.coords = Coordinates(region: region)
+    }
+    
+    func searchSpecies() {
+        withNavigation { navigation in
+            let view = PickSpeciesListView(flow: self)
+            navigation.pushViewController(view.setUpViewController(), animated: true)
+        }
     }
 }
