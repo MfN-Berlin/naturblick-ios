@@ -23,7 +23,7 @@ struct ObservationInfoView: View {
     var body: some View {
         VStack() {
             if let thumbnail = observationInfoVM.thumbnail?.image {
-                if let fullScreen = observationInfoVM.fullscreenImage {
+                if let fullscreenImageId = observationInfoVM.fullscreenImageId {
                     avatar(image: thumbnail).overlay(alignment: .bottomTrailing) {
                         ZStack {
                             Circle()
@@ -32,7 +32,7 @@ struct ObservationInfoView: View {
                             Image("zoom")
                                 .foregroundColor(.onPrimaryHighEmphasis)
                         }.onTapGesture {
-                            navigate(FullscreenView(imageId: fullScreen.id).setUpViewController())
+                            navigate(FullscreenView(imageId: fullscreenImageId).setUpViewController())
                         }
                     }
                 } else if let sound = observationInfoVM.sound {

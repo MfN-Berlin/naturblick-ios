@@ -9,7 +9,7 @@ import UIKit
 class ObservationInfoViewModel: ObservableObject {
         
     @Published var thumbnail: NBImage? = nil
-    @Published var fullscreenImage: NBImage? = nil
+    @Published var fullscreenImageId: UUID? = nil
     
     let species: SpeciesListItem?
     let created: ZonedDateTime
@@ -38,10 +38,8 @@ class ObservationInfoViewModel: ObservableObject {
         }
         
         if (data.original.obsType == .image || data.original.obsType == .unidentifiedimage) {
-            Task {
-                if let mediaId = data.original.mediaId {
-                    fullscreenImage = try await NBImage(id: mediaId)
-                }
+            if let mediaId = data.original.mediaId {
+                fullscreenImageId = mediaId
             }
         }
     }
@@ -50,7 +48,7 @@ class ObservationInfoViewModel: ObservableObject {
         species = data.species
         created = data.created
         thumbnail = data.sound.crop ?? data.image.crop
-        fullscreenImage = data.image.image
+        fullscreenImageId = data.image.image?.id
         
         sound = data.sound.sound
         start = data.sound.start

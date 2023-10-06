@@ -542,6 +542,7 @@
 				133B39292A4081A000D48617 /* NBImage.swift */,
 				137690062A30D3F40076F93A /* NBSound.swift */,
 				1366FA942A654B8500436EF1 /* Observation.swift */,
+				7BD2DFBD2AC324C3007DA520 /* ObservationInfoViewModel.swift */,
 				134B72B02A04FB6B00C1DCAD /* ObservationRequest.swift */,
 				137FE58D29E5AC1C00B397DF /* ObservationResponse.swift */,
 				137FE58629E5996800B397DF /* ObsType.swift */,
@@ -570,7 +571,6 @@
 				7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */,
 				134F548F2A5EB60F00A079EC /* UploadOperation.swift */,
 				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
-				7BD2DFBD2AC324C3007DA520 /* ObservationInfoViewModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
