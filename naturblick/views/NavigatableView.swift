@@ -5,6 +5,30 @@
 
 import SwiftUI
 
+public protocol PopAware {
+    func pop() -> Bool
+}
+
+extension PopAware {
+    func pop() -> Bool {
+        return true
+    }
+}
+
+class PopAwareNavigationController: UINavigationController {
+    @discardableResult
+    override func popViewController(animated: Bool) -> UIViewController? {
+        if let vc = topViewController as? PopAware, !vc.pop() {
+            return self
+        } else {
+            return super.popViewController(animated: animated)
+        }
+    }
+    
+    func forcePopViewController(animated: Bool) {
+        let _ = super.popViewController(animated: animated)
+    }
+}
 
 public class ViewControllerHolder {
     public weak var viewController: UIViewController?
@@ -26,8 +50,8 @@ extension HoldingViewController {
         return holder.viewController
     }
     
-    var navigationController: UINavigationController? {
-        return viewController?.navigationController
+    var navigationController: PopAwareNavigationController? {
+        return viewController?.navigationController as? PopAwareNavigationController
     }
     
     func withNavigation(block: (_ navigation: UINavigationController) -> Void) {
@@ -74,7 +98,7 @@ extension UIViewController {
     }
 }
 
-public protocol HostedView: View, HoldingViewController {
+public protocol HostedView: View, HoldingViewController, PopAware {
     var viewName: String? { get }
     var alwaysDarkBackground: Bool { get }
     var hideNavigationBarShadow: Bool { get }
@@ -95,7 +119,7 @@ public extension HostedView {
     }
 }
 
-public protocol NavigatableView: View, HoldingViewController {
+public protocol NavigatableView: View, HoldingViewController, PopAware {
     var viewName: String? { get }
     var alwaysDarkBackground: Bool { get }
     var hideNavigationBarShadow: Bool { get }
@@ -124,7 +148,10 @@ public extension NavigatableView {
     }
 }
 
-public class HostingController<ContentView>: UIHostingController<ContentView>  where ContentView: HostedView {
+public class HostingController<ContentView>: UIHostingController<ContentView>, PopAware where ContentView: HostedView {
+    public func pop() -> Bool {
+        return rootView.pop()
+    }
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUpDefaultNavigationItemApperance(hideShadow: rootView.hideNavigationBarShadow)
@@ -148,7 +175,11 @@ public class HostingController<ContentView>: UIHostingController<ContentView>  w
     }
 }
 
-private class NavigatableHostingController<ContentView>: UIHostingController<ContentView> where ContentView: NavigatableView {
+private class NavigatableHostingController<ContentView>: UIHostingController<ContentView>, PopAware where ContentView: NavigatableView {
+    public func pop() -> Bool {
+        return rootView.pop()
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUpDefaultNavigationItemApperance(hideShadow: rootView.hideNavigationBarShadow)

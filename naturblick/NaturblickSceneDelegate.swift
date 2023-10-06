@@ -15,7 +15,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         UINavigationBar.appearance().tintColor = .onPrimaryHighEmphasis
 
         let window = UIWindow(windowScene: windowScene)
-        let navigationController = UINavigationController(rootViewController: HomeViewController())
+        let navigationController = PopAwareNavigationController(rootViewController: HomeViewController())
         window.rootViewController = navigationController
         self.window = window
         window.makeKeyAndVisible()
