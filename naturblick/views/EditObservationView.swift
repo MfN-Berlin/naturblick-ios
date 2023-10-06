@@ -121,7 +121,9 @@ struct EditObservationView: HostedView {
                         Image("placeholder")
                             .observationProperty()
                         Picker("Behavior", selection: $flow.data.behavior) {
-                            Text("None").tag(nil as Behavior?)
+                            if flow.data.original.behavior == nil {
+                                Text("None").tag(nil as Behavior?)
+                            }
                             ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
                                 Text($0.rawValue).tag($0 as Behavior?)
                             }
