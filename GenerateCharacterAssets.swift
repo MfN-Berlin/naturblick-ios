@@ -111,6 +111,7 @@ enum SvgGenerator {
 @main
 enum GenerateCharacterAssets {
     static func main() async throws {
+        let url = ProcessInfo.processInfo.environment["CONFIGURATION"] == "Debug" ? "https://staging.naturblick.net/strapi" : "https://naturblick.museumfuernaturkunde.berlin/strapi"
         let generatedAssets = URL(fileURLWithPath: FileManager().currentDirectoryPath).appendingPathComponent("naturblick/Generated.xcassets")
 
         if !FileManager.default.fileExists(atPath: generatedAssets.path) {
@@ -118,7 +119,7 @@ enum GenerateCharacterAssets {
         }
 
         let decoder = JSONDecoder()
-        let data = try await URLSession.shared.httpData(from: URL(string: "https://staging.naturblick.net/strapi/character-values?_limit=-1")!)
+        let data = try await URLSession.shared.httpData(from: URL(string: "\(url)/character-values?_limit=-1")!)
         let characters = try decoder.decode([CharacterValue].self, from: data)
         for character in characters {
             guard character.image != nil || (character.colors != nil && character.colors != "") else {
@@ -131,7 +132,7 @@ enum GenerateCharacterAssets {
             }
 
             if let image = character.image {
-                let svgData = try await URLSession.shared.httpData(from: URL(string: "https://staging.naturblick.net/strapi" + image.url)!)
+                let svgData = try await URLSession.shared.httpData(from: URL(string: "\(url)" + image.url)!)
                 try svgData.write(to: assetDir.appendingPathComponent("character_\(character.id).svg"))
             } else if let colors = character.colors {
                 let image = SvgGenerator.svg(colors: colors.split(separator: ","), dotsOpt: character.dots)
