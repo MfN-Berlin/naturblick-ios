@@ -121,10 +121,16 @@ struct EditObservationView: HostedView {
                         Image("placeholder")
                             .observationProperty()
                         Picker("Behavior", selection: $flow.data.behavior) {
+                            if flow.data.original.behavior == nil {
+                                Text("None").tag(nil as Behavior?)
+                            }
                             ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
                                 Text($0.rawValue).tag($0 as Behavior?)
                             }
                         }
+                        .pickerStyle(MenuPickerStyle())
+                        .tint(.onSecondaryHighEmphasis)
+                        .accentColor(.onSecondaryHighEmphasis)
                     }
                     Divider()
                     HStack {
