@@ -96,7 +96,7 @@ class BackendClient {
         if let token = bearerToken {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         } else {
-            request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
+            request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
         }
  
         let response: ObservationResponse = try await downloader.httpJson(request: request)
@@ -148,8 +148,7 @@ class BackendClient {
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        let deviceId: String = Settings.deviceId()
-        request.setValue(deviceId, forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
         let _ = try await downloader.http(request: request)
     }
     
@@ -164,7 +163,7 @@ class BackendClient {
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
         let _ = try await downloader.http(request: request)
     }	
     
@@ -187,7 +186,7 @@ class BackendClient {
     func spectrogram(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/specgram/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
     }
@@ -195,7 +194,7 @@ class BackendClient {
     func download(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url)
-        request.setValue(Settings.deviceId(), forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
     }
