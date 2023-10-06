@@ -39,4 +39,8 @@ struct Settings {
     static func ccByName() -> String {
         return userDefault.string(forKey: "ccByName") ?? "MfN Naturblick"
     }
+    
+    static func deviceIdHeader() -> String {
+        return getAllDeviceIds().joined(separator: ",")
+    }
 }
