@@ -175,71 +175,63 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
     }
     
     var body: some View {
-        VStack {
-            if let spectrogram = model.spectrogram {
-                Text("Choose section")
-                    .headline6()
-                    .padding([.horizontal, .top], .defaultPadding)
-                Text("Please select a section that best represents the bird\'s sound. Our pattern recognition gives the best results for recordings that are under 10 seconds.")
-                    .caption(color: .onPrimaryLowEmphasis)
-                    .padding([.horizontal, .bottom], .defaultPadding)
-                Image(uiImage: spectrogram)
-                    .resizable()
-                    .overlay {
-                        GeometryReader { geo in
-                            let minWidth = (400 / spectrogram.size.width) * geo.size.width
-                            let minWidthOrWidth = minWidth < geo.size.width ? minWidth : geo.size.width
-                            selectedRectangle(width: geo.size.width, height: geo.size.height)
-                                .overlay {
-                                    startHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
-                                    endHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
-                                }
-                        }
-                    }
-                HStack {
-                    FABView("ic_play_circle_outline", color: .onPrimaryButtonPrimary)
-                        .onTapGesture {
-                            streamController.play(url: model.sound.url)
-                        }
-                    Text(timeText(spectrogram: spectrogram))
-                        .font(.nbHeadline3)
-                        .foregroundColor(.onPrimaryHighEmphasis)
-                }
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.defaultPadding)
-            } else {
-                ProgressView {
-                    Text("Downloading spectrogram")
-                        .font(.nbButton)
-                        .foregroundColor(.onSecondaryMediumEmphasis)
-                }
-                .progressViewStyle(.circular)
-                .foregroundColor(.onSecondaryHighEmphasis)
-                .controlSize(.large)
-            }
-            Spacer()
+        StaticBottomSheetView {
             VStack {
-                HStack {
-                    Button("Discard") {
-                        navigationController?.popToRootViewController(animated: true)
+                if let spectrogram = model.spectrogram {
+                    Text("Choose section")
+                        .headline6()
+                        .padding([.horizontal, .top], .defaultPadding)
+                    Text("Please select a section that best represents the bird\'s sound. Our pattern recognition gives the best results for recordings that are under 10 seconds.")
+                        .caption(color: .onPrimaryLowEmphasis)
+                        .padding([.horizontal, .bottom], .defaultPadding)
+                    Image(uiImage: spectrogram)
+                        .resizable()
+                        .overlay {
+                            GeometryReader { geo in
+                                let minWidth = (400 / spectrogram.size.width) * geo.size.width
+                                let minWidthOrWidth = minWidth < geo.size.width ? minWidth : geo.size.width
+                                selectedRectangle(width: geo.size.width, height: geo.size.height)
+                                    .overlay {
+                                        startHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
+                                        endHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
+                                    }
+                            }
+                        }
+                    HStack {
+                        FABView("ic_play_circle_outline", color: .onPrimaryButtonPrimary)
+                            .onTapGesture {
+                                streamController.play(url: model.sound.url)
+                            }
+                        Text(timeText(spectrogram: spectrogram))
+                            .font(.nbHeadline3)
+                            .foregroundColor(.onPrimaryHighEmphasis)
                     }
-                    .buttonStyle(DestructiveButton())
-                    Button("Identify species") {
-                        crop()
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.defaultPadding)
+                } else {
+                    ProgressView {
+                        Text("Downloading spectrogram")
+                            .font(.nbButton)
+                            .foregroundColor(.onSecondaryMediumEmphasis)
                     }
-                    .buttonStyle(ConfirmButton())
-                    .padding(.leading, .defaultPadding)
+                    .progressViewStyle(.circular)
+                    .foregroundColor(.onSecondaryHighEmphasis)
+                    .controlSize(.large)
                 }
-                .padding(.defaultPadding)
-                .padding(.bottom, .defaultPadding * 2)
             }
-            .background {
-                RoundedRectangle(cornerRadius: .largeCornerRadius)
-                    .fill(Color.secondaryColor)
-                    .nbShadow()
+        } sheet: {
+            HStack {
+                Button("Discard") {
+                    navigationController?.popToRootViewController(animated: true)
+                }
+                .buttonStyle(DestructiveFullWidthButton())
+                Button("Identify species") {
+                    crop()
+                }
+                .buttonStyle(ConfirmFullWidthButton())
+                .padding(.leading, .defaultPadding)
             }
         }
-        .ignoresSafeArea(edges: .bottom)
         .alertHttpError(isPresented: $model.isPresented, error: model.error) { details in
             Button("Try again") {
                 model.downloadSpectrogram()

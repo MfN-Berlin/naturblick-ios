@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct ConfirmButton: ButtonStyle {
+struct ConfirmFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .font(.nbButton)
@@ -14,10 +14,23 @@ struct ConfirmButton: ButtonStyle {
             .background(Color.onPrimaryButtonPrimary)
             .foregroundStyle(Color.onPrimaryHighEmphasis)
             .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .nbShadow()
     }
 }
 
-struct DestructiveButton: ButtonStyle {
+struct AuxiliaryOnSecondaryButton: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(.nbButton)
+            .padding(.defaultPadding)
+            .foregroundStyle(Color.onSecondaryHighEmphasis)
+            .border(Color.onSecondaryMinimumEmphasis)
+            .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .nbShadow()
+    }
+}
+
+struct DestructiveFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
             .font(.nbButton)
@@ -26,5 +39,19 @@ struct DestructiveButton: ButtonStyle {
             .foregroundStyle(Color.onSecondarywarning)
             .border(Color.onSecondarywarning)
             .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .nbShadow()
+    }
+}
+
+struct FABReplacementFullWidthButton: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(.nbButton)
+            .padding(.defaultPadding)
+            .frame(maxWidth: .infinity)
+            .background(Color.onSecondaryButtonSecondary)
+            .foregroundStyle(Color.onPrimaryHighEmphasis)
+            .clipShape(Capsule())
+            .nbShadow()
     }
 }

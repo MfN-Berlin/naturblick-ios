@@ -33,7 +33,7 @@ struct SpeciesListView: NavigatableView {
     }
     
     func showSpecies(species: SpeciesListItem) {
-        navigationController?.pushViewController(PortraitView(species: species).setUpViewController(), animated: true)
+        navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: false), animated: true)
     }
     
     var body: some View {

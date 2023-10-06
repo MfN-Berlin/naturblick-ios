@@ -146,7 +146,7 @@ struct EditObservationView: HostedView {
                         }
                         .onTapGesture {
                             if let species = flow.data.species {
-                                navigationController?.pushViewController(PortraitView(species: species).setUpViewController(), animated: true)
+                                navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
                             }
                         }
                     }

@@ -9,6 +9,7 @@ struct SimilarSpeciesView: View, HoldingViewController {
     @StateObject var similarSpeciesViewModel = SimilarSpeciesViewModel()
     let portraitId: Int64
     var holder: ViewControllerHolder
+    let inSelectionFlow: Bool
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -25,7 +26,7 @@ struct SimilarSpeciesView: View, HoldingViewController {
                                 .padding(.top, .halfPadding)
                         }
                         .onTapGesture {
-                            navigationController?.pushViewController(PortraitView(species: mix.species.listItem).setUpViewController(), animated: true)
+                            navigationController?.pushViewController(PortraitViewController(species: mix.species.listItem, inSelectionFlow: inSelectionFlow), animated: true)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.defaultPadding)
@@ -74,6 +75,6 @@ struct SimilarSpeciesView: View, HoldingViewController {
 
 struct SimilarSpeciesView_Previews: PreviewProvider {
     static var previews: some View {
-        SimilarSpeciesView(portraitId: 5, holder: ViewControllerHolder())
+        SimilarSpeciesView(portraitId: 5, holder: ViewControllerHolder(), inSelectionFlow: false)
     }
 }
