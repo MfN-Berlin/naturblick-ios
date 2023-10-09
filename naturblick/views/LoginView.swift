@@ -29,10 +29,10 @@ struct LoginView: NavigatableView {
         Task {
             do {
                 let signInResponse = try await client.signIn(email: loginVM.email, password: loginVM.password)
-                accountViewModel.setEmail(loginVM.email)
-                accountViewModel.setBearer(signInResponse.access_token)
-                accountViewModel.setNeverSignedIn(false)
-                accountViewModel.setActivated(true)
+                accountViewModel.email = loginVM.email
+                accountViewModel.bearerToken = signInResponse.access_token
+                accountViewModel.neverSignedIn = false
+                accountViewModel.activated = true
                 showLoginSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 400 {
                 showCredentialsWrong = true

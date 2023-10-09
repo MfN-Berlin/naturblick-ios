@@ -13,27 +13,11 @@ class AccountViewModel : ObservableObject {
     @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
     @AppStorage("activated") var activated: Bool = false
     
-    func setBearer(_ bearer: String?) {
-        bearerToken = bearer
-    }
-    
-    func setEmail(_ email: String?) {
-        self.email = email
-    }
-    
-    func setNeverSignedIn(_ neverSignedIn: Bool) {
-        self.neverSignedIn = neverSignedIn
-    }
-    
-    func setActivated(_ activated: Bool) {
-        self.activated = activated
-    }
-    
     func signOut() {
-        setEmail(nil)
-        setNeverSignedIn(true)
-        setBearer(nil)
-        setActivated(false)
+        email = nil
+        neverSignedIn = true
+        bearerToken = nil
+        activated = false
     }
 }
 
