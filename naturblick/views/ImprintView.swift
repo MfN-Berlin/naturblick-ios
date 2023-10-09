@@ -16,12 +16,13 @@ struct ImprintView: NavigatableView {
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
                     .padding()
-                NavigationLink(destination: FurtherSourcesView()) {
+
+                Button {
+                    navigationController?.pushViewController(FurtherSourcesView().setUpViewController(), animated: true)
+                } label: {
                     Text("More sources")
-                        .padding()
-                        .foregroundColor(.onSecondaryButtonPrimary)
+                }.buttonStyle(.bordered).foregroundColor(.black)
             
-                }
                 Text("**Additional Regulations**\n\nCopyright\n\nAll parts of the Website of the Museum für Naturkunde Berlin are copyrighted. You may not copy, reproduce, republish, download, post, broadcast, transmit, adapt or otherwise use any material on the Site other than for your own personal non-commercial use.\n\nDisclaimer\n\nFor all information published on the site of the Museum für Naturkunde Berlin the following conditions apply:\n\nUse of the material provided is bound by the following agreement: The Museum für Naturkunde Berlin makes every effort to provide timely and accurate information. Nevertheless, mistakes and confusions may occur. Therefore the publishers make no guarantee about the correctness, completeness, quality or suitability for any purpose of the information provided or linked to by this site. Information is provided \"as is\" without warranty of any kind, either expressed or implied, including, but not limited to warranties of fitness for a particular purpose. Under no circumstances shall the publishers be liable for any special, indirect, consequential or incidental damages or any damages whatsoever resulting from use of information provided by this site. If misleading, incorrect or otherwise inappropriate information is brought to our attention, a reasonable effort will be made to redress the problems.\n\nThe Museum für Naturkunde Berlin reserves the right to change, supplement, or delete some or all of the information on its Internet web site without notice. Similarly, the Museum für Naturkunde Berlin also reserves the right to temporarily or permanently discontinue the Internet web site.\n\nAny claims relating to the materials or the WWW site will be governed by German law.\n\nThe general disclaimer is part of [this disclaimer](https://www.disclaimer.de/disclaimer.htm).\n\nThis disclaimer is to be considered as part of the internet publication from which you were referred. If individual terms or sections of this statement are not legal or correct, the validity and content of the other parts remain uninfluenced by this fact.\n\nSource: [www.datenschutzbeauftragter-info.de](https://www.disclaimer.de/disclaimer.htm)\n\n© Museum für Naturkunde Berlin")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)

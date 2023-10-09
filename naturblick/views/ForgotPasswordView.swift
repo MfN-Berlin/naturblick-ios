@@ -5,8 +5,12 @@
 
 import SwiftUI
 
-struct ForgotPasswordView: View {
+struct ForgotPasswordView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var viewName: String? = "Forgot Password"
     
+    let toLogin: () -> ()
+   
     @StateObject private var forgotPasswordVM = EmailAndPasswordWithPrompt()
     @State var action: String?
     
@@ -33,9 +37,6 @@ struct ForgotPasswordView: View {
     
     var body: some View {
         VStack {
-            NavigationLink(destination: LoginView(), tag: AccountView.loginAction, selection: $action) {
-                EmptyView()
-            }
             NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt)
                 .padding()
                 .keyboardType(.emailAddress)
@@ -67,12 +68,12 @@ struct ForgotPasswordView: View {
     
     func forgotSuccessButtons() -> [Alert.Button] {
         var buttons: [Alert.Button] = [Alert.Button.destructive(Text("Go back to login"), action: {
-            action = AccountView.loginAction
+            toLogin()
         })]
        
         if (canOpenEmail()) {
             buttons.append(
-                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in action = AccountView.loginAction }) })
+                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in toLogin() }) })
             )
         }
         return buttons
@@ -81,6 +82,8 @@ struct ForgotPasswordView: View {
 
 struct ForgotPasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        ForgotPasswordView()
+        ForgotPasswordView() {
+            // empty toLogin
+        }
     }
 }

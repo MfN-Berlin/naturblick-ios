@@ -78,8 +78,12 @@ struct LoginView: NavigatableView {
             }.foregroundColor(.black)
                 .buttonStyle(.bordered)
             
-            NavigationLink(destination: ForgotPasswordView()) {
-                Text("Forgot Password")
+            Button {
+                navigationController?.pushViewController(ForgotPasswordView() {
+                    navigationController?.popViewController(animated: true)
+                }.setUpViewController(), animated: true)
+            } label: {
+                Text("Forgot password")
             }.buttonStyle(.bordered).foregroundColor(.black)
             
             if (!activated) {

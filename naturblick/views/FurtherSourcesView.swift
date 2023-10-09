@@ -5,7 +5,10 @@
 
 import SwiftUI
 
-struct FurtherSourcesView: View {
+struct FurtherSourcesView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var viewName: String? = "Further Sources"
+    
     var body: some View {
         Text("Todo")
     }

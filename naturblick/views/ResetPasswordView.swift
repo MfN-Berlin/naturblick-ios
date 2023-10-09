@@ -11,7 +11,9 @@ enum ResetPasswordAction {
     case Account
 }
 
-struct ResetPasswordView: View {
+struct ResetPasswordViewNavigatableView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var viewName: String? = "Reset Password"
     
     let token: String?
     

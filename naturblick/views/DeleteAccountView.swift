@@ -5,10 +5,11 @@
 
 import SwiftUI
 
-struct DeleteAccountView: View {
+struct DeleteAccountView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var viewName: String? = "Delete Account"
     
     @StateObject var deleteVM = EmailAndPasswordWithPrompt()
-    @State var action: String?
     
     @State var showDeleteSuccess = false
     
@@ -49,9 +50,6 @@ struct DeleteAccountView: View {
     
     var body: some View {
         VStack {
-            NavigationLink(destination: AccountView(), tag: AccountView.accountAction, selection: $action) {
-                EmptyView()
-            }
             Text("**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.\n\nPlease, confirm your wish to delete the account by entering your login details.")
                 .tint(Color.onSecondaryButtonPrimary)
                 .font(.nbBody1)
@@ -70,8 +68,12 @@ struct DeleteAccountView: View {
                 deleteAccount()
             }.foregroundColor(.black)
                 .buttonStyle(.bordered)
-            NavigationLink(destination: ForgotPasswordView()) {
-                Text("Forgot Password")
+            Button {
+                navigationController?.pushViewController(ForgotPasswordView() {
+                    navigationController?.popViewController(animated: true)
+                }.setUpViewController(), animated: true)
+            } label: {
+                Text("Forgot password")
             }.buttonStyle(.bordered).foregroundColor(.black)
         }
         .foregroundColor(.onSecondaryHighEmphasis)
@@ -81,7 +83,7 @@ struct DeleteAccountView: View {
                 message: Text("Your account was deleted."),
                 buttons: [
                     .default(Text("Ok"), action: {
-                        action = AccountView.accountAction
+                        navigationController?.popViewController(animated: true)
                     })
                 ]
             )
