@@ -2,7 +2,7 @@
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
-
+/*
 import SwiftUI
 
 enum ResetPasswordAction {
@@ -11,9 +11,9 @@ enum ResetPasswordAction {
     case Account
 }
 
-struct ResetPasswordViewNavigatableView: NavigatableView {
+struct ResetPasswordView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Reset Password"
+    var viewName: String? = "Reset password"
     
     let token: String?
     
@@ -86,3 +86,4 @@ struct ResetPasswordViewNavigatableView: NavigatableView {
         }
 }
 
+*/

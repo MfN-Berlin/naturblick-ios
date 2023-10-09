@@ -2,15 +2,14 @@
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
-
 import SwiftUI
 
 struct ForgotPasswordView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = "Forgot Password"
     
-    let toLogin: () -> ()
-   
+    @ObservedObject var accountViewModel: AccountViewModel
+       
     @StateObject private var forgotPasswordVM = EmailAndPasswordWithPrompt()
     @State var action: String?
     
@@ -18,7 +17,7 @@ struct ForgotPasswordView: NavigatableView {
     @State var showSendInfo: Bool = false
     @State var isPresented: Bool = false
     
-    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
+    @Environment(\.dismiss) var dismiss
     
     func forgotPassword() {
         let client = BackendClient()
@@ -60,7 +59,7 @@ struct ForgotPasswordView: NavigatableView {
             )
         }.alertHttpError(isPresented: $isPresented, error: error)
             .onAppear {
-                if let email = email {
+                if let email = accountViewModel.email {
                     forgotPasswordVM.email = email
                 }
             }
@@ -68,12 +67,12 @@ struct ForgotPasswordView: NavigatableView {
     
     func forgotSuccessButtons() -> [Alert.Button] {
         var buttons: [Alert.Button] = [Alert.Button.destructive(Text("Go back to login"), action: {
-            toLogin()
+            dismiss()
         })]
        
         if (canOpenEmail()) {
             buttons.append(
-                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in toLogin() }) })
+                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in dismiss() }) })
             )
         }
         return buttons
@@ -82,8 +81,6 @@ struct ForgotPasswordView: NavigatableView {
 
 struct ForgotPasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        ForgotPasswordView() {
-            // empty toLogin
-        }
+        ForgotPasswordView(accountViewModel: AccountViewModel())
     }
 }

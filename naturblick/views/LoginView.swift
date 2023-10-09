@@ -12,10 +12,7 @@ struct LoginView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = "Login"
     
-    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
-    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
-    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
-    @AppStorage("activated") var activated: Bool = false
+    @ObservedObject var accountViewModel: AccountViewModel
     
     @Environment(\.dismiss) var dismiss
     
@@ -32,10 +29,10 @@ struct LoginView: NavigatableView {
         Task {
             do {
                 let signInResponse = try await client.signIn(email: loginVM.email, password: loginVM.password)
-                email = loginVM.email
-                bearerToken = signInResponse.access_token
-                neverSignedIn = false
-                activated = true
+                accountViewModel.setEmail(loginVM.email)
+                accountViewModel.setBearer(signInResponse.access_token)
+                accountViewModel.setNeverSignedIn(false)
+                accountViewModel.setActivated(true)
                 showLoginSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 400 {
                 showCredentialsWrong = true
@@ -50,7 +47,7 @@ struct LoginView: NavigatableView {
 
     var body: some View {
         VStack {
-            if (activated) {
+            if (accountViewModel.activated) {
                 Text("Your Naturblick account is activated. Log in with your email address and password on all devices you want to connect to the account.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
@@ -79,14 +76,12 @@ struct LoginView: NavigatableView {
                 .buttonStyle(.bordered)
             
             Button {
-                navigationController?.pushViewController(ForgotPasswordView() {
-                    navigationController?.popViewController(animated: true)
-                }.setUpViewController(), animated: true)
+                navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
             } label: {
                 Text("Forgot password")
             }.buttonStyle(.bordered).foregroundColor(.black)
             
-            if (!activated) {
+            if (!accountViewModel.activated) {
                 Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
@@ -108,7 +103,7 @@ struct LoginView: NavigatableView {
             )
         }.alertHttpError(isPresented: $isPresented, error: error)
         .onAppear {
-            if let email = email {
+            if let email = accountViewModel.email {
                 loginVM.email = email
             }
         }
@@ -117,6 +112,6 @@ struct LoginView: NavigatableView {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(accountViewModel: AccountViewModel())
     }
 }

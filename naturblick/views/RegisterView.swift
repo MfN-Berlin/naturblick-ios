@@ -7,10 +7,7 @@ import SwiftUI
 struct RegisterView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = "Register"
-    
-    let toLogin: () -> ()
-    
-    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
+        
     @StateObject var registerVM = RegisterViewModel()
         
     @State var showRegisterSuccess: Bool = false
@@ -19,12 +16,14 @@ struct RegisterView: NavigatableView {
     @State var isPresented: Bool = false
     @State var error: HttpError? = nil
     
+    @ObservedObject var accountViewModel: AccountViewModel
+    
     func signUp() {
         let client = BackendClient()
         Task {
             do {
                 let _ = try await client.signUp(deviceId: Settings.deviceId(), email: registerVM.email, password: registerVM.password)
-                email = registerVM.email
+                accountViewModel.email = registerVM.email
                 showRegisterSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 409 {
                 showAlreadyExists = true
@@ -104,13 +103,19 @@ struct RegisterView: NavigatableView {
         }
         return buttons
     }
+    
+    private func toLogin() {
+        withNavigation { navigation in
+            var viewControllers = navigation.viewControllers
+            viewControllers[viewControllers.count - 1] = LoginView(accountViewModel: accountViewModel).setUpViewController()
+            navigation.setViewControllers(viewControllers, animated: true)
+        }
+    }
 }
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView() {
-            // empty
-        }
+        RegisterView(accountViewModel: AccountViewModel())
     }
 }
 

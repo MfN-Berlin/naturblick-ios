@@ -5,22 +5,60 @@
 
 import SwiftUI
 
+
+class AccountViewModel : ObservableObject {
+    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) private var backedBearerToken: String?
+    @AppSecureStorage(NbAppSecureStorageKey.Email) private var backedEmail: String?
+    
+    @AppStorage("neverSignedIn") private var backedNeverSignedIn: Bool = true
+    @AppStorage("activated") private var backedActivated: Bool = false
+    
+    @Published var bearerToken: String?
+    @Published var email: String?
+    
+    @Published var neverSignedIn: Bool = true
+    @Published var activated: Bool = false
+    
+    init() {
+        bearerToken = backedBearerToken
+        email = backedEmail
+        neverSignedIn = backedNeverSignedIn
+        activated = backedActivated
+    }
+    
+    func setBearer(_ bearer: String?) {
+        backedBearerToken = bearer
+        bearerToken = bearer
+    }
+    
+    func setEmail(_ email: String?) {
+        backedEmail = email
+        self.email = email
+    }
+    
+    func setNeverSignedIn(_ neverSignedIn: Bool) {
+        backedNeverSignedIn = neverSignedIn
+        self.neverSignedIn = neverSignedIn
+    }
+    
+    func setActivated(_ activated: Bool) {
+        backedActivated = activated
+        self.activated = activated
+    }
+    
+    func signOut() {
+        setEmail(nil)
+        setNeverSignedIn(true)
+        setBearer(nil)
+        setActivated(false)
+    }
+}
+
 struct AccountView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = "Account"
     
-    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
-    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
-    
-    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
-    @AppStorage("activated") var activated: Bool = false
-    
-    private func signOut() {
-        email = nil
-        neverSignedIn = true
-        bearerToken = nil
-        activated = false
-    }
+    @StateObject var accountViewModel = AccountViewModel()
     
     var body: some View {
         VStack {
@@ -29,31 +67,31 @@ struct AccountView: NavigatableView {
                 .font(.nbBody1)
                 .padding()
             
-            if (email == nil) {
+            if (accountViewModel.email == nil) {
                 Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nHowever, you can still use Naturblick without an account.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
                     .padding()
                 
                 Button {
-                    navigationController?.pushViewController(LoginView().setUpViewController(), animated: true)
+                    navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
                 } label: {
                     Text("Go to login")
                 }
                 .buttonStyle(.bordered).foregroundColor(.black)
                 
                 Button {
-                    navigationController?.pushViewController(RegisterView(toLogin: toLogin).setUpViewController(), animated: true)
+                    navigationController?.pushViewController(RegisterView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
                 } label: {
                     Text("Register now")
                 }.buttonStyle(.bordered).foregroundColor(.black)
-            } else if (bearerToken != nil) {
-                Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nYou are signed in as: \(email!)\n\n**Delete account**\n\nDeleting your account will remove the link to other devices and we will automatically delete the email address you provided.")
+            } else if (accountViewModel.bearerToken != nil) {
+                Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nYou are signed in as: \(accountViewModel.email!)\n\n**Delete account**\n\nDeleting your account will remove the link to other devices and we will automatically delete the email address you provided.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
                     .padding()
                 Button {
-                    navigationController?.pushViewController(DeleteAccountView().setUpViewController(), animated: true)
+                    navigationController?.pushViewController(DeleteAccountView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
                 } label: {
                     Text("Go to delete account")
                 }.buttonStyle(.bordered).foregroundColor(.black)
@@ -64,20 +102,20 @@ struct AccountView: NavigatableView {
                     .font(.nbBody1)
                     .padding()
 
-            } else if (bearerToken == nil && email != nil) {
-                if (neverSignedIn) {
+            } else if (accountViewModel.bearerToken == nil && accountViewModel.email != nil) {
+                if (accountViewModel.neverSignedIn) {
                     Text("Log into your account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
                     Button {
-                        navigationController?.pushViewController(LoginView().setUpViewController(), animated: true)
+                        navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
                     } label: {
                         Text("Go to login")
                     }
                     .buttonStyle(.bordered).foregroundColor(.black)
                     Button("Continue without account") {
-                        signOut()
+                        accountViewModel.signOut()
                     }.buttonStyle(.bordered).foregroundColor(.black)
                     Text("**Activation link**\n\nYou can access your Naturblick account only after confirming your registration. To do so, please click on the activation link that we have sent to your email address.")
                         .tint(Color.onSecondaryButtonPrimary)
@@ -89,7 +127,7 @@ struct AccountView: NavigatableView {
                         .font(.nbBody1)
                         .padding()
                     Button {
-                        navigationController?.pushViewController(LoginView().setUpViewController(), animated: true)
+                        navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
                     } label: {
                         Text("Go to login")
                     }
@@ -99,24 +137,19 @@ struct AccountView: NavigatableView {
                         .font(.nbBody1)
                         .padding()
                     Button {
-                        navigationController?.pushViewController(RegisterView(toLogin: toLogin).setUpViewController(), animated: true)
+                        navigationController?.pushViewController(RegisterView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
                     } label: {
                         Text("Register")
                     }
                     .buttonStyle(.bordered).foregroundColor(.black)
                     Button("Continue without account") {
-                        signOut()
+                        accountViewModel.signOut()
                     }.foregroundColor(.black)
                     .buttonStyle(.bordered)
                 }
             }
             Spacer()
         }.foregroundColor(.onSecondaryHighEmphasis)
-    }
-    
-    private func toLogin() {
-        navigationController?.popViewController(animated: false)
-        navigationController?.pushViewController(LoginView().setUpViewController(), animated: true)
     }
 }
 
