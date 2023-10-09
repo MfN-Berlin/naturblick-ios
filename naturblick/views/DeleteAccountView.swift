@@ -9,6 +9,8 @@ struct DeleteAccountView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = "Delete Account"
     
+    @ObservedObject var accountViewModel: AccountViewModel
+    
     @StateObject var deleteVM = EmailAndPasswordWithPrompt()
     
     @State var showDeleteSuccess = false
@@ -18,24 +20,12 @@ struct DeleteAccountView: NavigatableView {
     @State var isPresented: Bool = false
     @State var error: HttpError? = nil
     
-    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
-    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
-    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
-    @AppStorage("activated") var activated: Bool = false
-    
-    private func signOut() {
-        email = nil
-        neverSignedIn = true
-        bearerToken = nil
-        activated = false
-    }
-    
     func deleteAccount() {
         let client = BackendClient()
         Task {
             do {
                 try await client.deleteAccount(email: deleteVM.email, password: deleteVM.password)
-                signOut()
+                accountViewModel.signOut()
                 showDeleteSuccess = true
             }  catch HttpError.clientError(let statusCode) where statusCode == 400 {
                 showCredentialsError = true
@@ -69,9 +59,7 @@ struct DeleteAccountView: NavigatableView {
             }.foregroundColor(.black)
                 .buttonStyle(.bordered)
             Button {
-                navigationController?.pushViewController(ForgotPasswordView() {
-                    navigationController?.popViewController(animated: true)
-                }.setUpViewController(), animated: true)
+                navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
             } label: {
                 Text("Forgot password")
             }.buttonStyle(.bordered).foregroundColor(.black)
@@ -93,6 +81,6 @@ struct DeleteAccountView: NavigatableView {
 
 struct DeleteAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        DeleteAccountView()
+        DeleteAccountView(accountViewModel: AccountViewModel())
     }
 }
