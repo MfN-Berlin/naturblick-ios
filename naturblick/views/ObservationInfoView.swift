@@ -11,46 +11,46 @@ struct ObservationInfoView: View {
     
     let navigate: (UIViewController) -> Void
     
-    private func avatar(image: UIImage) -> some View {
-        return Image(uiImage: image)
-            .resizable()
-            .scaledToFit()
-            .clipShape(Circle())
-            .frame(width: width * 0.4, height: width * 0.4)
-            .padding(.bottom, .defaultPadding)
+    var avatar: some View {
+        if let thumbnail = observationInfoVM.thumbnail?.image {
+            return Image(uiImage: thumbnail)
+                .resizable()
+                .scaledToFit()
+                .clipShape(Circle())
+                .frame(width: width * 0.4, height: width * 0.4)
+                .padding(.bottom, .defaultPadding)
+        } else {
+            return Image("placeholder")
+                .resizable()
+                .scaledToFit()
+                .clipShape(Circle())
+                .frame(width: width * 0.4, height: width * 0.4)
+                .padding(.bottom, .defaultPadding)
+        }
     }
     
     var body: some View {
         VStack() {
-            if let thumbnail = observationInfoVM.thumbnail?.image {
-                if let fullscreenImageId = observationInfoVM.fullscreenImageId {
-                    avatar(image: thumbnail).overlay(alignment: .bottomTrailing) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.onPrimaryButtonPrimary)
-                                .frame(width: 40, height: 40)
-                            Image("zoom")
-                                .foregroundColor(.onPrimaryHighEmphasis)
-                        }.onTapGesture {
-                            navigate(FullscreenView(imageId: fullscreenImageId).setUpViewController())
-                        }
+            if let fullscreenImageId = observationInfoVM.fullscreenImageId {
+                avatar.overlay(alignment: .bottomTrailing) {
+                    ZStack {
+                        Circle()
+                            .fill(Color.onPrimaryButtonPrimary)
+                            .frame(width: 40, height: 40)
+                        Image("zoom")
+                            .foregroundColor(.onPrimaryHighEmphasis)
+                    }.onTapGesture {
+                        navigate(FullscreenView(imageId: fullscreenImageId).setUpViewController())
                     }
-                } else if let sound = observationInfoVM.sound {
-                    avatar(image: thumbnail)
-                        .overlay(alignment: .bottomTrailing) {
-                            SoundButton(url: sound.url)
-                        }
-                } else {
-                    avatar(image: thumbnail)
                 }
-            } else  {
-                Image("placeholder")
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(Circle())
-                    .frame(width: width * 0.4, height: width * 0.4)
-                    .padding(.bottom, .defaultPadding)
-            } 
+            } else if let sound = observationInfoVM.sound {
+                avatar
+                    .overlay(alignment: .bottomTrailing) {
+                        SoundButton(url: sound.url)
+                    }
+            } else {
+                avatar
+            }
             if let sciname = observationInfoVM.species?.sciname {
                 Text(sciname)
                     .font(.nbOverline)
