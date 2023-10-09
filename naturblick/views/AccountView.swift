@@ -40,28 +40,21 @@ struct AccountView: NavigatableView {
                     .font(.nbBody1)
                     .padding()
                 
-                Button {
+                Button("Go to login") {
                     navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                } label: {
-                    Text("Go to login")
-                }
-                .buttonStyle(.bordered).foregroundColor(.black)
+                }.buttonStyle(ConfirmButton())
                 
-                Button {
+                Button("Register now") {
                     navigationController?.pushViewController(RegisterView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                } label: {
-                    Text("Register now")
-                }.buttonStyle(.bordered).foregroundColor(.black)
+                }.buttonStyle(ConfirmButton())
             } else if (accountViewModel.bearerToken != nil) {
                 Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nYou are signed in as: \(accountViewModel.email!)\n\n**Delete account**\n\nDeleting your account will remove the link to other devices and we will automatically delete the email address you provided.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
                     .padding()
-                Button {
+                Button("Go to delete account") {
                     navigationController?.pushViewController(DeleteAccountView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                } label: {
-                    Text("Go to delete account")
-                }.buttonStyle(.bordered).foregroundColor(.black)
+                }.buttonStyle(DestructiveButton())
                 
                 Text("**Advice for the connection with old devices**\n\nTo transfer observations from old devices to new ones, we recommend that you log in on both devices. If you pass on or recycle your phone, uninstall Naturblick on your phone or simply reset it to its default settings. This will not delete your old observations. Do not delete the account, as this would break the link between the observations.")
                     .tint(Color.onSecondaryButtonPrimary)
@@ -75,15 +68,12 @@ struct AccountView: NavigatableView {
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
-                    Button {
+                    Button("Go to login") {
                         navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                    } label: {
-                        Text("Go to login")
-                    }
-                    .buttonStyle(.bordered).foregroundColor(.black)
+                    }.buttonStyle(ConfirmButton())
                     Button("Continue without account") {
                         accountViewModel.signOut()
-                    }.buttonStyle(.bordered).foregroundColor(.black)
+                    }.buttonStyle(ConfirmButton())
                     Text("**Activation link**\n\nYou can access your Naturblick account only after confirming your registration. To do so, please click on the activation link that we have sent to your email address.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.caption)
@@ -93,26 +83,19 @@ struct AccountView: NavigatableView {
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
-                    Button {
+                    Button("Go to login") {
                         navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                    } label: {
-                        Text("Go to login")
-                    }
-                    .buttonStyle(.bordered).foregroundColor(.black)
+                    }.buttonStyle(ConfirmButton())
                     Text("**Account deleted**\n\nRegister a new account or use Naturblick without an account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
-                    Button {
+                    Button("Register") {
                         navigationController?.pushViewController(RegisterView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                    } label: {
-                        Text("Register")
-                    }
-                    .buttonStyle(.bordered).foregroundColor(.black)
+                    }.buttonStyle(ConfirmButton())
                     Button("Continue without account") {
                         accountViewModel.signOut()
-                    }.foregroundColor(.black)
-                    .buttonStyle(.bordered)
+                    }.buttonStyle(ConfirmButton())
                 }
             }
             Spacer()

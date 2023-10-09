@@ -55,6 +55,18 @@ struct DestructiveFullWidthButton: ButtonStyle {
     }
 }
 
+struct DestructiveButton: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(.nbButton)
+            .padding(.defaultPadding)
+            .foregroundStyle(Color.onSecondarywarning)
+            .border(Color.onSecondarywarning)
+            .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .nbShadow()
+    }
+}
+
 struct FABReplacementFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label

@@ -4,13 +4,22 @@
 
 import SwiftUI
 
+enum DeepLink : Equatable {
+    case resetPasswort(token: String)
+    case speciesPortrait(speciesId: Int64)
+    case activateAccount(token: String)
+}
+
 class HomeViewController: HostingController<HomeView> {
     let persistenceController: ObservationPersistenceController
     let createFlow: CreateFlowViewModel
-    init() {
+    let deepLink: DeepLink?
+    
+    init(deepLink: DeepLink? = nil) {
+        self.deepLink = deepLink
         persistenceController = ObservationPersistenceController()
         createFlow = CreateFlowViewModel(persistenceController: persistenceController)
-        let view = HomeView(persistenceController: persistenceController, createFlow: createFlow)
+        let view = HomeView(deepLink: deepLink, persistenceController: persistenceController, createFlow: createFlow)
         view.viewController?.view.backgroundColor = .primaryHome
         super.init(rootView: view)
         createFlow.setViewController(controller: self)
@@ -23,6 +32,8 @@ struct HomeView: HostedView {
     var viewName: String? {
         "Home"
     }
+    
+    @State var deepLink: DeepLink?
     
     func configureNavigationItem(item: UINavigationItem) {
         
@@ -123,40 +134,40 @@ struct HomeView: HostedView {
                         
                         HStack(alignment: .top) {
                             Spacer()
-
-                                    HomeViewButton(
-                                        text: "Record a bird sound",
-                                        color: Color.onPrimaryButtonPrimary,
-                                        image: Image("audio24"),
-                                        size: topRowSize)
-                                    .onTapGesture {
-                                        createFlow.recordSound()
-                                    }
+                            
+                            HomeViewButton(
+                                text: "Record a bird sound",
+                                color: Color.onPrimaryButtonPrimary,
+                                image: Image("audio24"),
+                                size: topRowSize)
+                            .onTapGesture {
+                                createFlow.recordSound()
+                            }
                             Spacer()
-                                HomeViewButton(text: "Select characteristics",
-                                               color: Color.onPrimaryButtonPrimary,
-                                               image: Image("characteristics24"),
-                                               size: topRowSize
-                                )
-                                .onTapGesture {
-                                    let nextViewController = GroupsView(
-                                        groups: Group.characterGroups,
-                                        destination: { group in
-                                            CharactersView(group: group)
-                                        }
-                                    ).setUpViewController()
-                                    viewController?.navigationController?.pushViewController(nextViewController, animated: true)
-                                }
-                            Spacer()
-                           
-                                    HomeViewButton(text: "Photograph a plant",
-                                                   color: Color.onPrimaryButtonPrimary,
-                                                   image: Image("photo24"),
-                                                   size: topRowSize
-                                    )
-                                    .onTapGesture {
-                                        createFlow.takePhoto()
+                            HomeViewButton(text: "Select characteristics",
+                                           color: Color.onPrimaryButtonPrimary,
+                                           image: Image("characteristics24"),
+                                           size: topRowSize
+                            )
+                            .onTapGesture {
+                                let nextViewController = GroupsView(
+                                    groups: Group.characterGroups,
+                                    destination: { group in
+                                        CharactersView(group: group)
                                     }
+                                ).setUpViewController()
+                                viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+                            }
+                            Spacer()
+                            
+                            HomeViewButton(text: "Photograph a plant",
+                                           color: Color.onPrimaryButtonPrimary,
+                                           image: Image("photo24"),
+                                           size: topRowSize
+                            )
+                            .onTapGesture {
+                                createFlow.takePhoto()
+                            }
                             Spacer()
                         }
                         .padding(.bottom, .defaultPadding)
@@ -198,7 +209,32 @@ struct HomeView: HostedView {
                     }
                 }
             }
-        }.edgesIgnoringSafeArea([.bottom])
+        }
+        .edgesIgnoringSafeArea([.bottom])
+        .onAppear {
+            switch deepLink {
+            case .activateAccount(let token):
+                Task {
+                    do {
+                        try await BackendClient().activateAccount(token: token)
+                        activated = true
+                        navigationController?.pushViewController(AccountView().setUpViewController(), animated: true)
+                    } catch {
+                        preconditionFailure(error.localizedDescription)
+                    }
+                }
+            case .resetPasswort(let token):
+                navigationController?.pushViewController(ResetPasswordView(token: token).setUpViewController(), animated: true)
+            case .speciesPortrait(let speciesId):
+                let species = try? SpeciesListItem.find(speciesId: speciesId)
+                if let species = species {
+                    navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
+                }
+            case .none:
+                return
+            }
+            deepLink = nil
+        }
     }
 }
 

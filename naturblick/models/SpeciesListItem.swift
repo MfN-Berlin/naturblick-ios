@@ -4,6 +4,7 @@
 
 
 import Foundation
+import SQLite
 
 struct SpeciesListItem: Identifiable {
     var id: String {
@@ -54,6 +55,28 @@ extension SpeciesListItem {
         group: Group.groups[0].id,
         audioUrl: nil
     )
+    
+    static func find(speciesId: Int64) throws -> SpeciesListItem? {
+        let speciesDb: Connection = Connection.speciesDB
+        let query = Species.Definition.baseQuery.filter(Species.Definition.table[Species.Definition.id] == speciesId)
+        
+        return try speciesDb.prepareRowIterator(query)
+            .map { row in
+                SpeciesListItem(
+                    speciesId: row[Species.Definition.table[Species.Definition.id]],
+                    sciname: row[Species.Definition.sciname],
+                    gername: row[Species.Definition.gername],
+                    maleUrl: row[Species.Definition.maleUrl],
+                    femaleUrl: row[Species.Definition.femaleUrl],
+                    gersynonym: row[Species.Definition.gersynonym],
+                    isFemale: nil,
+                    wikipedia: row[Species.Definition.wikipedia],
+                    hasPortrait: row[Species.Definition.optionalPortraitId] != nil,
+                    group: row[Species.Definition.group],
+                    audioUrl: row[Portrait.Definition.audioUrl]
+                )
+            }.first
+    }
 }
 
 extension Species {

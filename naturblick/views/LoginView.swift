@@ -13,9 +13,7 @@ struct LoginView: NavigatableView {
     var viewName: String? = "Login"
     
     @ObservedObject var accountViewModel: AccountViewModel
-    
-    @Environment(\.dismiss) var dismiss
-    
+        
     @StateObject private var loginVM = EmailAndPasswordWithPrompt()
     
     @State  var isPresented: Bool = false
@@ -72,14 +70,11 @@ struct LoginView: NavigatableView {
             
             Button("Login") {
                 signIn()
-            }.foregroundColor(.black)
-                .buttonStyle(.bordered)
+            }.buttonStyle(ConfirmButton())
             
-            Button {
+            Button("Forgot password") {
                 navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-            } label: {
-                Text("Forgot password")
-            }.buttonStyle(.bordered).foregroundColor(.black)
+            }.buttonStyle(ConfirmButton())
             
             if (!accountViewModel.activated) {
                 Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
@@ -97,7 +92,7 @@ struct LoginView: NavigatableView {
                 message: Text("You are signed in as: \(loginVM.email)"),
                 buttons: [
                     .default(Text("Ok"), action: {
-                        dismiss()
+                        navigationController?.popViewController(animated: true)
                     })
                 ]
             )
