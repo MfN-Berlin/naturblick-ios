@@ -78,6 +78,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     
     @MainActor func spectrogramCropDone(crop: NBImage, start: Int, end: Int) {
         soundData.crop = crop
+        data.thumbnail = crop
         soundData.start = start
         soundData.end = end
         let resultView = SelectSpeciesView(flow: self, thumbnail: crop)
@@ -121,6 +122,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
             let crop = NBImage(image: thumbnail)
             try crop.write()
             imageData.crop = crop
+            data.thumbnail = crop
             imageData.result = nil
             withNavigation { navigation in
                 cropDone(thumbnail: crop)
