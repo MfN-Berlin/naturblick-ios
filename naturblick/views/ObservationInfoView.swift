@@ -7,12 +7,54 @@ import SwiftUI
 
 struct ObservationInfoView: View {
     let width: CGFloat
-    @ObservedObject var observationInfoVM: ObservationInfoViewModel
-    
     let navigate: (UIViewController) -> Void
+
+    let species: SpeciesListItem?
+    let created: ZonedDateTime
+    
+    let sound: NBSound?
+    let start: Int?
+    let end: Int?
+    let fullscreenImageId: UUID?
+    let thumbnail: NBImage?
+    
+    init(width: CGFloat, data: EditData, navigate: @escaping (UIViewController) -> Void) {
+        self.width = width
+        self.navigate = navigate
+        self.species = data.species
+        self.created = data.original.created
+        
+        self.start = data.original.segmStart.map { s in Int(s) } ?? nil
+        self.end = data.original.segmEnd.map { s in Int(s) } ?? nil
+        self.thumbnail = data.thumbnail
+        if data.original.obsType == .audio || data.original.obsType == .unidentifiedaudio,  let mediaId = data.original.mediaId {
+            self.sound = NBSound(id: mediaId)
+        } else {
+            self.sound = nil
+        }
+        
+        if data.original.obsType == .image || data.original.obsType == .unidentifiedimage, let mediaId = data.original.mediaId {
+            self.fullscreenImageId = mediaId
+        } else {
+            self.fullscreenImageId = nil
+        }
+    }
+    
+    init(width: CGFloat, data: CreateData, navigate: @escaping (UIViewController) -> Void) {
+        self.width = width
+        self.navigate = navigate
+        self.species = data.species
+        self.created = data.created
+        self.sound = data.sound.sound
+        self.start = data.sound.start
+        self.end = data.sound.end
+        self.thumbnail =  data.sound.crop ?? data.image.crop
+        self.fullscreenImageId = data.image.image?.id
+    }
+        
     
     var avatar: some View {
-        if let thumbnail = observationInfoVM.thumbnail?.image {
+        if let thumbnail = self.thumbnail?.image {
             return Image(uiImage: thumbnail)
                 .resizable()
                 .scaledToFit()
@@ -31,7 +73,7 @@ struct ObservationInfoView: View {
     
     var body: some View {
         VStack() {
-            if let fullscreenImageId = observationInfoVM.fullscreenImageId {
+            if let fullscreenImageId = fullscreenImageId {
                 avatar.overlay(alignment: .bottomTrailing) {
                     ZStack {
                         Circle()
@@ -43,7 +85,7 @@ struct ObservationInfoView: View {
                         navigate(FullscreenView(imageId: fullscreenImageId).setUpViewController())
                     }
                 }
-            } else if let sound = observationInfoVM.sound {
+            } else if let sound = sound {
                 avatar
                     .overlay(alignment: .bottomTrailing) {
                         SoundButton(url: sound.url)
@@ -51,17 +93,17 @@ struct ObservationInfoView: View {
             } else {
                 avatar
             }
-            if let sciname = observationInfoVM.species?.sciname {
+            if let sciname = species?.sciname {
                 Text(sciname)
                     .font(.nbOverline)
                     .foregroundColor(.onPrimarySignalHigh)
                     .multilineTextAlignment(TextAlignment.center)
             }
-            Text(observationInfoVM.species?.name ?? "Unknown species")
+            Text(species?.name ?? "Unknown species")
                 .font(.nbHeadline2)
                 .foregroundColor(.onPrimaryHighEmphasis)
                 .multilineTextAlignment(TextAlignment.center)
-            Text(observationInfoVM.created.date, formatter: .dateTime)
+            Text(created.date, formatter: .dateTime)
                 .font(.caption)
                 .foregroundColor(.onPrimarySignalLow)
                 .multilineTextAlignment(TextAlignment.center)
