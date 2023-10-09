@@ -8,7 +8,9 @@ struct SigninResponse : Decodable {
     let access_token: String
 }
 
-struct LoginView: View {
+struct LoginView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var viewName: String? = "Login"
     
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
@@ -76,8 +78,12 @@ struct LoginView: View {
             }.foregroundColor(.black)
                 .buttonStyle(.bordered)
             
-            NavigationLink(destination: ForgotPasswordView()) {
-                Text("Forgot Password")
+            Button {
+                navigationController?.pushViewController(ForgotPasswordView() {
+                    navigationController?.popViewController(animated: true)
+                }.setUpViewController(), animated: true)
+            } label: {
+                Text("Forgot password")
             }.buttonStyle(.bordered).foregroundColor(.black)
             
             if (!activated) {

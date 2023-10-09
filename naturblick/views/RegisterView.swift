@@ -4,13 +4,15 @@
 
 import SwiftUI
 
-struct RegisterView: View {
+struct RegisterView: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var viewName: String? = "Register"
+    
+    let toLogin: () -> ()
     
     @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
     @StateObject var registerVM = RegisterViewModel()
-    
-    @State var action: String?
-    
+        
     @State var showRegisterSuccess: Bool = false
     @State var showAlreadyExists = false
     
@@ -38,11 +40,6 @@ struct RegisterView: View {
     var body: some View {
         ScrollView {
             VStack {
-                
-                NavigationLink(destination: LoginView(), tag: AccountView.loginAction, selection: $action) {
-                    EmptyView()
-                }
-                
                 Text("**Create account**\n\nYou create a Naturblick account here. Please enter an email address. We will send you the activation link to this address.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
@@ -57,7 +54,6 @@ struct RegisterView: View {
                         .font(.nbBody1)
                         .padding()
                 }
-                
                 
                 NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $registerVM.password, isSecure: true, prompt: registerVM.passwordPrompt).padding()
                 if registerVM.passwordPrompt == nil {
@@ -98,12 +94,12 @@ struct RegisterView: View {
         
     func registerSuccessButtons() -> [Alert.Button] {
         var buttons: [Alert.Button] = [Alert.Button.destructive(Text("Continue to login"), action: {
-            action = AccountView.loginAction
+            toLogin()
         })]
-       
+        
         if (canOpenEmail()) {
             buttons.append(
-                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in action = AccountView.loginAction }) })
+                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in toLogin() }) })
             )
         }
         return buttons
@@ -112,7 +108,9 @@ struct RegisterView: View {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView()
+        RegisterView() {
+            // empty
+        }
     }
 }
 

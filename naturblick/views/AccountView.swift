@@ -15,9 +15,6 @@ struct AccountView: NavigatableView {
     @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
     @AppStorage("activated") var activated: Bool = false
     
-    static let loginAction = "login"
-    static let accountAction = "account"
-    
     private func signOut() {
         email = nil
         neverSignedIn = true
@@ -37,10 +34,17 @@ struct AccountView: NavigatableView {
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
                     .padding()
-                NavigationLink(destination: LoginView()) {
+                
+                Button {
+                    navigationController?.pushViewController(LoginView().setUpViewController(), animated: true)
+                } label: {
                     Text("Go to login")
-                }.buttonStyle(.bordered).foregroundColor(.black)
-                NavigationLink(destination: RegisterView()) {
+                }
+                .buttonStyle(.bordered).foregroundColor(.black)
+                
+                Button {
+                    navigationController?.pushViewController(RegisterView(toLogin: toLogin).setUpViewController(), animated: true)
+                } label: {
                     Text("Register now")
                 }.buttonStyle(.bordered).foregroundColor(.black)
             } else if (bearerToken != nil) {
@@ -48,9 +52,12 @@ struct AccountView: NavigatableView {
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
                     .padding()
-                NavigationLink(destination: DeleteAccountView()) {
+                Button {
+                    navigationController?.pushViewController(DeleteAccountView().setUpViewController(), animated: true)
+                } label: {
                     Text("Go to delete account")
                 }.buttonStyle(.bordered).foregroundColor(.black)
+                
                 Text("**Advice for the connection with old devices**\n\nTo transfer observations from old devices to new ones, we recommend that you log in on both devices. If you pass on or recycle your phone, uninstall Naturblick on your phone or simply reset it to its default settings. This will not delete your old observations. Do not delete the account, as this would break the link between the observations.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .foregroundColor(.onPrimaryHighEmphasis)
@@ -63,9 +70,12 @@ struct AccountView: NavigatableView {
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
-                    NavigationLink(destination: LoginView()) {
+                    Button {
+                        navigationController?.pushViewController(LoginView().setUpViewController(), animated: true)
+                    } label: {
                         Text("Go to login")
-                    }.buttonStyle(.bordered).foregroundColor(.black)
+                    }
+                    .buttonStyle(.bordered).foregroundColor(.black)
                     Button("Continue without account") {
                         signOut()
                     }.buttonStyle(.bordered).foregroundColor(.black)
@@ -78,16 +88,22 @@ struct AccountView: NavigatableView {
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
-                    NavigationLink(destination: LoginView()) {
+                    Button {
+                        navigationController?.pushViewController(LoginView().setUpViewController(), animated: true)
+                    } label: {
                         Text("Go to login")
-                    }.buttonStyle(.bordered).foregroundColor(.black)
+                    }
+                    .buttonStyle(.bordered).foregroundColor(.black)
                     Text("**Account deleted**\n\nRegister a new account or use Naturblick without an account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
                         .padding()
-                    NavigationLink(destination: RegisterView()) {
+                    Button {
+                        navigationController?.pushViewController(RegisterView(toLogin: toLogin).setUpViewController(), animated: true)
+                    } label: {
                         Text("Register")
-                    }.buttonStyle(.bordered).foregroundColor(.black)
+                    }
+                    .buttonStyle(.bordered).foregroundColor(.black)
                     Button("Continue without account") {
                         signOut()
                     }.foregroundColor(.black)
@@ -96,6 +112,11 @@ struct AccountView: NavigatableView {
             }
             Spacer()
         }.foregroundColor(.onSecondaryHighEmphasis)
+    }
+    
+    private func toLogin() {
+        navigationController?.popViewController(animated: false)
+        navigationController?.pushViewController(LoginView().setUpViewController(), animated: true)
     }
 }
 
