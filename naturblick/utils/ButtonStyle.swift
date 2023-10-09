@@ -55,6 +55,27 @@ struct AuxiliaryOnSecondaryFullwidthButton: ButtonStyle {
     }
 }
 
+struct ButtonLabelStyle: LabelStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        HStack(spacing: .halfPadding) {
+            configuration.icon
+            configuration.title
+                .font(.nbButton)
+        }
+        .padding(.halfPadding)
+    }
+}
+
+struct AuxiliaryOnPrimaryButton: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .labelStyle(ButtonLabelStyle())
+            .foregroundStyle(Color.onPrimaryHighEmphasis)
+            .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .border(Color.onPrimaryMinimumEmphasis)
+    }
+}
+
 struct DestructiveFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label

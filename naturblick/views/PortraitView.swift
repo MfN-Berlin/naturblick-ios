@@ -66,27 +66,19 @@ struct PortraitView: HostedView {
                                     .foregroundColor(.onPrimarySignalLow)
                                     .multilineTextAlignment(.center)
                             }
+                            if !inSelectionFlow {
+                                Button {
+                                    flow.selectManual(species: species)
+                                } label: {
+                                    Label("I observed this species here", image: "artportraits24")
+                                }
+                                .buttonStyle(AuxiliaryOnPrimaryButton())
+                            }
                         }
                         .padding(.bottom, .defaultPadding * 2)
                         .padding([.top, .horizontal], .defaultPadding)
                         
                         VStack(alignment: .leading) { // description
-                            if !inSelectionFlow {
-                                Button(action: {
-                                    flow.selectManual(species: species)
-                                }) {
-                                    HStack {
-                                        Image("add_24")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(height: .fabMiniSize)
-                                        Text("Observed here")
-                                            .font(.nbButton)
-                                            .foregroundColor(.onPrimaryHighEmphasis)
-                                    }
-                                }
-                                .buttonStyle(FABReplacementFullWidthButton())
-                            }
                             Text("Beschreibung")
                                 .font(.nbHeadline4)
                                 .padding(.bottom, .defaultPadding)
