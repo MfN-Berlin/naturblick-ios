@@ -7,42 +7,25 @@ import SwiftUI
 
 
 class AccountViewModel : ObservableObject {
-    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) private var backedBearerToken: String?
-    @AppSecureStorage(NbAppSecureStorageKey.Email) private var backedEmail: String?
+    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
     
-    @AppStorage("neverSignedIn") private var backedNeverSignedIn: Bool = true
-    @AppStorage("activated") private var backedActivated: Bool = false
-    
-    @Published var bearerToken: String?
-    @Published var email: String?
-    
-    @Published var neverSignedIn: Bool = true
-    @Published var activated: Bool = false
-    
-    init() {
-        bearerToken = backedBearerToken
-        email = backedEmail
-        neverSignedIn = backedNeverSignedIn
-        activated = backedActivated
-    }
+    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
+    @AppStorage("activated") var activated: Bool = false
     
     func setBearer(_ bearer: String?) {
-        backedBearerToken = bearer
         bearerToken = bearer
     }
     
     func setEmail(_ email: String?) {
-        backedEmail = email
         self.email = email
     }
     
     func setNeverSignedIn(_ neverSignedIn: Bool) {
-        backedNeverSignedIn = neverSignedIn
         self.neverSignedIn = neverSignedIn
     }
     
     func setActivated(_ activated: Bool) {
-        backedActivated = activated
         self.activated = activated
     }
     
