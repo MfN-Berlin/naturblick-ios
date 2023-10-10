@@ -38,7 +38,6 @@ struct ObservationListView: HostedView {
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var createFlow: CreateFlowViewModel
     @StateObject var model = ObservationListViewModel()
-    @State var showMapInfo = false
     
     fileprivate func extractedFunc() -> [MenuEntry] {
         return [
@@ -101,15 +100,14 @@ struct ObservationListView: HostedView {
                         ZStack {
                             Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
                                 .onTapGesture {
-                                    showMapInfo.toggle()
-                            }
-                            if (showMapInfo) {
-                                MapInfoBox(present: $showMapInfo, observation: observation) { obs in
-                                    navigationController?.pushViewController(EditObservationViewController(observation: obs, persistenceController: persistenceController), animated: true)
+                                    let view = MapInfoBox(observation: observation, persistenceController: persistenceController) {
+                                        let controller = EditObservationViewController(observation: observation, persistenceController: persistenceController)
+                                        navigationController?.pushViewController(controller, animated: true)
+                                    } .setUpViewController()
+                                    
+                                    navigationController?.present(view, animated: true)
                                 }
                             }
-                        }
-                        
                     }
                 }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
