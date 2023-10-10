@@ -18,6 +18,18 @@ struct ConfirmFullWidthButton: ButtonStyle {
     }
 }
 
+struct ConfirmButton: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(.nbButton)
+            .padding(.defaultPadding)
+            .background(Color.onPrimaryButtonPrimary)
+            .foregroundStyle(Color.onPrimaryHighEmphasis)
+            .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .nbShadow()
+    }
+}
+
 struct AuxiliaryOnSecondaryButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
