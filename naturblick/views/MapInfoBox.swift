@@ -31,10 +31,8 @@ struct MapInfoBox: NavigatableView {
             Button("Details") {
                 viewController?.dismiss(animated: true)
                 toDetails()
-            }.accentColor(Color.onPrimaryButtonPrimary)
-                .buttonStyle(.borderedProminent)
-                .padding(.defaultPadding)
+            }.buttonStyle(ConfirmButton())
             Spacer()
-        }.foregroundColor(.onPrimaryHighEmphasis)
+        }.foregroundColor(.onSecondaryHighEmphasis)
     }
 }
