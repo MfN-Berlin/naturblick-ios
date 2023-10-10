@@ -5,41 +5,36 @@
 
 import SwiftUI
 
-struct MapInfoBox: View {
+struct MapInfoBox: NavigatableView {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var viewName: String? {
+        "Map Info"
+    }
     
-    @Binding var present: Bool
     let observation: Observation
-    let navToEdit: (Observation) -> Void
+    let persistenceController: ObservationPersistenceController
+    let toDetails: () -> Void
     
     var body: some View {
-        ZStack {
+        VStack {
             Thumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
-                ZStack {
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: .mapInfoSize, height: .mapInfoSize)
-                    Rectangle()
-                        .foregroundColor(.clear)
-                        .background(LinearGradient(gradient: Gradient(colors: [.clear, .white]), startPoint: .top, endPoint: .bottom))
-                }.cornerRadius(.smallCornerRadius)
+                image
+                    .resizable()
+                    .scaledToFit()
             }
-            VStack {
-                Spacer()
-                if let gerName = observation.species?.gername {
-                    Text(gerName)
-                        .font(.nbCaption)
-                        .foregroundColor(.black)
-                }
-                Text(observation.observation.created.date, formatter: .dateTime)
-                    .font(.nbOverline)
-                    .foregroundColor(.black)
-                Button("Details") {
-                    navToEdit(observation)
-                }.accentColor(Color.onPrimaryButtonPrimary)
-                    .buttonStyle(.borderedProminent)
-                    .padding(.defaultPadding)
+            if let gerName = observation.species?.gername {
+                Text(gerName)
+                    .font(.nbSubtitle1)
             }
-        }
+            Text(observation.observation.created.date, formatter: .dateTime)
+                .font(.nbOverline)
+            Button("Details") {
+                viewController?.dismiss(animated: true)
+                toDetails()
+            }.accentColor(Color.onPrimaryButtonPrimary)
+                .buttonStyle(.borderedProminent)
+                .padding(.defaultPadding)
+            Spacer()
+        }.foregroundColor(.onPrimaryHighEmphasis)
     }
 }
