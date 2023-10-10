@@ -34,68 +34,66 @@ struct CreateObservationView: NavigatableView {
     @State private var sheetPosition : BottomSheetPosition = .dynamic
     var body: some View {
         GeometryReader { geo in
-            VStack(alignment: .center) {
-                ObservationInfoView(width: geo.size.width, data: createFlow.data) { view in
-                    navigationController?.pushViewController(view, animated: true)
-                }
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .bottomSheet(bottomSheetPosition: $sheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
-            VStack(alignment: .leading) {
-                Thumbnail(speciesUrl: createFlow.data.species?.url, thumbnailId: nil) { thumbnail in
-                    HStack {
-                        thumbnail
-                            .avatar()
-                            .padding(.trailing, .defaultPadding)
-                        Text(createFlow.data.species?.sciname ?? "Unknown species")
+            ZStack {
+                VStack(alignment: .center) {
+                    ObservationInfoView(width: geo.size.width, data: createFlow.data) { view in
+                        navigationController?.pushViewController(view, animated: true)
                     }
                 }
-                Divider()
-                HStack {
-                    Image("placeholder")
-                        .observationProperty()
-                    CoordinatesView(coordinates: createFlow.data.coords)
-                        .onTapGesture {
-                            navigationController?.pushViewController(PickerView(flow: createFlow).setUpViewController(), animated: true)
-                        }
-                }
-                Divider()
-                HStack {
-                    Image("details")
-                        .observationProperty()
-                    TextField("Notes", text: $createFlow.data.details)
-                }
-                Divider()
-                HStack {
-                    Image("placeholder")
-                        .observationProperty()
-                    Picker("Behavior", selection: $createFlow.data.behavior) {
-                        Text("None").tag(nil as Behavior?)
-                        ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
-                            Text($0.rawValue).tag($0 as Behavior?)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                
+                VStack(alignment: .leading) {
+                    Thumbnail(speciesUrl: createFlow.data.species?.url, thumbnailId: nil) { thumbnail in
+                        HStack {
+                            thumbnail
+                                .avatar()
+                                .padding(.trailing, .defaultPadding)
+                            VStack(alignment: .leading) {
+                                Text("Species")
+                                    .caption(color: .onSecondarySignalLow)
+                                Text(createFlow.data.species?.sciname ?? "Unknown species")
+                                    .subtitle1()
+                            }
                         }
                     }
-                    .pickerStyle(MenuPickerStyle())
-                    .tint(.onSecondaryHighEmphasis)
-                    .accentColor(.onSecondaryHighEmphasis)
+                    OnSecondaryFieldView(icon: "location24") {
+                        CoordinatesView(coordinates: createFlow.data.coords)
+                    }
+                    .onTapGesture {
+                        navigationController?.pushViewController(PickerView(flow: createFlow).setUpViewController(), animated: true)
+                    }
+                    OnSecondaryFieldView(icon: "details") {
+                        TextField("Notes", text: $createFlow.data.details)
+                    }
+                    OnSecondaryFieldView(icon: "location24") {
+                        Picker("Behavior", selection: $createFlow.data.behavior) {
+                            Text("None").tag(nil as Behavior?)
+                            ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
+                                Text($0.rawValue).tag($0 as Behavior?)
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .tint(.onSecondaryHighEmphasis)
+                        .accentColor(.onSecondaryHighEmphasis)
+                    }
+                    OnSecondaryFieldView(icon: "number24") {
+                        IndividualsView(individuals: $createFlow.data.individuals)
+                    }
                 }
-                Divider()
-                HStack {
-                    Image("placeholder")
-                        .observationProperty()
-                    IndividualsView(individuals: $createFlow.data.individuals)
-                }
+                .padding(.defaultPadding)
+                .padding(.bottom, geo.safeAreaInsets.bottom)
+                .background(
+                    RoundedRectangle(cornerRadius: .largeCornerRadius)
+                        .fill(Color.secondaryColor)
+                        .nbShadow()
+                )
+                .background(Color(uiColor: .onPrimaryButtonSecondary))
+                .frame(maxHeight: .infinity, alignment: .bottom)
             }
-            .padding(.defaultPadding)
-            .padding(.bottom, .defaultPadding * 2)
+            .ignoresSafeArea(edges: .bottom)
+            .frame(maxHeight: .infinity)
+            .background(Color(uiColor: .onPrimaryButtonSecondary))
         }
-        .customBackground(
-            RoundedRectangle(cornerRadius: .largeCornerRadius)
-                .fill(Color.secondaryColor)
-                .nbShadow()
-        )
-        .background(Color(uiColor: .onPrimaryButtonSecondary))
         .onChange(of: locationManager.userLocation) { location in
             if let location = location {
                 let coordinates = Coordinates(location: location)
