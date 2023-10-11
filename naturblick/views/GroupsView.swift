@@ -6,7 +6,7 @@ import SwiftUI
 
 struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Gruppen"
+    var viewName: String? = String(localized: "menu_groups")
     var alwaysDarkBackground: Bool = true
     let groups: [Group]
     let destination: (Group) -> Content
@@ -19,7 +19,7 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
                 .foregroundColor(.onPrimarySignalHigh)
                 .frame(width: .headerIconSize, height: .headerIconSize)
                 .padding(.top, .defaultPadding)
-            Text("Wähle eine Gruppe")
+            Text("choose_a_group")
                 .font(.nbHeadline3)
                 .foregroundColor(.onPrimaryHighEmphasis)
             GeometryReader { geo in

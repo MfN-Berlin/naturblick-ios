@@ -14,37 +14,28 @@ struct FeedbackView: NavigatableView {
     
     var body: some View {
         ScrollView {
-            VStack {
-                Text("**Support us!**\n\nNaturblick is continuously being further developed in terms of content and technology. We depend on your feedback. Suggest changes, improvements, or report bugs.")
-                    .tint(Color.onSecondaryButtonPrimary)
-                    .font(.nbBody1)
-                    .padding()
-                Button {
+            VStack(alignment: .leading, spacing: .defaultPadding) {
+                Text("support_us_text")
+                Button("feedback_form") {
                     let deviceName = "ios"
                     let appVersion = UIApplication.appVersion
                     let survey = "https://survey.naturkundemuseum-berlin.de/de/Feedback%20Naturblick?device_name=\(deviceName)&version=\(appVersion)"
                     if let url = URL(string: survey) {
                         UIApplication.shared.open(url)
                     }
-                } label: {
-                    Text("Use our feedback form")
-                        .button()
-                        .padding()
-                }.background(Color.onSecondaryButtonPrimary)
-                    .padding()
-                Button {
+                }.buttonStyle(ConfirmFullWidthButton())
+                Button("feedback_email") {
                     let email = "naturblick@mfn-berlin.de"
                     if let url = URL(string: "mailto:\(email)") {
                         UIApplication.shared.open(url)
                     }
-                } label: {
-                    Text("Send an email")
-                        .button()
-                        .padding()
-                }.background(Color.onSecondaryButtonPrimary)
-                    .padding()
+                }.buttonStyle(ConfirmFullWidthButton())
             }
-        }.foregroundColor(.onSecondaryHighEmphasis)
+            .tint(Color.onSecondaryButtonPrimary)
+            .font(.nbBody1)
+            .foregroundColor(.onSecondaryHighEmphasis)
+        }
+        .padding(.defaultPadding)
     }
 }
 

@@ -13,15 +13,14 @@ struct SettingsView: NavigatableView {
     
     var body: some View {
         ScrollView {
-            VStack {
-                Text("**Authorship**\n\nAll recordings made with Naturblick are licensed under CC BY-SA 4.0, i.e. they may be distributed and used.\n\nIf you want, you can attribute your authorship with a name. The material will then be published together with this name. All footage that has not been assigned an author name will be published under MfN_Naturblick.")
-                    .tint(Color.onSecondaryButtonPrimary)
-                    .font(.nbBody1)
-                    .padding()
-                NBEditText(label: "Name (Synonym)", icon: Image(systemName: "pencil"), text: $ccByName)
+            VStack(alignment: .leading, spacing: .defaultPadding) {
+                Text("cc_by_msg")
+                NBEditText(label: String(localized: "cc_by_field"), icon: Image(systemName: "pencil"), text: $ccByName)
             }
             .foregroundColor(.onSecondaryHighEmphasis)
-        }
+            .tint(Color.onSecondaryButtonPrimary)
+            .font(.nbBody1)
+        }.padding(.defaultPadding)
     }
 }
 
