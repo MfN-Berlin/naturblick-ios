@@ -49,32 +49,29 @@ struct LoginView: NavigatableView {
                 Text("Your Naturblick account is activated. Log in with your email address and password on all devices you want to connect to the account.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
-                    .padding()
             } else {
                 Text("Connect all observations on this phone to your account.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
-                    .padding()
             }
             
-            NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $loginVM.email, prompt: loginVM.emailPrompt)
-                .padding()
+            NBEditText(label: "Email address", icon: Image("create_24px"), text: $loginVM.email, prompt: loginVM.emailPrompt)
                 .keyboardType(.emailAddress)
-            NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $loginVM.password, isSecure: true, prompt: loginVM.passwordPrompt).padding()
+                .padding([.trailing, .bottom], .defaultPadding)
+            NBEditText(label: "Password", icon: Image("visibility"), text: $loginVM.password, isSecure: true, prompt: loginVM.passwordPrompt)
             if showCredentialsWrong {
                 Text("Credentials not recognized. Please validate your e-mail and password.")
                     .foregroundColor(.onSecondarywarning)
                     .font(.nbBody1)
-                    .padding()
             }
             
             Button("Login") {
                 signIn()
-            }.buttonStyle(ConfirmButton())
+            }.buttonStyle(ConfirmFullWidthButton()).padding([.top, .bottom], .defaultPadding)
             
             Button("Forgot password") {
                 navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-            }.buttonStyle(ConfirmButton())
+            }.buttonStyle(AuxiliaryOnSecondaryFullwidthButton()).padding([.bottom], .defaultPadding)
             
             if (!accountViewModel.activated) {
                 Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
@@ -102,6 +99,7 @@ struct LoginView: NavigatableView {
                 loginVM.email = email
             }
         }
+        .padding(.defaultPadding)
     }
 }
 

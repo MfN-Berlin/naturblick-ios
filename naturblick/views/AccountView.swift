@@ -32,73 +32,71 @@ struct AccountView: NavigatableView {
     
     var body: some View {
         VStack {
-            Text("**Naturblick account**")
+            Text("Naturblick account")
                 .tint(Color.onSecondaryButtonPrimary)
-                .font(.nbBody1)
-                .padding()
+                .font(.nbSubtitle1)
+                .padding([.top, .bottom], .defaultPadding)
             
             if (accountViewModel.email == nil) {
                 Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nHowever, you can still use Naturblick without an account.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
-                    .padding()
                 
                 Button("Go to login") {
                     navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                }.buttonStyle(ConfirmButton())
+                }.buttonStyle(ConfirmFullWidthButton())
+                .padding([.top, .bottom], .defaultPadding)
                 
                 Button("Register now") {
                     navigationController?.pushViewController(RegisterView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                }.buttonStyle(ConfirmButton())
+                }.buttonStyle(ConfirmFullWidthButton())
             } else if (accountViewModel.bearerToken != nil) {
                 Text("A Naturblick account enables you to back up and view your observations across multiple mobile devices.\n\nYou are signed in as: \(accountViewModel.email!)\n\n**Delete account**\n\nDeleting your account will remove the link to other devices and we will automatically delete the email address you provided.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbBody1)
-                    .padding()
                 Button("Go to delete account") {
                     navigationController?.pushViewController(DeleteAccountView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                }.buttonStyle(DestructiveButton())
+                }.buttonStyle(DestructiveFullWidthButton())
+                    .padding([.top, .bottom], .defaultPadding)
                 
                 Text("**Advice for the connection with old devices**\n\nTo transfer observations from old devices to new ones, we recommend that you log in on both devices. If you pass on or recycle your phone, uninstall Naturblick on your phone or simply reset it to its default settings. This will not delete your old observations. Do not delete the account, as this would break the link between the observations.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .foregroundColor(.onPrimaryHighEmphasis)
                     .font(.nbBody1)
-                    .padding()
-
             } else if (accountViewModel.bearerToken == nil && accountViewModel.email != nil) {
                 if (accountViewModel.neverSignedIn) {
                     Text("Log into your account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
-                        .padding()
                     Button("Go to login") {
                         navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
                     }.buttonStyle(ConfirmButton())
+                        .padding([.top, .bottom], .defaultPadding)
                     Button("Continue without account") {
                         accountViewModel.signOut()
-                    }.buttonStyle(ConfirmButton())
+                    }.buttonStyle(ConfirmFullWidthButton())
+                        .padding([.bottom], .defaultPadding)
                     Text("**Activation link**\n\nYou can access your Naturblick account only after confirming your registration. To do so, please click on the activation link that we have sent to your email address.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.caption)
-                        .padding()
                 } else {
                     Text("You have been logged out because you have reset your password or deleted your account.\n\n**New password**\n\nLog in with your new password to link your observations on this phone to your account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
-                        .padding()
                     Button("Go to login") {
                         navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                    }.buttonStyle(ConfirmButton())
+                    }.buttonStyle(ConfirmFullWidthButton())
+                        .padding([.top, .bottom], .defaultPadding)
                     Text("**Account deleted**\n\nRegister a new account or use Naturblick without an account.")
                         .tint(Color.onSecondaryButtonPrimary)
                         .font(.nbBody1)
-                        .padding()
                     Button("Register") {
                         navigationController?.pushViewController(RegisterView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-                    }.buttonStyle(ConfirmButton())
+                    }.buttonStyle(ConfirmFullWidthButton())
+                        .padding([.top, .bottom], .defaultPadding)
                     Button("Continue without account") {
                         accountViewModel.signOut()
-                    }.buttonStyle(ConfirmButton())
+                    }.buttonStyle(AuxiliaryOnSecondaryFullwidthButton())
                 }
             }
             Spacer()
@@ -114,7 +112,7 @@ struct AccountView: NavigatableView {
             Button("Cancel") {
                 navigationController?.popViewController(animated: true)
             }
-        }
+        }.padding(.defaultPadding)
     }
     
     private func activateAccount() {

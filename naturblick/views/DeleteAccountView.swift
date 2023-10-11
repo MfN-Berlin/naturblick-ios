@@ -44,7 +44,7 @@ struct DeleteAccountView: NavigatableView {
                 .tint(Color.onSecondaryButtonPrimary)
                 .font(.nbBody1)
                 .padding()
-            NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $deleteVM.email, prompt: deleteVM.emailPrompt)
+            NBEditText(label: "Email address", icon: Image("create_24px"), text: $deleteVM.email, prompt: deleteVM.emailPrompt)
                 .padding()
                 .keyboardType(.emailAddress)
             NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $deleteVM.password, isSecure: true, prompt: deleteVM.passwordPrompt).padding()
@@ -57,6 +57,7 @@ struct DeleteAccountView: NavigatableView {
             Button("Delete account") {
                 deleteAccount()
             }.buttonStyle(DestructiveButton())
+                .padding([.trailing, .bottom], .defaultPadding)
             Button {
                 navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
             } label: {

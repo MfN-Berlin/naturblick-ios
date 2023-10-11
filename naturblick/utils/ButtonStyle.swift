@@ -42,6 +42,19 @@ struct AuxiliaryOnSecondaryButton: ButtonStyle {
     }
 }
 
+struct AuxiliaryOnSecondaryFullwidthButton: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .font(.nbButton)
+            .padding(.defaultPadding)
+            .frame(maxWidth: .infinity)
+            .foregroundStyle(Color.onSecondaryHighEmphasis)
+            .border(Color.onSecondaryMinimumEmphasis)
+            .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .nbShadow()
+    }
+}
+
 struct DestructiveFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
