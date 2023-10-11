@@ -56,13 +56,12 @@ struct DeleteAccountView: NavigatableView {
             }
             Button("Delete account") {
                 deleteAccount()
-            }.foregroundColor(.black)
-                .buttonStyle(.bordered)
+            }.buttonStyle(DestructiveButton())
             Button {
                 navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
             } label: {
                 Text("Forgot password")
-            }.buttonStyle(.bordered).foregroundColor(.black)
+            }.buttonStyle(ConfirmButton())
         }
         .foregroundColor(.onSecondaryHighEmphasis)
         .actionSheet(isPresented: $showDeleteSuccess) {

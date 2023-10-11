@@ -6,7 +6,7 @@ import SwiftUI
 
 struct ForgotPasswordView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Forgot Password"
+    var viewName: String? = "Forgot"
     
     @ObservedObject var accountViewModel: AccountViewModel
        
@@ -42,8 +42,7 @@ struct ForgotPasswordView: NavigatableView {
            
             Button("Reset password") {
                 forgotPassword()
-            }.foregroundColor(.black)
-                .buttonStyle(.bordered)
+            }.buttonStyle(ConfirmButton())
             Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
                 .tint(Color.onSecondaryButtonPrimary)
                 .font(.nbBody1)

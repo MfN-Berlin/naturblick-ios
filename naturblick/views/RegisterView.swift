@@ -72,9 +72,8 @@ struct RegisterView: NavigatableView {
                 
                 Button("Register") {
                     signUp()
-                }.disabled(!registerVM.isRegisterEnabled)
-                    .foregroundColor(.black)
-                    .buttonStyle(.bordered)
+                }.buttonStyle(ConfirmButton())
+                    .disabled(!registerVM.isRegisterEnabled)
                     .opacity(registerVM.isRegisterEnabled ? 1 : 0.6)
                 Spacer(minLength: 10)
             }

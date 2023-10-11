@@ -6,18 +6,89 @@
 import SwiftUI
 import UIKit
 
+enum DeepLink : Equatable {
+    case resetPasswort(token: String)
+    case speciesPortrait(speciesId: Int64)
+    case activateAccount(token: String)
+}
+
 class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
+        
+        if let userActivity = connectionOptions.userActivities.first,
+           userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            handle(userActivity, windowScene)
+        } else {
+            startScene(windowScene: windowScene)
+        }
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        guard let windowScene = scene as? UIWindowScene,
+        userActivity.activityType == NSUserActivityTypeBrowsingWeb else {
+            return
+        }
+        handle(userActivity, windowScene)
+    }
+    
+    
+    private func handle(_ userActivity: NSUserActivity, _ windowScene: UIWindowScene) {
+        
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let incomingURL = userActivity.webpageURL,
+              let pathComponents = userActivity.webpageURL?.pathComponents,
+              let nsURLComponents = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else { return }
+        
+        if (pathComponents.count >= 3) {
+            if (pathComponents[1] == "species") {
+                if let speciesStr = pathComponents.last, let speciesId = Int64(speciesStr) {
+                    startScene(windowScene: windowScene, deepLink: .speciesPortrait(speciesId: speciesId))
+                } else {
+                    return
+                }
+            } else if (pathComponents[1] == "account") {
+                let second = pathComponents[2]
+                if (second == "activate") {
+                    if let token = pathComponents.last {
+                        startScene(windowScene: windowScene, deepLink: .activateAccount(token: token))
+                    }
+                } else if (second == "reset-password") {
+                    if let token = nsURLComponents.queryItems?.first(where: { $0.name == "token" })?.value {
+                        startScene(windowScene: windowScene, deepLink: .resetPasswort(token: token))
+                    }
+                }
+            }
+        } else {
+            return
+        }
+    }
+    
+    private func startScene(windowScene: UIWindowScene, deepLink: DeepLink? = nil) {
         UINavigationBar.appearance().tintColor = .onPrimaryHighEmphasis
 
         let window = UIWindow(windowScene: windowScene)
         let navigationController = PopAwareNavigationController(rootViewController: HomeViewController())
+        
+        switch deepLink {
+        case .activateAccount(let token):
+            navigationController.pushViewController(AccountView(token: token).setUpViewController(), animated: true)
+        case .resetPasswort(let token):
+            navigationController.pushViewController(ResetPasswordView(token: token).setUpViewController(), animated: true)
+        case .speciesPortrait(let speciesId):
+            let species = try? SpeciesListItem.find(speciesId: speciesId)
+            if let species = species {
+                navigationController.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
+            }
+        default: break
+        }
+            
         window.rootViewController = navigationController
         self.window = window
         window.makeKeyAndVisible()
     }
+
 }

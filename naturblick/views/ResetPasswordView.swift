@@ -2,24 +2,17 @@
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
-/*
 import SwiftUI
-
-enum ResetPasswordAction {
-    case Reset
-    case Login
-    case Account
-}
 
 struct ResetPasswordView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Reset password"
+    var viewName: String? = "Reset"
     
-    let token: String?
+    let token: String
     
-    @Environment(\.dismiss) var dismiss
+    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    
     @StateObject private var resetPasswordVM = EmailAndPasswordWithPrompt()
-    @State private var action: ResetPasswordAction = .Reset
     
     @State var showResetSuccess: Bool = false
     @State var isPresented: Bool = false
@@ -30,6 +23,7 @@ struct ResetPasswordView: NavigatableView {
         Task {
             do {
                 try await client.resetPassword(token: token, password: resetPasswordVM.password)
+                bearerToken = nil
                 showResetSuccess = true
             }
             catch is HttpError {
@@ -42,48 +36,39 @@ struct ResetPasswordView: NavigatableView {
     }
     
     var body: some View {
-        SwiftUI.Group {
-                if action == .Reset {
-                    VStack {
-                        NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $resetPasswordVM.password, isSecure: true, prompt: resetPasswordVM.passwordPrompt).padding()
-                        if resetPasswordVM.passwordPrompt == nil {
-                            Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.")
-                                .tint(Color.onSecondaryButtonPrimary)
-                                .font(.nbCaption)
-                                .padding([.leading, .trailing])
-                        }
-                        
-                        if let token = token {
-                            Button("Reset password") {
-                                resetPassword(token: token)
-                            }.foregroundColor(.black)
-                                .buttonStyle(.bordered)
-                        }
-                        Spacer()
-                    }
-                } else if action == .Login {
-                    LoginView().onDisappear {
-                        action = .Account
-                    }
-                } else if action == .Account {
-                    AccountView()
-                }
+        VStack {
+            NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $resetPasswordVM.password, isSecure: true, prompt: resetPasswordVM.passwordPrompt).padding()
+            if resetPasswordVM.passwordPrompt == nil {
+                Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.")
+                    .tint(Color.onSecondaryButtonPrimary)
+                    .font(.nbCaption)
+                    .padding([.leading, .trailing])
             }
+            
+            Button("Reset password") {
+                resetPassword(token: token)
+            }.buttonStyle(ConfirmButton())
+    
+            Spacer()
+        }
         .foregroundColor(.onSecondaryHighEmphasis)
         .actionSheet(isPresented: $showResetSuccess) {
-                ActionSheet(
-                    title: Text("Reset password"),
-                    message: Text("Password reset was successful."),
-                    buttons:
-                        [
-                            .default(Text("Ok"), action: {
-                                dismiss()
-                            })
-                        ]
-                )
-            }
-            .alertHttpError(isPresented: $isPresented, error: error)
+            ActionSheet(
+                title: Text("Reset password"),
+                message: Text("Password reset was successful."),
+                buttons:
+                    [
+                        .default(Text("Ok"), action: {
+                            withNavigation { navigation in
+                                var viewControllers = navigation.viewControllers
+                                viewControllers[viewControllers.count - 1] = AccountView().setUpViewController()
+                                navigation.setViewControllers(viewControllers, animated: true)
+                            }
+                            
+                        })
+                    ]
+            )
         }
+        .alertHttpError(isPresented: $isPresented, error: error)
+    }
 }
-
-*/
