@@ -29,10 +29,14 @@ struct OnSecondaryFieldView<Field: View>: View {
            image
                 .observationProperty()
             field()
+                .font(.nbBody1)
+                .foregroundColor(.onSecondaryMediumEmphasis)
+                .frame(maxHeight: .editTextIconSize)
             Spacer()
         }
+        .frame(height: .editTextFieldHeight)
         .frame(maxWidth: .infinity)
-        .padding([.top, .bottom, .trailing], .defaultPadding)
+        .padding(.trailing, .defaultPadding)
         .overlay(alignment: .bottom) {
             Divider()
                 .frame(height: 1)

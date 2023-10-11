@@ -27,6 +27,7 @@ extension CGFloat {
     static let mapInfoSize: CGFloat = 250
     static let stopButtonSize: CGFloat = 116
     static let pixelToMsFactor: CGFloat = 10
+    static let editTextFieldHeight: CGFloat = .editTextIconSize + 2 * .defaultPadding
 }
 
 extension CGSize {

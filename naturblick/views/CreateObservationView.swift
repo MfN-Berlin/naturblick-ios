@@ -62,8 +62,8 @@ struct CreateObservationView: NavigatableView {
                     .onTapGesture {
                         navigationController?.pushViewController(PickerView(flow: createFlow).setUpViewController(), animated: true)
                     }
-                    OnSecondaryFieldView(icon: "details") {
-                        TextField("Notes", text: $createFlow.data.details)
+                    OnSecondaryFieldView(icon: "number24") {
+                        IndividualsView(individuals: $createFlow.data.individuals)
                     }
                     OnSecondaryFieldView(icon: "location24") {
                         Picker("Behavior", selection: $createFlow.data.behavior) {
@@ -76,8 +76,8 @@ struct CreateObservationView: NavigatableView {
                         .tint(.onSecondaryHighEmphasis)
                         .accentColor(.onSecondaryHighEmphasis)
                     }
-                    OnSecondaryFieldView(icon: "number24") {
-                        IndividualsView(individuals: $createFlow.data.individuals)
+                    OnSecondaryFieldView(icon: "details") {
+                        TextField("Notes", text: $createFlow.data.details)
                     }
                 }
                 .padding(.defaultPadding)
