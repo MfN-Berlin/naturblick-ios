@@ -25,7 +25,10 @@ struct AccountView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = "Account"
     
+    var token: String? = nil
+    
     @StateObject var accountViewModel = AccountViewModel()
+    @StateObject private var errorHandler = HttpErrorViewModel()
     
     var body: some View {
         VStack {
@@ -99,7 +102,32 @@ struct AccountView: NavigatableView {
                 }
             }
             Spacer()
-        }.foregroundColor(.onSecondaryHighEmphasis)
+        }
+        .foregroundColor(.onSecondaryHighEmphasis)
+        .onAppear {
+            activateAccount()
+        }
+        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { details in
+            Button("Try again") {
+                activateAccount()
+            }
+            Button("Cancel") {
+                navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    private func activateAccount() {
+        if let token = token {
+            Task {
+                do {
+                    try await BackendClient().activateAccount(token: token)
+                    accountViewModel.activated = true
+                } catch {
+                    let _ = errorHandler.handle(error)
+                }
+            }
+        }
     }
 }
 

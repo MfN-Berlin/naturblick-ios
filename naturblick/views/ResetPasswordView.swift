@@ -10,6 +10,8 @@ struct ResetPasswordView: NavigatableView {
     
     let token: String
     
+    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    
     @StateObject private var resetPasswordVM = EmailAndPasswordWithPrompt()
     
     @State var showResetSuccess: Bool = false
@@ -21,6 +23,7 @@ struct ResetPasswordView: NavigatableView {
         Task {
             do {
                 try await client.resetPassword(token: token, password: resetPasswordVM.password)
+                bearerToken = nil
                 showResetSuccess = true
             }
             catch is HttpError {

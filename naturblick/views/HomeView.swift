@@ -4,22 +4,14 @@
 
 import SwiftUI
 
-enum DeepLink : Equatable {
-    case resetPasswort(token: String)
-    case speciesPortrait(speciesId: Int64)
-    case activateAccount(token: String)
-}
-
 class HomeViewController: HostingController<HomeView> {
     let persistenceController: ObservationPersistenceController
     let createFlow: CreateFlowViewModel
-    let deepLink: DeepLink?
     
-    init(deepLink: DeepLink? = nil) {
-        self.deepLink = deepLink
+    init() {
         persistenceController = ObservationPersistenceController()
         createFlow = CreateFlowViewModel(persistenceController: persistenceController)
-        let view = HomeView(deepLink: deepLink, persistenceController: persistenceController, createFlow: createFlow)
+        let view = HomeView(persistenceController: persistenceController, createFlow: createFlow)
         view.viewController?.view.backgroundColor = .primaryHome
         super.init(rootView: view)
         createFlow.setViewController(controller: self)
@@ -32,8 +24,6 @@ struct HomeView: HostedView {
     var viewName: String? {
         "Home"
     }
-    
-    @State var deepLink: DeepLink?
     
     func configureNavigationItem(item: UINavigationItem) {
         
@@ -86,7 +76,6 @@ struct HomeView: HostedView {
     @State var token: String? = nil
     
     @State var isShowingLogin = false
-    @AppStorage("activated") var activated: Bool = false
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var createFlow: CreateFlowViewModel
 
@@ -211,30 +200,6 @@ struct HomeView: HostedView {
             }
         }
         .edgesIgnoringSafeArea([.bottom])
-        .onAppear {
-            switch deepLink {
-            case .activateAccount(let token):
-                Task {
-                    do {
-                        try await BackendClient().activateAccount(token: token)
-                        activated = true
-                        navigationController?.pushViewController(AccountView().setUpViewController(), animated: true)
-                    } catch {
-                        preconditionFailure(error.localizedDescription)
-                    }
-                }
-            case .resetPasswort(let token):
-                navigationController?.pushViewController(ResetPasswordView(token: token).setUpViewController(), animated: true)
-            case .speciesPortrait(let speciesId):
-                let species = try? SpeciesListItem.find(speciesId: speciesId)
-                if let species = species {
-                    navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
-                }
-            case .none:
-                return
-            }
-            deepLink = nil
-        }
     }
 }
 

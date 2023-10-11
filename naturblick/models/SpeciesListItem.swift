@@ -60,7 +60,7 @@ extension SpeciesListItem {
         let speciesDb: Connection = Connection.speciesDB
         let query = Species.Definition.baseQuery.filter(Species.Definition.table[Species.Definition.id] == speciesId)
         
-        return try speciesDb.prepareRowIterator(query)
+        return try speciesDb.pluck(query)
             .map { row in
                 SpeciesListItem(
                     speciesId: row[Species.Definition.table[Species.Definition.id]],
@@ -75,7 +75,7 @@ extension SpeciesListItem {
                     group: row[Species.Definition.group],
                     audioUrl: row[Portrait.Definition.audioUrl]
                 )
-            }.first
+            }
     }
 }
 

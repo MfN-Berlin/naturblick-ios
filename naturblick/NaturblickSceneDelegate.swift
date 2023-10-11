@@ -6,6 +6,12 @@
 import SwiftUI
 import UIKit
 
+enum DeepLink : Equatable {
+    case resetPasswort(token: String)
+    case speciesPortrait(speciesId: Int64)
+    case activateAccount(token: String)
+}
+
 class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -39,11 +45,10 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if (pathComponents.count >= 3) {
             if (pathComponents[1] == "species") {
-                if let speciesStr = pathComponents.last {
-                    let speciesId = Int64(speciesStr)!
+                if let speciesStr = pathComponents.last, let speciesId = Int64(speciesStr) {
                     startScene(windowScene: windowScene, deepLink: .speciesPortrait(speciesId: speciesId))
                 } else {
-                    preconditionFailure("route to artportrait is invalid [\(pathComponents)]")
+                    return
                 }
             } else if (pathComponents[1] == "account") {
                 let second = pathComponents[2]
@@ -66,7 +71,21 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         UINavigationBar.appearance().tintColor = .onPrimaryHighEmphasis
 
         let window = UIWindow(windowScene: windowScene)
-        let navigationController = PopAwareNavigationController(rootViewController: HomeViewController(deepLink: deepLink))
+        let navigationController = PopAwareNavigationController(rootViewController: HomeViewController())
+        
+        switch deepLink {
+        case .activateAccount(let token):
+            navigationController.pushViewController(AccountView(token: token).setUpViewController(), animated: true)
+        case .resetPasswort(let token):
+            navigationController.pushViewController(ResetPasswordView(token: token).setUpViewController(), animated: true)
+        case .speciesPortrait(let speciesId):
+            let species = try? SpeciesListItem.find(speciesId: speciesId)
+            if let species = species {
+                navigationController.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
+            }
+        default: break
+        }
+            
         window.rootViewController = navigationController
         self.window = window
         window.makeKeyAndVisible()
