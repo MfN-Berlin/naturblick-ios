@@ -37,17 +37,18 @@ struct ResetPasswordView: NavigatableView {
     
     var body: some View {
         VStack {
-            NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $resetPasswordVM.password, isSecure: true, prompt: resetPasswordVM.passwordPrompt).padding()
+            NBEditText(label: "Password", icon: Image("visibility"), text: $resetPasswordVM.password, isSecure: true, prompt: resetPasswordVM.passwordPrompt)
+                .padding([.top, .bottom], .defaultPadding)
             if resetPasswordVM.passwordPrompt == nil {
                 Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.")
                     .tint(Color.onSecondaryButtonPrimary)
                     .font(.nbCaption)
-                    .padding([.leading, .trailing])
             }
             
             Button("Reset password") {
                 resetPassword(token: token)
-            }.buttonStyle(ConfirmButton())
+            }.buttonStyle(ConfirmFullWidthButton())
+                .padding([.top], .defaultPadding)
     
             Spacer()
         }
@@ -70,5 +71,6 @@ struct ResetPasswordView: NavigatableView {
             )
         }
         .alertHttpError(isPresented: $isPresented, error: error)
+        .padding(.defaultPadding)
     }
 }

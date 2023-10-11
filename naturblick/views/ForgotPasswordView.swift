@@ -36,17 +36,16 @@ struct ForgotPasswordView: NavigatableView {
     
     var body: some View {
         VStack {
-            NBEditText(label: "Email address", icon: Image(systemName: "mail"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt)
-                .padding()
+            NBEditText(label: "Email address", icon: Image("create_24px"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt)
                 .keyboardType(.emailAddress)
            
             Button("Reset password") {
                 forgotPassword()
-            }.buttonStyle(ConfirmButton())
+            }.buttonStyle(ConfirmFullWidthButton())
+                .padding([.top, .bottom], .defaultPadding)
             Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
                 .tint(Color.onSecondaryButtonPrimary)
                 .font(.nbBody1)
-                .padding()
             Spacer()
         }
         .foregroundColor(.onSecondaryHighEmphasis)
@@ -57,11 +56,12 @@ struct ForgotPasswordView: NavigatableView {
                 buttons: forgotSuccessButtons()
             )
         }.alertHttpError(isPresented: $isPresented, error: error)
-            .onAppear {
-                if let email = accountViewModel.email {
-                    forgotPasswordVM.email = email
-                }
+        .onAppear {
+            if let email = accountViewModel.email {
+                forgotPasswordVM.email = email
             }
+        }
+        .padding(.defaultPadding)
     }
     
     func forgotSuccessButtons() -> [Alert.Button] {
