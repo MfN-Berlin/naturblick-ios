@@ -32,6 +32,7 @@ struct CreateObservationView: NavigatableView {
     @StateObject private var locationManager = LocationManager()
     @State private var userTrackingMode: MapUserTrackingMode = .none
     @State private var sheetPosition : BottomSheetPosition = .dynamic
+    
     var body: some View {
         GeometryReader { geo in
             ZStack {
@@ -56,16 +57,16 @@ struct CreateObservationView: NavigatableView {
                             }
                         }
                     }
-                    OnSecondaryFieldView(icon: "location24") {
+                    OnSecondaryFieldView(label: "test", icon: "location24", isSet: createFlow.data.coords != nil) { _ in
                         CoordinatesView(coordinates: createFlow.data.coords)
                     }
                     .onTapGesture {
                         navigationController?.pushViewController(PickerView(flow: createFlow).setUpViewController(), animated: true)
                     }
-                    OnSecondaryFieldView(icon: "number24") {
+                    OnSecondaryFieldView(label: "test", icon: "number24", isSet: true) { _ in
                         IndividualsView(individuals: $createFlow.data.individuals)
                     }
-                    OnSecondaryFieldView(icon: "location24") {
+                    OnSecondaryFieldView(label: "test", icon: "location24", isSet: createFlow.data.behavior != nil) { _ in
                         Picker("Behavior", selection: $createFlow.data.behavior) {
                             Text("None").tag(nil as Behavior?)
                             ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
@@ -76,8 +77,8 @@ struct CreateObservationView: NavigatableView {
                         .tint(.onSecondaryHighEmphasis)
                         .accentColor(.onSecondaryHighEmphasis)
                     }
-                    OnSecondaryFieldView(icon: "details") {
-                        TextField("Notes", text: $createFlow.data.details)
+                    OnSecondaryFieldView(label: "Label", icon: "details", isSet: !createFlow.data.details.isEmpty) { label in
+                        TextField(label, text: $createFlow.data.details, prompt: nil)
                     }
                 }
                 .padding(.defaultPadding)

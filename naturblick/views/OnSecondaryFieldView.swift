@@ -12,26 +12,37 @@ struct FieldShape: Shape {
 }
 
 struct OnSecondaryFieldView<Field: View>: View {
+    let label: String
     let image: Image
-    @ViewBuilder let field: () -> Field
-    
-    init(image: Image, @ViewBuilder field: @escaping () -> Field) {
+    let isSet: Bool
+    @ViewBuilder let field: (String) -> Field
+    @FocusState var focus: Bool
+    init(label: String, image: Image, isSet: Bool, @ViewBuilder field: @escaping (String) -> Field) {
         self.field = field
         self.image = image
+        self.label = label
+        self.isSet = isSet
     }
     
-    init(icon: String, @ViewBuilder field: @escaping () -> Field) {
-        self.init(image: Image(icon), field: field)
+    init(label: String, icon: String, isSet: Bool, @ViewBuilder field: @escaping (String) -> Field) {
+        self.init(label: label, image: Image(icon), isSet: isSet, field: field)
     }
     
     var body: some View {
         HStack(alignment: .center) {
            image
                 .observationProperty()
-            field()
-                .font(.nbBody1)
-                .foregroundColor(.onSecondaryMediumEmphasis)
-                .frame(maxHeight: .editTextIconSize)
+            VStack(alignment: .leading, spacing: .zero) {
+                if focus || isSet {
+                    Text(label)
+                            .caption(color: .onSecondarySignalLow)
+                }
+                field(focus ? "" : label)
+                    .focused($focus)
+                    .font(.nbBody1)
+                    .foregroundColor(.onSecondaryMediumEmphasis)
+            }
+            .frame(maxHeight: .editTextIconSize)
             Spacer()
         }
         .frame(height: .editTextFieldHeight)
@@ -44,13 +55,16 @@ struct OnSecondaryFieldView<Field: View>: View {
         }
         .background(Color.onSecondaryMinimumEmphasis)
         .clipShape(FieldShape())
+        .onTapGesture {
+            focus = true
+        }
     }
 }
 
 struct OnSecondaryFieldView_Previews: PreviewProvider {
     static var previews: some View {
-        OnSecondaryFieldView(icon: "placeholder") {
-            TextField("Test", text: .constant("test"))
+        OnSecondaryFieldView(label: "Label", icon: "placeholder", isSet: true) { label in
+            TextField(label, text: .constant("test"))
         }
     }
 }

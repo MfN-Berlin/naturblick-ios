@@ -27,12 +27,12 @@ extension Text {
     }
     
     func caption() -> some View {
-        self.font(.caption)
+        self.font(.nbCaption)
             .foregroundColor(.onPrimaryButtonSecondary)
     }
     
     func caption(color: Color) -> some View {
-        self.font(.caption)
+        self.font(.nbCaption)
             .foregroundColor(color)
     }
     
