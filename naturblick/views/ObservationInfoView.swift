@@ -16,17 +16,20 @@ struct ObservationInfoView: View {
     let start: Int?
     let end: Int?
     let fullscreenImageId: UUID?
-    let thumbnail: NBImage?
+    let thumbnail: Image
     
-    init(width: CGFloat, data: EditData, navigate: @escaping (UIViewController) -> Void) {
+    init(width: CGFloat, fallbackThumbnail: Image, data: EditData, navigate: @escaping (UIViewController) -> Void) {
         self.width = width
         self.navigate = navigate
         self.species = data.species
         self.created = data.original.created
-        
         self.start = data.original.segmStart.map { s in Int(s) } ?? nil
         self.end = data.original.segmEnd.map { s in Int(s) } ?? nil
-        self.thumbnail = data.thumbnail
+        if let thumbnail = data.thumbnail?.image {
+            self.thumbnail = Image(uiImage: thumbnail)
+        } else {
+            self.thumbnail = fallbackThumbnail
+        }
         if data.original.obsType == .audio || data.original.obsType == .unidentifiedaudio,  let mediaId = data.original.mediaId {
             self.sound = NBSound(id: mediaId)
         } else {
@@ -40,7 +43,7 @@ struct ObservationInfoView: View {
         }
     }
     
-    init(width: CGFloat, data: CreateData, navigate: @escaping (UIViewController) -> Void) {
+    init(width: CGFloat, fallbackThumbnail: Image, data: CreateData, navigate: @escaping (UIViewController) -> Void) {
         self.width = width
         self.navigate = navigate
         self.species = data.species
@@ -48,25 +51,21 @@ struct ObservationInfoView: View {
         self.sound = data.sound.sound
         self.start = data.sound.start
         self.end = data.sound.end
-        self.thumbnail =  data.sound.crop ?? data.image.crop
+        if let thumbnail = data.sound.crop?.image ?? data.image.crop?.image {
+            self.thumbnail = Image(uiImage: thumbnail)
+        } else {
+            self.thumbnail = fallbackThumbnail
+        }
         self.fullscreenImageId = data.image.image?.id
     }
-        
+    
     
     var avatar: some View {
-        if let thumbnail = self.thumbnail?.image {
-            return Image(uiImage: thumbnail)
-                .resizable()
-                .scaledToFit()
-                .clipShape(Circle())
-                .frame(width: width * 0.4, height: width * 0.4)
-        } else {
-            return Image("placeholder")
-                .resizable()
-                .scaledToFit()
-                .clipShape(Circle())
-                .frame(width: width * 0.4, height: width * 0.4)
-        }
+        thumbnail
+            .resizable()
+            .scaledToFit()
+            .clipShape(Circle())
+            .frame(width: width * 0.4, height: width * 0.4)
     }
     
     var body: some View {

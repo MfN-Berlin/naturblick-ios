@@ -4,7 +4,7 @@
 
 
 import Foundation
-import UIKit
+import SwiftUI
 import Mantis
 import MapKit
 
@@ -16,7 +16,8 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     let persistenceController: ObservationPersistenceController
     @Published var data = CreateData()
     @Published var region: MKCoordinateRegion = .defaultRegion
-    
+    @Published var speciesAvatar: Image = Image("placeholder")
+
     init(persistenceController: ObservationPersistenceController) {
         self.persistenceController = persistenceController
         super.init()
@@ -29,6 +30,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @MainActor func takePhoto() {
         data = CreateData()
         region = .defaultRegion
+        speciesAvatar = Image("placeholder")
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .camera
         imagePicker.delegate = self
@@ -61,6 +63,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @MainActor func recordSound() {
         data = CreateData()
         region = .defaultRegion
+        speciesAvatar = Image("placeholder")
         withNavigation { navigation in
             let soundRecorder = BirdRecorderView(flow: self)
             navigation.pushViewController(soundRecorder.setUpViewController(), animated: true)
@@ -86,8 +89,21 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         }
     }
     
+    @MainActor func setSpeciesAvatar(avatar: UIImage?) {
+        if let avatar = avatar {
+            speciesAvatar = Image(uiImage: avatar)
+        } else {
+            speciesAvatar = Image("placeholder")
+        }
+    }
+    
     @MainActor func selectSpecies(species: SpeciesListItem?) {
         data.species = species
+        if let speciesUrl = species?.url {
+            Task {
+                setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
+            }
+        }
         let create = CreateObservationView(createFlow: self).setUpViewController()
         navigationController?.pushViewController(create, animated: true)
     }
@@ -95,6 +111,13 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @MainActor func selectManual(species: SpeciesListItem) {
         data = CreateData()
         data.species = species
+        region = .defaultRegion
+        speciesAvatar = Image("placeholder")
+        if let speciesUrl = species.url {
+            Task {
+                setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
+            }
+        }
         let create = CreateObservationView(createFlow: self).setUpViewController()
         navigationController?.pushViewController(create, animated: true)
     }

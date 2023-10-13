@@ -36,24 +36,22 @@ struct CreateObservationView: NavigatableView {
         GeometryReader { geo in
             ZStack {
                 VStack(alignment: .center) {
-                    ObservationInfoView(width: geo.size.width, data: createFlow.data) { view in
+                    ObservationInfoView(width: geo.size.width, fallbackThumbnail: createFlow.speciesAvatar, data: createFlow.data) { view in
                         navigationController?.pushViewController(view, animated: true)
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 
                 VStack(alignment: .leading, spacing: .defaultPadding) {
-                    Thumbnail(speciesUrl: createFlow.data.species?.url, thumbnailId: nil) { thumbnail in
-                        HStack {
-                            thumbnail
-                                .avatar()
-                                .padding(.trailing, .defaultPadding)
-                            VStack(alignment: .leading) {
-                                Text("Species")
-                                    .caption(color: .onSecondarySignalLow)
-                                Text(createFlow.data.species?.sciname ?? "Unknown species")
-                                    .subtitle1()
-                            }
+                    HStack {
+                       createFlow.speciesAvatar
+                            .avatar()
+                            .padding(.trailing, .defaultPadding)
+                        VStack(alignment: .leading) {
+                            Text("Species")
+                                .caption(color: .onSecondarySignalLow)
+                            Text(createFlow.data.species?.sciname ?? "Unknown species")
+                                .subtitle1()
                         }
                     }
                     OnSecondaryFieldView(icon: "location24") {
