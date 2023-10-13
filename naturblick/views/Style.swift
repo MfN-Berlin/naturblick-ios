@@ -7,8 +7,12 @@ import SwiftUI
 
 extension Text {
     func subtitle1() -> some View {
+        subtitle1(color: .onSecondaryHighEmphasis)
+    }
+    
+    func subtitle1(color: Color) -> some View {
         self.font(.nbSubtitle1)
-            .foregroundColor(.onSecondaryHighEmphasis)
+            .foregroundColor(color)
     }
     
     func subtitle3() -> some View {

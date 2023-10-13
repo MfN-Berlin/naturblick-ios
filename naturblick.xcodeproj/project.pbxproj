@@ -59,6 +59,8 @@
 		136E89092AD579C500197790 /* OnSecondaryFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136E89082AD579C500197790 /* OnSecondaryFieldView.swift */; };
 		13709A832A7CFE2600B81108 /* FullscreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13709A822A7CFE2600B81108 /* FullscreenView.swift */; };
 		13709A852A7D1C0E00B81108 /* FABView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13709A842A7D1C0E00B81108 /* FABView.swift */; };
+		13738D502AD93E0E004FCB2A /* ViewProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13738D4F2AD93E0E004FCB2A /* ViewProperty.swift */; };
+		13738D522AD94AED004FCB2A /* ChevronView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13738D512AD94AED004FCB2A /* ChevronView.swift */; };
 		13743F6A2A6803AA00ABCCB1 /* Image+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13743F692A6803AA00ABCCB1 /* Image+Style.swift */; };
 		13743F6C2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13743F6B2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift */; };
 		137690032A30946F0076F93A /* SpectrogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137690022A30946F0076F93A /* SpectrogramView.swift */; };
@@ -235,6 +237,8 @@
 		136E89082AD579C500197790 /* OnSecondaryFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnSecondaryFieldView.swift; sourceTree = "<group>"; };
 		13709A822A7CFE2600B81108 /* FullscreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenView.swift; sourceTree = "<group>"; };
 		13709A842A7D1C0E00B81108 /* FABView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FABView.swift; sourceTree = "<group>"; };
+		13738D4F2AD93E0E004FCB2A /* ViewProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProperty.swift; sourceTree = "<group>"; };
+		13738D512AD94AED004FCB2A /* ChevronView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChevronView.swift; sourceTree = "<group>"; };
 		13743F692A6803AA00ABCCB1 /* Image+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Style.swift"; sourceTree = "<group>"; };
 		13743F6B2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIGraphicsImageRendererFormat+noScale.swift"; sourceTree = "<group>"; };
 		137690022A30946F0076F93A /* SpectrogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramView.swift; sourceTree = "<group>"; };
@@ -471,6 +475,7 @@
 				13A2923329D3110C00AF772A /* CharactersView.swift */,
 				13A2923729D3116200AF772A /* CharacterValueView.swift */,
 				13A2923529D3114500AF772A /* CharacterView.swift */,
+				13738D512AD94AED004FCB2A /* ChevronView.swift */,
 				7B83703429E98EA10075D9F5 /* ColorTestView.swift */,
 				132A91422A2DD52100AC405C /* CoordinatesView.swift */,
 				136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */,
@@ -520,6 +525,7 @@
 				13F03C7D2ACD6AE100EEF964 /* StaticBottomSheetView.swift */,
 				7BCCFD7629F2A62A00C71453 /* Style.swift */,
 				7B572DD82A6E758F008F50C5 /* Thumbnail.swift */,
+				13738D4F2AD93E0E004FCB2A /* ViewProperty.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -833,6 +839,7 @@
 				7BCD2E442A2DCF3E0083B310 /* ImageCropper.swift in Sources */,
 				134C75A72A2F32650046EEE4 /* IndividualsView.swift in Sources */,
 				13535CED2A77E4FE00501DFA /* SpeciesInfoView.swift in Sources */,
+				13738D502AD93E0E004FCB2A /* ViewProperty.swift in Sources */,
 				137690092A30DC5A0076F93A /* LocalFileDownloader.swift in Sources */,
 				13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */,
 				1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */,
@@ -879,6 +886,7 @@
 				7BDD17E62A45C7C3001B9DB4 /* ForgotPasswordView.swift in Sources */,
 				7BDD17E02A45BE84001B9DB4 /* AccountView.swift in Sources */,
 				7BB3DE2729F68FE100F0D387 /* SpeciesFeaturesView.swift in Sources */,
+				13738D522AD94AED004FCB2A /* ChevronView.swift in Sources */,
 				137ACD2A2A6171A000C370CF /* ImageData.swift in Sources */,
 				7B993F4929F16C3D0023315B /* SoundButton.swift in Sources */,
 				137FE59029E5B3A500B397DF /* NSMutableData+append.swift in Sources */,

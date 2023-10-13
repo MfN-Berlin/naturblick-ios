@@ -28,6 +28,7 @@ extension CGFloat {
     static let stopButtonSize: CGFloat = 116
     static let pixelToMsFactor: CGFloat = 10
     static let editTextFieldHeight: CGFloat = .editTextIconSize + 2 * .defaultPadding
+    static let chevron: CGFloat = 24
 }
 
 extension CGSize {

@@ -76,6 +76,16 @@ struct AuxiliaryOnPrimaryButton: ButtonStyle {
     }
 }
 
+struct ChangeSpeciesButton: ButtonStyle{
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .padding(.halfPadding)
+            .foregroundStyle(Color.onSecondaryButtonPrimary)
+            .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .border(Color.onSecondaryLowEmphasis)
+    }
+}
+
 struct DestructiveFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
