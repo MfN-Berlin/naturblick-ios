@@ -71,30 +71,27 @@ struct EditObservationView: HostedView {
     
     var edit: some View {
         VStack(alignment: .leading, spacing: .defaultPadding) {
-            Thumbnail(speciesUrl: flow.data.species?.url, thumbnailId: nil) { thumbnail in
-                HStack {
-                    thumbnail
-                        .avatar()
-                        .padding(.trailing, .defaultPadding)
-                    VStack(alignment: .leading) {
-                        Text("Species")
-                            .caption(color: .onSecondaryLowEmphasis)
-                        Text(flow.data.species?.sciname ?? "Unknown species")
-                            .subtitle1(color: .onSecondaryHighEmphasis)
-                    }
-                    Spacer()
-                    Button("change") {
-                        switch(flow.data.obsType) {
-                        case .image, .unidentifiedimage:
-                            identifyImage()
-                        case .audio, .unidentifiedaudio:
-                            identifySound()
-                        case .manual:
-                            do {} // TODO
-                        }
-                    }
-                    .buttonStyle(ChangeSpeciesButton())
+            HStack {
+                flow.speciesAvatar
+                    .avatar()
+                VStack(alignment: .leading) {
+                    Text("Species")
+                        .caption(color: .onSecondaryLowEmphasis)
+                    Text(flow.data.species?.sciname ?? "Unknown species")
+                        .subtitle1(color: .onSecondaryHighEmphasis)
                 }
+                Spacer()
+                Button("change") {
+                    switch(flow.data.obsType) {
+                    case .image, .unidentifiedimage:
+                        identifyImage()
+                    case .audio, .unidentifiedaudio:
+                        identifySound()
+                    case .manual:
+                        flow.searchSpecies()
+                    }
+                }
+                .buttonStyle(ChangeSpeciesButton())
             }
             Divider()
             OnSecondaryFieldView(icon: "location24") {
@@ -127,25 +124,24 @@ struct EditObservationView: HostedView {
     
     var view: some View {
         VStack(alignment: .leading, spacing: .defaultPadding) {
-            Thumbnail(speciesUrl: flow.data.species?.url, thumbnailId: nil) { thumbnail in
-                HStack {
-                    thumbnail
-                        .avatar()
-                        .padding(.trailing, .defaultPadding)
-                    VStack(alignment: .leading) {
-                        Text("Species")
-                            .caption(color: .onSecondarySignalLow)
-                        Text(flow.data.species?.sciname ?? "Unknown species")
-                            .subtitle1(color: .onSecondaryMediumEmphasis)
-                    }
-                    Spacer()
-                    ChevronView(color: .onSecondarySignalLow)
+            HStack {
+                flow.speciesAvatar
+                    .avatar()
+                    .padding(.trailing, .defaultPadding)
+                
+                VStack(alignment: .leading) {
+                    Text("Species")
+                        .caption(color: .onSecondarySignalLow)
+                    Text(flow.data.species?.sciname ?? "Unknown species")
+                        .subtitle1(color: .onSecondaryMediumEmphasis)
                 }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    if let species = flow.data.species {
-                        navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
-                    }
+                Spacer()
+                ChevronView(color: .onSecondarySignalLow)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                if let species = flow.data.species {
+                    navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
                 }
             }
             Divider()
@@ -176,7 +172,7 @@ struct EditObservationView: HostedView {
         GeometryReader { geo in
             ZStack {
                 VStack(alignment: .center) {
-                    ObservationInfoView(width: geo.size.width, data: flow.data) { view in
+                    ObservationInfoView(width: geo.size.width, fallbackThumbnail: flow.speciesAvatar, data: flow.data) { view in
                         navigationController?.pushViewController(view, animated: true)
                     }
                 }

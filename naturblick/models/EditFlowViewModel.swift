@@ -4,7 +4,7 @@
 
 
 import Foundation
-import UIKit
+import SwiftUI
 import MapKit
 import Mantis
 import Combine
@@ -17,6 +17,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     @Published var data: EditData
     @Published var imageData: ImageData = ImageData()
     @Published var soundData: SoundData = SoundData()
+    @Published var speciesAvatar: Image = Image("placeholder")
     @Published var editing: Bool = false
     @Published var region: MKCoordinateRegion
     init(persistenceController: ObservationPersistenceController, observation: Observation) {
@@ -40,6 +41,12 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
             Task {
                 let thumbnail = try await NBImage(id: thumbnailId)
                 await setThumbnail(thumbnail: thumbnail)
+            }
+        }
+        
+        if let speciesUrl = data.species?.url {
+            Task {
+                await setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
             }
         }
     }
@@ -87,8 +94,23 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         }
     }
     
+    @MainActor func setSpeciesAvatar(avatar: UIImage?) {
+        if let avatar = avatar {
+            speciesAvatar = Image(uiImage: avatar)
+        } else {
+            speciesAvatar = Image("placeholder")
+        }
+    }
+    
     @MainActor func selectSpecies(species: SpeciesListItem?) {
         data.species = species
+        if let speciesUrl = species?.url {
+            Task {
+                setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
+            }
+        } else {
+            setSpeciesAvatar(avatar: nil)
+        }
         if let controller = viewController, let navigation = controller.navigationController {
             navigation.popToViewController(controller, animated: true)
         }
