@@ -42,7 +42,7 @@ struct CreateObservationView: NavigatableView {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: .defaultPadding) {
                     Thumbnail(speciesUrl: createFlow.data.species?.url, thumbnailId: nil) { thumbnail in
                         HStack {
                             thumbnail

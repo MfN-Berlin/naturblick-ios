@@ -60,38 +60,40 @@ struct ObservationInfoView: View {
                 .scaledToFit()
                 .clipShape(Circle())
                 .frame(width: width * 0.4, height: width * 0.4)
-                .padding(.bottom, .defaultPadding)
         } else {
             return Image("placeholder")
                 .resizable()
                 .scaledToFit()
                 .clipShape(Circle())
                 .frame(width: width * 0.4, height: width * 0.4)
-                .padding(.bottom, .defaultPadding)
         }
     }
     
     var body: some View {
-        VStack() {
+        VStack(spacing: .zero) {
             if let fullscreenImageId = fullscreenImageId {
-                avatar.overlay(alignment: .bottomTrailing) {
-                    ZStack {
-                        Circle()
-                            .fill(Color.onPrimaryButtonPrimary)
-                            .frame(width: 40, height: 40)
-                        Image("zoom")
-                            .foregroundColor(.onPrimaryHighEmphasis)
-                    }.onTapGesture {
-                        navigate(FullscreenView(imageId: fullscreenImageId).setUpViewController())
+                avatar
+                    .overlay(alignment: .bottomTrailing) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.onPrimaryButtonPrimary)
+                                .frame(width: 40, height: 40)
+                            Image("zoom")
+                                .foregroundColor(.onPrimaryHighEmphasis)
+                        }.onTapGesture {
+                            navigate(FullscreenView(imageId: fullscreenImageId).setUpViewController())
+                        }
                     }
-                }
+                    .padding(.bottom, .defaultPadding)
             } else if let sound = sound {
                 avatar
                     .overlay(alignment: .bottomTrailing) {
                         SoundButton(url: sound.url)
                     }
+                    .padding(.bottom, .defaultPadding)
             } else {
                 avatar
+                    .padding(.bottom, .defaultPadding)
             }
             if let sciname = species?.sciname {
                 Text(sciname)

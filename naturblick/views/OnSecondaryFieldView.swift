@@ -27,7 +27,7 @@ struct OnSecondaryFieldView<Field: View>: View {
     var body: some View {
         HStack(alignment: .center) {
            image
-                .observationProperty()
+                .observationEditProperty()
             field()
                 .font(.nbBody1)
                 .foregroundColor(.onSecondaryMediumEmphasis)

@@ -5,7 +5,6 @@
 
 import SwiftUI
 import MapKit
-import BottomSheet
 
 class EditObservationViewController: HostingController<EditObservationView> {
     let flow: EditFlowViewModel
@@ -27,7 +26,6 @@ struct EditObservationView: HostedView {
     var hideNavigationBarShadow: Bool = true
     @ObservedObject var flow: EditFlowViewModel
     @State private var isEditing = false
-    @State private var sheetPosition: BottomSheetPosition = .dynamic
     init(flow: EditFlowViewModel) {
         self.flow = flow
     }
@@ -71,134 +69,139 @@ struct EditObservationView: HostedView {
         }
     }
     
+    var edit: some View {
+        VStack(alignment: .leading, spacing: .defaultPadding) {
+            Thumbnail(speciesUrl: flow.data.species?.url, thumbnailId: nil) { thumbnail in
+                HStack {
+                    thumbnail
+                        .avatar()
+                        .padding(.trailing, .defaultPadding)
+                    VStack(alignment: .leading) {
+                        Text("Species")
+                            .caption(color: .onSecondaryLowEmphasis)
+                        Text(flow.data.species?.sciname ?? "Unknown species")
+                            .subtitle1(color: .onSecondaryHighEmphasis)
+                    }
+                    Spacer()
+                    Button("change") {
+                        switch(flow.data.obsType) {
+                        case .image, .unidentifiedimage:
+                            identifyImage()
+                        case .audio, .unidentifiedaudio:
+                            identifySound()
+                        case .manual:
+                            do {} // TODO
+                        }
+                    }
+                    .buttonStyle(ChangeSpeciesButton())
+                }
+            }
+            Divider()
+            OnSecondaryFieldView(icon: "location24") {
+                CoordinatesView(coordinates: flow.data.coords)
+                    .onTapGesture {
+                        navigationController?.pushViewController(PickerView(flow: flow).setUpViewController(), animated: true)
+                    }
+            }
+            OnSecondaryFieldView(icon: "number24") {
+                IndividualsView(individuals: $flow.data.individuals)
+            }
+            OnSecondaryFieldView(icon: "location24") {
+                Picker("Behavior", selection: $flow.data.behavior) {
+                    if flow.data.original.behavior == nil {
+                        Text("None").tag(nil as Behavior?)
+                    }
+                    ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
+                        Text($0.rawValue).tag($0 as Behavior?)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                .tint(.onSecondaryHighEmphasis)
+                .accentColor(.onSecondaryHighEmphasis)
+            }
+            OnSecondaryFieldView(icon: "details") {
+                TextField("Notes", text: $flow.data.details)
+            }
+        }
+    }
+    
+    var view: some View {
+        VStack(alignment: .leading, spacing: .defaultPadding) {
+            Thumbnail(speciesUrl: flow.data.species?.url, thumbnailId: nil) { thumbnail in
+                HStack {
+                    thumbnail
+                        .avatar()
+                        .padding(.trailing, .defaultPadding)
+                    VStack(alignment: .leading) {
+                        Text("Species")
+                            .caption(color: .onSecondarySignalLow)
+                        Text(flow.data.species?.sciname ?? "Unknown species")
+                            .subtitle1(color: .onSecondaryMediumEmphasis)
+                    }
+                    Spacer()
+                    ChevronView(color: .onSecondarySignalLow)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    if let species = flow.data.species {
+                        navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
+                    }
+                }
+            }
+            Divider()
+            HStack {
+                Image("location24")
+                    .observationProperty()
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("Location")
+                        .caption(color: .onSecondarySignalLow)
+                    CoordinatesView(coordinates: flow.data.coords)
+                }
+                Spacer()
+                ChevronView(color: .onSecondarySignalLow)
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                // TODO
+                print("Show on map")
+            }
+            Divider()
+            ViewProperty(icon: "number24", label: "Number", content: String(flow.data.individuals))
+            ViewProperty(icon: "location24", label: "Observation", content: flow.data.behavior?.rawValue)
+            ViewProperty(icon: "details", label: "Details", content: flow.data.details)
+        }
+    }
+    
     var body: some View {
         GeometryReader { geo in
-            VStack(alignment: .center) {
-                ObservationInfoView(width: geo.size.width, data: flow.data) { view in
-                    navigationController?.pushViewController(view, animated: true)
+            ZStack {
+                VStack(alignment: .center) {
+                    ObservationInfoView(width: geo.size.width, data: flow.data) { view in
+                        navigationController?.pushViewController(view, animated: true)
+                    }
                 }
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .bottomSheet(bottomSheetPosition: $sheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
-            if isEditing {
-                VStack(alignment: .leading) {
-                    Thumbnail(speciesUrl: flow.data.species?.url, thumbnailId: nil) { thumbnail in
-                        HStack {
-                            thumbnail
-                                .avatar()
-                                .padding(.trailing, .defaultPadding)
-                            Text(flow.data.species?.sciname ?? "Unknown species")
-                        }
-                        .onTapGesture {
-                            switch(flow.data.obsType) {
-                            case .image, .unidentifiedimage:
-                                identifyImage()
-                            case .audio, .unidentifiedaudio:
-                                identifySound()
-                            case .manual:
-                                do {}
-                            }
-                        }
-                    }
-                    Divider()
-                    HStack {
-                        Image("placeholder")
-                            .observationProperty()
-                        CoordinatesView(coordinates: flow.data.coords)
-                            .onTapGesture {
-                                navigationController?.pushViewController(PickerView(flow: flow).setUpViewController(), animated: true)
-                            }
-                    }
-                    Divider()
-                    HStack {
-                        Image("details")
-                            .observationProperty()
-                        TextField("Notes", text: $flow.data.details)
-                    }
-                    Divider()
-                    HStack {
-                        Image("placeholder")
-                            .observationProperty()
-                        Picker("Behavior", selection: $flow.data.behavior) {
-                            if flow.data.original.behavior == nil {
-                                Text("None").tag(nil as Behavior?)
-                            }
-                            ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
-                                Text($0.rawValue).tag($0 as Behavior?)
-                            }
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        .tint(.onSecondaryHighEmphasis)
-                        .accentColor(.onSecondaryHighEmphasis)
-                    }
-                    Divider()
-                    HStack {
-                        Image("placeholder")
-                            .observationProperty()
-                        IndividualsView(individuals: $flow.data.individuals)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                SwiftUI.Group {
+                    if isEditing {
+                        edit
+                    } else {
+                        view
                     }
                 }
                 .padding(.defaultPadding)
-                .padding(.bottom, .defaultPadding * 2)
-            } else {
-                VStack(alignment: .leading) {
-                    Thumbnail(speciesUrl: flow.data.species?.url, thumbnailId: nil) { thumbnail in
-                        HStack {
-                            thumbnail
-                                .avatar()
-                                .padding(.trailing, .defaultPadding)
-                            Text(flow.data.species?.sciname ?? "Unknown species")
-                        }
-                        .onTapGesture {
-                            if let species = flow.data.species {
-                                navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
-                            }
-                        }
-                    }
-                    Divider()
-                    HStack {
-                        Image("placeholder")
-                            .observationProperty()
-                        CoordinatesView(coordinates: flow.data.coords)
-                    }
-                    Divider()
-                    HStack {
-                        Image("details")
-                            .observationProperty()
-                        if flow.data.details.isEmpty {
-                            Text(" ")
-                        } else {
-                            Text(flow.data.details)
-                        }
-                    }
-                    Divider()
-                    HStack {
-                        Image("placeholder")
-                            .observationProperty()
-                        if let behavior = flow.data.behavior?.rawValue {
-                            Text(behavior)
-                        } else {
-                            Text(" ")
-                        }
-                    }
-                    Divider()
-                    HStack {
-                        Image("placeholder")
-                            .observationProperty()
-                        Text(String(flow.data.individuals))
-                    }
-                }
-                .padding(.defaultPadding)
-                .padding(.bottom, .defaultPadding * 2)
+                .padding(.bottom, geo.safeAreaInsets.bottom)
+                .background(
+                    RoundedRectangle(cornerRadius: .largeCornerRadius)
+                        .fill(Color.secondaryColor)
+                        .nbShadow()
+                )
+                .background(Color(uiColor: .onPrimaryButtonSecondary))
+                .frame(maxHeight: .infinity, alignment: .bottom)
             }
+            .ignoresSafeArea(edges: .bottom)
+            .frame(maxHeight: .infinity)
+            .background(Color(uiColor: .onPrimaryButtonSecondary))
         }
-        .customBackground(
-            RoundedRectangle(cornerRadius: .largeCornerRadius)
-                .fill(Color.secondaryColor)
-                .nbShadow()
-        )
-        .background(Color(uiColor: .onPrimaryButtonSecondary))
         .onReceive(flow.$editing) { editing in
             if editing {
                 withAnimation {

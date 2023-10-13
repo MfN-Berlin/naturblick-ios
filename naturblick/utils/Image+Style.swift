@@ -17,6 +17,15 @@ extension Image {
     func observationProperty() -> some View {
         self
             .resizable()
+            .foregroundColor(.onSecondarySignalLow)
+            .frame(width: .editTextIconSize, height: .editTextIconSize)
+            .padding(.leading, .avatarOffsetPadding)
+            .padding(.trailing, .avatarOffsetPadding + .defaultPadding)
+    }
+    func observationEditProperty() -> some View {
+        self
+            .resizable()
+            .foregroundColor(.onSecondaryLowEmphasis)
             .frame(width: .editTextIconSize, height: .editTextIconSize)
             .padding(.leading, .avatarOffsetPadding)
             .padding(.trailing, .avatarOffsetPadding + .defaultPadding)
