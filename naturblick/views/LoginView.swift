@@ -10,7 +10,7 @@ struct SigninResponse : Decodable {
 
 struct LoginView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Login"
+    var viewName: String? = String(localized: "login")
     
     @ObservedObject var accountViewModel: AccountViewModel
         

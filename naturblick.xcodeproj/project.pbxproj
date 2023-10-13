@@ -610,6 +610,7 @@
 				1343D1C829DD94870075ACE3 /* HttpError.swift */,
 				13743F692A6803AA00ABCCB1 /* Image+Style.swift */,
 				7BCD2E432A2DCF3D0083B310 /* ImageCropper.swift */,
+				7BD0FBE22AD7EF2900B63E07 /* Language.swift */,
 				7B2CEA132AA5DAA8004B4276 /* Licence.swift */,
 				137690082A30DC5A0076F93A /* LocalFileDownloader.swift */,
 				7BB74B5A2ABB2E34002C4493 /* MenuController.swift */,
@@ -631,7 +632,6 @@
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
-				7BD0FBE22AD7EF2900B63E07 /* Language.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";

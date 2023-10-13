@@ -22,7 +22,7 @@ struct HomeView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
-        "Home"
+        String(localized: "home")
     }
     
     func configureNavigationItem(item: UINavigationItem) {
@@ -56,7 +56,7 @@ struct HomeView: HostedView {
                     let view = ImprintView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 },
-                MenuEntry(title: String(localized: "about"), image: UIImage(systemName: "info.circle")!) {
+                MenuEntry(title: String(localized: "about_nb"), image: UIImage(systemName: "info.circle")!) {
                     let view = AboutView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 }

@@ -6,7 +6,7 @@ import SwiftUI
 
 struct ResetPasswordView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Reset"
+    var viewName: String? = String(localized: "reset")
     
     let token: String
     
@@ -37,14 +37,14 @@ struct ResetPasswordView: NavigatableView {
     
     var body: some View {
         VStack {
-            NBEditText(label: "Password", icon: Image("visibility"), text: $resetPasswordVM.password, isSecure: true, prompt: resetPasswordVM.passwordPrompt)
+            NBEditText(label: String(localized: "password"), icon: Image("visibility"), text: $resetPasswordVM.password, isSecure: true, prompt: resetPasswordVM.passwordPrompt)
                 .padding([.top, .bottom], .defaultPadding)
             if resetPasswordVM.passwordPrompt == nil {
-                Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.")
+                Text("password_format")
                     .caption(color: .onSecondaryMediumEmphasis)
             }
             
-            Button("Reset password") {
+            Button("reset_password") {
                 resetPassword(token: token)
             }.buttonStyle(ConfirmFullWidthButton())
                 .padding([.top], .defaultPadding)
@@ -54,8 +54,8 @@ struct ResetPasswordView: NavigatableView {
         .foregroundColor(.onSecondaryHighEmphasis)
         .actionSheet(isPresented: $showResetSuccess) {
             ActionSheet(
-                title: Text("Reset password"),
-                message: Text("Password reset was successful."),
+                title: Text("reset_password"),
+                message: Text("password_reset_successful"),
                 buttons:
                     [
                         .default(Text("Ok"), action: {

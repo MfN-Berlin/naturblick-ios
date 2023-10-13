@@ -6,7 +6,7 @@ import SwiftUI
 
 struct ForgotPasswordView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Forgot"
+    var viewName: String? = String(localized: "forgot")
     
     @ObservedObject var accountViewModel: AccountViewModel
        
@@ -36,22 +36,22 @@ struct ForgotPasswordView: NavigatableView {
     
     var body: some View {
         VStack {
-            NBEditText(label: "Email address", icon: Image("create_24px"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt)
+            NBEditText(label: String(localized: "email"), icon: Image("create_24px"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt)
                 .keyboardType(.emailAddress)
            
-            Button("Reset password") {
+            Button("reset_password") {
                 forgotPassword()
             }.buttonStyle(ConfirmFullWidthButton())
                 .padding([.top, .bottom], .defaultPadding)
-            Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
+            Text("delete_account_note_password")
                 .body1()
             Spacer()
         }
         .foregroundColor(.onSecondaryHighEmphasis)
         .actionSheet(isPresented: $showSendInfo) {
             ActionSheet(
-                title: Text("New password"),
-                message: Text("We have sent a password reset link to the email address you provided. The link is valid for 12 hours. If you do not receive an email after 10 minutes, the email address you provided is not associated with an existing account."),
+                title: Text("reset_email_sent_title"),
+                message: Text("reset_email_sent_message"),
                 buttons: forgotSuccessButtons()
             )
         }.alertHttpError(isPresented: $isPresented, error: error)
@@ -64,13 +64,13 @@ struct ForgotPasswordView: NavigatableView {
     }
     
     func forgotSuccessButtons() -> [Alert.Button] {
-        var buttons: [Alert.Button] = [Alert.Button.destructive(Text("Go back to login"), action: {
+        var buttons: [Alert.Button] = [Alert.Button.destructive(Text("go_back_to_login_screen"), action: {
             dismiss()
         })]
        
         if (canOpenEmail()) {
             buttons.append(
-                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in dismiss() }) })
+                Alert.Button.default(Text("open_default_email_app"), action: { openMail(completionHandler: { _ in dismiss() }) })
             )
         }
         return buttons

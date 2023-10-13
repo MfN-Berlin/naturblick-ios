@@ -7,7 +7,7 @@ import SwiftUI
 
 struct SettingsView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Settings"
+    var viewName: String? = String(localized: "settings")
     
     @AppStorage("ccByName") var ccByName: String = "MfN Naturblick"
     

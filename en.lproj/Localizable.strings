@@ -14,7 +14,7 @@
 "help"="Help";
 "feedback"="Feedback";
 "imprint"="Imprint";
-"about"="About Naturblick";
+"about_nb"="About Naturblick";
 "action_settings"="Settings";
 "account"="Account";
 "choose_a_group"="Choose a group";
@@ -48,7 +48,6 @@
 "password_no_digits"="Must contain digits";
 "password_too_short"="Must be at least 9 characters";
 "user_already_exists"="Email already exists";
-"privacy"="We take data protection very seriously. You can find more information about data protection in the app\'s imprint.";
 "account_text"="A Naturblick account enables you to back up and view your observations across multiple mobile devices.";
 "account_text_sign_in_or_sign_up1"="A Naturblick account enables you to back up and view your observations across multiple mobile devices.";
 "account_text_sign_in_or_sign_up2"="However, you can still use Naturblick without an account.";
@@ -80,16 +79,22 @@
 "set_up_an_account"="Naturblick account";
 "account_info"="A Naturblick account enables you to back up and view your observations across multiple mobile devices. Do you want to create an account?";
 "signed_out_deleted_account"="**Account deleted**\n\nRegister a new account or use Naturblick without an account.";
-"sign_up_title"="Create account";
-"sign_up_text"="You create a Naturblick account here. Please enter an email address. We will send you the activation link to this address.";
-"privacy_rules"="Privacy statement";
-"privacy_rules_text1"="For the registration we need your email address. The registration is only valid after you have clicked on a confirmation link in an email sent to you y s. ress will be used by us exclusively for the administration of the account. The registration/login is voluntary and can be revoked at any time. Your personal data will e eleted em when the account is deleted.";
-"privacy_rules_text2"="The processing of the data is carried out in compliance with the applicable data protection regulations. The transmission of your entries is encrypted. n ct your data from loss, manipulation or access by unauthorized persons, the Museum für Naturkunde Berlin uses state-of-the-art technical and organizational measures.";
+"sign_up_text"="**Create account**\n\nYou create a Naturblick account here. Please enter an email address. We will send you the activation link to this address.";
+"privacy_rules_text"="**Privacy statement**\n\nFor the registration we need your email address. The registration is only valid after you have clicked on a confirmation link in an email sent to you by us. The email address will be used by us exclusively for the administration of the account. The registration/login is voluntary and can be revoked at any time. Your personal data will be deleted from our system when the account is deleted.\n\nThe processing of the data is carried out in compliance with the applicable data protection regulations. The transmission of your entries is encrypted. In order to protect your data from loss, manipulation or access by unauthorized persons, the Museum für Naturkunde Berlin uses state-of-the-art technical and organizational measures.\n\nWe take data protection very seriously. You can find more information about data protection in the app\'s imprint.";
 "try_again"="Try again";
 "cancel"="Cancel";
-
 "account_text"="A Naturblick account enables you to back up and view your observations across multiple mobile devices.";
 "account_text_sign_in_or_sign_up1"="A Naturblick account enables you to back up and view your observations across multiple mobile devices.";
-    
 "login_standard"="Connect all observations on this phone to your account.";
 "successful_signin"="Signed in successfully";
+"delete_account_question_no_observations"="Do you really want to delete your account?";
+"delete_account_question"="Deleting your account will unlink all other devices. You will lose the connection to observations on these devices.";
+"delete_account_text"="**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.\n\nPlease, confirm your wish to delete the account by entering your login details.";
+"delete_success"="Success";
+"reset"="Reset";
+"home"="Home";
+"login"="Login";
+"register"="Register";
+"forgot"="Forgot";
+"delete"="Delete";
+"about"="About";

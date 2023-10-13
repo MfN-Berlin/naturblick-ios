@@ -7,7 +7,7 @@ import SwiftUI
 
 struct DeleteAccountView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Delete Account"
+    var viewName: String? = String(localized: "delete")
     
     @ObservedObject var accountViewModel: AccountViewModel
     
@@ -40,32 +40,29 @@ struct DeleteAccountView: NavigatableView {
     
     var body: some View {
         VStack {
-            Text("**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.\n\nPlease, confirm your wish to delete the account by entering your login details.")
-                .body1()
-                .padding(.defaultPadding)
-            NBEditText(label: "Email address", icon: Image("create_24px"), text: $deleteVM.email, prompt: deleteVM.emailPrompt)
-                .padding(.defaultPadding)
+            Text("delete_account_text")
+            NBEditText(label: String(localized: "email"), icon: Image("create_24px"), text: $deleteVM.email, prompt: deleteVM.emailPrompt)
                 .keyboardType(.emailAddress)
-            NBEditText(label: "Password", icon: Image(systemName: "eye"), text: $deleteVM.password, isSecure: true, prompt: deleteVM.passwordPrompt)
-                .padding(.defaultPadding)
+            NBEditText(label: String(localized: "password"), icon: Image(systemName: "eye"), text: $deleteVM.password, isSecure: true, prompt: deleteVM.passwordPrompt)
             if showCredentialsError {
-                Text("Credentials not recognized. Please validate your e-mail and password.")
-                    .body1(color: .onSecondarywarning)
-                    .padding(.defaultPadding)
+                Text("email_or_password_invalid")
             }
-            Button("Delete account") {
+            Button("delete_account") {
                 deleteAccount()
-            }.buttonStyle(DestructiveFullWidthButton())
-                .padding([.trailing, .bottom], .defaultPadding)
-            Button("Forgot password") {
+            }.buttonStyle(DestructiveFullWidthButton()).textCase(.uppercase)
+            Button("forgot_password") {
                 navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-            }.buttonStyle(ConfirmFullWidthButton())
+            } .buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
+
         }
+        .padding(.defaultPadding)
         .foregroundColor(.onSecondaryHighEmphasis)
+        .tint(Color.onSecondaryButtonPrimary)
+        .font(.nbBody1)
         .actionSheet(isPresented: $showDeleteSuccess) {
             ActionSheet(
-                title: Text("Success!"),
-                message: Text("Your account was deleted."),
+                title: Text("delete_success"),
+                message: Text("account_delete"),
                 buttons: [
                     .default(Text("Ok"), action: {
                         navigationController?.popViewController(animated: true)
