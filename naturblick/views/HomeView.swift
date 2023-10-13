@@ -36,27 +36,27 @@ struct HomeView: HostedView {
         
         item.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), primaryAction: UIAction(image:  UIImage(systemName: "gearshape")) { action in
             let menuVC = MenuController(entries: [
-                MenuEntry(title: "Help", image: UIImage(systemName: "questionmark.circle")!) {
+                MenuEntry(title: String(localized: "help"), image: UIImage(systemName: "questionmark.circle")!) {
                     let view = HelpView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 },
-                MenuEntry(title: "Account", image: UIImage(systemName: "person")!) {
+                MenuEntry(title: String(localized: "account"), image: UIImage(systemName: "person")!) {
                     let view = AccountView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 },
-                MenuEntry(title: "Settings", image: UIImage(named: "settings")!) {
+                MenuEntry(title: String(localized: "action_settings"), image: UIImage(named: "settings")!) {
                     let view = SettingsView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 },
-                MenuEntry(title: "Feedback", image: UIImage(systemName: "square.and.pencil")!) {
+                MenuEntry(title: String(localized: "feedback"), image: UIImage(systemName: "square.and.pencil")!) {
                     let view = FeedbackView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 },
-                MenuEntry(title: "Imprint", image: UIImage(systemName: "shield")!) {
+                MenuEntry(title: String(localized: "imprint"), image: UIImage(systemName: "shield")!) {
                     let view = ImprintView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 },
-                MenuEntry(title: "About Naturblick", image: UIImage(systemName: "info.circle")!) {
+                MenuEntry(title: String(localized: "about"), image: UIImage(systemName: "info.circle")!) {
                     let view = AboutView().setUpViewController()
                     navigationController?.pushViewController(view, animated: true)
                 }
@@ -116,7 +116,7 @@ struct HomeView: HostedView {
                         .frame(height: .roundBottomHeight)
                     
                     VStack {
-                        Text("Identify animals and plants")
+                        Text("home_identify_animals_and_plants")
                             .foregroundColor(.onPrimaryHighEmphasis)
                             .font(.nbHeadline6)
                             .padding(.defaultPadding)
@@ -125,7 +125,7 @@ struct HomeView: HostedView {
                             Spacer()
                             
                             HomeViewButton(
-                                text: "Record a bird sound",
+                                text: String(localized: "record_a_bird"),
                                 color: Color.onPrimaryButtonPrimary,
                                 image: Image("audio24"),
                                 size: topRowSize)
@@ -133,7 +133,7 @@ struct HomeView: HostedView {
                                 createFlow.recordSound()
                             }
                             Spacer()
-                            HomeViewButton(text: "Select characteristics",
+                            HomeViewButton(text: String(localized: "select_characteristics"),
                                            color: Color.onPrimaryButtonPrimary,
                                            image: Image("characteristics24"),
                                            size: topRowSize
@@ -149,7 +149,7 @@ struct HomeView: HostedView {
                             }
                             Spacer()
                             
-                            HomeViewButton(text: "Photograph a plant",
+                            HomeViewButton(text: String(localized: "photograph_a_plant"),
                                            color: Color.onPrimaryButtonPrimary,
                                            image: Image("photo24"),
                                            size: topRowSize
@@ -164,7 +164,7 @@ struct HomeView: HostedView {
                         HStack(alignment: .top) {
                             Spacer()
                             HomeViewButton(
-                                text: "Fieldbook",
+                                text: String(localized: "field_book"),
                                 color: Color.onPrimaryButtonSecondary,
                                 image: Image("feldbuch24"),
                                 size: bottomRowSize
@@ -175,7 +175,7 @@ struct HomeView: HostedView {
                                 }
                             }
                             Spacer()
-                            HomeViewButton(text: "Learn about species",
+                            HomeViewButton(text: String(localized: "species_portraits"),
                                            color: Color.onPrimaryButtonSecondary,
                                            image: Image("ic_specportraits"),
                                            size: bottomRowSize

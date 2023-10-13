@@ -44,62 +44,54 @@ struct LoginView: NavigatableView {
     }
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: .defaultPadding) {
             if (accountViewModel.activated) {
-                Text("Your Naturblick account is activated. Log in with your email address and password on all devices you want to connect to the account.")
-                    .tint(Color.onSecondaryButtonPrimary)
-                    .font(.nbBody1)
+                Text("account_activated")
             } else {
-                Text("Connect all observations on this phone to your account.")
-                    .tint(Color.onSecondaryButtonPrimary)
-                    .font(.nbBody1)
+                Text("login_standard")
             }
             
-            NBEditText(label: "Email address", icon: Image("create_24px"), text: $loginVM.email, prompt: loginVM.emailPrompt)
+            NBEditText(label: String(localized: "email"), icon: Image("create_24px"), text: $loginVM.email, prompt: loginVM.emailPrompt)
                 .keyboardType(.emailAddress)
-                .padding([.trailing, .bottom], .defaultPadding)
-            NBEditText(label: "Password", icon: Image("visibility"), text: $loginVM.password, isSecure: true, prompt: loginVM.passwordPrompt)
+            NBEditText(label: String(localized: "password"), icon: Image("visibility"), text: $loginVM.password, isSecure: true, prompt: loginVM.passwordPrompt)
             if showCredentialsWrong {
-                Text("Credentials not recognized. Please validate your e-mail and password.")
+                Text("email_or_password_invalid")
                     .foregroundColor(.onSecondarywarning)
-                    .font(.nbBody1)
             }
             
-            Button("Login") {
+            Button("sign_in") {
                 signIn()
-            }.buttonStyle(ConfirmFullWidthButton()).padding([.top, .bottom], .defaultPadding)
+            }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
             
-            Button("Forgot password") {
+            Button("forgot_password") {
                 navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-            }.buttonStyle(AuxiliaryOnSecondaryFullwidthButton()).padding([.bottom], .defaultPadding)
+            }.buttonStyle(AuxiliaryOnSecondaryFullwidthButton()).textCase(.uppercase)
             
-            if (!accountViewModel.activated) {
-                Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
-                    .tint(Color.onSecondaryButtonPrimary)
-                    .font(.nbBody1)
-                    .padding()
-            }
-            
+            Text("delete_account_note_password")
             Spacer()
         }
+        .padding(.defaultPadding)
         .foregroundColor(.onSecondaryHighEmphasis)
+        .tint(Color.onSecondaryButtonPrimary)
+        .font(.nbBody1)
         .actionSheet(isPresented: $showLoginSuccess) {
             ActionSheet(
-                title: Text("Success!"),
-                message: Text("You are signed in as: \(loginVM.email)"),
+                title: Text("successful_signin"),
+                message: Text("signed_in_as \(loginVM.email)"),
                 buttons: [
                     .default(Text("Ok"), action: {
                         navigationController?.popViewController(animated: true)
                     })
                 ]
             )
-        }.alertHttpError(isPresented: $isPresented, error: error)
+        }
+        .alertHttpError(isPresented: $isPresented, error: error)
         .onAppear {
             if let email = accountViewModel.email {
                 loginVM.email = email
             }
         }
-        .padding(.defaultPadding)
+        
     }
 }
 

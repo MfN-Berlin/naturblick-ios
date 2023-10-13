@@ -1,0 +1,95 @@
+/* 
+  Localizable.strings
+  naturblick
+
+  Created by localadmin on 11.10.23.
+  
+*/
+"home_identify_animals_and_plants" = "Bestimme Tiere und Pflanzen";
+"record_a_bird" = "Vogelstimme aufnehmen";
+"select_characteristics" = "Merkmale auswählen";
+"photograph_a_plant" = "Pflanze fotografieren";
+"field_book" = "Feldbuch";
+"species_portraits" = "Arten kennenlernen";
+"help"="Hilfe";
+"feedback"="Feedback";
+"imprint"="Impressum";
+"about"="Über Naturblick";
+"action_settings"="Einstellungen";
+"account"="Account";
+"choose_a_group"="Wähle eine Gruppe";
+"menu_groups"="Gruppen";
+"about_text"="**Über Naturblick**\n\nIn einem interdisziplinären Team erforschen und entwickeln wir am Museum für Naturkunde Berlin digitale Werkzeuge für die urbane Naturerfahrung. Beispielsweise erproben wir den Einsatz von Mustererkennung in der Artbestimmung.\n\nMit unserer Smartphone-App Naturblick unterstützen wir die direkte Naturerfahrung in der Stadt. Mit vielfältigen Funktionen kannst du die Natur in der Stadt erkunden, Tiere und Pflanzen bestimmen und deine Beobachtungen speichern. Schau auch auf unsere [Plattform](https://naturblick.museumfuernaturkunde.berlin/). Dort findest du z.B. eine Karte mit bestätigten Beobachtungen anderer Nutzer:innen und die Rubrik “WissensWeiten” mit informierenden und inspirierenden Inhalte für alle, die sich näher mit der Natur um sie herum beschäftigen wollen.\n\n**Lauterkennung**\n\nDie Ergebnisse der automatisierten Artbestimmung werden durch den Vergleich mit Daten (in diesem Fall Audioaufnahmen von Vögeln), mit denen der Algorithmus trainiert wurde, erzeugt.\n\nDas bedeutet\n1) es können nur Arten erkannt werden, die auch trainiert wurden,\n2) die Erkennung funktioniert am besten, wenn eine große Ähnlichkeit zu der Aufnahmesituation und -qualität besteht (z.B. Mikrofonqualität).\n\nDer Naturblick Algorithmus wurde mit Audiomaterial aus dem Tierstimmenarchiv des Museum für Naturkunde Berlin, der kollaborativen Online-Datenbank Xeno-Canto und verifizierten Naturblick-Aufnahmen trainiert. Die Liste der Arten, die bestimmt werden können findest du [hier](https://naturblick.museumfuernaturkunde.berlin/speciesaudiorecognition/).\n\n**Bilderkennung**\n\nDie Ergebnisse der automatisierten Artbestimmung werden durch den Vergleich mit Daten (in diesem Fall Fotos von Pflanzen), mit denen der Algorithmus trainiert wurde, erzeugt.\n\nDas bedeutet\n1) es können nur Arten erkannt werden, die auch trainiert wurden,\n2) die Erkennung funktioniert am besten, wenn eine große Ähnlichkeit zu der Aufnahmesituation und -qualität besteht (z.B. Pflanzen in der freien Natur).\n\nDer Naturblick Algorithmus wurde mit Bildmaterial von naturgucker, den LIFECLEF Challenges und iNaturalist trainiert. Die Liste der Arten, die bestimmt werden können findest du [hier](https://naturblick.museumfuernaturkunde.berlin/speciesimagerecognition/).\n\nWir sind auf deine Unterstützung und dein Feedback angewiesen. Wir danken allen, die uns auf Fehler oder Probleme hinweisen oder Verbesserungsvorschläge machen.";
+"feedback_form"="Nutze unser Feedbackformular";
+"feedback_email"="Sende eine E-Mail";
+"cc_by_msg"="**Autorenschaft eintragen**\n\nAlle Aufnahmen, die mit Naturblick gemacht werden, bekommen die Lizenz CC BY-SA 4.0, d.h. sie dürfen weitergegeben und verwendet werden.\n\nWenn du möchtest, kannst du deine Autorenschaft mit einem Namen kennzeichnen. Die Aufnahmen werden dann zusammen mit diesem Namen veröffentlicht. Alle Aufnahmen, denen kein Autorenname zugeordnet wurde, werden unter MfN_Naturblick veröffentlicht.";
+"cc_by_field"="Name (Synonym)";
+"help_text"="**Wie kann ich Naturblick nutzen?**\n\nMache Fotos von Pflanzen und bestimme sie mit unserer automatischen Bilderkennung. Nimm Vogelstimmen auf und erkenne mit der automatischen Lauterkennung, welcher Vogel singt. Bestimme Tiere und Pflanzen anhand ausgewählter Merkmale mit unseren Bestimmungsschlüsseln. Speichere Beobachtungen und teile sie. Oder lerne mehr über Arten in den Artportraits.\n\n**Bildbestimmung Pflanzen**\n\nFür die Bildbestimmung wird ein quadratischer Bildausschnitt verwendet. Du kannst den Bildausschnitt anpassen, indem du das Quadrat verschiebst oder kleiner/größer ziehst. Mit dem Button \"Absenden\" schickst du den Ausschnitt zur automatischen Bestimmung an die Server des Museum für Naturkunde Berlin. Die Erkennung funktioniert am besten, wenn eine große Ähnlichkeit zu der Aufnahmesituation und -qualität des Trainingsmaterials besteht (z.B. Pflanzen in der freien Natur).\n\nWir zeigen immer die drei wahrscheinlichsten Ergebnisse der Mustererkennung. Der Prozentwert zeigt an, mit welcher Wahrscheinlichkeit der Algorithmus eine Art erkannt hat. Je näher die Zahl an 100% ist, desto wahrscheinlicher ist die Zuordnung zu einer Art. Es werden nur die Arten erkannt, die auch von uns trainiert wurden. Es kann daher auch passieren, dass keine der vorgeschlagenen Arten richtig ist.\n\nDer Naturblick Algorithmus wurde mit Bildmaterial von naturgucker, den LIFECLEF Challenges und iNaturalist trainiert. Die Liste der Arten, die bestimmt werden können findest du [hier](https://naturblick.museumfuernaturkunde.berlin/speciesimagerecognition?lang=en).\n\n**Lauterkennung Vögel**\n\nFür die Lauterkennung wird der weiße Ausschnitt deiner Tonaufnahme verwendet. Du kannst den Ausschnitt anpassen, indem du das Quadrat verschiebst oder kleiner/breiter ziehst. Bitte wähle einen Abschnitt, der die Vogelstimme am besten darstellt. Die Mustererkennung liefert die besten Ergebnisse für Aufnahmen, die unter 10 Sekunden sind. Mit dem Button \"Absenden\" schickst du den Ausschnitt zur automatischen Bestimmung an die Server des Museum für Naturkunde Berlin.\n\nWir zeigen immer die drei wahrscheinlichsten Ergebnisse der Mustererkennung. Der Prozentwert zeigt an, mit welcher Wahrscheinlichkeit der Algorithmus eine Art erkannt hat. Je näher die Zahl an 100% ist, desto wahrscheinlicher ist die Zuordnung zu einer Art. Es werden nur die Arten erkannt, die auch von uns trainiert wurden. Es kann daher auch passieren, dass keine der vorgeschlagenen Arten richtig ist.\n\n Der Naturblick Algorithmus wurde mit Audiomaterial aus dem Tierstimmenarchiv des Museum für Naturkunde Berlin, der kollaborativen Online-Datenbank Xeno-Canto und verifizierten Naturblick-Aufnahmen trainiert. Die Liste der Arten, die bestimmt werden können findest du [hier](https://naturblick.museumfuernaturkunde.berlin/speciesaudiorecognition?lang=en).\n\n**Mit Merkmalen bestimmen**\n\nIn unseren Bestimmungshilfen kannst du selber wählen, welche Merkmale du auswählst. Überspringe einfach alle Merkmale, die du nicht erkennen kannst. In dem kurzen Erklärungstext zu jedem Merkmal findest du Informationen, ob mehrere Antworten ausgewählt werden können. Eine Liste zeigt alle Arten, die aufgrund deiner Auswahl in Frage kommen.\n\n**Feldbuch**\n\nIm Feldbuch werden deine Beobachtungen gespeichert und können von dir bearbeitet werden. Du kannst den Standort deiner Beobachtung auch manuell auf der Karte festlegen, bzw. verbessern. Scroll und zoom dafür die Karte, um die Stecknadel an den Standort zu platzieren. Über das Plus-Symbol unten rechts kannst du weitere Beobachtungen hinzufügen.";
+"support_us_text"="**Unterstütze die Weiterentwicklung!**\n\nNaturblick wird inhaltlich und technisch kontinuierliche weiterentwickelt. Wir sind dabei auf dein Feedback angewiesen. Schlage Änderungen bzw. Verbesserungen vor oder melde Fehler.";
+"more_sources"="Weitere Quellen";
+"imprint_1 %@"="**Impressum**\n\nMuseum für Naturkunde\nLeibniz Institute for Evolution and Biodiversity Science\nInvalidenstraße 43\n10115 Berlin, Germany\n\nLandesunmittelbare rechtsfähige Stiftung des öffentlichen Rechts\n\nTelefon: +49 (0)30 2093-8591\nFax: +49 (0)30 2093-8561\n\nE-Mail: [naturblick(at)mfn.berlin](mailto:naturblick@mfn.berlin)\nInternet: [http://www.naturkundemuseum-berlin.de](http://www.naturkundemuseum-berlin.de)\n\nVertretungsberechtigte Person\nProf. Johannes Vogel, PhD (Generaldirektor),\nStephan Junker (Geschäftsführer)\n\nZuständige Aufsichtsbehörde\nSenatsverwaltung für Wirtschaft, Technologie und Forschung\nMartin-Luther-Straße 105, 10825 Berlin\n\nInhaltlich Verantwortliche gemäß § 55 Abs. 2 RStV\nUlrike Sturm\n\nUmsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz\nDE262426477\nBankverbindung\nBerliner Bank AG\nKonto-Nummer: 512 087 800\nBankleitzahl: 100 708 48\nIBAN: DE40 1007 0848 051 2087 800\nBIC/SWIFT: DEUTDEDB110\n\nFörderung 2016-2021 durch Bundesministerium für Umwelt, Naturschutz und nukleare Sicherheit (BMU)\n\nWeitere Informationen [hier](https://naturblick.museumfuernaturkunde.berlin/about?lang=en)\n\nApp-Version:  %@\n\n**Quellen**\n\nDie Quellen zu den Bild- und Tonmaterialien sind in den einzelnen Artportraits angegeben. Bild- und Tonmaterialien von Arten, die noch kein Artportrait haben oder aus anderen Kontexten der App wie z.B. Bestimmungshilfen sind unter weitere Quellen angeben. Deutsche und englische Namen stammen teilweise von GBIF.org (2022), GBIF Home Page. Verfügbar unter: [https://www.gbif.org](https://www.gbif.org) [28 September 2022].";
+"imprint_2"="**Weitere Bestimmungen**\n\nCopyright\n\nAlle Inhalte, Bilder oder Grafiken sind urheberrechtlich geschützt und dürfen nur mit schriftlicher Genehmigung des jeweiligen Rechteinhabers verwendet werden.\n\nHaftung für Inhalte\n\nDie Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.\n\nAls Diensteanbieter sind wir gemäß § 6 Abs.1 MDStV und § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Diensteanbieter sind jedoch nicht verpflichtet, die von ihnen übermittelten oder gespeicherten fremden Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.\n\nUrheberrecht\n\nDie Betreiber der Seiten sind bemüht, stets die Urheberrechte Anderer zu beachten bzw. auf selbst erstellte sowie lizenzfreie Werke zurückzugreifen.\n\nDie durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.\n\nAllgemeiner Haftungsausschluss\n\nÜber die weiter oben dargelegten Punkte hinaus gilt für alle Seiten dieses Webauftritts der allgemeine [www.datenschutzbeauftragter-info.de](https://www.disclaimer.de/disclaimer.htm)\n\n© Museum für Naturkunde Berlin";
+
+"your_account"="Dein Naturblick-Account";
+"sign_in"="Login";
+"to_sign_in"="Zum Login";
+"email"="E-Mail-Adresse";
+"signed_in_as %@"="Du bist eingeloggt als: %@";
+"password"="Passwort";
+"error_signed_out"="Du wurdest ausgeloggt. Willst du dich wieder einloggen?";
+"email_or_password_invalid"="Zugansdaten nicht erkannt. Bitte überprüfe deine Eingabe.";
+"data_protection_consent"="Ich habe die Datenschutzerklärung zur Kenntnis genommen.";
+"sign_up"="Registrieren";
+"to_sign_up"="Jetzt registrieren";
+"password_format"="Das Passwort muss mindestens 9 Zeichen lang sein. Es muss aus Zahlen, Groß- und Kleinbuchstaben bestehen.";
+"email_is_not_valid"="Keine valide E-Mail-Adresse";
+"password_no_lower_case"="Muss Kleinbuchstaben enthalten";
+"password_no_upper_case"="Muss Großbuchstaben enthalten";
+"password_no_digits"="Muss Zahlen enthalten";
+"password_too_short"="Muss aus mindestens 9 Zeichen bestehen";
+"user_already_exists"="Diese E-Mail-Adresse existiert bereits";
+"privacy"="Wir nehmen Datenschutz sehr wichtig. Weitere Informationen zum Datenschutz findest du im Impressum der App.";
+"account_text"="Mit einem Naturblick-Account kannst du deine Beobachtungen über mehrere mobile Geräte hinweg sichern und anzeigen lassen.";
+"account_text_sign_in_or_sign_up1"="Mit einem Naturblick-Account kannst du deine Beobachtungen bei einem Handywechsel über mehrere mobile Geräte hinweg sichern und auf allen verbundenen Handys anzeigen lassen.";
+"account_text_sign_in_or_sign_up2"="Du kannst Naturblick aber natürlich auch ohne Account wie bisher verwenden.";
+"validate_email_title"="Vielen Dank!";
+"validate_email_message"="Wir haben dir per E-Mail einen Aktivierungslink geschickt. Bitte öffne diesen Link um deine Registrierung abzuschließen. Der Link ist gültig für 12 Stunden.";
+"open_default_email_app"="Meine E-Mails öffnen";
+"go_to_login_screen"="Weiter zum Login";
+"go_back_to_login_screen"="Zurück zum Login";
+"default_email_app_failed"="Wir haben keine E-Mail-App gefunden. Aktiviere deinen Account bitte mit dem Link, den wir dir an deine E-Mail-Adresse gesendet haben.";
+"account_activated"="Dein Naturblick-Account ist aktiviert. Logge dich mit deiner E-Mail-Adresse und Passwort auf allen Geräten ein, die du mit dem Account verbinden möchtest.";
+"forgot_password"="Passwort vergessen";
+"reset_email_sent_title"="Neues Passwort";
+"reset_email_sent_message"="Wir haben an die von dir angegebene E-Mail-Adresse einen Link zum Zurücksetzen des Passworts gesendet. Der Link ist gültig für 12 Stunden. Solltest du nach 10 Minuten keine E-Mail erhalten, ist uns die angegebene E-Mail-Adresse nicht bekannt.";
+"reset_password"="Passwort zurücksetzen";
+"password_reset_successful"="Passwort ist erfolgreich zurückgesetzt";
+"delete_account_title"="**Account löschen**";
+"delete_account_text"="Mit dem Löschen deines Accounts wird die Verknüpfung zu anderen Geräten aufgehoben und wir löschen automatisch die von dir angegebene E-Mail-Adresse.";
+"delete_account_text_verify"=" Bitte bestätige deinen Wunsch, den Account zu löschen, indem du deine Zugangsdaten eingibst.";
+"delete_account"="Account gelöscht";
+"delete_account_note_link"="**Hinweis für die Verbindung mit alten Geräten**\n\nFür die Übertragung von Beobachtungen von alten Geräten auf neue, empfehlen wir dir, dich einfach auf beiden Geräten einzuloggen. Solltest du das Handy dann weitergeben oder recyceln, deinstalliere Naturblick auf deinem Handy oder setze es einfach auf die Werkseinstellungen zurück. Deine alten Beobachtungen werden dadurch nicht gelöscht. Lösche den Account nicht, da dadurch die Verknüpfung der Beobachtungen aufgehoben werden würde.";
+"delete_account_note_password"="Hinweis Passwort vergessen";
+"delete_account_note_password_text"="Wenn du ein neues Passwort vergibst, werden alle Handys, die mit dem Account verknüpft sind, aus Sicherheitsgründen automatisch ausgeloggt. Alle deine Beobachtungen bleiben weiterhin mit deinem Account verknüpft und werden dir angezeigt.";
+"account_delete"="Dein Account ist gelöscht.";
+"your_account_text"="Mit deinem Naturblick-Account sind deine Beobachtungen über mehrere mobile Geräte gesichert und werden dir auf allen verbundenen Handys angezeigt.";
+"activation_link_note"="**Hinweis Aktivierungslink**\n\nDu kannst deinen Naturblick-Account erst nutzen, wenn du deine Registrierung bestätigt hast. Klicke dafür bitte auf den Aktivierungslink, den wir dir an deine E-Mail-Adresse gesendet haben.";
+"to_delete_account"="Zum Account Löschen";
+"continue_with_sign_in"="Melde dich in deinem Naturblick-Account an.";
+"sign_out"="Weiter ohne Account";
+"signed_out"="Du wurdest automatisch ausgeloggt, da du dein Passwort zurückgesetzt oder deinen Account gelöscht hast.\n\n**Neues Passwort**\n\nMelde dich mit deinem neuen Passwort an, um deine Beobachtungen auf diesem Handy wieder mit deinem Account zu verknüpfen.";
+"set_up_an_account"="Naturblick-Account";
+ "account_info"="Mit einem Naturblick-Account kannst du deine Beobachtungen über mehrere mobile Geräte hinweg sichern und anzeigen lassen. Willst du einen Naturblick-Account anlegen?";
+ "signed_out_deleted_account"="**Account gelöscht**\n\nRegistriere dich erneut oder nutze Naturblick ohne Account.";
+ "sign_up_title"="Naturblick-Account erstellen";
+ "sign_up_text"="Hier kannst du einen Naturblick-Account erstellen. Bitte, gib dafür eine E-Mail-Adresse an. Wir senden dir dann den Aktivierungslink an diese Adresse.";
+ "privacy_rules"="Datenschutzerklärung";
+ "privacy_rules_text1"="Für die Registrierung benötigen wir deine E-Mail-Adresse. Die Anmeldung wird erst gültig, nachdem du in einer von uns an dich verschickten E-Mail einen Bestätigungslink angeklickt hast. Die E-Mail-Adresse wird von uns ausschließlich für die Verwaltung des Accounts verwendet. Die Registrierung/Anmeldung erfolgt freiwillig und kann jederzeit widerrufen werden. Deine personenbezogenen Daten werden mit dem Löschen des Accounts aus unserem System gelöscht.";
+ "privacy_rules_text2"="Die Verarbeitung der Daten erfolgt unter Beachtung der geltenden datenschutzrechtlichen Bestimmungen. Die Übertragung deiner Eingaben erfolgt verschlüsselt. Um die Daten vor Verlust, Manipulation oder Zugriff durch unberechtigte Personen zu schützen, werden durch das Museum für Naturkunde technisch-organisatorische Maßnahmen eingesetzt, die dem aktuellen Stand der Technik entsprechen.";
+"try_again"="Nochmal probieren";
+"cancel"="Abbrechen";
+
+"account_text"="Mit einem Naturblick-Account kannst du deine Beobachtungen über mehrere mobile Geräte hinweg sichern und anzeigen lassen.";
+"account_text_sign_in_or_sign_up1"="Mit einem Naturblick-Account kannst du deine Beobachtungen bei einem Handywechsel über mehrere mobile Geräte hinweg sichern und auf allen verbundenen Handys anzeigen lassen.";
+"login_standard"="Verbinde alle Beobachtungen auf diesem Handy mit deinem Account.";
+"successful_signin"="Erfolgreich eingeloggt";

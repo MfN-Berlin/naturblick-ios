@@ -107,6 +107,7 @@
 		7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B13663829F0122600F1DA30 /* SoundStreamController.swift */; };
 		7B2CEA142AA5DAA8004B4276 /* Licence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2CEA132AA5DAA8004B4276 /* Licence.swift */; };
 		7B2E70662A2F671900164C85 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2E70652A2F671900164C85 /* AboutView.swift */; };
+		7B3507C52AD6D824006F594B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B3507C72AD6D824006F594B /* Localizable.strings */; };
 		7B572DD92A6E758F008F50C5 /* Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B572DD82A6E758F008F50C5 /* Thumbnail.swift */; };
 		7B572DDB2A6E9F65008F50C5 /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B572DDA2A6E9F65008F50C5 /* String+MD5.swift */; };
 		7B8008F229D5B66B00950839 /* PortraitImageSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8008F129D5B66B00950839 /* PortraitImageSize.swift */; };
@@ -159,6 +160,7 @@
 		7BD016232A0B723600B07A3E /* MultipartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016222A0B723600B07A3E /* MultipartRequest.swift */; };
 		7BD016252A0B8CC400B07A3E /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016242A0B8CC400B07A3E /* Data.swift */; };
 		7BD016272A0BCE1F00B07A3E /* SpeciesResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */; };
+		7BD0FBE32AD7EF2900B63E07 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD0FBE22AD7EF2900B63E07 /* Language.swift */; };
 		7BD263522A8E654300CB4FE0 /* Sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD263512A8E654300CB4FE0 /* Sync.swift */; };
 		7BDA8FBB2ABC241E002E93C9 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */; };
 		7BDA8FBE2ABC5E94002E93C9 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDA8FBD2ABC5E94002E93C9 /* CachedAsyncImage */; };
@@ -285,6 +287,8 @@
 		7B13663829F0122600F1DA30 /* SoundStreamController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundStreamController.swift; sourceTree = "<group>"; };
 		7B2CEA132AA5DAA8004B4276 /* Licence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Licence.swift; sourceTree = "<group>"; };
 		7B2E70652A2F671900164C85 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		7B3507C62AD6D824006F594B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7B3507C82AD6D8AE006F594B /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B572DD82A6E758F008F50C5 /* Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thumbnail.swift; sourceTree = "<group>"; };
 		7B572DDA2A6E9F65008F50C5 /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		7B8008F129D5B66B00950839 /* PortraitImageSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortraitImageSize.swift; sourceTree = "<group>"; };
@@ -337,6 +341,7 @@
 		7BD016222A0B723600B07A3E /* MultipartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartRequest.swift; sourceTree = "<group>"; };
 		7BD016242A0B8CC400B07A3E /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesResult.swift; sourceTree = "<group>"; };
+		7BD0FBE22AD7EF2900B63E07 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		7BD263512A8E654300CB4FE0 /* Sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sync.swift; sourceTree = "<group>"; };
 		7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		7BDA8FC12ABC6AF6002E93C9 /* CCInfoPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCInfoPopupView.swift; sourceTree = "<group>"; };
@@ -374,6 +379,7 @@
 		131E785529C9BB24000DF928 = {
 			isa = PBXGroup;
 			children = (
+				7B3507C72AD6D824006F594B /* Localizable.strings */,
 				131E786029C9BB24000DF928 /* naturblick */,
 				1343D1D129DD988D0075ACE3 /* naturblickTests */,
 				131E785F29C9BB24000DF928 /* Products */,
@@ -625,6 +631,7 @@
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
+				7BD0FBE22AD7EF2900B63E07 /* Language.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -709,6 +716,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 131E785529C9BB24000DF928;
 			packageReferences = (
@@ -738,6 +746,7 @@
 				132B0D9D29CDD78600B80C9E /* lato_italic.ttf in Resources */,
 				132B0D9B29CDD78600B80C9E /* lato_black.ttf in Resources */,
 				131E786629C9BB25000DF928 /* Assets.xcassets in Resources */,
+				7B3507C52AD6D824006F594B /* Localizable.strings in Resources */,
 				13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */,
 				132B0D9C29CDD78600B80C9E /* lato_regular.ttf in Resources */,
 			);
@@ -909,6 +918,7 @@
 				137690032A30946F0076F93A /* SpectrogramView.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
 				7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */,
+				7BD0FBE32AD7EF2900B63E07 /* Language.swift in Sources */,
 				7BD016232A0B723600B07A3E /* MultipartRequest.swift in Sources */,
 				137D280B2AC44A91009DFB36 /* SpetrogramViewModel.swift in Sources */,
 				13AFFA5C2AAF568700ABF4F9 /* NBText.swift in Sources */,
@@ -968,11 +978,24 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		7B3507C72AD6D824006F594B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7B3507C62AD6D824006F594B /* en */,
+				7B3507C82AD6D8AE006F594B /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		131E786A29C9BB25000DF928 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1033,6 +1056,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
