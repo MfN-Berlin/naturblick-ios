@@ -96,17 +96,14 @@ struct ObservationInfoView: View {
             }
             if let sciname = species?.sciname {
                 Text(sciname)
-                    .font(.nbOverline)
-                    .foregroundColor(.onPrimarySignalHigh)
+                    .overline(color: .onPrimarySignalHigh)
                     .multilineTextAlignment(TextAlignment.center)
             }
             Text(species?.name ?? "Unknown species")
-                .font(.nbHeadline2)
-                .foregroundColor(.onPrimaryHighEmphasis)
+                .headline2()
                 .multilineTextAlignment(TextAlignment.center)
             Text(created.date, formatter: .dateTime)
-                .font(.caption)
-                .foregroundColor(.onPrimarySignalLow)
+                .caption(color: .onPrimarySignalLow)
                 .multilineTextAlignment(TextAlignment.center)
         }
         .padding(.defaultPadding)

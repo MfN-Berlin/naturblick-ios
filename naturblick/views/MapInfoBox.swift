@@ -24,10 +24,10 @@ struct MapInfoBox: NavigatableView {
             }
             if let gerName = observation.species?.gername {
                 Text(gerName)
-                    .font(.nbSubtitle1)
+                    .subtitle1()
             }
             Text(observation.observation.created.date, formatter: .dateTime)
-                .font(.nbOverline)
+                .overline(color: .onSecondaryHighEmphasis)
             Button("Details") {
                 viewController?.dismiss(animated: true)
                 toDetails()

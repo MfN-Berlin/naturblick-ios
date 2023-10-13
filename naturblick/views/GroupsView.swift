@@ -20,8 +20,7 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
                 .frame(width: .headerIconSize, height: .headerIconSize)
                 .padding(.top, .defaultPadding)
             Text("choose_a_group")
-                .font(.nbHeadline3)
-                .foregroundColor(.onPrimaryHighEmphasis)
+                .headline3()
             GeometryReader { geo in
                 LazyVGrid(columns: [
                     GridItem(spacing: .defaultPadding, alignment: .top),

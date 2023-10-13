@@ -25,10 +25,9 @@ struct HomeViewButton: View {
                 .frame(width: size, height: size)
                 .nbShadow()
             Text(text)
-                .foregroundColor(.onPrimaryHighEmphasis)
+                .caption(color: .onPrimaryHighEmphasis)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-                .font(.nbCaption)
                 .frame(width: size)
         }
         .font(.subheadline)

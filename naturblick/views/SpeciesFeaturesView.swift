@@ -16,9 +16,8 @@ struct SpeciesFeaturesView: View {
             SimilarSpeciesItemView(species: species.listItem)
             ForEach(featureViewModel.features) { feature in
                 Text(feature.description)
-                    .font(.nbBody2)
+                    .body2(color: .onFeatureHighEmphasis)
                     .padding(.halfPadding)
-                    .foregroundColor(.onFeatureHighEmphasis)
                     .background {
                         RoundedRectangle(cornerRadius: .smallCornerRadius)
                             .foregroundColor(.onPrimaryMediumEmphasis)

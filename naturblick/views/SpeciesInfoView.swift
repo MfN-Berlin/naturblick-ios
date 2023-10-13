@@ -53,18 +53,14 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
                 }
             }
             Text(species.sciname)
-                .font(.nbOverline)
-                .foregroundColor(.onSecondarySignalHigh)
-                .italic()
+                .overline(color: .onSecondarySignalHigh)
                 .multilineTextAlignment(.center)
             Text(species.gername?.uppercased() ?? "ARTNAME")
-                .font(.nbHeadline4)
-                .foregroundColor(.onSecondaryHighEmphasis)
+                .headline4(color: .onSecondaryHighEmphasis)
                 .multilineTextAlignment(.center)
             if let synonym = species.gersynonym {
                 Text("also: \(synonym)")
-                    .font(.nbCaption)
-                    .foregroundColor(.onSecondaryLowEmphasis)
+                    .caption(color: .onSecondaryLowEmphasis)
                     .multilineTextAlignment(.center)
             }
             if species.hasPortrait {

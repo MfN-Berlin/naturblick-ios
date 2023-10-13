@@ -44,8 +44,7 @@ struct ForgotPasswordView: NavigatableView {
             }.buttonStyle(ConfirmFullWidthButton())
                 .padding([.top, .bottom], .defaultPadding)
             Text("**Note**\n\nWhen you set a new password, all phones linked to the account will be automatically logged out for security reasons. All your observations will remain linked to your account.")
-                .tint(Color.onSecondaryButtonPrimary)
-                .font(.nbBody1)
+                .body1()
             Spacer()
         }
         .foregroundColor(.onSecondaryHighEmphasis)

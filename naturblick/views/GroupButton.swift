@@ -19,9 +19,8 @@ struct GroupButton: View {
                 .frame(width: geo.size.width * .topRowFactor)
                 .nbShadow()
             Text(isGerman() ? group.gerName : group.engName)
+                .caption(color: .onPrimaryHighEmphasis)
                 .multilineTextAlignment(TextAlignment.center)
-                .foregroundColor(.onPrimaryHighEmphasis)
-                .font(.nbCaption)
             Spacer()
         }
     }

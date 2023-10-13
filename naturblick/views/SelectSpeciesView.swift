@@ -48,8 +48,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     VStack {
                         if let results = model.speciesResults {
                             Text("The list suggests wild plants found in the city. The suggestions are created by comparing photos of over 2000 species. The closer the score is to 100%, the more likely the match is.")
-                                .font(.nbBody2)
-                                .foregroundColor(.onSecondaryMediumEmphasis)
+                                .body2()
                                 .padding(.bottom, .defaultPadding)
                             ForEach(results, id: \.0.id) { (result, item) in
                                 SpeciesResultView(result: result, species: item)
@@ -79,7 +78,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                         } else {
                             ProgressView {
                                 Text("Identifying species")
-                                    .font(.nbButton)
+                                    .button()
                                     .foregroundColor(.onSecondaryMediumEmphasis)
                             }
                             .progressViewStyle(.circular)

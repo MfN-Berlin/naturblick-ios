@@ -13,10 +13,8 @@ struct HelpView: NavigatableView {
         ScrollView {
             VStack(alignment: .leading, spacing: .defaultPadding) {
                 Text("help_text")
+                    .body1()
             }
-            .tint(Color.onSecondaryButtonPrimary)
-            .font(.nbBody1)
-            .foregroundColor(.onSecondaryHighEmphasis)
         }
         .padding(.defaultPadding)
     }

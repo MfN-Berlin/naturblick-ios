@@ -52,25 +52,19 @@ struct PortraitView: HostedView {
                         
                         VStack { // names
                             Text(portrait.species.sciname)
-                                .font(.nbOverline)
-                                .foregroundColor(.onPrimarySignalHigh)
-                                .italic()
+                                .overline(color: .onPrimarySignalHigh)
                                 .multilineTextAlignment(.center)
                             Text(portrait.species.gername?.uppercased() ?? "ARTNAME")
-                                .font(.nbHeadline4)
-                                .foregroundColor(.onPrimaryHighEmphasis)
+                                .headline4(color: .onPrimaryHighEmphasis)
                                 .multilineTextAlignment(.center)
                             if let synonym = portrait.species.gersynonym {
                                 Text("also: \(synonym)")
-                                    .font(.nbCaption)
-                                    .foregroundColor(.onPrimarySignalLow)
+                                    .caption(color: .onPrimarySignalLow)
                                     .multilineTextAlignment(.center)
                             }
                             if !inSelectionFlow {
-                                Button {
+                                Button("I observed this species here", icon: "artportraits24") {
                                     flow.selectManual(species: species)
-                                } label: {
-                                    Label("I observed this species here", image: "artportraits24")
                                 }
                                 .buttonStyle(AuxiliaryOnPrimaryButton())
                             }
@@ -80,11 +74,10 @@ struct PortraitView: HostedView {
                         
                         VStack(alignment: .leading) { // description
                             Text("Beschreibung")
-                                .font(.nbHeadline4)
+                                .headline4()
                                 .padding(.bottom, .defaultPadding)
                             Text(portrait.description)
-                                .font(.nbBody1)
-                            
+                                .body1()
                             VStack(alignment: .leading) { // similar species
                                 SpeciesFeaturesView(portraitId: portrait.id, species: portrait.species)
                                 SimilarSpeciesView(portraitId: portrait.id, holder: holder, inSelectionFlow: inSelectionFlow)
@@ -100,10 +93,10 @@ struct PortraitView: HostedView {
                                         .padding(.top, .halfPadding)
                                 }
                                 Text("In der Stadt")
-                                    .font(.nbHeadline4)
+                                    .headline4()
                                     .padding([.top, .bottom], .defaultPadding)
                                 Text(portrait.inTheCity)
-                                    .font(.nbBody1)
+                                    .body1()
                                     .padding(.bottom, .defaultPadding)
 
                                 
@@ -112,7 +105,7 @@ struct PortraitView: HostedView {
                                         .padding(.bottom, .halfPadding)
                                 }
                                 Text("Wissenswertes")
-                                    .font(.nbHeadline4)
+                                    .headline4()
                                     .padding(.bottom, .defaultPadding)
                                 ForEach(portrait.goodToKnows, id: \.self) { goodToKnow in
                                     HStack {
@@ -121,6 +114,7 @@ struct PortraitView: HostedView {
                                             .frame(width: .goodToKnowLineWidth)
                                             .frame(maxHeight: .infinity)
                                         Text(goodToKnow)
+                                            .body1()
                                             .padding(.leading, .defaultPadding)
                                     }
                                 }
@@ -128,10 +122,10 @@ struct PortraitView: HostedView {
                                 
                                 if let sources = portrait.sources {
                                     Text("Quellen")
-                                        .font(.nbHeadline4)
+                                        .headline4()
                                         .padding(.bottom, .defaultPadding)
                                     Text(sources)
-                                        .font(.nbBody1)
+                                        .body1()
                                         .padding(.bottom, .defaultPadding)
                                 }
                             }

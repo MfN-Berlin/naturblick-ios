@@ -16,6 +16,7 @@ struct AboutView: NavigatableView {
         ScrollView {
             VStack(alignment: .leading, spacing: .defaultPadding) {
                 Text("about_text")
+                    .body1()
                 Button("feedback_form") {
                     let deviceName = "ios"
                     let appVersion = UIApplication.appVersion
@@ -33,8 +34,6 @@ struct AboutView: NavigatableView {
                 }.buttonStyle(ConfirmFullWidthButton())
             }
             .tint(Color.onSecondaryButtonPrimary)
-            .font(.nbBody1)
-            .foregroundColor(.onSecondaryHighEmphasis)
         }
         .padding(.defaultPadding)
     }

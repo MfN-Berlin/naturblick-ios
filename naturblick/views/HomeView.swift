@@ -117,8 +117,7 @@ struct HomeView: HostedView {
                     
                     VStack {
                         Text("home_identify_animals_and_plants")
-                            .foregroundColor(.onPrimaryHighEmphasis)
-                            .font(.nbHeadline6)
+                            .headline6()
                             .padding(.defaultPadding)
                         
                         HStack(alignment: .top) {
