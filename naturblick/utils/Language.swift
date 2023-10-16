@@ -20,3 +20,7 @@ func getLanguage() -> String {
         default: return English
     }
 }
+
+func getLanguageId() -> Int64 {
+    getLanguage() == German ? 1 : 2
+}

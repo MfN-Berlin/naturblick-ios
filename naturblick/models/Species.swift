@@ -51,7 +51,7 @@ extension Species {
         static let baseQuery = table
             .select(table[*], optionalPortraitId, Portrait.Definition.audioUrl)
             .join(.leftOuter, Portrait.Definition.table, on: table[id] == Portrait.Definition.speciesId)
-            .filter(optionalLanguage == 1 || optionalLanguage == nil)
+            .filter(optionalLanguage == getLanguageId() || optionalLanguage == nil)
     }
 }
 

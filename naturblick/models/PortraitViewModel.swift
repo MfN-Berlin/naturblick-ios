@@ -60,7 +60,7 @@ class PortraitViewModel: ObservableObject {
                 on: Portrait.Definition.table[Portrait.Definition.id] == Portrait.Definition.gtkTable[Portrait.Definition.gtkPortraitId]
             )
             .filter(Portrait.Definition.speciesId == speciesId)
-            .filter(Portrait.Definition.language == 1) // Only in german to start with
+            .filter(Portrait.Definition.language == Int(getLanguageId()))
         }
          
     private func portraitImage(imgTable: Table, sizesTable: Table, rows: [Row]) -> PortraitImage? {

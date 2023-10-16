@@ -28,7 +28,7 @@ class SpeciesListViewModel: ObservableObject {
                 .join(.leftOuter, Portrait.Definition.table,
                       on: Portrait.Definition.speciesId == Species.Definition.table[Species.Definition.id])
                 .filter(Species.Definition.group == group.id)
-                .filter(Portrait.Definition.language == 1)
+                .filter(Portrait.Definition.language == Int(getLanguageId()))
                 .order(Species.Definition.gername)
             let queryWithSearch = searchString != nil ? filterSearchString(query, searchString) : query
             return try speciesDb.prepareRowIterator(queryWithSearch.order(Species.Definition.gername))
