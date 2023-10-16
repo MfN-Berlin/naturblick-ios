@@ -56,7 +56,7 @@ struct RegisterView: NavigatableView {
                 
                 if showAlreadyExists {
                     Text("user_already_exists")
-                        .foregroundColor(.onSecondarywarning)
+                        .caption(color: .onSecondarywarning)
                 }
                 
                 OnSecondaryFieldView(image: Image("visibility")) {
@@ -74,11 +74,11 @@ struct RegisterView: NavigatableView {
                             
                 Text("privacy_rules_text")
                     .body1()
+                Toggle(isOn: $registerVM.privacyChecked) {
+                    Text("data_protection_consent")
+                        .body1()
+                }
 
-                Toggle("data_protection_consent", isOn: $registerVM.privacyChecked)
-                    .font(.nbBody1)
-                    .foregroundColor(.onSecondaryMediumEmphasis)
-                
                 Button("sign_up") {
                     signUp()
                 }.buttonStyle(ConfirmFullWidthButton())

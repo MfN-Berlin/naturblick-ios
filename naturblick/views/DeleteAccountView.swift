@@ -71,7 +71,7 @@ struct DeleteAccountView: NavigatableView {
             }.buttonStyle(DestructiveFullWidthButton()).textCase(.uppercase)
             Button("forgot_password") {
                 navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-            } .buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
+            }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
             Spacer()
         }
         .padding(.defaultPadding)
