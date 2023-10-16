@@ -18,22 +18,22 @@ struct SpeciesListItem: Identifiable {
         }
     }
     var name: String? {
-        if let isFemale = isFemale, let gername = gername {
+        if let isFemale = isFemale, let speciesName = speciesName {
             if isFemale {
-                return "\(gername) ♀"
+                return "\(speciesName) ♀"
             } else {
-                return "\(gername) ♂"
+                return "\(speciesName) ♂"
             }
         } else {
-            return gername
+            return speciesName
         }
     }
     let speciesId: Int64
     let sciname: String
-    let gername: String?
+    let speciesName: String?
     let maleUrl: String?
     let femaleUrl: String?
-    let gersynonym: String?
+    let synonym: String?
     let isFemale: Bool?
     let wikipedia: String?
     let hasPortrait: Bool
@@ -45,10 +45,10 @@ extension SpeciesListItem {
     static let sampleData = SpeciesListItem(
         speciesId: 1,
         sciname: "Lissotriton vulgaris",
-        gername: "Teichmolch",
+        speciesName: "Teichmolch",
         maleUrl: "/uploads/crop_d60f7f6c98b0fcf1aa52e7b0_f0b5f2e568.jpg",
         femaleUrl: nil,
-        gersynonym: nil,
+        synonym: nil,
         isFemale: nil,
         wikipedia: "https://de.wikipedia.org/wiki/Teichmolch",
         hasPortrait: true,
@@ -65,10 +65,10 @@ extension SpeciesListItem {
                 SpeciesListItem(
                     speciesId: row[Species.Definition.table[Species.Definition.id]],
                     sciname: row[Species.Definition.sciname],
-                    gername: isGerman() ? row[Species.Definition.gername] : row[Species.Definition.engname],
+                    speciesName: isGerman() ? row[Species.Definition.gername] : row[Species.Definition.engname],
                     maleUrl: row[Species.Definition.maleUrl],
                     femaleUrl: row[Species.Definition.femaleUrl],
-                    gersynonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engsynonym],
+                    synonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engsynonym],
                     isFemale: nil,
                     wikipedia: row[Species.Definition.wikipedia],
                     hasPortrait: row[Species.Definition.optionalPortraitId] != nil,
@@ -84,10 +84,10 @@ extension Species {
         SpeciesListItem(
             speciesId: id,
             sciname: sciname,
-            gername: isGerman() ? gername : engname,
+            speciesName: isGerman() ? gername : engname,
             maleUrl: maleUrl,
             femaleUrl: femaleUrl,
-            gersynonym: isGerman() ? gersynonym : engsynonym,
+            synonym: isGerman() ? gersynonym : engsynonym,
             isFemale: nil,
             wikipedia: wikipedia,
             hasPortrait: hasPortrait,

@@ -19,6 +19,14 @@ struct Species: Identifiable {
     let redListGermany: String?
     let iucnCategory: String?
     let hasPortrait: Bool
+    
+    var speciesName: String? {
+        isGerman() ? gername : engname
+    }
+    
+    var synonym: String? {
+        isGerman() ? gersynonym : engsynonym
+    }
 }
 
 extension Species {
