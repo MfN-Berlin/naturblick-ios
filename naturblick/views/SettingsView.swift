@@ -16,9 +16,9 @@ struct SettingsView: NavigatableView {
             VStack(alignment: .leading, spacing: .defaultPadding) {
                 Text("cc_by_msg")
                     .body1()
-                NBEditText(label: String(localized: "cc_by_field"), icon: Image(systemName: "pencil"), text: $ccByName)
-                    .font(.nbBody1)
-                    .foregroundColor(.onSecondaryHighEmphasis)
+                OnSecondaryFieldView(image: Image(systemName: "pencil")) {
+                    TextField(String(localized: "cc_by_field"), text: $ccByName)
+                }
             }
         }.padding(.defaultPadding)
     }

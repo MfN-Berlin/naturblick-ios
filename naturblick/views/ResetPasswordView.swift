@@ -37,11 +37,17 @@ struct ResetPasswordView: NavigatableView {
     
     var body: some View {
         VStack {
-            NBEditText(label: String(localized: "password"), icon: Image("visibility"), text: $resetPasswordVM.password, isSecure: true, prompt: resetPasswordVM.passwordPrompt)
-                .padding([.top, .bottom], .defaultPadding)
-            if resetPasswordVM.passwordPrompt == nil {
+            OnSecondaryFieldView(image: Image("visibility")) {
+                SecureField(String(localized: "password"), text: $resetPasswordVM.password)
+                    .autocorrectionDisabled(true)
+                    .autocapitalization(.none)
+            }
+            if let prompt = resetPasswordVM.passwordPrompt {
+                Text(prompt)
+                    .caption()
+            } else if resetPasswordVM.passwordPrompt == nil {
                 Text("password_format")
-                    .caption(color: .onSecondaryMediumEmphasis)
+                    .caption()
             }
             
             Button("reset_password") {

@@ -40,21 +40,44 @@ struct RegisterView: NavigatableView {
         ScrollView {
             VStack {
                 Text("sign_up_text")
-                NBEditText(label: String(localized: "email"), icon: Image("create_24px"), text: $registerVM.email, prompt: registerVM.emailPrompt)
-                    .keyboardType(.emailAddress)
+                    .body1()
+                
+                
+                OnSecondaryFieldView(icon: "create_24px") {
+                    TextField(String(localized: "email"), text: $registerVM.email)
+                        .keyboardType(.emailAddress)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                }
+                if let prompt = registerVM.emailPrompt {
+                    Text(prompt)
+                        .caption()
+                }
+                
                 if showAlreadyExists {
                     Text("user_already_exists")
                         .foregroundColor(.onSecondarywarning)
                 }
                 
-                NBEditText(label: String(localized: "password"), icon: Image("visibility"), text: $registerVM.password, isSecure: true, prompt: registerVM.passwordPrompt)
-                if registerVM.passwordPrompt == nil {
-                    Text("password_format")
-                        .font(.nbCaption)
+                OnSecondaryFieldView(image: Image("visibility")) {
+                    SecureField(String(localized: "password"), text: $registerVM.password)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
                 }
+                if let prompt = registerVM.passwordPrompt {
+                    Text(prompt)
+                        .caption()
+                } else if registerVM.passwordPrompt == nil {
+                    Text("password_format")
+                        .caption()
+                }
+                            
                 Text("privacy_rules_text")
+                    .body1()
 
                 Toggle("data_protection_consent", isOn: $registerVM.privacyChecked)
+                    .font(.nbBody1)
+                    .foregroundColor(.onSecondaryMediumEmphasis)
                 
                 Button("sign_up") {
                     signUp()
@@ -65,9 +88,6 @@ struct RegisterView: NavigatableView {
             }
         }
         .padding(.defaultPadding)
-        .foregroundColor(.onSecondaryHighEmphasis)
-        .tint(Color.onSecondaryButtonPrimary)
-        .font(.nbBody1)
         .actionSheet(isPresented: $showRegisterSuccess) {
             ActionSheet(
                 title: Text("validate_email_title"),

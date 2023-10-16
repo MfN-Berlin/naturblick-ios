@@ -36,8 +36,16 @@ struct ForgotPasswordView: NavigatableView {
     
     var body: some View {
         VStack {
-            NBEditText(label: String(localized: "email"), icon: Image("create_24px"), text: $forgotPasswordVM.email, prompt: forgotPasswordVM.emailPrompt)
-                .keyboardType(.emailAddress)
+            OnSecondaryFieldView(icon: "create_24px") {
+                TextField(String(localized: "email"), text: $forgotPasswordVM.email)
+                    .keyboardType(.emailAddress)
+                    .autocorrectionDisabled(true)
+                    .autocapitalization(.none)
+            }
+            if let prompt = forgotPasswordVM.emailPrompt {
+                Text(prompt)
+                    .caption()
+            }
            
             Button("reset_password") {
                 forgotPassword()

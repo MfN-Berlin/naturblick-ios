@@ -39,13 +39,32 @@ struct DeleteAccountView: NavigatableView {
     }
     
     var body: some View {
-        VStack {
-            Text("delete_account_text")
-            NBEditText(label: String(localized: "email"), icon: Image("create_24px"), text: $deleteVM.email, prompt: deleteVM.emailPrompt)
-                .keyboardType(.emailAddress)
-            NBEditText(label: String(localized: "password"), icon: Image(systemName: "eye"), text: $deleteVM.password, isSecure: true, prompt: deleteVM.passwordPrompt)
+        VStack(alignment: .leading, spacing: .defaultPadding) {
+            Text("delete_account_text_rly")
+                .body1()
+            OnSecondaryFieldView(icon: "create_24px") {
+                TextField(String(localized: "email"), text: $deleteVM.email)
+                    .keyboardType(.emailAddress)
+                    .autocorrectionDisabled(true)
+                    .autocapitalization(.none)
+            }
+            if let prompt = deleteVM.emailPrompt {
+                Text(prompt)
+                    .caption()
+            }
+            
+            OnSecondaryFieldView(image: Image(systemName: "eye")) {
+                SecureField(String(localized: "password"), text: $deleteVM.password)
+                    .autocorrectionDisabled(true)
+                    .autocapitalization(.none)
+            }
+            if let prompt = deleteVM.passwordPrompt {
+                Text(prompt)
+                    .caption()
+            }
             if showCredentialsError {
                 Text("email_or_password_invalid")
+                    .body1(color: .onSecondarywarning)
             }
             Button("delete_account") {
                 deleteAccount()
@@ -53,12 +72,9 @@ struct DeleteAccountView: NavigatableView {
             Button("forgot_password") {
                 navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
             } .buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
-
+            Spacer()
         }
         .padding(.defaultPadding)
-        .foregroundColor(.onSecondaryHighEmphasis)
-        .tint(Color.onSecondaryButtonPrimary)
-        .font(.nbBody1)
         .actionSheet(isPresented: $showDeleteSuccess) {
             ActionSheet(
                 title: Text("delete_success"),

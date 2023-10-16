@@ -66,7 +66,7 @@
 "delete_account_title"="**Account löschen**";
 "delete_account_text"="Mit dem Löschen deines Accounts wird die Verknüpfung zu anderen Geräten aufgehoben und wir löschen automatisch die von dir angegebene E-Mail-Adresse.";
 "delete_account_text_verify"=" Bitte bestätige deinen Wunsch, den Account zu löschen, indem du deine Zugangsdaten eingibst.";
-"delete_account"="Account gelöscht";
+"delete_account"="Account löschen";
 "delete_account_note_link"="**Hinweis für die Verbindung mit alten Geräten**\n\nFür die Übertragung von Beobachtungen von alten Geräten auf neue, empfehlen wir dir, dich einfach auf beiden Geräten einzuloggen. Solltest du das Handy dann weitergeben oder recyceln, deinstalliere Naturblick auf deinem Handy oder setze es einfach auf die Werkseinstellungen zurück. Deine alten Beobachtungen werden dadurch nicht gelöscht. Lösche den Account nicht, da dadurch die Verknüpfung der Beobachtungen aufgehoben werden würde.";
 "delete_account_note_password"="Hinweis Passwort vergessen";
 "delete_account_note_password_text"="Wenn du ein neues Passwort vergibst, werden alle Handys, die mit dem Account verknüpft sind, aus Sicherheitsgründen automatisch ausgeloggt. Alle deine Beobachtungen bleiben weiterhin mit deinem Account verknüpft und werden dir angezeigt.";
@@ -88,7 +88,7 @@
 "account_text_sign_in_or_sign_up1"="Mit einem Naturblick-Account kannst du deine Beobachtungen bei einem Handywechsel über mehrere mobile Geräte hinweg sichern und auf allen verbundenen Handys anzeigen lassen.";
 "login_standard"="Verbinde alle Beobachtungen auf diesem Handy mit deinem Account.";
 "successful_signin"="Erfolgreich eingeloggt";
-"delete_account_text"="**Willst du deinen Account wirklich löschen?**\n\nMit dem Löschen deines Accounts wird die Verknüpfung zu anderen Geräten aufgehoben und wir löschen automatisch die von dir angegebene E-Mail-Adresse.\n\nBitte bestätige deinen Wunsch, den Account zu löschen, indem du deine Zugangsdaten eingibst.";
+"delete_account_text_rly"="**Willst du deinen Account wirklich löschen?**\n\nMit dem Löschen deines Accounts wird die Verknüpfung zu anderen Geräten aufgehoben und wir löschen automatisch die von dir angegebene E-Mail-Adresse.\n\nBitte bestätige deinen Wunsch, den Account zu löschen, indem du deine Zugangsdaten eingibst.";
 "delete_success"="Erfolgreich gelöscht";
 "reset"="Zurücksetzen";
 "home"="Start";

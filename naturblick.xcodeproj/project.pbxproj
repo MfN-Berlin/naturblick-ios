@@ -55,7 +55,6 @@
 		136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */; };
 		136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D907F29D18BBE00A00BD4 /* Portrait.swift */; };
 		136DFAB929F96E6500C8B8FF /* CreateObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */; };
-		136DFABB29F9752100C8B8FF /* NBEditText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DFABA29F9752100C8B8FF /* NBEditText.swift */; };
 		136E89092AD579C500197790 /* OnSecondaryFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136E89082AD579C500197790 /* OnSecondaryFieldView.swift */; };
 		13709A832A7CFE2600B81108 /* FullscreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13709A822A7CFE2600B81108 /* FullscreenView.swift */; };
 		13709A852A7D1C0E00B81108 /* FABView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13709A842A7D1C0E00B81108 /* FABView.swift */; };
@@ -235,7 +234,6 @@
 		136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationPersistenceController.swift; sourceTree = "<group>"; };
 		136D907F29D18BBE00A00BD4 /* Portrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portrait.swift; sourceTree = "<group>"; };
 		136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateObservationView.swift; sourceTree = "<group>"; };
-		136DFABA29F9752100C8B8FF /* NBEditText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBEditText.swift; sourceTree = "<group>"; };
 		136E89082AD579C500197790 /* OnSecondaryFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnSecondaryFieldView.swift; sourceTree = "<group>"; };
 		13709A822A7CFE2600B81108 /* FullscreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenView.swift; sourceTree = "<group>"; };
 		13709A842A7D1C0E00B81108 /* FABView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FABView.swift; sourceTree = "<group>"; };
@@ -504,7 +502,6 @@
 				132A91402A2DCF6C00AC405C /* Map+Extensions.swift */,
 				7BB518622AC1AAFF008A1CEA /* MapInfoBox.swift */,
 				13F08DE02A9F674600874264 /* NavigatableView.swift */,
-				136DFABA29F9752100C8B8FF /* NBEditText.swift */,
 				13AFFA5B2AAF568700ABF4F9 /* NBText.swift */,
 				1345EF7F2AB873D600F1CEA8 /* ObservationInfoView.swift */,
 				135E682E29EE805700192C4A /* ObservationListItemView.swift */,
@@ -864,7 +861,6 @@
 				1349393A2AAB42F800A50BF1 /* IdFlow.swift in Sources */,
 				13070CA82A053EC700A2046D /* Operation.swift in Sources */,
 				7B8008F229D5B66B00950839 /* PortraitImageSize.swift in Sources */,
-				136DFABB29F9752100C8B8FF /* NBEditText.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
 				134C75AB2A2F515C0046EEE4 /* BirdRecorderViewModel.swift in Sources */,
 				7BDCC0EB2AD0458C0089A4C6 /* PickSpeciesListView.swift in Sources */,

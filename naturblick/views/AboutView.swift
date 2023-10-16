@@ -33,7 +33,6 @@ struct AboutView: NavigatableView {
                     }
                 }.buttonStyle(ConfirmFullWidthButton())
             }
-            .tint(Color.onSecondaryButtonPrimary)
         }
         .padding(.defaultPadding)
     }

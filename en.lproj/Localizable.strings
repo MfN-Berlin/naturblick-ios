@@ -89,7 +89,7 @@
 "successful_signin"="Signed in successfully";
 "delete_account_question_no_observations"="Do you really want to delete your account?";
 "delete_account_question"="Deleting your account will unlink all other devices. You will lose the connection to observations on these devices.";
-"delete_account_text"="**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.\n\nPlease, confirm your wish to delete the account by entering your login details.";
+"delete_account_text_rly"="**Do you really want to delete your account?**\n\nDeleting your account will unlink all other devices. You will lose the connection to observations on these devices.\n\nPlease, confirm your wish to delete the account by entering your login details.";
 "delete_success"="Success";
 "reset"="Reset";
 "home"="Home";

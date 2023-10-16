@@ -53,9 +53,24 @@ struct LoginView: NavigatableView {
                     .body1()
             }
             
-            NBEditText(label: String(localized: "email"), icon: Image("create_24px"), text: $loginVM.email, prompt: loginVM.emailPrompt)
-                .keyboardType(.emailAddress)
-            NBEditText(label: String(localized: "password"), icon: Image("visibility"), text: $loginVM.password, isSecure: true, prompt: loginVM.passwordPrompt)
+            OnSecondaryFieldView(icon: "create_24px") {
+                TextField(String(localized: "email"), text: $loginVM.email)
+                    .keyboardType(.emailAddress)
+            }
+            if let prompt = loginVM.emailPrompt {
+                Text(prompt)
+                    .caption()
+            }
+            OnSecondaryFieldView(image: Image("visibility")) {
+                SecureField(String(localized: "password"), text: $loginVM.password)
+            }
+            if let prompt = loginVM.passwordPrompt {
+                Text(prompt)
+                    .caption()
+            } else if loginVM.passwordPrompt == nil {
+                Text("password_format")
+                    .caption()
+            }
             if showCredentialsWrong {
                 Text("email_or_password_invalid")
                     .body1(color: .onSecondarywarning)
