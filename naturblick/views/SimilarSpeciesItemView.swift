@@ -30,15 +30,12 @@ struct SimilarSpeciesItemView: View {
             VStack(alignment: .leading) {
                 if let name = species.name {
                     Text(species.sciname)
-                        .font(.nbSubtitle3)
-                        .foregroundColor(.onFeatureSignalHigh)
+                        .subtitle3(color: .onFeatureSignalHigh)
                     Text(name)
-                        .font(.nbSubtitle1)
-                        .foregroundColor(.onFeatureHighEmphasis)
+                        .subtitle1(color: .onFeatureHighEmphasis)
                 } else {
                     Text(species.sciname)
-                        .font(.nbSubtitle1)
-                        .foregroundColor(.onFeatureSignalHigh)
+                        .subtitle1(color: .onFeatureSignalHigh)
                 }
             }
             .padding(.top, .avatarTextOffset)

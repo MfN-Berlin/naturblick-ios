@@ -8,7 +8,6 @@ import SwiftUI
 struct ConfirmFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.nbButton)
             .padding(.defaultPadding)
             .frame(maxWidth: .infinity)
             .background(Color.onPrimaryButtonPrimary)
@@ -21,7 +20,6 @@ struct ConfirmFullWidthButton: ButtonStyle {
 struct ConfirmButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.nbButton)
             .padding(.defaultPadding)
             .background(Color.onPrimaryButtonPrimary)
             .foregroundStyle(Color.onPrimaryHighEmphasis)
@@ -33,7 +31,6 @@ struct ConfirmButton: ButtonStyle {
 struct AuxiliaryOnSecondaryButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.nbButton)
             .padding(.defaultPadding)
             .foregroundStyle(Color.onSecondaryHighEmphasis)
             .border(Color.onSecondaryMinimumEmphasis)
@@ -45,7 +42,6 @@ struct AuxiliaryOnSecondaryButton: ButtonStyle {
 struct AuxiliaryOnSecondaryFullwidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.nbButton)
             .padding(.defaultPadding)
             .frame(maxWidth: .infinity)
             .foregroundStyle(Color.onSecondaryHighEmphasis)
@@ -89,7 +85,6 @@ struct ChangeSpeciesButton: ButtonStyle{
 struct DestructiveFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.nbButton)
             .padding(.defaultPadding)
             .frame(maxWidth: .infinity)
             .foregroundStyle(Color.onSecondarywarning)
@@ -102,7 +97,6 @@ struct DestructiveFullWidthButton: ButtonStyle {
 struct DestructiveButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.nbButton)
             .padding(.defaultPadding)
             .foregroundStyle(Color.onSecondarywarning)
             .border(Color.onSecondarywarning)
@@ -114,7 +108,6 @@ struct DestructiveButton: ButtonStyle {
 struct FABReplacementFullWidthButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.nbButton)
             .padding(.defaultPadding)
             .frame(maxWidth: .infinity)
             .background(Color.onSecondaryButtonSecondary)

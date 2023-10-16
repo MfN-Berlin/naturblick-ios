@@ -16,6 +16,7 @@ struct FeedbackView: NavigatableView {
         ScrollView {
             VStack(alignment: .leading, spacing: .defaultPadding) {
                 Text("support_us_text")
+                    .body1()
                 Button("feedback_form") {
                     let deviceName = "ios"
                     let appVersion = UIApplication.appVersion
@@ -32,8 +33,6 @@ struct FeedbackView: NavigatableView {
                 }.buttonStyle(ConfirmFullWidthButton())
             }
             .tint(Color.onSecondaryButtonPrimary)
-            .font(.nbBody1)
-            .foregroundColor(.onSecondaryHighEmphasis)
         }
         .padding(.defaultPadding)
     }

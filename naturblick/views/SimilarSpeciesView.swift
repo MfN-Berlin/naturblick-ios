@@ -15,14 +15,14 @@ struct SimilarSpeciesView: View, HoldingViewController {
         VStack(alignment: .leading) {
             if !similarSpeciesViewModel.mixups.isEmpty {
                 Text("Verwechslungsarten")
-                    .font(.nbHeadline4)
+                    .headline4()
             }
             ForEach(similarSpeciesViewModel.mixups) { mix in
                 if mix.species.hasPortrait {
                         VStack(alignment: .leading) {
                             SimilarSpeciesItemView(species: mix.species.listItem)
                             Text(mix.differences)
-                                .font(.nbBody1)
+                                .body1()
                                 .padding(.top, .halfPadding)
                         }
                         .onTapGesture {
@@ -39,7 +39,7 @@ struct SimilarSpeciesView: View, HoldingViewController {
                         VStack(alignment: .leading) {
                             SimilarSpeciesItemView(species: mix.species.listItem)
                             Text(mix.differences)
-                                .font(.nbBody1)
+                                .body1()
                                 .padding(.top, .halfPadding)
                         }
                         .frame(maxWidth: .infinity)
@@ -54,7 +54,7 @@ struct SimilarSpeciesView: View, HoldingViewController {
                     VStack(alignment: .leading) {
                         SimilarSpeciesItemView(species: mix.species.listItem)
                         Text(mix.differences)
-                            .font(.nbBody1)
+                            .body1()
                             .padding(.top, .halfPadding)
                     }
                     .frame(maxWidth: .infinity)

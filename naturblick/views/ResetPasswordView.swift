@@ -41,8 +41,7 @@ struct ResetPasswordView: NavigatableView {
                 .padding([.top, .bottom], .defaultPadding)
             if resetPasswordVM.passwordPrompt == nil {
                 Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.")
-                    .tint(Color.onSecondaryButtonPrimary)
-                    .font(.nbCaption)
+                    .caption(color: .onSecondaryMediumEmphasis)
             }
             
             Button("Reset password") {

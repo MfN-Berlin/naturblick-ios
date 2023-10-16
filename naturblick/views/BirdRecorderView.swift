@@ -16,7 +16,7 @@ struct BirdRecorderView: NavigatableView {
             HStack(alignment: .center) {
                 if model.isAuthorized {
                     Text("\(model.currentTime)")
-                        .font(.nbHeadline3)
+                        .headline3()
                         .foregroundColor(.onPrimaryHighEmphasis)
                         .onAppear {
                             model.record()

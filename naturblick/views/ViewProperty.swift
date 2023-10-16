@@ -18,11 +18,10 @@ struct ViewProperty: View {
                     .caption(color: .onSecondarySignalLow)
                 if let text = content, !text.isEmpty {
                     Text(text)
-                        .font(.nbBody1)
-                        .foregroundColor(.onSecondaryMediumEmphasis)
+                        .body1()
                 } else {
                     Text(" ")
-                        .font(.nbBody1)
+                        .body1()
                 }
             }
         }

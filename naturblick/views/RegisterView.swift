@@ -38,36 +38,31 @@ struct RegisterView: NavigatableView {
     
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(alignment: .leading) {
                 Text("Create account")
-                    .tint(Color.onSecondaryButtonPrimary)
-                    .font(.nbSubtitle1)
+                    .subtitle1()
                     .padding([.top, .bottom], .defaultPadding)
                 
                 Text("You create a Naturblick account here. Please enter an email address. We will send you the activation link to this address.")
-                    .tint(Color.onSecondaryButtonPrimary)
-                    .font(.nbBody1)
+                    .body1()
                 
                 NBEditText(label: "Email address", icon: Image("create_24px"), text: $registerVM.email, prompt: registerVM.emailPrompt)
                     .keyboardType(.emailAddress)
                     .padding([.top, .bottom], .defaultPadding)
                 if showAlreadyExists {
                     Text("Email already exists.")
-                        .foregroundColor(.onSecondarywarning)
-                        .font(.nbBody1)
+                        .body1(color: .onSecondarywarning)
                 }
                 
                 NBEditText(label: "Password", icon: Image("visibility"), text: $registerVM.password, isSecure: true, prompt: registerVM.passwordPrompt)
                 if registerVM.passwordPrompt == nil {
                     Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.")
-                        .tint(Color.onSecondaryButtonPrimary)
-                        .font(.nbCaption)
+                        .caption(color: .onSecondaryHighEmphasis)
                         .padding([.bottom], .defaultPadding)
                 }
                 
                 Text("**Privacy statement**\n\nFor the registration we need your email address. The registration is only valid after you have clicked on a confirmation link in an email sent to you by us. The email address will be used by us exclusively for the administration of the account. The registration/login is voluntary and can be revoked at any time. Your personal data will be deleted from our system when the account is deleted.\n\nThe processing of the data is carried out in compliance with the applicable data protection regulations. The transmission of your entries is encrypted. In order to protect your data from loss, manipulation or access by unauthorized persons, the Museum für Naturkunde Berlin uses state-of-the-art technical and organizational measures.\n\nWe take data protection very seriously. You can find more information about data protection in the app's imprint.")
-                    .tint(Color.onSecondaryButtonPrimary)
-                    .font(.nbBody1)
+                    .body1()
                 
                 Toggle("I have read and understood privacy statement.", isOn: $registerVM.privacyChecked).font(.nbBody1)
                     .padding([.trailing, .bottom], .defaultPadding)

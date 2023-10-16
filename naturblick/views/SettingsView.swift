@@ -15,11 +15,11 @@ struct SettingsView: NavigatableView {
         ScrollView {
             VStack(alignment: .leading, spacing: .defaultPadding) {
                 Text("cc_by_msg")
+                    .body1()
                 NBEditText(label: String(localized: "cc_by_field"), icon: Image(systemName: "pencil"), text: $ccByName)
+                    .font(.nbBody1)
+                    .foregroundColor(.onSecondaryHighEmphasis)
             }
-            .foregroundColor(.onSecondaryHighEmphasis)
-            .tint(Color.onSecondaryButtonPrimary)
-            .font(.nbBody1)
         }.padding(.defaultPadding)
     }
 }

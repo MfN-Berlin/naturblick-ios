@@ -203,8 +203,7 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                                 streamController.play(url: model.sound.url)
                             }
                         Text(timeText(spectrogram: spectrogram))
-                            .font(.nbHeadline3)
-                            .foregroundColor(.onPrimaryHighEmphasis)
+                            .headline3()
                     }
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.defaultPadding)

@@ -47,7 +47,7 @@ class MenuController : UITableViewController, UIPopoverPresentationControllerDel
         contentConfig.text = entry.title
         contentConfig.textProperties.font = .nbHeadline6
         contentConfig.textProperties.color = .onPrimaryHighEmphasis
-        
+
         contentConfig.image = entry.image
         contentConfig.imageProperties.tintColor = .onPrimaryHighEmphasis
 

@@ -24,7 +24,7 @@ struct NBText: View {
             }
             if let prompt = prompt {
                 Text(prompt)
-                    .font(.nbCaption)
+                    .caption(color: .onSecondaryMediumEmphasis)
             }
         }
     }

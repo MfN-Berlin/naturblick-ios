@@ -30,7 +30,7 @@ struct NBEditText: View {
             }
             if let prompt = prompt {
                 Text(prompt)
-                    .font(.nbCaption)
+                    .caption()
             }
         }
     }

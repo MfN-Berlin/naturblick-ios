@@ -40,7 +40,7 @@ struct PortraitImageView: View {
                     }
                 }
                 .overlay(alignment: .topTrailing) {
-                    Button(action: {
+                    SwiftUI.Button(action: {
                         showCCByInfo.toggle()
                     }) {
                         Circle()
@@ -58,7 +58,7 @@ struct PortraitImageView: View {
                 }
                 if !headerImage {
                     Text(image.text)
-                        .font(.nbBody1)
+                        .body1()
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }
             }.onAppear {

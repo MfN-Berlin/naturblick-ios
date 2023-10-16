@@ -47,8 +47,10 @@ struct LoginView: NavigatableView {
         VStack(alignment: .leading, spacing: .defaultPadding) {
             if (accountViewModel.activated) {
                 Text("account_activated")
+                    .body1()
             } else {
                 Text("login_standard")
+                    .body1()
             }
             
             NBEditText(label: String(localized: "email"), icon: Image("create_24px"), text: $loginVM.email, prompt: loginVM.emailPrompt)
@@ -56,7 +58,7 @@ struct LoginView: NavigatableView {
             NBEditText(label: String(localized: "password"), icon: Image("visibility"), text: $loginVM.password, isSecure: true, prompt: loginVM.passwordPrompt)
             if showCredentialsWrong {
                 Text("email_or_password_invalid")
-                    .foregroundColor(.onSecondarywarning)
+                    .body1(color: .onSecondarywarning)
             }
             
             Button("sign_in") {
@@ -68,12 +70,10 @@ struct LoginView: NavigatableView {
             }.buttonStyle(AuxiliaryOnSecondaryFullwidthButton()).textCase(.uppercase)
             
             Text("delete_account_note_password")
+                .body2()
             Spacer()
         }
         .padding(.defaultPadding)
-        .foregroundColor(.onSecondaryHighEmphasis)
-        .tint(Color.onSecondaryButtonPrimary)
-        .font(.nbBody1)
         .actionSheet(isPresented: $showLoginSuccess) {
             ActionSheet(
                 title: Text("successful_signin"),

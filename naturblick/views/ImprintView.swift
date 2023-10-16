@@ -13,13 +13,13 @@ struct ImprintView: NavigatableView {
         ScrollView {
             VStack(alignment: .leading, spacing: .defaultPadding) {
                 Text("imprint_1 \(UIApplication.appVersion)")
+                    .body1()
                 Button("more_sources") {
                     navigationController?.pushViewController(FurtherSourcesView().setUpViewController(), animated: true)
                 }.buttonStyle(ConfirmFullWidthButton())
                 Text("imprint_2")
-            }.foregroundColor(.onSecondaryHighEmphasis)
-                .tint(Color.onSecondaryButtonPrimary)
-                .font(.nbBody1)
+                    .body1()
+            }
         }
         .padding(.defaultPadding)
     }
