@@ -28,7 +28,10 @@ struct Thumbnail<Content: View> : View {
         .task(id: thumbnailId) {
             if let thumbnailId = self.thumbnailId {
                 self.uiImage = try? await NBImage(id: thumbnailId).image
-            } else if let speciesUrl = speciesUrl {
+            }
+        }
+        .task(id: speciesUrl) {
+            if let speciesUrl = speciesUrl, self.thumbnailId == nil {
                 self.uiImage = await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!)
             }
         }
