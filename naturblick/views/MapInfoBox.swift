@@ -22,8 +22,8 @@ struct MapInfoBox: NavigatableView {
                     .resizable()
                     .scaledToFit()
             }
-            if let gerName = observation.species?.gername {
-                Text(gerName)
+            if let speciesName = observation.species?.speciesName {
+                Text(speciesName)
                     .subtitle1()
             }
             Text(observation.observation.created.date, formatter: .dateTime)

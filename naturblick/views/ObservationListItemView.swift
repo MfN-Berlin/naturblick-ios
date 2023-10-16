@@ -15,7 +15,7 @@ struct ObservationListItemView: View {
                 .avatar()
                 .padding(.trailing, .defaultPadding)
             VStack(alignment: .leading) {
-                if let name = observation.species?.gername {
+                if let name = observation.species?.speciesName {
                     Text(name)
                         .subtitle1()
                 } else {

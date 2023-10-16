@@ -30,10 +30,10 @@ struct CharacterView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(character.gername)
+            Text(character.name)
                 .subtitle1()
                 .padding(.bottom, .defaultPadding)
-            if let description = character.gerdescription {
+            if let description = character.description {
                 Text(description)
                     .body2()
                     .padding(.bottom, .defaultPadding)

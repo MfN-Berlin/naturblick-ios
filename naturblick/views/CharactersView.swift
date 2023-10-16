@@ -9,7 +9,7 @@ import BottomSheet
 struct CharactersView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? {
-        group.gerName
+        isGerman() ? group.gerName : group.engName
     }
     
     let group: Group

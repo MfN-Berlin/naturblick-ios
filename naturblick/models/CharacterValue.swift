@@ -12,6 +12,10 @@ struct CharacterValue: Identifiable {
     let gername: String
     let engname: String
     let hasImage: Bool
+    
+    var name: String {
+        isGerman() ? gername : engname
+    }
 }
 
 extension CharacterValue {
