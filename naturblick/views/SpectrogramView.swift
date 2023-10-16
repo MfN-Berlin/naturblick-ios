@@ -178,10 +178,10 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
         StaticBottomSheetView {
             VStack {
                 if let spectrogram = model.spectrogram {
-                    Text("Choose section")
+                    Text("choose_section")
                         .headline6()
                         .padding([.horizontal, .top], .defaultPadding)
-                    Text("Please select a section that best represents the bird\'s sound. Our pattern recognition gives the best results for recordings that are under 10 seconds.")
+                    Text("please_select")
                         .caption(color: .onPrimaryLowEmphasis)
                         .padding([.horizontal, .bottom], .defaultPadding)
                     Image(uiImage: spectrogram)
@@ -209,7 +209,7 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                     .padding(.defaultPadding)
                 } else {
                     ProgressView {
-                        Text("Downloading spectrogram")
+                        Text("downloading_spectrogram")
                             .font(.nbButton)
                             .foregroundColor(.onSecondaryMediumEmphasis)
                     }
@@ -220,11 +220,11 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
             }
         } sheet: {
             HStack {
-                Button("Discard") {
+                Button("discard") {
                     navigationController?.popToRootViewController(animated: true)
                 }
                 .buttonStyle(DestructiveFullWidthButton())
-                Button("Identify species") {
+                Button("identify_species") {
                     crop()
                 }
                 .buttonStyle(ConfirmFullWidthButton())
@@ -232,13 +232,13 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
             }
         }
         .alertHttpError(isPresented: $model.isPresented, error: model.error) { details in
-            Button("Try again") {
+            Button("try_again") {
                 model.downloadSpectrogram()
             }
-            Button("Browse species") {
+            Button("browse_species") {
                 flow.searchSpecies()
             }
-            Button("Save as unknown species") {
+            Button("save_unknown") {
                 flow.selectSpecies(species: nil)
             }
         }

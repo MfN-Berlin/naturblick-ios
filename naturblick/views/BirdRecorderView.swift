@@ -25,9 +25,9 @@ struct BirdRecorderView: NavigatableView {
                             model.cancel()
                         }
                 } else if model.isDenied {
-                    Text("Without permission to record it is not possible to record birds")
+                    Text("record_permission_missing")
                 } else {
-                    Text("Naturblick requires recording")
+                    Text("requires_recording")
                 }
             }
         } sheet: {
