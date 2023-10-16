@@ -19,10 +19,10 @@ class SelectSpeciesViewModel: ObservableObject {
                     return (results.filter { r in r.id == id}.first!, SpeciesListItem(
                         speciesId: id,
                         sciname: row[Species.Definition.sciname],
-                        gername: row[Species.Definition.gername],
+                        gername: isGerman() ? row[Species.Definition.gername] : row[Species.Definition.engname],
                         maleUrl: row[Species.Definition.maleUrl],
                         femaleUrl: row[Species.Definition.femaleUrl],
-                        gersynonym: row[Species.Definition.gersynonym],
+                        gersynonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engsynonym],
                         isFemale: nil,
                         wikipedia: row[Species.Definition.wikipedia],
                         hasPortrait: row[Species.Definition.optionalPortraitId] != nil,
