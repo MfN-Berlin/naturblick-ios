@@ -17,6 +17,7 @@ struct ObservationInfoView: View {
     let start: Int?
     let end: Int?
     let fullscreenImageId: UUID?
+    let fullscreenLocalId: String?
     let thumbnailId: UUID?
     let fallbackThumbnail: Image
     @State var thumbnail: Image? = nil
@@ -36,8 +37,10 @@ struct ObservationInfoView: View {
         
         if observation.observation.obsType == .image || observation.observation.obsType == .unidentifiedimage, let mediaId = observation.observation.mediaId {
             self.fullscreenImageId = mediaId
+            self.fullscreenLocalId = observation.observation.localMediaId
         } else {
             self.fullscreenImageId = nil
+            self.fullscreenLocalId = nil
         }
         self.thumbnailId = observation.observation.thumbnailId
         self.fallbackThumbnail = fallbackThumbnail
@@ -71,7 +74,7 @@ struct ObservationInfoView: View {
                             Image("zoom")
                                 .foregroundColor(.onPrimaryHighEmphasis)
                         }.onTapGesture {
-                            navigate(FullscreenView(imageId: fullscreenImageId).setUpViewController())
+                            navigate(FullscreenView(imageId: fullscreenImageId, localIdentifier: self.fullscreenLocalId).setUpViewController())
                         }
                     }
                     .padding(.bottom, .defaultPadding)
@@ -100,7 +103,7 @@ struct ObservationInfoView: View {
         .padding(.defaultPadding)
         .background(Color(uiColor: .onPrimaryButtonSecondary))
         .task(id: thumbnailId) {
-            if let id = thumbnailId, let image = try? await client.download(mediaId: id) {
+            if let id = thumbnailId, let image = try? await client.downloadCached(mediaId: id) {
                 thumbnail = Image(uiImage: image)
             }
         }

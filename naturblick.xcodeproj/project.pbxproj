@@ -27,6 +27,7 @@
 		133B39222A40598C00D48617 /* Connection+SpeciesDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */; };
 		133B39242A4069BD00D48617 /* SelectSpeciesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B39232A4069BD00D48617 /* SelectSpeciesViewModel.swift */; };
 		133B392A2A4081A000D48617 /* NBImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B39292A4081A000D48617 /* NBImage.swift */; };
+		134082AD2ADD721500351C42 /* NBThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134082AC2ADD721500351C42 /* NBThumbnail.swift */; };
 		1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C829DD94870075ACE3 /* HttpError.swift */; };
 		1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1CA29DD94F50075ACE3 /* BackendClient.swift */; };
 		1343D1D329DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1D229DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift */; };
@@ -171,7 +172,6 @@
 		7BDD17E22A45C397001B9DB4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E12A45C397001B9DB4 /* LoginView.swift */; };
 		7BDD17E42A45C5AA001B9DB4 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */; };
 		7BDD17E62A45C7C3001B9DB4 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */; };
-		7BDF2D2B2A090EE8002EC35F /* PhotoLibraryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF2D2A2A090EE8002EC35F /* PhotoLibraryManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,6 +206,7 @@
 		133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Connection+SpeciesDB.swift"; sourceTree = "<group>"; };
 		133B39232A4069BD00D48617 /* SelectSpeciesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpeciesViewModel.swift; sourceTree = "<group>"; };
 		133B39292A4081A000D48617 /* NBImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBImage.swift; sourceTree = "<group>"; };
+		134082AC2ADD721500351C42 /* NBThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBThumbnail.swift; sourceTree = "<group>"; };
 		1343D1C629DD944D0075ACE3 /* HTTPDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPDownloader.swift; sourceTree = "<group>"; };
 		1343D1C829DD94870075ACE3 /* HttpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpError.swift; sourceTree = "<group>"; };
 		1343D1CA29DD94F50075ACE3 /* BackendClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendClient.swift; sourceTree = "<group>"; };
@@ -351,7 +352,6 @@
 		7BDD17E12A45C397001B9DB4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
-		7BDF2D2A2A090EE8002EC35F /* PhotoLibraryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -456,7 +456,6 @@
 			children = (
 				7BC46D752A050BB80020EAC6 /* CameraManager.swift */,
 				7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */,
-				7BDF2D2A2A090EE8002EC35F /* PhotoLibraryManager.swift */,
 			);
 			path = manager;
 			sourceTree = "<group>";
@@ -558,6 +557,7 @@
 				134F54912A5EB67B00A079EC /* MimeType.swift */,
 				133B39292A4081A000D48617 /* NBImage.swift */,
 				137690062A30D3F40076F93A /* NBSound.swift */,
+				134082AC2ADD721500351C42 /* NBThumbnail.swift */,
 				1366FA942A654B8500436EF1 /* Observation.swift */,
 				134B72B02A04FB6B00C1DCAD /* ObservationRequest.swift */,
 				137FE58D29E5AC1C00B397DF /* ObservationResponse.swift */,
@@ -902,6 +902,7 @@
 				137FE59029E5B3A500B397DF /* NSMutableData+append.swift in Sources */,
 				134B72B32A04FBA300C1DCAD /* SyncInfo.swift in Sources */,
 				137FE58529E5964100B397DF /* DBObservation.swift in Sources */,
+				134082AD2ADD721500351C42 /* NBThumbnail.swift in Sources */,
 				7BB3DE2029F6695F00F0D387 /* SimilarSpeciesItemView.swift in Sources */,
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
 				7BC11AFE2A4ACD4E00823D4F /* DeleteAccountView.swift in Sources */,
@@ -915,7 +916,6 @@
 				7B02E4DA2A4993DF006406A1 /* Settings.swift in Sources */,
 				133B39202A40517200D48617 /* SelectSpeciesView.swift in Sources */,
 				13743F6C2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift in Sources */,
-				7BDF2D2B2A090EE8002EC35F /* PhotoLibraryManager.swift in Sources */,
 				137690032A30946F0076F93A /* SpectrogramView.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
 				7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */,
@@ -1126,6 +1126,7 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Naturblick needs location.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Naturblick needs microphone.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to add your nature photos to the gallery";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Naturblick needs photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -1166,6 +1167,7 @@
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Naturblick needs location.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Naturblick needs microphone.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to add your nature photos to the gallery";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Naturblick needs photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;

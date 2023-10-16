@@ -13,7 +13,7 @@ struct EditData {
     var coords: Coordinates?
     var details: String
     var individuals: Int64
-    var thumbnail: NBImage?
+    var thumbnail: NBThumbnail?
     var behavior: Behavior?
     
     init(observation: Observation) {
@@ -51,7 +51,7 @@ struct EditData {
             return nil
         }
 
-        return PatchOperation(occurenceId: original.occurenceId, obsType: obsType, coords: coords, details: details, individuals: individuals, mediaId: nil, thumbnailId: thumbnailId, newSpeciesId: speciesId, behavior: behavior)
+        return PatchOperation(occurenceId: original.occurenceId, obsType: obsType, coords: coords, details: details, individuals: individuals, mediaId: nil, localMediaId: nil, thumbnailId: thumbnailId, newSpeciesId: speciesId, behavior: behavior)
     }
     
     var hasChanged: Bool {

@@ -14,6 +14,7 @@ struct PatchOperation: Encodable {
     let details: String?
     let individuals: Int64?
     let mediaId: UUID?
+    let localMediaId: String?
     let thumbnailId: UUID?
     let newSpeciesId: Int64?
     let behavior: Behavior?
@@ -30,6 +31,7 @@ extension PatchOperation {
         static let details = Expression<String?>("details")
         static let individuals = Expression<Int64?>("individuals")
         static let mediaId = Expression<UUID?>("media_id")
+        static let localMediaId = Expression<String?>("local_media_id")
         static let thumbnailId = Expression<UUID?>("thumbnail_id")
         static let speciesId = Expression<Int64?>("species_id")
         static let behavior = Expression<String?>("behavior")
@@ -44,6 +46,7 @@ extension PatchOperation {
                 details <- operation.details,
                 individuals <- operation.individuals,
                 mediaId <- operation.mediaId,
+                localMediaId <- operation.localMediaId,
                 thumbnailId <- operation.thumbnailId,
                 speciesId <- operation.newSpeciesId,
                 behavior <- operation.behavior?.rawValue
@@ -71,6 +74,7 @@ extension PatchOperation {
                 details: try row.get(table[details]),
                 individuals: try row.get(table[individuals]),
                 mediaId: try row.get(table[mediaId]),
+                localMediaId: try row.get(table[localMediaId]),
                 thumbnailId: try row.get(table[thumbnailId]),
                 newSpeciesId: try row.get(table[speciesId]),
                 behavior: behaviorEnum

@@ -7,6 +7,7 @@ import Foundation
 import SwiftUI
 import Mantis
 import MapKit
+import Photos
 
 class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController {
     
@@ -29,15 +30,28 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
           }.assign(to: &$result)
     }
     
-    @MainActor func takePhoto() {
+    private func askForPermission() -> Bool {
+        PHPhotoLibrary.authorizationStatus(for: .addOnly) == .notDetermined
+    }
+    
+    private func requestAccess() async {
+        await PHPhotoLibrary.requestAuthorization(for: .addOnly)
+    }
+    
+    func takePhoto() {
         data = CreateData()
         region = .defaultRegion
         speciesAvatar = Image("placeholder")
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .camera
-        imagePicker.delegate = self
-        withNavigation { navigation in
-            navigation.present(imagePicker, animated: true)
+        Task { @MainActor in
+            if askForPermission() {
+                await requestAccess()
+            }
+            let imagePicker = UIImagePickerController()
+            imagePicker.sourceType = .camera
+            imagePicker.delegate = self
+            withNavigation { navigation in
+                navigation.present(imagePicker, animated: true)
+            }
         }
     }
     
@@ -55,7 +69,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         }
     }
     
-    func cropDone(thumbnail: NBImage) {
+    func cropDone(thumbnail: NBThumbnail) {
         let resultView = SelectSpeciesView(flow: self, thumbnail: thumbnail)
         withNavigation { navigation in
             navigation.pushViewController(resultView.setUpViewController(), animated: true)
@@ -81,7 +95,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         }
     }
     
-    @MainActor func spectrogramCropDone(crop: NBImage, start: Int, end: Int) {
+    @MainActor func spectrogramCropDone(crop: NBThumbnail, start: Int, end: Int) {
         data.sound.crop = crop
         data.sound.start = start
         data.sound.end = end
@@ -145,13 +159,14 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     @MainActor func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
-        do {
-            let image = NBImage(image: selectedImage)
-            try image.writeToAlbum()
-            cropPhoto(image: image)
-            picker.dismiss(animated: true)
-        } catch {
-            preconditionFailure("\(error)")
+        Task {
+            do {
+                let image = try await NBImage(image: selectedImage)
+                cropPhoto(image: image)
+                picker.dismiss(animated: true)
+            } catch {
+                preconditionFailure("\(error)")
+            }
         }
     }
     
@@ -160,8 +175,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             cropped.draw(in: CGRect(origin: .zero, size: .thumbnail))
         }
         do {
-            let crop = NBImage(image: thumbnail)
-            try crop.write()
+            let crop = try NBThumbnail(image: thumbnail)
             data.image.crop = crop
             data.image.result = nil
             withNavigation { navigation in

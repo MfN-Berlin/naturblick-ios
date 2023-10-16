@@ -27,7 +27,7 @@ struct Thumbnail<Content: View> : View {
         }
         .task(id: thumbnailId) {
             if let thumbnailId = self.thumbnailId {
-                self.uiImage = try? await NBImage(id: thumbnailId).image
+                self.uiImage = try? await NBThumbnail(id: thumbnailId).image
             }
         }
         .task(id: speciesUrl) {

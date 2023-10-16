@@ -39,7 +39,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         
         if let thumbnailId = observation.observation.thumbnailId {
             Task {
-                let thumbnail = try await NBImage(id: thumbnailId)
+                let thumbnail = try await NBThumbnail(id: thumbnailId)
                 await setThumbnail(thumbnail: thumbnail)
             }
         }
@@ -51,7 +51,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         }
     }
     
-    @MainActor private func setThumbnail(thumbnail: NBImage) async {
+    @MainActor private func setThumbnail(thumbnail: NBThumbnail) async {
         data.thumbnail = thumbnail
     }
 
@@ -69,7 +69,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         }
     }
     
-    func cropDone(thumbnail: NBImage) {
+    func cropDone(thumbnail: NBThumbnail) {
         let resultView = SelectSpeciesView(flow: self, thumbnail: thumbnail)
         withNavigation { navigation in
             navigation.pushViewController(resultView.setUpViewController(), animated: true)
@@ -83,7 +83,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         }
     }
     
-    @MainActor func spectrogramCropDone(crop: NBImage, start: Int, end: Int) {
+    @MainActor func spectrogramCropDone(crop: NBThumbnail, start: Int, end: Int) {
         soundData.crop = crop
         data.thumbnail = crop
         soundData.start = start
@@ -141,8 +141,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
             cropped.draw(in: CGRect(origin: .zero, size: .thumbnail))
         }
         do {
-            let crop = NBImage(image: thumbnail)
-            try crop.write()
+            let crop = try NBThumbnail(image: thumbnail)
             imageData.crop = crop
             data.thumbnail = crop
             imageData.result = nil

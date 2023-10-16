@@ -111,6 +111,16 @@ class ObservationPersistenceController: ObservableObject {
 """
                 )
             }
+            if self.queue.userVersion == 1 {
+                try self.queue.execute(
+"""
+                    BEGIN TRANSACTION;
+                    ALTER TABLE patch_operation ADD COLUMN local_media_id TEXT;
+                    PRAGMA user_version = 2;
+                    COMMIT TRANSACTION;
+"""
+                )
+            }
             try refresh()
         } catch {
             fatalError(error.localizedDescription)
@@ -209,11 +219,10 @@ class ObservationPersistenceController: ObservableObject {
         }
     }
 
-    private func insert(occurenceId: UUID, image: NBImage) throws {
-        let uiImage = image.image
-        let upload = UploadOperation(occurenceId: occurenceId, mediaId: image.id, mime: .jpeg)
-        let size = uiImage.size
-        var resultImage = uiImage
+    private func insert(occurenceId: UUID, id: UUID, image: UIImage) throws {
+        let upload = UploadOperation(occurenceId: occurenceId, mediaId: id, mime: .jpeg)
+        let size = image.size
+        var resultImage = image
         if size.width > .maxResolution || size.height > .maxResolution {
             let widthRatio  = .maxResolution / size.width
             let heightRatio = .maxResolution / size.height
@@ -224,12 +233,12 @@ class ObservationPersistenceController: ObservableObject {
                 newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
             }
             UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-            uiImage.draw(in: CGRect(origin: .zero, size: newSize))
+            image.draw(in: CGRect(origin: .zero, size: newSize))
             resultImage = UIGraphicsGetImageFromCurrentImageContext()!
             UIGraphicsEndImageContext()
         }
         let data = resultImage.jpegData(compressionQuality: .jpegQuality)
-        try data!.write(to: URL.uploadFileURL(id: image.id, mime: upload.mime))
+        try data!.write(to: URL.uploadFileURL(id: id, mime: upload.mime))
         let uploadId = try queue.run(Operation.D.table.insert())
         try queue.run(UploadOperation.D.table.insert(upload.setters(id: uploadId)))
     }
@@ -251,15 +260,15 @@ class ObservationPersistenceController: ObservableObject {
     func insert(data: CreateData) throws {
         try queue.transaction {
             if let media = data.image.image {
-                try insert(occurenceId: data.occurenceId, image: media)
+                try insert(occurenceId: data.occurenceId, id: media.id, image: media.image)
                 if let thumbnail = data.image.crop {
-                    try insert(occurenceId: data.occurenceId, image: thumbnail)
+                    try insert(occurenceId: data.occurenceId, id: thumbnail.id, image: thumbnail.image)
                 }
             }
             if let media = data.sound.sound {
                 try insert(occurenceId: data.occurenceId, sound: media)
                 if let thumbnail = data.sound.crop {
-                    try insert(occurenceId: data.occurenceId, image: thumbnail)
+                    try insert(occurenceId: data.occurenceId, id: thumbnail.id, image: thumbnail.image)
                 }
             }
             let createId = try queue.run(Operation.D.table.insert())
@@ -279,7 +288,7 @@ class ObservationPersistenceController: ObservableObject {
     func insert(data: EditData) throws {
         try queue.transaction {
             if let thumbnail = data.thumbnail {
-                try insert(occurenceId: data.original.occurenceId, image: thumbnail)
+                try insert(occurenceId: data.original.occurenceId, id: thumbnail.id, image: thumbnail.image)
             }
             
             if let patch = data.patch {

@@ -12,7 +12,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     var viewName: String? = String(localized: "results")
 
     @ObservedObject var flow: Flow
-    let thumbnail: NBImage
+    let thumbnail: NBThumbnail
     @State var showInfo: SpeciesListItem? = nil
     @State private var presentAlternativesDialog: Bool = false
     @StateObject var model: SelectSpeciesViewModel = SelectSpeciesViewModel()
