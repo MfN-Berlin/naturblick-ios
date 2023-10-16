@@ -14,7 +14,7 @@
 "help"="Hilfe";
 "feedback"="Feedback";
 "imprint"="Impressum";
-"about"="Über Naturblick";
+"about_nb"="Über Naturblick";
 "action_settings"="Einstellungen";
 "account"="Account";
 "choose_a_group"="Wähle eine Gruppe";
@@ -48,7 +48,6 @@
 "password_no_digits"="Muss Zahlen enthalten";
 "password_too_short"="Muss aus mindestens 9 Zeichen bestehen";
 "user_already_exists"="Diese E-Mail-Adresse existiert bereits";
-"privacy"="Wir nehmen Datenschutz sehr wichtig. Weitere Informationen zum Datenschutz findest du im Impressum der App.";
 "account_text"="Mit einem Naturblick-Account kannst du deine Beobachtungen über mehrere mobile Geräte hinweg sichern und anzeigen lassen.";
 "account_text_sign_in_or_sign_up1"="Mit einem Naturblick-Account kannst du deine Beobachtungen bei einem Handywechsel über mehrere mobile Geräte hinweg sichern und auf allen verbundenen Handys anzeigen lassen.";
 "account_text_sign_in_or_sign_up2"="Du kannst Naturblick aber natürlich auch ohne Account wie bisher verwenden.";
@@ -67,7 +66,7 @@
 "delete_account_title"="**Account löschen**";
 "delete_account_text"="Mit dem Löschen deines Accounts wird die Verknüpfung zu anderen Geräten aufgehoben und wir löschen automatisch die von dir angegebene E-Mail-Adresse.";
 "delete_account_text_verify"=" Bitte bestätige deinen Wunsch, den Account zu löschen, indem du deine Zugangsdaten eingibst.";
-"delete_account"="Account gelöscht";
+"delete_account"="Account löschen";
 "delete_account_note_link"="**Hinweis für die Verbindung mit alten Geräten**\n\nFür die Übertragung von Beobachtungen von alten Geräten auf neue, empfehlen wir dir, dich einfach auf beiden Geräten einzuloggen. Solltest du das Handy dann weitergeben oder recyceln, deinstalliere Naturblick auf deinem Handy oder setze es einfach auf die Werkseinstellungen zurück. Deine alten Beobachtungen werden dadurch nicht gelöscht. Lösche den Account nicht, da dadurch die Verknüpfung der Beobachtungen aufgehoben werden würde.";
 "delete_account_note_password"="Hinweis Passwort vergessen";
 "delete_account_note_password_text"="Wenn du ein neues Passwort vergibst, werden alle Handys, die mit dem Account verknüpft sind, aus Sicherheitsgründen automatisch ausgeloggt. Alle deine Beobachtungen bleiben weiterhin mit deinem Account verknüpft und werden dir angezeigt.";
@@ -81,15 +80,20 @@
 "set_up_an_account"="Naturblick-Account";
  "account_info"="Mit einem Naturblick-Account kannst du deine Beobachtungen über mehrere mobile Geräte hinweg sichern und anzeigen lassen. Willst du einen Naturblick-Account anlegen?";
  "signed_out_deleted_account"="**Account gelöscht**\n\nRegistriere dich erneut oder nutze Naturblick ohne Account.";
- "sign_up_title"="Naturblick-Account erstellen";
- "sign_up_text"="Hier kannst du einen Naturblick-Account erstellen. Bitte, gib dafür eine E-Mail-Adresse an. Wir senden dir dann den Aktivierungslink an diese Adresse.";
- "privacy_rules"="Datenschutzerklärung";
- "privacy_rules_text1"="Für die Registrierung benötigen wir deine E-Mail-Adresse. Die Anmeldung wird erst gültig, nachdem du in einer von uns an dich verschickten E-Mail einen Bestätigungslink angeklickt hast. Die E-Mail-Adresse wird von uns ausschließlich für die Verwaltung des Accounts verwendet. Die Registrierung/Anmeldung erfolgt freiwillig und kann jederzeit widerrufen werden. Deine personenbezogenen Daten werden mit dem Löschen des Accounts aus unserem System gelöscht.";
- "privacy_rules_text2"="Die Verarbeitung der Daten erfolgt unter Beachtung der geltenden datenschutzrechtlichen Bestimmungen. Die Übertragung deiner Eingaben erfolgt verschlüsselt. Um die Daten vor Verlust, Manipulation oder Zugriff durch unberechtigte Personen zu schützen, werden durch das Museum für Naturkunde technisch-organisatorische Maßnahmen eingesetzt, die dem aktuellen Stand der Technik entsprechen.";
+ "sign_up_text"="**Naturblick-Account erstellen**\n\nHier kannst du einen Naturblick-Account erstellen. Bitte, gib dafür eine E-Mail-Adresse an. Wir senden dir dann den Aktivierungslink an diese Adresse.";
+ "privacy_rules_text"="**Datenschutzerklärung**\n\nFür die Registrierung benötigen wir deine E-Mail-Adresse. Die Anmeldung wird erst gültig, nachdem du in einer von uns an dich verschickten E-Mail einen Bestätigungslink angeklickt hast. Die E-Mail-Adresse wird von uns ausschließlich für die Verwaltung des Accounts verwendet. Die Registrierung/Anmeldung erfolgt freiwillig und kann jederzeit widerrufen werden. Deine personenbezogenen Daten werden mit dem Löschen des Accounts aus unserem System gelöscht.\n\nDie Verarbeitung der Daten erfolgt unter Beachtung der geltenden datenschutzrechtlichen Bestimmungen. Die Übertragung deiner Eingaben erfolgt verschlüsselt. Um die Daten vor Verlust, Manipulation oder Zugriff durch unberechtigte Personen zu schützen, werden durch das Museum für Naturkunde technisch-organisatorische Maßnahmen eingesetzt, die dem aktuellen Stand der Technik entsprechen.\n\nWir nehmen Datenschutz sehr wichtig. Weitere Informationen zum Datenschutz findest du im Impressum der App.";
 "try_again"="Nochmal probieren";
 "cancel"="Abbrechen";
-
 "account_text"="Mit einem Naturblick-Account kannst du deine Beobachtungen über mehrere mobile Geräte hinweg sichern und anzeigen lassen.";
 "account_text_sign_in_or_sign_up1"="Mit einem Naturblick-Account kannst du deine Beobachtungen bei einem Handywechsel über mehrere mobile Geräte hinweg sichern und auf allen verbundenen Handys anzeigen lassen.";
 "login_standard"="Verbinde alle Beobachtungen auf diesem Handy mit deinem Account.";
 "successful_signin"="Erfolgreich eingeloggt";
+"delete_account_text_rly"="**Willst du deinen Account wirklich löschen?**\n\nMit dem Löschen deines Accounts wird die Verknüpfung zu anderen Geräten aufgehoben und wir löschen automatisch die von dir angegebene E-Mail-Adresse.\n\nBitte bestätige deinen Wunsch, den Account zu löschen, indem du deine Zugangsdaten eingibst.";
+"delete_success"="Erfolgreich gelöscht";
+"reset"="Zurücksetzen";
+"home"="Start";
+"login"="Login";
+"register"="Registrierung";
+"forgot"="Vergessen";
+"delete"="Löschen";
+"about"="Über";

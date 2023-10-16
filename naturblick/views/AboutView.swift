@@ -7,7 +7,7 @@ import SwiftUI
 
 struct AboutView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "About"
+    var viewName: String? = String(localized: "about")
     
     func configureNavigationItem(item: UINavigationItem) {
     }
@@ -33,7 +33,6 @@ struct AboutView: NavigatableView {
                     }
                 }.buttonStyle(ConfirmFullWidthButton())
             }
-            .tint(Color.onSecondaryButtonPrimary)
         }
         .padding(.defaultPadding)
     }

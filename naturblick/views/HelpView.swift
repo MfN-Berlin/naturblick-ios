@@ -7,7 +7,7 @@ import SwiftUI
 
 struct HelpView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Help"
+    var viewName: String? = String(localized: "help")
     
     var body: some View {
         ScrollView {

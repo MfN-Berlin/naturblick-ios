@@ -24,7 +24,7 @@ class AccountViewModel : ObservableObject {
 
 struct AccountView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Account"
+    var viewName: String? = String(localized: "account")
     
     var token: String? = nil
     
@@ -100,10 +100,10 @@ struct AccountView: NavigatableView {
             activateAccount()
         }
         .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { details in
-            Button("Try again") {
+            Button("try_again") {
                 activateAccount()
             }
-            Button("Cancel") {
+            Button("cancel") {
                 navigationController?.popViewController(animated: true)
             }
         }

@@ -6,7 +6,7 @@ import SwiftUI
 
 struct RegisterView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? = "Register"
+    var viewName: String? = String(localized: "register")
         
     @StateObject var registerVM = RegisterViewModel()
         
@@ -38,36 +38,48 @@ struct RegisterView: NavigatableView {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                Text("Create account")
-                    .subtitle1()
-                    .padding([.top, .bottom], .defaultPadding)
-                
-                Text("You create a Naturblick account here. Please enter an email address. We will send you the activation link to this address.")
+            VStack {
+                Text("sign_up_text")
                     .body1()
                 
-                NBEditText(label: "Email address", icon: Image("create_24px"), text: $registerVM.email, prompt: registerVM.emailPrompt)
-                    .keyboardType(.emailAddress)
-                    .padding([.top, .bottom], .defaultPadding)
+                
+                OnSecondaryFieldView(icon: "create_24px") {
+                    TextField(String(localized: "email"), text: $registerVM.email)
+                        .keyboardType(.emailAddress)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                }
+                if let prompt = registerVM.emailPrompt {
+                    Text(prompt)
+                        .caption()
+                }
+                
                 if showAlreadyExists {
-                    Text("Email already exists.")
-                        .body1(color: .onSecondarywarning)
+                    Text("user_already_exists")
+                        .caption(color: .onSecondarywarning)
                 }
                 
-                NBEditText(label: "Password", icon: Image("visibility"), text: $registerVM.password, isSecure: true, prompt: registerVM.passwordPrompt)
-                if registerVM.passwordPrompt == nil {
-                    Text("The password must be at least 9 characters long. It must consist of numbers, upper and lower case letters.")
-                        .caption(color: .onSecondaryHighEmphasis)
-                        .padding([.bottom], .defaultPadding)
+                OnSecondaryFieldView(image: Image("visibility")) {
+                    SecureField(String(localized: "password"), text: $registerVM.password)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
                 }
-                
-                Text("**Privacy statement**\n\nFor the registration we need your email address. The registration is only valid after you have clicked on a confirmation link in an email sent to you by us. The email address will be used by us exclusively for the administration of the account. The registration/login is voluntary and can be revoked at any time. Your personal data will be deleted from our system when the account is deleted.\n\nThe processing of the data is carried out in compliance with the applicable data protection regulations. The transmission of your entries is encrypted. In order to protect your data from loss, manipulation or access by unauthorized persons, the Museum für Naturkunde Berlin uses state-of-the-art technical and organizational measures.\n\nWe take data protection very seriously. You can find more information about data protection in the app's imprint.")
+                if let prompt = registerVM.passwordPrompt {
+                    Text(prompt)
+                        .caption()
+                } else if registerVM.passwordPrompt == nil {
+                    Text("password_format")
+                        .caption()
+                }
+                            
+                Text("privacy_rules_text")
                     .body1()
-                
-                Toggle("I have read and understood privacy statement.", isOn: $registerVM.privacyChecked).font(.nbBody1)
-                    .padding([.trailing, .bottom], .defaultPadding)
-                
-                Button("Register") {
+                Toggle(isOn: $registerVM.privacyChecked) {
+                    Text("data_protection_consent")
+                        .body1()
+                }
+
+                Button("sign_up") {
                     signUp()
                 }.buttonStyle(ConfirmFullWidthButton())
                     .disabled(!registerVM.isRegisterEnabled)
@@ -75,27 +87,26 @@ struct RegisterView: NavigatableView {
                 Spacer(minLength: 10)
             }
         }
-        .foregroundColor(.onSecondaryHighEmphasis)
+        .padding(.defaultPadding)
         .actionSheet(isPresented: $showRegisterSuccess) {
             ActionSheet(
-                title: Text("Thank you!"),
-                message: Text("We have sent you an activation link by email. Please open this link to complete your registration. The link is valid for 12 hours."),
+                title: Text("validate_email_title"),
+                message: Text("validate_email_message"),
                 buttons:
                     registerSuccessButtons()
             )
         }
         .alertHttpError(isPresented: $isPresented, error: error)
-        .padding(.defaultPadding)
     }
         
     func registerSuccessButtons() -> [Alert.Button] {
-        var buttons: [Alert.Button] = [Alert.Button.destructive(Text("Continue to login"), action: {
+        var buttons: [Alert.Button] = [Alert.Button.destructive(Text("go_to_login_screen"), action: {
             toLogin()
         })]
         
         if (canOpenEmail()) {
             buttons.append(
-                Alert.Button.default(Text("Open my emails"), action: { openMail(completionHandler: { _ in toLogin() }) })
+                Alert.Button.default(Text("open_default_email_app"), action: { openMail(completionHandler: { _ in toLogin() }) })
             )
         }
         return buttons
