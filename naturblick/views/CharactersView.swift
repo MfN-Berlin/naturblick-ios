@@ -14,7 +14,11 @@ struct CharactersView: NavigatableView {
     
     let group: Group
     @StateObject private var charactersViewModel = CharactersViewModel()
-
+    
+    private var charactersViewModelCountStr: String {
+        "\(charactersViewModel.count)"
+    }
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -30,7 +34,7 @@ struct CharactersView: NavigatableView {
             charactersViewModel.configure(group: group)
         }
         .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
-            Button("show_results \(charactersViewModel.count)") {
+            Button(String(localized: "show_results \(charactersViewModelCountStr)")) {
                 navigationController?.pushViewController(SpeciesListView(filter: charactersViewModel.filter).setUpViewController(), animated: true)
             }
             .accentColor(Color.onPrimaryButtonPrimary)

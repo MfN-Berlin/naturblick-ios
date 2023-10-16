@@ -56,7 +56,7 @@ struct CCInfoPopupView : View {
                 Text(txt)
             }
         
-            Button("Close") {
+            Button("close") {
                 present = false
             }
             .foregroundColor(.onSecondaryHighEmphasis)
