@@ -14,7 +14,7 @@ struct PickerView<Flow>: NavigatableView where Flow: PickerFlow {
     @StateObject private var locationManager = LocationManager()
 
     func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Pick") {_ in
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "pick")) {_ in
             flow.pickCoordinate()
             navigationController?.popViewController(animated: true)
         })

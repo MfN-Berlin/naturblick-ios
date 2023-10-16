@@ -14,7 +14,7 @@ struct SimilarSpeciesView: View, HoldingViewController {
     var body: some View {
         VStack(alignment: .leading) {
             if !similarSpeciesViewModel.mixups.isEmpty {
-                Text("Verwechslungsarten")
+                Text("similar_species")
                     .headline4()
             }
             ForEach(similarSpeciesViewModel.mixups) { mix in

@@ -30,7 +30,7 @@ struct CharactersView: NavigatableView {
             charactersViewModel.configure(group: group)
         }
         .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
-            Button("\(charactersViewModel.count) Ergebnissse anzeigen") {
+            Button("show_results \(charactersViewModel.count)") {
                 navigationController?.pushViewController(SpeciesListView(filter: charactersViewModel.filter).setUpViewController(), animated: true)
             }
             .accentColor(Color.onPrimaryButtonPrimary)

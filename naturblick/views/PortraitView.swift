@@ -54,7 +54,7 @@ struct PortraitView: HostedView {
                             Text(portrait.species.sciname)
                                 .overline(color: .onPrimarySignalHigh)
                                 .multilineTextAlignment(.center)
-                            Text(portrait.species.gername?.uppercased() ?? "ARTNAME")
+                            Text(portrait.species.gername?.uppercased() ?? String(localized: "speciesname").uppercased())
                                 .headline4(color: .onPrimaryHighEmphasis)
                                 .multilineTextAlignment(.center)
                             if let synonym = portrait.species.gersynonym {
@@ -63,7 +63,7 @@ struct PortraitView: HostedView {
                                     .multilineTextAlignment(.center)
                             }
                             if !inSelectionFlow {
-                                Button("I observed this species here", icon: "artportraits24") {
+                                Button("i_observed", icon: "artportraits24") {
                                     flow.selectManual(species: species)
                                 }
                                 .buttonStyle(AuxiliaryOnPrimaryButton())
@@ -73,7 +73,7 @@ struct PortraitView: HostedView {
                         .padding([.top, .horizontal], .defaultPadding)
                         
                         VStack(alignment: .leading) { // description
-                            Text("Beschreibung")
+                            Text("description")
                                 .headline4()
                                 .padding(.bottom, .defaultPadding)
                             Text(portrait.description)
@@ -92,7 +92,7 @@ struct PortraitView: HostedView {
                                     PortraitImageView(geo: geo, image: meta, headerImage: false)
                                         .padding(.top, .halfPadding)
                                 }
-                                Text("In der Stadt")
+                                Text("in_the_city")
                                     .headline4()
                                     .padding([.top, .bottom], .defaultPadding)
                                 Text(portrait.inTheCity)
@@ -104,7 +104,7 @@ struct PortraitView: HostedView {
                                     PortraitImageView(geo: geo, image: meta, headerImage: false)
                                         .padding(.bottom, .halfPadding)
                                 }
-                                Text("Wissenswertes")
+                                Text("good_to_know")
                                     .headline4()
                                     .padding(.bottom, .defaultPadding)
                                 ForEach(portrait.goodToKnows, id: \.self) { goodToKnow in
@@ -121,7 +121,7 @@ struct PortraitView: HostedView {
                                 .padding(.bottom, .defaultPadding)
                                 
                                 if let sources = portrait.sources {
-                                    Text("Quellen")
+                                    Text("sources")
                                         .headline4()
                                         .padding(.bottom, .defaultPadding)
                                     Text(sources)
@@ -137,7 +137,7 @@ struct PortraitView: HostedView {
                                 .nbShadow()
                         }
                     } else {
-                        Text("Sorry No Portrait")
+                        Text("no_portrait")
                     }
                 }
             }

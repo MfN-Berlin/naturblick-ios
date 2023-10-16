@@ -16,7 +16,7 @@ struct FullscreenView: NavigatableView {
                 .resizable()
                 .scaledToFit()
         } else {
-            Text("Loading")
+            Text("loading")
                 .task {
                     do {
                         image = try await NBImage(id: imageId)

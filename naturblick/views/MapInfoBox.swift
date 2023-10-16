@@ -28,7 +28,7 @@ struct MapInfoBox: NavigatableView {
             }
             Text(observation.observation.created.date, formatter: .dateTime)
                 .overline(color: .onSecondaryHighEmphasis)
-            Button("Details") {
+            Button("details") {
                 viewController?.dismiss(animated: true)
                 toDetails()
             }.buttonStyle(ConfirmButton())

@@ -130,3 +130,17 @@
 "edit"="Editieren";
 "create_obs"="Observation erstellen";
 "ident_from_photo"="Pflanze von einem Foto erkennen";
+"source %@"="[Quelle](%@)";
+"show_results %@"="%@ Ergebnissse anzeigen";
+"no_coordinates"="Keine Koordinaten";
+"loading"="Lade...";
+"details"="Details";
+"no_species"="Keine Arten";
+"pick"="Wählen";
+"sources"="Quellen";
+"i_observed"="Diese Art hier gesehen";
+"description"="Beschreibung";
+"in_the_city"="In der Stadt";
+"good_to_know"="Wissenswertes";
+"no_portrait"="Entschuldigung zu dieser Art gibt es kein Portrait";
+"similar_species"="Verwechslungsarten";
