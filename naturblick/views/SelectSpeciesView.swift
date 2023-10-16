@@ -9,10 +9,8 @@ import CachedAsyncImage
 struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
-    var viewName: String? {
-        "Results"
-    }
-    
+    var viewName: String? = String(localized: "results")
+
     @ObservedObject var flow: Flow
     let thumbnail: NBImage
     @State var showInfo: SpeciesListItem? = nil
@@ -47,7 +45,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                 .overlay(alignment: .bottom) {
                     VStack {
                         if let results = model.speciesResults {
-                            Text("The list suggests wild plants found in the city. The suggestions are created by comparing photos of over 2000 species. The closer the score is to 100%, the more likely the match is.")
+                            Text(flow.isImage() ? "image_autoid_infotext" : "sound_autoid_infotext")
                                 .body2()
                                 .padding(.bottom, .defaultPadding)
                             ForEach(results, id: \.0.id) { (result, item) in
@@ -66,7 +64,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                                     .frame(width: .avatarSize, height: .avatarSize)
                                     .padding(.trailing, .defaultPadding)
                                     .foregroundColor(.onSecondaryHighEmphasis)
-                                Text("None of the above")
+                                Text("none_of_the_options")
                                     .subtitle1()
                                 Spacer()
                             }
@@ -77,7 +75,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                             }
                         } else {
                             ProgressView {
-                                Text("Identifying species")
+                                Text("identifying_species")
                                     .button()
                                     .foregroundColor(.onSecondaryMediumEmphasis)
                             }
@@ -100,27 +98,27 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                 }
                 .ignoresSafeArea(edges: .bottom)
                 .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { details in
-                    Button("Try again") {
+                    Button("try_again") {
                         identify()
                     }
-                    Button("Browse species") {
+                    Button("browse_species") {
                         flow.searchSpecies()
                     }
-                    Button("Save as unknown species") {
+                    Button("save_unknown") {
                         flow.selectSpecies(species: nil)
                     }
                 }
-                .alert("Do you want to identify the species in another way?", isPresented: $presentAlternativesDialog) {
-                    Button("Use another part of the image") {
+                .alert("other_identification", isPresented: $presentAlternativesDialog) {
+                    Button(flow.isImage() ? "crop_again" : "crop_sound_again") {
                         navigationController?.popViewController(animated: true)
                     }
-                    Button("Browse species") {
+                    Button("browse_species") {
                         flow.searchSpecies()
                     }
-                    Button("Save as unknown species") {
+                    Button("save_unknown") {
                         flow.selectSpecies(species: nil)
                     }
-                    Button("Cancel", role: .cancel) {
+                    Button("cancel", role: .cancel) {
                     }
                 }
         }

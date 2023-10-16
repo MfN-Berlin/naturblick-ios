@@ -7,12 +7,15 @@ import SwiftUI
 
 struct IndividualsView: View {
     @Binding var individuals: Int64
+    private var individualsStr: String {
+        "\(individuals)"
+    }
     var body: some View {
         Stepper  {
             if individuals == 1 {
-                Text("1 individual")
+                Text("individual")
             } else {
-                Text("\(individuals) individuals")
+                Text("individuals \(individualsStr)")
             }
         } onIncrement: {
             individuals += 1

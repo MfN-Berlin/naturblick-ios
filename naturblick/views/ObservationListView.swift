@@ -25,9 +25,7 @@ class ObservationListViewController: HostingController<ObservationListView> {
 struct ObservationListView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
-    var viewName: String? {
-        "Feldbuch"
-    }
+    var viewName: String? = String(localized: "field_book")
     
     private let client = BackendClient()
     @StateObject private var locationManager = LocationManager()
@@ -41,16 +39,16 @@ struct ObservationListView: HostedView {
     
     fileprivate func extractedFunc() -> [MenuEntry] {
         return [
-            MenuEntry(title: "Identify photo from a plant", image: UIImage(named: "details")!) {
+            MenuEntry(title: String(localized: "ident_from_photo"), image: UIImage(named: "details")!) {
                 
             },
-            MenuEntry(title: "Record a bird sound", image: UIImage(named: "audio24")!) {
+            MenuEntry(title: String(localized: "record_a_bird"), image: UIImage(named: "audio24")!) {
                 createFlow.recordSound()
             },
-            MenuEntry(title: "Photograph a plant", image: UIImage(named: "photo24")!) {
+            MenuEntry(title: String(localized: "photograph_a_plant"), image: UIImage(named: "photo24")!) {
                 createFlow.takePhoto()
             },
-            MenuEntry(title: "Create observation", image: UIImage(named: "logo24")!) {
+            MenuEntry(title: String(localized: "create_obs"), image: UIImage(named: "logo24")!) {
                 createFlow.searchSpecies()
             }
         ]

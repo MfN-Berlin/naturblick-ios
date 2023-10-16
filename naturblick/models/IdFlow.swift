@@ -17,6 +17,7 @@ protocol IdFlow: ObservableObject {
     func identify() async throws -> [SpeciesResult]
     func selectSpecies(species: SpeciesListItem?)
     func searchSpecies()
+    func isImage() -> Bool
 }
 
 class IdFlowSample: IdFlow {
@@ -25,4 +26,5 @@ class IdFlowSample: IdFlow {
     func identify() async throws -> [SpeciesResult] {[]}
     func selectSpecies(species: SpeciesListItem?) {}
     func searchSpecies() {}
+    func isImage() -> Bool { return true }
 }

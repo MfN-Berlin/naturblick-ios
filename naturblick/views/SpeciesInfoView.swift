@@ -14,7 +14,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
     }
     
     func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Choose") {_ in
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "choose")) {_ in
             flow.selectSpecies(species: species)
         })
     }
@@ -55,21 +55,21 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
             Text(species.sciname)
                 .overline(color: .onSecondarySignalHigh)
                 .multilineTextAlignment(.center)
-            Text(species.gername?.uppercased() ?? "ARTNAME")
+            Text(species.gername?.uppercased() ?? String(localized: "speciesname").uppercased())
                 .headline4(color: .onSecondaryHighEmphasis)
                 .multilineTextAlignment(.center)
             if let synonym = species.gersynonym {
-                Text("also: \(synonym)")
+                Text("also \(synonym)")
                     .caption(color: .onSecondaryLowEmphasis)
                     .multilineTextAlignment(.center)
             }
             if species.hasPortrait {
-                Button("Visit artportrait") {
+                Button("to_artportrait") {
                     navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
                 }
                 .buttonStyle(AuxiliaryOnSecondaryButton())
             } else if let wikipedia = species.wikipedia {
-                Link("Visit wikipedia", destination: URL(string: wikipedia)!)
+                Link("link_to_wikipedia", destination: URL(string: wikipedia)!)
                     .buttonStyle(AuxiliaryOnSecondaryButton())
             }
         }

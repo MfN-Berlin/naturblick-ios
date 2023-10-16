@@ -186,4 +186,8 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
             navigation.pushViewController(view.setUpViewController(), animated: true)
         }
     }
+    
+    func isImage() -> Bool {
+        data.obsType == .image || data.obsType == .unidentifiedimage
+    }
 }

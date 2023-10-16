@@ -22,7 +22,7 @@ struct CreateObservationView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var hideNavigationBarShadow: Bool = true
     func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Save") {_ in
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "save")) {_ in
             createFlow.saveObservation()
         })
     }
@@ -48,9 +48,9 @@ struct CreateObservationView: NavigatableView {
                             .avatar()
                             .padding(.trailing, .defaultPadding)
                         VStack(alignment: .leading) {
-                            Text("Species")
+                            Text("species")
                                 .caption(color: .onSecondarySignalLow)
-                            Text(createFlow.data.species?.sciname ?? "Unknown species")
+                            Text(createFlow.data.species?.sciname ?? "unknown_species")
                                 .subtitle1()
                         }
                     }
@@ -64,8 +64,8 @@ struct CreateObservationView: NavigatableView {
                         IndividualsView(individuals: $createFlow.data.individuals)
                     }
                     OnSecondaryFieldView(icon: "location24") {
-                        Picker("Behavior", selection: $createFlow.data.behavior) {
-                            Text("None").tag(nil as Behavior?)
+                        Picker("behavior", selection: $createFlow.data.behavior) {
+                            Text("none").tag(nil as Behavior?)
                             ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
                                 Text($0.rawValue).tag($0 as Behavior?)
                             }
@@ -75,7 +75,7 @@ struct CreateObservationView: NavigatableView {
                         .accentColor(.onSecondaryHighEmphasis)
                     }
                     OnSecondaryFieldView(icon: "details") {
-                        TextField("Notes", text: $createFlow.data.details)
+                        TextField("notes", text: $createFlow.data.details)
                     }
                 }
                 .padding(.defaultPadding)

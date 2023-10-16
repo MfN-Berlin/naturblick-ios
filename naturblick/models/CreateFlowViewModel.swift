@@ -199,4 +199,8 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             navigation.pushViewController(view.setUpViewController(), animated: true)
         }
     }
+    
+    func isImage() -> Bool {
+        data.obsType == .image || data.obsType == .unidentifiedimage
+    }
 }

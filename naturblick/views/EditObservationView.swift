@@ -35,7 +35,7 @@ struct EditObservationView: HostedView {
             let discard = UIAlertAction(title: "Discard changes", style: .destructive) { (action) in
                 self.navigationController?.forcePopViewController(animated: true)
             }
-            let save = UIAlertAction(title: "Save", style: .default) { (action) in
+            let save = UIAlertAction(title: String(localized: "save"), style: .default) { (action) in
                 flow.saveObservation()
             }
             let cancel = UIAlertAction(title: "Continue editing", style: .cancel) { (action) in}
@@ -51,7 +51,7 @@ struct EditObservationView: HostedView {
     }
     
     func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .done, target: viewController, action: #selector(EditObservationViewController.setEdit))
+        item.rightBarButtonItem = UIBarButtonItem(title: String(localized: "edit"), style: .done, target: viewController, action: #selector(EditObservationViewController.setEdit))
     }
     
     func identifyImage() {
@@ -75,9 +75,9 @@ struct EditObservationView: HostedView {
                 flow.speciesAvatar
                     .avatar()
                 VStack(alignment: .leading) {
-                    Text("Species")
+                    Text("species")
                         .caption(color: .onSecondaryLowEmphasis)
-                    Text(flow.data.species?.sciname ?? "Unknown species")
+                    Text(flow.data.species?.sciname ?? "unknown_species")
                         .subtitle1(color: .onSecondaryHighEmphasis)
                 }
                 Spacer()
@@ -104,9 +104,9 @@ struct EditObservationView: HostedView {
                 IndividualsView(individuals: $flow.data.individuals)
             }
             OnSecondaryFieldView(icon: "location24") {
-                Picker("Behavior", selection: $flow.data.behavior) {
+                Picker("behavior", selection: $flow.data.behavior) {
                     if flow.data.original.behavior == nil {
-                        Text("None").tag(nil as Behavior?)
+                        Text("none").tag(nil as Behavior?)
                     }
                     ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
                         Text($0.rawValue).tag($0 as Behavior?)
@@ -117,7 +117,7 @@ struct EditObservationView: HostedView {
                 .accentColor(.onSecondaryHighEmphasis)
             }
             OnSecondaryFieldView(icon: "details") {
-                TextField("Notes", text: $flow.data.details)
+                TextField("notes", text: $flow.data.details)
             }
         }
     }
@@ -130,9 +130,9 @@ struct EditObservationView: HostedView {
                     .padding(.trailing, .defaultPadding)
                 
                 VStack(alignment: .leading) {
-                    Text("Species")
+                    Text("species")
                         .caption(color: .onSecondarySignalLow)
-                    Text(flow.data.species?.sciname ?? "Unknown species")
+                    Text(flow.data.species?.sciname ?? "unknown_species")
                         .subtitle1(color: .onSecondaryMediumEmphasis)
                 }
                 Spacer()
@@ -149,7 +149,7 @@ struct EditObservationView: HostedView {
                 Image("location24")
                     .observationProperty()
                 VStack(alignment: .leading, spacing: .zero) {
-                    Text("Location")
+                    Text("location")
                         .caption(color: .onSecondarySignalLow)
                     CoordinatesView(coordinates: flow.data.coords)
                 }
@@ -162,9 +162,9 @@ struct EditObservationView: HostedView {
                 print("Show on map")
             }
             Divider()
-            ViewProperty(icon: "number24", label: "Number", content: String(flow.data.individuals))
-            ViewProperty(icon: "location24", label: "Observation", content: flow.data.behavior?.rawValue)
-            ViewProperty(icon: "details", label: "Details", content: flow.data.details)
+            ViewProperty(icon: "number24", label: String(localized: "number"), content: String(flow.data.individuals))
+            ViewProperty(icon: "location24", label: String(localized: "behavior"), content: flow.data.behavior?.rawValue)
+            ViewProperty(icon: "details", label: String(localized: "notes"), content: flow.data.details)
         }
     }
     
@@ -202,7 +202,7 @@ struct EditObservationView: HostedView {
             if editing {
                 withAnimation {
                     isEditing = editing
-                    viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: "Save") {_ in
+                    viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "save")) {_ in
                         flow.saveObservation()
                     })
                 }
