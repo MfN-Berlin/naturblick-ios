@@ -24,9 +24,6 @@ struct ObservationListItemView: View {
                 }
                 Text(observation.observation.created.date.formatted())
                     .subtitle3()
-                if let details = observation.observation.details {
-                    Text(details)
-                }
             }
             .padding(.top, .avatarTextOffset)
             Spacer()
