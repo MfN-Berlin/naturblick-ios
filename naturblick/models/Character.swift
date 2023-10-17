@@ -15,6 +15,14 @@ struct Character: Identifiable {
     let single: Bool
     let gerdescription: String?
     let engdescription: String?
+    
+    var name: String {
+        isGerman() ? gername : engname
+    }
+    
+    var description: String? {
+        isGerman() ? gerdescription : engdescription
+    }
 }
 
 extension Character {

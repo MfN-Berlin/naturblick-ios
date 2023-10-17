@@ -55,10 +55,10 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
             Text(species.sciname)
                 .overline(color: .onSecondarySignalHigh)
                 .multilineTextAlignment(.center)
-            Text(species.gername?.uppercased() ?? String(localized: "speciesname").uppercased())
+            Text(species.speciesName?.uppercased() ?? String(localized: "speciesname").uppercased())
                 .headline4(color: .onSecondaryHighEmphasis)
                 .multilineTextAlignment(.center)
-            if let synonym = species.gersynonym {
+            if let synonym = species.synonym {
                 Text("also \(synonym)")
                     .caption(color: .onSecondaryLowEmphasis)
                     .multilineTextAlignment(.center)

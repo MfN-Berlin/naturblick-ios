@@ -28,7 +28,7 @@ class SpeciesListViewModel: ObservableObject {
                 .join(.leftOuter, Portrait.Definition.table,
                       on: Portrait.Definition.speciesId == Species.Definition.table[Species.Definition.id])
                 .filter(Species.Definition.group == group.id)
-                .filter(Portrait.Definition.language == 1)
+                .filter(Portrait.Definition.language == Int(getLanguageId()))
                 .order(Species.Definition.gername)
             let queryWithSearch = searchString != nil ? filterSearchString(query, searchString) : query
             return try speciesDb.prepareRowIterator(queryWithSearch.order(Species.Definition.gername))
@@ -36,10 +36,10 @@ class SpeciesListViewModel: ObservableObject {
                     SpeciesListItem(
                         speciesId: row[Species.Definition.table[Species.Definition.id]],
                         sciname: row[Species.Definition.sciname],
-                        gername: row[Species.Definition.gername],
+                        speciesName: isGerman() ? row[Species.Definition.gername] : row[Species.Definition.engname],
                         maleUrl: row[Species.Definition.maleUrl],
                         femaleUrl: row[Species.Definition.femaleUrl],
-                        gersynonym: row[Species.Definition.gersynonym],
+                        synonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engname],
                         isFemale: nil,
                         wikipedia: row[Species.Definition.wikipedia],
                         hasPortrait: true,
@@ -54,10 +54,10 @@ class SpeciesListViewModel: ObservableObject {
                     SpeciesListItem(
                         speciesId: row[Species.Definition.id],
                         sciname: row[Species.Definition.sciname],
-                        gername: row[Species.Definition.gername],
+                        speciesName: isGerman() ? row[Species.Definition.gername] : row[Species.Definition.engname],
                         maleUrl: row[Species.Definition.maleUrl],
                         femaleUrl: row[Species.Definition.femaleUrl],
-                        gersynonym: row[Species.Definition.gersynonym],
+                        synonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engsynonym],
                         isFemale: row[Species.Definition.isFemale],
                         wikipedia: row[Species.Definition.wikipedia],
                         hasPortrait: true,

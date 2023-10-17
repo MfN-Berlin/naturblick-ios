@@ -19,6 +19,14 @@ struct Species: Identifiable {
     let redListGermany: String?
     let iucnCategory: String?
     let hasPortrait: Bool
+    
+    var speciesName: String? {
+        isGerman() ? gername : engname
+    }
+    
+    var synonym: String? {
+        isGerman() ? gersynonym : engsynonym
+    }
 }
 
 extension Species {
@@ -43,7 +51,7 @@ extension Species {
         static let baseQuery = table
             .select(table[*], optionalPortraitId, Portrait.Definition.audioUrl)
             .join(.leftOuter, Portrait.Definition.table, on: table[id] == Portrait.Definition.speciesId)
-            .filter(optionalLanguage == 1 || optionalLanguage == nil)
+            .filter(optionalLanguage == getLanguageId() || optionalLanguage == nil)
     }
 }
 

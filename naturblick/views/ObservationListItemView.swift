@@ -15,11 +15,11 @@ struct ObservationListItemView: View {
                 .avatar()
                 .padding(.trailing, .defaultPadding)
             VStack(alignment: .leading) {
-                if let name = observation.species?.gername {
+                if let name = observation.species?.speciesName {
                     Text(name)
                         .subtitle1()
                 } else {
-                    Text(observation.species?.sciname ?? "No species")
+                    Text(observation.species?.sciname ?? "no_species")
                         .subtitle1()
                 }
                 Text(observation.observation.created.date.formatted())

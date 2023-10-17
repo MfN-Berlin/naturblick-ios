@@ -9,7 +9,7 @@ struct CCInfoPopupView : View {
     @Binding var present: Bool
     
     private func textAndSourceAsLink(source: String) -> String {
-        return "[Source](\(source)/)"
+        return String(localized: "source \(source)")
     }
     
     private func licenceToLink(licence: String) -> String {
@@ -56,7 +56,7 @@ struct CCInfoPopupView : View {
                 Text(txt)
             }
         
-            Button("Close") {
+            Button("close") {
                 present = false
             }
             .foregroundColor(.onSecondaryHighEmphasis)

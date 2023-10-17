@@ -15,7 +15,7 @@ struct CharacterValueView: View {
             } else {
                 Spacer()
             }
-            Text(value.gername)
+            Text(value.name)
                 .caption()
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)

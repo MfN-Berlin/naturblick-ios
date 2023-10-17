@@ -9,12 +9,16 @@ import BottomSheet
 struct CharactersView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? {
-        group.gerName
+        isGerman() ? group.gerName : group.engName
     }
     
     let group: Group
     @StateObject private var charactersViewModel = CharactersViewModel()
-
+    
+    private var charactersViewModelCountStr: String {
+        "\(charactersViewModel.count)"
+    }
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -30,7 +34,7 @@ struct CharactersView: NavigatableView {
             charactersViewModel.configure(group: group)
         }
         .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
-            Button("\(charactersViewModel.count) Ergebnissse anzeigen") {
+            Button(String(localized: "show_results \(charactersViewModelCountStr)")) {
                 navigationController?.pushViewController(SpeciesListView(filter: charactersViewModel.filter).setUpViewController(), animated: true)
             }
             .accentColor(Color.onPrimaryButtonPrimary)

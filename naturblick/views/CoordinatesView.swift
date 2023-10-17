@@ -12,7 +12,7 @@ struct CoordinatesView: View {
            let longitude = coordinates?.longitude {
             Text("\(longitude), \(latitude)")
         } else {
-            Text("No coordinates")
+            Text("no_coordinates")
         }
     }
 }

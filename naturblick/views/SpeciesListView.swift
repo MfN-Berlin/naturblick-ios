@@ -10,9 +10,9 @@ struct SpeciesListView: NavigatableView {
     var viewName: String? {
         switch(filter) {
         case .group(let group):
-            return group.gerName
+            return isGerman() ? group.gerName : group.engName
         case _:
-            return "Species"
+            return String(localized: "species")
         }
     }
     

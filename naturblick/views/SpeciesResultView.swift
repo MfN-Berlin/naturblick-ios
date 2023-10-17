@@ -44,8 +44,8 @@ struct SpeciesResultView: View {
                     .padding(.trailing, .defaultPadding)
             }
             VStack(alignment: .leading) {
-                if let gername = species.name {
-                    Text(gername)
+                if let name = species.name {
+                    Text(name)
                         .subtitle1()
                 } else {
                     Text(species.sciname)

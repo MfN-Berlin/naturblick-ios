@@ -18,7 +18,7 @@ class SimilarSpeciesViewModel: ObservableObject {
                 on: Species.Definition.table[Species.Definition.id] == SimilarSpecies.Definition.similarToId
             )
             .join(.leftOuter, Portrait.Definition.table, on: Species.Definition.table[Species.Definition.id] == Portrait.Definition.speciesId)
-            .filter(Species.Definition.optionalLanguage == 1 || Species.Definition.optionalLanguage == nil)
+            .filter(Species.Definition.optionalLanguage == getLanguageId() || Species.Definition.optionalLanguage == nil)
             .filter(SimilarSpecies.Definition.portraitId == portraitId)
         }
         

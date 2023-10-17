@@ -99,7 +99,7 @@ struct ObservationInfoView: View {
                     .overline(color: .onPrimarySignalHigh)
                     .multilineTextAlignment(TextAlignment.center)
             }
-            Text(species?.name ?? "Unknown species")
+            Text(species?.name ?? "unknown_species")
                 .headline2()
                 .multilineTextAlignment(TextAlignment.center)
             Text(created.date, formatter: .dateTime)
