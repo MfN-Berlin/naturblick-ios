@@ -84,7 +84,8 @@ struct PortraitView: HostedView {
                             }
                             .padding(.defaultPadding)
                             .background {
-                                RoundedRectangle(cornerRadius: .largeCornerRadius)                                    .foregroundColor(.featureColor)
+                                RoundedRectangle(cornerRadius: .largeCornerRadius)
+                                    .foregroundColor(.featureColor)
                             }
                             
                             VStack(alignment: .leading) {

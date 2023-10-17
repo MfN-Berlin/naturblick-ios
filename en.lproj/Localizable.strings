@@ -147,3 +147,6 @@
 "no_portrait"="Sorry No Portrait";
 "similar_species"="Similar species";
 "close"="Close";
+"cannot_connect"="Can not connect to server, please check your connectivity.";
+"responded_error"="The server responded with an error, please try again later.";
+"logged_out_error"="You have been logged out.";
