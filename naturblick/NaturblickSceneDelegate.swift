@@ -37,7 +37,6 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     private func handle(_ userActivity: NSUserActivity, _ windowScene: UIWindowScene) {
-        
         guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
               let incomingURL = userActivity.webpageURL,
               let pathComponents = userActivity.webpageURL?.pathComponents,
@@ -68,10 +67,8 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func startScene(windowScene: UIWindowScene, deepLink: DeepLink? = nil) {
-        UINavigationBar.appearance().tintColor = .onPrimaryHighEmphasis
-
         let window = UIWindow(windowScene: windowScene)
-        let navigationController = PopAwareNavigationController(rootViewController: HomeViewController())
+        let navigationController = StandardPopAwareNavigationController(rootViewController: HomeViewController())
         
         switch deepLink {
         case .activateAccount(let token):

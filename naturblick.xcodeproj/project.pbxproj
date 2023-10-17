@@ -50,6 +50,7 @@
 		13561BE32A7937F700968A03 /* Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13561BE22A7937F700968A03 /* Behavior.swift */; };
 		1358D5EE2AA5D86300B48C01 /* NBMantisController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */; };
 		135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135E682E29EE805700192C4A /* ObservationListItemView.swift */; };
+		13640AF12ADEAE2400BA5907 /* EditObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13640AF02ADEAE2400BA5907 /* EditObservationView.swift */; };
 		1366FA952A654B8500436EF1 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1366FA942A654B8500436EF1 /* Observation.swift */; };
 		136C118B29D6E66E00805628 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 136C118A29D6E66E00805628 /* BottomSheet */; };
 		136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */; };
@@ -75,6 +76,7 @@
 		137FE58E29E5AC1C00B397DF /* ObservationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58D29E5AC1C00B397DF /* ObservationResponse.swift */; };
 		137FE59029E5B3A500B397DF /* NSMutableData+append.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */; };
 		13839FBE2ABDBE0A00DE2A5B /* SourcesTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13839FBD2ABDBE0A00DE2A5B /* SourcesTranslation.swift */; };
+		1395C1562ADFCEED00B168AD /* ObservationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1395C1552ADFCEED00B168AD /* ObservationViewModel.swift */; };
 		139DA94C2AB99E6F00C8C238 /* View+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */; };
 		13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13A2923029D2DC3C00AF772A /* Generated.xcassets */; };
 		13A2923429D3110C00AF772A /* CharactersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923329D3110C00AF772A /* CharactersView.swift */; };
@@ -87,7 +89,7 @@
 		13AFFA5A2AAF0A0B00ABF4F9 /* EditFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AFFA592AAF0A0B00ABF4F9 /* EditFlowViewModel.swift */; };
 		13B686AC2A09055C001FD28F /* EditData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B686AB2A09055C001FD28F /* EditData.swift */; };
 		13B686AE2A091951001FD28F /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B686AD2A091951001FD28F /* Formatter.swift */; };
-		13B686B02A093A75001FD28F /* EditObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B686AF2A093A75001FD28F /* EditObservationView.swift */; };
+		13B686B02A093A75001FD28F /* ObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B686AF2A093A75001FD28F /* ObservationView.swift */; };
 		13B686B22A09410A001FD28F /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B686B12A09410A001FD28F /* Coordinates.swift */; };
 		13C02EBE2AB059FE001F8D4B /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C02EBD2AB059FE001F8D4B /* PickerView.swift */; };
 		13C02EC02AB06313001F8D4B /* PickerFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C02EBF2AB06313001F8D4B /* PickerFlow.swift */; };
@@ -229,6 +231,7 @@
 		13561BE22A7937F700968A03 /* Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Behavior.swift; sourceTree = "<group>"; };
 		1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBMantisController.swift; sourceTree = "<group>"; };
 		135E682E29EE805700192C4A /* ObservationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemView.swift; sourceTree = "<group>"; };
+		13640AF02ADEAE2400BA5907 /* EditObservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditObservationView.swift; sourceTree = "<group>"; };
 		1366FA942A654B8500436EF1 /* Observation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observation.swift; sourceTree = "<group>"; };
 		136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationPersistenceController.swift; sourceTree = "<group>"; };
 		136D907F29D18BBE00A00BD4 /* Portrait.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portrait.swift; sourceTree = "<group>"; };
@@ -253,6 +256,7 @@
 		137FE58D29E5AC1C00B397DF /* ObservationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationResponse.swift; sourceTree = "<group>"; };
 		137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableData+append.swift"; sourceTree = "<group>"; };
 		13839FBD2ABDBE0A00DE2A5B /* SourcesTranslation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesTranslation.swift; sourceTree = "<group>"; };
+		1395C1552ADFCEED00B168AD /* ObservationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationViewModel.swift; sourceTree = "<group>"; };
 		139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Shadow.swift"; sourceTree = "<group>"; };
 		13A2923029D2DC3C00AF772A /* Generated.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Generated.xcassets; sourceTree = "<group>"; };
 		13A2923329D3110C00AF772A /* CharactersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersView.swift; sourceTree = "<group>"; };
@@ -265,7 +269,7 @@
 		13AFFA592AAF0A0B00ABF4F9 /* EditFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFlowViewModel.swift; sourceTree = "<group>"; };
 		13B686AB2A09055C001FD28F /* EditData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditData.swift; sourceTree = "<group>"; };
 		13B686AD2A091951001FD28F /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
-		13B686AF2A093A75001FD28F /* EditObservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditObservationView.swift; sourceTree = "<group>"; };
+		13B686AF2A093A75001FD28F /* ObservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationView.swift; sourceTree = "<group>"; };
 		13B686B12A09410A001FD28F /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		13C02EBD2AB059FE001F8D4B /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 		13C02EBF2AB06313001F8D4B /* PickerFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerFlow.swift; sourceTree = "<group>"; };
@@ -483,7 +487,7 @@
 				132A91422A2DD52100AC405C /* CoordinatesView.swift */,
 				136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */,
 				7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */,
-				13B686AF2A093A75001FD28F /* EditObservationView.swift */,
+				13640AF02ADEAE2400BA5907 /* EditObservationView.swift */,
 				13709A842A7D1C0E00B81108 /* FABView.swift */,
 				7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */,
 				7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */,
@@ -504,6 +508,7 @@
 				135E682E29EE805700192C4A /* ObservationListItemView.swift */,
 				13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */,
 				13EC572229DC83E900D56A77 /* ObservationListView.swift */,
+				13B686AF2A093A75001FD28F /* ObservationView.swift */,
 				136E89082AD579C500197790 /* OnSecondaryFieldView.swift */,
 				13C02EBD2AB059FE001F8D4B /* PickerView.swift */,
 				7BDCC0EA2AD0458C0089A4C6 /* PickSpeciesListView.swift */,
@@ -556,6 +561,7 @@
 				1366FA942A654B8500436EF1 /* Observation.swift */,
 				134B72B02A04FB6B00C1DCAD /* ObservationRequest.swift */,
 				137FE58D29E5AC1C00B397DF /* ObservationResponse.swift */,
+				1395C1552ADFCEED00B168AD /* ObservationViewModel.swift */,
 				137FE58629E5996800B397DF /* ObsType.swift */,
 				13070CA72A053EC700A2046D /* Operation.swift */,
 				134B72B42A05348000C1DCAD /* PatchOperation.swift */,
@@ -827,12 +833,13 @@
 				13EC572129DC80AD00D56A77 /* ObservationListItemWithImageView.swift in Sources */,
 				13A2923C29D317A300AF772A /* CharacterValue.swift in Sources */,
 				7B572DD92A6E758F008F50C5 /* Thumbnail.swift in Sources */,
-				13B686B02A093A75001FD28F /* EditObservationView.swift in Sources */,
+				13B686B02A093A75001FD28F /* ObservationView.swift in Sources */,
 				7BCEFCC82A690FC800EAC332 /* UIDevice.swift in Sources */,
 				13561BE32A7937F700968A03 /* Behavior.swift in Sources */,
 				13A2923429D3110C00AF772A /* CharactersView.swift in Sources */,
 				135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */,
 				136E89092AD579C500197790 /* OnSecondaryFieldView.swift in Sources */,
+				1395C1562ADFCEED00B168AD /* ObservationViewModel.swift in Sources */,
 				7BC77E852A6A4DCB00B489C2 /* AppSecureStorage.swift in Sources */,
 				1345EF802AB873D600F1CEA8 /* ObservationInfoView.swift in Sources */,
 				13743F6A2A6803AA00ABCCB1 /* Image+Style.swift in Sources */,
@@ -912,6 +919,7 @@
 				137690032A30946F0076F93A /* SpectrogramView.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
 				7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */,
+				13640AF12ADEAE2400BA5907 /* EditObservationView.swift in Sources */,
 				7BD0FBE32AD7EF2900B63E07 /* Language.swift in Sources */,
 				7BD016232A0B723600B07A3E /* MultipartRequest.swift in Sources */,
 				137D280B2AC44A91009DFB36 /* SpetrogramViewModel.swift in Sources */,

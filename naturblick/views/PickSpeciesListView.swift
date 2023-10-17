@@ -28,8 +28,7 @@ struct PickSpeciesListView<Flow>: NavigatableView where Flow: IdFlow {
     }
     
     func showSpecies(species: SpeciesListItem) {
-        navigationController?.pushViewController(SpeciesInfoView(species: species, flow: flow)
-            .setUpViewController(), animated: true)
+        viewController?.present(InSheetPopAwareNavigationController(rootViewController: SpeciesInfoView(species: species, flow: flow).setUpViewController()), animated: true)
     }
     
     var body: some View {

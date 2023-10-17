@@ -18,7 +18,6 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     @Published var imageData: ImageData = ImageData()
     @Published var soundData: SoundData = SoundData()
     @Published var speciesAvatar: Image = Image("placeholder")
-    @Published var editing: Bool = false
     @Published var region: MKCoordinateRegion
     init(persistenceController: ObservationPersistenceController, observation: Observation) {
         self.persistenceController = persistenceController
@@ -64,7 +63,10 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         config.cropToolbarConfig.mode = .embedded
         let cropViewController: NBMantisController = Mantis.cropViewController(image: image.image, config: config)
         cropViewController.delegate = self
+        print("\(viewController)")
+        print("\(navigationController)")
         withNavigation { navigation in
+            print("push")
             navigation.pushViewController(cropViewController, animated: true)
         }
     }

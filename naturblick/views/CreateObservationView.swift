@@ -22,7 +22,11 @@ struct CreateObservationView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var hideNavigationBarShadow: Bool = true
     func configureNavigationItem(item: UINavigationItem) {
+        item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "cancel")) {_ in
+            viewController?.dismiss(animated: true)
+        })
         item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "save")) {_ in
+            viewController?.dismiss(animated: true)
             createFlow.saveObservation()
         })
     }
@@ -33,64 +37,31 @@ struct CreateObservationView: NavigatableView {
     @State private var userTrackingMode: MapUserTrackingMode = .none
     @State private var sheetPosition : BottomSheetPosition = .dynamic
     var body: some View {
-        GeometryReader { geo in
-            ZStack {
-                VStack(alignment: .center) {
-                    ObservationInfoView(width: geo.size.width, fallbackThumbnail: createFlow.speciesAvatar, data: createFlow.data) { view in
-                        navigationController?.pushViewController(view, animated: true)
-                    }
+        Form {
+            HStack {
+                createFlow.speciesAvatar
+                    .avatar()
+                    .padding(.trailing, .defaultPadding)
+                VStack(alignment: .leading) {
+                    Text("species")
+                        .caption(color: .onSecondarySignalLow)
+                    Text(createFlow.data.species?.sciname ?? "unknown_species")
+                        .subtitle1()
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                
-                VStack(alignment: .leading, spacing: .defaultPadding) {
-                    HStack {
-                       createFlow.speciesAvatar
-                            .avatar()
-                            .padding(.trailing, .defaultPadding)
-                        VStack(alignment: .leading) {
-                            Text("species")
-                                .caption(color: .onSecondarySignalLow)
-                            Text(createFlow.data.species?.sciname ?? "unknown_species")
-                                .subtitle1()
-                        }
-                    }
-                    OnSecondaryFieldView(icon: "location24") {
-                        CoordinatesView(coordinates: createFlow.data.coords)
-                    }
-                    .onTapGesture {
-                        navigationController?.pushViewController(PickerView(flow: createFlow).setUpViewController(), animated: true)
-                    }
-                    OnSecondaryFieldView(icon: "number24") {
-                        IndividualsView(individuals: $createFlow.data.individuals)
-                    }
-                    OnSecondaryFieldView(icon: "location24") {
-                        Picker("behavior", selection: $createFlow.data.behavior) {
-                            Text("none").tag(nil as Behavior?)
-                            ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
-                                Text($0.rawValue).tag($0 as Behavior?)
-                            }
-                        }
-                        .pickerStyle(MenuPickerStyle())
-                        .tint(.onSecondaryHighEmphasis)
-                        .accentColor(.onSecondaryHighEmphasis)
-                    }
-                    OnSecondaryFieldView(icon: "details") {
-                        TextField("notes", text: $createFlow.data.details)
-                    }
-                }
-                .padding(.defaultPadding)
-                .padding(.bottom, geo.safeAreaInsets.bottom)
-                .background(
-                    RoundedRectangle(cornerRadius: .largeCornerRadius)
-                        .fill(Color.secondaryColor)
-                        .nbShadow()
-                )
-                .background(Color(uiColor: .onPrimaryButtonSecondary))
-                .frame(maxHeight: .infinity, alignment: .bottom)
             }
-            .ignoresSafeArea(edges: .bottom)
-            .frame(maxHeight: .infinity)
-            .background(Color(uiColor: .onPrimaryButtonSecondary))
+            CoordinatesView(coordinates: createFlow.data.coords)
+                .onTapGesture {
+                    navigationController?.pushViewController(PickerView(flow: createFlow).setUpViewController(), animated: true)
+                }
+            IndividualsView(individuals: $createFlow.data.individuals)
+            Picker("behavior", selection: $createFlow.data.behavior) {
+                Text("none").tag(nil as Behavior?)
+                ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
+                    Text($0.rawValue).tag($0 as Behavior?)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            TextField("notes", text: $createFlow.data.details)
         }
         .onChange(of: locationManager.userLocation) { location in
             if let location = location {

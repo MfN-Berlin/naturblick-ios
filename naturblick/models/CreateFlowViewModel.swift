@@ -104,8 +104,8 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
             }
         }
-        let create = CreateObservationView(createFlow: self).setUpViewController()
-        navigationController?.pushViewController(create, animated: true)
+        let create = InSheetPopAwareNavigationController(rootViewController: CreateObservationView(createFlow: self).setUpViewController())
+        viewController?.present(create, animated: true)
     }
     
     @MainActor func selectManual(species: SpeciesListItem) {
@@ -118,8 +118,8 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
             }
         }
-        let create = CreateObservationView(createFlow: self).setUpViewController()
-        navigationController?.pushViewController(create, animated: true)
+        let create = InSheetPopAwareNavigationController(rootViewController: CreateObservationView(createFlow: self).setUpViewController())
+        viewController?.present(create, animated: true)
     }
     
     @MainActor private func updateResult(result: [SpeciesResult]) {

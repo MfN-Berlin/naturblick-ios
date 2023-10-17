@@ -15,6 +15,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
     
     func configureNavigationItem(item: UINavigationItem) {
         item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "choose")) {_ in
+            viewController?.dismiss(animated: true)
             flow.selectSpecies(species: species)
         })
     }

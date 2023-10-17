@@ -6,6 +6,7 @@
 import SwiftUI
 
 struct ObservationInfoView: View {
+    let client = BackendClient()
     let width: CGFloat
     let navigate: (UIViewController) -> Void
 
@@ -16,56 +17,46 @@ struct ObservationInfoView: View {
     let start: Int?
     let end: Int?
     let fullscreenImageId: UUID?
-    let thumbnail: Image
+    let thumbnailId: UUID?
+    let fallbackThumbnail: Image
+    @State var thumbnail: Image? = nil
     
-    init(width: CGFloat, fallbackThumbnail: Image, data: EditData, navigate: @escaping (UIViewController) -> Void) {
+    init(width: CGFloat, fallbackThumbnail: Image, observation: Observation, navigate: @escaping (UIViewController) -> Void) {
         self.width = width
         self.navigate = navigate
-        self.species = data.species
-        self.created = data.original.created
-        self.start = data.original.segmStart.map { s in Int(s) } ?? nil
-        self.end = data.original.segmEnd.map { s in Int(s) } ?? nil
-        if let thumbnail = data.thumbnail?.image {
-            self.thumbnail = Image(uiImage: thumbnail)
-        } else {
-            self.thumbnail = fallbackThumbnail
-        }
-        if data.original.obsType == .audio || data.original.obsType == .unidentifiedaudio,  let mediaId = data.original.mediaId {
+        self.species = observation.species?.listItem
+        self.created = observation.observation.created
+        self.start = observation.observation.segmStart.map { s in Int(s) } ?? nil
+        self.end = observation.observation.segmEnd.map { s in Int(s) } ?? nil
+        if observation.observation.obsType == .audio || observation.observation.obsType == .unidentifiedaudio,  let mediaId = observation.observation.mediaId {
             self.sound = NBSound(id: mediaId)
         } else {
             self.sound = nil
         }
         
-        if data.original.obsType == .image || data.original.obsType == .unidentifiedimage, let mediaId = data.original.mediaId {
+        if observation.observation.obsType == .image || observation.observation.obsType == .unidentifiedimage, let mediaId = observation.observation.mediaId {
             self.fullscreenImageId = mediaId
         } else {
             self.fullscreenImageId = nil
         }
+        self.thumbnailId = observation.observation.thumbnailId
+        self.fallbackThumbnail = fallbackThumbnail
     }
-    
-    init(width: CGFloat, fallbackThumbnail: Image, data: CreateData, navigate: @escaping (UIViewController) -> Void) {
-        self.width = width
-        self.navigate = navigate
-        self.species = data.species
-        self.created = data.created
-        self.sound = data.sound.sound
-        self.start = data.sound.start
-        self.end = data.sound.end
-        if let thumbnail = data.sound.crop?.image ?? data.image.crop?.image {
-            self.thumbnail = Image(uiImage: thumbnail)
-        } else {
-            self.thumbnail = fallbackThumbnail
-        }
-        self.fullscreenImageId = data.image.image?.id
-    }
-    
     
     var avatar: some View {
-        thumbnail
-            .resizable()
-            .scaledToFit()
-            .clipShape(Circle())
-            .frame(width: width * 0.4, height: width * 0.4)
+        if let thumbnail = thumbnail {
+            return thumbnail
+                .resizable()
+                .scaledToFit()
+                .clipShape(Circle())
+                .frame(width: width * 0.4, height: width * 0.4)
+        } else {
+            return fallbackThumbnail
+                .resizable()
+                .scaledToFit()
+                .clipShape(Circle())
+                .frame(width: width * 0.4, height: width * 0.4)
+        }
     }
     
     var body: some View {
@@ -108,5 +99,10 @@ struct ObservationInfoView: View {
         }
         .padding(.defaultPadding)
         .background(Color(uiColor: .onPrimaryButtonSecondary))
+        .task(id: thumbnailId) {
+            if let id = thumbnailId, let image = try? await client.download(mediaId: id) {
+                thumbnail = Image(uiImage: image)
+            }
+        }
     }
 }
