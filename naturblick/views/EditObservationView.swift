@@ -4,7 +4,6 @@
 
 
 import SwiftUI
-import MapKit
 
 class EditObservationViewController: HostingController<EditObservationView> {
     let flow: EditFlowViewModel
@@ -14,44 +13,25 @@ class EditObservationViewController: HostingController<EditObservationView> {
         super.init(rootView: EditObservationView(flow: flow))
         flow.setViewController(controller: self)
     }
-
-    @objc func setEdit() {
-        flow.editing = true
+    
+    
+    @objc func save() {
+        flow.saveObservation()
+        dismiss(animated: true)
     }
-
+    
+    @objc func cancel() {
+        dismiss(animated: true)
+    }
 }
 
 struct EditObservationView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    var hideNavigationBarShadow: Bool = true
     @ObservedObject var flow: EditFlowViewModel
-    @State private var isEditing = false
-    init(flow: EditFlowViewModel) {
-        self.flow = flow
-    }
-    
-    func pop() -> Bool {
-        if flow.data.hasChanged {
-            let discard = UIAlertAction(title: "Discard changes", style: .destructive) { (action) in
-                self.navigationController?.forcePopViewController(animated: true)
-            }
-            let save = UIAlertAction(title: String(localized: "save"), style: .default) { (action) in
-                flow.saveObservation()
-            }
-            let cancel = UIAlertAction(title: "Continue editing", style: .cancel) { (action) in}
-            let alert = UIAlertController(title: "Unsaved changes", message: "There are changes that have not been saved.", preferredStyle: .actionSheet)
-            alert.addAction(discard)
-            alert.addAction(save)
-            alert.addAction(cancel)
-            viewController?.present(alert, animated: true)
-            return false
-        } else {
-            return true
-        }
-    }
     
     func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(title: String(localized: "edit"), style: .done, target: viewController, action: #selector(EditObservationViewController.setEdit))
+        item.leftBarButtonItem = UIBarButtonItem(title: String(localized: "cancel"), style: .plain, target: viewController, action: #selector(EditObservationViewController.cancel))
+        item.rightBarButtonItem = UIBarButtonItem(title: String(localized: "save"), style: .done, target: viewController, action: #selector(EditObservationViewController.save))
     }
     
     func identifyImage() {
@@ -69,8 +49,8 @@ struct EditObservationView: HostedView {
         }
     }
     
-    var edit: some View {
-        VStack(alignment: .leading, spacing: .defaultPadding) {
+    var body: some View {
+        Form {
             HStack {
                 flow.speciesAvatar
                     .avatar()
@@ -93,126 +73,28 @@ struct EditObservationView: HostedView {
                 }
                 .buttonStyle(ChangeSpeciesButton())
             }
-            Divider()
-            OnSecondaryFieldView(icon: "location24") {
-                CoordinatesView(coordinates: flow.data.coords)
-                    .onTapGesture {
-                        navigationController?.pushViewController(PickerView(flow: flow).setUpViewController(), animated: true)
-                    }
-            }
-            OnSecondaryFieldView(icon: "number24") {
-                IndividualsView(individuals: $flow.data.individuals)
-            }
-            OnSecondaryFieldView(icon: "location24") {
-                Picker("behavior", selection: $flow.data.behavior) {
-                    if flow.data.original.behavior == nil {
-                        Text("none").tag(nil as Behavior?)
-                    }
-                    ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
-                        Text($0.rawValue).tag($0 as Behavior?)
-                    }
+            CoordinatesView(coordinates: flow.data.coords)
+                .onTapGesture {
+                    navigationController?.pushViewController(PickerView(flow: flow).setUpViewController(), animated: true)
                 }
-                .pickerStyle(MenuPickerStyle())
-                .tint(.onSecondaryHighEmphasis)
-                .accentColor(.onSecondaryHighEmphasis)
-            }
-            OnSecondaryFieldView(icon: "details") {
-                TextField("notes", text: $flow.data.details)
-            }
-        }
-    }
-    
-    var view: some View {
-        VStack(alignment: .leading, spacing: .defaultPadding) {
-            HStack {
-                flow.speciesAvatar
-                    .avatar()
-                    .padding(.trailing, .defaultPadding)
-                
-                VStack(alignment: .leading) {
-                    Text("species")
-                        .caption(color: .onSecondarySignalLow)
-                    Text(flow.data.species?.sciname ?? "unknown_species")
-                        .subtitle1(color: .onSecondaryMediumEmphasis)
+            IndividualsView(individuals: $flow.data.individuals)
+            
+            Picker("behavior", selection: $flow.data.behavior) {
+                if flow.data.original.behavior == nil {
+                    Text("none").tag(nil as Behavior?)
                 }
-                Spacer()
-                ChevronView(color: .onSecondarySignalLow)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                if let species = flow.data.species {
-                    navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
+                ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
+                    Text($0.rawValue).tag($0 as Behavior?)
                 }
             }
-            Divider()
-            HStack {
-                Image("location24")
-                    .observationProperty()
-                VStack(alignment: .leading, spacing: .zero) {
-                    Text("location")
-                        .caption(color: .onSecondarySignalLow)
-                    CoordinatesView(coordinates: flow.data.coords)
-                }
-                Spacer()
-                ChevronView(color: .onSecondarySignalLow)
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                // TODO
-                print("Show on map")
-            }
-            Divider()
-            ViewProperty(icon: "number24", label: String(localized: "number"), content: String(flow.data.individuals))
-            ViewProperty(icon: "location24", label: String(localized: "behavior"), content: flow.data.behavior?.rawValue)
-            ViewProperty(icon: "details", label: String(localized: "notes"), content: flow.data.details)
-        }
-    }
-    
-    var body: some View {
-        GeometryReader { geo in
-            ZStack {
-                VStack(alignment: .center) {
-                    ObservationInfoView(width: geo.size.width, fallbackThumbnail: flow.speciesAvatar, data: flow.data) { view in
-                        navigationController?.pushViewController(view, animated: true)
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                SwiftUI.Group {
-                    if isEditing {
-                        edit
-                    } else {
-                        view
-                    }
-                }
-                .padding(.defaultPadding)
-                .padding(.bottom, geo.safeAreaInsets.bottom)
-                .background(
-                    RoundedRectangle(cornerRadius: .largeCornerRadius)
-                        .fill(Color.secondaryColor)
-                        .nbShadow()
-                )
-                .background(Color(uiColor: .onPrimaryButtonSecondary))
-                .frame(maxHeight: .infinity, alignment: .bottom)
-            }
-            .ignoresSafeArea(edges: .bottom)
-            .frame(maxHeight: .infinity)
-            .background(Color(uiColor: .onPrimaryButtonSecondary))
-        }
-        .onReceive(flow.$editing) { editing in
-            if editing {
-                withAnimation {
-                    isEditing = editing
-                    viewController?.navigationItem.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "save")) {_ in
-                        flow.saveObservation()
-                    })
-                }
-            }
+            .pickerStyle(MenuPickerStyle())
+            TextField("notes", text: $flow.data.details)
         }
     }
 }
 
-struct EditObsevationView_Previews: PreviewProvider {
+struct EditObservationView_Previews: PreviewProvider {
     static var previews: some View {
-        EditObservationView(flow: EditFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true), observation: Observation(observation: DBObservation.sampleData, species: nil)))
+        EditObservationView(flow: EditFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true), observation: Observation(observation: DBObservation.sampleData, species: Species.sampleData)))
     }
 }

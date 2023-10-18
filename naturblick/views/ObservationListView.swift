@@ -15,7 +15,7 @@ class ObservationListViewController: HostingController<ObservationListView> {
     let createFlow: CreateFlowViewModel
     init() {
         persistenceController = ObservationPersistenceController()
-        createFlow = CreateFlowViewModel(persistenceController: persistenceController)
+        createFlow = CreateFlowViewModel(persistenceController: persistenceController, fromList: true)
         let view = ObservationListView(persistenceController: persistenceController, createFlow: createFlow)
         super.init(rootView: view)
         createFlow.setViewController(controller: self)
@@ -79,7 +79,7 @@ struct ObservationListView: HostedView {
                         .listRowInsets(.nbInsets)
                         .listRowBackground(Color.secondaryColor)
                         .onTapGesture {
-                            navigationController?.pushViewController(EditObservationViewController(observation: observation, persistenceController: persistenceController), animated: true)
+                            navigationController?.pushViewController(ObservationView(occurenceId: observation.id, persistenceController: persistenceController).setUpViewController(), animated: true)
                         }
                 }
                 .listStyle(.plain)
@@ -99,7 +99,7 @@ struct ObservationListView: HostedView {
                             Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
                                 .onTapGesture {
                                     let view = MapInfoBox(observation: observation, persistenceController: persistenceController) {
-                                        let controller = EditObservationViewController(observation: observation, persistenceController: persistenceController)
+                                        let controller = ObservationView(occurenceId: observation.id, persistenceController: persistenceController).setUpViewController()
                                         navigationController?.pushViewController(controller, animated: true)
                                     } .setUpViewController()
                                     

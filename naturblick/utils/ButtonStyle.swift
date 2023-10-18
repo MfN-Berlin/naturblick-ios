@@ -28,6 +28,17 @@ struct ConfirmButton: ButtonStyle {
     }
 }
 
+struct SecondaryOnSecondaryButton: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .padding(.defaultPadding)
+            .foregroundStyle(Color.onPrimaryHighEmphasis)
+            .background(Color.onSecondaryButtonSecondary)
+            .clipShape(RoundedRectangle(cornerRadius: .smallCornerRadius))
+            .nbShadow()
+    }
+}
+
 struct AuxiliaryOnSecondaryButton: ButtonStyle {
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label

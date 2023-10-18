@@ -7,16 +7,11 @@ import SwiftUI
 import CachedAsyncImage
 
 struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
+    @Environment(\.openURL) var openURL
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
         species.name
-    }
-    
-    func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "choose")) {_ in
-            flow.selectSpecies(species: species)
-        })
     }
     
     let species: SpeciesListItem
@@ -30,8 +25,14 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
         }
     }
     
+    func configureNavigationItem(item: UINavigationItem) {
+        item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "close")) {_ in
+            viewController?.dismiss(animated: true)
+            })
+        }
+    
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: .defaultPadding) {
             SwiftUI.Group {
                 CachedAsyncImage(urlRequest: urlRequest) { image in
                     image
@@ -52,26 +53,41 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
                         .padding(.defaultPadding)
                 }
             }
-            Text(species.sciname)
-                .overline(color: .onSecondarySignalHigh)
-                .multilineTextAlignment(.center)
-            Text(species.speciesName?.uppercased() ?? String(localized: "speciesname").uppercased())
-                .headline4(color: .onSecondaryHighEmphasis)
-                .multilineTextAlignment(.center)
-            if let synonym = species.synonym {
-                Text("also \(synonym)")
-                    .caption(color: .onSecondaryLowEmphasis)
+            VStack {
+                Text(species.sciname)
+                    .overline(color: .onSecondarySignalHigh)
                     .multilineTextAlignment(.center)
+                Text(species.speciesName?.uppercased() ?? String(localized: "speciesname").uppercased())
+                    .headline4(color: .onSecondaryHighEmphasis)
+                    .multilineTextAlignment(.center)
+                
+                if let synonym = species.synonym {
+                    Text("also \(synonym)")
+                        .caption(color: .onSecondaryLowEmphasis)
+                        .multilineTextAlignment(.center)
+                }
             }
+            Button(flow.isCreate ? "create_with_species" : "choose_species") {
+                viewController?.dismiss(animated: true)
+                flow.selectSpecies(species: species)
+            }
+            .buttonStyle(SecondaryOnSecondaryButton())
             if species.hasPortrait {
-                Button("to_artportrait") {
+                Button("to_artportrait", icon: "artportraits24") {
                     navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
                 }
                 .buttonStyle(AuxiliaryOnSecondaryButton())
             } else if let wikipedia = species.wikipedia {
-                Link("link_to_wikipedia", destination: URL(string: wikipedia)!)
-                    .buttonStyle(AuxiliaryOnSecondaryButton())
+                Button("link_to_wikipedia") {
+                    openURL(URL(string: wikipedia)!)
+                }
+                .buttonStyle(AuxiliaryOnSecondaryButton())
             }
+            Button("choose_another") {
+                viewController?.dismiss(animated: true)
+            }
+            .buttonStyle(AuxiliaryOnSecondaryButton())
+            Spacer()
         }
         .padding(.defaultPadding)
     }

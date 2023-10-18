@@ -17,9 +17,11 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @Published var data = CreateData()
     @Published var region: MKCoordinateRegion = .defaultRegion
     @Published var speciesAvatar: Image = Image("placeholder")
-
-    init(persistenceController: ObservationPersistenceController) {
+    var isCreate: Bool = true
+    let fromList: Bool
+    init(persistenceController: ObservationPersistenceController, fromList: Bool = false) {
         self.persistenceController = persistenceController
+        self.fromList = fromList
         super.init()
         
         $data.map { data in
@@ -118,8 +120,8 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
             }
         }
-        let create = CreateObservationView(createFlow: self).setUpViewController()
-        navigationController?.pushViewController(create, animated: true)
+        let create = InSheetPopAwareNavigationController(rootViewController: CreateObservationView(createFlow: self).setUpViewController())
+        viewController?.present(create, animated: true)
     }
     
     @MainActor private func updateResult(result: [SpeciesResult]) {
@@ -178,7 +180,14 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         if let controller = viewController, let navigation = controller.navigationController {
             do {
                 try persistenceController.insert(data: data)
-                navigation.popToViewController(controller, animated: true)
+                var controllers = navigation.viewControllers
+                if fromList {
+                    controllers.removeLast(controllers.count - 2)
+                } else {
+                    controllers.removeLast(controllers.count - 1)
+                    controllers.append(ObservationListViewController())
+                }
+                navigation.setViewControllers(controllers, animated: true)
             } catch {
                 preconditionFailure("\(error)")
             }
