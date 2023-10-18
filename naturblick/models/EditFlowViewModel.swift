@@ -63,10 +63,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         config.cropToolbarConfig.mode = .embedded
         let cropViewController: NBMantisController = Mantis.cropViewController(image: image.image, config: config)
         cropViewController.delegate = self
-        print("\(viewController)")
-        print("\(navigationController)")
         withNavigation { navigation in
-            print("push")
             navigation.pushViewController(cropViewController, animated: true)
         }
     }

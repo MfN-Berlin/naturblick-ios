@@ -149,3 +149,4 @@
 "cannot_connect"="Es kann keine Verbindung zum Server hergestellt werden, bitte überprüfen Sie Ihre Verbindung.";
 "responded_error"="Der Server hat mit einem Fehler geantwortet, bitte versuchen Sie es später noch einmal.";
 "logged_out_error"="Sie wurden abgemeldet.";
+"choose_another"="Eine andere Art aussuchen";
