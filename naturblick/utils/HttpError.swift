@@ -17,13 +17,13 @@ extension HttpError {
     var localizedDescription: String {
         switch(self) {
         case .networkError:
-            return "Can not connect to server, please check your connectivity."
+            return String(localized: "cannot_connect")
         case .serverError:
-            return "The server responded with an error, please try again later."
+            return String(localized: "responded_error")
         case .clientError:
-            return "The server responded with an error, please try again later."
+            return String(localized: "responded_error")
         case .loggedOut:
-            return "You have been logged out because you have reset your password or deleted your account."
+            return String(localized: "logged_out_error")
         }
     }
 }
