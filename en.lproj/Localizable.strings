@@ -151,3 +151,5 @@
 "responded_error"="The server responded with an error, please try again later.";
 "logged_out_error"="You have been logged out.";
 "choose_another"="Choose another species";
+"create_with_species"="Use to create observation";
+"choose_species"="Use this species";

@@ -150,3 +150,5 @@
 "responded_error"="Der Server hat mit einem Fehler geantwortet, bitte versuchen Sie es später noch einmal.";
 "logged_out_error"="Sie wurden abgemeldet.";
 "choose_another"="Eine andere Art aussuchen";
+"create_with_species"="Mit dieser Art eine Beobachtung kreieren";
+"choose_species"="Diese Art auswählen";

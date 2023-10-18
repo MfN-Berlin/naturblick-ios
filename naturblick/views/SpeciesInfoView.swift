@@ -67,7 +67,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
                         .multilineTextAlignment(.center)
                 }
             }
-            Button("choose") {
+            Button(flow.isCreate ? "create_with_species" : "choose_species") {
                 viewController?.dismiss(animated: true)
                 flow.selectSpecies(species: species)
             }

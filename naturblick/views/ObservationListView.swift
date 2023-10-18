@@ -15,7 +15,7 @@ class ObservationListViewController: HostingController<ObservationListView> {
     let createFlow: CreateFlowViewModel
     init() {
         persistenceController = ObservationPersistenceController()
-        createFlow = CreateFlowViewModel(persistenceController: persistenceController)
+        createFlow = CreateFlowViewModel(persistenceController: persistenceController, fromList: true)
         let view = ObservationListView(persistenceController: persistenceController, createFlow: createFlow)
         super.init(rootView: view)
         createFlow.setViewController(controller: self)

@@ -22,9 +22,6 @@ struct CreateObservationView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var hideNavigationBarShadow: Bool = true
     func configureNavigationItem(item: UINavigationItem) {
-        item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "cancel")) {_ in
-            viewController?.dismiss(animated: true)
-        })
         item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "save")) {_ in
             viewController?.dismiss(animated: true)
             createFlow.saveObservation()
