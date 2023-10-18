@@ -42,13 +42,13 @@ struct ObservationListView: HostedView {
             MenuEntry(title: String(localized: "ident_from_photo"), image: UIImage(named: "details")!) {
                 
             },
-            MenuEntry(title: String(localized: "record_a_bird"), image: UIImage(named: "audio48")!) {
+            MenuEntry(title: String(localized: "record_a_bird"), image: UIImage(named: "audio24")!) {
                 createFlow.recordSound()
             },
-            MenuEntry(title: String(localized: "photograph_a_plant"), image: UIImage(named: "photo48")!) {
+            MenuEntry(title: String(localized: "photograph_a_plant"), image: UIImage(named: "photo24")!) {
                 createFlow.takePhoto()
             },
-            MenuEntry(title: String(localized: "create_obs"), image: UIImage(named: "logo48")!) {
+            MenuEntry(title: String(localized: "create_obs"), image: UIImage(named: "logo24")!) {
                 createFlow.searchSpecies()
             }
         ]
