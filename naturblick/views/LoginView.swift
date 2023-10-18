@@ -8,41 +8,35 @@ struct SigninResponse : Decodable {
     let access_token: String
 }
 
-struct LoginView: NavigatableView {
+class LoginViewController: HostingController<LoginView> {
+    
+    var accountViewModel: AccountViewModel
+    let loginVM: LoginViewModel
+    
+    init(accountViewModel: AccountViewModel) {
+        self.accountViewModel = accountViewModel
+        self.loginVM = LoginViewModel(accountViewModel: accountViewModel)
+        super.init(rootView: LoginView(accountViewModel: self.accountViewModel, loginVM: self.loginVM))
+    }
+}
+
+struct LoginView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = String(localized: "login")
     
     @ObservedObject var accountViewModel: AccountViewModel
+    @ObservedObject var loginVM: LoginViewModel
         
-    @StateObject private var loginVM = EmailAndPasswordWithPrompt()
-    
-    @State  var isPresented: Bool = false
-    @State  var error: HttpError? = nil
-    
-    @State var showCredentialsWrong = false
-    @State var showLoginSuccess = false
+    func configureNavigationItem(item: UINavigationItem) {
+        item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "cancel")) { _ in
+            navigationController?.dismiss(animated: true)
+        })
         
-    func signIn() -> Void {
-        let client = BackendClient()
-        Task {
-            do {
-                let signInResponse = try await client.signIn(email: loginVM.email, password: loginVM.password)
-                accountViewModel.email = loginVM.email
-                accountViewModel.bearerToken = signInResponse.access_token
-                accountViewModel.neverSignedIn = false
-                accountViewModel.activated = true
-                showLoginSuccess = true
-            } catch HttpError.clientError(let statusCode) where statusCode == 400 {
-                showCredentialsWrong = true
-            } catch is HttpError {
-                self.error = error
-                self.isPresented = true
-            } catch {
-                preconditionFailure(error.localizedDescription)
-            }
-        }
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "sign_in")) {_ in
+            loginVM.signIn()
+        })
     }
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: .defaultPadding) {
             if (accountViewModel.activated) {
@@ -53,43 +47,57 @@ struct LoginView: NavigatableView {
                     .body1()
             }
             
-            OnSecondaryFieldView(icon: "create_24px") {
-                TextField(String(localized: "email"), text: $loginVM.email)
-                    .keyboardType(.emailAddress)
+            HStack {
+                Image("create_24px").foregroundColor(.onSecondaryMediumEmphasis)
+                TextField("email",
+                    text: $loginVM.email,
+                    prompt: Text("email")
+                )
+                .keyboardType(.emailAddress)
+                .autocorrectionDisabled(true)
+                .autocapitalization(.none)
+                    
             }
-            if let prompt = loginVM.emailPrompt {
-                Text(prompt)
+            if let emailHint = loginVM.emailHint {
+                Text(emailHint)
                     .caption()
             }
-            OnSecondaryFieldView(image: Image("visibility")) {
-                SecureField(String(localized: "password"), text: $loginVM.password)
+            
+            HStack {
+                Image("visibility").foregroundColor(.onSecondaryMediumEmphasis)
+                SecureField(
+                    "password",
+                    text: $loginVM.password,
+                    prompt: Text("password")
+                )
+                .autocorrectionDisabled(true)
+                .autocapitalization(.none)
             }
-            if let prompt = loginVM.passwordPrompt {
-                Text(prompt)
+            if let passwordHint = loginVM.passwordHint {
+                Text(passwordHint)
                     .caption()
-            } else if loginVM.passwordPrompt == nil {
+            } else if loginVM.passwordHint == nil {
                 Text("password_format")
                     .caption()
             }
-            if showCredentialsWrong {
+            if loginVM.showCredentialsWrong {
                 Text("email_or_password_invalid")
                     .body1(color: .onSecondarywarning)
             }
             
-            Button("sign_in") {
-                signIn()
-            }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
-            
             Button("forgot_password") {
-                navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
-            }.buttonStyle(AuxiliaryOnSecondaryFullwidthButton()).textCase(.uppercase)
+                navigationController?.present(PopAwareNavigationController(rootViewController: ForgotPasswordViewController(accountViewModel: accountViewModel)), animated: true)
+            }
+            .buttonStyle(AuxiliaryOnSecondaryFullwidthButton())
+            .textCase(.uppercase)
+            .foregroundColor(.onSecondaryMediumEmphasis)
             
             Text("delete_account_note_password")
                 .body2()
             Spacer()
         }
         .padding(.defaultPadding)
-        .actionSheet(isPresented: $showLoginSuccess) {
+        .actionSheet(isPresented: $loginVM.showLoginSuccess) {
             ActionSheet(
                 title: Text("successful_signin"),
                 message: Text("signed_in_as \(loginVM.email)"),
@@ -100,18 +108,11 @@ struct LoginView: NavigatableView {
                 ]
             )
         }
-        .alertHttpError(isPresented: $isPresented, error: error)
+        .alertHttpError(isPresented: $loginVM.isPresented, error: loginVM.error)
         .onAppear {
             if let email = accountViewModel.email {
                 loginVM.email = email
             }
         }
-        
-    }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView(accountViewModel: AccountViewModel())
     }
 }

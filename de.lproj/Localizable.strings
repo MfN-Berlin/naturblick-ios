@@ -67,8 +67,7 @@
 "delete_account_text_verify"=" Bitte bestätige deinen Wunsch, den Account zu löschen, indem du deine Zugangsdaten eingibst.";
 "delete_account"="Account löschen";
 "delete_account_note_link"="**Hinweis für die Verbindung mit alten Geräten**\n\nFür die Übertragung von Beobachtungen von alten Geräten auf neue, empfehlen wir dir, dich einfach auf beiden Geräten einzuloggen. Solltest du das Handy dann weitergeben oder recyceln, deinstalliere Naturblick auf deinem Handy oder setze es einfach auf die Werkseinstellungen zurück. Deine alten Beobachtungen werden dadurch nicht gelöscht. Lösche den Account nicht, da dadurch die Verknüpfung der Beobachtungen aufgehoben werden würde.";
-"delete_account_note_password"="Hinweis Passwort vergessen";
-"delete_account_note_password_text"="Wenn du ein neues Passwort vergibst, werden alle Handys, die mit dem Account verknüpft sind, aus Sicherheitsgründen automatisch ausgeloggt. Alle deine Beobachtungen bleiben weiterhin mit deinem Account verknüpft und werden dir angezeigt.";
+"delete_account_note_password"="**Hinweis Passwort vergessen**\n\nWenn du ein neues Passwort vergibst, werden alle Handys, die mit dem Account verknüpft sind, aus Sicherheitsgründen automatisch ausgeloggt. Alle deine Beobachtungen bleiben weiterhin mit deinem Account verknüpft und werden dir angezeigt.";
 "account_delete"="Dein Account ist gelöscht.";
 "your_account_text"="Mit deinem Naturblick-Account sind deine Beobachtungen über mehrere mobile Geräte gesichert und werden dir auf allen verbundenen Handys angezeigt.";
 "activation_link_note"="**Hinweis Aktivierungslink**\n\nDu kannst deinen Naturblick-Account erst nutzen, wenn du deine Registrierung bestätigt hast. Klicke dafür bitte auf den Aktivierungslink, den wir dir an deine E-Mail-Adresse gesendet haben.";
@@ -152,3 +151,5 @@
 "choose_another"="Eine andere Art aussuchen";
 "create_with_species"="Mit dieser Art eine Beobachtung kreieren";
 "choose_species"="Diese Art auswählen";
+"back"="Zurück";
+"error"="Fehler";

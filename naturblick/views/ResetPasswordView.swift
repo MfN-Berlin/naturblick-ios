@@ -4,61 +4,58 @@
 
 import SwiftUI
 
-struct ResetPasswordView: NavigatableView {
+class ResetPasswordViewViewController: HostingController<ResetPasswordView> {
+    
+    let resetVM: ResetPasswordViewModel
+    let token: String
+    
+    init(token: String) {
+        self.token = token
+        self.resetVM = ResetPasswordViewModel(token: self.token)
+        super.init(rootView: ResetPasswordView(resetVM: self.resetVM))
+    }
+}
+
+struct ResetPasswordView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = String(localized: "reset")
     
-    let token: String
-    
-    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
-    
-    @StateObject private var resetPasswordVM = EmailAndPasswordWithPrompt()
-    
-    @State var showResetSuccess: Bool = false
-    @State var isPresented: Bool = false
-    @State var error: HttpError? = nil
-    
-    func resetPassword(token: String) {
-        let client = BackendClient()
-        Task {
-            do {
-                try await client.resetPassword(token: token, password: resetPasswordVM.password)
-                bearerToken = nil
-                showResetSuccess = true
-            }
-            catch is HttpError {
-                self.error = error
-                isPresented = true
-            } catch {
-                preconditionFailure(error.localizedDescription)
-            }
-        }
+    @ObservedObject var resetVM: ResetPasswordViewModel
+
+    func configureNavigationItem(item: UINavigationItem) {
+        item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "cancel")) {_ in
+            navigationController?.dismiss(animated: true)
+        })
+        
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "reset_password")) {_ in
+            resetVM.resetPassword()
+        })
     }
     
     var body: some View {
         VStack {
-            OnSecondaryFieldView(image: Image("visibility")) {
-                SecureField(String(localized: "password"), text: $resetPasswordVM.password)
-                    .autocorrectionDisabled(true)
-                    .autocapitalization(.none)
+            HStack {
+                Image("visibility").foregroundColor(.onSecondaryMediumEmphasis)
+                SecureField(
+                    "password",
+                    text: $resetVM.password,
+                    prompt: Text("password")
+                )
+                .autocorrectionDisabled(true)
+                .autocapitalization(.none)
             }
-            if let prompt = resetPasswordVM.passwordPrompt {
-                Text(prompt)
+            if let passwordHint = resetVM.passwordHint {
+                Text(passwordHint)
                     .caption()
-            } else if resetPasswordVM.passwordPrompt == nil {
+            } else if resetVM.passwordHint == nil {
                 Text("password_format")
                     .caption()
             }
             
-            Button("reset_password") {
-                resetPassword(token: token)
-            }.buttonStyle(ConfirmFullWidthButton())
-                .padding([.top], .defaultPadding)
-    
             Spacer()
         }
         .foregroundColor(.onSecondaryHighEmphasis)
-        .actionSheet(isPresented: $showResetSuccess) {
+        .actionSheet(isPresented: $resetVM.showResetSuccess) {
             ActionSheet(
                 title: Text("reset_password"),
                 message: Text("password_reset_successful"),
@@ -75,7 +72,7 @@ struct ResetPasswordView: NavigatableView {
                     ]
             )
         }
-        .alertHttpError(isPresented: $isPresented, error: error)
+        .alertHttpError(isPresented: $resetVM.isPresented, error: resetVM.error)
         .padding(.defaultPadding)
     }
 }

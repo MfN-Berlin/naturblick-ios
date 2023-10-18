@@ -43,7 +43,7 @@ extension View {
     }
     
     func alertHttpError<A, M>(isPresented: Binding<Bool>, error: HttpError?, @ViewBuilder actions: (HttpError) -> A, @ViewBuilder message: (HttpError) -> M) -> some View where A : View, M : View {
-        return self.alert("Error", isPresented: isPresented, presenting: error, actions: actions, message: message)
+        return self.alert(String(localized: "error"), isPresented: isPresented, presenting: error, actions: actions, message: message)
     }
     
 }
