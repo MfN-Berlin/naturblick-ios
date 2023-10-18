@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "logo24.svg",
+      "filename" : "artportraits48.svg",
       "idiom" : "universal"
     }
   ],
@@ -10,7 +10,6 @@
     "version" : 1
   },
   "properties" : {
-    "compression-type" : "automatic",
     "template-rendering-intent" : "template"
   }
 }

@@ -97,7 +97,7 @@ struct HomeView: HostedView {
                 }
                 VStack {
                     VStack {
-                        Image("logo24")
+                        Image("logo48")
                             .resizable()
                             .scaledToFit()
                             .frame(width: geo.size.width / 4, alignment: .center)
@@ -126,7 +126,7 @@ struct HomeView: HostedView {
                             HomeViewButton(
                                 text: String(localized: "record_a_bird"),
                                 color: Color.onPrimaryButtonPrimary,
-                                image: Image("audio24"),
+                                image: Image("audio48"),
                                 size: topRowSize)
                             .onTapGesture {
                                 createFlow.recordSound()
@@ -134,7 +134,7 @@ struct HomeView: HostedView {
                             Spacer()
                             HomeViewButton(text: String(localized: "select_characteristics"),
                                            color: Color.onPrimaryButtonPrimary,
-                                           image: Image("characteristics24"),
+                                           image: Image("characteristics48"),
                                            size: topRowSize
                             )
                             .onTapGesture {
@@ -150,7 +150,7 @@ struct HomeView: HostedView {
                             
                             HomeViewButton(text: String(localized: "photograph_a_plant"),
                                            color: Color.onPrimaryButtonPrimary,
-                                           image: Image("photo24"),
+                                           image: Image("photo48"),
                                            size: topRowSize
                             )
                             .onTapGesture {
@@ -165,7 +165,7 @@ struct HomeView: HostedView {
                             HomeViewButton(
                                 text: String(localized: "field_book"),
                                 color: Color.onPrimaryButtonSecondary,
-                                image: Image("feldbuch24"),
+                                image: Image("feldbuch48"),
                                 size: bottomRowSize
                             )
                             .onTapGesture {
