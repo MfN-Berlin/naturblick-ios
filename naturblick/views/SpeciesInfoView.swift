@@ -13,13 +13,6 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
         species.name
     }
     
-    func configureNavigationItem(item: UINavigationItem) {
-        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "choose")) {_ in
-            viewController?.dismiss(animated: true)
-            flow.selectSpecies(species: species)
-        })
-    }
-    
     let species: SpeciesListItem
     @ObservedObject var flow: Flow
     
@@ -59,11 +52,17 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
             Text(species.speciesName?.uppercased() ?? String(localized: "speciesname").uppercased())
                 .headline4(color: .onSecondaryHighEmphasis)
                 .multilineTextAlignment(.center)
+
             if let synonym = species.synonym {
                 Text("also \(synonym)")
                     .caption(color: .onSecondaryLowEmphasis)
                     .multilineTextAlignment(.center)
             }
+            Button("choose") {
+                viewController?.dismiss(animated: true)
+                flow.selectSpecies(species: species)
+            }
+            .buttonStyle(SecondaryOnSecondaryButton())
             if species.hasPortrait {
                 Button("to_artportrait") {
                     navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
@@ -73,6 +72,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
                 Link("link_to_wikipedia", destination: URL(string: wikipedia)!)
                     .buttonStyle(AuxiliaryOnSecondaryButton())
             }
+            Spacer()
         }
         .padding(.defaultPadding)
     }
