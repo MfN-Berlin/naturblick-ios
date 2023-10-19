@@ -4,35 +4,38 @@
 
 import SwiftUI
 
-struct RegisterView: NavigatableView {
+class RegisterViewController: HostingController<RegisterView> {
+    
+    var accountViewModel: AccountViewModel
+    let registerVM: RegisterViewModel
+    
+    init(accountViewModel: AccountViewModel) {
+        self.accountViewModel = accountViewModel
+        self.registerVM = RegisterViewModel(accountViewModel: accountViewModel)
+        super.init(rootView: RegisterView(registerVM: self.registerVM, accountViewModel: self.accountViewModel))
+    }
+}
+
+struct RegisterView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = String(localized: "register")
         
-    @StateObject var registerVM = RegisterViewModel()
-        
-    @State var showRegisterSuccess: Bool = false
-    @State var showAlreadyExists = false
-    
-    @State var isPresented: Bool = false
-    @State var error: HttpError? = nil
-    
+    @ObservedObject var registerVM: RegisterViewModel
     @ObservedObject var accountViewModel: AccountViewModel
     
-    func signUp() {
-        let client = BackendClient()
-        Task {
-            do {
-                let _ = try await client.signUp(deviceId: Settings.deviceId(), email: registerVM.email, password: registerVM.password)
-                accountViewModel.email = registerVM.email
-                showRegisterSuccess = true
-            } catch HttpError.clientError(let statusCode) where statusCode == 409 {
-                showAlreadyExists = true
-            } catch is HttpError {
-                self.error = error
-                isPresented = true
-            } catch {
-                preconditionFailure(error.localizedDescription)
-            }
+    func configureNavigationItem(item: UINavigationItem) {
+        item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "cancel")) { _ in
+            navigationController?.dismiss(animated: true)
+        })
+        
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "sign_up")) {_ in
+            registerVM.signUp()
+        })
+        
+        if registerVM.privacyChecked {
+            item.rightBarButtonItem?.isEnabled = true
+        } else {
+            item.rightBarButtonItem?.isEnabled = false
         }
     }
     
@@ -42,32 +45,41 @@ struct RegisterView: NavigatableView {
                 Text("sign_up_text")
                     .body1()
                 
-                
-                OnSecondaryFieldView(icon: "create_24px") {
-                    TextField(String(localized: "email"), text: $registerVM.email)
-                        .keyboardType(.emailAddress)
-                        .autocorrectionDisabled(true)
-                        .autocapitalization(.none)
+                HStack {
+                    Image("create_24px").foregroundColor(.onSecondaryMediumEmphasis)
+                    TextField("email",
+                        text: $registerVM.email,
+                        prompt: Text("email")
+                    )
+                    .keyboardType(.emailAddress)
+                    .autocorrectionDisabled(true)
+                    .autocapitalization(.none)
+                        
                 }
-                if let prompt = registerVM.emailPrompt {
-                    Text(prompt)
+                if let emailHint = registerVM.emailHint {
+                    Text(emailHint)
                         .caption()
                 }
                 
-                if showAlreadyExists {
+                if registerVM.showAlreadyExists {
                     Text("user_already_exists")
                         .caption(color: .onSecondarywarning)
                 }
                 
-                OnSecondaryFieldView(image: Image("visibility")) {
-                    SecureField(String(localized: "password"), text: $registerVM.password)
-                        .autocorrectionDisabled(true)
-                        .autocapitalization(.none)
+                HStack {
+                    Image("visibility").foregroundColor(.onSecondaryMediumEmphasis)
+                    SecureField(
+                        "password",
+                        text: $registerVM.password,
+                        prompt: Text("password")
+                    )
+                    .autocorrectionDisabled(true)
+                    .autocapitalization(.none)
                 }
-                if let prompt = registerVM.passwordPrompt {
-                    Text(prompt)
+                if let passwordHint = registerVM.passwordHint {
+                    Text(passwordHint)
                         .caption()
-                } else if registerVM.passwordPrompt == nil {
+                } else if registerVM.passwordHint == nil {
                     Text("password_format")
                         .caption()
                 }
@@ -79,16 +91,11 @@ struct RegisterView: NavigatableView {
                         .body1()
                 }
 
-                Button("sign_up") {
-                    signUp()
-                }.buttonStyle(ConfirmFullWidthButton())
-                    .disabled(!registerVM.isRegisterEnabled)
-                    .opacity(registerVM.isRegisterEnabled ? 1 : 0.6)
                 Spacer(minLength: 10)
             }
         }
         .padding(.defaultPadding)
-        .actionSheet(isPresented: $showRegisterSuccess) {
+        .actionSheet(isPresented: $registerVM.showRegisterSuccess) {
             ActionSheet(
                 title: Text("validate_email_title"),
                 message: Text("validate_email_message"),
@@ -96,7 +103,13 @@ struct RegisterView: NavigatableView {
                     registerSuccessButtons()
             )
         }
-        .alertHttpError(isPresented: $isPresented, error: error)
+        .alertHttpError(isPresented: $registerVM.isPresented, error: registerVM.error)
+        .onChange(of: registerVM.privacyChecked) { isChecked in
+            if let navItem = viewController?.navigationItem {
+                print("reconfigure ==")
+                configureNavigationItem(item: navItem)
+            }
+        }
     }
         
     func registerSuccessButtons() -> [Alert.Button] {
@@ -115,15 +128,8 @@ struct RegisterView: NavigatableView {
     private func toLogin() {
         withNavigation { navigation in
             var viewControllers = navigation.viewControllers
-            viewControllers[viewControllers.count - 1] = LoginView(accountViewModel: accountViewModel).setUpViewController()
+            viewControllers[viewControllers.count - 1] = LoginViewController(accountViewModel: accountViewModel)
             navigation.setViewControllers(viewControllers, animated: true)
         }
     }
 }
-
-struct RegisterView_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterView(accountViewModel: AccountViewModel())
-    }
-}
-

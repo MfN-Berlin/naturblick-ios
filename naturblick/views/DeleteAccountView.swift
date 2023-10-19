@@ -5,77 +5,81 @@
 
 import SwiftUI
 
-struct DeleteAccountView: NavigatableView {
+class DeleteAccountViewController: HostingController<DeleteAccountView> {
+    
+    var accountViewModel: AccountViewModel
+    let deleteVM: DeleteAccountViewModel
+    
+    init(accountViewModel: AccountViewModel) {
+        self.accountViewModel = accountViewModel
+        self.deleteVM = DeleteAccountViewModel(accountViewModel: accountViewModel)
+        super.init(rootView: DeleteAccountView(accountViewModel: self.accountViewModel, deleteVM: self.deleteVM))
+    }
+}
+
+struct DeleteAccountView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = String(localized: "delete")
     
     @ObservedObject var accountViewModel: AccountViewModel
+    @ObservedObject var deleteVM: DeleteAccountViewModel
     
-    @StateObject var deleteVM = EmailAndPasswordWithPrompt()
-    
-    @State var showDeleteSuccess = false
-    
-    @State var showCredentialsError = false
-    
-    @State var isPresented: Bool = false
-    @State var error: HttpError? = nil
-    
-    func deleteAccount() {
-        let client = BackendClient()
-        Task {
-            do {
-                try await client.deleteAccount(email: deleteVM.email, password: deleteVM.password)
-                accountViewModel.signOut()
-                showDeleteSuccess = true
-            }  catch HttpError.clientError(let statusCode) where statusCode == 400 {
-                showCredentialsError = true
-            } catch is HttpError {
-                self.error = error
-                self.isPresented = true
-            } catch {
-                preconditionFailure(error.localizedDescription)
-            }
-        }
+    func configureNavigationItem(item: UINavigationItem) {
+        item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "cancel")) {_ in
+            navigationController?.dismiss(animated: true)
+        })
+        
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "delete_account")) {_ in
+            deleteVM.deleteAccount()
+        })
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: .defaultPadding) {
             Text("delete_account_text_rly")
                 .body1()
-            OnSecondaryFieldView(icon: "create_24px") {
-                TextField(String(localized: "email"), text: $deleteVM.email)
-                    .keyboardType(.emailAddress)
-                    .autocorrectionDisabled(true)
-                    .autocapitalization(.none)
+            HStack {
+                Image("create_24px").foregroundColor(.onSecondaryMediumEmphasis)
+                TextField("email",
+                    text: $deleteVM.email,
+                    prompt: Text("email")
+                )
+                .keyboardType(.emailAddress)
+                .autocorrectionDisabled(true)
+                .autocapitalization(.none)
+                    
             }
-            if let prompt = deleteVM.emailPrompt {
-                Text(prompt)
+            if let emailHint = deleteVM.emailHint {
+                Text(emailHint)
                     .caption()
             }
             
-            OnSecondaryFieldView(image: Image(systemName: "eye")) {
-                SecureField(String(localized: "password"), text: $deleteVM.password)
-                    .autocorrectionDisabled(true)
-                    .autocapitalization(.none)
+            HStack {
+                Image("visibility").foregroundColor(.onSecondaryMediumEmphasis)
+                SecureField(
+                    "password",
+                    text: $deleteVM.password,
+                    prompt: Text("password")
+                )
+                .autocorrectionDisabled(true)
+                .autocapitalization(.none)
             }
-            if let prompt = deleteVM.passwordPrompt {
-                Text(prompt)
+            if let passwordHint = deleteVM.passwordHint {
+                Text(passwordHint)
                     .caption()
             }
-            if showCredentialsError {
+            if deleteVM.showCredentialsError {
                 Text("email_or_password_invalid")
                     .body1(color: .onSecondarywarning)
             }
-            Button("delete_account") {
-                deleteAccount()
-            }.buttonStyle(DestructiveFullWidthButton()).textCase(.uppercase)
+         
             Button("forgot_password") {
-                navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
+                navigationController?.present(PopAwareNavigationController(rootViewController: ForgotPasswordViewController(accountViewModel: accountViewModel)), animated: true)
             }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
             Spacer()
         }
         .padding(.defaultPadding)
-        .actionSheet(isPresented: $showDeleteSuccess) {
+        .actionSheet(isPresented: $deleteVM.showDeleteSuccess) {
             ActionSheet(
                 title: Text("delete_success"),
                 message: Text("account_delete"),
@@ -85,12 +89,7 @@ struct DeleteAccountView: NavigatableView {
                     })
                 ]
             )
-        }.alertHttpError(isPresented: $isPresented, error: error)
-    }
-}
-
-struct DeleteAccountView_Previews: PreviewProvider {
-    static var previews: some View {
-        DeleteAccountView(accountViewModel: AccountViewModel())
+        }
+        .alertHttpError(isPresented: $deleteVM.isPresented, error: deleteVM.error)
     }
 }

@@ -4,65 +4,69 @@
 
 import SwiftUI
 
-struct ForgotPasswordView: NavigatableView {
+class ForgotPasswordViewController: HostingController<ForgotPasswordView> {
+    
+    var accountViewModel: AccountViewModel
+    let forgotPasswordVM: ForgotPasswordViewModel
+    
+    init(accountViewModel: AccountViewModel) {
+        self.accountViewModel = accountViewModel
+        self.forgotPasswordVM = ForgotPasswordViewModel(accountViewModel: accountViewModel)
+        super.init(rootView: ForgotPasswordView(accountViewModel: self.accountViewModel, forgotPasswordVM: self.forgotPasswordVM))
+    }
+}
+
+struct ForgotPasswordView: HostedView {
+
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = String(localized: "forgot")
     
     @ObservedObject var accountViewModel: AccountViewModel
-       
-    @StateObject private var forgotPasswordVM = EmailAndPasswordWithPrompt()
+    @ObservedObject var forgotPasswordVM: ForgotPasswordViewModel
+    
     @State var action: String?
     
-    @State var error: HttpError? = nil
-    @State var showSendInfo: Bool = false
-    @State var isPresented: Bool = false
-    
-    @Environment(\.dismiss) var dismiss
-    
-    func forgotPassword() {
-        let client = BackendClient()
-        Task {
-            do {
-                try await client.forgotPassword(email: forgotPasswordVM.email)
-                showSendInfo = true
-            } catch is HttpError {
-                self.error = error
-                self.isPresented = true
-            } catch {
-                preconditionFailure(error.localizedDescription)
-            }
-        }
+    func configureNavigationItem(item: UINavigationItem) {
+        item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "cancel")) {_ in
+            navigationController?.dismiss(animated: true)
+        })
+        
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "reset_password")) {_ in
+            forgotPasswordVM.forgotPassword()
+        })
     }
     
     var body: some View {
         VStack {
-            OnSecondaryFieldView(icon: "create_24px") {
-                TextField(String(localized: "email"), text: $forgotPasswordVM.email)
-                    .keyboardType(.emailAddress)
-                    .autocorrectionDisabled(true)
-                    .autocapitalization(.none)
+            HStack {
+                Image("create_24px").foregroundColor(.onSecondaryMediumEmphasis)
+                TextField("email",
+                    text: $forgotPasswordVM.email,
+                    prompt: Text("email")
+                )
+                .keyboardType(.emailAddress)
+                .autocorrectionDisabled(true)
+                .autocapitalization(.none)
+                    
             }
-            if let prompt = forgotPasswordVM.emailPrompt {
-                Text(prompt)
+            if let emailHint = forgotPasswordVM.emailHint {
+                Text(emailHint)
                     .caption()
             }
            
-            Button("reset_password") {
-                forgotPassword()
-            }.buttonStyle(ConfirmFullWidthButton())
-                .padding([.top, .bottom], .defaultPadding)
             Text("delete_account_note_password")
                 .body1()
             Spacer()
         }
         .foregroundColor(.onSecondaryHighEmphasis)
-        .actionSheet(isPresented: $showSendInfo) {
+        .actionSheet(isPresented: $forgotPasswordVM.showSendInfo) {
             ActionSheet(
                 title: Text("reset_email_sent_title"),
                 message: Text("reset_email_sent_message"),
                 buttons: forgotSuccessButtons()
             )
-        }.alertHttpError(isPresented: $isPresented, error: error)
+        }
+        .alertHttpError(isPresented: $forgotPasswordVM.isPresented, error: forgotPasswordVM.error)
         .onAppear {
             if let email = accountViewModel.email {
                 forgotPasswordVM.email = email
@@ -73,20 +77,14 @@ struct ForgotPasswordView: NavigatableView {
     
     func forgotSuccessButtons() -> [Alert.Button] {
         var buttons: [Alert.Button] = [Alert.Button.destructive(Text("go_back_to_login_screen"), action: {
-            dismiss()
+            navigationController?.dismiss(animated: true)
         })]
        
         if (canOpenEmail()) {
             buttons.append(
-                Alert.Button.default(Text("open_default_email_app"), action: { openMail(completionHandler: { _ in dismiss() }) })
+                Alert.Button.default(Text("open_default_email_app"), action: { openMail(completionHandler: { _ in navigationController?.popViewController(animated: true) }) })
             )
         }
         return buttons
-    }
-}
-
-struct ForgotPasswordView_Previews: PreviewProvider {
-    static var previews: some View {
-        ForgotPasswordView(accountViewModel: AccountViewModel())
     }
 }

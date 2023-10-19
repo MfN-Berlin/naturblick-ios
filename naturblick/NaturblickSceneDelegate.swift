@@ -74,7 +74,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         case .activateAccount(let token):
             navigationController.pushViewController(AccountView(token: token).setUpViewController(), animated: true)
         case .resetPasswort(let token):
-            navigationController.pushViewController(ResetPasswordView(token: token).setUpViewController(), animated: true)
+            navigationController.pushViewController(ResetPasswordViewViewController(token: token), animated: true)
         case .speciesPortrait(let speciesId):
             let species = try? SpeciesListItem.find(speciesId: speciesId)
             if let species = species {

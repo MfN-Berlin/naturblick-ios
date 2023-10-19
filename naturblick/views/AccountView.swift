@@ -30,7 +30,7 @@ struct AccountView: NavigatableView {
     
     @StateObject var accountViewModel = AccountViewModel()
     @StateObject private var errorHandler = HttpErrorViewModel()
-    
+        
     var body: some View {
         VStack(alignment: .leading, spacing: .defaultPadding) {
             Text("your_account")
@@ -42,10 +42,10 @@ struct AccountView: NavigatableView {
                 Text("account_text_sign_in_or_sign_up2")
                     .body1()
                 Button("to_sign_in") {
-                    navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
+                    navigationController?.present(PopAwareNavigationController(rootViewController: LoginViewController(accountViewModel: accountViewModel)), animated: true)
                 }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
                 Button("to_sign_up") {
-                    navigationController?.pushViewController(RegisterView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
+                    navigationController?.present(PopAwareNavigationController(rootViewController: RegisterViewController(accountViewModel: accountViewModel)), animated: true)
                 }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
             } else if (accountViewModel.bearerToken != nil) {
                 Text("your_account_text")
@@ -58,7 +58,7 @@ struct AccountView: NavigatableView {
                     .body1()
                 
                 Button("to_delete_account") {
-                    navigationController?.pushViewController(DeleteAccountView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
+                    navigationController?.pushViewController(PopAwareNavigationController(rootViewController: DeleteAccountViewController(accountViewModel: accountViewModel)), animated: true)
                 }.buttonStyle(DestructiveFullWidthButton()).textCase(.uppercase)
                 
                 Text("delete_account_note_link")
@@ -68,7 +68,7 @@ struct AccountView: NavigatableView {
                     Text("continue_with_sign_in")
                         .body1()
                     Button("to_sign_in") {
-                        navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
+                        navigationController?.present(PopAwareNavigationController(rootViewController: LoginViewController(accountViewModel: accountViewModel)), animated: true)
                     }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
                     Button("sign_out") {
                         accountViewModel.signOut()
@@ -79,14 +79,14 @@ struct AccountView: NavigatableView {
                     Text("signed_out")
                         .body1()
                     Button("to_sign_in") {
-                        navigationController?.pushViewController(LoginView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
+                        navigationController?.present(PopAwareNavigationController(rootViewController: LoginViewController(accountViewModel: accountViewModel)), animated: true)
                     }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
                     
                     Text("signed_out_deleted_account")
                         .body1()
                     
                     Button("sign_up") {
-                        navigationController?.pushViewController(RegisterView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
+                        navigationController?.present(PopAwareNavigationController(rootViewController: RegisterViewController(accountViewModel: accountViewModel)), animated: true)
                     }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
                     Button("sign_out") {
                         accountViewModel.signOut()
