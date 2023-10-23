@@ -42,7 +42,7 @@ struct AccountView: NavigatableView {
                 Text("account_text_sign_in_or_sign_up2")
                     .body1()
                 Button("to_sign_in") {
-                    navigationController?.present(PopAwareNavigationController(rootViewController: LoginViewController(accountViewModel: accountViewModel)), animated: true)
+                    navigationController?.present(InSheetPopAwareNavigationController(rootViewController: LoginViewController(accountViewModel: accountViewModel)), animated: true)
                 }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
                 Button("to_sign_up") {
                     navigationController?.present(PopAwareNavigationController(rootViewController: RegisterViewController(accountViewModel: accountViewModel)), animated: true)
