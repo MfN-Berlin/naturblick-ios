@@ -47,7 +47,10 @@ struct NBImage {
     init(id: UUID, localIdentifier: String?) async throws {
         self.id = id
         self.localIdentifier = localIdentifier
-        if let local = localIdentifier, let image = await NBImage.fetchImage(localIdentifier: local) {
+        let path = NBImage.url(id: id).path
+        if FileManager.default.fileExists(atPath: path), let image = UIImage(contentsOfFile: path) {
+            self.image = image
+        } else if let local = localIdentifier, let image = await NBImage.fetchImage(localIdentifier: local) {
             self.image = image
         } else {
             self.image = try await BackendClient().downloadCached(mediaId: id)
@@ -71,9 +74,15 @@ struct NBImage {
     private static func writeToAlbum(id: UUID, image: UIImage) async throws -> String?{
         try write(id: id, image: image)
         var localIdentifier: String? = nil
-        try await PHPhotoLibrary.shared().performChanges {
-            localIdentifier = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: NBImage.url(id: id))?.placeholderForCreatedAsset?.localIdentifier
+        if PHPhotoLibrary.authorizationStatus(for: .readWrite) == .notDetermined {
+            await PHPhotoLibrary.requestAuthorization(for: .readWrite)
+        }
+        if PHPhotoLibrary.authorizationStatus(for: .readWrite) == .authorized {
+            try await PHPhotoLibrary.shared().performChanges {
+                localIdentifier = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: NBImage.url(id: id))?.placeholderForCreatedAsset?.localIdentifier
+            }
         }
         return localIdentifier
+            
     }
 }

@@ -31,11 +31,11 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     private func askForPermission() -> Bool {
-        PHPhotoLibrary.authorizationStatus(for: .addOnly) == .notDetermined
+        PHPhotoLibrary.authorizationStatus(for: .readWrite) == .notDetermined
     }
     
     private func requestAccess() async {
-        await PHPhotoLibrary.requestAuthorization(for: .addOnly)
+        await PHPhotoLibrary.requestAuthorization(for: .readWrite)
     }
     
     func takePhoto() {

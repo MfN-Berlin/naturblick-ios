@@ -3,6 +3,7 @@
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
 import SwiftUI
+import Photos
 
 class HomeViewController: HostingController<HomeView> {
     let persistenceController: ObservationPersistenceController
@@ -78,6 +79,7 @@ struct HomeView: HostedView {
     @State var isShowingLogin = false
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var createFlow: CreateFlowViewModel
+    @State var showPhotoLibraryInfo: Bool = false
 
     var body: some View {
         GeometryReader { geo in
@@ -154,7 +156,11 @@ struct HomeView: HostedView {
                                            size: topRowSize
                             )
                             .onTapGesture {
-                                createFlow.takePhoto()
+                                if PHPhotoLibrary.shared().askForPermission() {
+                                    showPhotoLibraryInfo = true
+                                } else {
+                                    createFlow.takePhoto()
+                                }
                             }
                             Spacer()
                         }
@@ -197,6 +203,18 @@ struct HomeView: HostedView {
                     }
                 }
             }
+        }
+        .alert(isPresented: $showPhotoLibraryInfo) {
+            Alert(
+                title: Text("Allow Naturblick to use your photo library"),
+                message: Text("Naturblick will now ask you to provide access to your photos. You can either choose to Allow Access to All Photos or Don't Allow. If you choose Select Photos... the end result is as if naturblick has no access to your photos. With access to your photos naturblick can store its images with your photos in the album naturblick. It is also required for importing photos."),
+                dismissButton: .default(Text("Ask for permission")) {
+                    Task {
+                        await PHPhotoLibrary.shared().requestAccess()
+                        createFlow.takePhoto()
+                    }
+                }
+            )
         }
         .edgesIgnoringSafeArea([.bottom])
     }

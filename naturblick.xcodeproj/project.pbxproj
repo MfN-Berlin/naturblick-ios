@@ -101,6 +101,7 @@
 		13EC572129DC80AD00D56A77 /* ObservationListItemWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */; };
 		13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572229DC83E900D56A77 /* ObservationListView.swift */; };
 		13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */; };
+		13ED4C292AE6C3C00007C228 /* PHPhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ED4C282AE6C3C00007C228 /* PHPhotoLibrary.swift */; };
 		13F03C7E2ACD6AE100EEF964 /* StaticBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F03C7D2ACD6AE100EEF964 /* StaticBottomSheetView.swift */; };
 		13F08DE12A9F674600874264 /* NavigatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F08DE02A9F674600874264 /* NavigatableView.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
@@ -281,6 +282,7 @@
 		13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemWithImageView.swift; sourceTree = "<group>"; };
 		13EC572229DC83E900D56A77 /* ObservationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListView.swift; sourceTree = "<group>"; };
 		13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EdgeInsets+Dimensions.swift"; sourceTree = "<group>"; };
+		13ED4C282AE6C3C00007C228 /* PHPhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPhotoLibrary.swift; sourceTree = "<group>"; };
 		13F03C7D2ACD6AE100EEF964 /* StaticBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticBottomSheetView.swift; sourceTree = "<group>"; };
 		13F08DE02A9F674600874264 /* NavigatableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatableView.swift; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
@@ -632,6 +634,7 @@
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
+				13ED4C282AE6C3C00007C228 /* PHPhotoLibrary.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -825,6 +828,7 @@
 				7BDA8FC22ABC6AF6002E93C9 /* CCInfoPopupView.swift in Sources */,
 				1337159A2A8CFBC2009E31E0 /* HttpErrorViewModel.swift in Sources */,
 				13C880FF2A98BB91007DEC0B /* NaturblickAppDelegate.swift in Sources */,
+				13ED4C292AE6C3C00007C228 /* PHPhotoLibrary.swift in Sources */,
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
 				136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */,
 				13A2923629D3114500AF772A /* CharacterView.swift in Sources */,
