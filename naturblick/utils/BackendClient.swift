@@ -136,7 +136,7 @@ class BackendClient {
         let _ = try await downloader.httpSend(request: request, data: encoded)
     }
 
-    func upload(image: NBImage) async throws {
+    func upload(image: NBThumbnail) async throws {
         let mediaId = image.id.uuidString.lowercased()
         var mpr = MultipartRequest()
         mpr.add(
@@ -191,9 +191,9 @@ class BackendClient {
         return UIImage(data: data)!
     }
 
-    func download(mediaId: UUID) async throws -> UIImage {
+    func downloadCached(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
         request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!

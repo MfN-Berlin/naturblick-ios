@@ -8,7 +8,7 @@ import SwiftUI
 import MapKit
 
 struct Identified {
-    var crop: NBImage
+    var crop: NBThumbnail
     var result: [SpeciesResult]
 }
 
@@ -65,9 +65,11 @@ struct CreateData {
     var patch: PatchOperation? {
         var mediaId: UUID? = nil
         var thumbnailId: UUID? = nil
-        
+        var localMediaId: String? = nil
+    
         if image.image != nil {
             mediaId = image.image?.id
+            localMediaId = image.image?.localIdentifier
             thumbnailId = image.crop?.id
         } else if sound.sound != nil {
             mediaId = sound.sound?.id
@@ -78,6 +80,6 @@ struct CreateData {
             return nil
         }
         
-        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals, mediaId: mediaId, thumbnailId: thumbnailId, newSpeciesId: nil, behavior: behavior)
+        return PatchOperation(occurenceId: occurenceId, obsType: nil, coords: coords, details: details.isEmpty ? nil : details, individuals: individuals, mediaId: mediaId, localMediaId: localMediaId, thumbnailId: thumbnailId, newSpeciesId: nil, behavior: behavior)
     }
 }

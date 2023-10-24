@@ -56,6 +56,7 @@ extension DBObservation {
                 createdTz <- observation.created.tz.identifier,
                 species <- observation.newSpeciesId,
                 mediaId <- observation.mediaId,
+                localMediaId <- observation.localMediaId,
                 thumbnailId <- observation.thumbnailId,
                 coordsLatitude <- observation.coords?.latitude,
                 coordsLongitude <- observation.coords?.longitude,
@@ -136,6 +137,9 @@ extension DBObservation {
             }
             if let newMedia = operation.mediaId {
                 setters.append(mediaId <- newMedia)
+            }
+            if let newLocalMedia = operation.localMediaId {
+                setters.append(localMediaId <- newLocalMedia)
             }
             if let newThumbnail = operation.thumbnailId {
                 setters.append(thumbnailId <- newThumbnail)

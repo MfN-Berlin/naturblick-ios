@@ -10,6 +10,7 @@ class HttpErrorViewModel: ObservableObject {
     @Published var isPresented = false
     @Published var error: HttpError? = nil
     
+    @discardableResult
     func handle(_ anyError: Error) -> Bool {
         if case HttpError.loggedOut = anyError {
             error = .loggedOut

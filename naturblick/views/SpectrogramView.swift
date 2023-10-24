@@ -42,8 +42,7 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                     }
                 }
             }
-            let thumbnail = NBImage(image: crop)
-            try thumbnail.write()
+            let thumbnail = try NBThumbnail(image: crop)
             flow.spectrogramCropDone(crop: thumbnail, start: Int(startPx * .pixelToMsFactor), end: Int(endPx * .pixelToMsFactor))
         }
     }

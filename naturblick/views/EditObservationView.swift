@@ -37,7 +37,7 @@ struct EditObservationView: HostedView {
     func identifyImage() {
         Task {
             if let mediaId = flow.data.original.mediaId {
-                let origImage = try await NBImage(id: mediaId)
+                let origImage = try await NBImage(id: mediaId, localIdentifier: flow.data.original.localMediaId)
                 flow.cropPhoto(image: origImage)
             }
         }

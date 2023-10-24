@@ -7,7 +7,7 @@ import Foundation
 
 struct SoundData {
     var sound: NBSound? = nil
-    var crop: NBImage? = nil
+    var crop: NBThumbnail? = nil
     var start: Int? = nil
     var end: Int? = nil
     var result: [SpeciesResult]? = nil

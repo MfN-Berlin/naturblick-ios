@@ -8,43 +8,72 @@ import Photos
 
 struct NBImage {
     let id: UUID
+    let localIdentifier: String?
     let image: UIImage
     
-    init(id: UUID = UUID(), image: UIImage) {
+    init(id: UUID = UUID(), image: UIImage) async throws {
         self.id = id
         self.image = image
+        self.localIdentifier = try await NBImage.writeToAlbum(id: id, image: image)
     }
     
-    init(id: UUID) async throws {
-        self.id = id
-        
-        let filename = URL.documentsDirectory.appendingPathComponent(id.filename(mime: .jpeg))
-        do {
-            let data = try Data(contentsOf: filename)
-            guard let img = UIImage(data: data) else {
-                preconditionFailure("no image data at \(filename)")
+    private static func fetchImage(localIdentifier: String) async -> UIImage? {
+        if PHPhotoLibrary.authorizationStatus(for: .readWrite) == .notDetermined {
+            await PHPhotoLibrary.requestAuthorization(for: .readWrite)
+        }
+        if PHPhotoLibrary.authorizationStatus(for: .readWrite) == .authorized {
+            return await withCheckedContinuation { continuation in
+                let asset = PHAsset.fetchAssets(withLocalIdentifiers: [localIdentifier], options: nil)
+                let manager = PHImageManager.default()
+                let options = PHImageRequestOptions()
+                options.version = .original
+                if let object = asset.firstObject {
+                    manager.requestImageDataAndOrientation(for: object, options: options) {data,_,_,_ in
+                        if let data = data, let image = UIImage(data: data) {
+                            continuation.resume(returning: image)
+                        } else {
+                            continuation.resume(returning: nil)
+                        }
+                    }
+                } else {
+                    continuation.resume(returning: nil)
+                }
             }
-            self.image = img
-        } catch {
-            self.image = try await BackendClient().download(mediaId: id)
-            try write()
+        } else {
+            return nil
+        }
+    }
+    
+    init(id: UUID, localIdentifier: String?) async throws {
+        self.id = id
+        self.localIdentifier = localIdentifier
+        if let local = localIdentifier, let image = await NBImage.fetchImage(localIdentifier: local) {
+            self.image = image
+        } else {
+            self.image = try await BackendClient().downloadCached(mediaId: id)
         }
     }
     
     var url: URL {
+        NBImage.url(id: id)
+    }
+    
+    private static func url(id: UUID) -> URL {
         URL.fileURL(id: id, mime: .jpeg)
     }
     
-    func write() throws {
+    private static func write(id: UUID, image: UIImage) throws {
         if let data = image.jpegData(compressionQuality: .jpegQuality) {
-            try data.write(to: url, options: [.atomic])
+            try data.write(to: url(id: id), options: [.atomic])
         }
     }
     
-    func writeToAlbum() throws {
-        try write()
-        PHPhotoLibrary.shared().performChanges {
-            PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: url)
+    private static func writeToAlbum(id: UUID, image: UIImage) async throws -> String?{
+        try write(id: id, image: image)
+        var localIdentifier: String? = nil
+        try await PHPhotoLibrary.shared().performChanges {
+            localIdentifier = PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: NBImage.url(id: id))?.placeholderForCreatedAsset?.localIdentifier
         }
+        return localIdentifier
     }
 }

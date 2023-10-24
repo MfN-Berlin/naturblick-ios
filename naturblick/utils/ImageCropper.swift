@@ -8,7 +8,7 @@ import SwiftUI
 struct ImageCropper: UIViewControllerRepresentable {
     @Environment(\.dismiss) var dismiss
     let image: UIImage
-    @Binding var crop: NBImage?
+    @Binding var crop: NBThumbnail?
         
     class Coordinator: CropViewControllerDelegate {
         var parent: ImageCropper
@@ -22,8 +22,7 @@ struct ImageCropper: UIViewControllerRepresentable {
                 cropped.draw(in: CGRect(origin: .zero, size: .thumbnail))
             }
             do {
-                let crop = NBImage(image: thumbnail)
-                try crop.write()
+                let crop = try NBThumbnail(image: thumbnail)
                 parent.crop = crop
             } catch {
                 preconditionFailure("\(error)")

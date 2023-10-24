@@ -7,7 +7,7 @@ import Foundation
 
 struct ImageData {
     var image: NBImage? = nil
-    var crop: NBImage? = nil
+    var crop: NBThumbnail? = nil
     var result: [SpeciesResult]? = nil
     
     var identified: Identified? {

@@ -9,22 +9,30 @@ struct FullscreenView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     let imageId: UUID
+    let localIdentifier: String?
     @State var image: NBImage? = nil
+    @StateObject var errorHandler = HttpErrorViewModel()
     var body: some View {
-        if let loaded = image {
-            Image(uiImage: loaded.image)
-                .resizable()
-                .scaledToFit()
-        } else {
-            Text("loading")
-                .task {
-                    do {
-                        image = try await NBImage(id: imageId)
-                    } catch {
-                        preconditionFailure("\(error)")
+        SwiftUI.Group {
+            if let loaded = image {
+                Image(uiImage: loaded.image)
+                    .resizable()
+                    .scaledToFit()
+            } else {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .foregroundColor(.onSecondaryHighEmphasis)
+                    .controlSize(.large)
+                    .task {
+                        do {
+                            image = try await NBImage(id: imageId, localIdentifier: localIdentifier)
+                        } catch {
+                            errorHandler.handle(error)
+                        }
                     }
-                }
+            }
         }
+        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)
     }
 }
 
