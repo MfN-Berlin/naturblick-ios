@@ -3,6 +3,7 @@
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
 import SwiftUI
+import Photos
 
 class HomeViewController: HostingController<HomeView> {
     let persistenceController: ObservationPersistenceController

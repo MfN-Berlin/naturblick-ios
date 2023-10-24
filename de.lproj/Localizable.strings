@@ -1,10 +1,7 @@
-/* 
-  Localizable.strings
-  naturblick
+//
+// Copyright © 2023 Museum für Naturkunde Berlin.
+// This code is licensed under MIT license (see LICENSE.txt for details)
 
-  Created by localadmin on 11.10.23.
-  
-*/
 "home_identify_animals_and_plants" = "Bestimme Tiere und Pflanzen";
 "record_a_bird" = "Vogelstimme aufnehmen";
 "select_characteristics" = "Merkmale auswählen";
@@ -152,3 +149,4 @@
 "choose_another"="Eine andere Art aussuchen";
 "create_with_species"="Mit dieser Art eine Beobachtung kreieren";
 "choose_species"="Diese Art auswählen";
+"crop"="Ausschnitt";

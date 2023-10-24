@@ -16,8 +16,8 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
     @StateObject private var model: SpectrogramViewModel
     @StateObject private var streamController = SoundStreamController()
     
-    init(sound: NBSound, flow: Flow) {
-        self._model = StateObject(wrappedValue: SpectrogramViewModel(sound: sound))
+    init(mediaId: UUID, flow: Flow) {
+        self._model = StateObject(wrappedValue: SpectrogramViewModel(mediaId: mediaId))
         self.flow = flow
     }
     
@@ -199,7 +199,9 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                     HStack {
                         FABView("ic_play_circle_outline", color: .onPrimaryButtonPrimary)
                             .onTapGesture {
-                                streamController.play(url: model.sound.url)
+                                if let url = model.sound?.url {
+                                    streamController.play(url: url)
+                                }
                             }
                         Text(timeText(spectrogram: spectrogram))
                             .headline3()
@@ -252,6 +254,6 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
 
 struct SpectrogramView_Previews: PreviewProvider {
     static var previews: some View {
-        SpectrogramView(sound: NBSound(), flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
+        SpectrogramView(mediaId: UUID(), flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
     }
 }

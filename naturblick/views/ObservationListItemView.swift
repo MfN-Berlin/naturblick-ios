@@ -19,7 +19,7 @@ struct ObservationListItemView: View {
                     Text(name)
                         .subtitle1()
                 } else {
-                    Text(observation.species?.sciname ?? "no_species")
+                    Text(observation.species?.sciname ?? String(localized: "no_species"))
                         .subtitle1()
                 }
                 Text(observation.observation.created.date.formatted())

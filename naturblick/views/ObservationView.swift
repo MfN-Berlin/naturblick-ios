@@ -43,11 +43,13 @@ struct ObservationView: NavigatableView {
                 VStack(alignment: .leading) {
                     Text("species")
                         .caption(color: .onSecondarySignalLow)
-                    Text(model.observation?.species?.sciname ?? "unknown_species")
+                    Text(model.observation?.species?.sciname ?? String(localized: "unknown_species"))
                         .subtitle1(color: .onSecondaryMediumEmphasis)
                 }
                 Spacer()
-                ChevronView(color: .onSecondarySignalLow)
+                if model.observation?.species != nil {
+                    ChevronView(color: .onSecondarySignalLow)
+                }
             }
             .contentShape(Rectangle())
             .onTapGesture {

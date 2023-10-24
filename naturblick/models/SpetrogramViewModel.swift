@@ -8,11 +8,12 @@ import UIKit
 
 class SpectrogramViewModel: HttpErrorViewModel {
     let client = BackendClient()
-    let sound: NBSound
+    let mediaId: UUID
+    @Published var sound: NBSound? = nil
     @Published var spectrogram: UIImage? = nil
 
-    init(sound: NBSound) {
-        self.sound = sound
+    init(mediaId: UUID) {
+        self.mediaId = mediaId
         super.init()
         downloadSpectrogram()
     }
@@ -24,6 +25,7 @@ class SpectrogramViewModel: HttpErrorViewModel {
     func downloadSpectrogram() {
         Task {
             do {
+                let sound = try await NBSound(id: mediaId)
                 try await client.upload(sound: sound.url, mediaId: sound.id)
                 let spectrogram = try await client.spectrogram(mediaId: sound.id)
                 spectrogramDownloaded(spectrogram: spectrogram)
