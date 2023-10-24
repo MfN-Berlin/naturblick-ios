@@ -127,7 +127,7 @@
 "number"="Anzahl";
 "edit"="Editieren";
 "create_obs"="Observation erstellen";
-"ident_from_photo"="Pflanze von einem Foto erkennen";
+"ident_from_photo"="Pflanze von bestehendem Bild";
 "source %@"="[Quelle](%@)";
 "show_results %@"="%@ Ergebnissse anzeigen";
 "no_coordinates"="Keine Koordinaten";
