@@ -9,8 +9,20 @@ import AVFAudio
 import Combine
 
 class SoundStreamController : ObservableObject {
-    @Published var currentStatus: AVPlayer.TimeControlStatus = AVPlayer.TimeControlStatus.paused
+    @Published var currentStatus: AVPlayer.TimeControlStatus = .paused
     private var audioPlayer: AVPlayer? = nil
+    
+    func play(mediaId: UUID) {
+        currentStatus = .waitingToPlayAtSpecifiedRate
+        Task {
+            do {
+                let sound = try await NBSound(id: mediaId)
+                await play(url: sound.url)
+            } catch {
+                stop()
+            }
+        }
+    }
     
     @MainActor func play(url: URL){
         do {

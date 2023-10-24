@@ -191,6 +191,13 @@ class BackendClient {
         return UIImage(data: data)!
     }
 
+    func downloadSound(mediaId: UUID) async throws -> Data {
+        let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
+        var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
+        return try await downloader.http(request: request)
+    }
+    
     func downloadCached(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)

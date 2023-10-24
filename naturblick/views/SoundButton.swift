@@ -7,8 +7,19 @@ import SwiftUI
 import AVFoundation
 
 struct SoundButton: View {
-    let url: URL
+    let url: URL?
+    let mediaId: UUID?
     @StateObject private var soundStream = SoundStreamController()
+    
+    init(url: URL?) {
+        self.url = url
+        self.mediaId = nil
+    }
+
+    init(mediaId: UUID?) {
+        self.url = nil
+        self.mediaId = mediaId
+    }
     
     func buttonIcon() -> FABView {
         switch soundStream.currentStatus {
@@ -27,7 +38,11 @@ struct SoundButton: View {
         buttonIcon()
         .onTapGesture {
             if (soundStream.currentStatus == AVPlayer.TimeControlStatus.paused) {
-                soundStream.play(url: url)
+                if let url = url {
+                    soundStream.play(url: url)
+                } else if let mediaId = mediaId {
+                    soundStream.play(mediaId: mediaId)
+                }
             } else {
                 soundStream.stop()
             }

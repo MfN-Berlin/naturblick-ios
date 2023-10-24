@@ -13,7 +13,7 @@ struct ObservationInfoView: View {
     let species: SpeciesListItem?
     let created: ZonedDateTime
     
-    let sound: NBSound?
+    let soundId: UUID?
     let start: Int?
     let end: Int?
     let fullscreenImageId: UUID?
@@ -30,9 +30,9 @@ struct ObservationInfoView: View {
         self.start = observation.observation.segmStart.map { s in Int(s) } ?? nil
         self.end = observation.observation.segmEnd.map { s in Int(s) } ?? nil
         if observation.observation.obsType == .audio || observation.observation.obsType == .unidentifiedaudio,  let mediaId = observation.observation.mediaId {
-            self.sound = NBSound(id: mediaId)
+            self.soundId = mediaId
         } else {
-            self.sound = nil
+            self.soundId = nil
         }
         
         if observation.observation.obsType == .image || observation.observation.obsType == .unidentifiedimage, let mediaId = observation.observation.mediaId {
@@ -78,10 +78,10 @@ struct ObservationInfoView: View {
                         }
                     }
                     .padding(.bottom, .defaultPadding)
-            } else if let sound = sound {
+            } else if let soundId = soundId {
                 avatar
                     .overlay(alignment: .bottomTrailing) {
-                        SoundButton(url: sound.url)
+                        SoundButton(mediaId: soundId)
                     }
                     .padding(.bottom, .defaultPadding)
             } else {
@@ -93,7 +93,7 @@ struct ObservationInfoView: View {
                     .overline(color: .onPrimarySignalHigh)
                     .multilineTextAlignment(TextAlignment.center)
             }
-            Text(species?.name ?? "unknown_species")
+            Text(species?.name ?? String(localized: "unknown_species"))
                 .headline2()
                 .multilineTextAlignment(TextAlignment.center)
             Text(created.date, formatter: .dateTime)

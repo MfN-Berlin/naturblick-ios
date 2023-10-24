@@ -90,7 +90,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         data.sound.sound = sound
         withNavigation { navigation in
             var viewControllers = navigation.viewControllers
-            viewControllers[viewControllers.count - 1] = SpectrogramView(sound: sound, flow: self).setUpViewController()
+            viewControllers[viewControllers.count - 1] = SpectrogramView(mediaId: sound.id, flow: self).setUpViewController()
             navigation.setViewControllers(viewControllers, animated: true)
         }
     }
