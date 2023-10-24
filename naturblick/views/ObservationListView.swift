@@ -5,6 +5,7 @@
 
 import SwiftUI
 import MapKit
+import Photos
 
 class ObservationListViewModel: ObservableObject {
     @Published var showList = true
@@ -46,7 +47,7 @@ struct ObservationListView: HostedView {
                 createFlow.recordSound()
             },
             MenuEntry(title: String(localized: "photograph_a_plant"), image: UIImage(named: "photo24")!) {
-                createFlow.takePhoto()
+                    createFlow.takePhoto()
             },
             MenuEntry(title: String(localized: "create_obs"), image: UIImage(named: "logo24")!) {
                 createFlow.searchSpecies()

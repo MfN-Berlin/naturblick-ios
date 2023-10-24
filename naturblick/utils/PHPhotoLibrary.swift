@@ -3,16 +3,16 @@
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
 
-import Foundation
+import SwiftUI
 import Photos
 
 extension PHPhotoLibrary {
 
-    func askForPermission() -> Bool {
+    static func askForPermission() -> Bool {
         return PHPhotoLibrary.authorizationStatus(for: .readWrite) == .notDetermined
     }
 
-    func requestAccess() async {
+    static func requestAccess() async {
         await PHPhotoLibrary.requestAuthorization(for: .readWrite)
         
     }

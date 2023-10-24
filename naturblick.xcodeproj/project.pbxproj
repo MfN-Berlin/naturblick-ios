@@ -97,6 +97,7 @@
 		13C850DC2AA20CE30006FA1A /* CreateFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C850DB2AA20CE30006FA1A /* CreateFlowViewModel.swift */; };
 		13C880FF2A98BB91007DEC0B /* NaturblickAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C880FE2A98BB91007DEC0B /* NaturblickAppDelegate.swift */; };
 		13C881012A98BC07007DEC0B /* NaturblickSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */; };
+		13E50A282AE7F4010049FACD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13E50A2A2AE7F4010049FACD /* InfoPlist.strings */; };
 		13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */; };
 		13EC572129DC80AD00D56A77 /* ObservationListItemWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */; };
 		13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572229DC83E900D56A77 /* ObservationListView.swift */; };
@@ -142,7 +143,6 @@
 		7BB777162A612B9100EA844C /* URL+Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB777152A612B9100EA844C /* URL+Query.swift */; };
 		7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */; };
 		7BC11AFE2A4ACD4E00823D4F /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */; };
-		7BC46D762A050BB80020EAC6 /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC46D752A050BB80020EAC6 /* CameraManager.swift */; };
 		7BC6100A2A3096A400185BAA /* ImprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC610092A3096A400185BAA /* ImprintView.swift */; };
 		7BC6100C2A30989900185BAA /* FurtherSourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */; };
 		7BC77E852A6A4DCB00B489C2 /* AppSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E842A6A4DCB00B489C2 /* AppSecureStorage.swift */; };
@@ -278,6 +278,8 @@
 		13C850DB2AA20CE30006FA1A /* CreateFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFlowViewModel.swift; sourceTree = "<group>"; };
 		13C880FE2A98BB91007DEC0B /* NaturblickAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickAppDelegate.swift; sourceTree = "<group>"; };
 		13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickSceneDelegate.swift; sourceTree = "<group>"; };
+		13E50A292AE7F4010049FACD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		13E50A2B2AE7F40A0049FACD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItem.swift; sourceTree = "<group>"; };
 		13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemWithImageView.swift; sourceTree = "<group>"; };
 		13EC572229DC83E900D56A77 /* ObservationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListView.swift; sourceTree = "<group>"; };
@@ -323,7 +325,6 @@
 		7BB777152A612B9100EA844C /* URL+Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Query.swift"; sourceTree = "<group>"; };
 		7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
-		7BC46D752A050BB80020EAC6 /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
 		7BC610092A3096A400185BAA /* ImprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImprintView.swift; sourceTree = "<group>"; };
 		7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurtherSourcesView.swift; sourceTree = "<group>"; };
 		7BC77E842A6A4DCB00B489C2 /* AppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecureStorage.swift; sourceTree = "<group>"; };
@@ -381,6 +382,7 @@
 		131E785529C9BB24000DF928 = {
 			isa = PBXGroup;
 			children = (
+				13E50A2A2AE7F4010049FACD /* InfoPlist.strings */,
 				7B3507C72AD6D824006F594B /* Localizable.strings */,
 				131E786029C9BB24000DF928 /* naturblick */,
 				1343D1D129DD988D0075ACE3 /* naturblickTests */,
@@ -456,7 +458,6 @@
 		7BBF7AF12A03C2A600D184FA /* manager */ = {
 			isa = PBXGroup;
 			children = (
-				7BC46D752A050BB80020EAC6 /* CameraManager.swift */,
 				7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */,
 			);
 			path = manager;
@@ -620,6 +621,7 @@
 				1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */,
 				137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */,
 				136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */,
+				13ED4C282AE6C3C00007C228 /* PHPhotoLibrary.swift */,
 				7BC77E882A6A4F7A00B489C2 /* secure */,
 				7B02E4D92A4993DF006406A1 /* Settings.swift */,
 				7B13663829F0122600F1DA30 /* SoundStreamController.swift */,
@@ -634,7 +636,6 @@
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
-				13ED4C282AE6C3C00007C228 /* PHPhotoLibrary.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -751,6 +752,7 @@
 				131E786629C9BB25000DF928 /* Assets.xcassets in Resources */,
 				7B3507C52AD6D824006F594B /* Localizable.strings in Resources */,
 				13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */,
+				13E50A282AE7F4010049FACD /* InfoPlist.strings in Resources */,
 				132B0D9C29CDD78600B80C9E /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -932,7 +934,6 @@
 				7BB68E4A2A545D5C00B1DC51 /* String+Validations.swift in Sources */,
 				7BA4DA122A73EC5600AEC0A4 /* HelpView.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
-				7BC46D762A050BB80020EAC6 /* CameraManager.swift in Sources */,
 				13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */,
 				7BB68E482A544B7F00B1DC51 /* RegisterViewModel.swift in Sources */,
 				7BC77E872A6A4F2700B489C2 /* KeychainWrapper.swift in Sources */,
@@ -983,6 +984,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		13E50A2A2AE7F4010049FACD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				13E50A292AE7F4010049FACD /* en */,
+				13E50A2B2AE7F40A0049FACD /* de */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		7B3507C72AD6D824006F594B /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1126,11 +1136,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = naturblick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Naturblick needs camera permission.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Naturblick needs location.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Naturblick needs microphone.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to add your nature photos to the gallery";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Naturblick needs photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -1167,11 +1173,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = naturblick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSCameraUsageDescription = "Naturblick needs camera permission.";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Naturblick needs location.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Naturblick needs microphone.";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to add your nature photos to the gallery";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Naturblick needs photos.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;

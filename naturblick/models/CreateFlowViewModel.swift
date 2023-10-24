@@ -29,22 +29,15 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             data.image.result
           }.assign(to: &$result)
     }
-    
-    private func askForPermission() -> Bool {
-        PHPhotoLibrary.authorizationStatus(for: .readWrite) == .notDetermined
-    }
-    
-    private func requestAccess() async {
-        await PHPhotoLibrary.requestAuthorization(for: .readWrite)
-    }
-    
+
+    @MainActor
     func takePhoto() {
         data = CreateData()
         region = .defaultRegion
         speciesAvatar = Image("placeholder")
         Task { @MainActor in
-            if askForPermission() {
-                await requestAccess()
+            if PHPhotoLibrary.askForPermission() {
+                await PHPhotoLibrary.requestAccess()
             }
             let imagePicker = UIImagePickerController()
             imagePicker.sourceType = .camera
