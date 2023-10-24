@@ -151,3 +151,6 @@
 "create_with_species"="Use to create observation";
 "choose_species"="Use this species";
 "crop"="Crop";
+"go_to_app_settings_photo"="Naturblick need access to your camera to take photos. You can change this permission in the settings app.";
+"go_to_app_settings_microphone"="Naturblick need access to your microphone to record sounds. You can change this permission in the settings app.";
+"open_settings"="Open system settings";

@@ -42,7 +42,7 @@ struct CreateObservationView: NavigatableView {
                 VStack(alignment: .leading) {
                     Text("species")
                         .caption(color: .onSecondarySignalLow)
-                    Text(createFlow.data.species?.sciname ?? "unknown_species")
+                    Text(createFlow.data.species?.sciname ?? String(localized: "unknown_species"))
                         .subtitle1()
                 }
             }

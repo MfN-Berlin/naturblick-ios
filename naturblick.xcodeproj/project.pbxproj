@@ -98,6 +98,7 @@
 		13C880FF2A98BB91007DEC0B /* NaturblickAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C880FE2A98BB91007DEC0B /* NaturblickAppDelegate.swift */; };
 		13C881012A98BC07007DEC0B /* NaturblickSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */; };
 		13E50A282AE7F4010049FACD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13E50A2A2AE7F4010049FACD /* InfoPlist.strings */; };
+		13E50A2D2AE805890049FACD /* AVAudioSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E50A2C2AE805890049FACD /* AVAudioSession.swift */; };
 		13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */; };
 		13EC572129DC80AD00D56A77 /* ObservationListItemWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */; };
 		13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572229DC83E900D56A77 /* ObservationListView.swift */; };
@@ -280,6 +281,7 @@
 		13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickSceneDelegate.swift; sourceTree = "<group>"; };
 		13E50A292AE7F4010049FACD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13E50A2B2AE7F40A0049FACD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		13E50A2C2AE805890049FACD /* AVAudioSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioSession.swift; sourceTree = "<group>"; };
 		13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItem.swift; sourceTree = "<group>"; };
 		13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemWithImageView.swift; sourceTree = "<group>"; };
 		13EC572229DC83E900D56A77 /* ObservationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListView.swift; sourceTree = "<group>"; };
@@ -599,6 +601,7 @@
 		7BCE46C029C9DC5E00C6C101 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				13E50A2C2AE805890049FACD /* AVAudioSession.swift */,
 				1343D1CA29DD94F50075ACE3 /* BackendClient.swift */,
 				137F1F682AC3281A00D14BE1 /* ButtonStyle.swift */,
 				134F54932A5ED78E00A079EC /* CGFloat+Constants.swift */,
@@ -830,6 +833,7 @@
 				7BDA8FC22ABC6AF6002E93C9 /* CCInfoPopupView.swift in Sources */,
 				1337159A2A8CFBC2009E31E0 /* HttpErrorViewModel.swift in Sources */,
 				13C880FF2A98BB91007DEC0B /* NaturblickAppDelegate.swift in Sources */,
+				13E50A2D2AE805890049FACD /* AVAudioSession.swift in Sources */,
 				13ED4C292AE6C3C00007C228 /* PHPhotoLibrary.swift in Sources */,
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
 				136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */,
@@ -1136,7 +1140,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = naturblick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Naturblick needs microphone.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
@@ -1173,7 +1176,6 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = naturblick/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Naturblick needs microphone.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
