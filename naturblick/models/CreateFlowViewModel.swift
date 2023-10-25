@@ -9,6 +9,20 @@ import Mantis
 import MapKit
 import Photos
 
+extension View {
+    func permissionSettingsDialog(isPresented: Binding<Bool>, presenting: String?) -> some View {
+        self.confirmationDialog("open_settings", isPresented: isPresented, presenting: presenting) { _ in
+            Button("open_settings") {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+        } message: { message in
+            Text(message)
+        }
+    }
+}
+
 class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
@@ -18,6 +32,8 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @Published var data = CreateData()
     @Published var region: MKCoordinateRegion = .defaultRegion
     @Published var speciesAvatar: Image = Image("placeholder")
+    @Published var showOpenSettings: Bool = false
+    @Published var openSettingsMessage: String? = nil
     var isCreate: Bool = true
     let fromList: Bool
     init(persistenceController: ObservationPersistenceController, fromList: Bool = false) {
@@ -39,6 +55,22 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             if PHPhotoLibrary.askForPermission() {
                 await PHPhotoLibrary.requestAccess()
             }
+            let status = AVCaptureDevice.authorizationStatus(for: .video)
+            var accessGranted = false
+            if  status == .notDetermined {
+                accessGranted = await AVCaptureDevice.requestAccess(for: .video)
+            } else if status == .authorized {
+                accessGranted = true
+            } else {
+                // User has previously denied the permission, but ask to take a photo again
+                openSettingsMessage = String(localized: "go_to_app_settings_photo")
+                showOpenSettings = true
+            }
+            
+            guard accessGranted else {
+                return
+            }
+            
             let imagePicker = UIImagePickerController()
             imagePicker.sourceType = .camera
             imagePicker.delegate = self
@@ -73,9 +105,28 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         data = CreateData()
         region = .defaultRegion
         speciesAvatar = Image("placeholder")
-        withNavigation { navigation in
-            let soundRecorder = BirdRecorderView(flow: self)
-            navigation.pushViewController(soundRecorder.setUpViewController(), animated: true)
+        Task { @MainActor in
+            let status = AVAudioSession.sharedInstance().recordPermission
+            var accessGranted = false
+            
+            if status == .undetermined {
+                accessGranted = await AVAudioSession.sharedInstance().requestRecordPermission()
+            } else if status == .granted {
+                accessGranted = true
+            } else {
+                // User has previously denied the permission, but ask to record a bird again
+                openSettingsMessage = String(localized: "go_to_app_settings_microphone")
+                showOpenSettings = true
+            }
+
+            guard accessGranted else {
+                return
+            }
+            
+            withNavigation { navigation in
+                let soundRecorder = BirdRecorderView(flow: self)
+                navigation.pushViewController(soundRecorder.setUpViewController(), animated: true)
+            }
         }
     }
     

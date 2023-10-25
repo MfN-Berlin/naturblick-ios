@@ -5,3 +5,4 @@
 "NSPhotoLibraryUsageDescription"="If you choose \"Allow Access to All Photos\" Naturblick will store photos taken in the album \"Naturblick\" and it will be possible to import photos into your Fieldbook. If you choose either \"Don't allow\" or \"Select Photos...\" Naturblick will store photos internally only and it will not be possible to import photos.";
 "NSLocationWhenInUseUsageDescription"="If you allow Naturblick to access your location it can be stored together with your observation.";
 "NSCameraUsageDescription"="Naturblick needs access to your camera to take photos of plants.";
+"NSMicrophoneUsageDescription"="Naturblick needs access to your microphone to recrod birds sounds";

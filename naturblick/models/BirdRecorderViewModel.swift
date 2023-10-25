@@ -14,8 +14,6 @@ struct BirdRecorder {
 }
 
 class BirdRecorderViewModel: ObservableObject {
-    @Published private(set) var isAuthorized: Bool = false
-    @Published private(set) var isBusy: Bool = false
     @Published private(set) var isDenied: Bool = false
     @Published private(set) var currentTime: String = "00:00.0"
     private var recorder: BirdRecorder? = nil
@@ -25,15 +23,6 @@ class BirdRecorderViewModel: ObservableObject {
         do {
             // Set the audio session category and mode.
             try audioSession.setCategory(.record, mode: .measurement)
-            audioSession.requestRecordPermission { [weak self] allowed in
-                DispatchQueue.main.async {
-                    if allowed {
-                        self?.isAuthorized = true
-                    } else {
-                        self?.isDenied = true
-                    }
-                }
-            }
             Timer.publish(every: 0.1, on: .main, in: .default)
                 .autoconnect()
                 .map { [weak self] t in
@@ -64,7 +53,7 @@ class BirdRecorderViewModel: ObservableObject {
             recorder.audioRecorder.record(forDuration: 60)
             self.recorder = recorder
         } catch {
-            print("Error2: \(error)")
+            preconditionFailure("\(error)")
         }
     }
     

@@ -124,6 +124,7 @@ struct ObservationListView: HostedView {
             }
         }
         .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)
+        .permissionSettingsDialog(isPresented: $createFlow.showOpenSettings, presenting: createFlow.openSettingsMessage)
     }
     
     private func sync() async {

@@ -5,3 +5,4 @@
 "NSPhotoLibraryUsageDescription"="Wenn du \"Zugriff auf alle Fotos erlauben\" wählst wird Naturblick Bilder im Ordner \"Naturblick\" speichern und es wird möglich sein Bilder aus deinen Fotos mit Naturblick zu bestimmen. Wenn du \"Nicht erlauben\" oder \"Fotos wählen ...\" auswählst wird Naturblick Bilder intern speichern und es wird nicht möglich seien Bilder aus deinen Fotos zu bestimmen.";
 "NSLocationWhenInUseUsageDescription"="Wenn du Naturblick erlaubst auf deinen Standort zuzugreifen kann dieser zusammen mit deiner Beobachtung gespeichert werden.";
 "NSCameraUsageDescription"="Naturblick benötigt Zugriff auf deine Kamera, um Pflanzen zu fotografieren.";
+"NSMicrophoneUsageDescription"="Naturblick benötigt Zugriff auf dein Mikrofon, um Vogelstimmen aufzunehmen";

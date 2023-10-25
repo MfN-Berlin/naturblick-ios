@@ -14,24 +14,18 @@ struct BirdRecorderView: NavigatableView {
     var body: some View {
         StaticBottomSheetView {
             HStack(alignment: .center) {
-                if model.isAuthorized {
-                    Text("\(model.currentTime)")
-                        .headline3()
-                        .foregroundColor(.onPrimaryHighEmphasis)
-                        .onAppear {
-                            model.record()
-                        }
-                        .onDisappear {
-                            model.cancel()
-                        }
-                } else if model.isDenied {
-                    Text("record_permission_missing")
-                } else {
-                    Text("requires_recording")
-                }
+                Text("\(model.currentTime)")
+                    .headline3()
+                    .foregroundColor(.onPrimaryHighEmphasis)
+                    .onAppear {
+                        model.record()
+                    }
+                    .onDisappear {
+                        model.cancel()
+                    }
             }
         } sheet: {
-                Circle()
+            Circle()
                     .stroke(Color.onSecondaryHighEmphasis, lineWidth: .goodToKnowLineWidth)
                     .overlay {
                         RoundedRectangle(cornerRadius: .smallCornerRadius)
