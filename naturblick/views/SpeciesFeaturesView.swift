@@ -12,7 +12,7 @@ struct SpeciesFeaturesView: View {
     
     var body: some View {
         
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: .defaultPadding) {
             SimilarSpeciesItemView(species: species.listItem)
             ForEach(featureViewModel.features) { feature in
                 Text(feature.description)

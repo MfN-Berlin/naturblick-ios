@@ -10,11 +10,11 @@ struct ObservationListItemView: View {
     let observation: Observation
     let image: Image
     var body: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .top, spacing: .zero) {
             image
                 .avatar()
                 .padding(.trailing, .defaultPadding)
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: .zero) {
                 if let name = observation.species?.speciesName {
                     Text(name)
                         .subtitle1()
@@ -24,9 +24,6 @@ struct ObservationListItemView: View {
                 }
                 Text(observation.observation.created.date.formatted())
                     .subtitle3()
-                if let details = observation.observation.details {
-                    Text(details)
-                }
             }
             .padding(.top, .avatarTextOffset)
             Spacer()

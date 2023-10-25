@@ -39,7 +39,7 @@ struct CreateObservationView: NavigatableView {
                 createFlow.speciesAvatar
                     .avatar()
                     .padding(.trailing, .defaultPadding)
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: .zero) {
                     Text("species")
                         .caption(color: .onSecondarySignalLow)
                     Text(createFlow.data.species?.sciname ?? String(localized: "unknown_species"))

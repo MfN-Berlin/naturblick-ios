@@ -16,7 +16,7 @@ struct MapInfoBox: NavigatableView {
     let toDetails: () -> Void
     
     var body: some View {
-        VStack {
+        VStack(spacing: .defaultPadding) {
             Thumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
                 image
                     .resizable()

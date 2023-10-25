@@ -12,7 +12,7 @@ struct HomeViewButton: View {
     let size: CGFloat
 
     var body: some View {
-        VStack {
+        VStack(spacing: .defaultPadding) {
             Circle()
                 .fill(color)
                 .overlay {
@@ -30,7 +30,6 @@ struct HomeViewButton: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .frame(width: size)
         }
-        .font(.subheadline)
     }
 }
 

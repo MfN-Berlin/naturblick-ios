@@ -29,14 +29,12 @@ struct CharacterView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: .defaultPadding) {
             Text(character.name)
                 .subtitle1()
-                .padding(.bottom, .defaultPadding)
             if let description = character.description {
                 Text(description)
                     .body2()
-                    .padding(.bottom, .defaultPadding)
             }
             LazyVGrid(columns: [
                 GridItem(spacing: .defaultPadding),

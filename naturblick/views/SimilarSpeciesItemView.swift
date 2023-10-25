@@ -27,7 +27,7 @@ struct SimilarSpeciesItemView: View {
                         .padding(.trailing, .defaultPadding)
                 }
             }
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: .zero) {
                 if let name = species.name {
                     Text(species.sciname)
                         .subtitle3(color: .onFeatureSignalHigh)

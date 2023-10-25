@@ -34,7 +34,6 @@ struct HomeView: HostedView {
         item.compactAppearance = nil
         item.scrollEdgeAppearance = nil
         item.compactScrollEdgeAppearance = nil
-        
         item.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), primaryAction: UIAction(image:  UIImage(systemName: "gearshape")) { action in
             let menuVC = MenuController(entries: [
                 MenuEntry(title: String(localized: "help"), image: UIImage(systemName: "questionmark.circle")!) {
@@ -87,7 +86,7 @@ struct HomeView: HostedView {
             let bottomRowSize = geo.size.width * .bottomRowFactor
             
             ZStack {
-                VStack {
+                VStack(spacing: .zero) {
                     Image("Kingfisher")
                         .resizable()
                         .scaledToFit()
@@ -96,17 +95,15 @@ struct HomeView: HostedView {
                         .padding(.bottom, -geo.safeAreaInsets.top)
                     Spacer()
                 }
-                VStack {
-                    VStack {
-                        Image("logo24")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: geo.size.width / 4, alignment: .center)
-                            .foregroundColor(.onPrimaryHighEmphasis)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .overlay(alignment: .bottomLeading) {
-                        Image("mfn_logo")
+                VStack(spacing: .zero) {
+                    Image("logo24")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: geo.size.width / 4, alignment: .center)
+                        .foregroundColor(.onPrimaryHighEmphasis)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .overlay(alignment: .bottomLeading) {
+                            Image("mfn_logo")
                             .resizable()
                             .scaledToFit()
                             .frame(width: geo.size.width / 5)
@@ -116,10 +113,9 @@ struct HomeView: HostedView {
                     RoundBottomView()
                         .frame(height: .roundBottomHeight)
                     
-                    VStack {
+                    VStack(spacing: .defaultPadding) {
                         Text("home_identify_animals_and_plants")
                             .headline6()
-                            .padding(.defaultPadding)
                         
                         HStack(alignment: .top) {
                             Spacer()
@@ -159,7 +155,6 @@ struct HomeView: HostedView {
                             }
                             Spacer()
                         }
-                        .padding(.bottom, .defaultPadding)
                         
                         HStack(alignment: .top) {
                             Spacer()
@@ -189,7 +184,8 @@ struct HomeView: HostedView {
                             }
                             Spacer()
                         }
-                        .padding(.bottom, .defaultPadding * 2)
+                        .padding(.defaultPadding)
+                        .padding(.bottom, geo.safeAreaInsets.bottom + .defaultPadding)
                     }
                     .frame(width: geo.size.width)
                     .background {

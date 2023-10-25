@@ -6,56 +6,88 @@ import SwiftUI
 
 extension CGFloat {
     static let headline2: CGFloat = 36
+    static let headline2LineHeight: CGFloat = 40
     static let headline3: CGFloat = 30
+    static let headline3LineHeight: CGFloat = 36
     static let headline4: CGFloat = 25
+    static let headline4LineHeight: CGFloat = 30
     static let headline6: CGFloat = 19
+    static let headline6LineHeight: CGFloat = 27
 
     static let subtitle1: CGFloat = 16
+    static let subtitle1LineHeight: CGFloat = 22
+
     static let subtitle2: CGFloat = 14
+    static let subtitle2LineHeight: CGFloat = 24
+
     static let subtitle3: CGFloat = 14
+    static let subtitle3LineHeight: CGFloat = 22
 
     static let body1: CGFloat = 16
+    static let body1LineHeight: CGFloat = 24
+
     static let body2: CGFloat = 14
+    static let body2LineHeight: CGFloat = 20
+
 
     static let caption: CGFloat = 12
+    static let captionLineHeight: CGFloat = 16
+
     static let button: CGFloat = 14
+
     static let overline: CGFloat = 12
+    static let overlineLineHeight: CGFloat = 17
+
+    static func spacing(fontSize: CGFloat, lineHeight: CGFloat) -> CGFloat {
+        lineHeight - (fontSize + 2) // A font with leading(.tight) is 2 points bigger than its font size
+    }
 }
 
 extension Font {
-    static let nbHeadline2 = Font.custom("Lato", size: .headline2, relativeTo: .title).weight(.black)
-    static let nbHeadline3 = Font.custom("Lato", size: .headline3, relativeTo: .title).weight(.black)
-    static let nbHeadline4 = Font.custom("Lato", size: .headline4, relativeTo: .title).weight(.black)
-    static let nbHeadline6 = Font.custom("Lato", size: .headline6, relativeTo: .title).weight(.black)
-
-    static let nbSubtitle1 = Font.custom("Lato", size: .subtitle1, relativeTo: .subheadline).weight(.black)
-    static let nbSubtitle2 = Font.custom("Lato", size: .subtitle2, relativeTo: .subheadline).weight(.black)
-    static let nbSubtitle3 = Font.custom("Lato", size: .subtitle3, relativeTo: .subheadline).italic()
-
-    static let nbBody1 = Font.custom("Lato", size: .body1, relativeTo: .body)
-    static let nbBody2 = Font.custom("Lato", size: .body2, relativeTo: .body)
-
-    static let nbCaption = Font.custom("Lato", size: .caption, relativeTo: .caption)
-
+    static let nbHeadline2 = Font.custom("Lato", size: .headline2, relativeTo: .title).weight(.black).leading(.tight)
+    static let nbHeadline3 = Font.custom("Lato", size: .headline3, relativeTo: .title).weight(.black).leading(.tight)
+    static let nbHeadline4 = Font.custom("Lato", size: .headline4, relativeTo: .title).weight(.black).leading(.tight)
+    static let nbHeadline6 = Font.custom("Lato", size: .headline6, relativeTo: .title).weight(.black).leading(.tight)
+    
+    static let nbSubtitle1 = Font.custom("Lato", size: .subtitle1, relativeTo: .subheadline).weight(.black).leading(.tight)
+    static let nbSubtitle2 = Font.custom("Lato", size: .subtitle2, relativeTo: .subheadline).weight(.black).leading(.tight)
+    static let nbSubtitle3 = Font.custom("Lato", size: .subtitle3, relativeTo: .subheadline).italic().leading(.tight)
+    
+    static let nbBody1 = Font.custom("Lato", size: .body1, relativeTo: .body).leading(.tight)
+    static let nbBody2 = Font.custom("Lato", size: .body2, relativeTo: .body).leading(.tight)
+    
+    static let nbCaption = Font.custom("Lato", size: .caption, relativeTo: .caption).leading(.tight)
+    
     static let nbButton = Font.custom("Lato", size: .button, relativeTo: .body)
-    static let nbOverline = Font.custom("Lato", size: .overline, relativeTo: .subheadline).italic()
+    static let nbOverline = Font.custom("Lato", size: .overline, relativeTo: .subheadline).italic().leading(.tight)
+    
 }
 
 extension Text {
+    private func lineSpacing(fontSize: CGFloat, lineHeight: CGFloat) -> some View {
+        let lineSpacing: CGFloat = .spacing(fontSize: fontSize, lineHeight: lineHeight)
+        return self
+            .lineSpacing(lineSpacing)
+            .padding([.bottom, .top], lineSpacing / 2.0)
+    }
+    
     func headline2() -> some View {
         self.font(.nbHeadline2)
+            .lineSpacing(fontSize: .headline2, lineHeight: .headline2LineHeight)
             .foregroundColor(.onPrimaryHighEmphasis)
     }
     
     func headline3() -> some View {
         self
             .font(.nbHeadline3)
+            .lineSpacing(fontSize: .headline3, lineHeight: .headline3LineHeight)
             .foregroundColor(.onPrimaryHighEmphasis)
     }
     
     func headline4(color: Color) -> some View {
         self
             .font(.nbHeadline4)
+            .lineSpacing(fontSize: .headline4, lineHeight: .headline4LineHeight)
             .foregroundColor(color)
     }
     
@@ -65,6 +97,7 @@ extension Text {
     
     func headline6() -> some View {
         self.font(.nbHeadline6)
+            .lineSpacing(fontSize: .headline6, lineHeight: .headline6LineHeight)
             .foregroundColor(.onPrimaryHighEmphasis)
     }
     
@@ -74,22 +107,24 @@ extension Text {
     
     func subtitle1(color: Color) -> some View {
         self.font(.nbSubtitle1)
+            .lineSpacing(fontSize: .subtitle1, lineHeight: .subtitle1LineHeight)
             .foregroundColor(color)
     }
     
     func subtitle3() -> some View {
-        self.font(.nbSubtitle3)
-            .kerning(0.018 * .subtitle3)
-            .foregroundColor(Color.onSecondarySignalLow)
+            subtitle3(color: Color.onSecondarySignalLow)
     }
     
     func subtitle3(color: Color) -> some View {
         self.font(.nbSubtitle3)
+            .kerning(0.018 * .subtitle3)
+            .lineSpacing(fontSize: .subtitle3, lineHeight: .subtitle3LineHeight)
             .foregroundColor(color)
     }
     
     func body1(color: Color) -> some View {
         self.font(.nbBody1)
+            .lineSpacing(fontSize: .body1, lineHeight: .body1LineHeight)
             .foregroundColor(color)
     }
     
@@ -103,6 +138,7 @@ extension Text {
     
     func body2(color: Color) -> some View {
         self.font(.nbBody2)
+            .lineSpacing(fontSize: .body2, lineHeight: .body2LineHeight)
             .foregroundColor(color)
     }
     
@@ -113,6 +149,7 @@ extension Text {
     func caption(color: Color) -> some View {
         self.font(.caption)
             .kerning(0.04 * .caption)
+            .lineSpacing(fontSize: .caption, lineHeight: .captionLineHeight)
             .foregroundColor(color)
     }
     
@@ -125,6 +162,7 @@ extension Text {
         self
             .font(.nbOverline)
             .kerning(0.042 * .overline)
+            .lineSpacing(fontSize: .overline, lineHeight: .overlineLineHeight)
             .foregroundColor(color)
     }
 }

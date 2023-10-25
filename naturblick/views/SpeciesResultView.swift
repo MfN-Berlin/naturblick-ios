@@ -43,7 +43,7 @@ struct SpeciesResultView: View {
                     .frame(width: .avatarSize, height: .avatarSize)
                     .padding(.trailing, .defaultPadding)
             }
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: .zero) {
                 if let name = species.name {
                     Text(name)
                         .subtitle1()

@@ -35,7 +35,7 @@ struct ForgotPasswordView: NavigatableView {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: .zero) {
             OnSecondaryFieldView(icon: "create_24px") {
                 TextField(String(localized: "email"), text: $forgotPasswordVM.email)
                     .keyboardType(.emailAddress)
@@ -50,7 +50,6 @@ struct ForgotPasswordView: NavigatableView {
             Button("reset_password") {
                 forgotPassword()
             }.buttonStyle(ConfirmFullWidthButton())
-                .padding([.top, .bottom], .defaultPadding)
             Text("delete_account_note_password")
                 .body1()
             Spacer()

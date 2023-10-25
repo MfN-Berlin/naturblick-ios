@@ -36,7 +36,7 @@ struct ResetPasswordView: NavigatableView {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: .defaultPadding) {
             OnSecondaryFieldView(image: Image("visibility")) {
                 SecureField(String(localized: "password"), text: $resetPasswordVM.password)
                     .autocorrectionDisabled(true)
