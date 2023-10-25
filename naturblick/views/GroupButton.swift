@@ -10,7 +10,7 @@ struct GroupButton: View {
     let geo: GeometryProxy
 
     var body: some View {
-        VStack() {
+        VStack(spacing: .defaultPadding) {
             Image(group.image)
                 .resizable()
                 .imageScale(.small)

@@ -54,7 +54,7 @@ struct EditObservationView: HostedView {
             HStack {
                 flow.speciesAvatar
                     .avatar()
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: .zero) {
                     Text("species")
                         .caption(color: .onSecondaryLowEmphasis)
                     Text(flow.data.species?.sciname ?? "unknown_species")

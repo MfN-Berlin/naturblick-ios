@@ -11,10 +11,10 @@ struct StaticBottomSheetView<MainContent: View, SheetContent: View>: View {
     
     var body: some View {
         GeometryReader { geo in
-            VStack {
+            VStack(spacing: .zero) {
                 main()
                     .frame(maxHeight: .infinity)
-                VStack {
+                VStack(spacing: .zero) {
                     sheet()
                 }
                 .padding(.defaultPadding)

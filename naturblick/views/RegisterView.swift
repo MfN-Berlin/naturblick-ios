@@ -38,7 +38,7 @@ struct RegisterView: NavigatableView {
     
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: .defaultPadding) {
                 Text("sign_up_text")
                     .body1()
                 

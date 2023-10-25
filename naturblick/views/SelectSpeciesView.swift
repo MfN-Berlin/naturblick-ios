@@ -43,11 +43,10 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                         .frame(width: geo.size.width, height: geo.size.width)
                 }
                 .overlay(alignment: .bottom) {
-                    VStack {
+                    VStack(spacing: .defaultPadding) {
                         if let results = model.speciesResults {
                             Text(flow.isImage() ? "image_autoid_infotext" : "sound_autoid_infotext")
                                 .body2()
-                                .padding(.bottom, .defaultPadding)
                             ForEach(results, id: \.0.id) { (result, item) in
                                 SpeciesResultView(result: result, species: item)
                                     .listRowInsets(.nbInsets)

@@ -23,6 +23,7 @@ struct PortraitView: HostedView {
     var alwaysDarkBackground: Bool = true
     
     @StateObject var portraitViewModel = PortraitViewModel()
+    @StateObject var similarSpeciesViewModel = SimilarSpeciesViewModel()
     @ObservedObject var flow: CreateFlowViewModel
     let species: SpeciesListItem
     let inSelectionFlow: Bool
@@ -30,13 +31,13 @@ struct PortraitView: HostedView {
     var body: some View {
         GeometryReader { geo in
             ScrollView {
-                VStack {
+                SwiftUI.Group {
                     if let portrait = portraitViewModel.portrait {
                         ZStack { // header
                             if let meta = portrait.descriptionImage {
                                 PortraitImageView(geo: geo, image: meta, headerImage: true)
                             }
-                            VStack {
+                            VStack(spacing: .zero) {
                                 Spacer()
                                 if let urlPart = portrait.audioUrl {
                                     SoundButton(url: URL(string: Configuration.strapiUrl + urlPart)!)
@@ -50,7 +51,7 @@ struct PortraitView: HostedView {
                             }
                         }
                         
-                        VStack { // names
+                        VStack(spacing: .zero) { // names
                             Text(portrait.species.sciname)
                                 .overline(color: .onPrimarySignalHigh)
                                 .multilineTextAlignment(.center)
@@ -67,20 +68,22 @@ struct PortraitView: HostedView {
                                     flow.selectManual(species: species)
                                 }
                                 .buttonStyle(AuxiliaryOnPrimaryButton())
+                                .padding(.top, .defaultPadding)
                             }
                         }
                         .padding(.bottom, .defaultPadding * 2)
                         .padding([.top, .horizontal], .defaultPadding)
                         
-                        VStack(alignment: .leading) { // description
+                        VStack(alignment: .leading, spacing: .defaultPadding) { // description
                             Text("description")
                                 .headline4()
-                                .padding(.bottom, .defaultPadding)
                             Text(portrait.description)
                                 .body1()
-                            VStack(alignment: .leading) { // similar species
+                            VStack(alignment: .leading, spacing: .defaultPadding) { // similar species
                                 SpeciesFeaturesView(portraitId: portrait.id, species: portrait.species)
-                                SimilarSpeciesView(portraitId: portrait.id, holder: holder, inSelectionFlow: inSelectionFlow)
+                                if !similarSpeciesViewModel.mixups.isEmpty {
+                                    SimilarSpeciesView(similarSpeciesViewModel: similarSpeciesViewModel, holder: holder, inSelectionFlow: inSelectionFlow)
+                                }
                             }
                             .padding(.defaultPadding)
                             .background {
@@ -88,26 +91,20 @@ struct PortraitView: HostedView {
                                     .foregroundColor(.featureColor)
                             }
                             
-                            VStack(alignment: .leading) {
+                            VStack(alignment: .leading, spacing: .defaultPadding) {
                                 if let meta = portrait.inTheCityImage {
                                     PortraitImageView(geo: geo, image: meta, headerImage: false)
-                                        .padding(.top, .halfPadding)
                                 }
                                 Text("in_the_city")
                                     .headline4()
-                                    .padding([.top, .bottom], .defaultPadding)
                                 Text(portrait.inTheCity)
                                     .body1()
-                                    .padding(.bottom, .defaultPadding)
-
                                 
                                 if let meta = portrait.goodToKnowImage {
                                     PortraitImageView(geo: geo, image: meta, headerImage: false)
-                                        .padding(.bottom, .halfPadding)
                                 }
                                 Text("good_to_know")
                                     .headline4()
-                                    .padding(.bottom, .defaultPadding)
                                 ForEach(portrait.goodToKnows, id: \.self) { goodToKnow in
                                     HStack {
                                         Rectangle()
@@ -119,15 +116,12 @@ struct PortraitView: HostedView {
                                             .padding(.leading, .defaultPadding)
                                     }
                                 }
-                                .padding(.bottom, .defaultPadding)
                                 
                                 if let sources = portrait.sources {
                                     Text("sources")
                                         .headline4()
-                                        .padding(.bottom, .defaultPadding)
                                     Text(sources)
                                         .body1()
-                                        .padding(.bottom, .defaultPadding)
                                 }
                             }
                         }
@@ -136,6 +130,9 @@ struct PortraitView: HostedView {
                             RoundedRectangle(cornerRadius: .largeCornerRadius)
                                 .foregroundColor(.secondaryColor)
                                 .nbShadow()
+                        }
+                        .task {
+                            similarSpeciesViewModel.filter(portraitId: portrait.id)
                         }
                     } else {
                         Text("no_portrait")

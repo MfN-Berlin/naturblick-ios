@@ -21,7 +21,7 @@ struct PortraitImageView: View {
     
     var body: some View {
         ZStack {
-            VStack {
+            VStack(spacing: .zero) {
                 SwiftUI.Group {
                     if let full = self.full {
                         Image(uiImage: full)

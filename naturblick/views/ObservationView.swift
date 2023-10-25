@@ -40,7 +40,7 @@ struct ObservationView: NavigatableView {
                     .avatar()
                     .padding(.trailing, .defaultPadding)
                 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: .zero) {
                     Text("species")
                         .caption(color: .onSecondarySignalLow)
                     Text(model.observation?.species?.sciname ?? String(localized: "unknown_species"))
@@ -89,7 +89,7 @@ struct ObservationView: NavigatableView {
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                VStack(alignment: .center) {
+                VStack(alignment: .center, spacing: .zero) {
                     if let observation = model.observation {
                         ObservationInfoView(width: geo.size.width, fallbackThumbnail: speciesAvatar, observation: observation) { view in
                             navigationController?.pushViewController(view, animated: true)

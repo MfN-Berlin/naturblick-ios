@@ -6,22 +6,19 @@
 import SwiftUI
 
 struct SimilarSpeciesView: View, HoldingViewController {
-    @StateObject var similarSpeciesViewModel = SimilarSpeciesViewModel()
-    let portraitId: Int64
+    @ObservedObject var similarSpeciesViewModel: SimilarSpeciesViewModel
     var holder: ViewControllerHolder
     let inSelectionFlow: Bool
 
     var body: some View {
-        VStack(alignment: .leading) {
-            if !similarSpeciesViewModel.mixups.isEmpty {
-                Text("similar_species")
-                    .headline4()
-            }
+        VStack(alignment: .leading, spacing: .defaultPadding) {
+            Text("similar_species")
+                .headline4()
             ForEach(similarSpeciesViewModel.mixups) { mix in
                 if mix.species.hasPortrait {
-                        VStack(alignment: .leading) {
-                            SimilarSpeciesItemView(species: mix.species.listItem)
-                            Text(mix.differences)
+                    VStack(alignment: .leading, spacing: .defaultPadding) {
+                        SimilarSpeciesItemView(species: mix.species.listItem)
+                        Text(mix.differences)
                                 .body1()
                                 .padding(.top, .halfPadding)
                         }
@@ -36,7 +33,7 @@ struct SimilarSpeciesView: View, HoldingViewController {
                         }
                 } else if let wikipedia = mix.species.wikipedia {
                     Link(destination: URL(string: wikipedia)!) {
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: .defaultPadding) {
                             SimilarSpeciesItemView(species: mix.species.listItem)
                             Text(mix.differences)
                                 .body1()
@@ -51,7 +48,7 @@ struct SimilarSpeciesView: View, HoldingViewController {
                     }
                     .buttonStyle(PlainButtonStyle()) // to prevent defualt link-text-styling
                 } else {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: .defaultPadding) {
                         SimilarSpeciesItemView(species: mix.species.listItem)
                         Text(mix.differences)
                             .body1()
@@ -67,14 +64,11 @@ struct SimilarSpeciesView: View, HoldingViewController {
             }
             .padding(.top, .halfPadding)
         }
-        .task {
-            similarSpeciesViewModel.filter(portraitId: portraitId)
-        }
     }
 }
 
 struct SimilarSpeciesView_Previews: PreviewProvider {
     static var previews: some View {
-        SimilarSpeciesView(portraitId: 5, holder: ViewControllerHolder(), inSelectionFlow: false)
+        SimilarSpeciesView(similarSpeciesViewModel: SimilarSpeciesViewModel(), holder: ViewControllerHolder(), inSelectionFlow: false)
     }
 }

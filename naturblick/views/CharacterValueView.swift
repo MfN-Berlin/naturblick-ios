@@ -9,7 +9,7 @@ struct CharacterValueView: View {
     let value: CharacterValue
     let selected: Bool
     var body: some View {
-        let stack = VStack {
+        let stack = VStack(spacing: .zero) {
             if(value.hasImage) {
                 Image("character_\(value.id)")
             } else {

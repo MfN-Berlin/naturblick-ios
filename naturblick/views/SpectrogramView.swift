@@ -175,14 +175,12 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
     
     var body: some View {
         StaticBottomSheetView {
-            VStack {
+            VStack(spacing: .defaultPadding) {
                 if let spectrogram = model.spectrogram {
                     Text("choose_section")
                         .headline6()
-                        .padding([.horizontal, .top], .defaultPadding)
                     Text("please_select")
                         .caption(color: .onPrimaryLowEmphasis)
-                        .padding([.horizontal, .bottom], .defaultPadding)
                     Image(uiImage: spectrogram)
                         .resizable()
                         .overlay {
