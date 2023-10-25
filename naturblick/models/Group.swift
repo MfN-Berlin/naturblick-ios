@@ -55,109 +55,109 @@ extension String {
     var mapIcon: String {
         switch(self) {
         case "acarida":
-            return "map_spiders"
+            return "map_platform_spiders"
         case "actinopterygii":
-            return "map_fish"
-    case "amphibian":
-        return "map_platform_amphibian"
+            return "map_platform_fish"
+        case "amphibian":
+            return "map_platform_amphibian"
         case "amphipoda":
-            return "map_crustaceans"
+            return "map_platform_crustacea"
         case "anaspidea":
-            return "map_gastropoda"
+            return "map_platform_gastropoda"
         case "arachnid":
-            return "map_spiders"
+            return "map_platform_spiders"
         case "araneae":
-            return "map_spiders"
-    case "bird":
-        return "map_platform_bird"
+            return "map_platform_spiders"
+        case "bird":
+            return "map_platform_bird"
         case "blattodea":
-            return "map_insects"
+            return "map_platform_insects"
         case "branchiobdellida":
-            return "map_ringworm"
+            return "map_platform_ringworm"
         case "branchiopoda":
-            return "map_crustaceans"
+            return "map_platform_crustaceans"
         case "bug":
-            return "map_insects"
-    case "butterfly":
-        return "map_platform_butterfly"
+            return "map_platform_insects"
+        case "butterfly":
+            return "map_platform_butterfly"
         case "cephalaspidea":
-            return "map_gastropoda"
+            return "map_platform_gastropoda"
         case "chilopoda":
-            return "map_centipede"
+            return "map_platform_centipede"
         case "coleoptera":
-            return "map_insects"
-    case "conifer":
-        return "map_platform_conifer"
+            return "map_platform_insects"
+        case "conifer":
+            return "map_platform_conifer"
         case "crustacea":
-            return "map_crustaceans"
+            return "map_platform_crustacea"
         case "dermaptera":
-            return "map_insects"
+            return "map_platform_insects"
         case "diplopoda":
-            return "map_centipede"
+            return "map_platform_centipede"
         case "diptera":
-            return "map_insects"
+            return "map_platform_insects"
         case "dragonfly":
-            return "map_insects"
+            return "map_platform_insects"
         case "ephemeroptera":
-            return "map_insects"
+            return "map_platform_insects"
         case "gastropoda":
-            return "map_gastropoda"
+            return "map_platform_gastropoda"
         case "grasshopper":
-            return "map_insects"
-    case "herb":
-        return "map_platform_plant"
+            return "map_platform_insects"
+        case "herb":
+            return "map_platform_plant"
         case "heteroptera":
-            return "map_insects"
+            return "map_platform_insects"
         case "hirudinea":
-            return "map_ringworm"
+            return "map_platform_ringworm"
         case "hydrachnidia":
-            return "map_spiders"
+            return "map_platform_spider"
         case "hymenoptera":
             return "map_platform_bee"
         case "lepidoptera":
-            return "map_insects"
-    case "mammal":
-        return "map_platform_mammal"
+            return "map_platform_insects"
+        case "mammal":
+            return "map_platform_mammal"
         case "mantodea":
-            return "map_insects"
+            return "map_platform_insects"
         case "maxillopoda":
-            return "map_crustaceans"
+            return "map_platform_crustacea"
         case "mecoptera":
-            return "map_insects"
+            return "map_platform_insects"
         case "megaloptera":
-            return "map_insects"
+            return "map_platform_insects"
         case "neuroptera":
-            return "map_insects"
+            return "map_platform_insects"
         case "odonata":
-            return "map_insects"
+            return "map_platform_insects"
         case "oligochaeta":
-            return "map_ringworm"
+            return "map_platform_ringworm"
         case "planipennia":
-            return "map_insects"
+            return "map_platform_insects"
         case "plecoptera":
-            return "map_insects"
+            return "map_platform_insects"
         case "polychaeta":
-            return "map_ringworm"
+            return "map_platform_ringworm"
         case "psocoptera":
-            return "map_insects"
+            return "map_platform_insects"
         case "raphidioptera":
-            return "map_insects"
-    case "reptile":
-        return "map_platform_reptile"
+            return "map_platform_insects"
+        case "reptile":
+            return "map_platform_reptile"
         case "strigeida":
-            return "map_bird"
+            return "map_platform_birds"
         case "terebellida":
-            return "map_ringworm"
+            return "map_platform_ringworm"
         case "thysanoptera":
-            return "map_insects"
-    case "tree":
-        return "map_platform_tree"
+            return "map_platform_insects"
+        case "tree":
+            return "map_platform_tree"
         case "trichoptera":
-            return "map_insects"
+            return "map_platform_insects"
         case "truebug":
-            return "map_insects"
+            return "map_platform_insects"
         case "zygentoma":
-            return "map_insects"
+            return "map_platform_insects"
         default:
             return "map_nbobs"
         }

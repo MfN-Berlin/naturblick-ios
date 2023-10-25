@@ -18,9 +18,11 @@ struct MapIcon: View {
             Circle()
                 .strokeBorder(Color.onPrimaryHighEmphasis, lineWidth: CGFloat.goodToKnowLineWidth)
                 .background(Circle().fill(Color.onPrimaryButtonPrimary))
-                .frame(width: .headerIconSize, height: .headerIconSize)
+                .frame(width: .mapIconSize, height: .mapIconSize)
                 .overlay {
-                    Image(mapIcon).foregroundColor(.onPrimaryHighEmphasis)
+                    Image(mapIcon)
+                        .resizable()
+                        .foregroundColor(.onPrimaryHighEmphasis)
                 }
         }
     }
