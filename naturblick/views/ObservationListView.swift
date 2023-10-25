@@ -96,17 +96,7 @@ struct ObservationListView: HostedView {
                     }
                 ) { observation in
                     MapAnnotation(coordinate: observation.observation.coords!.location) {
-                        ZStack {
-                            Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
-                                .onTapGesture {
-                                    let view = MapInfoBox(observation: observation, persistenceController: persistenceController) {
-                                        let controller = ObservationView(occurenceId: observation.id, persistenceController: persistenceController).setUpViewController()
-                                        navigationController?.pushViewController(controller, animated: true)
-                                    } .setUpViewController()
-                                    
-                                    navigationController?.present(view, animated: true)
-                                }
-                            }
+                        MapIcon(mapIcon: observation.species?.group.mapIcon)
                     }
                 }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)

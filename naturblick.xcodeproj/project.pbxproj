@@ -152,6 +152,7 @@
 		7BC77E8C2A6AA4A300B489C2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E8B2A6AA4A300B489C2 /* SettingsView.swift */; };
 		7BCCB4CF2A5D427E0072841B /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCB4CE2A5D427E0072841B /* ResetPasswordView.swift */; };
 		7BCD2E442A2DCF3E0083B310 /* ImageCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD2E432A2DCF3D0083B310 /* ImageCropper.swift */; };
+		7BCDB0142AE804E7004C6F71 /* MapIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCDB0132AE804E7004C6F71 /* MapIcon.swift */; };
 		7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */; };
 		7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */; };
 		7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */; };
@@ -336,6 +337,7 @@
 		7BCAE7BF2A5BF6A300B27370 /* naturblick.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = naturblick.entitlements; sourceTree = "<group>"; };
 		7BCCB4CE2A5D427E0072841B /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		7BCD2E432A2DCF3D0083B310 /* ImageCropper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropper.swift; sourceTree = "<group>"; };
+		7BCDB0132AE804E7004C6F71 /* MapIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapIcon.swift; sourceTree = "<group>"; };
 		7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewButton.swift; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 				134C75A62A2F32650046EEE4 /* IndividualsView.swift */,
 				7BDD17E12A45C397001B9DB4 /* LoginView.swift */,
 				132A91402A2DCF6C00AC405C /* Map+Extensions.swift */,
+				7BCDB0132AE804E7004C6F71 /* MapIcon.swift */,
 				7BB518622AC1AAFF008A1CEA /* MapInfoBox.swift */,
 				13F08DE02A9F674600874264 /* NavigatableView.swift */,
 				1345EF7F2AB873D600F1CEA8 /* ObservationInfoView.swift */,
@@ -851,6 +854,7 @@
 				136E89092AD579C500197790 /* OnSecondaryFieldView.swift in Sources */,
 				1395C1562ADFCEED00B168AD /* ObservationViewModel.swift in Sources */,
 				7BC77E852A6A4DCB00B489C2 /* AppSecureStorage.swift in Sources */,
+				7BCDB0142AE804E7004C6F71 /* MapIcon.swift in Sources */,
 				1345EF802AB873D600F1CEA8 /* ObservationInfoView.swift in Sources */,
 				13743F6A2A6803AA00ABCCB1 /* Image+Style.swift in Sources */,
 				13C02EBE2AB059FE001F8D4B /* PickerView.swift in Sources */,
