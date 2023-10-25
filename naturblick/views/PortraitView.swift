@@ -13,6 +13,13 @@ class PortraitViewController: HostingController<PortraitView> {
         super.init(rootView: view)
         createFlow.setViewController(controller: self)
     }
+    
+    init(species: SpeciesListItem, inSelectionFlow: Bool, createFlow: CreateFlowViewModel) {
+        self.createFlow = createFlow
+        let view = PortraitView(flow: createFlow, species: species, inSelectionFlow: inSelectionFlow)
+        super.init(rootView: view)
+        createFlow.setViewController(controller: self)
+    }
 }
 
 struct PortraitView: HostedView {
