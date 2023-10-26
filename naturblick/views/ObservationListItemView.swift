@@ -27,13 +27,6 @@ struct ObservationListItemView: View {
             }
             .padding(.top, .avatarTextOffset)
             Spacer()
-           /* VStack {
-                Spacer()
-                Image("chevron_right_24")
-                Spacer()
-            }*/
-            
-                
         }
         .contentShape(Rectangle())
     }
