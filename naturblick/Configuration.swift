@@ -6,8 +6,8 @@ import Foundation
 
 struct Configuration {
     #if DEBUG
-    static let strapiUrl = "https://staging.naturblick.net/strapi/"
-    static let backendUrl = "https://staging.naturblick.net/api/"
+    static let strapiUrl = "https://naturblick.museumfuernaturkunde.berlin/strapi/"
+    static let backendUrl = "https://naturblick.museumfuernaturkunde.berlin/api/"
     #else
     static let strapiUrl = "https://naturblick.museumfuernaturkunde.berlin/strapi/"
     static let backendUrl = "https://naturblick.museumfuernaturkunde.berlin/api/"
