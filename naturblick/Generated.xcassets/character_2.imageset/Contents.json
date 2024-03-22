@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "character_2.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "generate_character_assets",
+    "version" : 1
+  }
+}
