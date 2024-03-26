@@ -658,10 +658,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 131E786C29C9BB25000DF928 /* Build configuration list for PBXNativeTarget "naturblick" */;
 			buildPhases = (
+				7BA4DA102A73BD0E00AEC0A4 /* Run Script */,
 				131E785A29C9BB24000DF928 /* Sources */,
 				131E785B29C9BB24000DF928 /* Frameworks */,
 				7BDF9EE12A98C1E60064DD3B /* ShellScript */,
-				7BA4DA102A73BD0E00AEC0A4 /* Run Script */,
 				131E785C29C9BB24000DF928 /* Resources */,
 			);
 			buildRules = (
@@ -783,6 +783,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(SRCROOT)/naturblick/Generated.xcassets/",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
