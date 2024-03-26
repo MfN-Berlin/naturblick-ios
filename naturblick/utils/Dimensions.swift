@@ -8,6 +8,7 @@ import Foundation
 extension CGFloat {
     static let defaultPadding: CGFloat = 14
     static let halfPadding: CGFloat = defaultPadding * 0.5
+    static let doublePadding: CGFloat = defaultPadding * 2
     static let avatarSize: CGFloat = 64
     static let fabSize: CGFloat = 48
     static let fabMiniSize: CGFloat = 24
