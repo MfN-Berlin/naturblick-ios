@@ -76,20 +76,14 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         }
     }
     
-    @MainActor func soundRecorded(sound: NBSound) {
-        soundData.sound = sound
-        withNavigation { navigation in
-            navigation.pushViewController(SpectrogramView(mediaId: sound.id, flow: self).setUpViewController(), animated: true)
-        }
-    }
-    
     @MainActor func existingSound(mediaId: UUID) {
         withNavigation { navigation in
-            navigation.pushViewController(SpectrogramView(mediaId: mediaId, flow: self).setUpViewController(), animated: true)
+            navigation.pushViewController(SpectrogramViewController(mediaId: mediaId, flow: self), animated: true)
         }
     }
     
-    @MainActor func spectrogramCropDone(crop: NBThumbnail, start: Int, end: Int) {
+    @MainActor func spectrogramCropDone(sound: NBSound, crop: NBThumbnail, start: Int, end: Int) {
+        soundData.sound = sound
         soundData.crop = crop
         data.thumbnail = crop
         soundData.start = start
@@ -138,7 +132,6 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
             return result
         } else {
             preconditionFailure("Can not identify sound or image without complete data")
-
         }
     }
     

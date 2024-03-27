@@ -5,83 +5,72 @@
 
 import SwiftUI
 
-struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
-    var holder: ViewControllerHolder = ViewControllerHolder()
-    var alwaysDarkBackground: Bool = true
-    @State private var startOffset: CGFloat = 0
-    @State private var endOffset: CGFloat = 0
-    @State private var start: CGFloat = 0
-    @State private var end: CGFloat = 1
-    @ObservedObject var flow: Flow
-    @StateObject private var model: SpectrogramViewModel
-    @StateObject private var streamController = SoundStreamController()
+class SpectrogramViewController<Flow>: HostingController<SpectrogramView<Flow>> where Flow: IdFlow {
+    let flow: Flow
+    let model: SpectrogramViewModel
     
     init(mediaId: UUID, flow: Flow) {
-        self._model = StateObject(wrappedValue: SpectrogramViewModel(mediaId: mediaId))
         self.flow = flow
+        self.model = SpectrogramViewModel(mediaId: mediaId)
+        super.init(rootView: SpectrogramView(model: model, flow: flow))
+    }
+}
+
+struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
+    var holder: ViewControllerHolder = ViewControllerHolder()
+    var alwaysDarkBackground: Bool = true
+    @ObservedObject var flow: Flow
+    @ObservedObject var model: SpectrogramViewModel
+    
+    func configureNavigationItem(item: UINavigationItem) {
+        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "identify_species")) {_ in
+            if let (sound, thumbnail, start, end) = self.model.crop() {
+                self.flow.spectrogramCropDone(sound: sound, crop: thumbnail, start: start, end: end)
+            }
+        })
     }
     
-    func crop() {
-        guard let spectrogram = model.spectrogram else {
-            return
-        }
-        Task {
-            let startPx = spectrogram.size.width * start
-            let endPx = spectrogram.size.width * end
-            let crop = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
-                let cropRect = CGRect(
-                    x: startPx,
-                    y: 0,
-                    width: endPx,
-                    height: spectrogram.size.height
-                )
-                if let cgImage = spectrogram.cgImage {
-                    if let crop = cgImage.cropping(to: cropRect) {
-                        let uiImageCrop = UIImage(cgImage: crop, scale: spectrogram.scale, orientation: spectrogram.imageOrientation)
-                        uiImageCrop.draw(in: CGRect(origin: .zero, size: .thumbnail))
-                    }
-                }
-            }
-            let thumbnail = try NBThumbnail(image: crop)
-            flow.spectrogramCropDone(crop: thumbnail, start: Int(startPx * .pixelToMsFactor), end: Int(endPx * .pixelToMsFactor))
-        }
+    init(model: SpectrogramViewModel, flow: Flow) {
+        self.model = model
+        self.flow = flow
     }
     
     func updateStartOffset(translation: CGSize, width: CGFloat, minWidth: CGFloat) {
         let startOffset = translation.width
-        if start * width + startOffset > 0, (end * width + endOffset) - (start * width + startOffset) > minWidth {
-            self.startOffset = startOffset
+        if model.start * width + startOffset > 0, (model.end * width + model.endOffset) - (model.start * width + startOffset) > minWidth {
+            model.startOffset = startOffset
         }
     }
     
     func updateEndOffset(translation: CGSize, width: CGFloat, minWidth: CGFloat) {
         let endOffset = translation.width
-        if end * width + endOffset < width, (end * width + endOffset) - (start * width + startOffset) > minWidth {
-            self.endOffset = endOffset
+        if model.end * width + endOffset < width, (model.end * width + endOffset) - (model.start * width + model.startOffset) > minWidth {
+            model.endOffset = endOffset
         }
     }
     
     func updateStartAndEndOffset(translation: CGSize, width: CGFloat) {
         let offset = translation.width
-        if start * width + offset > 0, end * width + offset < width {
-            self.startOffset = offset
-            self.endOffset = offset
+        if model.start * width + offset > 0, model.end * width + offset < width {
+            model.startOffset = offset
+            model.endOffset = offset
         }
     }
     
     func startHandle(width: CGFloat, height: CGFloat, minWidth: CGFloat) -> some View {
         Path { path in
-            path.addRect(CGRect(x: width * start + 8 + startOffset, y: height / 2 - height / 5, width: 4, height: (height / 5) * 2))
+            path.addRect(CGRect(x: width * model.start + 8 + model.startOffset, y: height / 2 - height / 5, width: 4, height: (height / 5) * 2))
         }
         .fill(Color.whiteOpacity60)
         .overlay {
             Color.clear.contentShape(
                 Path { path in
-                    path.addRect(CGRect(x: width * start + startOffset, y: 0, width: 20, height: height))
+                    path.addRect(CGRect(x: width * model.start + model.startOffset, y: 0, width: 20, height: height))
                 })
             .gesture(
                 DragGesture()
                     .onChanged { gesture in
+                        model.stop()
                         updateStartOffset(
                             translation: gesture.translation,
                             width: width,
@@ -94,8 +83,8 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                             width: width,
                             minWidth: minWidth
                         )
-                        start = start + (startOffset / width)
-                        startOffset = 0
+                        model.start = model.start + (model.startOffset / width)
+                        model.startOffset = 0
                     }
             )
         }
@@ -103,17 +92,18 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
     
     func endHandle(width: CGFloat, height: CGFloat, minWidth: CGFloat) -> some View {
         Path { path in
-            path.addRect(CGRect(x: width * end - 8 + endOffset, y: height / 2 - height / 5, width: -4, height: (height / 5) * 2))
+            path.addRect(CGRect(x: width * model.end - 8 + model.endOffset, y: height / 2 - height / 5, width: -4, height: (height / 5) * 2))
         }
         .fill(Color.whiteOpacity60)
         .overlay {
             Color.clear.contentShape(
                 Path { path in
-                    path.addRect(CGRect(x: width * end + endOffset, y: 0, width: -20, height: height))
+                    path.addRect(CGRect(x: width * model.end + model.endOffset, y: 0, width: -20, height: height))
                 })
             .gesture(
                 DragGesture()
                     .onChanged { gesture in
+                        model.stop()
                         updateEndOffset(
                             translation: gesture.translation,
                             width: width,
@@ -126,8 +116,8 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                             width: width,
                             minWidth: minWidth
                         )
-                        end = end + (endOffset / width)
-                        endOffset = 0
+                        model.end = model.end + (model.endOffset / width)
+                        model.endOffset = 0
                     }
             )
         }
@@ -137,9 +127,9 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
         let rect = Path { path in
             path
                 .addRect(CGRect(
-                    x: width * start + startOffset,
+                    x: width * model.start + model.startOffset,
                     y: 0,
-                    width: (width * end + endOffset) - (width * start + startOffset),
+                    width: (width * model.end + model.endOffset) - (width * model.start + model.startOffset),
                     height: height)
                 )
         }
@@ -151,6 +141,7 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
             .gesture(
                 DragGesture()
                     .onChanged { gesture in
+                        model.stop()
                         updateStartAndEndOffset(
                             translation: gesture.translation,
                             width: width
@@ -161,73 +152,75 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
                             translation: gesture.translation,
                             width: width
                         )
-                        start = start + (startOffset / width)
-                        end = end + (endOffset / width)
-                        startOffset = 0
-                        endOffset = 0
+                        model.start = model.start + (model.startOffset / width)
+                        model.end = model.end + (model.endOffset / width)
+                        model.startOffset = 0
+                        model.endOffset = 0
                     }
             )
     }
     
     func timeText(spectrogram: UIImage) -> String {
-        Double((((end - start) * spectrogram.size.width) * .pixelToMsFactor) / 1000).toTimeString
+        if model.currentStatus != .playing {
+            Double((((model.end - model.start) * spectrogram.size.width) * .pixelToMsFactor) / 1000).toTimeString
+        } else {
+            (model.time - model.start * model.totalDuration).toTimeString
+        }
+    }
+    
+    func buttonIcon() -> FABView {
+        switch model.currentStatus {
+            case .waitingToPlayAtSpecifiedRate:
+                return FABView(systemName: "clock.circle", color: .onPrimaryButtonPrimary) // placeholder icon
+            case .paused:
+                return FABView("ic_play_circle_outline", color: .onPrimaryButtonPrimary)
+            case .playing:
+                return FABView("ic_pause_circle_outline", color: .onPrimaryButtonPrimary)
+            default:
+                return FABView(systemName: "clock.circle", color: .onPrimaryButtonPrimary)
+        }
     }
     
     var body: some View {
-        StaticBottomSheetView {
-            VStack(spacing: .defaultPadding) {
-                if let spectrogram = model.spectrogram {
-                    Text("choose_section")
-                        .headline6()
-                    Text("please_select")
-                        .caption(color: .onPrimaryLowEmphasis)
-                    Image(uiImage: spectrogram)
-                        .resizable()
-                        .overlay {
-                            GeometryReader { geo in
-                                let minWidth = (400 / spectrogram.size.width) * geo.size.width
-                                let minWidthOrWidth = minWidth < geo.size.width ? minWidth : geo.size.width
-                                selectedRectangle(width: geo.size.width, height: geo.size.height)
-                                    .overlay {
-                                        startHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
-                                        endHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
-                                    }
-                            }
-                        }
-                    HStack {
-                        FABView("ic_play_circle_outline", color: .onPrimaryButtonPrimary)
-                            .onTapGesture {
-                                if let url = model.sound?.url {
-                                    streamController.play(url: url)
+        VStack(spacing: .defaultPadding) {
+            if let spectrogram = model.spectrogram {
+                Text("choose_section")
+                    .headline6()
+                    .padding(.top, .doublePadding)
+                Text("please_select")
+                    .caption(color: .onPrimaryLowEmphasis)
+                Image(uiImage: spectrogram)
+                    .resizable()
+                    .overlay {
+                        GeometryReader { geo in
+                            let minWidth = (400 / spectrogram.size.width) * geo.size.width
+                            let minWidthOrWidth = minWidth < geo.size.width ? minWidth : geo.size.width
+                            selectedRectangle(width: geo.size.width, height: geo.size.height)
+                                .overlay {
+                                    startHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
+                                    endHandle(width: geo.size.width, height: geo.size.height, minWidth: minWidthOrWidth)
                                 }
-                            }
-                        Text(timeText(spectrogram: spectrogram))
-                            .headline3()
+                        }
                     }
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.defaultPadding)
-                } else {
-                    ProgressView {
-                        Text("downloading_spectrogram")
-                            .font(.nbButton)
-                            .foregroundColor(.onSecondaryMediumEmphasis)
-                    }
-                    .progressViewStyle(.circular)
-                    .foregroundColor(.onSecondaryHighEmphasis)
-                    .controlSize(.large)
+                HStack {
+                    buttonIcon()
+                        .onTapGesture {
+                            model.toggle(start: model.start * model.totalDuration, end: model.end * model.totalDuration)
+                        }
+                    Text(timeText(spectrogram: spectrogram))
+                        .headline3()
                 }
-            }
-        } sheet: {
-            HStack {
-                Button("discard") {
-                    navigationController?.popToRootViewController(animated: true)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.defaultPadding)
+            } else {
+                ProgressView {
+                    Text("downloading_spectrogram")
+                        .font(.nbButton)
+                        .foregroundColor(.onSecondaryMediumEmphasis)
                 }
-                .buttonStyle(DestructiveFullWidthButton())
-                Button("identify_species") {
-                    crop()
-                }
-                .buttonStyle(ConfirmFullWidthButton())
-                .padding(.leading, .defaultPadding)
+                .progressViewStyle(.circular)
+                .foregroundColor(.onSecondaryHighEmphasis)
+                .controlSize(.large)
             }
         }
         .alertHttpError(isPresented: $model.isPresented, error: model.error) { details in
@@ -244,7 +237,7 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
         .onReceive(model.$spectrogram) { spectrogramOpt in
             if let spectrogram = spectrogramOpt {
                 let initialStart = 1 - 400 / spectrogram.size.width
-                start = initialStart > 0 ? initialStart : 0
+                model.start = initialStart > 0 ? initialStart : 0
             }
         }
     }
@@ -252,6 +245,6 @@ struct SpectrogramView<Flow>: NavigatableView where Flow: IdFlow {
 
 struct SpectrogramView_Previews: PreviewProvider {
     static var previews: some View {
-        SpectrogramView(mediaId: UUID(), flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
+        SpectrogramView(model: SpectrogramViewModel(mediaId: UUID()), flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
     }
 }
