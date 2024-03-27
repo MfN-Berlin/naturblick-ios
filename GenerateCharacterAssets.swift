@@ -111,7 +111,7 @@ enum SvgGenerator {
 @main
 enum GenerateCharacterAssets {
     static func main() async throws {
-        let url = "https://naturblick.museumfuernaturkunde.berlin/strapi"
+        let url = ProcessInfo.processInfo.environment["CONFIGURATION"] == "Debug" ? "https://staging.naturblick.net/strapi" : "https://naturblick.museumfuernaturkunde.berlin/strapi"
         let generatedAssets = URL(fileURLWithPath: FileManager().currentDirectoryPath).appendingPathComponent("naturblick/Generated.xcassets")
 
         if !FileManager.default.fileExists(atPath: generatedAssets.path) {
