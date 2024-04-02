@@ -26,17 +26,18 @@ struct BirdRecorderView: NavigatableView {
             }
         } sheet: {
             Circle()
-                    .stroke(Color.onSecondaryHighEmphasis, lineWidth: .goodToKnowLineWidth)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: .smallCornerRadius)
-                            .fill(Color.onSecondarywarning)
-                            .padding(.defaultPadding * 2)
-                    }
-                    .frame(width: .stopButtonSize, height: .stopButtonSize)
-                    .onTapGesture {
-                        flow.soundRecorded(sound: model.stop()!)
-                    }
-                    .padding(.defaultPadding)
+                .stroke(Color.onSecondaryDisabled, lineWidth: .goodToKnowLineWidth)
+                .overlay {
+                    RoundedRectangle(cornerRadius: .largeCornerRadius)
+                        .fill(Color.onSecondarywarning)
+                        .frame(width: .stopButtonSize, height: .stopButtonSize)
+                        .nbShadow()
+                }
+                .frame(width: .stopButtonCircleSize, height: .stopButtonCircleSize)
+                .onTapGesture {
+                    flow.soundRecorded(sound: model.stop()!)
+                }
+                .padding(.defaultPadding)
         }
     }
 }
