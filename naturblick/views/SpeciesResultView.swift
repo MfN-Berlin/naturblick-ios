@@ -55,6 +55,7 @@ struct SpeciesResultView: View {
                     .subtitle3(color: color)
             }
             Spacer()
+            ChevronView(color: .onPrimarySignalLow)
         }
         .contentShape(Rectangle())
     }
