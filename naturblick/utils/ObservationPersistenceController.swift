@@ -203,10 +203,10 @@ class ObservationPersistenceController: ObservableObject {
             observation.settters
         })
         
-        try queue.run(DBObservation.D.backendObservation.insertMany(observationSetters))
+        try queue.run(DBObservation.D.backendObservation.insertMany(or: .replace, observationSetters))
         try updateAndRefresh()
     }
-    
+
     func truncateObservations() throws {
         try queue.run(DBObservation.D.backendObservation.delete())
     }
