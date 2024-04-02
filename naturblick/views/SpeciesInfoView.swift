@@ -28,8 +28,12 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
     func configureNavigationItem(item: UINavigationItem) {
         item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "close")) {_ in
             viewController?.dismiss(animated: true)
-            })
-        }
+        })
+        item.rightBarButtonItem  = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "create_with_species")) {_ in
+            viewController?.dismiss(animated: true)
+            flow.selectSpecies(species: species)
+        })
+    }
     
     var body: some View {
         VStack(alignment: .center, spacing: .defaultPadding) {
@@ -67,11 +71,6 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
                         .multilineTextAlignment(.center)
                 }
             }
-            Button(flow.isCreate ? "create_with_species" : "choose_species") {
-                viewController?.dismiss(animated: true)
-                flow.selectSpecies(species: species)
-            }
-            .buttonStyle(SecondaryOnSecondaryButton())
             if species.hasPortrait {
                 Button("to_artportrait", icon: "artportraits24") {
                     navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
@@ -83,10 +82,6 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
                 }
                 .buttonStyle(AuxiliaryOnSecondaryButton())
             }
-            Button("choose_another") {
-                viewController?.dismiss(animated: true)
-            }
-            .buttonStyle(AuxiliaryOnSecondaryButton())
             Spacer()
         }
         .padding(.defaultPadding)

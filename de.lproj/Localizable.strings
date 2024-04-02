@@ -147,7 +147,7 @@
 "responded_error"="Der Server hat mit einem Fehler geantwortet, bitte versuchen Sie es später noch einmal.";
 "logged_out_error"="Sie wurden abgemeldet.";
 "choose_another"="Eine andere Art aussuchen";
-"create_with_species"="Mit dieser Art eine Beobachtung kreieren";
+"create_with_species"="Art auswählen";
 "choose_species"="Diese Art auswählen";
 "crop"="Ausschnitt";
 "go_to_app_settings_photo"="Naturblick benötigt die Erlaubnis deine Kamera zu benutzen, um Fotos zu machen. Du kannst das in den Einstellungen erlauben.";
