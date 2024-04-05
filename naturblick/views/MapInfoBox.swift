@@ -5,34 +5,40 @@
 
 import SwiftUI
 
-struct MapInfoBox: NavigatableView {
-    var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? {
-        "Map Info"
-    }
-    
+struct MapInfoBox: View {
     let observation: Observation
     let persistenceController: ObservationPersistenceController
-    let toDetails: () -> Void
+    let toDetails: (Observation) -> Void
     
     var body: some View {
-        VStack(spacing: .defaultPadding) {
+        ZStack(alignment: .bottom) {
             Thumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
                 image
                     .resizable()
                     .scaledToFit()
             }
-            if let speciesName = observation.species?.speciesName {
-                Text(speciesName)
-                    .subtitle1()
+            Rectangle().fill(LinearGradient(gradient: Gradient(colors: [.blackFullyTransparent, .whiteHalfTransparent, .white]), startPoint: .top, endPoint: .bottom))
+            VStack(spacing: .zero) {
+                if let name = observation.species?.speciesName {
+                    Text(name)
+                        .subtitle1(color: .black)
+                } else {
+                    Text(observation.species?.sciname ?? String(localized: "unknown_species"))
+                        .subtitle1(color: .black)
+                }
+                Text(observation.observation.created.date.formatted())
+                    .subtitle3(color: .black)
+                SwiftUI.Button {
+                    toDetails(observation)
+                } label: {
+                    Text("details")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(ConfirmButton())
+                .padding(.vertical, .halfPadding)
+                .padding(.horizontal, .defaultPadding)
             }
-            Text(observation.observation.created.date, formatter: .dateTime)
-                .overline(color: .onSecondaryHighEmphasis)
-            Button("details") {
-                viewController?.dismiss(animated: true)
-                toDetails()
-            }.buttonStyle(ConfirmButton())
-            Spacer()
-        }.foregroundColor(.onSecondaryHighEmphasis)
+            .foregroundColor(.onSecondaryHighEmphasis)
+        }
     }
 }

@@ -67,12 +67,15 @@ struct ObservationView: NavigatableView {
                     CoordinatesView(coordinates: model.observation?.observation.coords)
                 }
                 Spacer()
-                ChevronView(color: .onSecondarySignalLow)
+                if model.observation?.observation.coords != nil {
+                    ChevronView(color: .onSecondarySignalLow)
+                }
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                // TODO
-                print("Show on map")
+                if model.observation?.observation.coords != nil {
+                    navigationController?.pushViewController(ObservationListViewController(persistenceController: persistenceController, showObservation: model.observation), animated: true)
+                }
             }
             Divider()
             ViewProperty(icon: "number24", label: String(localized: "number"), content: String(model.observation?.observation.individuals ?? 1))

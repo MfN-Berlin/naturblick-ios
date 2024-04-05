@@ -108,6 +108,7 @@
 		13F08DE12A9F674600874264 /* NavigatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F08DE02A9F674600874264 /* NavigatableView.swift */; };
 		13F49F5B2BC43FDA0094FB49 /* SourcesImprintViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F49F5A2BC43FDA0094FB49 /* SourcesImprintViewModel.swift */; };
 		13F49F5D2BC440330094FB49 /* SourcesImprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F49F5C2BC440330094FB49 /* SourcesImprint.swift */; };
+		13F5D6582BBFED910022CE0F /* ObservationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F5D6572BBFED910022CE0F /* ObservationMapView.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
 		13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */; };
 		7B02E4DA2A4993DF006406A1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B02E4D92A4993DF006406A1 /* Settings.swift */; };
@@ -294,6 +295,7 @@
 		13F08DE02A9F674600874264 /* NavigatableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatableView.swift; sourceTree = "<group>"; };
 		13F49F5A2BC43FDA0094FB49 /* SourcesImprintViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesImprintViewModel.swift; sourceTree = "<group>"; };
 		13F49F5C2BC440330094FB49 /* SourcesImprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesImprint.swift; sourceTree = "<group>"; };
+		13F5D6572BBFED910022CE0F /* ObservationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationMapView.swift; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOperation.swift; sourceTree = "<group>"; };
 		7B02E4D92A4993DF006406A1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -517,6 +519,7 @@
 				135E682E29EE805700192C4A /* ObservationListItemView.swift */,
 				13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */,
 				13EC572229DC83E900D56A77 /* ObservationListView.swift */,
+				13F5D6572BBFED910022CE0F /* ObservationMapView.swift */,
 				13B686AF2A093A75001FD28F /* ObservationView.swift */,
 				136E89082AD579C500197790 /* OnSecondaryFieldView.swift */,
 				13C02EBD2AB059FE001F8D4B /* PickerView.swift */,
@@ -833,6 +836,7 @@
 				13A2923E29D33D3600AF772A /* CharactersViewModel.swift in Sources */,
 				137690072A30D3F40076F93A /* NBSound.swift in Sources */,
 				134F54922A5EB67B00A079EC /* MimeType.swift in Sources */,
+				13F5D6582BBFED910022CE0F /* ObservationMapView.swift in Sources */,
 				133B392A2A4081A000D48617 /* NBImage.swift in Sources */,
 				1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */,
 				134B72B52A05348000C1DCAD /* PatchOperation.swift in Sources */,
