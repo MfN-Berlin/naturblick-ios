@@ -11,8 +11,11 @@ struct ObservationListItemWithImageView: View {
     let observation: Observation
 
     var body: some View {
-        Thumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
-            ObservationListItemView(observation: observation, image: image)
+        HStack {
+            Thumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
+                ObservationListItemView(observation: observation, image: image)
+            }
+            ChevronView(color: .onPrimarySignalLow)
         }
         .listRowBackground(Color.secondaryColor)
     }
