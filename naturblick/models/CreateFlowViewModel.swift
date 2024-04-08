@@ -261,6 +261,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     func searchSpecies() {
+        data = CreateData()
         withNavigation { navigation in
             let view = PickSpeciesListView(flow: self)
             navigation.pushViewController(view.setUpViewController(), animated: true)
