@@ -38,18 +38,18 @@ struct ObservationListView: HostedView {
     @ObservedObject var createFlow: CreateFlowViewModel
     @StateObject var model = ObservationListViewModel()
     
-    fileprivate func extractedFunc() -> [MenuEntry] {
+    fileprivate func menuEntries() -> [UIAction] {
         return [
-            MenuEntry(title: String(localized: "ident_from_photo"), image: UIImage(named: "details")!) {
+            UIAction(title: String(localized: "ident_from_photo")) { _ in
                 
             },
-            MenuEntry(title: String(localized: "record_a_bird"), image: UIImage(named: "audio24")!) {
+            UIAction(title: String(localized: "record_a_bird")) { _ in
                 createFlow.recordSound()
             },
-            MenuEntry(title: String(localized: "photograph_a_plant"), image: UIImage(named: "photo24")!) {
-                    createFlow.takePhoto()
+            UIAction(title: String(localized: "photograph_a_plant")) { _ in
+                createFlow.takePhoto()
             },
-            MenuEntry(title: String(localized: "create_obs"), image: UIImage(named: "logo24")!) {
+            UIAction(title: String(localized: "create_obs")) { _ in
                 createFlow.searchSpecies()
             }
         ]
@@ -57,11 +57,7 @@ struct ObservationListView: HostedView {
     
     func configureNavigationItem(item: UINavigationItem, showList: Bool) {
         item.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "add_24"), primaryAction: UIAction(image:  UIImage(named: "add_24")) { action in
-                let menuVC = MenuController(entries: extractedFunc());
-               menuVC.popoverPresentationController?.barButtonItem = action.sender as? UIBarButtonItem
-               navigationController?.present(menuVC, animated: true)
-           }), 
+            UIBarButtonItem(title: nil, image: UIImage(named: "add_24"), menu: UIMenu(children: menuEntries())),
             UIBarButtonItem(primaryAction: UIAction(image: UIImage(named: showList ? "map" : "format_list_bulleted")) {action in
                 model.showList.toggle()
             })

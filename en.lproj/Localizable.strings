@@ -128,7 +128,7 @@
 "number"="Number";
 "edit"="Edit";
 "create_obs"="Create observation";
-"ident_from_photo"="Identify photo from a plant";
+"ident_from_photo"="Plant from existing image";
 "source %@"="[Source](%@)";
 "show_results %@"="Show %@ results";
 "no_coordinates"="No coordinates";
