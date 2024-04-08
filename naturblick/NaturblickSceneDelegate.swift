@@ -67,6 +67,8 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func startScene(windowScene: UIWindowScene, deepLink: DeepLink? = nil) {
+        URLSession.shared.configuration.timeoutIntervalForRequest = 15
+        URLSession.shared.configuration.timeoutIntervalForResource = 30
         let window = UIWindow(windowScene: windowScene)
         let navigationController = StandardPopAwareNavigationController(rootViewController: HomeViewController())
         
