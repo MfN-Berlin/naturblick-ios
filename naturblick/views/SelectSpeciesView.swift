@@ -66,6 +66,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                                 Text("none_of_the_options")
                                     .subtitle1()
                                 Spacer()
+                                ChevronView(color: .onPrimarySignalLow)
                             }
                             .contentShape(Rectangle())
                             .listRowInsets(.nbInsets)

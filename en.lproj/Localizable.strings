@@ -148,7 +148,7 @@
 "responded_error"="The server responded with an error, please try again later.";
 "logged_out_error"="You have been logged out.";
 "choose_another"="Choose another species";
-"create_with_species"="Use to create observation";
+"create_with_species"="Select species";
 "choose_species"="Use this species";
 "crop"="Crop";
 "go_to_app_settings_photo"="Naturblick need access to your camera to take photos. You can change this permission in the settings app.";
