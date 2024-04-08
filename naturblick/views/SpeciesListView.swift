@@ -20,6 +20,8 @@ struct SpeciesListView: NavigatableView {
     @State var query: String = ""
     @StateObject var speciesListViewModel: SpeciesListViewModel = SpeciesListViewModel()
     let filter: SpeciesListFilter
+    var flow: CreateFlowViewModel
+    var isCharacterResult: Bool = false
     
     func updateFilter() {
         Task {
@@ -32,7 +34,11 @@ struct SpeciesListView: NavigatableView {
     }
     
     func showSpecies(species: SpeciesListItem) {
-        navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: false), animated: true)
+        if isCharacterResult {
+            viewController?.present(InSheetPopAwareNavigationController(rootViewController: SpeciesInfoView(species: species, flow: flow).setUpViewController()), animated: true)
+        } else {
+            viewController?.navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: false, createFlow: flow), animated: true)
+        }
     }
     
     var body: some View {
@@ -59,6 +65,6 @@ struct SpeciesListView: NavigatableView {
 
 struct SpeciesListView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesListView(filter: .group(Group.groups[0]))
+        SpeciesListView(filter: .group(Group.groups[0]), flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
     }
 }

@@ -45,6 +45,16 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             data.image.result
           }.assign(to: &$result)
     }
+    
+    func selectCharacteristics() {
+        let nextViewController = GroupsView(
+            groups: Group.characterGroups,
+            destination: { group in
+                CharactersView(group: group, flow: self)
+            }
+        ).setUpViewController()
+        viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+    }
 
     @MainActor
     func takePhoto() {

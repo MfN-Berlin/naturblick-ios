@@ -7,12 +7,15 @@ import SwiftUI
 import BottomSheet
 
 struct CharactersView: NavigatableView {
+
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? {
         isGerman() ? group.gerName : group.engName
     }
     
     let group: Group
+    var flow: CreateFlowViewModel
+    
     @StateObject private var charactersViewModel = CharactersViewModel()
     
     private var charactersViewModelCountStr: String {
@@ -35,7 +38,8 @@ struct CharactersView: NavigatableView {
         }
         .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
             Button(String(localized: "show_results \(charactersViewModelCountStr)")) {
-                navigationController?.pushViewController(SpeciesListView(filter: charactersViewModel.filter).setUpViewController(), animated: true)
+                navigationController?.pushViewController(
+                    SpeciesListView(filter: charactersViewModel.filter, flow: flow, isCharacterResult: true).setUpViewController(), animated: true)
             }
             .accentColor(Color.onPrimaryButtonPrimary)
             .buttonStyle(.borderedProminent)
@@ -54,7 +58,7 @@ struct CharactersView: NavigatableView {
 struct CharactersView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CharactersView(group: Group.groups[0])
+            CharactersView(group: Group.groups[0], flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
         }
     }
 }

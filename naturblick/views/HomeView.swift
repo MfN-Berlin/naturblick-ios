@@ -135,13 +135,7 @@ struct HomeView: HostedView {
                                            size: topRowSize
                             )
                             .onTapGesture {
-                                let nextViewController = GroupsView(
-                                    groups: Group.characterGroups,
-                                    destination: { group in
-                                        CharactersView(group: group)
-                                    }
-                                ).setUpViewController()
-                                viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+                                createFlow.selectCharacteristics()
                             }
                             Spacer()
                             
@@ -178,7 +172,7 @@ struct HomeView: HostedView {
                                 let nextViewController = GroupsView(
                                     groups: Group.groups,
                                     destination: { group in
-                                        SpeciesListView(filter: .group(group))
+                                        SpeciesListView(filter: .group(group), flow: createFlow)
                                     }).setUpViewController()
                                 viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                             }
