@@ -131,15 +131,15 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     @MainActor func soundRecorded(sound: NBSound) {
-        data.sound.sound = sound
         withNavigation { navigation in
             var viewControllers = navigation.viewControllers
-            viewControllers[viewControllers.count - 1] = SpectrogramView(mediaId: sound.id, flow: self).setUpViewController()
+            viewControllers[viewControllers.count - 1] = SpectrogramViewController(mediaId: sound.id, flow: self)
             navigation.setViewControllers(viewControllers, animated: true)
         }
     }
     
-    @MainActor func spectrogramCropDone(crop: NBThumbnail, start: Int, end: Int) {
+    @MainActor func spectrogramCropDone(sound: NBSound, crop: NBThumbnail, start: Int, end: Int) {
+        data.sound.sound = sound
         data.sound.crop = crop
         data.sound.start = start
         data.sound.end = end

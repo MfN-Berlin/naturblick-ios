@@ -10,12 +10,12 @@ struct NBThumbnail {
     let id: UUID
     let image: UIImage
     
-    init(id: UUID = UUID(), image: UIImage) throws {
+    init(id: UUID = UUID(), image: UIImage) {
         self.id = id
         self.image = image
         if let data = image.jpegData(compressionQuality: .jpegQuality) {
             let url = URL(string: Configuration.backendUrl + "/media/\(id)")!
-            var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+            let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
             let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
             URLCache.shared.storeCachedResponse(CachedURLResponse(response: response, data: data), for: request)
         }
