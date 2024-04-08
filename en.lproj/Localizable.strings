@@ -101,6 +101,7 @@
 "downloading_spectrogram"="Downloading spectrogram";
 "discard"="Discard";
 "identify_species"="Identify species";
+"identifying_species"="Waiting for response from the pattern recognition";
 "browse_species"="Browse species";
 "save_unknown"="Save as unknown species";
 "sound_autoid_infotext"="The suggestions are produced by comparing audio recordings of [239 birds](https://naturblick.museumfuernaturkunde.berlin/speciesaudiorecognition?lang=en). The closer the score is to 100%, the more likely the match is.";
@@ -134,7 +135,6 @@
 "no_coordinates"="No coordinates";
 "loading"="Loading";
 "details"="Details";
-"no_species"="No species";
 "pick"="Pick";
 "sources"="Sources";
 "i_observed"="I observed this species here";
