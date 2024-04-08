@@ -106,6 +106,8 @@
 		13ED4C292AE6C3C00007C228 /* PHPhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13ED4C282AE6C3C00007C228 /* PHPhotoLibrary.swift */; };
 		13F03C7E2ACD6AE100EEF964 /* StaticBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F03C7D2ACD6AE100EEF964 /* StaticBottomSheetView.swift */; };
 		13F08DE12A9F674600874264 /* NavigatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F08DE02A9F674600874264 /* NavigatableView.swift */; };
+		13F49F5B2BC43FDA0094FB49 /* SourcesImprintViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F49F5A2BC43FDA0094FB49 /* SourcesImprintViewModel.swift */; };
+		13F49F5D2BC440330094FB49 /* SourcesImprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F49F5C2BC440330094FB49 /* SourcesImprint.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
 		13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */; };
 		7B02E4DA2A4993DF006406A1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B02E4D92A4993DF006406A1 /* Settings.swift */; };
@@ -145,7 +147,7 @@
 		7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */; };
 		7BC11AFE2A4ACD4E00823D4F /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */; };
 		7BC6100A2A3096A400185BAA /* ImprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC610092A3096A400185BAA /* ImprintView.swift */; };
-		7BC6100C2A30989900185BAA /* FurtherSourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */; };
+		7BC6100C2A30989900185BAA /* SourcesImprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC6100B2A30989900185BAA /* SourcesImprintView.swift */; };
 		7BC77E852A6A4DCB00B489C2 /* AppSecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E842A6A4DCB00B489C2 /* AppSecureStorage.swift */; };
 		7BC77E872A6A4F2700B489C2 /* KeychainWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E862A6A4F2700B489C2 /* KeychainWrapper.swift */; };
 		7BC77E8A2A6A4FC400B489C2 /* KeychainItemAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E892A6A4FC400B489C2 /* KeychainItemAccessibility.swift */; };
@@ -289,6 +291,8 @@
 		13ED4C282AE6C3C00007C228 /* PHPhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPhotoLibrary.swift; sourceTree = "<group>"; };
 		13F03C7D2ACD6AE100EEF964 /* StaticBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticBottomSheetView.swift; sourceTree = "<group>"; };
 		13F08DE02A9F674600874264 /* NavigatableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatableView.swift; sourceTree = "<group>"; };
+		13F49F5A2BC43FDA0094FB49 /* SourcesImprintViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesImprintViewModel.swift; sourceTree = "<group>"; };
+		13F49F5C2BC440330094FB49 /* SourcesImprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesImprint.swift; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOperation.swift; sourceTree = "<group>"; };
 		7B02E4D92A4993DF006406A1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -328,7 +332,7 @@
 		7BBF7AF22A03C2CD00D184FA /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		7BC610092A3096A400185BAA /* ImprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImprintView.swift; sourceTree = "<group>"; };
-		7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurtherSourcesView.swift; sourceTree = "<group>"; };
+		7BC6100B2A30989900185BAA /* SourcesImprintView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesImprintView.swift; sourceTree = "<group>"; };
 		7BC77E842A6A4DCB00B489C2 /* AppSecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSecureStorage.swift; sourceTree = "<group>"; };
 		7BC77E862A6A4F2700B489C2 /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
 		7BC77E892A6A4FC400B489C2 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
@@ -496,7 +500,6 @@
 				7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */,
 				7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */,
 				13709A822A7CFE2600B81108 /* FullscreenView.swift */,
-				7BC6100B2A30989900185BAA /* FurtherSourcesView.swift */,
 				7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */,
 				7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */,
 				7BA4DA112A73EC5600AEC0A4 /* HelpView.swift */,
@@ -526,6 +529,7 @@
 				7BB3DE1F29F6695F00F0D387 /* SimilarSpeciesItemView.swift */,
 				7BA037C629D6E36E00804AFE /* SimilarSpeciesView.swift */,
 				7B993F4829F16C3D0023315B /* SoundButton.swift */,
+				7BC6100B2A30989900185BAA /* SourcesImprintView.swift */,
 				7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */,
 				13535CEC2A77E4FE00501DFA /* SpeciesInfoView.swift */,
 				13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */,
@@ -581,6 +585,8 @@
 				7BA037C229D6DFF800804AFE /* SimilarSpecies.swift */,
 				7BA037C429D6E11200804AFE /* SimilarSpeciesViewModel.swift */,
 				137ACD2B2A6171BD00C370CF /* SoundData.swift */,
+				13F49F5C2BC440330094FB49 /* SourcesImprint.swift */,
+				13F49F5A2BC43FDA0094FB49 /* SourcesImprintViewModel.swift */,
 				13839FBD2ABDBE0A00DE2A5B /* SourcesTranslation.swift */,
 				13316BD829C9F4150077292B /* Species.swift */,
 				13316BDA29C9F6030077292B /* SpeciesListFilter.swift */,
@@ -830,6 +836,7 @@
 				13839FBE2ABDBE0A00DE2A5B /* SourcesTranslation.swift in Sources */,
 				13AFFA5A2AAF0A0B00ABF4F9 /* EditFlowViewModel.swift in Sources */,
 				7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */,
+				13F49F5B2BC43FDA0094FB49 /* SourcesImprintViewModel.swift in Sources */,
 				13B686B22A09410A001FD28F /* Coordinates.swift in Sources */,
 				7BDA8FC22ABC6AF6002E93C9 /* CCInfoPopupView.swift in Sources */,
 				1337159A2A8CFBC2009E31E0 /* HttpErrorViewModel.swift in Sources */,
@@ -900,7 +907,7 @@
 				7BC77E8A2A6A4FC400B489C2 /* KeychainItemAccessibility.swift in Sources */,
 				7BB518632AC1AAFF008A1CEA /* MapInfoBox.swift in Sources */,
 				134C75A92A2F513E0046EEE4 /* BirdRecorderView.swift in Sources */,
-				7BC6100C2A30989900185BAA /* FurtherSourcesView.swift in Sources */,
+				7BC6100C2A30989900185BAA /* SourcesImprintView.swift in Sources */,
 				7BB03C352A0CCA9900C3A885 /* HTTPDownloader.swift in Sources */,
 				1337D96D2A7A982700712B8F /* SpeciesResultView.swift in Sources */,
 				137FE58E29E5AC1C00B397DF /* ObservationResponse.swift in Sources */,
@@ -939,6 +946,7 @@
 				7BB68E4A2A545D5C00B1DC51 /* String+Validations.swift in Sources */,
 				7BA4DA122A73EC5600AEC0A4 /* HelpView.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
+				13F49F5D2BC440330094FB49 /* SourcesImprint.swift in Sources */,
 				13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */,
 				7BB68E482A544B7F00B1DC51 /* RegisterViewModel.swift in Sources */,
 				7BC77E872A6A4F2700B489C2 /* KeychainWrapper.swift in Sources */,

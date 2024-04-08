@@ -15,7 +15,7 @@ struct ImprintView: NavigatableView {
                 Text("imprint_1 \(UIApplication.appVersion)")
                     .body1()
                 Button("more_sources") {
-                    navigationController?.pushViewController(FurtherSourcesView().setUpViewController(), animated: true)
+                    navigationController?.pushViewController(SourcesImprintView().setUpViewController(), animated: true)
                 }.buttonStyle(ConfirmFullWidthButton())
                 Text("imprint_2")
                     .body1()
