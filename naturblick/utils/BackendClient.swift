@@ -92,7 +92,7 @@ class BackendClient {
         }
         
         var request = mpr.urlRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!, method: "PUT")
-        
+        request.timeoutInterval = 30
         if let token = bearerToken {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         } else {
