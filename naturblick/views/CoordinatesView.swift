@@ -10,7 +10,7 @@ struct CoordinatesView: View {
     var body: some View {
         if let latitude = coordinates?.latitude,
            let longitude = coordinates?.longitude {
-            Text("\(longitude), \(latitude)")
+            Text(String(format: "Latitude: %.2f / Longitude: %.2f", latitude, longitude))
         } else {
             Text("no_coordinates")
         }

@@ -50,15 +50,21 @@ struct EditObservationView: HostedView {
     }
     
     var body: some View {
-        Form {
+        VStack(alignment: .leading, spacing: .defaultPadding) {
             HStack {
                 flow.speciesAvatar
                     .avatar()
+                    .padding(.trailing, .defaultPadding)
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("species")
                         .caption(color: .onSecondaryLowEmphasis)
-                    Text(flow.data.species?.sciname ?? "unknown_species")
-                        .subtitle1(color: .onSecondaryHighEmphasis)
+                    if let species = flow.data.species {
+                        Text(species.speciesName ?? species.sciname)
+                            .subtitle1(color: .onSecondaryHighEmphasis)
+                    } else {
+                        Text("unknown_species")
+                            .subtitle1(color: .onSecondaryHighEmphasis)
+                    }
                 }
                 Spacer()
                 Button("change") {
@@ -73,23 +79,62 @@ struct EditObservationView: HostedView {
                 }
                 .buttonStyle(ChangeSpeciesButton())
             }
-            CoordinatesView(coordinates: flow.data.coords)
-                .onTapGesture {
+            Divider()
+            HStack {
+                Image("location24")
+                    .observationProperty()
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("location")
+                        .caption(color: .onSecondarySignalLow)
+                    CoordinatesView(coordinates: flow.data.coords)
+                }
+                Spacer()
+                Button("change") {
                     navigationController?.pushViewController(PickerView(flow: flow).setUpViewController(), animated: true)
                 }
-            IndividualsView(individuals: $flow.data.individuals)
-            
-            Picker("behavior", selection: $flow.data.behavior) {
-                if flow.data.original.behavior == nil {
-                    Text("none").tag(nil as Behavior?)
-                }
-                ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
-                    Text($0.rawValue).tag($0 as Behavior?)
+                .buttonStyle(ChangeSpeciesButton())
+            }
+            Divider()
+            HStack {
+                Image("number24")
+                    .observationProperty()
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("number")
+                        .caption(color: .onSecondarySignalLow)
+                    IndividualsView(individuals: $flow.data.individuals)
                 }
             }
-            .pickerStyle(MenuPickerStyle())
-            TextField("notes", text: $flow.data.details)
+            Divider()
+            HStack {
+                Image("location24")
+                    .observationProperty()
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("behavior")
+                        .caption(color: .onSecondarySignalLow)
+                    Picker("behavior", selection: $flow.data.behavior) {
+                        if flow.data.original.behavior == nil {
+                            Text("none").tag(nil as Behavior?)
+                        }
+                        ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
+                            Text($0.rawValue).tag($0 as Behavior?)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                }
+            }
+            Divider()
+            HStack {
+                Image("details")
+                    .observationProperty()
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("notes")
+                        .caption(color: .onSecondarySignalLow)
+                    TextField("edit_notes", text: $flow.data.details)
+                }
+            }
+            Spacer()
         }
+        .padding(.defaultPadding)
     }
 }
 

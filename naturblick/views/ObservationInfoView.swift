@@ -88,14 +88,25 @@ struct ObservationInfoView: View {
                 avatar
                     .padding(.bottom, .defaultPadding)
             }
-            if let sciname = species?.sciname {
-                Text(sciname)
-                    .overline(color: .onPrimarySignalHigh)
+
+            if let species = species {
+                if let name = species.name {
+                    Text(species.sciname)
+                        .overline(color: .onPrimarySignalHigh)
+                        .multilineTextAlignment(TextAlignment.center)
+                    Text(name.uppercased())
+                        .headline2()
+                        .multilineTextAlignment(TextAlignment.center)
+                } else {
+                    Text(species.sciname.uppercased())
+                        .headline2()
+                        .multilineTextAlignment(TextAlignment.center)
+                }
+            } else {
+                Text((String(localized: "unknown_species")).uppercased())
+                    .headline2()
                     .multilineTextAlignment(TextAlignment.center)
             }
-            Text((species?.name ?? String(localized: "unknown_species")).uppercased())
-                .headline2()
-                .multilineTextAlignment(TextAlignment.center)
             Text(created.date, formatter: .dateTime)
                 .caption(color: .onPrimarySignalLow)
                 .multilineTextAlignment(TextAlignment.center)
