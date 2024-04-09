@@ -253,7 +253,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                     controllers.removeLast(controllers.count - 2)
                 } else {
                     controllers.removeLast(controllers.count - 1)
-                    controllers.append(ObservationListViewController())
+                    controllers.append(ObservationListViewController(persistenceController: persistenceController))
                 }
                 navigation.setViewControllers(controllers, animated: true)
             } catch {

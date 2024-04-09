@@ -49,8 +49,8 @@ extension Color {
     static let shadowBlackOpacity10 = Color.black.opacity(0.1)
     static let shadowBlackOpacity5 = Color.black.opacity(0.05)
     static let shadowGreyOpacity5 = Color("shadowGreyOpacity5")
-
-
+    static let blackFullyTransparent = Color.black.opacity(0)
+    static let whiteHalfTransparent = Color.white.opacity(0.5)
 }
 
 extension UIColor {

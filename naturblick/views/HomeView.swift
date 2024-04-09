@@ -160,7 +160,7 @@ struct HomeView: HostedView {
                             )
                             .onTapGesture {
                                 withNavigation { navigation in
-                                    navigation.pushViewController(ObservationListViewController(), animated: true)
+                                    navigation.pushViewController(ObservationListViewController(persistenceController: persistenceController), animated: true)
                                 }
                             }
                             Spacer()

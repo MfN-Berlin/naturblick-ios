@@ -6,7 +6,7 @@
 import Foundation
 import SQLite
 
-struct DBObservation: Decodable, Identifiable {
+struct DBObservation: Decodable, Identifiable, Equatable {
     let occurenceId: UUID
     let obsIdent: String?
     let obsType: ObsType

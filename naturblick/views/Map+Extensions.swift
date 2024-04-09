@@ -56,4 +56,39 @@ extension View {
                 }
             }
     }
+    
+    func trackingToggle(@Binding userTrackingMode: MKUserTrackingMode, authorizationStatus: CLAuthorizationStatus?) -> some View {
+        self
+            .overlay(alignment: .topTrailing) {
+                if authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse {
+                    RoundedRectangle(cornerRadius: .defaultPadding)
+                        .fill(.white)
+                        .frame(width: .fabSize, height: .fabSize)
+                        .shadow(radius: .halfPadding)
+                        .padding(.defaultPadding)
+                        .overlay {
+                            switch(userTrackingMode) {
+                            case .follow:
+                                Image(systemName: "location.fill")
+                                    .padding(.fabIconPadding)
+                                    .foregroundColor(.primaryColor)
+                            default:
+                                Image(systemName: "location")
+                                    .padding(.fabIconPadding)
+                                    .foregroundColor(.primaryColor)
+                            }
+                        }
+                        .onTapGesture {
+                            switch(userTrackingMode) {
+                            case .none:
+                                if authorizationStatus == .authorizedAlways || authorizationStatus == .authorizedWhenInUse {
+                                    userTrackingMode = .follow
+                                }
+                            default:
+                                userTrackingMode = .none
+                            }
+                        }
+                }
+            }
+    }
 }

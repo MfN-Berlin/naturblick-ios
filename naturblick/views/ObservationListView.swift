@@ -8,16 +8,20 @@ import MapKit
 import Photos
 
 class ObservationListViewModel: ObservableObject {
-    @Published var showList = true
+    @Published var showList: Bool
+    
+    init(showList: Bool) {
+        self.showList = showList
+    }
 }
 
 class ObservationListViewController: HostingController<ObservationListView> {
     let persistenceController: ObservationPersistenceController
     let createFlow: CreateFlowViewModel
-    init() {
-        persistenceController = ObservationPersistenceController()
+    init(persistenceController: ObservationPersistenceController, showObservation: Observation? = nil) {
+        self.persistenceController = persistenceController
         createFlow = CreateFlowViewModel(persistenceController: persistenceController, fromList: true)
-        let view = ObservationListView(persistenceController: persistenceController, createFlow: createFlow)
+        let view = ObservationListView(persistenceController: persistenceController, createFlow: createFlow, showObservation: showObservation)
         super.init(rootView: view)
         createFlow.setViewController(controller: self)
     }
@@ -31,12 +35,20 @@ struct ObservationListView: HostedView {
     private let client = BackendClient()
     @StateObject private var locationManager = LocationManager()
     @StateObject private var errorHandler = HttpErrorViewModel()
-    @State private var region: MKCoordinateRegion = .defaultRegion
-    @State private var userTrackingMode: MapUserTrackingMode = .none
+    @State private var userTrackingMode: MKUserTrackingMode = .none
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var createFlow: CreateFlowViewModel
-    @StateObject var model = ObservationListViewModel()
+    @StateObject var model: ObservationListViewModel
+    let showObservation: Observation?
+    
+    init(persistenceController: ObservationPersistenceController, createFlow: CreateFlowViewModel, showObservation: Observation?) {
+        self.persistenceController = persistenceController
+        self.createFlow = createFlow
+        self.showObservation = showObservation
+        self._model = StateObject(wrappedValue: ObservationListViewModel(showList: showObservation == nil)
+        )
+    }
     
     fileprivate func menuEntries() -> [UIAction] {
         return [
@@ -84,27 +96,12 @@ struct ObservationListView: HostedView {
                     await sync()
                 }
             } else {
-                Map(
-                    coordinateRegion: $region,
-                    showsUserLocation: true,
+                ObservationMapView(
+                    persistenceController: persistenceController,
                     userTrackingMode: $userTrackingMode,
-                    annotationItems: persistenceController.observations.filter { $0.observation.coords != nil
+                    initial: showObservation) { observation in
+                        navigationController?.pushViewController(ObservationView(occurenceId: observation.id, persistenceController: persistenceController).setUpViewController(), animated: true)
                     }
-                ) { observation in
-                    MapAnnotation(coordinate: observation.observation.coords!.location) {
-                        ZStack {
-                            Image(observation.species?.group.mapIcon ?? "map_undefined_spec")
-                                .onTapGesture {
-                                    let view = MapInfoBox(observation: observation, persistenceController: persistenceController) {
-                                        let controller = ObservationView(occurenceId: observation.id, persistenceController: persistenceController).setUpViewController()
-                                        navigationController?.pushViewController(controller, animated: true)
-                                    } .setUpViewController()
-                                    
-                                    navigationController?.present(view, animated: true)
-                                }
-                            }
-                    }
-                }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
                 .onAppear {
                     if(locationManager.askForPermission()) {
@@ -137,6 +134,6 @@ struct ObservationListView: HostedView {
 struct ObservationListView_Previews: PreviewProvider {
     static var previews: some View {
         let persistenceController = ObservationPersistenceController(inMemory: true)
-        ObservationListView(persistenceController: persistenceController, createFlow: CreateFlowViewModel(persistenceController: persistenceController))
+        ObservationListView(persistenceController: persistenceController, createFlow: CreateFlowViewModel(persistenceController: persistenceController), showObservation: nil)
     }
 }
