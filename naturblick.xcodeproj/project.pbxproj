@@ -174,6 +174,7 @@
 		7BDD17E22A45C397001B9DB4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E12A45C397001B9DB4 /* LoginView.swift */; };
 		7BDD17E42A45C5AA001B9DB4 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */; };
 		7BDD17E62A45C7C3001B9DB4 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */; };
+		DB01A49E2BC52F5600F67812 /* String+LinkDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -357,6 +358,7 @@
 		7BDD17E12A45C397001B9DB4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+LinkDetect.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -639,6 +641,7 @@
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
+				DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -817,6 +820,7 @@
 				7B2E70662A2F671900164C85 /* AboutView.swift in Sources */,
 				7BDA8FBB2ABC241E002E93C9 /* FeedbackView.swift in Sources */,
 				133B39222A40598C00D48617 /* Connection+SpeciesDB.swift in Sources */,
+				DB01A49E2BC52F5600F67812 /* String+LinkDetect.swift in Sources */,
 				137F1F692AC3281A00D14BE1 /* ButtonStyle.swift in Sources */,
 				7BB3DE1E29F2B0A100F0D387 /* RoundBottomView.swift in Sources */,
 				133B39242A4069BD00D48617 /* SelectSpeciesViewModel.swift in Sources */,

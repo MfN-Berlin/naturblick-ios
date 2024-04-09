@@ -127,7 +127,7 @@ struct PortraitView: HostedView {
                                 if let sources = portrait.sources {
                                     Text("sources")
                                         .headline4()
-                                    Text(sources)
+                                    Text(sources.toDetectedAttributedString())
                                         .body1()
                                 }
                             }
