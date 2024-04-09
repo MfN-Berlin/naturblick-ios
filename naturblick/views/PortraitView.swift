@@ -142,7 +142,7 @@ struct PortraitView: HostedView {
                             similarSpeciesViewModel.filter(portraitId: portrait.id)
                         }
                     } else {
-                        Text("no_portrait")
+                        Text("no_portrait").padding()
                     }
                 }
             }

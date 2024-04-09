@@ -140,7 +140,7 @@
 "description"="Beschreibung";
 "in_the_city"="In der Stadt";
 "good_to_know"="Wissenswertes";
-"no_portrait"="Entschuldigung zu dieser Art gibt es kein Portrait";
+"no_portrait"="Für diese Art gibt es noch kein Artportait.";
 "similar_species"="Verwechslungsarten";
 "close"="Schließen";
 "cannot_connect"="Es kann keine Verbindung zum Server hergestellt werden, bitte überprüfen Sie Ihre Verbindung.";
