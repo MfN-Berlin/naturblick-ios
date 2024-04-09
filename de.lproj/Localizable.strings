@@ -92,6 +92,8 @@
 "register"="Registrierung";
 "forgot"="Vergessen";
 "delete"="Löschen";
+"delete_question"="Beobachtung löschen?";
+"delete_question_message"="Bist du sicher, dass du diese Beobachtung löschen möchtest?";
 "about"="Über";
 "record_permission_missing"="Ohne Aufnahmeberechtigung ist es nicht möglich Vögel aufzunehmen";
 "requires_recording"="Um Vogelstimmen aufzunehmen, benötigt die App die Berechtigung Audios aufzunehmen.";

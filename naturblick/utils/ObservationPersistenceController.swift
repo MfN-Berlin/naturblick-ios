@@ -250,13 +250,23 @@ class ObservationPersistenceController: ObservableObject {
         try queue.run(UploadOperation.D.table.insert(upload.setters(id: uploadId)))
     }
     
+    func delete(indexSet: IndexSet) throws {
+        try queue.transaction {
+            for i in indexSet {
+                let deleteId = try queue.run(Operation.D.table.insert())
+                try queue.run(DeleteOperation.D.table.insert(DeleteOperation(occurenceId: observations[i].id).setters(id: deleteId)))
+            }
+            try updateAndRefresh()
+        }
+    }
+    
     func delete(occurenceId: UUID) throws {
         let delete = DeleteOperation(occurenceId: occurenceId)
         let deleteId = try queue.run(Operation.D.table.insert())
         try queue.run(DeleteOperation.D.table.insert(delete.setters(id: deleteId)))
         try updateAndRefresh()
     }
-    
+
     func insert(data: CreateData) throws {
         try queue.transaction {
             if let media = data.image.image {

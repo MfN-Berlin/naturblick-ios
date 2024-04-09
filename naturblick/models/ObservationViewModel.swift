@@ -7,7 +7,7 @@ import Foundation
 
 class ObservationViewModel: ObservableObject {
     @Published var observation: Observation? = nil
-
+    @Published var delete: Bool = false
     init(viewObservation: UUID, persistenceController: ObservationPersistenceController) {
         persistenceController.$observations.map {
             $0.first {
