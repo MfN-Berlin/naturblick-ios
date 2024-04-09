@@ -44,7 +44,11 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                 }
                 .overlay(alignment: .bottom) {
                     VStack(spacing: .defaultPadding) {
-                        if let results = model.speciesResults {
+                        if let results 
+                            = model.speciesResults {
+                            Text("suggestions")
+                                .headline6()
+                                .padding([.top])
                             Text(flow.isImage() ? "image_autoid_infotext" : "sound_autoid_infotext")
                                 .body2()
                             ForEach(results, id: \.0.id) { (result, item) in
