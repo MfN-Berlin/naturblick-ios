@@ -141,7 +141,7 @@
 "description"="Description";
 "in_the_city"="In the city";
 "good_to_know"="Interesting facts";
-"no_portrait"="Sorry No Portrait";
+"no_portrait"="For this species there is no species portrait yet.";
 "similar_species"="Similar species";
 "close"="Close";
 "cannot_connect"="Can not connect to server, please check your connectivity.";
