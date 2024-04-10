@@ -215,12 +215,10 @@ struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
             } else {
                 ProgressView {
                     Text("downloading_spectrogram")
-                        .headline6()
-                        .foregroundColor(.onSecondaryMediumEmphasis)
+                        .headline6(color: .onPrimaryMediumEmphasis)
                         .padding()
                 }
-                .progressViewStyle(.circular)
-                .foregroundColor(.onSecondaryHighEmphasis)
+                .progressViewStyle(CircularProgressViewStyle(tint: .onPrimaryHighEmphasis))
                 .controlSize(.large)
             }
         }

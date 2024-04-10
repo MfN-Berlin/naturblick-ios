@@ -43,8 +43,8 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                         .frame(width: geo.size.width, height: geo.size.width)
                 }
                 .overlay(alignment: .bottom) {
-                    VStack(spacing: .defaultPadding) {
-                        if let results 
+                    VStack(alignment: .leading, spacing: .defaultPadding) {
+                        if let results
                             = model.speciesResults {
                             Text("suggestions")
                                 .headline6()
@@ -80,11 +80,9 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                         } else {
                             ProgressView {
                                 Text("identifying_species")
-                                    .button()
-                                    .foregroundColor(.onSecondaryMediumEmphasis)
+                                    .headline6(color: .onSecondaryMediumEmphasis)
                             }
-                            .progressViewStyle(.circular)
-                            .foregroundColor(.onSecondaryHighEmphasis)
+                            .progressViewStyle(CircularProgressViewStyle(tint: .onSecondaryHighEmphasis))
                             .controlSize(.large)
                             .onAppear {
                                 identify()
