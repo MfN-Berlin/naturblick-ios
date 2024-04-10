@@ -40,6 +40,8 @@ struct ObservationListView: HostedView {
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var createFlow: CreateFlowViewModel
     @StateObject var model: ObservationListViewModel
+    @State var showDelete: Bool = false
+    @State var deleteObservation: IndexSet? = nil
     let showObservation: Observation?
     
     init(persistenceController: ObservationPersistenceController, createFlow: CreateFlowViewModel, showObservation: Observation?) {
@@ -83,13 +85,20 @@ struct ObservationListView: HostedView {
     var body: some View {
         SwiftUI.Group {
             if(model.showList) {
-                List(persistenceController.observations) { observation in
-                    ObservationListItemWithImageView(observation: observation)
-                        .listRowInsets(.nbInsets)
-                        .listRowBackground(Color.secondaryColor)
-                        .onTapGesture {
-                            navigationController?.pushViewController(ObservationView(occurenceId: observation.id, persistenceController: persistenceController).setUpViewController(), animated: true)
-                        }
+                List {
+                    ForEach(persistenceController.observations) {
+                        observation in
+                        ObservationListItemWithImageView(observation: observation)
+                            .listRowInsets(.nbInsets)
+                            .listRowBackground(Color.secondaryColor)
+                            .onTapGesture {
+                                navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, persistenceController: persistenceController), animated: true)
+                            }
+                    }
+                    .onDelete { indexSet in
+                            self.deleteObservation = indexSet
+                            self.showDelete = true
+                    }
                 }
                 .listStyle(.plain)
                 .refreshable {
@@ -100,7 +109,7 @@ struct ObservationListView: HostedView {
                     persistenceController: persistenceController,
                     userTrackingMode: $userTrackingMode,
                     initial: showObservation) { observation in
-                        navigationController?.pushViewController(ObservationView(occurenceId: observation.id, persistenceController: persistenceController).setUpViewController(), animated: true)
+                        navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, persistenceController: persistenceController), animated: true)
                     }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
                 .onAppear {
@@ -118,6 +127,17 @@ struct ObservationListView: HostedView {
         }
         .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)
         .permissionSettingsDialog(isPresented: $createFlow.showOpenSettings, presenting: createFlow.openSettingsMessage)
+        .confirmationDialog("delete_question", isPresented: $showDelete, titleVisibility: .visible, presenting: deleteObservation) { indexSet in
+            Button("delete", role: .destructive) {
+                do {
+                    try persistenceController.delete(indexSet: indexSet)
+                } catch {
+                    fatalError(error.localizedDescription)
+                }
+            }
+        } message: {_ in 
+            Text("delete_question_message")
+        }
     }
     
     private func sync() async {

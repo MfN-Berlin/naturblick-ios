@@ -93,6 +93,8 @@
 "register"="Register";
 "forgot"="Forgot";
 "delete"="Delete";
+"delete_question"="Delete observation?";
+"delete_question_message"="Are you sure that you want to delete this observation?";
 "about"="About";
 "record_permission_missing"="Without permission to record it is not possible to record birds";
 "requires_recording"="To record birds the app needs the permission to record audio";
