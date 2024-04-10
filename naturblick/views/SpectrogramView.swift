@@ -215,8 +215,9 @@ struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
             } else {
                 ProgressView {
                     Text("downloading_spectrogram")
-                        .font(.nbButton)
+                        .headline6()
                         .foregroundColor(.onSecondaryMediumEmphasis)
+                        .padding()
                 }
                 .progressViewStyle(.circular)
                 .foregroundColor(.onSecondaryHighEmphasis)
