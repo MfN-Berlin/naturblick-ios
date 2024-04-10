@@ -96,9 +96,13 @@ extension Text {
     }
     
     func headline6() -> some View {
+        self.headline6(color: .onPrimaryHighEmphasis)
+    }
+
+    func headline6(color: Color) -> some View {
         self.font(.nbHeadline6)
             .lineSpacing(fontSize: .headline6, lineHeight: .headline6LineHeight)
-            .foregroundColor(.onPrimaryHighEmphasis)
+            .foregroundColor(color)
     }
     
     func subtitle1() -> some View {
