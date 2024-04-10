@@ -228,15 +228,11 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         let thumbnail = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
             cropped.draw(in: CGRect(origin: .zero, size: .thumbnail))
         }
-        do {
-            let crop = try NBThumbnail(image: thumbnail)
-            data.image.crop = crop
-            data.image.result = nil
-            withNavigation { navigation in
-                cropDone(thumbnail: crop)
-            }
-        } catch {
-            preconditionFailure("\(error)")
+        let crop = NBThumbnail(image: thumbnail)
+        data.image.crop = crop
+        data.image.result = nil
+        withNavigation { navigation in
+            cropDone(thumbnail: crop)
         }
     }
     
@@ -270,6 +266,11 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         data.coords = Coordinates(region: region)
     }
     
+    func createWithSearch() {
+        data = CreateData()
+        searchSpecies()
+    }
+
     func searchSpecies() {
         withNavigation { navigation in
             let view = PickSpeciesListView(flow: self)

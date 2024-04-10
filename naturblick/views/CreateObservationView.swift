@@ -34,7 +34,7 @@ struct CreateObservationView: NavigatableView {
     @State private var userTrackingMode: MapUserTrackingMode = .none
     @State private var sheetPosition : BottomSheetPosition = .dynamic
     var body: some View {
-        Form {
+        VStack(alignment: .leading, spacing: .defaultPadding) {
             HStack {
                 createFlow.speciesAvatar
                     .avatar()
@@ -42,24 +42,69 @@ struct CreateObservationView: NavigatableView {
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("species")
                         .caption(color: .onSecondarySignalLow)
-                    Text(createFlow.data.species?.sciname ?? String(localized: "unknown_species"))
-                        .subtitle1()
+                    if let species = createFlow.data.species {
+                        Text(species.speciesName ?? species.sciname)
+                            .subtitle1(color: .onSecondaryHighEmphasis)
+                    } else {
+                        Text("unknown_species")
+                            .subtitle1(color: .onSecondaryHighEmphasis)
+                    }
                 }
             }
-            CoordinatesView(coordinates: createFlow.data.coords)
-                .onTapGesture {
+            Divider()
+            HStack {
+                Image("location24")
+                    .observationProperty()
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("location")
+                        .caption(color: .onSecondarySignalLow)
+                    CoordinatesView(coordinates: createFlow.data.coords)
+                }
+                Spacer()
+                Button("change") {
                     navigationController?.pushViewController(PickerView(flow: createFlow).setUpViewController(), animated: true)
                 }
-            IndividualsView(individuals: $createFlow.data.individuals)
-            Picker("behavior", selection: $createFlow.data.behavior) {
-                Text("none").tag(nil as Behavior?)
-                ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
-                    Text($0.rawValue).tag($0 as Behavior?)
+                .buttonStyle(ChangeSpeciesButton())
+            }
+            Divider()
+            HStack {
+                Image("number24")
+                    .observationProperty()
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("number")
+                        .caption(color: .onSecondarySignalLow)
+                    IndividualsView(individuals: $createFlow.data.individuals)
                 }
             }
-            .pickerStyle(MenuPickerStyle())
-            TextField("notes", text: $createFlow.data.details)
+            Divider()
+            HStack {
+                Image("location24")
+                    .observationProperty()
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("behavior")
+                        .caption(color: .onSecondarySignalLow)
+                    Picker("behavior", selection: $createFlow.data.behavior) {
+                        Text("none").tag(nil as Behavior?)
+                        ForEach([Behavior].forGroup(group: createFlow.data.species?.group)) {
+                            Text($0.rawValue).tag($0 as Behavior?)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                }
+            }
+            Divider()
+            HStack {
+                Image("details")
+                    .observationProperty()
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("notes")
+                        .caption(color: .onSecondarySignalLow)
+                    TextField("edit_notes", text: $createFlow.data.details)
+                }
+            }
+            Spacer()
         }
+        .padding(.defaultPadding)
         .onChange(of: locationManager.userLocation) { location in
             if let location = location {
                 let coordinates = Coordinates(location: location)

@@ -64,7 +64,7 @@ struct ObservationListView: HostedView {
                 createFlow.takePhoto()
             },
             UIAction(title: String(localized: "create_obs")) { _ in
-                createFlow.searchSpecies()
+                createFlow.createWithSearch()
             }
         ]
     }
