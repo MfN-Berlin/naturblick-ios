@@ -6,8 +6,7 @@
 import SwiftUI
 
 struct RoundBottomView: View {
-    
-    @Environment(\.colorScheme) var colorScheme
+    let color: Color
     
     var body: some View {
         GeometryReader { geometry in
@@ -49,13 +48,13 @@ struct RoundBottomView: View {
                     )
                 )
             }
-            .fill(Color.primaryColor)
+            .fill(color)
         }
     }
 }
 
 struct RoundBottomView_Previews: PreviewProvider {
     static var previews: some View {
-        RoundBottomView()
+        RoundBottomView(color: .primaryColor)
     }
 }

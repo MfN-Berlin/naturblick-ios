@@ -110,7 +110,7 @@ struct HomeView: HostedView {
                             .foregroundColor(.gray)
                             .padding(.defaultPadding)
                     }
-                    RoundBottomView()
+                    RoundBottomView(color: .primaryColor)
                         .frame(height: .roundBottomHeight)
                     
                     VStack(spacing: .defaultPadding) {

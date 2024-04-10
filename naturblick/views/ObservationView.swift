@@ -57,8 +57,13 @@ struct ObservationView: HostedView {
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("species")
                         .caption(color: .onSecondarySignalLow)
-                    Text(model.observation?.species?.sciname ?? String(localized: "unknown_species"))
-                        .subtitle1(color: .onSecondaryMediumEmphasis)
+                    if let species = model.observation?.species {
+                        Text(species.speciesName ?? species.sciname)
+                            .subtitle1(color: .onSecondaryHighEmphasis)
+                    } else {
+                        Text("unknown_species")
+                            .subtitle1(color: .onSecondaryHighEmphasis)
+                    }
                 }
                 Spacer()
                 if model.observation?.species != nil {
