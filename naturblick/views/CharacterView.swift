@@ -28,6 +28,16 @@ struct CharacterView: View {
         selected = updated
     }
 
+    var rows: Int {
+        (values.count + 1) / 3
+    }
+    func value(row: Int, col: Int) -> CharacterValue? {
+        if row * 3 + col < values.count {
+            return values[row * 3 + col]
+        } else {
+            return nil
+        }
+    }
     var body: some View {
         VStack(alignment: .leading, spacing: .defaultPadding) {
             Text(character.name)
@@ -36,16 +46,20 @@ struct CharacterView: View {
                 Text(description)
                     .body2()
             }
-            LazyVGrid(columns: [
-                GridItem(spacing: .defaultPadding),
-                GridItem(spacing: .defaultPadding),
-                GridItem(spacing: .defaultPadding)
-            ], spacing: .defaultPadding) {
-                ForEach(values) { value in
-                    CharacterValueView(value: value, selected: selected.contains(value.id))
-                        .onTapGesture {
-                            toggleSelection(id: value.id)
+            VStack {
+                ForEach(0 ..< rows, id: \.self) { row in
+                    HStack {
+                        ForEach(0 ..< 3, id: \.self) { col in
+                            if let value = value(row: row, col: col) {
+                                CharacterValueView(value: value, selected: selected.contains(value.id))
+                                    .onTapGesture {
+                                        toggleSelection(id: value.id)
+                                    }
+                            } else {
+                                Text("").frame(maxWidth: .infinity, maxHeight: .infinity)
+                            }
                         }
+                    }
                 }
             }
         }.padding(.defaultPadding)

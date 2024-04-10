@@ -9,6 +9,7 @@ struct CharacterValueView: View {
     let value: CharacterValue
     let selected: Bool
     var body: some View {
+
         let stack = VStack(spacing: .zero) {
             if(value.hasImage) {
                 Image("character_\(value.id)")
@@ -25,24 +26,26 @@ struct CharacterValueView: View {
                 Spacer()
             }
         }
-        .frame(maxWidth: .infinity, alignment: .center)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .background(.white)
-        .cornerRadius(.smallCornerRadius)
-        .shadow(color: Color.black.opacity(0.2), radius: .smallCornerRadius, x: 0, y: 0)
         
         if(selected) {
             stack
-                .border(Color.primaryColor)
+                .border(Color.onSecondaryButtonSecondary)
+                .cornerRadius(.smallCornerRadius)
+                .shadow(color: Color.black.opacity(0.2), radius: .smallCornerRadius, x: 0, y: 0)
                 .overlay(alignment: .topTrailing) {
                     Image("check_circle_24")
                         .resizable()
                         .scaledToFit()
                         .frame(width: .checkedSize, height: .checkedSize)
-                        .foregroundColor(.primaryColor)
+                        .foregroundColor(.onSecondaryButtonSecondary)
                         .padding(.halfPadding)
                 }
         } else {
             stack
+                .cornerRadius(.smallCornerRadius)
+                .shadow(color: Color.black.opacity(0.2), radius: .smallCornerRadius, x: 0, y: 0)
         }
     }
 }

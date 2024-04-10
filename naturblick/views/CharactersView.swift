@@ -32,6 +32,7 @@ struct CharactersView: NavigatableView {
                     }
                 }
             }
+            .padding(.bottom, .doublePadding)
         }
         .task {
             charactersViewModel.configure(group: group)
