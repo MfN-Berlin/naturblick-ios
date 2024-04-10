@@ -52,8 +52,7 @@ struct PortraitView: HostedView {
                                         .padding(.horizontal, .defaultPadding)
                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                                 }
-                                
-                                RoundBottomView()
+                                RoundBottomView(color: .primaryHomeColor)
                                     .frame(height: .roundBottomHeight)
                             }
                         }
