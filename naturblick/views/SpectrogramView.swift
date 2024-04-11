@@ -189,6 +189,7 @@ struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
                     .padding(.top, .doublePadding)
                 Text("please_select")
                     .caption(color: .onPrimaryLowEmphasis)
+                    .padding([.trailing, .leading])
                 Image(uiImage: spectrogram)
                     .resizable()
                     .overlay {
