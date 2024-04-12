@@ -20,7 +20,7 @@ struct SpeciesListView: NavigatableView {
     @State var query: String = ""
     @StateObject var speciesListViewModel: SpeciesListViewModel = SpeciesListViewModel()
     let filter: SpeciesListFilter
-    var flow: CreateFlowViewModel
+    @ObservedObject var flow: CreateFlowViewModel
     var isCharacterResult: Bool = false
     
     func updateFilter() {
