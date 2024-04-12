@@ -102,7 +102,11 @@ struct ObservationListView: HostedView {
                 }
                 .listStyle(.plain)
                 .refreshable {
-                    await sync()
+                    do {
+                        try await client.sync(controller: persistenceController)
+                    } catch {
+                        errorHandler.handle(error)
+                    }
                 }
             } else {
                 ObservationMapView(
@@ -124,8 +128,11 @@ struct ObservationListView: HostedView {
             if let item = viewController?.navigationItem {
                 configureNavigationItem(item: item, showList: showList)
             }
-        }
-        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error)
+        }	
+        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error, loggedOutHandler: {
+            bearerToken = nil
+            navigationController?.pushViewController(LoginView(accountViewModel: AccountViewModel()).setUpViewController(), animated: true)
+        })
         .permissionSettingsDialog(isPresented: $createFlow.showOpenSettings, presenting: createFlow.openSettingsMessage)
         .confirmationDialog("delete_question", isPresented: $showDelete, titleVisibility: .visible, presenting: deleteObservation) { indexSet in
             Button("delete", role: .destructive) {
@@ -137,16 +144,6 @@ struct ObservationListView: HostedView {
             }
         } message: {_ in 
             Text("delete_question_message")
-        }
-    }
-    
-    private func sync() async {
-        do {
-            try await client.sync(controller: persistenceController)
-        } catch {
-            if(errorHandler.handle(error)) {
-                bearerToken = nil
-            }
         }
     }
 }

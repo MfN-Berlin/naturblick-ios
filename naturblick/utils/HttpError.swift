@@ -13,7 +13,7 @@ enum HttpError: Error {
     case loggedOut
 }
 
-extension HttpError {
+extension HttpError: Equatable {
     var localizedDescription: String {
         switch(self) {
         case .networkError:
@@ -29,6 +29,20 @@ extension HttpError {
 }
 
 extension View {
+    
+    func alertHttpError(isPresented: Binding<Bool>, error: HttpError?, loggedOutHandler: @escaping (() -> ())) -> some View {
+        return self.alertHttpError(isPresented: isPresented, error: error) { error in
+            if case .loggedOut = error {
+                Button("sign_out") {}
+                Button("to_sign_in") {
+                    loggedOutHandler()
+                }
+            }
+        } message: { error in
+            Text(error.localizedDescription)
+        }
+    }
+    
     func alertHttpError(isPresented: Binding<Bool>, error: HttpError?) -> some View {
         return self.alertHttpError(isPresented: isPresented, error: error) { details in
         } message: { error in

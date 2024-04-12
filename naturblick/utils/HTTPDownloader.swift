@@ -18,6 +18,7 @@ protocol HTTPDownloader {
 }
 
 extension URLSession: HTTPDownloader {
+    
     private static let logger = Logger(
         subsystem: Bundle.main.bundleIdentifier!,
         category: String(describing: HTTPDownloader.self)
@@ -27,15 +28,7 @@ extension URLSession: HTTPDownloader {
             let (data, response) = try await self.data(for: request)
             let httpResponse = (response as! HTTPURLResponse)
             let statusCode = httpResponse.statusCode
-            guard validStatus.contains(statusCode) else {
-                if statusCode == 401 {
-                    throw HttpError.loggedOut
-                } else if clientError.contains(statusCode) {
-                    throw HttpError.clientError(statusCode: statusCode)
-                } else {
-                    throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
-                }
-            }
+            try checkForErrorStatus(statusCode: statusCode, data: data)
             let decoder = JSONDecoder()
             return try decoder.decode(T.self, from: data)
         } catch {
@@ -53,16 +46,7 @@ extension URLSession: HTTPDownloader {
         do {
             let (data, response) = try await self.data(for: request)
             let statusCode = (response as? HTTPURLResponse)!.statusCode
-           
-            guard validStatus.contains(statusCode) else {
-                if statusCode == 401 {
-                    throw HttpError.loggedOut
-                } else if clientError.contains(statusCode) {
-                    throw HttpError.clientError(statusCode: statusCode)
-                } else {
-                    throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
-                }
-            }
+            try checkForErrorStatus(statusCode: statusCode, data: data)
             return data
         } catch {
             switch error {
@@ -75,21 +59,27 @@ extension URLSession: HTTPDownloader {
             }
         }
     }
+    
+    private func checkForErrorStatus(statusCode: Int, data: Data) throws {
+        @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+        guard validStatus.contains(statusCode) else {
+            if statusCode == 401 {
+                bearerToken = nil
+                throw HttpError.loggedOut
+            } else if clientError.contains(statusCode) {
+                throw HttpError.clientError(statusCode: statusCode)
+            } else {
+                throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
+            }
+        }
+    }
 
     func httpSend(request: URLRequest, data: Data) async throws -> Data {
         do {
             let (responseData, response) = try await self.upload(for: request, from: data)
             let httpResponse = (response as! HTTPURLResponse)
             let statusCode = httpResponse.statusCode
-            guard validStatus.contains(statusCode) else {
-                if statusCode == 401 {
-                    throw HttpError.loggedOut
-                } else if clientError.contains(statusCode) {
-                    throw HttpError.clientError(statusCode: statusCode)
-                } else {
-                    throw HttpError.serverError(statusCode: statusCode, data: String(decoding: data[..<min(64, data.count)], as: UTF8.self))
-                }
-            }
+            try checkForErrorStatus(statusCode: statusCode, data: data)
             return responseData
         } catch {
             switch error {
