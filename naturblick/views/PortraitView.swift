@@ -7,6 +7,8 @@ import SwiftUI
 
 class PortraitViewController: HostingController<PortraitView> {
     let createFlow: CreateFlowViewModel
+
+    // Used by species portrait direct link
     init(species: SpeciesListItem, inSelectionFlow: Bool) {
         createFlow = CreateFlowViewModel(persistenceController: ObservationPersistenceController())
         let view = PortraitView(flow: createFlow, species: species, inSelectionFlow: inSelectionFlow)
@@ -18,7 +20,6 @@ class PortraitViewController: HostingController<PortraitView> {
         self.createFlow = createFlow
         let view = PortraitView(flow: createFlow, species: species, inSelectionFlow: inSelectionFlow)
         super.init(rootView: view)
-        createFlow.setViewController(controller: self)
     }
 }
 

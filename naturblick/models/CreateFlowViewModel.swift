@@ -189,7 +189,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             }
         }
         let create = InSheetPopAwareNavigationController(rootViewController: CreateObservationView(createFlow: self).setUpViewController())
-        viewController?.present(create, animated: true)
+        navigationController?.present(create, animated: true)
     }
     
     @MainActor private func updateResult(result: [SpeciesResult]) {
