@@ -47,7 +47,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                         if let results
                             = model.speciesResults {
                             Text("suggestions")
-                                .headline6()
+                                .headline4()
                                 .padding([.top])
                             Text(flow.isImage() ? "image_autoid_infotext" : "sound_autoid_infotext")
                                 .body2()

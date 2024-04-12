@@ -50,10 +50,13 @@ struct ForgotPasswordView: NavigatableView {
             Button("reset_password") {
                 forgotPassword()
             }.buttonStyle(ConfirmFullWidthButton())
+                .padding([.top])
             Text("delete_account_note_password")
                 .body1()
+                .padding([.top])
             Spacer()
         }
+        .padding(.defaultPadding)
         .foregroundColor(.onSecondaryHighEmphasis)
         .actionSheet(isPresented: $showSendInfo) {
             ActionSheet(
@@ -67,7 +70,6 @@ struct ForgotPasswordView: NavigatableView {
                 forgotPasswordVM.email = email
             }
         }
-        .padding(.defaultPadding)
     }
     
     func forgotSuccessButtons() -> [Alert.Button] {

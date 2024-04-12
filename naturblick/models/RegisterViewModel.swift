@@ -4,14 +4,14 @@
 
 
 import Foundation
-
+import SwiftUI
 
 class EmailWithPrompt: ObservableObject {
     @Published var email: String = ""
     
-    var emailPrompt: String? {
+    var emailPrompt: LocalizedStringKey? {
         if (email.count > 0 && !email.isEmail()) {
-            return "Not a valid e-mail address"
+            return LocalizedStringKey("email_is_not_valid")
         }
         return nil
     }
@@ -24,29 +24,29 @@ class EmailAndPasswordWithPrompt: EmailWithPrompt {
         passwordPrompt == nil && !password.isEmpty
     }
     
-    var passwordPrompt: String? {
+    var passwordPrompt: LocalizedStringKey? {
         if (password.count == 0) {
             return nil
         }
         
         let passwordIsTooShort = password.count < 9
         if (passwordIsTooShort) {
-            return "Must be at least 9 characters"
+            return LocalizedStringKey("password_too_short")
         }
         
         let passwordContainsNoLowerCaseLetters = !password.containsLowercase()
         if (passwordContainsNoLowerCaseLetters) {
-            return "Must contain lower case letters"
+            return LocalizedStringKey("password_no_lower_case")
         }
         
         let passwordContainsNoUpperCaseLetters = !password.containsUppercase()
         if (passwordContainsNoUpperCaseLetters) {
-            return "Must contain upper case letters"
+            return LocalizedStringKey("password_no_upper_case")
         }
         
         let passwordContainsNoDigits = !password.containsDigits()
         if (passwordContainsNoDigits) {
-            return "Must contain digits"
+            return LocalizedStringKey("password_no_digits")
         }
         
         return nil

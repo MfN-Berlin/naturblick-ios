@@ -83,9 +83,6 @@ struct LoginView: NavigatableView {
             Button("forgot_password") {
                 navigationController?.pushViewController(ForgotPasswordView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
             }.buttonStyle(AuxiliaryOnSecondaryFullwidthButton()).textCase(.uppercase)
-            
-            Text("delete_account_note_password")
-                .body2()
             Spacer()
         }
         .padding(.defaultPadding)
