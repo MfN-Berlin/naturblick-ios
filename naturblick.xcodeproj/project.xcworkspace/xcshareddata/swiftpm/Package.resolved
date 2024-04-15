@@ -1,12 +1,13 @@
 {
+  "originHash" : "0b90a3c380cd1ff73475b8be7cbbdfce87418d54347d2e403f32ea75f6861eda",
   "pins" : [
     {
       "identity" : "bottomsheet",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lucaszischka/BottomSheet",
       "state" : {
-        "revision" : "4c9ef84552712e0117c37d4893270fdc28fb9288",
-        "version" : "3.1.0"
+        "revision" : "720ddbd1371fef2a09cc1ab65fc503df37767f9c",
+        "version" : "3.1.1"
       }
     },
     {
@@ -23,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/guoyingtao/Mantis.git",
       "state" : {
-        "revision" : "62e4b08d51913bcf7e6853ad0d020aafea319b6b",
-        "version" : "2.10.0"
+        "revision" : "ccc498ea429774d948a0a8aacacde207f7ffff48",
+        "version" : "2.21.0"
       }
     },
     {
@@ -41,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/stephencelis/SQLite.swift.git",
       "state" : {
-        "revision" : "7a2e3cd27de56f6d396e84f63beefd0267b55ccb",
-        "version" : "0.14.1"
+        "revision" : "f0af5e0a2b6917ae38e3019e3456fd0fa9365864",
+        "version" : "0.15.1"
       }
     },
     {
@@ -109,5 +110,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
