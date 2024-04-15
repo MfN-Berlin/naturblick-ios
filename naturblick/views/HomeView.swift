@@ -17,6 +17,14 @@ class HomeViewController: HostingController<HomeView> {
         super.init(rootView: view)
         createFlow.setViewController(controller: self)
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        if !UserDefaults.standard.bool(forKey: "agb") {
+            let agb = InSheetPopAwareNavigationController(rootViewController: AGBView().setUpViewController())
+            agb.modalPresentationStyle = .fullScreen
+            self.present(agb, animated: true)
+        }
+    }
 }
 
 struct HomeView: HostedView {
