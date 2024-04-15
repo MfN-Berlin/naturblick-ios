@@ -1286,7 +1286,7 @@
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.14.1;
+				version = 0.15.1;
 			};
 		};
 		136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
@@ -1294,7 +1294,7 @@
 			repositoryURL = "https://github.com/lucaszischka/BottomSheet";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 3.1.1;
 			};
 		};
 		13BA832A29CB1BAB003FFE07 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
@@ -1310,7 +1310,7 @@
 			repositoryURL = "https://github.com/guoyingtao/Mantis.git";
 			requirement = {
 				kind = exactVersion;
-				version = 2.10.0;
+				version = 2.21.0;
 			};
 		};
 		7BDA8FBC2ABC5E93002E93C9 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
@@ -1318,7 +1318,7 @@
 			repositoryURL = "https://github.com/lorenzofiamingo/swiftui-cached-async-image";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 2.1.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
