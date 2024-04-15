@@ -158,8 +158,8 @@
 "edit_notes"="Notizen hier eingeben";
 "accept"="Zustimmen";
 "decline"="Ablehnen";
-"accept_agb_title"="Bitte die Nutzungsbedingungen zustimmen";
-"accept_agb_message"="Um Naturblick zu nutzen, muss du die Nutzungsbedingungen zustimmen.";
+"accept_agb_title"="Bitte den Nutzungsbedingungen zustimmen";
+"accept_agb_message"="Um Naturblick zu nutzen, musst du den Nutzungsbedingungen zustimmen.";
 "new_tac_greeting"="Wir freuen uns über dein Interesse, mehr über die Natur in deiner Umgebung zu erfahren.";
 "new_tac_info"="Hier geben wir dir einen Überblick über die Nutzungsbedingungen und Datenerhebung.";
 "new_tac_authorship_title"="Autorenschaft von Bild- und Tonaufnahmen, Beobachtungen mit Geo-Koordinaten";
@@ -181,3 +181,4 @@
 "new_tac_data_collection_summary"="Datenschutz ist uns sehr wichtig. Weitere Informationen zum Datenschutz findest du [hier](https://www.museumfuernaturkunde.berlin/de/datenschutzerklaerung) und im Impressum von Naturblick.";
 "new_tac_questions"="Bei Fragen kannst du dich immer gerne an uns wenden: [naturblick@mfn.berlin](mailto:naturblick@mfn.berlin)";
 "new_tac_usage_is_acceptance"="Mit dem Nutzen von Naturblick stimmst du unseren Bedingungen zu.";
+"ok"="Ok";
