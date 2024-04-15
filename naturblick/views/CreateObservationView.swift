@@ -5,7 +5,6 @@
 
 import SwiftUI
 import MapKit
-import BottomSheet
 
 enum CreateObservationAction: Identifiable {
     var id: Self {
@@ -32,7 +31,6 @@ struct CreateObservationView: NavigatableView {
     @ObservedObject var createFlow: CreateFlowViewModel
     @StateObject private var locationManager = LocationManager()
     @State private var userTrackingMode: MapUserTrackingMode = .none
-    @State private var sheetPosition : BottomSheetPosition = .dynamic
     var body: some View {
         VStack(alignment: .leading, spacing: .defaultPadding) {
             HStack {
