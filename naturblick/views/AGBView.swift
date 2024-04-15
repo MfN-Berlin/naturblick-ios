@@ -5,19 +5,29 @@
 
 import SwiftUI
 
-struct AGBView: NavigatableView {
+class AGBViewController: HostingController<AGBView> {
+    init() {
+        super.init(rootView: AGBView())
+    }
+    
+    @objc func decline() {
+        let alert = UIAlertController(title: String(localized: "accept_agb_title"), message: String(localized: "accept_agb_message"), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: String(localized: "ok"), style: .default))
+        present(alert, animated: true)
+    }
+    
+    @objc func accept() {
+        UserDefaults.standard.setValue(true, forKey: "agb")
+        dismiss(animated: true)
+    }
+}
+
+struct AGBView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
 
     func configureNavigationItem(item: UINavigationItem) {
-        item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "decline")) {_ in
-            let alert = UIAlertController(title: String(localized: "accept_agb_title"), message: String(localized: "accept_agb_message"), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: String(localized: "ok"), style: .default))
-            viewController?.present(alert, animated: true)
-        })
-        item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "accept")) {_ in
-            UserDefaults.standard.setValue(true, forKey: "agb")
-            viewController?.dismiss(animated: true)
-        })
+        item.leftBarButtonItem = UIBarButtonItem(title: String(localized: "decline"), style: .plain, target: viewController, action: #selector(AGBViewController.decline))
+        item.rightBarButtonItem = UIBarButtonItem(title: String(localized: "accept"), style: .done, target: viewController, action: #selector(AGBViewController.accept))
     }
 
     var body: some View {

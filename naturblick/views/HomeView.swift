@@ -20,7 +20,7 @@ class HomeViewController: HostingController<HomeView> {
 
     override func viewDidAppear(_ animated: Bool) {
         if !UserDefaults.standard.bool(forKey: "agb") {
-            let agb = InSheetPopAwareNavigationController(rootViewController: AGBView().setUpViewController())
+            let agb = InSheetPopAwareNavigationController(rootViewController: AGBViewController())
             agb.modalPresentationStyle = .fullScreen
             self.present(agb, animated: true)
         }
