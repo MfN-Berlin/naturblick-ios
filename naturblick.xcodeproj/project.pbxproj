@@ -742,7 +742,6 @@
 			);
 			mainGroup = 131E785529C9BB24000DF928;
 			packageReferences = (
-				13BA832A29CB1BAB003FFE07 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 				136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 				7BB350D92A2A32A8005065E4 /* XCRemoteSwiftPackageReference "Mantis" */,
@@ -1299,14 +1298,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.1.1;
-			};
-		};
-		13BA832A29CB1BAB003FFE07 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				branch = main;
-				kind = branch;
 			};
 		};
 		7BB350D92A2A32A8005065E4 /* XCRemoteSwiftPackageReference "Mantis" */ = {
