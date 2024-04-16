@@ -54,9 +54,6 @@ struct ObservationListView: HostedView {
     
     fileprivate func menuEntries() -> [UIAction] {
         return [
-            UIAction(title: String(localized: "ident_from_photo")) { _ in
-                
-            },
             UIAction(title: String(localized: "record_a_bird")) { _ in
                 createFlow.recordSound()
             },
