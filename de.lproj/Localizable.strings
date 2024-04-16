@@ -130,7 +130,7 @@
 "edit"="Editieren";
 "create_obs"="Observation erstellen";
 "ident_from_photo"="Pflanze von bestehendem Bild";
-"source %@"="[Quelle](%@)";
+"source"="Quelle";
 "show_results %@"="%@ Ergebnissse anzeigen";
 "no_coordinates"="Keine Koordinaten";
 "loading"="Lade...";
@@ -182,3 +182,5 @@
 "new_tac_questions"="Bei Fragen kannst du dich immer gerne an uns wenden: [naturblick@mfn.berlin](mailto:naturblick@mfn.berlin)";
 "new_tac_usage_is_acceptance"="Mit dem Nutzen von Naturblick stimmst du unseren Bedingungen zu.";
 "ok"="Ok";
+"to_orig"="Zum Original";
+"to_licence"="Lizenzinfo";

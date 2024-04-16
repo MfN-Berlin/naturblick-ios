@@ -11,14 +11,12 @@ struct Licence {
         let l = licence.lowercased()
         
         if l.contains("cc0") || l.contains("cc 0") {
-            return "[\(licence)](https://creativecommons.org/publicdomain/zero/1.0) "
+            return "https://creativecommons.org/publicdomain/zero/1.0"
         }
         else if l.contains("cc") && l.contains("by") {
-            return "[\(licence)](https://creativecommons.org/licenses/by\(sa(l))/\(version(l)))"
+            return "https://creativecommons.org/licenses/by\(sa(l))/\(version(l))"
         }
-        else {
-            return "(\(licence)) "
-        }
+        return "https://creativecommons.org/licenses"
     }
     
     private static func sa(_ licence: String) -> String {

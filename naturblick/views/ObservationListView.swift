@@ -74,7 +74,6 @@ struct ObservationListView: HostedView {
          UIBarButtonItem(primaryAction: UIAction(image: UIImage(named: showList ? "map" : "format_list_bulleted")) {action in
              model.showList.toggle()
          })]
-        
     }
     
     func configureNavigationItem(item: UINavigationItem) {

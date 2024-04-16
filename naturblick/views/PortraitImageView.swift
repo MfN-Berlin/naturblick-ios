@@ -81,9 +81,13 @@ struct PortraitImageView: View {
                     }
                 }
             }
-            if (showCCByInfo) {
-                CCInfoPopupView(present: $showCCByInfo, imageSource: image.source, imageOwner: image.owner, imageLicense: image.license)
-            }
+            .alert("source",
+                   isPresented: $showCCByInfo,
+                   actions: { 
+                Link("to_orig", destination: URL(string: image.source)!)
+                Link("to_licence", destination: URL(string: Licence.licenceToLink(licence: image.license))!)
+                        Button("close") { showCCByInfo = false } },
+                   message: { Text("(\(image.license)) \(image.owner)") } )
         }
     }
 }
