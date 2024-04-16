@@ -14,7 +14,7 @@ struct CharactersView: NavigatableView {
     }
     
     let group: Group
-    var flow: CreateFlowViewModel
+    @ObservedObject var flow: CreateFlowViewModel
     
     @StateObject private var charactersViewModel = CharactersViewModel()
     

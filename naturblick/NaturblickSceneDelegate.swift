@@ -68,16 +68,14 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func startScene(windowScene: UIWindowScene, deepLink: DeepLink? = nil) {
         let existingCcByName = UserDefaults.standard.string(forKey: "ccByName")
-        let existingAgb = UserDefaults.standard.string(forKey: "agb")
-        if existingCcByName == nil || existingAgb == nil {
-            Task {
-                if let userData = OldUserData.getFromOldDB() {
-                    if let ccByName = userData.name, existingCcByName == nil {
-                        UserDefaults.standard.setValue(ccByName, forKey: "ccByName")
-                    }
-                    if let agb = userData.policy, existingAgb == nil {
-                        UserDefaults.standard.setValue(agb, forKey: "agb")
-                    }
+        let existingAgb = UserDefaults.standard.bool(forKey: "agb")
+        if existingCcByName == nil || !existingAgb {
+            if let userData = OldUserData.getFromOldDB() {
+                if let ccByName = userData.name, existingCcByName == nil {
+                    UserDefaults.standard.setValue(ccByName, forKey: "ccByName")
+                }
+                if let agb = userData.policy, !existingAgb {
+                    UserDefaults.standard.setValue(agb, forKey: "agb")
                 }
             }
         }

@@ -88,6 +88,7 @@
 		13A2923E29D33D3600AF772A /* CharactersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A2923D29D33D3600AF772A /* CharactersViewModel.swift */; };
 		13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */; };
 		13AFFA5A2AAF0A0B00ABF4F9 /* EditFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AFFA592AAF0A0B00ABF4F9 /* EditFlowViewModel.swift */; };
+		13B4E7592BCD25D30025C64E /* AGBView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B4E7582BCD25D30025C64E /* AGBView.swift */; };
 		13B686AC2A09055C001FD28F /* EditData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B686AB2A09055C001FD28F /* EditData.swift */; };
 		13B686AE2A091951001FD28F /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B686AD2A091951001FD28F /* Formatter.swift */; };
 		13B686B02A093A75001FD28F /* ObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B686AF2A093A75001FD28F /* ObservationView.swift */; };
@@ -275,6 +276,7 @@
 		13A2923D29D33D3600AF772A /* CharactersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewModel.swift; sourceTree = "<group>"; };
 		13A70A8D29CB05EE006A1E08 /* SpeciesListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItemView.swift; sourceTree = "<group>"; };
 		13AFFA592AAF0A0B00ABF4F9 /* EditFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFlowViewModel.swift; sourceTree = "<group>"; };
+		13B4E7582BCD25D30025C64E /* AGBView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AGBView.swift; sourceTree = "<group>"; };
 		13B686AB2A09055C001FD28F /* EditData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditData.swift; sourceTree = "<group>"; };
 		13B686AD2A091951001FD28F /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		13B686AF2A093A75001FD28F /* ObservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationView.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 			children = (
 				7B2E70652A2F671900164C85 /* AboutView.swift */,
 				7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */,
+				13B4E7582BCD25D30025C64E /* AGBView.swift */,
 				134C75A82A2F513E0046EEE4 /* BirdRecorderView.swift */,
 				13738D552AD984C1004FCB2A /* Button.swift */,
 				7BDA8FC12ABC6AF6002E93C9 /* CCInfoPopupView.swift */,
@@ -849,6 +852,7 @@
 				13F49F5B2BC43FDA0094FB49 /* SourcesImprintViewModel.swift in Sources */,
 				13B686B22A09410A001FD28F /* Coordinates.swift in Sources */,
 				7BDA8FC22ABC6AF6002E93C9 /* CCInfoPopupView.swift in Sources */,
+				13B4E7592BCD25D30025C64E /* AGBView.swift in Sources */,
 				1337159A2A8CFBC2009E31E0 /* HttpErrorViewModel.swift in Sources */,
 				13C880FF2A98BB91007DEC0B /* NaturblickAppDelegate.swift in Sources */,
 				13E50A2D2AE805890049FACD /* AVAudioSession.swift in Sources */,
