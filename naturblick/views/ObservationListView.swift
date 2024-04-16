@@ -25,6 +25,23 @@ class ObservationListViewController: HostingController<ObservationListView> {
         super.init(rootView: view)
         createFlow.setViewController(controller: self)
     }
+    
+    @objc func openMenu(sender: AnyObject) {
+        let menuVC = MenuController(entries: [
+               MenuEntry(title: String(localized: "record_a_bird"), image: UIImage(named: "audio24")!) {
+                   self.createFlow.recordSound()
+               },
+               MenuEntry(title: String(localized: "photograph_a_plant"), image: UIImage(named: "photo24")!) {
+                   self.createFlow.takePhoto()
+               },
+               MenuEntry(title: String(localized: "create_obs"), image: UIImage(named: "logo24")!) {
+                   self.createFlow.createWithSearch()
+               }
+           ], width: 250);
+           
+           menuVC.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
+           navigationController?.present(menuVC, animated: true)
+    }
 }
 
 struct ObservationListView: HostedView {
@@ -52,27 +69,12 @@ struct ObservationListView: HostedView {
         )
     }
     
-    fileprivate func menuEntries() -> [UIAction] {
-        return [
-            UIAction(title: String(localized: "record_a_bird")) { _ in
-                createFlow.recordSound()
-            },
-            UIAction(title: String(localized: "photograph_a_plant")) { _ in
-                createFlow.takePhoto()
-            },
-            UIAction(title: String(localized: "create_obs")) { _ in
-                createFlow.createWithSearch()
-            }
-        ]
-    }
-    
     func configureNavigationItem(item: UINavigationItem, showList: Bool) {
-        item.rightBarButtonItems = [
-            UIBarButtonItem(title: nil, image: UIImage(named: "add_24"), menu: UIMenu(children: menuEntries())),
-            UIBarButtonItem(primaryAction: UIAction(image: UIImage(named: showList ? "map" : "format_list_bulleted")) {action in
-                model.showList.toggle()
-            })
-        ]
+        item.rightBarButtonItems = [ UIBarButtonItem(image: UIImage(named: "add_24"), style: .plain, target: viewController, action: #selector(ObservationListViewController.openMenu)),
+         UIBarButtonItem(primaryAction: UIAction(image: UIImage(named: showList ? "map" : "format_list_bulleted")) {action in
+             model.showList.toggle()
+         })]
+        
     }
     
     func configureNavigationItem(item: UINavigationItem) {
