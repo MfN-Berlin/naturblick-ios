@@ -93,11 +93,7 @@ class BackendClient {
         
         var request = mpr.urlRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!, method: "PUT")
         request.timeoutInterval = 30
-        if let token = bearerToken {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        } else {
-            request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
-        }
+        request.setAuthHeader(bearerToken: bearerToken)
  
         let response: ObservationResponse = try await downloader.httpJson(request: request)
         
@@ -148,7 +144,7 @@ class BackendClient {
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setAuthHeader(bearerToken: bearerToken)
         let _ = try await downloader.http(request: request)
     }
     
@@ -163,9 +159,9 @@ class BackendClient {
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setAuthHeader(bearerToken: bearerToken)
         let _ = try await downloader.http(request: request)
-    }	
+    }
     
     func imageId(mediaId: String) async throws -> [SpeciesResult] {
         let url = URL(string: Configuration.backendUrl + "androidimageid?mediaId=\(mediaId)")
@@ -186,7 +182,7 @@ class BackendClient {
     func spectrogram(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/specgram/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setAuthHeader(bearerToken: bearerToken)
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
     }
@@ -194,14 +190,14 @@ class BackendClient {
     func downloadSound(mediaId: UUID) async throws -> Data {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setAuthHeader(bearerToken: bearerToken)
         return try await downloader.http(request: request)
     }
     
     func downloadCached(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setAuthHeader(bearerToken: bearerToken)
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
     }
