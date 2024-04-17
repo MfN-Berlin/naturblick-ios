@@ -125,9 +125,7 @@ struct ObservationListView: HostedView {
         .task {
             do {
                 try await client.sync(controller: self.persistenceController)
-            } catch {
-                errorHandler.handle(error)
-            }
+            } catch { /* empty */ }
         }
         .onReceive(model.$showList) { showList in
             if let item = viewController?.navigationItem {
