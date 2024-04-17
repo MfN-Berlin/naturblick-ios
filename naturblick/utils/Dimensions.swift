@@ -38,6 +38,5 @@ extension CGSize {
 }
 
 extension Int {
-    static let menuWidth: Int = 250
     static let menuRowHeight: Int = 50
 }

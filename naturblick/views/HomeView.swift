@@ -25,6 +25,38 @@ class HomeViewController: HostingController<HomeView> {
             self.present(agb, animated: true)
         }
     }
+    
+    @objc func openMenu(sender: AnyObject) {
+        let menuVC = MenuController(entries: [
+            MenuEntry(title: String(localized: "help"), image: UIImage(systemName: "questionmark.circle")!) {
+                let view = HelpView().setUpViewController()
+                self.navigationController?.pushViewController(view, animated: true)
+            },
+            MenuEntry(title: String(localized: "account"), image: UIImage(systemName: "person")!) {
+                let view = AccountView().setUpViewController()
+                self.navigationController?.pushViewController(view, animated: true)
+            },
+            MenuEntry(title: String(localized: "action_settings"), image: UIImage(named: "settings")!) {
+                let view = SettingsView().setUpViewController()
+                self.navigationController?.pushViewController(view, animated: true)
+            },
+            MenuEntry(title: String(localized: "feedback"), image: UIImage(systemName: "square.and.pencil")!) {
+                let view = FeedbackView().setUpViewController()
+                self.navigationController?.pushViewController(view, animated: true)
+            },
+            MenuEntry(title: String(localized: "imprint"), image: UIImage(systemName: "shield")!) {
+                let view = ImprintView().setUpViewController()
+                self.navigationController?.pushViewController(view, animated: true)
+            },
+            MenuEntry(title: String(localized: "about_nb"), image: UIImage(systemName: "info.circle")!) {
+                let view = AboutView().setUpViewController()
+                self.navigationController?.pushViewController(view, animated: true)
+            }
+           ], width: 200);
+           
+           menuVC.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
+           navigationController?.present(menuVC, animated: true)
+    }
 }
 
 struct HomeView: HostedView {
@@ -42,37 +74,7 @@ struct HomeView: HostedView {
         item.compactAppearance = nil
         item.scrollEdgeAppearance = nil
         item.compactScrollEdgeAppearance = nil
-        item.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), primaryAction: UIAction(image:  UIImage(systemName: "gearshape")) { action in
-            let menuVC = MenuController(entries: [
-                MenuEntry(title: String(localized: "help"), image: UIImage(systemName: "questionmark.circle")!) {
-                    let view = HelpView().setUpViewController()
-                    navigationController?.pushViewController(view, animated: true)
-                },
-                MenuEntry(title: String(localized: "account"), image: UIImage(systemName: "person")!) {
-                    let view = AccountView().setUpViewController()
-                    navigationController?.pushViewController(view, animated: true)
-                },
-                MenuEntry(title: String(localized: "action_settings"), image: UIImage(named: "settings")!) {
-                    let view = SettingsView().setUpViewController()
-                    navigationController?.pushViewController(view, animated: true)
-                },
-                MenuEntry(title: String(localized: "feedback"), image: UIImage(systemName: "square.and.pencil")!) {
-                    let view = FeedbackView().setUpViewController()
-                    navigationController?.pushViewController(view, animated: true)
-                },
-                MenuEntry(title: String(localized: "imprint"), image: UIImage(systemName: "shield")!) {
-                    let view = ImprintView().setUpViewController()
-                    navigationController?.pushViewController(view, animated: true)
-                },
-                MenuEntry(title: String(localized: "about_nb"), image: UIImage(systemName: "info.circle")!) {
-                    let view = AboutView().setUpViewController()
-                    navigationController?.pushViewController(view, animated: true)
-                }
-            ]);
-            
-            menuVC.popoverPresentationController?.barButtonItem = action.sender as? UIBarButtonItem
-            navigationController?.present(menuVC, animated: true)
-        })
+        item.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: viewController, action: #selector(HomeViewController.openMenu))
     }
     
     @Environment(\.colorScheme) var colorScheme

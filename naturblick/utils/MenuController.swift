@@ -15,12 +15,12 @@ class MenuController : UITableViewController, UIPopoverPresentationControllerDel
     
     private let rowHeight = Int.menuRowHeight
     
-    convenience init(entries: [MenuEntry]) {
+    convenience init(entries: [MenuEntry], width: Int) {
         self.init(style: .plain)
         self.entries = entries
         
         modalPresentationStyle = .popover
-        preferredContentSize = CGSize(width: .menuWidth, height: rowHeight * entries.count)
+        preferredContentSize = CGSize(width: width, height: rowHeight * entries.count)
         presentationController?.delegate = self
         popoverPresentationController?.permittedArrowDirections = .up
     }
@@ -45,7 +45,7 @@ class MenuController : UITableViewController, UIPopoverPresentationControllerDel
         let entry = entries[indexPath.row]
         
         contentConfig.text = entry.title
-        contentConfig.textProperties.font = .nbHeadline6
+        contentConfig.textProperties.font = .nbBody1
         contentConfig.textProperties.color = .onPrimaryHighEmphasis
 
         contentConfig.image = entry.image
