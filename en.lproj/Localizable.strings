@@ -132,7 +132,7 @@
 "edit"="Edit";
 "create_obs"="Create observation";
 "ident_from_photo"="Plant from existing image";
-"source %@"="[Source](%@)";
+"source"="Source";
 "show_results %@"="Show %@ results";
 "no_coordinates"="No coordinates";
 "loading"="Loading";
@@ -184,3 +184,5 @@
 "new_tac_questions"="If you have any questions, please feel free to contact us: [naturblick@mfn.berlin](mailto:naturblick@mfn.berlin)";
 "new_tac_usage_is_acceptance"="By using Naturblick you agree to our terms and conditions.";
 "ok"="Ok";
+"to_orig"="Goto original";
+"to_licence"="Licence information";
