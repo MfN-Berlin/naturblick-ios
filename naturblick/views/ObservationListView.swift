@@ -122,6 +122,13 @@ struct ObservationListView: HostedView {
                 .ignoresSafeArea(edges: .bottom)
             }
         }
+        .task {
+            do {
+                try await client.sync(controller: self.persistenceController)
+            } catch {
+                errorHandler.handle(error)
+            }
+        }
         .onReceive(model.$showList) { showList in
             if let item = viewController?.navigationItem {
                 configureNavigationItem(item: item, showList: showList)
