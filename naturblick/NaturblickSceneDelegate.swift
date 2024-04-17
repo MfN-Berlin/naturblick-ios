@@ -82,6 +82,11 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         URLSession.shared.configuration.timeoutIntervalForRequest = 15
         URLSession.shared.configuration.timeoutIntervalForResource = 30
+        
+        Task {
+            try await BackendClient().register()
+        }
+        
         let window = UIWindow(windowScene: windowScene)
         let navigationController = StandardPopAwareNavigationController(rootViewController: HomeViewController())
         
