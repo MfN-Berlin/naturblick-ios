@@ -144,7 +144,7 @@ class BackendClient {
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        request.setAuthHeader(bearerToken: bearerToken)
+        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
         let _ = try await downloader.http(request: request)
     }
     
@@ -159,7 +159,7 @@ class BackendClient {
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        request.setAuthHeader(bearerToken: bearerToken)
+        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
         let _ = try await downloader.http(request: request)
     }
     
