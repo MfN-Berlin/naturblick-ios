@@ -23,7 +23,7 @@ extension View {
     }
 }
 
-class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController {
+class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController, ImagePickerDelegate {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
     let client = BackendClient()
@@ -33,6 +33,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @Published var region: MKCoordinateRegion = .defaultRegion
     @Published var speciesAvatar: Image = Image("placeholder")
     @Published var showOpenSettings: Bool = false
+    @Published var showDateConfirm: Bool = false
     @Published var openSettingsMessage: String? = nil
     var isCreate: Bool = true
     let fromList: Bool
@@ -56,6 +57,51 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             }
         ).setUpViewController()
         viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+    }
+    
+    @MainActor
+    func pickPhoto() {
+        data = CreateData()
+        region = .defaultRegion
+        speciesAvatar = Image("placeholder")
+        Task { @MainActor in
+            if PHPhotoLibrary.askForPermission() {
+                await PHPhotoLibrary.requestAccess()
+            }
+            let status = AVCaptureDevice.authorizationStatus(for: .video)
+            var accessGranted = false
+            if  status == .notDetermined {
+                accessGranted = await AVCaptureDevice.requestAccess(for: .video)
+            } else if status == .authorized {
+                accessGranted = true
+            } else {
+                // User has previously denied the permission, but ask to take a photo again
+                openSettingsMessage = String(localized: "go_to_app_settings_photo")
+                showOpenSettings = true
+            }
+            
+            guard accessGranted else {
+                return
+            }
+            
+            let imagePicker = ImagePickerController(rootView: ImagePicker(delegate: self))
+            
+            withNavigation { navigation in
+                navigation.present(imagePicker, animated: true)
+            }
+        }
+    }
+    
+    func pickedFromPhotos(uiImage: UIImage, assetResult: AssetResult) {
+        Task {
+            if let creationDate = assetResult.creationDate {
+                self.data.created = creationDate
+            }
+            self.data.coords =  assetResult.location.map { Coordinates(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude) }
+            let image = NBImage(image: uiImage, localIdentifier: assetResult.localIdentifier)
+            showDateConfirm = true
+            cropPhoto(image: image)
+        }
     }
 
     @MainActor
@@ -191,6 +237,16 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
             }
         }
+        if showDateConfirm {
+            navigationController?.pushViewController(ConfirmDateView(createFlow: self).setUpViewController(), animated: true)
+        } else {
+            showCreateView()
+        }
+        
+    }
+    
+    @MainActor
+    func showCreateView() {
         let create = CreateObservationView(createFlow: self).setUpViewController()
         navigationController?.pushViewController(create, animated: true)
     }

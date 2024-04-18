@@ -11,6 +11,12 @@ struct NBImage {
     let localIdentifier: String?
     let image: UIImage
     
+    init(id: UUID = UUID(), image: UIImage, localIdentifier: String) {
+        self.id = id
+        self.image = image
+        self.localIdentifier = localIdentifier
+    }
+    
     init(id: UUID = UUID(), image: UIImage) async throws {
         self.id = id
         self.image = image
