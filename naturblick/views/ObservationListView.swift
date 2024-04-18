@@ -98,6 +98,7 @@ struct ObservationListView: HostedView {
                             self.showDelete = true
                     }
                 }
+                .animation(.default, value: persistenceController.observations)
                 .listStyle(.plain)
                 .refreshable {
                     do {
