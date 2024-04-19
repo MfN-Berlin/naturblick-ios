@@ -59,17 +59,17 @@ struct LoginView: NavigatableView {
             }
             if let prompt = loginVM.emailPrompt {
                 Text(prompt)
-                    .caption()
+                    .caption(color: .onSecondaryMediumEmphasis)
             }
             OnSecondaryFieldView(image: Image("visibility")) {
                 SecureField(String(localized: "password"), text: $loginVM.password)
             }
             if let prompt = loginVM.passwordPrompt {
                 Text(prompt)
-                    .caption()
+                    .caption(color: .onSecondaryMediumEmphasis)
             } else if loginVM.passwordPrompt == nil {
                 Text("password_format")
-                    .caption()
+                    .caption(color: .onSecondaryMediumEmphasis)
             }
             if showCredentialsWrong {
                 Text("email_or_password_invalid")

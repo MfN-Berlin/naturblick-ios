@@ -74,7 +74,7 @@ struct AccountView: NavigatableView {
                         accountViewModel.signOut()
                     }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
                     Text("activation_link_note")
-                        .caption()
+                        .caption(color: .onSecondaryMediumEmphasis)
                 } else {
                     Text("signed_out")
                         .body1()
