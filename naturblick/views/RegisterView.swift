@@ -51,7 +51,7 @@ struct RegisterView: NavigatableView {
                 }
                 if let prompt = registerVM.emailPrompt {
                     Text(prompt)
-                        .caption()
+                        .caption(color: .onSecondaryMediumEmphasis)
                 }
                 
                 if showAlreadyExists {
@@ -66,10 +66,10 @@ struct RegisterView: NavigatableView {
                 }
                 if let prompt = registerVM.passwordPrompt {
                     Text(prompt)
-                        .caption()
+                        .caption(color: .onSecondaryMediumEmphasis)
                 } else if registerVM.passwordPrompt == nil {
                     Text("password_format")
-                        .caption()
+                        .caption(color: .onSecondaryMediumEmphasis)
                 }
                             
                 Text("privacy_rules_text")
