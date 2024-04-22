@@ -18,6 +18,17 @@ enum ImportError: Error {
 extension URLSession {
     static let validStatus = 200...299
     func httpData(from url: URL) async throws -> Data {
+        for _ in 0..<5 {
+            do {
+                return try await load(url: url)
+            } catch {
+                try? await Task.sleep(nanoseconds: 500_000_000)
+                continue
+            }
+        }
+        return try await load(url: url)
+    }
+    func load(url: URL) async throws -> Data {
         guard let (data, response) = try await self.data(from: url, delegate: nil) as? (Data, HTTPURLResponse),
               URLSession.validStatus.contains(response.statusCode) else {
             throw ImportError.networkError
