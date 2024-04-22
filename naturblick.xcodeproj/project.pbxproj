@@ -99,6 +99,7 @@
 		13C850DC2AA20CE30006FA1A /* CreateFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C850DB2AA20CE30006FA1A /* CreateFlowViewModel.swift */; };
 		13C880FF2A98BB91007DEC0B /* NaturblickAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C880FE2A98BB91007DEC0B /* NaturblickAppDelegate.swift */; };
 		13C881012A98BC07007DEC0B /* NaturblickSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */; };
+		13D8A7E32BD68DBF008AF50E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13D8A7E22BD68DBF008AF50E /* PrivacyInfo.xcprivacy */; };
 		13E50A282AE7F4010049FACD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13E50A2A2AE7F4010049FACD /* InfoPlist.strings */; };
 		13E50A2D2AE805890049FACD /* AVAudioSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E50A2C2AE805890049FACD /* AVAudioSession.swift */; };
 		13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */; };
@@ -287,6 +288,7 @@
 		13C850DB2AA20CE30006FA1A /* CreateFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFlowViewModel.swift; sourceTree = "<group>"; };
 		13C880FE2A98BB91007DEC0B /* NaturblickAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickAppDelegate.swift; sourceTree = "<group>"; };
 		13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickSceneDelegate.swift; sourceTree = "<group>"; };
+		13D8A7E22BD68DBF008AF50E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13E50A292AE7F4010049FACD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13E50A2B2AE7F40A0049FACD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13E50A2C2AE805890049FACD /* AVAudioSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioSession.swift; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 		131E785529C9BB24000DF928 = {
 			isa = PBXGroup;
 			children = (
+				13D8A7E22BD68DBF008AF50E /* PrivacyInfo.xcprivacy */,
 				13E50A2A2AE7F4010049FACD /* InfoPlist.strings */,
 				7B3507C72AD6D824006F594B /* Localizable.strings */,
 				131E786029C9BB24000DF928 /* naturblick */,
@@ -773,6 +776,7 @@
 				7B3507C52AD6D824006F594B /* Localizable.strings in Resources */,
 				13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */,
 				13E50A282AE7F4010049FACD /* InfoPlist.strings in Resources */,
+				13D8A7E32BD68DBF008AF50E /* PrivacyInfo.xcprivacy in Resources */,
 				132B0D9C29CDD78600B80C9E /* lato_regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
