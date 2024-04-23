@@ -92,6 +92,24 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         }
     }
     
+    @objc func cancel() {
+        if let controller = viewController, let navigation = controller.navigationController {
+            navigation.popToViewController(controller, animated: true)
+        }
+    }
+    
+    @objc func discard() {
+        if let controller = viewController {
+            let alert = UIAlertController(title: String(localized: "save_observation"), message: String(localized: "save_observation_message"), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: String(localized: "exit_without_saving_observation"), style: .destructive, handler: { _ in
+                self.cancel()
+            }))
+            alert.addAction(UIAlertAction(title: String(localized: "cancel"), style: .cancel, handler: { _ in
+            }))
+            controller.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     @MainActor private func cropPhoto(image: NBImage) {
         data.image.image = image
         data.image.crop = nil
@@ -103,6 +121,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         cropViewController.delegate = self
         withNavigation { navigation in
             navigation.pushViewController(cropViewController, animated: true)
+            cropViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: String(localized: "discard"), style: .plain, target: self, action: #selector(CreateFlowViewModel.discard))
         }
     }
     
@@ -134,11 +153,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             guard accessGranted else {
                 return
             }
-            
-            withNavigation { navigation in
-                let soundRecorder = BirdRecorderView(flow: self)
-                navigation.pushViewController(soundRecorder.setUpViewController(), animated: true)
-            }
+            navigationController?.pushViewController(BirdRecorderView(flow: self).setUpViewController(), animated: true)
         }
     }
     
