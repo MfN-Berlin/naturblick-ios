@@ -185,3 +185,9 @@
 "ok"="Ok";
 "to_orig"="Goto original";
 "to_licence"="Licence information";
+"save_observation"="Attention";
+"save_observation_message"="The observation has not been saved. Unsaved observations cannot be recovered.";
+"exit_without_saving_observation"="Discard observation";
+"save_changes"="Unsaved changes";
+"save_changes_message"="There are changes that have not been saved.";
+"exit_without_saving"="Discard changes";
