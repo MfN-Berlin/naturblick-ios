@@ -61,7 +61,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
                 Text(species.sciname)
                     .overline(color: .onSecondarySignalHigh)
                     .multilineTextAlignment(.center)
-                Text(species.speciesName?.uppercased() ?? String(localized: "speciesname").uppercased())
+                Text(species.speciesName?.uppercased() ?? species.sciname.uppercased())
                     .headline4(color: .onSecondaryHighEmphasis)
                     .multilineTextAlignment(.center)
                 
