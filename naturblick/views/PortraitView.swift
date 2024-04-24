@@ -62,7 +62,7 @@ struct PortraitView: HostedView {
                             Text(portrait.species.sciname)
                                 .overline(color: .onPrimarySignalHigh)
                                 .multilineTextAlignment(.center)
-                            Text(portrait.species.speciesName?.uppercased() ?? String(localized: "speciesname").uppercased())
+                            Text(portrait.species.speciesName?.uppercased() ?? portrait.species.sciname.uppercased())
                                 .headline4(color: .onPrimaryHighEmphasis)
                                 .multilineTextAlignment(.center)
                             if let synonym = portrait.species.synonym {

@@ -29,9 +29,8 @@ class SpeciesListViewModel: ObservableObject {
                       on: Portrait.Definition.speciesId == Species.Definition.table[Species.Definition.id])
                 .filter(Species.Definition.group == group.id)
                 .filter(Portrait.Definition.language == Int(getLanguageId()))
-                .order(Species.Definition.gername)
             let queryWithSearch = searchString != nil ? filterSearchString(query, searchString) : query
-            return try speciesDb.prepareRowIterator(queryWithSearch.order(Species.Definition.gername))
+            return try speciesDb.prepareRowIterator(queryWithSearch.order(isGerman() ? Species.Definition.gername : Species.Definition.engname))
                 .map { row in
                     SpeciesListItem(
                         speciesId: row[Species.Definition.table[Species.Definition.id]],
@@ -39,7 +38,7 @@ class SpeciesListViewModel: ObservableObject {
                         speciesName: isGerman() ? row[Species.Definition.gername] : row[Species.Definition.engname],
                         maleUrl: row[Species.Definition.maleUrl],
                         femaleUrl: row[Species.Definition.femaleUrl],
-                        synonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engname],
+                        synonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engsynonym],
                         isFemale: nil,
                         wikipedia: row[Species.Definition.wikipedia],
                         hasPortrait: true,

@@ -84,10 +84,10 @@ extension Species {
         SpeciesListItem(
             speciesId: id,
             sciname: sciname,
-            speciesName: isGerman() ? gername : engname,
+            speciesName: speciesName,
             maleUrl: maleUrl,
             femaleUrl: femaleUrl,
-            synonym: isGerman() ? gersynonym : engsynonym,
+            synonym: synonym,
             isFemale: nil,
             wikipedia: wikipedia,
             hasPortrait: hasPortrait,
