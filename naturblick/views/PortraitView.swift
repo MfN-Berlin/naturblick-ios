@@ -5,36 +5,11 @@
 
 import SwiftUI
 
-class PortraitViewController: HostingController<PortraitView> {
-    let createFlow: CreateFlowViewModel
-
-    // Used by species portrait direct link
-    init(species: SpeciesListItem, inSelectionFlow: Bool) {
-        createFlow = CreateFlowViewModel(persistenceController: ObservationPersistenceController())
-        let view = PortraitView(flow: createFlow, species: species, inSelectionFlow: inSelectionFlow)
-        super.init(rootView: view)
-        createFlow.setViewController(controller: self)
-    }
-    
-    init(species: SpeciesListItem, inSelectionFlow: Bool, createFlow: CreateFlowViewModel) {
-        self.createFlow = createFlow
-        let view = PortraitView(flow: createFlow, species: species, inSelectionFlow: inSelectionFlow)
-        super.init(rootView: view)
-    }
-}
-
-struct PortraitView: HostedView {
-    var holder: ViewControllerHolder = ViewControllerHolder()
-    var viewName: String? {
-        species.name
-    }
-    var alwaysDarkBackground: Bool = true
-    
+struct PortraitView: View {
     @StateObject var portraitViewModel = PortraitViewModel()
     @StateObject var similarSpeciesViewModel = SimilarSpeciesViewModel()
-    @ObservedObject var flow: CreateFlowViewModel
     let species: SpeciesListItem
-    let inSelectionFlow: Bool
+    let similarSpeciesDestination: (SpeciesListItem) -> Void
     
     var body: some View {
         GeometryReader { geo in
@@ -70,13 +45,6 @@ struct PortraitView: HostedView {
                                     .caption(color: .onPrimarySignalLow)
                                     .multilineTextAlignment(.center)
                             }
-                            if !inSelectionFlow {
-                                Button("i_observed", icon: "artportraits24") {
-                                    flow.selectManual(species: species)
-                                }
-                                .buttonStyle(SecondaryOnSecondaryButton())
-                                .padding(.top, .defaultPadding)
-                            }
                         }
                         .padding(.bottom, .defaultPadding * 2)
                         .padding([.top, .horizontal], .defaultPadding)
@@ -90,7 +58,7 @@ struct PortraitView: HostedView {
                             VStack(alignment: .leading, spacing: .defaultPadding) { // similar species
                                 SpeciesFeaturesView(portraitId: portrait.id, species: portrait.species)
                                 if !similarSpeciesViewModel.mixups.isEmpty {
-                                    SimilarSpeciesView(similarSpeciesViewModel: similarSpeciesViewModel, holder: holder, inSelectionFlow: inSelectionFlow)
+                                    SimilarSpeciesView(similarSpeciesViewModel: similarSpeciesViewModel, similarSpeciesDestination: similarSpeciesDestination)
                                 }
                             }
                             .padding(.defaultPadding)
@@ -168,7 +136,10 @@ struct PortraitView: HostedView {
 }
 
 struct PortraitView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        PortraitView(flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)), species: SpeciesListItem.sampleData, inSelectionFlow: false)
+        PortraitView(species: SpeciesListItem.sampleData) { _ in
+            
+        }
     }
 }

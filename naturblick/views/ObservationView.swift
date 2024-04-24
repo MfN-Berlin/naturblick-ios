@@ -8,11 +8,8 @@ import MapKit
 import os
 
 class ObservationViewController: HostingController<ObservationView> {
-    let persistenceController: ObservationPersistenceController
     let model: ObservationViewModel
-
-    init(occurenceId: UUID, persistenceController: ObservationPersistenceController) {
-        self.persistenceController = persistenceController
+    init(occurenceId: UUID, persistenceController: ObservationPersistenceController, flow: CreateFlowViewModel) {
         self.model = ObservationViewModel(viewObservation: occurenceId, persistenceController: persistenceController)
         super.init(rootView: ObservationView(occurenceId: occurenceId, persistenceController: persistenceController, model: model))
     }
@@ -75,7 +72,7 @@ struct ObservationView: HostedView {
             .contentShape(Rectangle())
             .onTapGesture {
                 if let species = model.observation?.species?.listItem {
-                    navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
+                    navigationController?.pushViewController(SpeciesInfoView(selectionFlow: false, species: species, flow: VoidSelectionFlow()).setUpViewController(), animated: true)
                 }
             }
             Divider()

@@ -6,14 +6,14 @@
 import SwiftUI
 import CachedAsyncImage
 
-struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
+struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     @Environment(\.openURL) var openURL
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
         species.name
     }
-    
+    let selectionFlow: Bool
     let species: SpeciesListItem
     @ObservedObject var flow: Flow
     
@@ -26,71 +26,79 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
     }
     
     func configureNavigationItem(item: UINavigationItem) {
-        item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "close")) {_ in
-            viewController?.dismiss(animated: true)
-        })
-        item.rightBarButtonItem  = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "create_with_species")) {_ in
-            viewController?.dismiss(animated: true)
-            flow.selectSpecies(species: species)
-        })
+        if navigationController?.viewControllers.first == viewController {
+            item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "close")) {_ in
+                viewController?.dismiss(animated: true)
+            })
+        }
+        if !(flow is VoidSelectionFlow) {
+            let actionString = selectionFlow ? String(localized: "create_with_species") : String(localized: "i_observed")
+            item.rightBarButtonItem  = UIBarButtonItem(primaryAction: UIAction(title: actionString) {_ in
+                viewController?.dismiss(animated: true)
+                flow.selectSpecies(species: species)
+            })
+        }
+    }
+    
+    func navigate(species: SpeciesListItem) {
+        navigationController?.pushViewController(SpeciesInfoView(selectionFlow: selectionFlow, species: species, flow: flow).setUpViewController(), animated: true)
     }
     
     var body: some View {
-        VStack(alignment: .center, spacing: .defaultPadding) {
-            SwiftUI.Group {
-                CachedAsyncImage(urlRequest: urlRequest) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(RoundedRectangle(cornerRadius: .largeCornerRadius))
-                } placeholder: {
-                    Image("placeholder")
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(Circle())
+        if species.hasPortrait {
+            PortraitView(species: species, similarSpeciesDestination: navigate)
+        } else {
+            VStack(alignment: .center, spacing: .defaultPadding) {
+                SwiftUI.Group {
+                    CachedAsyncImage(urlRequest: urlRequest) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(RoundedRectangle(cornerRadius: .largeCornerRadius))
+                    } placeholder: {
+                        Image("placeholder")
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(Circle())
+                    }
                 }
-            }
-            .overlay(alignment: .bottomTrailing) {
-                if let audioUrl = species.audioUrl {
-                    SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!, speciesId: species.speciesId)
-                        .frame(height: .fabSize)
-                        .padding(.defaultPadding)
+                .overlay(alignment: .bottomTrailing) {
+                    if let audioUrl = species.audioUrl {
+                        SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!, speciesId: species.speciesId)
+                            .frame(height: .fabSize)
+                            .padding(.defaultPadding)
+                    }
                 }
-            }
-            VStack {
-                Text(species.sciname)
-                    .overline(color: .onSecondarySignalHigh)
-                    .multilineTextAlignment(.center)
-                Text(species.speciesName?.uppercased() ?? species.sciname.uppercased())
-                    .headline4(color: .onSecondaryHighEmphasis)
-                    .multilineTextAlignment(.center)
-                
-                if let synonym = species.synonym {
-                    Text("also \(synonym)")
-                        .caption(color: .onSecondaryLowEmphasis)
+                VStack {
+                    Text(species.sciname)
+                        .overline(color: .onSecondarySignalHigh)
                         .multilineTextAlignment(.center)
+                    Text(species.speciesName?.uppercased() ?? species.sciname.uppercased())
+                        .headline4(color: .onSecondaryHighEmphasis)
+                        .multilineTextAlignment(.center)
+                    
+                    if let synonym = species.synonym {
+                        Text("also \(synonym)")
+                            .caption(color: .onSecondaryLowEmphasis)
+                            .multilineTextAlignment(.center)
+                    }
                 }
-            }
-            if species.hasPortrait {
-                Button("to_artportrait", icon: "artportraits24") {
-                    navigationController?.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
+                if let wikipedia = species.wikipedia {
+                    Button("link_to_wikipedia") {
+                        openURL(URL(string: wikipedia)!)
+                    }
+                    .buttonStyle(AuxiliaryOnSecondaryButton())
                 }
-                .buttonStyle(AuxiliaryOnSecondaryButton())
-            } else if let wikipedia = species.wikipedia {
-                Button("link_to_wikipedia") {
-                    openURL(URL(string: wikipedia)!)
-                }
-                .buttonStyle(AuxiliaryOnSecondaryButton())
-            }
-            Spacer()
+                Spacer()
+            }.padding(.defaultPadding)
         }
-        .padding(.defaultPadding)
+        
     }
 }
 
 struct SpeciesInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesInfoView(species: .sampleData, flow: IdFlowSample())
+        SpeciesInfoView(selectionFlow: false, species: .sampleData, flow: VoidSelectionFlow())
     }
 }
 

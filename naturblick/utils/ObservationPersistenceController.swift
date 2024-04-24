@@ -139,6 +139,12 @@ class ObservationPersistenceController: ObservableObject {
             guard let row = try speciesDb.pluck(Species.Definition.table.filter(Species.Definition.id == speciesId)) else {
                 return Observation(observation: observation, species: nil)
             }
+            let portraits = try? speciesDb.scalar(
+                Portrait.Definition.table
+                    .filter(Portrait.Definition.speciesId == speciesId)
+                    .filter(Portrait.Definition.language == Int(getLanguageId()))
+                    .count
+            )
             let species = Species(
                 id: row[Species.Definition.id],
                 group: row[Species.Definition.group],
@@ -152,7 +158,7 @@ class ObservationPersistenceController: ObservableObject {
                 engsynonym: row[Species.Definition.engsynonym],
                 redListGermany: row[Species.Definition.redListGermany],
                 iucnCategory: row[Species.Definition.iucnCategory],
-                hasPortrait: false
+                hasPortrait: (portraits ?? 0) > 0
             )
             return Observation(observation: observation, species: species)
         }
