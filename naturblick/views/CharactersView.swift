@@ -23,36 +23,38 @@ struct CharactersView: NavigatableView {
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                ForEach(charactersViewModel.characters, id: \.0.id) { character, values in
-                    CharacterView(character: character, values: values, selected: $charactersViewModel.selected)
-                    if character.id != charactersViewModel.characters.last?.0.id {
-                        Divider()
+        GeometryReader { geo in
+            ScrollView {
+                VStack {
+                    ForEach(charactersViewModel.characters, id: \.0.id) { character, values in
+                        CharacterView(character: character, values: values, selected: $charactersViewModel.selected)
+                        if character.id != charactersViewModel.characters.last?.0.id {
+                            Divider()
+                        }
                     }
                 }
+                .padding(.bottom, geo.safeAreaInsets.bottom + .doublePadding)
             }
-            .padding(.bottom, .doublePadding)
-        }
-        .task {
-            charactersViewModel.configure(group: group)
-        }
-        .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
-            Button(String(localized: "show_results \(charactersViewModelCountStr)")) {
-                navigationController?.pushViewController(
-                    SpeciesListView(filter: charactersViewModel.filter, flow: flow, isCharacterResult: true).setUpViewController(), animated: true)
+            .task {
+                charactersViewModel.configure(group: group)
             }
-            .accentColor(Color.onPrimaryButtonPrimary)
-            .buttonStyle(.borderedProminent)
-            .padding(.defaultPadding)
-            .padding(.bottom, .defaultPadding * 2)
-            .disabled(charactersViewModel.selected.isEmpty)
+            .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
+                Button(String(localized: "show_results \(charactersViewModelCountStr)")) {
+                    navigationController?.pushViewController(
+                        SpeciesListView(filter: charactersViewModel.filter, flow: flow, isCharacterResult: true).setUpViewController(), animated: true)
+                }
+                .accentColor(Color.onPrimaryButtonPrimary)
+                .buttonStyle(.borderedProminent)
+                .padding(.horizontal, .defaultPadding)
+                .padding(.bottom, geo.safeAreaInsets.bottom)
+                .disabled(charactersViewModel.selected.isEmpty)
+            }
+            .customBackground(
+                RoundedRectangle(cornerRadius: .largeCornerRadius)
+                    .fill(Color.secondaryColor)
+                    .nbShadow()
+            )
         }
-        .customBackground(
-            RoundedRectangle(cornerRadius: .largeCornerRadius)
-                .fill(Color.secondaryColor)
-                .nbShadow()
-        )
     }
 }
 
