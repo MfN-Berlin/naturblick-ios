@@ -7,8 +7,6 @@ import SwiftUI
 struct GroupButton: View {
 
     let group: Group
-    let geo: GeometryProxy
-
     var body: some View {
         VStack(spacing: .defaultPadding) {
             Image(group.image)
@@ -16,7 +14,7 @@ struct GroupButton: View {
                 .imageScale(.small)
                 .clipShape(Circle())
                 .scaledToFit()
-                .frame(width: geo.size.width * .topRowFactor)
+                .padding(.horizontal, .halfPadding)
                 .nbShadow()
             Text(isGerman() ? group.gerName : group.engName)
                 .caption(color: .onPrimaryHighEmphasis)
@@ -28,8 +26,6 @@ struct GroupButton: View {
 
 struct GroupButton_Previews: PreviewProvider {
     static var previews: some View {
-        GeometryReader { geo in
-            GroupButton(group: Group.groups[0], geo: geo)
-        }
+        GroupButton(group: Group.groups[0])
     }
 }

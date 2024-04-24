@@ -183,3 +183,9 @@
 "ok"="Ok";
 "to_orig"="Zum Original";
 "to_licence"="Lizenzinfo";
+"save_observation"="Achtung";
+"save_observation_message"="Deine Beobachtung ist noch nicht gespeichert. Nicht gespeicherte Beobachtungen können nicht wieder hergestellt werden.";
+"exit_without_saving_observation"="Beobachtung verwerfen";
+"save_changes"="Nicht gespeicherte Änderungen";
+"save_changes_message"="Es gibt Änderungen, die noch nicht gespeichert geworden sind.";
+"exit_without_saving"="Änderungen verwerfen";

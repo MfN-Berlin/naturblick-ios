@@ -139,16 +139,12 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         let thumbnail = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
             cropped.draw(in: CGRect(origin: .zero, size: .thumbnail))
         }
-        do {
-            let crop = try NBThumbnail(image: thumbnail)
-            imageData.crop = crop
-            data.thumbnail = crop
-            imageData.result = nil
-            withNavigation { navigation in
-                cropDone(thumbnail: crop)
-            }
-        } catch {
-            preconditionFailure("\(error)")
+        let crop = NBThumbnail(image: thumbnail)
+        imageData.crop = crop
+        data.thumbnail = crop
+        imageData.result = nil
+        withNavigation { navigation in
+            cropDone(thumbnail: crop)
         }
     }
     

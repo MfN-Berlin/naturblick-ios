@@ -10,7 +10,12 @@ struct BirdRecorderView: NavigatableView {
     var alwaysDarkBackground: Bool = true
     @StateObject private var model = BirdRecorderViewModel()
     @ObservedObject var flow: CreateFlowViewModel
-
+    
+    func configureNavigationItem(item: UINavigationItem) {
+        item.hidesBackButton = true
+        item.leftBarButtonItem = UIBarButtonItem(title: String(localized: "cancel"), style: .plain, target: flow, action: #selector(CreateFlowViewModel.cancel))
+    }
+    
     var body: some View {
         StaticBottomSheetView {
             HStack(alignment: .center) {

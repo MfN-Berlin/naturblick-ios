@@ -12,30 +12,30 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
     let destination: (Group) -> Content
     
     var body: some View {
-        ScrollView() {
-            Image("artportraits24")
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(.onPrimarySignalHigh)
-                .frame(width: .headerIconSize, height: .headerIconSize)
-                .padding(.top, .doublePadding)
-            Text("choose_a_group")
-                .headline3()
-                .padding(.bottom, .doublePadding)
-            GeometryReader { geo in
-                LazyVGrid(columns: [
-                    GridItem(spacing: .defaultPadding, alignment: .top),
-                    GridItem(spacing: .defaultPadding, alignment: .top),
-                    GridItem(spacing: .defaultPadding, alignment: .top)
-                ], spacing: .defaultPadding) {
-                    ForEach(groups) { group in
-                        GroupButton(group: group, geo: geo).onTapGesture {
-                            let nextViewController = destination(group).setUpViewController()
-                            viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+        ScrollView {
+            VStack {
+                Image("artportraits24")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.onPrimarySignalHigh)
+                    .frame(width: .headerIconSize, height: .headerIconSize)
+                    .padding(.top, .defaultPadding)
+                Text("choose_a_group")
+                    .headline3()
+                    .padding(.bottom, .doublePadding)
+                   LazyVGrid(columns: [
+                        GridItem(spacing: .defaultPadding, alignment: .top),
+                        GridItem(spacing: .defaultPadding, alignment: .top),
+                        GridItem(spacing: .defaultPadding, alignment: .top)
+                    ], spacing: .defaultPadding) {
+                        ForEach(groups) { group in
+                            GroupButton(group: group).onTapGesture {
+                                let nextViewController = destination(group).setUpViewController()
+                                viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+                            }
                         }
-                    }
-                }
-            }.padding(.defaultPadding)
+                }.padding(.defaultPadding)
+            }
         }
     }
 }

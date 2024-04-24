@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-class EditObservationViewController: HostingController<EditObservationView> {
+class EditObservationViewController: HostingController<EditObservationView>, UIAdaptivePresentationControllerDelegate {
     let flow: EditFlowViewModel
     
     init(observation: Observation, persistenceController: ObservationPersistenceController) {
@@ -14,6 +14,31 @@ class EditObservationViewController: HostingController<EditObservationView> {
         flow.setViewController(controller: self)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationController?.presentationController?.delegate = self
+    }
+    
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        return !flow.data.hasChanged
+    }
+    
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        cancelOrDiscardAlert()
+    }
+
+    func cancelOrDiscardAlert() {
+        let alert = UIAlertController(title: String(localized: "save_changes"), message: String(localized: "save_changes_message"), preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: String(localized: "exit_without_saving"), style: .destructive, handler: { _ in
+            self.dismiss(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: String(localized: "save"), style: .default, handler: { _ in
+            self.save()
+        }))
+        alert.addAction(UIAlertAction(title: String(localized: "cancel"), style: .cancel, handler: { _ in
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
     
     @objc func save() {
         flow.saveObservation()
@@ -21,7 +46,11 @@ class EditObservationViewController: HostingController<EditObservationView> {
     }
     
     @objc func cancel() {
-        dismiss(animated: true)
+        if flow.data.hasChanged {
+            cancelOrDiscardAlert()
+        } else {
+            dismiss(animated: true)
+        }
     }
 }
 
