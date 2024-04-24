@@ -17,14 +17,6 @@ struct AboutView: NavigatableView {
             VStack(alignment: .leading, spacing: .defaultPadding) {
                 Text("about_text")
                     .body1()
-                Button("feedback_form") {
-                    let deviceName = "ios"
-                    let appVersion = UIApplication.appVersion
-                    let survey = "https://survey.naturkundemuseum-berlin.de/de/Feedback%20Naturblick?device_name=\(deviceName)&version=\(appVersion)"
-                    if let url = URL(string: survey) {
-                        UIApplication.shared.open(url)
-                    }
-                }.buttonStyle(ConfirmFullWidthButton())
                 
                 Button("feedback_email") {
                     let email = "naturblick@mfn-berlin.de"
