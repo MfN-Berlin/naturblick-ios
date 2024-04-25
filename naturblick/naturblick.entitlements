@@ -5,7 +5,9 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:naturblick.museumfuernaturkunde.berlin</string>
-		<string>applinks:staging.naturblick.net</string>
+		<string>applinks:staging.naturblick.museumfuernaturkunde.berlin</string>
+		<string>webcredentials:naturblick.museumfuernaturkunde.berlin</string>
+		<string>webcredentials:staging.naturblick.museumfuernaturkunde.berlin</string>
 	</array>
 </dict>
 </plist>
