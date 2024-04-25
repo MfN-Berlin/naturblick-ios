@@ -55,7 +55,9 @@ struct LoginView: NavigatableView {
             
             OnSecondaryFieldView(icon: "create_24px") {
                 TextField(String(localized: "email"), text: $loginVM.email)
+                    .textContentType(.username)
                     .keyboardType(.emailAddress)
+                    .textInputAutocapitalization(.never)
             }
             if let prompt = loginVM.emailPrompt {
                 Text(prompt)
@@ -63,6 +65,8 @@ struct LoginView: NavigatableView {
             }
             OnSecondaryFieldView(image: Image("visibility")) {
                 SecureField(String(localized: "password"), text: $loginVM.password)
+                    .textContentType(.password)
+                    .textInputAutocapitalization(.never)
             }
             if let prompt = loginVM.passwordPrompt {
                 Text(prompt)

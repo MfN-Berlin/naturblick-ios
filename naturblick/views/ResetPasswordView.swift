@@ -39,8 +39,9 @@ struct ResetPasswordView: NavigatableView {
         VStack(spacing: .defaultPadding) {
             OnSecondaryFieldView(image: Image("visibility")) {
                 SecureField(String(localized: "password"), text: $resetPasswordVM.password)
+                    .textContentType(.newPassword)
                     .autocorrectionDisabled(true)
-                    .autocapitalization(.none)
+                    .textInputAutocapitalization(.never)
             }
             if let prompt = resetPasswordVM.passwordPrompt {
                 Text(prompt)

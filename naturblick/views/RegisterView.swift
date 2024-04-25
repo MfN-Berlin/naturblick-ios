@@ -45,9 +45,10 @@ struct RegisterView: NavigatableView {
                 
                 OnSecondaryFieldView(icon: "create_24px") {
                     TextField(String(localized: "email"), text: $registerVM.email)
+                        .textContentType(.username)
                         .keyboardType(.emailAddress)
                         .autocorrectionDisabled(true)
-                        .autocapitalization(.none)
+                        .textInputAutocapitalization(.never)
                 }
                 if let prompt = registerVM.emailPrompt {
                     Text(prompt)
@@ -61,8 +62,9 @@ struct RegisterView: NavigatableView {
                 
                 OnSecondaryFieldView(image: Image("visibility")) {
                     SecureField(String(localized: "password"), text: $registerVM.password)
+                        .textContentType(.newPassword)
                         .autocorrectionDisabled(true)
-                        .autocapitalization(.none)
+                        .textInputAutocapitalization(.never)
                 }
                 if let prompt = registerVM.passwordPrompt {
                     Text(prompt)
