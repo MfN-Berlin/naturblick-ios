@@ -8,6 +8,13 @@ import SwiftUI
 import Mantis
 import MapKit
 import Photos
+import PhotosUI
+
+struct AssetResult {
+    let localIdentifier: String
+    let location: CLLocation?
+    let creationDate: ZonedDateTime?
+}
 
 extension View {
     func permissionSettingsDialog(isPresented: Binding<Bool>, presenting: String?) -> some View {
@@ -23,7 +30,7 @@ extension View {
     }
 }
 
-class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController, ImagePickerDelegate {
+class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController, PHPickerViewControllerDelegate {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
     let client = BackendClient()
@@ -84,11 +91,35 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 return
             }
             
-            let imagePicker = ImagePickerController(rootView: ImagePicker(delegate: self))
-            
-            withNavigation { navigation in
-                navigation.present(imagePicker, animated: true)
+            var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+            config.filter = .images
+            let picker = PHPickerViewController(configuration: config)
+            picker.delegate = self
+            navigationController?.present(picker, animated: true)
+        }
+    }
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        if let result = results.first {
+            let itemProvider: NSItemProvider = result.itemProvider
+            if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                itemProvider.loadObject(ofClass: UIImage.self) { image, _ in
+                    if let uiImage = image as? UIImage {
+                        self.pickedFromPhotos(uiImage: uiImage, assetResult: self.getAssetResult(result: result)!)
+                    }
+                }
             }
+        }
+    }
+    
+    private func getAssetResult(result: PHPickerResult) -> AssetResult? {
+        if let assetId = result.assetIdentifier, let phResult = PHAsset.fetchAssets(withLocalIdentifiers: [assetId], options: nil).firstObject {
+            AssetResult(localIdentifier: phResult.localIdentifier, location: phResult.location, creationDate: phResult.creationDate.map {
+                d in ZonedDateTime(date: d, tz: TimeZone(secondsFromGMT: 0)!)
+            } )
+        } else {
+            nil
         }
     }
     
