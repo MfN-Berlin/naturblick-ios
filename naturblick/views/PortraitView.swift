@@ -74,7 +74,7 @@ struct PortraitView: HostedView {
                                 Button("i_observed", icon: "artportraits24") {
                                     flow.selectManual(species: species)
                                 }
-                                .buttonStyle(AuxiliaryOnPrimaryButton())
+                                .buttonStyle(SecondaryOnSecondaryButton())
                                 .padding(.top, .defaultPadding)
                             }
                         }
