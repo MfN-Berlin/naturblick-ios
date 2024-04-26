@@ -10,12 +10,6 @@ import MapKit
 import Photos
 import PhotosUI
 
-struct AssetResult {
-    let localIdentifier: String
-    let location: CLLocation?
-    let creationDate: ZonedDateTime?
-}
-
 extension View {
     func permissionSettingsDialog(isPresented: Binding<Bool>, presenting: String?) -> some View {
         self.confirmationDialog("open_settings", isPresented: isPresented, presenting: presenting) { _ in
@@ -106,32 +100,26 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             if itemProvider.canLoadObject(ofClass: UIImage.self) {
                 itemProvider.loadObject(ofClass: UIImage.self) { image, _ in
                     if let uiImage = image as? UIImage {
-                        self.pickedFromPhotos(uiImage: uiImage, assetResult: self.getAssetResult(result: result)!)
+                        self.pickedFromPhotos(uiImage: uiImage, result: result)
                     }
                 }
             }
         }
     }
     
-    private func getAssetResult(result: PHPickerResult) -> AssetResult? {
-        if let assetId = result.assetIdentifier, let phResult = PHAsset.fetchAssets(withLocalIdentifiers: [assetId], options: nil).firstObject {
-            AssetResult(localIdentifier: phResult.localIdentifier, location: phResult.location, creationDate: phResult.creationDate.map {
-                d in ZonedDateTime(date: d, tz: TimeZone(secondsFromGMT: 0)!)
-            } )
-        } else {
-            nil
-        }
-    }
-    
-    func pickedFromPhotos(uiImage: UIImage, assetResult: AssetResult) {
+    func pickedFromPhotos(uiImage: UIImage, result: PHPickerResult) {
         Task {
-            if let creationDate = assetResult.creationDate {
-                self.data.created = creationDate
+            if let assetId = result.assetIdentifier, let phResult = PHAsset.fetchAssets(withLocalIdentifiers: [assetId], options: nil).firstObject {
+                if let creationDate = phResult.creationDate.map({ d in
+                    ZonedDateTime(date: d, tz: TimeZone(secondsFromGMT: 0)!)
+                }) {
+                    self.data.created = creationDate
+                }
+                self.data.coords =  phResult.location.map { Coordinates(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude) }
+                let image = NBImage(image: uiImage, localIdentifier: phResult.localIdentifier)
+                showDateConfirm = true
+                cropPhoto(image: image)
             }
-            self.data.coords =  assetResult.location.map { Coordinates(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude) }
-            let image = NBImage(image: uiImage, localIdentifier: assetResult.localIdentifier)
-            showDateConfirm = true
-            cropPhoto(image: image)
         }
     }
 
