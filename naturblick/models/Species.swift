@@ -5,7 +5,7 @@
 import Foundation
 import SQLite
 
-struct Species: Identifiable {
+struct Species: Identifiable, Equatable {
     let id: Int64
     let group: String
     let sciname: String

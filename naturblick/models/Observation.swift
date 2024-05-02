@@ -6,9 +6,6 @@
 import Foundation
 
 struct Observation: Identifiable, Equatable {
-    static func == (lhs: Observation, rhs: Observation) -> Bool {
-        lhs.id == rhs.id
-    }
     
     let observation: DBObservation
     let species: Species?
