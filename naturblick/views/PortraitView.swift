@@ -66,7 +66,7 @@ struct PortraitView: HostedView {
                                 .headline4(color: .onPrimaryHighEmphasis)
                                 .multilineTextAlignment(.center)
                             if let synonym = portrait.species.synonym {
-                                Text("also: \(synonym)")
+                                Text("also \(synonym)")
                                     .caption(color: .onPrimarySignalLow)
                                     .multilineTextAlignment(.center)
                             }
