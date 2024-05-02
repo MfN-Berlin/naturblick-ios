@@ -20,6 +20,9 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     @Published var speciesAvatar: Image = Image("placeholder")
     @Published var region: MKCoordinateRegion
     var isCreate: Bool = false
+    var obsIdent: String? {
+        data.original.obsIdent
+    }
     init(persistenceController: ObservationPersistenceController, observation: Observation) {
         self.persistenceController = persistenceController
         let data = EditData(observation: observation)

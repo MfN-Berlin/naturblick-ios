@@ -5,6 +5,7 @@
 
 import SwiftUI
 import MapKit
+import os
 
 class ObservationViewController: HostingController<ObservationView> {
     let persistenceController: ObservationPersistenceController
@@ -22,6 +23,7 @@ struct ObservationView: HostedView {
     let client = BackendClient()
     var hideNavigationBarShadow: Bool = true
     @State var speciesAvatar: Image = Image("placeholder")
+    @State var sound: NBSound? = nil
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var model: ObservationViewModel
     let occurenceId: UUID
@@ -105,6 +107,15 @@ struct ObservationView: HostedView {
             if let speciesUrl = model.observation?.species?.listItem.url, let image = try? await client.downloadCached(speciesUrl: speciesUrl) {
                 speciesAvatar = Image(uiImage: image)
             }
+            if let observation = model.observation?.observation, observation.obsType == .audio || observation.obsType == .unidentifiedaudio {
+                if let mediaId = observation.mediaId {
+                    sound = try? await NBSound(id: mediaId, obsIdent: observation.obsIdent)
+                } else if let obsIdent = observation.obsIdent {
+                    sound = NBSound.loadOld(occurenceId: observation.occurenceId, obsIdent: obsIdent, persistenceController: persistenceController)
+                } else {
+                    Logger.compat.warning("Audio Observation \(observation.occurenceId, privacy: .public) has neither mediaId nor obsIdent")
+                }
+            }
         }
     }
     
@@ -113,7 +124,7 @@ struct ObservationView: HostedView {
             ZStack {
                 VStack(alignment: .center, spacing: .zero) {
                     if let observation = model.observation {
-                        ObservationInfoView(width: geo.size.width, fallbackThumbnail: speciesAvatar, observation: observation) { view in
+                        ObservationInfoView(width: geo.size.width, fallbackThumbnail: speciesAvatar, observation: observation, sound: sound) { view in
                             navigationController?.pushViewController(view, animated: true)
                         }
                     }

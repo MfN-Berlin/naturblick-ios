@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		13070CA82A053EC700A2046D /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13070CA72A053EC700A2046D /* Operation.swift */; };
+		1311C2602BDBDB9600CD1384 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1311C25F2BDBDB9600CD1384 /* Logger.swift */; };
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
 		132A91412A2DCF6C00AC405C /* Map+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132A91402A2DCF6C00AC405C /* Map+Extensions.swift */; };
@@ -197,6 +198,7 @@
 
 /* Begin PBXFileReference section */
 		13070CA72A053EC700A2046D /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
+		1311C25F2BDBDB9600CD1384 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		131E786829C9BB25000DF928 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -641,6 +643,7 @@
 				7BD0FBE22AD7EF2900B63E07 /* Language.swift */,
 				7B2CEA132AA5DAA8004B4276 /* Licence.swift */,
 				137690082A30DC5A0076F93A /* LocalFileDownloader.swift */,
+				1311C25F2BDBDB9600CD1384 /* Logger.swift */,
 				7BB74B5A2ABB2E34002C4493 /* MenuController.swift */,
 				7BD016222A0B723600B07A3E /* MultipartRequest.swift */,
 				1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */,
@@ -978,6 +981,7 @@
 				502C51092BDB9E1E0077B06B /* AnalyticsTracker.swift in Sources */,
 				7BC77E872A6A4F2700B489C2 /* KeychainWrapper.swift in Sources */,
 				7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */,
+				1311C2602BDBDB9600CD1384 /* Logger.swift in Sources */,
 				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
 				7BD016272A0BCE1F00B07A3E /* SpeciesResult.swift in Sources */,
 				7BCE46BA29C9DAFE00C6C101 /* GroupButton.swift in Sources */,

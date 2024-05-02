@@ -11,7 +11,7 @@ class SpectrogramViewController<Flow>: HostingController<SpectrogramView<Flow>> 
     
     init(mediaId: UUID, flow: Flow) {
         self.flow = flow
-        self.model = SpectrogramViewModel(mediaId: mediaId)
+        self.model = SpectrogramViewModel(mediaId: mediaId, obsIdent: flow.obsIdent)
         super.init(rootView: SpectrogramView(model: model, flow: flow))
     }
 }
@@ -247,6 +247,6 @@ struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
 
 struct SpectrogramView_Previews: PreviewProvider {
     static var previews: some View {
-        SpectrogramView(model: SpectrogramViewModel(mediaId: UUID()), flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
+        SpectrogramView(model: SpectrogramViewModel(mediaId: UUID(), obsIdent: nil), flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
     }
 }

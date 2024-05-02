@@ -11,6 +11,7 @@ import AVFAudio
 class SpectrogramViewModel: HttpErrorViewModel {
     let client = BackendClient()
     let mediaId: UUID
+    let obsIdent: String?
     @Published var spectrogram: UIImage? = nil
     @Published var currentStatus: AVPlayer.TimeControlStatus = .paused
     @Published var time: Double = 0.0
@@ -23,8 +24,9 @@ class SpectrogramViewModel: HttpErrorViewModel {
     
     private var audioPlayer: AVPlayer? = nil
     private var timeObserver: Any? = nil
-    init(mediaId: UUID) {
+    init(mediaId: UUID, obsIdent: String?) {
         self.mediaId = mediaId
+        self.obsIdent = obsIdent
         super.init()
         do {
             try AVAudioSession.sharedInstance().setCategory(.soloAmbient)
@@ -60,7 +62,7 @@ class SpectrogramViewModel: HttpErrorViewModel {
     func downloadSpectrogram() {
         Task {
             do {
-                let sound = try await NBSound(id: mediaId)
+                let sound = try await NBSound(id: mediaId, obsIdent: obsIdent)
                 self.sound = sound
                 self.audioPlayer = AVPlayer(url: sound.url)
                 self.audioPlayer?.currentItem?.publisher(for: \.status)
