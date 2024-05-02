@@ -5,7 +5,8 @@
 
 import Foundation
 
-struct Observation: Identifiable {
+struct Observation: Identifiable, Equatable {
+    
     let observation: DBObservation
     let species: Species?
     
