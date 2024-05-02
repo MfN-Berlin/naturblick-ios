@@ -13,27 +13,27 @@ struct ObservationInfoView: View {
     let species: SpeciesListItem?
     let created: ZonedDateTime
     
-    let soundId: UUID?
     let start: Int?
     let end: Int?
     let fullscreenImageId: UUID?
     let fullscreenLocalId: String?
     let thumbnailId: UUID?
     let fallbackThumbnail: Image
+    let obsType: ObsType
+    let obsIdent: String?
     @State var thumbnail: Image? = nil
+    let sound: NBSound?
     
-    init(width: CGFloat, fallbackThumbnail: Image, observation: Observation, navigate: @escaping (UIViewController) -> Void) {
+    init(width: CGFloat, fallbackThumbnail: Image, observation: Observation, sound: NBSound?, navigate: @escaping (UIViewController) -> Void) {
+        self.obsIdent = observation.observation.obsIdent
+        self.obsType = observation.observation.obsType
+        self.sound = sound
         self.width = width
         self.navigate = navigate
         self.species = observation.species?.listItem
         self.created = observation.observation.created
         self.start = observation.observation.segmStart.map { s in Int(s) } ?? nil
         self.end = observation.observation.segmEnd.map { s in Int(s) } ?? nil
-        if observation.observation.obsType == .audio || observation.observation.obsType == .unidentifiedaudio,  let mediaId = observation.observation.mediaId {
-            self.soundId = mediaId
-        } else {
-            self.soundId = nil
-        }
         
         if observation.observation.obsType == .image || observation.observation.obsType == .unidentifiedimage, let mediaId = observation.observation.mediaId {
             self.fullscreenImageId = mediaId
@@ -78,10 +78,10 @@ struct ObservationInfoView: View {
                         }
                     }
                     .padding(.bottom, .defaultPadding)
-            } else if let soundId = soundId {
+            } else if let sound = sound {
                 avatar
                     .overlay(alignment: .bottomTrailing) {
-                        SoundButton(mediaId: soundId)
+                        SoundButton(sound: sound)
                     }
                     .padding(.bottom, .defaultPadding)
             } else {

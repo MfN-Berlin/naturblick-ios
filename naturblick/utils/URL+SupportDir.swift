@@ -23,4 +23,8 @@ extension URL {
             preconditionFailure("\(error)")
         }
     }
+    
+    static let oldDir: URL? = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("NoCloud", isDirectory: true)
+    static let oldRecordings: URL? = oldDir?.appendingPathComponent("Recordings", isDirectory: true)
+    
 }

@@ -250,6 +250,16 @@ class ObservationPersistenceController: ObservableObject {
         try queue.run(UploadOperation.D.table.insert(upload.setters(id: uploadId)))
     }
     
+    func addMissingSound(occurenceId: UUID, sound: NBSound) throws {
+        try queue.transaction {
+            try insert(occurenceId: occurenceId, sound: sound)
+            let patch = PatchOperation(occurenceId: occurenceId, obsType: nil, coords: nil, details: nil, individuals: nil, mediaId: sound.id, localMediaId: nil, thumbnailId: nil, newSpeciesId: nil, behavior: nil)
+            let patchId = try queue.run(Operation.D.table.insert())
+            try queue.run(PatchOperation.D.table.insert(patch.setters(id: patchId)))
+            try updateAndRefresh()
+        }
+    }
+
     func delete(indexSet: IndexSet) throws {
         try queue.transaction {
             for i in indexSet {

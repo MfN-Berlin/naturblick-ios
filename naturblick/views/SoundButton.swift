@@ -8,20 +8,20 @@ import AVFoundation
 
 struct SoundButton: View {
     let url: URL?
-    let mediaId: UUID?
     let speciesId: Int64?
+    let sound: NBSound?
     @StateObject private var soundStream = SoundStreamController()
     
     init(url: URL?, speciesId: Int64?) {
         self.url = url
         self.speciesId = speciesId
-        self.mediaId = nil
+        self.sound = nil
     }
 
-    init(mediaId: UUID?) {
+    init(sound: NBSound) {
         self.url = nil
         self.speciesId = nil
-        self.mediaId = mediaId
+        self.sound = sound
     }
     
     func buttonIcon() -> FABView {
@@ -46,8 +46,8 @@ struct SoundButton: View {
                     if let specId = speciesId {
                         AnalyticsTracker.trackPortraitSound(speciesId: specId, url: url.absoluteString)
                     }
-                } else if let mediaId = mediaId {
-                    soundStream.play(mediaId: mediaId)
+                } else if let sound = sound {
+                    soundStream.play(sound: sound)
                 }
             } else {
                 soundStream.stop()

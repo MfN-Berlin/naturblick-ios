@@ -35,6 +35,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @Published var showOpenSettings: Bool = false
     @Published var openSettingsMessage: String? = nil
     var isCreate: Bool = true
+    var obsIdent: String? = nil
     let fromList: Bool
     init(persistenceController: ObservationPersistenceController, fromList: Bool = false) {
         self.persistenceController = persistenceController

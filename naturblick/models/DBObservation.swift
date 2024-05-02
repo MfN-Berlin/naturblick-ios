@@ -52,6 +52,7 @@ extension DBObservation {
             [
                 occurenceId <- observation.occurenceId,
                 obsType <- observation.obsType.rawValue,
+                obsIdent <- observation.obsIdent,
                 created <- observation.created.date,
                 createdTz <- observation.created.tz.identifier,
                 species <- observation.newSpeciesId,

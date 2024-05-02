@@ -14,6 +14,7 @@ import Combine
 protocol IdFlow: ObservableObject {
     var result: [SpeciesResult]? {get}
     var isCreate: Bool {get}
+    var obsIdent: String? {get}
     func spectrogramCropDone(sound: NBSound, crop: NBThumbnail, start: Int, end: Int)
     func identify() async throws -> [SpeciesResult]
     func selectSpecies(species: SpeciesListItem?)
@@ -24,6 +25,7 @@ protocol IdFlow: ObservableObject {
 class IdFlowSample: IdFlow {
     var result: [SpeciesResult]? = nil
     var isCreate: Bool = true
+    var obsIdent: String? = nil
     func spectrogramCropDone(sound: NBSound, crop: NBThumbnail, start: Int, end: Int) {}
     func identify() async throws -> [SpeciesResult] {[]}
     func selectSpecies(species: SpeciesListItem?) {}

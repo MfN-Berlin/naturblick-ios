@@ -5,7 +5,7 @@
 
 import Foundation
 import SQLite
-
+import os
 
 struct OldUserData: Decodable {
     let name: String?
@@ -14,17 +14,27 @@ struct OldUserData: Decodable {
 
 extension OldUserData {
     static func getFromOldDB() -> OldUserData? {
-        if let fileURL = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false),
-           let connection = try? Connection(fileURL.absoluteString),
-           let response = try? connection.run("SELECT json FROM \"by-sequence\" ORDER BY rowid DESC LIMIT 1;"),
-           let row = response.next(),
-           let jsonString = row[0] as? String,
-           let jsonData = jsonString.data(using: .utf8)
-        {
-            let decoder = JSONDecoder()
-            return try? decoder.decode(OldUserData.self, from: jsonData)
-        } else {
+        Logger.compat.info("Looking for old user.db")
+        do {
+            if let fileURL = URL.oldDir?.appendingPathComponent("user.db", isDirectory: false) {
+                let connection = try Connection(fileURL.absoluteString)
+
+                if let jsonString = try connection.scalar("SELECT json FROM \"by-sequence\" ORDER BY rowid DESC LIMIT 1") as? String,
+                   let jsonData = jsonString.data(using: .utf8) {
+                    let decoder = JSONDecoder()
+                    return try decoder.decode(OldUserData.self, from: jsonData)
+                } else {
+                    Logger.compat.info("Failed reading data from user.db")
+                    return nil
+                }
+            } else {
+                Logger.compat.info("No user.db file found")
+                return nil
+            }
+        } catch {
+            Logger.compat.info("Failed to read from old user DB, \(error)")
             return nil
         }
     }
+
 }
