@@ -22,8 +22,8 @@ struct NBSound {
                 do {
                     Logger.compat.info("Copy \(oldPath, privacy: .public) to \(path, privacy: .public)")
                     try FileManager.default.copyItem(atPath: oldPath, toPath: path)
-                    Logger.compat.info("Would delete \(oldPath, privacy: .public) but still not active")
-                    //try? FileManager.default.removeItem(atPath: oldPath)
+                    Logger.compat.info("Deleting \(oldPath, privacy: .public)")
+                    try? FileManager.default.removeItem(atPath: oldPath)
                     Logger.compat.info("Successfully moved local sound \(id, privacy: .public) from \(oldPath, privacy: .public)")
                 } catch {
                     Logger.compat.info("Failed to create sound from \(oldPath, privacy: .public): \(error)")
@@ -76,8 +76,8 @@ struct NBSound {
             try FileManager.default.copyItem(atPath: path, toPath: newSound.url.path)
             Logger.compat.info("Create upload operation for \(newSound.url.path, privacy: .public), \(occurenceId, privacy: .public)")
             try persistenceController.addMissingSound(occurenceId: occurenceId, sound: newSound)
-            Logger.compat.info("Would delete \(path, privacy: .public) but still not active, \(occurenceId, privacy: .public)")
-            //try? FileManager.default.removeItem(atPath: path)
+            Logger.compat.info("Deleting \(path, privacy: .public), \(occurenceId, privacy: .public)")
+            try? FileManager.default.removeItem(atPath: path)
             Logger.compat.info("Successfully created sound \(newSound.id, privacy: .public) from \(path, privacy: .public), \(occurenceId, privacy: .public)")
             return newSound
         } catch {
