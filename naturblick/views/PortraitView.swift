@@ -48,7 +48,7 @@ struct PortraitView: HostedView {
                             VStack(spacing: .zero) {
                                 Spacer()
                                 if let urlPart = portrait.audioUrl {
-                                    SoundButton(url: URL(string: Configuration.strapiUrl + urlPart)!)
+                                    SoundButton(url: URL(string: Configuration.strapiUrl + urlPart)!, speciesId: species.speciesId)
                                         .frame(height: .fabSize)
                                         .padding(.horizontal, .defaultPadding)
                                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
@@ -145,6 +145,9 @@ struct PortraitView: HostedView {
                         Text("no_portrait").padding()
                     }
                 }
+            }
+            .onAppear() {
+                AnalyticsTracker.trackPortrait(species: species)
             }
             .task {
                 portraitViewModel.filter(speciesId: species.speciesId)

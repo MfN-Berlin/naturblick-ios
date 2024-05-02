@@ -40,6 +40,7 @@ struct CharactersView: NavigatableView {
             }
             .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
                 Button(String(localized: "show_results \(charactersViewModelCountStr)")) {
+                    AnalyticsTracker.trackSpeciesSelection(filter: charactersViewModel.filter)
                     navigationController?.pushViewController(
                         SpeciesListView(filter: charactersViewModel.filter, flow: flow, isCharacterResult: true).setUpViewController(), animated: true)
                 }

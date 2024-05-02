@@ -52,7 +52,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: IdFlow {
             }
             .overlay(alignment: .bottomTrailing) {
                 if let audioUrl = species.audioUrl {
-                    SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!)
+                    SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!, speciesId: species.speciesId)
                         .frame(height: .fabSize)
                         .padding(.defaultPadding)
                 }
