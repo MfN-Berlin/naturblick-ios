@@ -10,7 +10,7 @@ class NaturblickAppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         AnalyticsTracker.initalizeTracker()
         AnalyticsTracker.trackStartEvent()
-
+        URLCache.shared = URLCache(memoryCapacity: 10*1024*1024, diskCapacity: 1*1024*1024*1024)
         return true
     }
  
