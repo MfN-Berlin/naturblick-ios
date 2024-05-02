@@ -115,6 +115,8 @@
 		13F5D6582BBFED910022CE0F /* ObservationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F5D6572BBFED910022CE0F /* ObservationMapView.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
 		13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */; };
+		502C51072BDB88950077B06B /* SnowplowTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 502C51062BDB88950077B06B /* SnowplowTracker */; };
+		502C51092BDB9E1E0077B06B /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502C51082BDB9E1E0077B06B /* AnalyticsTracker.swift */; };
 		7B02E4DA2A4993DF006406A1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B02E4D92A4993DF006406A1 /* Settings.swift */; };
 		7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B13663829F0122600F1DA30 /* SoundStreamController.swift */; };
 		7B2CEA142AA5DAA8004B4276 /* Licence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2CEA132AA5DAA8004B4276 /* Licence.swift */; };
@@ -305,6 +307,7 @@
 		13F5D6572BBFED910022CE0F /* ObservationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationMapView.swift; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOperation.swift; sourceTree = "<group>"; };
+		502C51082BDB9E1E0077B06B /* AnalyticsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
 		7B02E4D92A4993DF006406A1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		7B13663829F0122600F1DA30 /* SoundStreamController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundStreamController.swift; sourceTree = "<group>"; };
 		7B2CEA132AA5DAA8004B4276 /* Licence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Licence.swift; sourceTree = "<group>"; };
@@ -379,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BB350DB2A2A32A8005065E4 /* Mantis in Frameworks */,
+				502C51072BDB88950077B06B /* SnowplowTracker in Frameworks */,
 				7BDA8FBE2ABC5E94002E93C9 /* CachedAsyncImage in Frameworks */,
 				13316BE029C9FAF80077292B /* SQLite in Frameworks */,
 				136C118B29D6E66E00805628 /* BottomSheet in Frameworks */,
@@ -660,6 +664,7 @@
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
+				502C51082BDB9E1E0077B06B /* AnalyticsTracker.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -695,6 +700,7 @@
 				136C118A29D6E66E00805628 /* BottomSheet */,
 				7BB350DA2A2A32A8005065E4 /* Mantis */,
 				7BDA8FBD2ABC5E94002E93C9 /* CachedAsyncImage */,
+				502C51062BDB88950077B06B /* SnowplowTracker */,
 			);
 			productName = naturblick;
 			productReference = 131E785E29C9BB24000DF928 /* naturblick.app */;
@@ -752,6 +758,7 @@
 				136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 				7BB350D92A2A32A8005065E4 /* XCRemoteSwiftPackageReference "Mantis" */,
 				7BDA8FBC2ABC5E93002E93C9 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
+				502C51052BDB88950077B06B /* XCRemoteSwiftPackageReference "snowplow-ios-tracker" */,
 			);
 			productRefGroup = 131E785F29C9BB24000DF928 /* Products */;
 			projectDirPath = "";
@@ -968,6 +975,7 @@
 				13F49F5D2BC440330094FB49 /* SourcesImprint.swift in Sources */,
 				13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */,
 				7BB68E482A544B7F00B1DC51 /* RegisterViewModel.swift in Sources */,
+				502C51092BDB9E1E0077B06B /* AnalyticsTracker.swift in Sources */,
 				7BC77E872A6A4F2700B489C2 /* KeychainWrapper.swift in Sources */,
 				7B13663929F0122600F1DA30 /* SoundStreamController.swift in Sources */,
 				13A70A8E29CB05EE006A1E08 /* SpeciesListItemView.swift in Sources */,
@@ -1308,6 +1316,14 @@
 				minimumVersion = 3.1.1;
 			};
 		};
+		502C51052BDB88950077B06B /* XCRemoteSwiftPackageReference "snowplow-ios-tracker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/snowplow/snowplow-ios-tracker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.2;
+			};
+		};
 		7BB350D92A2A32A8005065E4 /* XCRemoteSwiftPackageReference "Mantis" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/guoyingtao/Mantis.git";
@@ -1336,6 +1352,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */;
 			productName = BottomSheet;
+		};
+		502C51062BDB88950077B06B /* SnowplowTracker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 502C51052BDB88950077B06B /* XCRemoteSwiftPackageReference "snowplow-ios-tracker" */;
+			productName = SnowplowTracker;
 		};
 		7BB350DA2A2A32A8005065E4 /* Mantis */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -50,6 +50,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     func selectCharacteristics() {
         data = CreateData()
         let nextViewController = GroupsView(
+            viewType: .characterKeys,
             groups: Group.characterGroups,
             destination: { group in
                 CharactersView(group: group, flow: self)

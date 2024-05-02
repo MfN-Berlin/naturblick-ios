@@ -180,6 +180,7 @@ struct HomeView: HostedView {
                                            size: bottomRowSize
                             ).onTapGesture {
                                 let nextViewController = GroupsView(
+                                    viewType: .portraitGroups,
                                     groups: Group.groups,
                                     destination: { group in
                                         SpeciesListView(filter: .group(group), flow: createFlow)
