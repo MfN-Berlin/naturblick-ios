@@ -84,6 +84,7 @@ struct PortraitView: HostedView {
                         VStack(alignment: .leading, spacing: .defaultPadding) { // description
                             Text("description")
                                 .headline4()
+                                .padding(.top, .defaultPadding)
                             Text(portrait.description)
                                 .body1()
                             VStack(alignment: .leading, spacing: .defaultPadding) { // similar species
@@ -133,10 +134,12 @@ struct PortraitView: HostedView {
                             }
                         }
                         .padding(.defaultPadding)
-                        .background {
-                            RoundedRectangle(cornerRadius: .largeCornerRadius)
+                        .background{
+                            Rectangle()
                                 .foregroundColor(.secondaryColor)
-                                .nbShadow()
+                                .padding(.bottom, .largeCornerRadius)
+                                .cornerRadius(.largeCornerRadius)
+                                .padding(.bottom, -.largeCornerRadius)
                         }
                         .task {
                             similarSpeciesViewModel.filter(portraitId: portrait.id)
@@ -145,7 +148,15 @@ struct PortraitView: HostedView {
                         Text("no_portrait").padding()
                     }
                 }
+                .background(Color.primaryHomeColor)
             }
+            .background(LinearGradient(
+                stops: [
+                    .init(color: .primaryHomeColor, location: 0.5),
+                   .init(color: .secondaryColor, location: 0.5),
+                ],
+                startPoint: .top, endPoint: .bottom))
+            
             .onAppear() {
                 AnalyticsTracker.trackPortrait(species: species)
             }
