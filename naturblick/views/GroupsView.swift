@@ -14,7 +14,7 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
     
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: .zero) {
                 Image("artportraits24")
                     .resizable()
                     .scaledToFit()
@@ -24,19 +24,42 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
                 Text("choose_a_group")
                     .headline3()
                     .padding(.bottom, .doublePadding)
-                   LazyVGrid(columns: [
-                        GridItem(spacing: .defaultPadding, alignment: .top),
-                        GridItem(spacing: .defaultPadding, alignment: .top),
-                        GridItem(spacing: .defaultPadding, alignment: .top)
-                    ], spacing: .defaultPadding) {
-                        ForEach(groups) { group in
+                
+                LazyVGrid(columns: [
+                     GridItem(spacing: .defaultPadding, alignment: .center),
+                     GridItem(spacing: .defaultPadding, alignment: .center),
+                     GridItem(spacing: .defaultPadding, alignment: .center)
+                 ], spacing: .defaultPadding) {
+                     ForEach(groups.dropLast(groups.count % 3)) { group in
+                         GroupButton(group: group).onTapGesture {
+                             AnalyticsTracker.trackSpeciesSelection(filter: .group(group), viewType: self.viewType)
+                             let nextViewController = destination(group).setUpViewController()
+                             viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+                         }
+                     }
+                 }.padding(.defaultPadding)
+                
+                
+                
+                // center overhanging elements
+                if (groups.count % 3 > 0) {
+                    HStack {
+                        if(groups.count % 3 == 1) {
+                            Spacer().frame(maxWidth: .infinity)
+                        }
+                        ForEach(0 ..< groups.count % 3, id: \.self) { group in
+                            let group = groups[(groups.count / 3) * 3 + group]
                             GroupButton(group: group).onTapGesture {
                                 AnalyticsTracker.trackSpeciesSelection(filter: .group(group), viewType: self.viewType)
                                 let nextViewController = destination(group).setUpViewController()
                                 viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                             }
                         }
-                }.padding(.defaultPadding)
+                        Spacer().frame(maxWidth: .infinity)
+                    }
+                    .padding(.defaultPadding)
+                    .offset(x: groups.count % 3 == 1 ? 0.0 : .avatarSize)
+                }
             }
         }
     }
@@ -63,8 +86,7 @@ struct GroupsView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            GroupsView(viewType: .portraitGroups ,groups: Group.groups) { group in
-                T(str: "Clicked on \(group.gerName)")
+            GroupsView(viewType: .portraitGroups ,groups: Group.groups) { group in T(str: "Clicked on \(group.gerName)")
             }
         }
     }
