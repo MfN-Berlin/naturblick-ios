@@ -4,20 +4,56 @@
 
 
 import SwiftUI
-
+import Combine
 
 class AccountViewModel : ObservableObject {
-    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
-    @AppSecureStorage(NbAppSecureStorageKey.Email) var email: String?
+    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) private var secureBearerToken: String?
+    @AppSecureStorage(NbAppSecureStorageKey.Email) private var secureEmail: String?
     
-    @AppStorage("neverSignedIn") var neverSignedIn: Bool = true
-    @AppStorage("activated") var activated: Bool = false
+    @AppStorage("neverSignedIn") private var storageNeverSignedIn: Bool = true
+    @AppStorage("activated") private var storageActivated: Bool = false
+    
+    var bearerToken: String? {
+        willSet {
+            secureBearerToken = newValue
+            objectWillChange.send()
+        }
+    }
+    
+    var email: String? {
+        willSet {
+            secureEmail = newValue
+            objectWillChange.send()
+        }
+    }
+    
+    var neverSignedIn: Bool = true {
+        willSet {
+            storageNeverSignedIn = newValue
+            objectWillChange.send()
+        }
+    }
+  
+    var activated: Bool = false {
+        willSet {
+            storageActivated = newValue
+            objectWillChange.send()
+        }
+    }
+   
     
     func signOut() {
         email = nil
-        neverSignedIn = true
         bearerToken = nil
+        neverSignedIn = true
         activated = false
+    }
+    
+    init() {
+        bearerToken = secureBearerToken
+        email = secureEmail
+        neverSignedIn = storageNeverSignedIn
+        activated = storageActivated
     }
 }
 
@@ -64,7 +100,7 @@ struct AccountView: NavigatableView {
                 Text("delete_account_note_link")
                     .body2()
             } else if (accountViewModel.bearerToken == nil && accountViewModel.email != nil) {
-                if (accountViewModel.neverSignedIn) {
+                if accountViewModel.neverSignedIn {
                     Text("continue_with_sign_in")
                         .body1()
                     Button("to_sign_in") {
