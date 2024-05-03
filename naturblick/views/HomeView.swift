@@ -106,19 +106,23 @@ struct HomeView: HostedView {
                     Spacer()
                 }
                 VStack(spacing: .zero) {
-                    Image("logo24")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: geo.size.width / 4, alignment: .center)
-                        .foregroundColor(.onPrimaryHighEmphasis)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .overlay(alignment: .bottomLeading) {
-                            Image("mfn_logo")
+                    VStack(spacing: .zero) {
+                        Image("logo24")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: geo.size.width / 5)
-                            .foregroundColor(.gray)
-                            .padding(.defaultPadding)
+                            .frame(width: geo.size.width / 3)
+                            .foregroundColor(.onPrimaryHighEmphasis)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        HStack {
+                            Image("mfn_logo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: geo.size.width / 3)
+                                .foregroundColor(.gray)
+                                .padding(.defaultPadding)
+                            Spacer()
+                        }
+
                     }
                     RoundBottomView(color: .primaryColor)
                         .frame(height: .roundBottomHeight)
@@ -126,6 +130,7 @@ struct HomeView: HostedView {
                     VStack(spacing: .defaultPadding) {
                         Text("home_identify_animals_and_plants")
                             .headline6()
+                            .padding(.defaultPadding)
                         
                         HStack(alignment: .top) {
                             Spacer()
@@ -176,7 +181,7 @@ struct HomeView: HostedView {
                             Spacer()
                             HomeViewButton(text: String(localized: "species_portraits"),
                                            color: Color.onPrimaryButtonSecondary,
-                                           image: Image("ic_specportraits"),
+                                           image: Image("specportraits"),
                                            size: bottomRowSize
                             ).onTapGesture {
                                 let nextViewController = GroupsView(
@@ -190,7 +195,7 @@ struct HomeView: HostedView {
                             Spacer()
                         }
                         .padding(.defaultPadding)
-                        .padding(.bottom, geo.safeAreaInsets.bottom + .defaultPadding)
+                        .padding(.bottom, geo.safeAreaInsets.bottom + .doublePadding)
                     }
                     .frame(width: geo.size.width)
                     .background {
