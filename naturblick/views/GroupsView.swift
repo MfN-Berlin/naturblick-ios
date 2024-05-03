@@ -9,8 +9,15 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
     var viewName: String? = String(localized: "menu_groups")
     var viewType: GroupsViewType
     var alwaysDarkBackground: Bool = true
-    let groups: [Group]
     let destination: (Group) -> Content
+    
+    func button(_ group: Group) -> some View {
+        GroupButton(group: group).onTapGesture {
+            AnalyticsTracker.trackSpeciesSelection(filter: .group(group), viewType: self.viewType)
+            let nextViewController = destination(group).setUpViewController()
+            viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+        }
+    }
     
     var body: some View {
         ScrollView {
@@ -24,19 +31,48 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
                 Text("choose_a_group")
                     .headline3()
                     .padding(.bottom, .doublePadding)
-                   LazyVGrid(columns: [
-                        GridItem(spacing: .defaultPadding, alignment: .top),
-                        GridItem(spacing: .defaultPadding, alignment: .top),
-                        GridItem(spacing: .defaultPadding, alignment: .top)
-                    ], spacing: .defaultPadding) {
-                        ForEach(groups) { group in
-                            GroupButton(group: group).onTapGesture {
-                                AnalyticsTracker.trackSpeciesSelection(filter: .group(group), viewType: self.viewType)
-                                let nextViewController = destination(group).setUpViewController()
-                                viewController?.navigationController?.pushViewController(nextViewController, animated: true)
-                            }
+                if case .portraitGroups = viewType {
+                    VStack(spacing: .defaultPadding) {
+                        HStack(spacing: .defaultPadding) {
+                            button(.amphibian)
+                            button(.hymenoptera)
+                            button(.conifer)
                         }
-                }.padding(.defaultPadding)
+                        HStack(spacing: .defaultPadding) {
+                            button(.herb)
+                            button(.tree)
+                            button(.reptile)
+                        }
+                        HStack(spacing: .defaultPadding) {
+                            button(.butterfly)
+                            button(.gastropoda)
+                            button(.mammal)
+                        }
+                        HStack(spacing: .defaultPadding) {
+                            Spacer().frame(maxWidth: .infinity)
+                            button(.bird)
+                            Spacer().frame(maxWidth: .infinity)
+                        }
+                    }.padding(.defaultPadding)
+                } else {
+                    VStack(spacing: .defaultPadding) {
+                        HStack(spacing: .defaultPadding) {
+                            button(.amphibian)
+                            button(.hymenoptera)
+                            button(.herb)
+                        }
+                        HStack(spacing: .defaultPadding) {
+                            button(.tree)
+                            button(.reptile)
+                            button(.butterfly)
+                        }
+                        HStack(spacing: .defaultPadding) {
+                            button(.gastropoda)
+                            button(.mammal)
+                            button(.bird)
+                        }
+                    }.padding(.defaultPadding)
+                }
             }
         }
     }
@@ -63,7 +99,7 @@ struct GroupsView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            GroupsView(viewType: .portraitGroups ,groups: Group.groups) { group in
+            GroupsView(viewType: .portraitGroups) { group in
                 T(str: "Clicked on \(group.gerName)")
             }
         }

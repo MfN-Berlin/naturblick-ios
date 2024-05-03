@@ -14,37 +14,22 @@ struct Group: Identifiable, Hashable {
 }
 
 extension Group {
-    static let groups: [Group] = [
-        Group(id: "amphibian", groupType: GroupType.fauna, gerName: "Amphibien", image: "group_amphibian", engName: "Amphibians"),
-        Group(
-            id: "hymenoptera",
-            groupType: GroupType.fauna,
-            gerName: "Bienen, Wespen & Co",
-            image: "group_hymenoptera",
-            engName: "Bees, wasps & co"
-        ),
-        Group(id: "conifer", groupType: GroupType.flora, gerName: "Nadelbäume", image: "group_conifer", engName: "Evergreens"),
-        Group(id: "herb", groupType: GroupType.flora, gerName: "Kräuter & Wildblumen", image: "group_herb", engName: "Herbs & Wild Flowers"),
-        Group(id: "tree", groupType: GroupType.flora, gerName: "Laubbäume & Gingko", image: "group_tree", engName: "Deciduous trees & gingko"),
-        Group(id: "reptile", groupType: GroupType.fauna, gerName: "Reptilien", image: "group_reptile", engName: "Reptiles"),
-        Group(id: "butterfly", groupType: GroupType.fauna, gerName: "Schmetterlinge", image: "group_butterfly", engName: "Butterflies"),
-        Group(id: "gastropoda", groupType: GroupType.fauna, gerName: "Schnecken", image: "group_snail", engName: "Slugs"),
-        Group(id: "mammal", groupType: GroupType.fauna, gerName: "Säugetiere", image: "group_mammal", engName: "Mammals"),
-        Group(id: "bird", groupType: GroupType.fauna, gerName: "Vögel", image: "group_bird", engName: "Birds")
-    ]
-    private static let characterGroupIds = [
-        "amphibian",
-        "hymenoptera",
-        "herb",
-        "tree",
-        "reptile",
-        "butterfly",
-        "mammal",
-        "bird"
-    ]
-    
-    static let characterGroups = groups.filter( { characterGroupIds.contains($0.id) } )
-    
+    static let amphibian = Group(id: "amphibian", groupType: GroupType.fauna, gerName: "Amphibien", image: "group_amphibian", engName: "Amphibians")
+    static let hymenoptera = Group(
+        id: "hymenoptera",
+        groupType: GroupType.fauna,
+        gerName: "Bienen, Wespen & Co",
+        image: "group_hymenoptera",
+        engName: "Bees, wasps & co"
+    )
+    static let conifer = Group(id: "conifer", groupType: GroupType.flora, gerName: "Nadelbäume", image: "group_conifer", engName: "Evergreens")
+    static let herb = Group(id: "herb", groupType: GroupType.flora, gerName: "Kräuter & Wildblumen", image: "group_herb", engName: "Herbs & Wild Flowers")
+    static let tree = Group(id: "tree", groupType: GroupType.flora, gerName: "Laubbäume & Gingko", image: "group_tree", engName: "Deciduous trees & gingko")
+    static let reptile = Group(id: "reptile", groupType: GroupType.fauna, gerName: "Reptilien", image: "group_reptile", engName: "Reptiles")
+    static let butterfly = Group(id: "butterfly", groupType: GroupType.fauna, gerName: "Schmetterlinge", image: "group_butterfly", engName: "Butterflies")
+    static let gastropoda = Group(id: "gastropoda", groupType: GroupType.fauna, gerName: "Schnecken", image: "group_snail", engName: "Slugs")
+    static let mammal = Group(id: "mammal", groupType: GroupType.fauna, gerName: "Säugetiere", image: "group_mammal", engName: "Mammals")
+    static let bird = Group(id: "bird", groupType: GroupType.fauna, gerName: "Vögel", image: "group_bird", engName: "Birds")
 }
 
 extension String {

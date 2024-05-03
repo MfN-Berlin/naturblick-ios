@@ -62,7 +62,7 @@ struct CharactersView: NavigatableView {
 struct CharactersView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CharactersView(group: Group.groups[0], flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
+            CharactersView(group: .bird, flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
         }
     }
 }

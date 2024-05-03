@@ -91,7 +91,7 @@ extension Character {
         id: 1,
         gername: "Farbe",
         engname: "Color",
-        group: Group.groups[0].id,
+        group: Group.bird.id,
         weight: 1,
         single: true,
         gerdescription: "Verschiedene Farben",

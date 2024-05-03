@@ -52,7 +52,7 @@ extension SpeciesListItem {
         isFemale: nil,
         wikipedia: "https://de.wikipedia.org/wiki/Teichmolch",
         hasPortrait: true,
-        group: Group.groups[0].id,
+        group: Group.bird.id,
         audioUrl: nil
     )
     

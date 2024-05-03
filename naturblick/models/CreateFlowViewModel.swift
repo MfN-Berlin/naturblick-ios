@@ -52,7 +52,6 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         data = CreateData()
         let nextViewController = GroupsView(
             viewType: .characterKeys,
-            groups: Group.characterGroups,
             destination: { group in
                 CharactersView(group: group, flow: self)
             }

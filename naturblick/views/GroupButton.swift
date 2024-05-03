@@ -26,6 +26,6 @@ struct GroupButton: View {
 
 struct GroupButton_Previews: PreviewProvider {
     static var previews: some View {
-        GroupButton(group: Group.groups[0])
+        GroupButton(group: .bird)
     }
 }
