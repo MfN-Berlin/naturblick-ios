@@ -56,7 +56,7 @@ struct CharacterView: View {
                                         toggleSelection(id: value.id)
                                     }
                             } else {
-                                Text("").frame(maxWidth: .infinity, maxHeight: .infinity)
+                                Spacer().frame(maxWidth: .infinity, maxHeight: .infinity)
                             }
                         }
                     }

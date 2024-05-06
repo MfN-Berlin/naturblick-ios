@@ -94,7 +94,7 @@ struct ObservationListView: HostedView {
                             .listRowInsets(.nbInsets)
                             .listRowBackground(Color.secondaryColor)
                             .onTapGesture {
-                                navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, persistenceController: persistenceController), animated: true)
+                                navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, persistenceController: persistenceController, flow: createFlow), animated: true)
                             }
                     }
                     .onDelete { indexSet in
@@ -116,7 +116,7 @@ struct ObservationListView: HostedView {
                     persistenceController: persistenceController,
                     userTrackingMode: $userTrackingMode,
                     initial: showObservation) { observation in
-                        navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, persistenceController: persistenceController), animated: true)
+                        navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, persistenceController: persistenceController, flow: createFlow), animated: true)
                     }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
                 .onAppear {

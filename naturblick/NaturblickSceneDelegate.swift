@@ -88,7 +88,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         let window = UIWindow(windowScene: windowScene)
-        let navigationController = StandardPopAwareNavigationController(rootViewController: HomeViewController())
+        let navigationController = PopAwareNavigationController(rootViewController: HomeViewController())
         
         switch deepLink {
         case .activateAccount(let token):
@@ -98,7 +98,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         case .speciesPortrait(let speciesId):
             let species = try? SpeciesListItem.find(speciesId: speciesId)
             if let species = species {
-                navigationController.pushViewController(PortraitViewController(species: species, inSelectionFlow: true), animated: true)
+                navigationController.pushViewController(SpeciesInfoView(selectionFlow: false, species: species, flow: VoidSelectionFlow()).setUpViewController(), animated: true)
             }
         default: break
         }
