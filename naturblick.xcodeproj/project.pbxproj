@@ -625,6 +625,7 @@
 		7BCE46C029C9DC5E00C6C101 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				502C51082BDB9E1E0077B06B /* AnalyticsTracker.swift */,
 				13E50A2C2AE805890049FACD /* AVAudioSession.swift */,
 				1343D1CA29DD94F50075ACE3 /* BackendClient.swift */,
 				137F1F682AC3281A00D14BE1 /* ButtonStyle.swift */,
@@ -667,7 +668,6 @@
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
-				502C51082BDB9E1E0077B06B /* AnalyticsTracker.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";

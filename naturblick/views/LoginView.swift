@@ -45,7 +45,7 @@ struct LoginView: NavigatableView {
 
     var body: some View {
         VStack(alignment: .leading, spacing: .defaultPadding) {
-            if (accountViewModel.activated) {
+            if accountViewModel.activated {
                 Text("account_activated")
                     .body1()
             } else {
