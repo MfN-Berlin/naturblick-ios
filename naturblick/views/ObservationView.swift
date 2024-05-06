@@ -39,7 +39,7 @@ struct ObservationView: HostedView {
         let editButton = UIBarButtonItem(title: String(localized: "edit"), primaryAction: UIAction {_ in
             if let observation = persistenceController.observations.first(where: {$0.observation.occurenceId == occurenceId}) {
                 let view = EditObservationViewController(observation: observation, persistenceController: persistenceController)
-                let navigation = InSheetPopAwareNavigationController(rootViewController: view)
+                let navigation = PopAwareNavigationController(rootViewController: view)
                 viewController?.present(navigation, animated: true)
             }
         })

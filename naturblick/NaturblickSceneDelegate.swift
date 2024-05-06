@@ -88,7 +88,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         let window = UIWindow(windowScene: windowScene)
-        let navigationController = StandardPopAwareNavigationController(rootViewController: HomeViewController())
+        let navigationController = PopAwareNavigationController(rootViewController: HomeViewController())
         
         switch deepLink {
         case .activateAccount(let token):

@@ -16,6 +16,15 @@ extension PopAware {
 }
 
 class PopAwareNavigationController: UINavigationController {
+    override init(rootViewController: UIViewController) {
+        super.init(rootViewController: rootViewController)
+        navigationBar.tintColor = UIColor.onPrimaryHighEmphasis
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("NSCoding not supported")
+    }
     
     @discardableResult
     override func popViewController(animated: Bool) -> UIViewController? {
@@ -28,30 +37,6 @@ class PopAwareNavigationController: UINavigationController {
     
     func forcePopViewController(animated: Bool) {
         let _ = super.popViewController(animated: animated)
-    }
-}
-
-class StandardPopAwareNavigationController: PopAwareNavigationController {
-    override init(rootViewController: UIViewController) {
-        super.init(rootViewController: rootViewController)
-        navigationBar.tintColor = UIColor.onPrimaryHighEmphasis
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("NSCoding not supported")
-    }
-}
-
-class InSheetPopAwareNavigationController: PopAwareNavigationController {
-    override init(rootViewController: UIViewController) {
-        super.init(rootViewController: rootViewController)
-        navigationBar.tintColor = UIColor.onSecondaryHighEmphasis
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("NSCoding not supported")
     }
 }
 
@@ -79,10 +64,6 @@ extension HoldingViewController {
         return viewController?.navigationController as? PopAwareNavigationController
     }
     
-    var inSheet: Bool {
-        viewController?.navigationController as? InSheetPopAwareNavigationController != nil
-    }
-    
     func withNavigation(block: (_ navigation: UINavigationController) -> Void) {
         if let navigation = navigationController {
             block(navigation)
@@ -91,10 +72,10 @@ extension HoldingViewController {
 }
 
 extension UIViewController {
-    func setUpDefaultNavigationItemApperance(hideShadow: Bool, inSheet: Bool) {
+    func setUpDefaultNavigationItemApperance(hideShadow: Bool) {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = inSheet ? UIColor.secondary : UIColor.onPrimaryButtonSecondary
+        appearance.backgroundColor = UIColor.onPrimaryButtonSecondary
         
         guard let latoBlack19 = UIFont(name: "Lato-Black", size: 19) else {
             fatalError("""
@@ -104,7 +85,7 @@ extension UIViewController {
             )
         }
         let attrs: [NSAttributedString.Key: Any] = [
-            .foregroundColor: inSheet ? UIColor.onSecondaryHighEmphasis : UIColor.onPrimaryHighEmphasis,
+            .foregroundColor: UIColor.onPrimaryHighEmphasis,
             .font: latoBlack19
         ]
         let buttonAppearance = UIBarButtonItemAppearance()
@@ -183,7 +164,7 @@ public class HostingController<ContentView>: UIHostingController<ContentView>, P
     }
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setUpDefaultNavigationItemApperance(hideShadow: rootView.inSheet || rootView.hideNavigationBarShadow, inSheet: rootView.inSheet)
+        setUpDefaultNavigationItemApperance(hideShadow: rootView.hideNavigationBarShadow)
         if let title = rootView.viewName {
             navigationItem.title = title
         }
@@ -211,7 +192,7 @@ private class NavigatableHostingController<ContentView>: UIHostingController<Con
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        setUpDefaultNavigationItemApperance(hideShadow: rootView.inSheet || rootView.hideNavigationBarShadow, inSheet: rootView.inSheet)
+        setUpDefaultNavigationItemApperance(hideShadow: rootView.hideNavigationBarShadow)
         if let title = rootView.viewName {
             navigationItem.title = title
         }

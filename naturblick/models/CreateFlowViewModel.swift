@@ -207,7 +207,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
             }
         }
-        let create = InSheetPopAwareNavigationController(rootViewController: CreateObservationView(createFlow: self).setUpViewController())
+        let create = PopAwareNavigationController(rootViewController: CreateObservationView(createFlow: self).setUpViewController())
         navigationController?.present(create, animated: true)
     }
     

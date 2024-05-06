@@ -20,7 +20,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     
     func openSpeciesInfo(species: SpeciesListItem) {
         let info = SpeciesInfoView(selectionFlow: true, species: species, flow: flow).setUpViewController()
-        viewController?.present(InSheetPopAwareNavigationController(rootViewController: info), animated: true)
+        viewController?.present(PopAwareNavigationController(rootViewController: info), animated: true)
     }
     
     func identify() {

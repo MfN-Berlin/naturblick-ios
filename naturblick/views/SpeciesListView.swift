@@ -35,7 +35,7 @@ struct SpeciesListView: NavigatableView {
     
     func showSpecies(species: SpeciesListItem) {
         if isCharacterResult {
-            viewController?.present(InSheetPopAwareNavigationController(rootViewController: SpeciesInfoView(selectionFlow: true, species: species, flow: flow).setUpViewController()), animated: true)
+            viewController?.present(PopAwareNavigationController(rootViewController: SpeciesInfoView(selectionFlow: true, species: species, flow: flow).setUpViewController()), animated: true)
         } else {
             viewController?.navigationController?.pushViewController(SpeciesInfoView(selectionFlow: false, species: species, flow: flow).setUpViewController(), animated: true)
         }
