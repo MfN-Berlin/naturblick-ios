@@ -8,6 +8,7 @@ import SwiftUI
 import Mantis
 import MapKit
 import Photos
+import PhotosUI
 
 extension View {
     func permissionSettingsDialog(isPresented: Binding<Bool>, presenting: String?) -> some View {
@@ -23,7 +24,7 @@ extension View {
     }
 }
 
-class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController {
+class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController, PHPickerViewControllerDelegate {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
     let client = BackendClient()
@@ -33,6 +34,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @Published var region: MKCoordinateRegion = .defaultRegion
     @Published var speciesAvatar: Image = Image("placeholder")
     @Published var showOpenSettings: Bool = false
+    @Published var showDateConfirm: Bool = false
     @Published var openSettingsMessage: String? = nil
     var isCreate: Bool = true
     var obsIdent: String? = nil
@@ -58,6 +60,69 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             }
         ).setUpViewController()
         viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+    }
+    
+    @MainActor
+    func pickPhoto() {
+        data = CreateData()
+        region = .defaultRegion
+        speciesAvatar = Image("placeholder")
+        Task { @MainActor in
+            if PHPhotoLibrary.askForPermission() {
+                await PHPhotoLibrary.requestAccess()
+            }
+            let status = AVCaptureDevice.authorizationStatus(for: .video)
+            var accessGranted = false
+            if  status == .notDetermined {
+                accessGranted = await AVCaptureDevice.requestAccess(for: .video)
+            } else if status == .authorized {
+                accessGranted = true
+            } else {
+                // User has previously denied the permission, but ask to take a photo again
+                openSettingsMessage = String(localized: "go_to_app_settings_photo")
+                showOpenSettings = true
+            }
+            
+            guard accessGranted else {
+                return
+            }
+            
+            var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
+            config.filter = .images
+            let picker = PHPickerViewController(configuration: config)
+            picker.delegate = self
+            navigationController?.present(picker, animated: true)
+        }
+    }
+    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        if let result = results.first {
+            let itemProvider: NSItemProvider = result.itemProvider
+            if itemProvider.canLoadObject(ofClass: UIImage.self) {
+                itemProvider.loadObject(ofClass: UIImage.self) { image, _ in
+                    if let uiImage = image as? UIImage {
+                        self.pickedFromPhotos(uiImage: uiImage, result: result)
+                    }
+                }
+            }
+        }
+    }
+    
+    func pickedFromPhotos(uiImage: UIImage, result: PHPickerResult) {
+        Task {
+            if let assetId = result.assetIdentifier, let phResult = PHAsset.fetchAssets(withLocalIdentifiers: [assetId], options: nil).firstObject {
+                if let creationDate = phResult.creationDate.map({ d in
+                    ZonedDateTime(date: d, tz: TimeZone(secondsFromGMT: 0)!)
+                }) {
+                    self.data.created = creationDate
+                }
+                self.data.coords =  phResult.location.map { Coordinates(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude) }
+                let image = NBImage(image: uiImage, localIdentifier: phResult.localIdentifier)
+                showDateConfirm = true
+                cropPhoto(image: image)
+            }
+        }
     }
 
     @MainActor
@@ -193,6 +258,16 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
             }
         }
+        if showDateConfirm {
+            navigationController?.pushViewController(ConfirmDateView(createFlow: self).setUpViewController(), animated: true)
+        } else {
+            showCreateView()
+        }
+        
+    }
+    
+    @MainActor
+    func showCreateView() {
         let create = CreateObservationView(createFlow: self).setUpViewController()
         navigationController?.pushViewController(create, animated: true)
     }

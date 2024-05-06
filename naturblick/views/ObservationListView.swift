@@ -37,7 +37,11 @@ class ObservationListViewController: HostingController<ObservationListView> {
                MenuEntry(title: String(localized: "create_obs"), image: UIImage(named: "logo24")!) {
                    self.createFlow.createWithSearch()
                }
-           ], width: 250);
+               ,
+               MenuEntry(title: String(localized: "import_image"), image: UIImage(named: "ic_phone_action_image")!) {
+                   self.createFlow.pickPhoto()
+               }
+           ], width: 300);
            
            menuVC.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
            navigationController?.present(menuVC, animated: true)
@@ -124,9 +128,7 @@ struct ObservationListView: HostedView {
             }
         }
         .task {
-            do {
-                try await client.sync(controller: self.persistenceController)
-            } catch { /* empty */ }
+            try? await client.sync(controller: self.persistenceController)
         }
         .onReceive(model.$showList) { showList in
             if let item = viewController?.navigationItem {

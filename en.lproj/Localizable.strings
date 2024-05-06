@@ -191,3 +191,8 @@
 "save_changes"="Unsaved changes";
 "save_changes_message"="There are changes that have not been saved.";
 "exit_without_saving"="Discard changes";
+"import_image"="Identify photo from a plant";
+"validate_time"="Validate time";
+"validate_time_msg"="Please confirm that the automatically selected time and date corresponds to when the observation was made. Also select the correct time zone.";
+"set_time"="Set time";
+"timezone"="Timezone";

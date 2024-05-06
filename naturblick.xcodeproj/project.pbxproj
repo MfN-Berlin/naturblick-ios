@@ -184,6 +184,9 @@
 		7BDD17E42A45C5AA001B9DB4 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */; };
 		7BDD17E62A45C7C3001B9DB4 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */; };
 		DB01A49E2BC52F5600F67812 /* String+LinkDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */; };
+		DB0564812BD7DBAB0013FB61 /* ConfirmDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */; };
+		DB7F3F582BD910B900B4CBC2 /* TimeZonePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */; };
+		DB7F3F5A2BD910E100B4CBC2 /* TimeZoneVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -376,6 +379,9 @@
 		7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+LinkDetect.swift"; sourceTree = "<group>"; };
+		DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmDateView.swift; sourceTree = "<group>"; };
+		DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZonePolygon.swift; sourceTree = "<group>"; };
+		DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneVertex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -509,6 +515,7 @@
 				13A2923529D3114500AF772A /* CharacterView.swift */,
 				13738D512AD94AED004FCB2A /* ChevronView.swift */,
 				7B83703429E98EA10075D9F5 /* ColorTestView.swift */,
+				DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */,
 				132A91422A2DD52100AC405C /* CoordinatesView.swift */,
 				136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */,
 				7BC11AFD2A4ACD4E00823D4F /* DeleteAccountView.swift */,
@@ -614,6 +621,8 @@
 				137D280A2AC44A91009DFB36 /* SpetrogramViewModel.swift */,
 				7BD263512A8E654300CB4FE0 /* Sync.swift */,
 				134B72B22A04FBA300C1DCAD /* SyncInfo.swift */,
+				DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */,
+				DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */,
 				7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */,
 				7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */,
 				134F548F2A5EB60F00A079EC /* UploadOperation.swift */,
@@ -846,6 +855,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B2E70662A2F671900164C85 /* AboutView.swift in Sources */,
+				DB7F3F5A2BD910E100B4CBC2 /* TimeZoneVertex.swift in Sources */,
 				7BDA8FBB2ABC241E002E93C9 /* FeedbackView.swift in Sources */,
 				133B39222A40598C00D48617 /* Connection+SpeciesDB.swift in Sources */,
 				DB01A49E2BC52F5600F67812 /* String+LinkDetect.swift in Sources */,
@@ -884,6 +894,7 @@
 				13A2923429D3110C00AF772A /* CharactersView.swift in Sources */,
 				135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */,
 				136E89092AD579C500197790 /* OnSecondaryFieldView.swift in Sources */,
+				DB7F3F582BD910B900B4CBC2 /* TimeZonePolygon.swift in Sources */,
 				1395C1562ADFCEED00B168AD /* ObservationViewModel.swift in Sources */,
 				7BC77E852A6A4DCB00B489C2 /* AppSecureStorage.swift in Sources */,
 				1345EF802AB873D600F1CEA8 /* ObservationInfoView.swift in Sources */,
@@ -908,6 +919,7 @@
 				13535CEB2A77CFB600501DFA /* SpeciesListView.swift in Sources */,
 				13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */,
 				1349393A2AAB42F800A50BF1 /* IdFlow.swift in Sources */,
+				DB0564812BD7DBAB0013FB61 /* ConfirmDateView.swift in Sources */,
 				13070CA82A053EC700A2046D /* Operation.swift in Sources */,
 				7B8008F229D5B66B00950839 /* PortraitImageSize.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
