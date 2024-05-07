@@ -27,12 +27,12 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     
     func configureNavigationItem(item: UINavigationItem) {
         if navigationController?.viewControllers.first == viewController {
-            item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "close")) {_ in
+            item.leftBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "back")) {_ in
                 viewController?.dismiss(animated: true)
             })
         }
         if !(flow is VoidSelectionFlow) {
-            let actionString = selectionFlow ? String(localized: "create_with_species") : String(localized: "i_observed")
+            let actionString = selectionFlow ? String(localized: "create_with_species") : String(localized: "create_obs")
             item.rightBarButtonItem  = UIBarButtonItem(primaryAction: UIAction(title: actionString) {_ in
                 viewController?.dismiss(animated: true)
                 flow.selectSpecies(species: species)
