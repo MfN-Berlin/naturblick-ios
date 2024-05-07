@@ -29,7 +29,7 @@ struct CharacterView: View {
     }
 
     var rows: Int {
-        values.count / 3 + (values.count % 3) > 0 ? 1 : 0
+        values.count / 3 + (values.count % 3 > 0 ? 1 : 0)
     }
     func value(row: Int, col: Int) -> CharacterValue? {
         if row * 3 + col < values.count {
