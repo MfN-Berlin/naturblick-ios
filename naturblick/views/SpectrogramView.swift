@@ -28,8 +28,6 @@ struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
                 self.flow.spectrogramCropDone(sound: sound, crop: thumbnail, start: start, end: end)
             }
         })
-        item.hidesBackButton = true
-        item.leftBarButtonItem = UIBarButtonItem(title: String(localized: "discard"), style: .plain, target: flow, action: #selector(CreateFlowViewModel.discard))
     }
     
     init(model: SpectrogramViewModel, flow: Flow) {
