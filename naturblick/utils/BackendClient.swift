@@ -111,7 +111,7 @@ class BackendClient {
         }
     }
     
-    func deviceConnect(token: String) async throws {
+    func deviceConnect(token: String, deviceId: String) async throws {
     
         struct ConnectDevice: Encodable {
             let deviceIdentifier: String
@@ -122,9 +122,7 @@ class BackendClient {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "PUT"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        
-        let deviceId = Settings.deviceId()
-        
+                
         guard let encoded = try? JSONEncoder().encode(ConnectDevice(deviceIdentifier: deviceId)) else {
             preconditionFailure("Failed to encode ConnectDevice")
         }
@@ -247,8 +245,9 @@ class BackendClient {
         let data = try await downloader.http(request: request)
         let decoder = JSONDecoder()
         let signInResponse = try decoder.decode(SigninResponse.self, from: data)
-        
-        try await deviceConnect(token: signInResponse.access_token)
+        for deviceId in Settings.getAllDeviceIds() {
+            try await deviceConnect(token: signInResponse.access_token, deviceId: deviceId)
+        }
         
         return signInResponse
     }

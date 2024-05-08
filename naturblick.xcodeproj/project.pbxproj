@@ -101,6 +101,7 @@
 		13C850DC2AA20CE30006FA1A /* CreateFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C850DB2AA20CE30006FA1A /* CreateFlowViewModel.swift */; };
 		13C880FF2A98BB91007DEC0B /* NaturblickAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C880FE2A98BB91007DEC0B /* NaturblickAppDelegate.swift */; };
 		13C881012A98BC07007DEC0B /* NaturblickSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */; };
+		13CFACCB2BEA34B1004C506A /* DeviceIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13CFACCA2BEA34B1004C506A /* DeviceIdentifier.swift */; };
 		13D8A7E32BD68DBF008AF50E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13D8A7E22BD68DBF008AF50E /* PrivacyInfo.xcprivacy */; };
 		13E50A282AE7F4010049FACD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13E50A2A2AE7F4010049FACD /* InfoPlist.strings */; };
 		13E50A2D2AE805890049FACD /* AVAudioSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E50A2C2AE805890049FACD /* AVAudioSession.swift */; };
@@ -297,6 +298,7 @@
 		13C850DB2AA20CE30006FA1A /* CreateFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFlowViewModel.swift; sourceTree = "<group>"; };
 		13C880FE2A98BB91007DEC0B /* NaturblickAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickAppDelegate.swift; sourceTree = "<group>"; };
 		13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickSceneDelegate.swift; sourceTree = "<group>"; };
+		13CFACCA2BEA34B1004C506A /* DeviceIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceIdentifier.swift; sourceTree = "<group>"; };
 		13D8A7E22BD68DBF008AF50E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13E50A292AE7F4010049FACD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13E50A2B2AE7F40A0049FACD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 				13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */,
 				137FE58429E5964100B397DF /* DBObservation.swift */,
 				7BAC5BC72A8F629400160DEC /* DeleteOperation.swift */,
+				13CFACCA2BEA34B1004C506A /* DeviceIdentifier.swift */,
 				13B686AB2A09055C001FD28F /* EditData.swift */,
 				13AFFA592AAF0A0B00ABF4F9 /* EditFlowViewModel.swift */,
 				7BCE46BE29C9DB3700C6C101 /* Group.swift */,
@@ -917,6 +920,7 @@
 				134B72B72A053A6300C1DCAD /* CreateData.swift in Sources */,
 				7BD263522A8E654300CB4FE0 /* Sync.swift in Sources */,
 				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
+				13CFACCB2BEA34B1004C506A /* DeviceIdentifier.swift in Sources */,
 				7BB74B5B2ABB2E34002C4493 /* MenuController.swift in Sources */,
 				7BCEFCC62A690F4800EAC332 /* UIApplication.swift in Sources */,
 				13535CEB2A77CFB600501DFA /* SpeciesListView.swift in Sources */,

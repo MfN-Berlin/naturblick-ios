@@ -20,6 +20,7 @@ class ObservationPersistenceController: ObservableObject {
             } else {
                 self.queue = try Connection(fileURL.absoluteString)
             }
+            self.queue.busyTimeout = 5
             try self.queue.execute("PRAGMA foreign_keys = ON;")
             if self.queue.userVersion == 0 {
                 try self.queue.execute(
@@ -117,6 +118,19 @@ class ObservationPersistenceController: ObservableObject {
                     BEGIN TRANSACTION;
                     ALTER TABLE patch_operation ADD COLUMN local_media_id TEXT;
                     PRAGMA user_version = 2;
+                    COMMIT TRANSACTION;
+"""
+                )
+            }
+            if self.queue.userVersion == 2 {
+                try self.queue.execute(
+"""
+                    BEGIN TRANSACTION;
+                    CREATE TABLE device_identifier (
+                        id TEXT UNIQUE NOT NULL,
+                        name TEXT NOT NULL
+                    );
+                    PRAGMA user_version = 3;
                     COMMIT TRANSACTION;
 """
                 )
@@ -358,6 +372,22 @@ class ObservationPersistenceController: ObservableObject {
 
     private func clearPendingOperations(ids: [Int64]) throws {
         try queue.run(Operation.D.table.filter(ids.contains(Operation.D.rowid)).delete())
+    }
+    
+    func getAllDeviceIds() -> [String] {
+        let device = DeviceIdentifier(id: Settings.deviceId(), name: UIDevice.modelName)
+        do {
+            var deviceIds: [String] = []
+            try queue.transaction {
+                try queue.run(DeviceIdentifier.D.table.insert(or: .replace, device.setters()))
+                deviceIds = try queue.prepareRowIterator(DeviceIdentifier.D.table.select(DeviceIdentifier.D.id)).map { row in
+                    try row.get(DeviceIdentifier.D.id)
+                }
+            }
+            return deviceIds
+        } catch {
+            preconditionFailure("\(error)")
+        }
     }
 }
 
