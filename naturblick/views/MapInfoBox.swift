@@ -12,7 +12,7 @@ struct MapInfoBox: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            Thumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
+            Thumbnail(occurenceId: observation.id, persistenceController: persistenceController, speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId, obsIdent: observation.observation.obsIdent) { image in
                 image
                     .resizable()
                     .scaledToFit()

@@ -90,7 +90,7 @@ struct ObservationListView: HostedView {
                 List {
                     ForEach(persistenceController.observations) {
                         observation in
-                        ObservationListItemWithImageView(observation: observation)
+                        ObservationListItemWithImageView(observation: observation, persistenceController: persistenceController)
                             .listRowInsets(.nbInsets)
                             .listRowBackground(Color.secondaryColor)
                             .onTapGesture {

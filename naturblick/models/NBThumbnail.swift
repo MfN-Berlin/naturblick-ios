@@ -5,6 +5,7 @@
 
 import Foundation
 import UIKit
+import os
 
 struct NBThumbnail {
     let id: UUID
@@ -32,5 +33,48 @@ struct NBThumbnail {
     
     private static func url(id: UUID) -> URL {
         URL.fileURL(id: id, mime: .jpeg)
+    }
+    
+    static func oldUrl(obsIdent: String) -> URL? {
+        URL.oldRecordings?.appendingPathComponent("\(obsIdent)_Avatar.jpg", isDirectory: false)
+    }
+    
+    private static func findOld(obsIdent: String) -> String? {
+        guard let path = oldUrl(obsIdent: obsIdent)?.path else {
+            Logger.compat.warning("No path for thumbnail \(obsIdent, privacy: .public)")
+            return nil
+        }
+        
+        guard FileManager.default.fileExists(atPath: path) else {
+            Logger.compat.warning("No file found at \(path, privacy: .public)")
+            return nil
+        }
+        return path
+    }
+    
+    static func loadOld(occurenceId: UUID, obsIdent: String, persistenceController: ObservationPersistenceController) -> NBThumbnail? {
+        Logger.compat.info("Trying to find thumbnail for \(occurenceId, privacy: .public) \(obsIdent, privacy: .public)")
+        
+        guard let path = NBThumbnail.findOld(obsIdent: obsIdent) else {
+            Logger.compat.warning("Could not find thumbnail for \(occurenceId, privacy: .public)")
+            return nil
+        }
+        
+        guard let image = UIImage(contentsOfFile: path) else {
+            Logger.compat.warning("Could not load thumbnail from \(path, privacy: .public)")
+            return nil
+        }
+        let thumbnail = NBThumbnail(image: image)
+        do {
+            Logger.compat.info("Create upload operation for thumbnail \(thumbnail.id, privacy: .public), \(occurenceId, privacy: .public)")
+            try persistenceController.addMissingThumbnail(occurenceId: occurenceId, thumbnail: thumbnail)
+            Logger.compat.info("Deleting \(path, privacy: .public), \(occurenceId, privacy: .public)")
+            try? FileManager.default.removeItem(atPath: path)
+            Logger.compat.info("Successfully created thumbnail \(thumbnail.id, privacy: .public) from \(path, privacy: .public), \(occurenceId, privacy: .public)")
+            return thumbnail
+        } catch {
+            Logger.compat.warning("Failed to create thumbnail for \(path, privacy: .public), \(occurenceId, privacy: .public): \(error)")
+            return nil
+        }
     }
 }
