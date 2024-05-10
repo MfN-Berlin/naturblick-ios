@@ -206,6 +206,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     @MainActor func soundRecorded(sound: NBSound) {
+        data.sound.sound = sound
         withNavigation { navigation in
             var viewControllers = navigation.viewControllers
             viewControllers[viewControllers.count - 1] = SpectrogramViewController(mediaId: sound.id, flow: self)
