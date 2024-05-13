@@ -6,16 +6,13 @@
 import SwiftUI
 
 struct Thumbnail<Content: View> : View {
+    let occurenceId: UUID
+    let persistenceController: ObservationPersistenceController
     let speciesUrl: String?
     let thumbnailId: UUID?
+    let obsIdent: String?
     @State var uiImage: UIImage? = nil
     let content: (Image) -> Content
-
-    init(speciesUrl: String?, thumbnailId: UUID?, @ViewBuilder content: @escaping (Image) -> Content) {
-        self.speciesUrl = speciesUrl
-        self.thumbnailId = thumbnailId
-        self.content = content
-    }
 
     var body: some View {
         SwiftUI.Group {
@@ -28,10 +25,9 @@ struct Thumbnail<Content: View> : View {
         .task(id: thumbnailId) {
             if let thumbnailId = self.thumbnailId {
                 self.uiImage = try? await NBThumbnail(id: thumbnailId).image
-            }
-        }
-        .task(id: speciesUrl) {
-            if let speciesUrl = speciesUrl, self.thumbnailId == nil {
+            } else if let obsIdent = obsIdent, let thumbnail = NBThumbnail.loadOld(occurenceId: occurenceId, obsIdent: obsIdent, persistenceController: persistenceController) {
+                self.uiImage = thumbnail.image
+            } else if let speciesUrl = speciesUrl {
                 self.uiImage = await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!)
             }
         }
@@ -41,8 +37,11 @@ struct Thumbnail<Content: View> : View {
 struct Thumbnail_Previews: PreviewProvider {
     static var previews: some View {
         Thumbnail(
+            occurenceId: UUID(),
+            persistenceController: ObservationPersistenceController(inMemory: true),
             speciesUrl: nil,
-            thumbnailId: nil
+            thumbnailId: nil,
+            obsIdent: nil
         ) { image in
             image
         }

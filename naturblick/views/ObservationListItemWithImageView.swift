@@ -9,10 +9,10 @@ import class SQLite.Connection
 
 struct ObservationListItemWithImageView: View {
     let observation: Observation
-    
+    let persistenceController: ObservationPersistenceController
     var body: some View {
         HStack {
-            Thumbnail(speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId) { image in
+            Thumbnail(occurenceId: observation.id, persistenceController: persistenceController, speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId, obsIdent: observation.observation.obsIdent) { image in
                 ObservationListItemView(observation: observation, image: image)
             }
             ChevronView(color: .onPrimarySignalLow)
@@ -25,7 +25,8 @@ struct ObservationListItemWithImageView: View {
 struct ObservationListItemWithImageView_Previews: PreviewProvider {
     static var previews: some View {
         ObservationListItemWithImageView(
-            observation: Observation(observation: DBObservation.sampleData, species: Species.sampleData)
+            observation: Observation(observation: DBObservation.sampleData, species: Species.sampleData),
+            persistenceController: ObservationPersistenceController(inMemory: true)
         )
     }
 }

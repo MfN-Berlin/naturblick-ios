@@ -280,6 +280,16 @@ class ObservationPersistenceController: ObservableObject {
         }
     }
 
+    func addMissingThumbnail(occurenceId: UUID, thumbnail: NBThumbnail) throws {
+        try queue.transaction {
+            try insert(occurenceId: occurenceId, id: thumbnail.id, image: thumbnail.image)
+            let patch = PatchOperation(occurenceId: occurenceId, obsType: nil, coords: nil, details: nil, individuals: nil, mediaId: nil, localMediaId: nil, thumbnailId: thumbnail.id, newSpeciesId: nil, behavior: nil)
+            let patchId = try queue.run(Operation.D.table.insert())
+            try queue.run(PatchOperation.D.table.insert(patch.setters(id: patchId)))
+            try updateAndRefresh()
+        }
+    }
+    
     func delete(indexSet: IndexSet) throws {
         try queue.transaction {
             for i in indexSet {
