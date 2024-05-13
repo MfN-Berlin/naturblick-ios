@@ -6,6 +6,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import os
 
 struct Chunk {
     
@@ -66,7 +67,7 @@ class BackendClient {
     func sync(controller: ObservationPersistenceController) async throws {
         let (ids, operations) = try controller.getPendingOperations()
         var chunk = Chunk()
-        
+        Logger.sync.info("Will sync: \(operations)")
         for (i, o) in zip(ids, operations) {
             chunk.addOperation(id: i, operation: o)
             if chunk.exceedsMaxSize() {
@@ -75,6 +76,7 @@ class BackendClient {
             }
         }
         try await syncChunk(chunk: chunk, controller: controller)
+        Logger.sync.info("Sync done")
     }
     
     private func syncChunk(chunk: Chunk, controller: ObservationPersistenceController) async throws {
@@ -101,6 +103,8 @@ class BackendClient {
             try controller.truncateObservations()
         }
         
+        Logger.sync.info("The following operations were accepted: \(chunk.ids)")
+        Logger.sync.info("Received (partial: \(response.partial)) \(response.data.count) observation updates")
         try controller.handleChunk(from: response.data, ids: chunk.ids, syncId: response.syncId)
         
         for operation in chunk.operations {
@@ -248,7 +252,8 @@ class BackendClient {
         for deviceId in Settings.getAllDeviceIds() {
             try await deviceConnect(token: signInResponse.access_token, deviceId: deviceId)
         }
-        
+        // Reset sync IDs
+        ObservationPersistenceController().resetSyncIgnoreFailure()
         return signInResponse
     }
     

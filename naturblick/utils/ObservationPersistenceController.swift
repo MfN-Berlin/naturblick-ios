@@ -6,6 +6,7 @@
 import CoreData
 import SQLite
 import UIKit
+import os
 
 class ObservationPersistenceController: ObservableObject {
     private var queue: Connection
@@ -183,6 +184,17 @@ class ObservationPersistenceController: ObservableObject {
     
     func getSync() throws -> Sync? {
         try queue.prepare(Sync.D.sync.select(*)).map(Sync.D.instance).first
+    }
+    
+    func resetSyncIgnoreFailure() {
+        do {
+            Logger.sync.info("Clear all sync IDs")
+            try queue.transaction {
+                try queue.run(Sync.D.sync.delete())
+            }
+        } catch {
+            Logger.sync.warning("Failed to delete sync ID: \(error)")
+        }
     }
     
     private func setSyncId(syncId: Int64?) throws {

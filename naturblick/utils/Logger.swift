@@ -8,4 +8,6 @@ import os
 extension Logger {
     private static var subsystem = Bundle.main.bundleIdentifier!
     static let compat = Logger(subsystem: subsystem, category: "compat")
+    static let sync = Logger(subsystem: subsystem, category: "sync")
+
 }
