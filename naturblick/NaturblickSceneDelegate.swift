@@ -73,6 +73,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
             if let userData = OldUserData.getFromOldDB() {
                 if let ccByName = userData.name, existingCcByName == nil {
                     UserDefaults.standard.setValue(ccByName, forKey: "ccByName")
+                    UserDefaults.standard.setValue(true, forKey: "ccByNameWasSet")
                 }
                 if let agb = userData.policy, !existingAgb {
                     UserDefaults.standard.setValue(agb, forKey: "agb")
