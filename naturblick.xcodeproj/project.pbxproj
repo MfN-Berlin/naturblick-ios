@@ -79,6 +79,7 @@
 		137FE58E29E5AC1C00B397DF /* ObservationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58D29E5AC1C00B397DF /* ObservationResponse.swift */; };
 		137FE59029E5B3A500B397DF /* NSMutableData+append.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */; };
 		13839FBE2ABDBE0A00DE2A5B /* SourcesTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13839FBD2ABDBE0A00DE2A5B /* SourcesTranslation.swift */; };
+		138A2A322BF37DBF00BAA384 /* CCByPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A2A312BF37DBF00BAA384 /* CCByPopupView.swift */; };
 		1395C1562ADFCEED00B168AD /* ObservationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1395C1552ADFCEED00B168AD /* ObservationViewModel.swift */; };
 		139DA94C2AB99E6F00C8C238 /* View+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */; };
 		13A2923129D2DC3C00AF772A /* Generated.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13A2923029D2DC3C00AF772A /* Generated.xcassets */; };
@@ -276,6 +277,7 @@
 		137FE58D29E5AC1C00B397DF /* ObservationResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationResponse.swift; sourceTree = "<group>"; };
 		137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableData+append.swift"; sourceTree = "<group>"; };
 		13839FBD2ABDBE0A00DE2A5B /* SourcesTranslation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesTranslation.swift; sourceTree = "<group>"; };
+		138A2A312BF37DBF00BAA384 /* CCByPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CCByPopupView.swift; sourceTree = "<group>"; };
 		1395C1552ADFCEED00B168AD /* ObservationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationViewModel.swift; sourceTree = "<group>"; };
 		139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Shadow.swift"; sourceTree = "<group>"; };
 		13A2923029D2DC3C00AF772A /* Generated.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Generated.xcassets; sourceTree = "<group>"; };
@@ -568,6 +570,7 @@
 				13F03C7D2ACD6AE100EEF964 /* StaticBottomSheetView.swift */,
 				7B572DD82A6E758F008F50C5 /* Thumbnail.swift */,
 				13738D4F2AD93E0E004FCB2A /* ViewProperty.swift */,
+				138A2A312BF37DBF00BAA384 /* CCByPopupView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -883,6 +886,7 @@
 				13B686B22A09410A001FD28F /* Coordinates.swift in Sources */,
 				13B4E7592BCD25D30025C64E /* AGBView.swift in Sources */,
 				1337159A2A8CFBC2009E31E0 /* HttpErrorViewModel.swift in Sources */,
+				138A2A322BF37DBF00BAA384 /* CCByPopupView.swift in Sources */,
 				13C880FF2A98BB91007DEC0B /* NaturblickAppDelegate.swift in Sources */,
 				13E50A2D2AE805890049FACD /* AVAudioSession.swift in Sources */,
 				13ED4C292AE6C3C00007C228 /* PHPhotoLibrary.swift in Sources */,

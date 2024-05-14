@@ -37,7 +37,7 @@ class HomeViewController: HostingController<HomeView> {
                 self.navigationController?.pushViewController(view, animated: true)
             },
             MenuEntry(title: String(localized: "action_settings"), image: UIImage(named: "settings")!) {
-                let view = SettingsView().setUpViewController()
+                let view = SettingsViewController()
                 self.navigationController?.pushViewController(view, animated: true)
             },
             MenuEntry(title: String(localized: "feedback"), image: UIImage(systemName: "square.and.pencil")!) {

@@ -5,12 +5,23 @@
 
 import SwiftUI
 
-struct SettingsView: NavigatableView {
+class SettingsViewController: HostingController<SettingsView> {
+    init() {
+        super.init(rootView: SettingsView())
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        UserDefaults.standard.setValue(true, forKey: "ccByNameWasSet")
+    }
+}
+
+struct SettingsView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = String(localized: "settings")
     
     @AppStorage("ccByName") var ccByName: String = "MfN Naturblick"
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: .defaultPadding) {

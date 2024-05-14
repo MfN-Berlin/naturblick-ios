@@ -37,10 +37,6 @@ class ObservationListViewController: HostingController<ObservationListView> {
                MenuEntry(title: String(localized: "create_obs"), image: UIImage(named: "logo24")!) {
                    self.createFlow.createWithSearch()
                }
-               ,
-               MenuEntry(title: String(localized: "import_image"), image: UIImage(named: "ic_phone_action_image")!) {
-                   self.createFlow.pickPhoto()
-               }
            ], width: 300);
            
            menuVC.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem

@@ -174,6 +174,20 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     func cropDone(thumbnail: NBThumbnail) {
+        withNavigation { navigation in
+            if(UserDefaults.standard.bool(forKey: "ccByNameWasSet")) {
+                afterCrop(thumbnail: thumbnail)
+            } else {
+                let popup = CCByPopupViewController {
+                    self.afterCrop(thumbnail: thumbnail)
+                }
+                popup.modalPresentationStyle = .formSheet
+                navigation.present(PopAwareNavigationController(rootViewController: popup), animated: true)
+            }
+        }
+    }
+    
+    func afterCrop(thumbnail: NBThumbnail) {
         let resultView = SelectSpeciesView(flow: self, thumbnail: thumbnail)
         withNavigation { navigation in
             navigation.pushViewController(resultView.setUpViewController(), animated: true)
@@ -208,9 +222,24 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @MainActor func soundRecorded(sound: NBSound) {
         data.sound.sound = sound
         withNavigation { navigation in
-            var viewControllers = navigation.viewControllers
-            viewControllers[viewControllers.count - 1] = SpectrogramViewController(mediaId: sound.id, flow: self)
-            navigation.setViewControllers(viewControllers, animated: true)
+            if(UserDefaults.standard.bool(forKey: "ccByNameWasSet")) {
+                openSpectrogramView()
+            } else {
+                let popup = CCByPopupViewController {
+                    self.openSpectrogramView()
+                }
+                navigation.present(PopAwareNavigationController(rootViewController: popup), animated: true)
+            }
+        }
+    }
+    
+    @MainActor func openSpectrogramView() {
+        withNavigation { navigation in
+            if let sound = data.sound.sound {
+                var viewControllers = navigation.viewControllers
+                viewControllers[viewControllers.count - 1] = SpectrogramViewController(mediaId: sound.id, flow: self)
+                navigation.setViewControllers(viewControllers, animated: true)
+            }
         }
     }
     
