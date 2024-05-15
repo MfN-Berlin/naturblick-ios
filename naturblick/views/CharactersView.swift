@@ -33,7 +33,7 @@ struct CharactersView: NavigatableView {
                         }
                     }
                 }
-                .padding(.bottom, geo.safeAreaInsets.bottom + .doublePadding)
+                .padding(.bottom, geo.safeAreaInsets.bottom + .defaultPadding + .doublePadding)
             }
             .task {
                 charactersViewModel.configure(group: group)
@@ -47,7 +47,7 @@ struct CharactersView: NavigatableView {
                 .accentColor(Color.onPrimaryButtonPrimary)
                 .buttonStyle(.borderedProminent)
                 .padding(.horizontal, .defaultPadding)
-                .padding(.bottom, geo.safeAreaInsets.bottom)
+                .padding(.bottom, geo.safeAreaInsets.bottom + .defaultPadding)
                 .disabled(charactersViewModel.selected.isEmpty)
             }
             .customBackground(

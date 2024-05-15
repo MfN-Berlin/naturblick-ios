@@ -60,6 +60,7 @@ class HomeViewController: HostingController<HomeView> {
 }
 
 struct HomeView: HostedView {
+    static let maxWidth: CGFloat = 800
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
@@ -92,8 +93,8 @@ struct HomeView: HostedView {
     var body: some View {
         GeometryReader { geo in
             
-            let topRowSize = geo.size.width * .topRowFactor
-            let bottomRowSize = geo.size.width * .bottomRowFactor
+            let topRowSize = min(geo.size.width, HomeView.maxWidth) * .topRowFactor
+            let bottomRowSize = min(geo.size.width, HomeView.maxWidth) * .bottomRowFactor
             
             ZStack {
                 VStack(spacing: .zero) {
@@ -101,6 +102,7 @@ struct HomeView: HostedView {
                         .resizable()
                         .scaledToFit()
                         .clipped()
+                        .frame(alignment: .topLeading)
                         .ignoresSafeArea()
                         .padding(.bottom, -geo.safeAreaInsets.top)
                     Spacer()
@@ -164,6 +166,7 @@ struct HomeView: HostedView {
                             }
                             Spacer()
                         }
+                        .frame(maxWidth: HomeView.maxWidth)
                         
                         HStack(alignment: .top) {
                             Spacer()
@@ -194,10 +197,11 @@ struct HomeView: HostedView {
                             }
                             Spacer()
                         }
+                        .frame(maxWidth: HomeView.maxWidth)
                         .padding(.defaultPadding)
                         .padding(.bottom, geo.safeAreaInsets.bottom + .doublePadding)
                     }
-                    .frame(width: geo.size.width)
+                    .frame(maxWidth: .infinity)
                     .background {
                         Rectangle()
                             .foregroundColor(.primaryColor)
