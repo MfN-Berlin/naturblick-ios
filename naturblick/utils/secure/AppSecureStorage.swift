@@ -15,9 +15,9 @@ public enum NbAppSecureStorageKey: AccSecureStorageKey {
     public var key: String {
         switch self {
         case .BearerToken:
-            return "bearer_token"
+            return "naturblick_bearer_token"
         case .Email:
-            return "email"
+            return "naturblick_email"
         }
     }
 }
