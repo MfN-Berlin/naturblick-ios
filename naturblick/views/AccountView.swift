@@ -10,8 +10,8 @@ class AccountViewModel : ObservableObject {
     @AppSecureStorage(NbAppSecureStorageKey.BearerToken) private var secureBearerToken: String?
     @AppSecureStorage(NbAppSecureStorageKey.Email) private var secureEmail: String?
     
-    @AppStorage("neverSignedIn") private var storageNeverSignedIn: Bool = true
-    @AppStorage("activated") private var storageActivated: Bool = false
+    @AppStorage("naturblick_neverSignedIn") private var storageNeverSignedIn: Bool = true
+    @AppStorage("naturblick_activated") private var storageActivated: Bool = false
     
     var bearerToken: String? {
         willSet {
