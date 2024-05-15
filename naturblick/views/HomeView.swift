@@ -191,7 +191,7 @@ struct HomeView: HostedView {
                                     viewType: .portraitGroups,
                                     groups: Group.groups,
                                     destination: { group in
-                                        SpeciesListView(filter: .group(group), flow: createFlow)
+                                        SpeciesListView(filter: .group(group), flow: createFlow).setUpViewController()
                                     }).setUpViewController()
                                 viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                             }

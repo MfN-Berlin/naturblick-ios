@@ -6,7 +6,6 @@
 import Foundation
 import SQLite
 import Combine
-import BottomSheet
 
 class CharactersViewModel: ObservableObject {
 
@@ -14,7 +13,6 @@ class CharactersViewModel: ObservableObject {
     @Published var selected: Set<Int64> = []
     @Published private(set) var count: Int64 = 0
     @Published private(set) var filter: SpeciesListFilter = .characters(0, [])
-    @Published var bottomSheetPosition: BottomSheetPosition = .dynamicBottom
     
     func initializeCharacters(group: Group) {
         do {
@@ -116,16 +114,6 @@ extension CharactersViewModel {
                 }
             }
             .assign(to: &$count)
-
-        $count
-            .map { count in
-                if count > 0 {
-                    return .dynamic
-                } else {
-                    return .dynamicBottom
-                }
-            }
-            .assign(to: &$bottomSheetPosition)
 
         initializeCharacters(group: group)
     }
