@@ -56,7 +56,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             viewType: .characterKeys,
             groups: Group.characterGroups,
             destination: { group in
-                CharactersView(group: group, flow: self)
+                CharactersViewController(group: group, flow: self)
             }
         ).setUpViewController()
         viewController?.navigationController?.pushViewController(nextViewController, animated: true)

@@ -4,9 +4,38 @@
 
 
 import SwiftUI
-import BottomSheet
+import Combine
 
-struct CharactersView: NavigatableView {
+class CharactersViewController: HostingController<CharactersView> {
+    let model: CharactersViewModel
+    let flow: CreateFlowViewModel
+    private var subscriptions = Set<AnyCancellable>()
+    var count: Int64 = 0 {
+        didSet {
+            if count > 0 {
+                let countStr = "\(count)"
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "show_results \(countStr)"), style: .done, target: self, action: #selector(CharactersViewController.showResults))
+            } else {
+                navigationItem.rightBarButtonItem = nil
+            }
+        }
+    }
+    
+    @objc func showResults() {
+        AnalyticsTracker.trackSpeciesSelection(filter: model.filter)
+        navigationController?.pushViewController(
+            SpeciesListView(filter: model.filter, flow: flow, isCharacterResult: true).setUpViewController(), animated: true)
+    }
+    
+    init(group: Group, flow: CreateFlowViewModel) {
+        self.model = CharactersViewModel()
+        self.flow = flow
+        super.init(rootView: CharactersView(group: group, charactersViewModel: model))
+        model.$count.assign(to: \.count, on: self).store(in: &subscriptions)
+    }
+}
+
+struct CharactersView: HostedView {
 
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? {
@@ -14,13 +43,7 @@ struct CharactersView: NavigatableView {
     }
     
     let group: Group
-    @ObservedObject var flow: CreateFlowViewModel
-    
-    @StateObject private var charactersViewModel = CharactersViewModel()
-    
-    private var charactersViewModelCountStr: String {
-        "\(charactersViewModel.count)"
-    }
+    @ObservedObject var charactersViewModel: CharactersViewModel
     
     var body: some View {
         GeometryReader { geo in
@@ -33,28 +56,10 @@ struct CharactersView: NavigatableView {
                         }
                     }
                 }
-                .padding(.bottom, geo.safeAreaInsets.bottom + .defaultPadding + .doublePadding)
             }
             .task {
                 charactersViewModel.configure(group: group)
             }
-            .bottomSheet(bottomSheetPosition: $charactersViewModel.bottomSheetPosition, switchablePositions: [.dynamicBottom, .dynamic]) {
-                Button(String(localized: "show_results \(charactersViewModelCountStr)")) {
-                    AnalyticsTracker.trackSpeciesSelection(filter: charactersViewModel.filter)
-                    navigationController?.pushViewController(
-                        SpeciesListView(filter: charactersViewModel.filter, flow: flow, isCharacterResult: true).setUpViewController(), animated: true)
-                }
-                .accentColor(Color.onPrimaryButtonPrimary)
-                .buttonStyle(.borderedProminent)
-                .padding(.horizontal, .defaultPadding)
-                .padding(.bottom, geo.safeAreaInsets.bottom + .defaultPadding)
-                .disabled(charactersViewModel.selected.isEmpty)
-            }
-            .customBackground(
-                RoundedRectangle(cornerRadius: .largeCornerRadius)
-                    .fill(Color.secondaryColor)
-                    .nbShadow()
-            )
         }
     }
 }
@@ -62,7 +67,7 @@ struct CharactersView: NavigatableView {
 struct CharactersView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CharactersView(group: Group.groups[0], flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
+            CharactersView(group: Group.groups[0], charactersViewModel: CharactersViewModel())
         }
     }
 }

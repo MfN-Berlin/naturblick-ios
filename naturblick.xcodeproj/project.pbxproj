@@ -55,7 +55,6 @@
 		13631B072BE513A500AEB78B /* SelectionFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13631B062BE513A500AEB78B /* SelectionFlow.swift */; };
 		13640AF12ADEAE2400BA5907 /* EditObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13640AF02ADEAE2400BA5907 /* EditObservationView.swift */; };
 		1366FA952A654B8500436EF1 /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1366FA942A654B8500436EF1 /* Observation.swift */; };
-		136C118B29D6E66E00805628 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 136C118A29D6E66E00805628 /* BottomSheet */; };
 		136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */; };
 		136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D907F29D18BBE00A00BD4 /* Portrait.swift */; };
 		136DFAB929F96E6500C8B8FF /* CreateObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DFAB829F96E6500C8B8FF /* CreateObservationView.swift */; };
@@ -399,7 +398,6 @@
 				502C51072BDB88950077B06B /* SnowplowTracker in Frameworks */,
 				7BDA8FBE2ABC5E94002E93C9 /* CachedAsyncImage in Frameworks */,
 				13316BE029C9FAF80077292B /* SQLite in Frameworks */,
-				136C118B29D6E66E00805628 /* BottomSheet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,7 +716,6 @@
 			name = naturblick;
 			packageProductDependencies = (
 				13316BDF29C9FAF80077292B /* SQLite */,
-				136C118A29D6E66E00805628 /* BottomSheet */,
 				7BB350DA2A2A32A8005065E4 /* Mantis */,
 				7BDA8FBD2ABC5E94002E93C9 /* CachedAsyncImage */,
 				502C51062BDB88950077B06B /* SnowplowTracker */,
@@ -1383,11 +1380,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
-		};
-		136C118A29D6E66E00805628 /* BottomSheet */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */;
-			productName = BottomSheet;
 		};
 		502C51062BDB88950077B06B /* SnowplowTracker */ = {
 			isa = XCSwiftPackageProductDependency;

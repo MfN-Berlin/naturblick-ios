@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
+struct GroupsView<Content>: NavigatableView where Content: UIViewController {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = String(localized: "menu_groups")
     var viewType: GroupsViewType
@@ -32,7 +32,7 @@ struct GroupsView<Content>: NavigatableView where Content: NavigatableView {
                         ForEach(groups) { group in
                             GroupButton(group: group).onTapGesture {
                                 AnalyticsTracker.trackSpeciesSelection(filter: .group(group), viewType: self.viewType)
-                                let nextViewController = destination(group).setUpViewController()
+                                let nextViewController = destination(group)
                                 viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                             }
                         }
@@ -49,7 +49,13 @@ enum GroupsViewType {
 
 struct GroupsView_Previews: PreviewProvider {
     
-    struct T : NavigatableView {
+    class TController: HostingController<T> {
+        init(str: String) {
+            super.init(rootView: T(str: str))
+        }
+    }
+    
+    struct T : HostedView {
         let str: String
         
         var holder: ViewControllerHolder = ViewControllerHolder()
@@ -64,7 +70,7 @@ struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             GroupsView(viewType: .portraitGroups ,groups: Group.groups) { group in
-                T(str: "Clicked on \(group.gerName)")
+                TController(str: "Clicked on \(group.gerName)")
             }
         }
     }
