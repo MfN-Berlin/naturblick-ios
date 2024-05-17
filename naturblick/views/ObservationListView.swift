@@ -53,7 +53,6 @@ struct ObservationListView: HostedView {
     @StateObject private var locationManager = LocationManager()
     @StateObject private var errorHandler = HttpErrorViewModel()
     @State private var userTrackingMode: MKUserTrackingMode = .none
-    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var createFlow: CreateFlowViewModel
     @StateObject var model: ObservationListViewModel
@@ -127,10 +126,20 @@ struct ObservationListView: HostedView {
                 configureNavigationItem(item: item, showList: showList)
             }
         }
-        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error, loggedOutHandler: {
-            bearerToken = nil
-            navigationController?.pushViewController(LoginView(accountViewModel: AccountViewModel()).setUpViewController(), animated: true)
-        })
+        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { error in
+            if case .loggedOut = error {
+                Button("sign_out") {
+                    Keychain.delete(.token)
+                    Keychain.delete(.email)
+                }
+                Button("to_sign_in") {
+                    Keychain.delete(.token)
+                    navigationController?.pushViewController(LoginView(accountViewModel: AccountViewModel()).setUpViewController(), animated: true)
+                }
+            }
+        } message: { error in
+            Text(error.localizedDescription)
+        }
     }
 }
 

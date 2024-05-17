@@ -6,58 +6,6 @@
 import SwiftUI
 import Combine
 
-class AccountViewModel : ObservableObject {
-    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) private var secureBearerToken: String?
-    @AppSecureStorage(NbAppSecureStorageKey.Email) private var secureEmail: String?
-    
-    @AppStorage("naturblick_neverSignedIn") private var storageNeverSignedIn: Bool = true
-    @AppStorage("naturblick_activated") private var storageActivated: Bool = false
-    
-    var bearerToken: String? {
-        willSet {
-            secureBearerToken = newValue
-            objectWillChange.send()
-        }
-    }
-    
-    var email: String? {
-        willSet {
-            secureEmail = newValue
-            objectWillChange.send()
-        }
-    }
-    
-    var neverSignedIn: Bool = true {
-        willSet {
-            storageNeverSignedIn = newValue
-            objectWillChange.send()
-        }
-    }
-  
-    var activated: Bool = false {
-        willSet {
-            storageActivated = newValue
-            objectWillChange.send()
-        }
-    }
-   
-    
-    func signOut() {
-        email = nil
-        bearerToken = nil
-        neverSignedIn = true
-        activated = false
-    }
-    
-    init() {
-        bearerToken = secureBearerToken
-        email = secureEmail
-        neverSignedIn = storageNeverSignedIn
-        activated = storageActivated
-    }
-}
-
-
 struct AccountView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = String(localized: "account")
@@ -83,7 +31,7 @@ struct AccountView: NavigatableView {
                 Button("to_sign_up") {
                     navigationController?.pushViewController(RegisterView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
                 }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
-            } else if (accountViewModel.bearerToken != nil) {
+            } else if (accountViewModel.hasToken) {
                 Text("your_account_text")
                     .body1()
                 Text("signed_in_as \(accountViewModel.email!)")
@@ -99,7 +47,7 @@ struct AccountView: NavigatableView {
                 
                 Text("delete_account_note_link")
                     .body2()
-            } else if (accountViewModel.bearerToken == nil && accountViewModel.email != nil) {
+            } else if (!accountViewModel.hasToken && accountViewModel.email != nil) {
                 if accountViewModel.neverSignedIn {
                     Text("continue_with_sign_in")
                         .body1()

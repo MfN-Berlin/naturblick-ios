@@ -20,10 +20,9 @@ struct ForgotPasswordView: NavigatableView {
     @Environment(\.dismiss) var dismiss
     
     func forgotPassword() {
-        let client = BackendClient()
         Task {
             do {
-                try await client.forgotPassword(email: forgotPasswordVM.email)
+                try await accountViewModel.forgotPassword(email: forgotPasswordVM.email)
                 showSendInfo = true
             } catch is HttpError {
                 self.error = error

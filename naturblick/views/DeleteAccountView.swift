@@ -24,10 +24,9 @@ struct DeleteAccountView: NavigatableView {
         let client = BackendClient()
         Task {
             do {
-                try await client.deleteAccount(email: deleteVM.email, password: deleteVM.password)
-                accountViewModel.signOut()
+                try await accountViewModel.delete(email: deleteVM.email, password: deleteVM.password)
                 showDeleteSuccess = true
-            }  catch HttpError.clientError(let statusCode) where statusCode == 400 {
+            } catch HttpError.clientError(let statusCode) where statusCode == 400 {
                 showCredentialsError = true
             } catch is HttpError {
                 self.error = error

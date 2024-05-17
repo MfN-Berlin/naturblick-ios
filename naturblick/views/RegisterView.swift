@@ -19,11 +19,9 @@ struct RegisterView: NavigatableView {
     @ObservedObject var accountViewModel: AccountViewModel
     
     func signUp() {
-        let client = BackendClient()
         Task {
             do {
-                let _ = try await client.signUp(deviceId: Settings.deviceId(), email: registerVM.email, password: registerVM.password)
-                accountViewModel.email = registerVM.email
+                try await accountViewModel.signUp(email: registerVM.email, password: registerVM.password)
                 showRegisterSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 409 {
                 showAlreadyExists = true

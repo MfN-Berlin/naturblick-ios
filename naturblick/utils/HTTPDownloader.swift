@@ -61,10 +61,8 @@ extension URLSession: HTTPDownloader {
     }
     
     private func checkForErrorStatus(statusCode: Int, data: Data) throws {
-        @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
         guard validStatus.contains(statusCode) else {
             if statusCode == 401 {
-                bearerToken = nil
                 throw HttpError.loggedOut
             } else if clientError.contains(statusCode) {
                 throw HttpError.clientError(statusCode: statusCode)

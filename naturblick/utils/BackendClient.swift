@@ -40,11 +40,12 @@ class BackendClient {
     let downloader: HTTPDownloader
     let local: LocalFileDownloader
     private let encoder = JSONEncoder()
-    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
+    let bearerToken: String?
     
     init(downloader: HTTPDownloader = URLSession.shared, local: LocalFileDownloader = URLSession.shared) {
         self.downloader = downloader
         self.local = local
+        self.bearerToken = Keychain.string(.token)
     }
     
     private func dataFormField(named name: String,
