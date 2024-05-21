@@ -129,11 +129,11 @@ struct ObservationListView: HostedView {
         .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { error in
             if case .loggedOut = error {
                 Button("sign_out") {
-                    Keychain.delete(.token)
-                    Keychain.delete(.email)
+                    Keychain.shared.deleteToken()
+                    Keychain.shared.deleteEmail()
                 }
                 Button("to_sign_in") {
-                    Keychain.delete(.token)
+                    Keychain.shared.deleteToken()
                     navigationController?.pushViewController(LoginView(accountViewModel: AccountViewModel()).setUpViewController(), animated: true)
                 }
             }

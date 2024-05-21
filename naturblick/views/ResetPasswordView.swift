@@ -21,7 +21,7 @@ struct ResetPasswordView: NavigatableView {
         Task {
             do {
                 try await client.resetPassword(token: token, password: resetPasswordVM.password)
-                Keychain.delete(.token)
+                Keychain.shared.deleteToken()
                 showResetSuccess = true
             }
             catch is HttpError {

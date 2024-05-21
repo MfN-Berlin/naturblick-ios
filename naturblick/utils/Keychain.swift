@@ -5,11 +5,42 @@
 
 import Foundation
 
-enum Keychain: String {
-    case token = "token"
-    case email = "email"
+@MainActor
+class Keychain: ObservableObject {
+    @Published private(set) var token: String?
+    @Published private(set) var email: String?
+
+    enum Key: String {
+        case token = "token"
+        case email = "email"
+    }
     
-    static func delete(_ key: Keychain) {
+    func deleteEmail() {
+        Keychain.delete(.email)
+        email = nil
+    }
+    
+    func deleteToken() {
+        Keychain.delete(.token)
+        token = nil
+    }
+    
+    func setEmail(email: String) {
+        Keychain.upsert(.email, string: email)
+        self.email = email
+    }
+    
+    func setToken(token: String) {
+        Keychain.upsert(.token, string: token)
+        self.token = token
+    }
+    
+    func refresh() {
+        token = Keychain.string(.token)
+        email = Keychain.string(.email)
+    }
+    
+    private static func delete(_ key: Key) {
         let keychainQueryDictionary: [NSString:Any] = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: Bundle.main.bundleIdentifier! as NSString,
@@ -18,7 +49,7 @@ enum Keychain: String {
         let _ = SecItemDelete(keychainQueryDictionary as CFDictionary)
     }
     
-    static func upsert(_ key: Keychain, string: String) {
+    private static func upsert(_ key: Key, string: String) {
         let value = string.data(using: .utf8)
         let keychainQueryDictionary: [NSString:Any] = [
             kSecClass: kSecClassGenericPassword,
@@ -42,7 +73,7 @@ enum Keychain: String {
         }
     }
     
-    static func string(_ key: Keychain) -> String? {
+    private static func string(_ key: Key) -> String? {
         let keychainQueryDictionary: [NSString:Any] = [
             kSecClass:kSecClassGenericPassword,
             kSecAttrService: Bundle.main.bundleIdentifier!,
@@ -61,4 +92,5 @@ enum Keychain: String {
         return String(data: data, encoding: String.Encoding.utf8)
     }
     
+    static let shared = Keychain()
 }

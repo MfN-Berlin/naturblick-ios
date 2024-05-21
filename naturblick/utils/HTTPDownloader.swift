@@ -28,10 +28,11 @@ extension URLSession: HTTPDownloader {
             let (data, response) = try await self.data(for: request)
             let httpResponse = (response as! HTTPURLResponse)
             let statusCode = httpResponse.statusCode
-            try checkForErrorStatus(statusCode: statusCode, data: data)
+            try await checkForErrorStatus(statusCode: statusCode, data: data)
             let decoder = JSONDecoder()
             return try decoder.decode(T.self, from: data)
         } catch {
+            Logger.http.info("HTTP error: \(error)")
             switch error {
             case is URLError:
                 throw HttpError.networkError
@@ -46,9 +47,10 @@ extension URLSession: HTTPDownloader {
         do {
             let (data, response) = try await self.data(for: request)
             let statusCode = (response as? HTTPURLResponse)!.statusCode
-            try checkForErrorStatus(statusCode: statusCode, data: data)
+            try await checkForErrorStatus(statusCode: statusCode, data: data)
             return data
         } catch {
+            Logger.http.info("HTTP error: \(error)")
             switch error {
             case is URLError:
                 throw HttpError.networkError
@@ -60,9 +62,10 @@ extension URLSession: HTTPDownloader {
         }
     }
     
-    private func checkForErrorStatus(statusCode: Int, data: Data) throws {
+    private func checkForErrorStatus(statusCode: Int, data: Data) async throws {
         guard validStatus.contains(statusCode) else {
             if statusCode == 401 {
+                await Keychain.shared.deleteToken()
                 throw HttpError.loggedOut
             } else if clientError.contains(statusCode) {
                 throw HttpError.clientError(statusCode: statusCode)
@@ -77,9 +80,10 @@ extension URLSession: HTTPDownloader {
             let (responseData, response) = try await self.upload(for: request, from: data)
             let httpResponse = (response as! HTTPURLResponse)
             let statusCode = httpResponse.statusCode
-            try checkForErrorStatus(statusCode: statusCode, data: data)
+            try await checkForErrorStatus(statusCode: statusCode, data: data)
             return responseData
         } catch {
+            Logger.http.info("HTTP error: \(error)")
             switch error {
             case is URLError:
                 throw HttpError.networkError

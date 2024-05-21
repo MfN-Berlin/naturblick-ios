@@ -9,7 +9,7 @@ struct ForgotPasswordView: NavigatableView {
     var viewName: String? = String(localized: "forgot")
     
     @ObservedObject var accountViewModel: AccountViewModel
-       
+    @ObservedObject var keychain = Keychain.shared
     @StateObject private var forgotPasswordVM = EmailAndPasswordWithPrompt()
     @State var action: String?
     
@@ -65,7 +65,7 @@ struct ForgotPasswordView: NavigatableView {
             )
         }.alertHttpError(isPresented: $isPresented, error: error)
         .onAppear {
-            if let email = accountViewModel.email {
+            if let email = keychain.email {
                 forgotPasswordVM.email = email
             }
         }

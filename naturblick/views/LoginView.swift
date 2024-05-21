@@ -13,7 +13,7 @@ struct LoginView: NavigatableView {
     var viewName: String? = String(localized: "login")
     
     @ObservedObject var accountViewModel: AccountViewModel
-        
+    @ObservedObject var keychain = Keychain.shared
     @StateObject private var loginVM = EmailAndPasswordWithPrompt()
     
     @State  var isPresented: Bool = false
@@ -98,7 +98,7 @@ struct LoginView: NavigatableView {
         }
         .alertHttpError(isPresented: $isPresented, error: error)
         .onAppear {
-            if let email = accountViewModel.email {
+            if let email = keychain.email {
                 loginVM.email = email
             }
         }

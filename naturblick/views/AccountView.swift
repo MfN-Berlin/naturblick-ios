@@ -14,13 +14,13 @@ struct AccountView: NavigatableView {
     
     @StateObject var accountViewModel = AccountViewModel()
     @StateObject private var errorHandler = HttpErrorViewModel()
-    
+    @ObservedObject var keychain = Keychain.shared
     var body: some View {
         VStack(alignment: .leading, spacing: .defaultPadding) {
             Text("your_account")
                 .subtitle1()
             
-            if (accountViewModel.email == nil) {
+            if (keychain.email == nil) {
                 Text("account_text_sign_in_or_sign_up1")
                     .body1()
                 Text("account_text_sign_in_or_sign_up2")
@@ -31,10 +31,10 @@ struct AccountView: NavigatableView {
                 Button("to_sign_up") {
                     navigationController?.pushViewController(RegisterView(accountViewModel: accountViewModel).setUpViewController(), animated: true)
                 }.buttonStyle(ConfirmFullWidthButton()).textCase(.uppercase)
-            } else if (accountViewModel.hasToken) {
+            } else if (keychain.token != nil) {
                 Text("your_account_text")
                     .body1()
-                Text("signed_in_as \(accountViewModel.email!)")
+                Text("signed_in_as \(keychain.email!)")
                     .body1()
                 Text("delete_account_title")
                     .body1()
@@ -47,7 +47,7 @@ struct AccountView: NavigatableView {
                 
                 Text("delete_account_note_link")
                     .body2()
-            } else if (!accountViewModel.hasToken && accountViewModel.email != nil) {
+            } else if (keychain.token == nil && keychain.email != nil) {
                 if accountViewModel.neverSignedIn {
                     Text("continue_with_sign_in")
                         .body1()
