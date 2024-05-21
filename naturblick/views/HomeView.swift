@@ -210,7 +210,6 @@ struct HomeView: HostedView {
             }
         }
         .edgesIgnoringSafeArea([.bottom])
-        .permissionSettingsDialog(isPresented: $createFlow.showOpenSettings, presenting: createFlow.openSettingsMessage)
     }
 }
 

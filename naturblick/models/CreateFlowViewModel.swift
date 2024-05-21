@@ -10,20 +10,6 @@ import MapKit
 import Photos
 import PhotosUI
 
-extension View {
-    func permissionSettingsDialog(isPresented: Binding<Bool>, presenting: String?) -> some View {
-        self.confirmationDialog("open_settings", isPresented: isPresented, presenting: presenting) { _ in
-            Button("open_settings") {
-                if let url = URL(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(url)
-                }
-            }
-        } message: { message in
-            Text(message)
-        }
-    }
-}
-
 class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController, PHPickerViewControllerDelegate {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
@@ -33,9 +19,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @Published var data = CreateData()
     @Published var region: MKCoordinateRegion = .defaultRegion
     @Published var speciesAvatar: Image = Image("placeholder")
-    @Published var showOpenSettings: Bool = false
     @Published var showDateConfirm: Bool = false
-    @Published var openSettingsMessage: String? = nil
     var isCreate: Bool = true
     var obsIdent: String? = nil
     let fromList: Bool
@@ -79,8 +63,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 accessGranted = true
             } else {
                 // User has previously denied the permission, but ask to take a photo again
-                openSettingsMessage = String(localized: "go_to_app_settings_photo")
-                showOpenSettings = true
+                permissionSettingsDialog(message: String(localized: "go_to_app_settings_photo"))
             }
             
             guard accessGranted else {
@@ -142,8 +125,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 accessGranted = true
             } else {
                 // User has previously denied the permission, but ask to take a photo again
-                openSettingsMessage = String(localized: "go_to_app_settings_photo")
-                showOpenSettings = true
+                permissionSettingsDialog(message: String(localized: "go_to_app_settings_photo"))
             }
             
             guard accessGranted else {
@@ -208,8 +190,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 accessGranted = true
             } else {
                 // User has previously denied the permission, but ask to record a bird again
-                openSettingsMessage = String(localized: "go_to_app_settings_microphone")
-                showOpenSettings = true
+                permissionSettingsDialog(message: String(localized: "go_to_app_settings_microphone"))
             }
 
             guard accessGranted else {
@@ -385,5 +366,16 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     func isImage() -> Bool {
         data.obsType == .image || data.obsType == .unidentifiedimage
+    }
+    
+    private func permissionSettingsDialog(message: String) {
+        let alert = UIAlertController(title: String(localized: "open_settings"), message: message, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: String(localized: "open_settings"), style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        })
+        alert.addAction(UIAlertAction(title: String(localized: "cancel"), style: .cancel, handler: nil))
+        viewController?.present(alert, animated: true)
     }
 }
