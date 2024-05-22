@@ -9,7 +9,7 @@ struct ForgotPasswordView: NavigatableView {
     var viewName: String? = String(localized: "forgot")
     
     @ObservedObject var accountViewModel: AccountViewModel
-       
+    @ObservedObject var keychain = Keychain.shared
     @StateObject private var forgotPasswordVM = EmailAndPasswordWithPrompt()
     @State var action: String?
     
@@ -20,10 +20,9 @@ struct ForgotPasswordView: NavigatableView {
     @Environment(\.dismiss) var dismiss
     
     func forgotPassword() {
-        let client = BackendClient()
         Task {
             do {
-                try await client.forgotPassword(email: forgotPasswordVM.email)
+                try await accountViewModel.forgotPassword(email: forgotPasswordVM.email)
                 showSendInfo = true
             } catch is HttpError {
                 self.error = error
@@ -66,7 +65,7 @@ struct ForgotPasswordView: NavigatableView {
             )
         }.alertHttpError(isPresented: $isPresented, error: error)
         .onAppear {
-            if let email = accountViewModel.email {
+            if let email = keychain.email {
                 forgotPasswordVM.email = email
             }
         }

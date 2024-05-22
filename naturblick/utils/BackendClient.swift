@@ -40,7 +40,6 @@ class BackendClient {
     let downloader: HTTPDownloader
     let local: LocalFileDownloader
     private let encoder = JSONEncoder()
-    @AppSecureStorage(NbAppSecureStorageKey.BearerToken) var bearerToken: String?
     
     init(downloader: HTTPDownloader = URLSession.shared, local: LocalFileDownloader = URLSession.shared) {
         self.downloader = downloader
@@ -93,7 +92,7 @@ class BackendClient {
         
         var request = mpr.urlRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!, method: "PUT")
         request.timeoutInterval = 30
-        request.setAuthHeader(bearerToken: bearerToken)
+        request.setAuthHeader(bearerToken: await Keychain.shared.token)
  
         let response: ObservationResponse = try await downloader.httpJson(request: request)
         
@@ -180,7 +179,7 @@ class BackendClient {
     func spectrogram(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/specgram/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setAuthHeader(bearerToken: bearerToken)
+        request.setAuthHeader(bearerToken: await Keychain.shared.token)
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
     }
@@ -188,14 +187,14 @@ class BackendClient {
     func downloadSound(mediaId: UUID) async throws -> Data {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setAuthHeader(bearerToken: bearerToken)
+        request.setAuthHeader(bearerToken: await Keychain.shared.token)
         return try await downloader.http(request: request)
     }
     
     func downloadCached(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setAuthHeader(bearerToken: bearerToken)
+        request.setAuthHeader(bearerToken: await Keychain.shared.token)
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
     }

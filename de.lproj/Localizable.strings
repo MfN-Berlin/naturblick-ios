@@ -193,3 +193,4 @@
 "validate_time_msg"="Bitte bestätige den Zeitpunkt deiner Beobachtung. Prüfe ob der automatisch ausgewählte Zeitpunkt auch dem Zeitpunkt entspricht an dem du die Beobachtung gemacht hast. Wähle auch die richtige Zeitzone aus.";
 "set_time"="Zeit übernehmen";
 "timezone"="Zeitzone";
+"error"="Fehler";

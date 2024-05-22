@@ -30,19 +30,6 @@ extension HttpError: Equatable {
 
 extension View {
     
-    func alertHttpError(isPresented: Binding<Bool>, error: HttpError?, loggedOutHandler: @escaping (() -> ())) -> some View {
-        return self.alertHttpError(isPresented: isPresented, error: error) { error in
-            if case .loggedOut = error {
-                Button("sign_out") {}
-                Button("to_sign_in") {
-                    loggedOutHandler()
-                }
-            }
-        } message: { error in
-            Text(error.localizedDescription)
-        }
-    }
-    
     func alertHttpError(isPresented: Binding<Bool>, error: HttpError?) -> some View {
         return self.alertHttpError(isPresented: isPresented, error: error) { details in
         } message: { error in
@@ -57,7 +44,7 @@ extension View {
     }
     
     func alertHttpError<A, M>(isPresented: Binding<Bool>, error: HttpError?, @ViewBuilder actions: (HttpError) -> A, @ViewBuilder message: (HttpError) -> M) -> some View where A : View, M : View {
-        return self.alert("Error", isPresented: isPresented, presenting: error, actions: actions, message: message)
+        return self.alert("error", isPresented: isPresented, presenting: error, actions: actions, message: message)
     }
     
 }

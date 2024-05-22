@@ -67,6 +67,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func startScene(windowScene: UIWindowScene, deepLink: DeepLink? = nil) {
+        Keychain.shared.refresh()
         let existingCcByName = UserDefaults.standard.string(forKey: "ccByName")
         let existingAgb = UserDefaults.standard.bool(forKey: "agb")
         if existingCcByName == nil || !existingAgb {

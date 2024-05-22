@@ -13,7 +13,7 @@ struct LoginView: NavigatableView {
     var viewName: String? = String(localized: "login")
     
     @ObservedObject var accountViewModel: AccountViewModel
-        
+    @ObservedObject var keychain = Keychain.shared
     @StateObject private var loginVM = EmailAndPasswordWithPrompt()
     
     @State  var isPresented: Bool = false
@@ -23,14 +23,9 @@ struct LoginView: NavigatableView {
     @State var showLoginSuccess = false
         
     func signIn() -> Void {
-        let client = BackendClient()
         Task {
             do {
-                let signInResponse = try await client.signIn(email: loginVM.email, password: loginVM.password)
-                accountViewModel.email = loginVM.email
-                accountViewModel.bearerToken = signInResponse.access_token
-                accountViewModel.neverSignedIn = false
-                accountViewModel.activated = true
+                try await accountViewModel.signIn(email: loginVM.email, password: loginVM.password)
                 showLoginSuccess = true
             } catch HttpError.clientError(let statusCode) where statusCode == 400 {
                 showCredentialsWrong = true
@@ -103,7 +98,7 @@ struct LoginView: NavigatableView {
         }
         .alertHttpError(isPresented: $isPresented, error: error)
         .onAppear {
-            if let email = accountViewModel.email {
+            if let email = keychain.email {
                 loginVM.email = email
             }
         }

@@ -195,3 +195,4 @@
 "validate_time_msg"="Please confirm that the automatically selected time and date corresponds to when the observation was made. Also select the correct time zone.";
 "set_time"="Set time";
 "timezone"="Timezone";
+"error"="Error";
