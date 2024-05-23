@@ -5,7 +5,6 @@
 import SwiftUI
 
 struct HomeViewButton: View {
-    static let fontBreakpoint: CGFloat = 150
     let text: String
     let color: Color
     let image: Image
@@ -24,18 +23,10 @@ struct HomeViewButton: View {
                 }
                 .frame(width: size, height: size)
                 .nbShadow()
-            if(size > HomeViewButton.fontBreakpoint) {
                 Text(text)
-                    .body1(color: .onPrimaryHighEmphasis)
+                    .bigRoundButtonText(size: size)
                     .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                     .frame(width: size)
-            } else {
-                Text(text)
-                    .caption(color: .onPrimaryHighEmphasis)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(width: size)
-            }
         }
     }
 }

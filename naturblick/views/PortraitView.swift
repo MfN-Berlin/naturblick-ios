@@ -19,17 +19,15 @@ struct PortraitView: View {
                         ZStack { // header
                             if let meta = portrait.descriptionImage {
                                 PortraitImageView(geo: geo, image: meta, headerImage: true)
+                                    .clipShape(RoundBottomShape())
+                                    .nbShadow()
                             }
-                            VStack(spacing: .zero) {
-                                Spacer()
-                                if let urlPart = portrait.audioUrl {
-                                    SoundButton(url: URL(string: Configuration.strapiUrl + urlPart)!, speciesId: species.speciesId)
-                                        .frame(height: .fabSize)
-                                        .padding(.horizontal, .defaultPadding)
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                }
-                                RoundBottomView(color: .primaryHomeColor)
-                                    .frame(height: .roundBottomHeight)
+                            if let urlPart = portrait.audioUrl {
+                                SoundButton(url: URL(string: Configuration.strapiUrl + urlPart)!, speciesId: species.speciesId)
+                                    .frame(height: .fabSize)
+                                    .padding(.horizontal, .defaultPadding)
+                                    .padding(.bottom, .roundBottomHeight + .defaultPadding)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                             }
                         }
                         

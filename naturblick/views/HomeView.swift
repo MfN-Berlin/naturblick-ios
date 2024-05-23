@@ -60,7 +60,6 @@ class HomeViewController: HostingController<HomeView> {
 }
 
 struct HomeView: HostedView {
-    static let maxWidth: CGFloat = 800
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
@@ -79,137 +78,128 @@ struct HomeView: HostedView {
     }
     
     @Environment(\.colorScheme) var colorScheme
-
-    @State var isShowingPortrait = false
-    @State var speciesId: Int64? = nil
     
-    @State var isShowingResetPassword = false
-    @State var token: String? = nil
-    
-    @State var isShowingLogin = false
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var createFlow: CreateFlowViewModel
 
-    var body: some View {
-        GeometryReader { geo in
-            
-            let topRowSize = min(geo.size.width, HomeView.maxWidth) * .topRowFactor
-            let bottomRowSize = min(geo.size.width, HomeView.maxWidth) * .bottomRowFactor
-            
+    func header(width: CGFloat) -> some View {
             ZStack {
-                VStack(spacing: .zero) {
-                    Image("Kingfisher")
-                        .resizable()
-                        .scaledToFit()
-                        .clipped()
-                        .frame(alignment: .topLeading)
-                        .ignoresSafeArea()
-                        .padding(.bottom, -geo.safeAreaInsets.top)
-                    Spacer()
-                }
-                VStack(spacing: .zero) {
-                    VStack(spacing: .zero) {
-                        Image("logo24")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: geo.size.width / 3)
-                            .foregroundColor(.onPrimaryHighEmphasis)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        HStack {
-                            Image("mfn_logo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: geo.size.width / 3)
-                                .foregroundColor(.gray)
-                                .padding(.defaultPadding)
-                            Spacer()
-                        }
-
-                    }
-                    RoundBottomView(color: .primaryColor)
-                        .frame(height: .roundBottomHeight)
-                    
-                    VStack(spacing: .defaultPadding) {
-                        Text("home_identify_animals_and_plants")
-                            .headline6()
-                            .padding(.defaultPadding)
-                        
-                        HStack(alignment: .top) {
-                            Spacer()
-                            
-                            HomeViewButton(
-                                text: String(localized: "record_a_bird"),
-                                color: Color.onPrimaryButtonPrimary,
-                                image: Image("audio24"),
-                                size: topRowSize)
-                            .onTapGesture {
-                                createFlow.recordSound()
-                            }
-                            Spacer()
-                            HomeViewButton(text: String(localized: "select_characteristics"),
-                                           color: Color.onPrimaryButtonPrimary,
-                                           image: Image("characteristics24"),
-                                           size: topRowSize
-                            )
-                            .onTapGesture {
-                                createFlow.selectCharacteristics()
-                            }
-                            Spacer()
-                            
-                            HomeViewButton(text: String(localized: "photograph_a_plant"),
-                                           color: Color.onPrimaryButtonPrimary,
-                                           image: Image("photo24"),
-                                           size: topRowSize
-                            )
-                            .onTapGesture {
-                                createFlow.takePhoto()
-                            }
-                            Spacer()
-                        }
-                        .frame(maxWidth: HomeView.maxWidth)
-                        
-                        HStack(alignment: .top) {
-                            Spacer()
-                            HomeViewButton(
-                                text: String(localized: "field_book"),
-                                color: Color.onPrimaryButtonSecondary,
-                                image: Image("feldbuch24"),
-                                size: bottomRowSize
-                            )
-                            .onTapGesture {
-                                withNavigation { navigation in
-                                    navigation.pushViewController(ObservationListViewController(persistenceController: persistenceController), animated: true)
-                                }
-                            }
-                            Spacer()
-                            HomeViewButton(text: String(localized: "species_portraits"),
-                                           color: Color.onPrimaryButtonSecondary,
-                                           image: Image("specportraits"),
-                                           size: bottomRowSize
-                            ).onTapGesture {
-                                let nextViewController = GroupsView(
-                                    viewType: .portraitGroups,
-                                    groups: Group.groups,
-                                    destination: { group in
-                                        SpeciesListView(filter: .group(group), flow: createFlow).setUpViewController()
-                                    }).setUpViewController()
-                                viewController?.navigationController?.pushViewController(nextViewController, animated: true)
-                            }
-                            Spacer()
-                        }
-                        .frame(maxWidth: HomeView.maxWidth)
-                        .padding(.defaultPadding)
-                        .padding(.bottom, geo.safeAreaInsets.bottom + .doublePadding)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .background {
-                        Rectangle()
-                            .foregroundColor(.primaryColor)
-                    }
+                Image("logo24")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: width / 3)
+                    .foregroundColor(.onPrimaryHighEmphasis)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                Image("mfn_logo")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.gray)
+                    .padding(.defaultPadding)
+                    .frame(width: width / 3)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                    .padding(.bottom, .roundBottomHeight)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background {
+                Image("Kingfisher")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            }
+            .clipShape(RoundBottomShape())
+            .nbShadow()
+            .ignoresSafeArea()
+        }
+    
+    func topRow(width: CGFloat) -> some View {
+        let topRowSize = width * .topRowFactor
+        return HStack(alignment: .top) {
+            Spacer()
+            
+            HomeViewButton(
+                text: String(localized: "record_a_bird"),
+                color: Color.onPrimaryButtonPrimary,
+                image: Image("audio24"),
+                size: topRowSize)
+            .onTapGesture {
+                createFlow.recordSound()
+            }
+            Spacer()
+            HomeViewButton(text: String(localized: "select_characteristics"),
+                           color: Color.onPrimaryButtonPrimary,
+                           image: Image("characteristics24"),
+                           size: topRowSize
+            )
+            .onTapGesture {
+                createFlow.selectCharacteristics()
+            }
+            Spacer()
+            
+            HomeViewButton(text: String(localized: "photograph_a_plant"),
+                           color: Color.onPrimaryButtonPrimary,
+                           image: Image("photo24"),
+                           size: topRowSize
+            )
+            .onTapGesture {
+                createFlow.takePhoto()
+            }
+            Spacer()
+        }
+        .frame(maxWidth: width)
+    }
+    
+    func bottomRow(width: CGFloat) -> some View {
+        let bottomRowSize = width * .bottomRowFactor
+        return HStack(alignment: .top) {
+            Spacer()
+            HomeViewButton(
+                text: String(localized: "field_book"),
+                color: Color.onPrimaryButtonSecondary,
+                image: Image("feldbuch24"),
+                size: bottomRowSize
+            )
+            .onTapGesture {
+                withNavigation { navigation in
+                    navigation.pushViewController(ObservationListViewController(persistenceController: persistenceController), animated: true)
                 }
             }
+            Spacer()
+            HomeViewButton(text: String(localized: "species_portraits"),
+                           color: Color.onPrimaryButtonSecondary,
+                           image: Image("specportraits"),
+                           size: bottomRowSize
+            ).onTapGesture {
+                let nextViewController = GroupsView(
+                    viewType: .portraitGroups,
+                    groups: Group.groups,
+                    destination: { group in
+                        SpeciesListView(filter: .group(group), flow: createFlow).setUpViewController()
+                    }).setUpViewController()
+                viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+            }
+            Spacer()
         }
-        .edgesIgnoringSafeArea([.bottom])
+        .frame(maxWidth: width, alignment: .bottom)
+        .padding(.defaultPadding)
+    }
+    
+    var body: some View {
+        GeometryReader { geo in
+            let width = min(geo.size.width, .maxContentWidth)
+
+            VStack(spacing: 0) {
+                header(width: width)
+                VStack(spacing: .defaultPadding) {
+                    Text("home_identify_animals_and_plants")
+                        .headline6()
+                        .padding(.defaultPadding)
+                    
+                    topRow(width: width)
+                    bottomRow(width: width)
+                }
+                .frame(maxWidth: .infinity)
+
+            }
+        }
+        .background(Color.primaryColor)
     }
 }
-
