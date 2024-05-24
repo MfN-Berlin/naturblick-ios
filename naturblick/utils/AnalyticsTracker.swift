@@ -99,8 +99,7 @@ class AnalyticsTracker {
     
     static func trackError(error: Error) {
         let event = SNOWError(message: "\(error)")
-            .name(String(describing: error))
-            .stackTrace(Thread.callStackSymbols.joined(separator: "\n"))
+            .stackTrace("\(Thread.callStackSymbols)")
         AnalyticsTracker.tracker?.track(event)
     }
     
