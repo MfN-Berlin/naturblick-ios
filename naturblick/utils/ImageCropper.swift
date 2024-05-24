@@ -25,7 +25,7 @@ struct ImageCropper: UIViewControllerRepresentable {
                 let crop = try NBThumbnail(image: thumbnail)
                 parent.crop = crop
             } catch {
-                preconditionFailure("\(error)")
+                Fail.with(error)
             }
         }
         

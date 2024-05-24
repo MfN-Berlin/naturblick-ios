@@ -28,7 +28,7 @@ class UnambiguousFeatureViewModel: ObservableObject {
                     )
                 }
             } catch {
-                preconditionFailure(error.localizedDescription)
+                Fail.with(error)
             }
         }
     }

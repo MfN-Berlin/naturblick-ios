@@ -66,10 +66,10 @@ class Keychain: ObservableObject {
             let updateDictionary = [kSecValueData:value]
             let status: OSStatus = SecItemUpdate(keychainQueryDictionary as CFDictionary, updateDictionary as CFDictionary)
             if status != errSecSuccess {
-                preconditionFailure("Failed to update \(key) with status \(status)")
+                Fail.with(message: "Failed to update \(key) with status \(status)")
             }
         } else if status != errSecSuccess {
-            preconditionFailure("Failed to add \(key) with status \(status)")
+            Fail.with(message: "Failed to add \(key) with status \(status)")
         }
     }
     

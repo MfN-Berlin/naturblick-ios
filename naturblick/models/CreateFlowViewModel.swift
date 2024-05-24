@@ -293,7 +293,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             updateResult(result: result)
             return result
         } else {
-            preconditionFailure("Can not identify sound or image without complete data")
+            Fail.with(message: "Can not identify sound or image without complete data")
         }
     }
     
@@ -305,7 +305,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 cropPhoto(image: image)
                 picker.dismiss(animated: true)
             } catch {
-                preconditionFailure("\(error)")
+                Fail.with(error)
             }
         }
     }
@@ -339,7 +339,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 }
                 navigation.setViewControllers(controllers, animated: true)
             } catch {
-                preconditionFailure("\(error)")
+                Fail.with(error)
             }
         }
     }

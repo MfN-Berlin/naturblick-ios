@@ -32,7 +32,7 @@ class SpectrogramViewModel: HttpErrorViewModel {
             try AVAudioSession.sharedInstance().setCategory(.soloAmbient)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
-            preconditionFailure("\(error)")
+            Fail.with(error)
         }
         downloadSpectrogram()
     }

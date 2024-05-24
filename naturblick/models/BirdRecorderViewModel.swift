@@ -30,7 +30,7 @@ class BirdRecorderViewModel: ObservableObject {
                 }
                 .assign(to: &$currentTime)
         } catch {
-            preconditionFailure(error.localizedDescription)
+            Fail.with(error)
         }
     }
     func record() {
@@ -53,7 +53,7 @@ class BirdRecorderViewModel: ObservableObject {
             recorder.audioRecorder.record(forDuration: 60)
             self.recorder = recorder
         } catch {
-            preconditionFailure("\(error)")
+            Fail.with(error)
         }
     }
     

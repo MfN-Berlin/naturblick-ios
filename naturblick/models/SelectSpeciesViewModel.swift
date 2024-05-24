@@ -32,7 +32,7 @@ class SelectSpeciesViewModel: ObservableObject {
                 }
                 .sorted { $0.0.score > $1.0.score }
         } catch {
-            preconditionFailure("\(error)")
+            Fail.with(error)
         }
     }
 }

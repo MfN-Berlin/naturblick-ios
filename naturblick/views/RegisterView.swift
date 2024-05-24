@@ -29,7 +29,7 @@ struct RegisterView: NavigatableView {
                 self.error = error
                 isPresented = true
             } catch {
-                preconditionFailure(error.localizedDescription)
+                Fail.with(error)
             }
         }
     }

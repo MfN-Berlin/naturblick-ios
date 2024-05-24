@@ -28,7 +28,7 @@ struct SpeciesListView: NavigatableView {
             do {
                 species = try speciesListViewModel.query(filter: filter, search: query)
             } catch {
-                preconditionFailure("\(error)")
+                Fail.with(error)
             }
         }
     }

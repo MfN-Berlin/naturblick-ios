@@ -141,7 +141,7 @@ class PortraitViewModel: ObservableObject {
                     )
                 }.first
         } catch {
-            preconditionFailure(error.localizedDescription)
+            Fail.with(error)
         }
     }
 }
