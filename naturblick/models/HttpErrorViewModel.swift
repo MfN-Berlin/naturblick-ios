@@ -21,7 +21,7 @@ class HttpErrorViewModel: ObservableObject {
             isPresented = true
             return false
         } else {
-            preconditionFailure("\(anyError)")
+            Fail.with(anyError)
         }
     }
 }

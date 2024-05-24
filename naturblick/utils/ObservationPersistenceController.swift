@@ -396,7 +396,7 @@ class ObservationPersistenceController: ObservableObject {
             }
             return deviceIds
         } catch {
-            preconditionFailure("\(error)")
+            Fail.with(error)
         }
     }
 }

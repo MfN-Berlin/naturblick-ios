@@ -29,6 +29,7 @@
 		133B39242A4069BD00D48617 /* SelectSpeciesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B39232A4069BD00D48617 /* SelectSpeciesViewModel.swift */; };
 		133B392A2A4081A000D48617 /* NBImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B39292A4081A000D48617 /* NBImage.swift */; };
 		134082AD2ADD721500351C42 /* NBThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134082AC2ADD721500351C42 /* NBThumbnail.swift */; };
+		1341AA142C0090DD00428E37 /* Fail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1341AA132C0090DD00428E37 /* Fail.swift */; };
 		1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C829DD94870075ACE3 /* HttpError.swift */; };
 		1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1CA29DD94F50075ACE3 /* BackendClient.swift */; };
 		1343D1D329DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1D229DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift */; };
@@ -224,6 +225,7 @@
 		133B39232A4069BD00D48617 /* SelectSpeciesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpeciesViewModel.swift; sourceTree = "<group>"; };
 		133B39292A4081A000D48617 /* NBImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBImage.swift; sourceTree = "<group>"; };
 		134082AC2ADD721500351C42 /* NBThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBThumbnail.swift; sourceTree = "<group>"; };
+		1341AA132C0090DD00428E37 /* Fail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fail.swift; sourceTree = "<group>"; };
 		1343D1C629DD944D0075ACE3 /* HTTPDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPDownloader.swift; sourceTree = "<group>"; };
 		1343D1C829DD94870075ACE3 /* HttpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpError.swift; sourceTree = "<group>"; };
 		1343D1CA29DD94F50075ACE3 /* BackendClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendClient.swift; sourceTree = "<group>"; };
@@ -640,6 +642,7 @@
 				7BD016242A0B8CC400B07A3E /* Data.swift */,
 				7BB74B5C2ABB3915002C4493 /* Dimensions.swift */,
 				13EC572429DC86D600D56A77 /* EdgeInsets+Dimensions.swift */,
+				1341AA132C0090DD00428E37 /* Fail.swift */,
 				132B0D9529CDD5C500B80C9E /* Font+Lato.swift */,
 				13B686AD2A091951001FD28F /* Formatter.swift */,
 				7BB03C342A0CCA9900C3A885 /* HTTPDownloader.swift */,
@@ -954,6 +957,7 @@
 				137ACD2A2A6171A000C370CF /* ImageData.swift in Sources */,
 				7B993F4929F16C3D0023315B /* SoundButton.swift in Sources */,
 				137FE59029E5B3A500B397DF /* NSMutableData+append.swift in Sources */,
+				1341AA142C0090DD00428E37 /* Fail.swift in Sources */,
 				134B72B32A04FBA300C1DCAD /* SyncInfo.swift in Sources */,
 				137FE58529E5964100B397DF /* DBObservation.swift in Sources */,
 				134082AD2ADD721500351C42 /* NBThumbnail.swift in Sources */,

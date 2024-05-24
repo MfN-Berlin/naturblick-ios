@@ -20,7 +20,7 @@ struct Chunk {
         ids.append(id)
         
         guard let encoded = try? JSONEncoder().encode(operation) else {
-            preconditionFailure("Failed to encode operation")
+            Fail.with(message: "Failed to encode operation")
         }
         
         size += encoded.count
@@ -123,7 +123,7 @@ class BackendClient {
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
                 
         guard let encoded = try? JSONEncoder().encode(ConnectDevice(deviceIdentifier: deviceId)) else {
-            preconditionFailure("Failed to encode ConnectDevice")
+            Fail.with(message: "Failed to encode ConnectDevice")
         }
         
         let _ = try await downloader.httpSend(request: request, data: encoded)
@@ -332,7 +332,7 @@ class BackendClient {
                 osVersion: UIDevice.current.systemVersion,
                 appVersion: UIApplication.appVersion))
         else {
-            preconditionFailure("Failed to encode RegisterDevice")
+            Fail.with(message: "Failed to encode RegisterDevice")
         }
         
         let _ = try await downloader.httpSend(request: request, data: encoded)

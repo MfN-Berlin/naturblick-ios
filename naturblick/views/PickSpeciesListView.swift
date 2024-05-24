@@ -22,7 +22,7 @@ struct PickSpeciesListView<Flow>: NavigatableView where Flow: IdFlow {
             do {
                 species = try pickSpeciesListViewModel.query(search: query, page: page)
             } catch {
-                preconditionFailure("\(error)")
+                Fail.with(error)
             }
         }
     }
@@ -63,7 +63,7 @@ struct PickSpeciesListView<Flow>: NavigatableView where Flow: IdFlow {
                 do {
                     species.append(contentsOf: try pickSpeciesListViewModel.query(search: query, page: page))
                 } catch {
-                    preconditionFailure("\(error)")
+                    Fail.with(error)
                 }
             }
         }

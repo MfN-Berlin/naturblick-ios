@@ -9,11 +9,11 @@ extension Connection {
     static var speciesDB: Connection {
         do {
             guard let path = Bundle.main.path(forResource: "strapi-db", ofType: "sqlite3") else {
-                preconditionFailure("Failed to find database file")
+                Fail.with(message: "Failed to find database file")
             }
             return try Connection(path, readonly: true)
         } catch {
-            preconditionFailure("Failed to connect database \(error)")
+            Fail.with(message: "Failed to connect database \(error)")
         }
     }
 }

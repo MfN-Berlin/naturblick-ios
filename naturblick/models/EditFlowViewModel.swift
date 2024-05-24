@@ -134,7 +134,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
             await updateResult(result: result)
             return result
         } else {
-            preconditionFailure("Can not identify sound or image without complete data")
+            Fail.with(message: "Can not identify sound or image without complete data")
         }
     }
     
@@ -161,7 +161,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
                 try persistenceController.insert(data: data)
                 navigation.forcePopViewController(animated: true)
             } catch {
-                preconditionFailure("\(error)")
+                Fail.with(error)
             }
         }
     }

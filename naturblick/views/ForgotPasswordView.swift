@@ -28,7 +28,7 @@ struct ForgotPasswordView: NavigatableView {
                 self.error = error
                 self.isPresented = true
             } catch {
-                preconditionFailure(error.localizedDescription)
+                Fail.with(error)
             }
         }
     }

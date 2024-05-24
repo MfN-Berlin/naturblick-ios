@@ -54,7 +54,7 @@ enum Operation: Encodable {
             }  else if deleteId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .delete(try DeleteOperation.D.instance(row: row)))
             } else {
-                preconditionFailure("Unknown operation")
+                Fail.with(message: "Unknown operation")
             }
         }
     }

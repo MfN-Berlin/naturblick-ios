@@ -20,7 +20,7 @@ extension URL {
             let resources = try self.resourceValues(forKeys:[.fileSizeKey])
             return resources.fileSize!
         } catch {
-            preconditionFailure("\(error)")
+            Fail.with(error)
         }
     }
     

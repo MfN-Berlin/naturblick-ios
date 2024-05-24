@@ -51,7 +51,7 @@ class SimilarSpeciesViewModel: ObservableObject {
                     )
                 }
             } catch {
-                preconditionFailure(error.localizedDescription)
+                Fail.with(error)
             }
         }
     }

@@ -54,7 +54,7 @@ class CharactersViewModel: ObservableObject {
 
             self.characters = characters
         } catch {
-            preconditionFailure(error.localizedDescription)
+            Fail.with(error)
         }
     }
 }
@@ -101,7 +101,7 @@ extension CharactersViewModel {
                     return 0
                 }
                 guard let path = Bundle.main.path(forResource: "strapi-db", ofType: "sqlite3") else {
-                    preconditionFailure("Failed to find database file")
+                    Fail.with(message: "Failed to find database file")
                 }
 
                 do {
@@ -110,7 +110,7 @@ extension CharactersViewModel {
                     let countSyntax = "SELECT COUNT(*) FROM (\(querySyntax))"
                     return try speciesDb.prepare(countSyntax).scalar(bindings) as! Int64
                 } catch {
-                    preconditionFailure(error.localizedDescription)
+                    Fail.with(error)
                 }
             }
             .assign(to: &$count)

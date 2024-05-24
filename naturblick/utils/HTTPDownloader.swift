@@ -39,7 +39,7 @@ extension URLSession: HTTPDownloader {
             case let httpError as HttpError:
                 throw httpError
             default:
-                preconditionFailure("\(error)")
+                Fail.with(error)
             }
         }
     }
@@ -57,7 +57,7 @@ extension URLSession: HTTPDownloader {
             case let httpError as HttpError:
                 throw httpError
             default:
-                preconditionFailure("\(error)")
+                Fail.with(error)
             }
         }
     }
@@ -90,7 +90,7 @@ extension URLSession: HTTPDownloader {
             case let httpError as HttpError:
                 throw httpError
             default:
-                preconditionFailure("\(error)")
+                Fail.with(error)
             }
         }
     }
