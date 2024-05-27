@@ -13,30 +13,36 @@ struct GroupsView<Content>: NavigatableView where Content: UIViewController {
     let destination: (Group) -> Content
     
     var body: some View {
-        ScrollView {
-            VStack {
-                Image("artportraits24")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.onPrimarySignalHigh)
-                    .frame(width: .headerIconSize, height: .headerIconSize)
-                    .padding(.top, .defaultPadding)
-                Text("choose_a_group")
-                    .headline3()
-                    .padding(.bottom, .doublePadding)
-                   LazyVGrid(columns: [
+        GeometryReader { geo in
+            let width = min(geo.size.width, .maxContentWidth)
+            ScrollView {
+                VStack {
+                    Image("artportraits24")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.onPrimarySignalHigh)
+                        .frame(width: .headerIconSize, height: .headerIconSize)
+                        .padding(.top, .defaultPadding)
+                    Text("choose_a_group")
+                        .headline3()
+                        .padding(.bottom, .doublePadding)
+                    LazyVGrid(columns: [
                         GridItem(spacing: .defaultPadding, alignment: .top),
                         GridItem(spacing: .defaultPadding, alignment: .top),
                         GridItem(spacing: .defaultPadding, alignment: .top)
                     ], spacing: .defaultPadding) {
                         ForEach(groups) { group in
-                            GroupButton(group: group).onTapGesture {
+                            GroupButton(size: (geo.size.width - 4 * .defaultPadding) / 3, group: group).onTapGesture {
                                 AnalyticsTracker.trackSpeciesSelection(filter: .group(group), viewType: self.viewType)
                                 let nextViewController = destination(group)
                                 viewController?.navigationController?.pushViewController(nextViewController, animated: true)
                             }
                         }
-                }.padding(.defaultPadding)
+                    }
+                    .frame(maxWidth: width)
+                    .padding(.defaultPadding)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
     }

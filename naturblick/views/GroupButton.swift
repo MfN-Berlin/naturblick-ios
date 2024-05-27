@@ -5,7 +5,7 @@
 import SwiftUI
 
 struct GroupButton: View {
-
+    let size: CGFloat
     let group: Group
     var body: some View {
         VStack(spacing: .defaultPadding) {
@@ -17,8 +17,7 @@ struct GroupButton: View {
                 .padding(.horizontal, .halfPadding)
                 .nbShadow()
             Text(isGerman() ? group.gerName : group.engName)
-                .caption(color: .onPrimaryHighEmphasis)
-                .multilineTextAlignment(TextAlignment.center)
+                .bigRoundButtonText(size: size)
             Spacer()
         }
     }
@@ -26,6 +25,6 @@ struct GroupButton: View {
 
 struct GroupButton_Previews: PreviewProvider {
     static var previews: some View {
-        GroupButton(group: Group.groups[0])
+        GroupButton(size: 500, group: Group.groups[0])
     }
 }
