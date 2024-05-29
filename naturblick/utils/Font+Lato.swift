@@ -151,7 +151,7 @@ extension Text {
     }
     
     func caption(color: Color) -> some View {
-        self.font(.caption)
+        self.font(.nbCaption)
             .kerning(0.04 * .caption)
             .lineSpacing(fontSize: .caption, lineHeight: .captionLineHeight)
             .foregroundColor(color)
@@ -168,5 +168,14 @@ extension Text {
             .kerning(0.042 * .overline)
             .lineSpacing(fontSize: .overline, lineHeight: .overlineLineHeight)
             .foregroundColor(color)
+    }
+    
+    func bigRoundButtonText(size: CGFloat) -> some View {
+        let isBig = size >= CGFloat.bigRoundButtonThreshold
+        return self
+            .font(isBig ? .nbBody1 : .nbCaption)
+            .kerning(0.04 * (isBig ? .body1 : .caption))
+            .lineSpacing(fontSize: isBig ? .body1 : .caption, lineHeight: isBig ? .body1LineHeight : .captionLineHeight)
+            .foregroundColor(.onPrimaryHighEmphasis)
     }
 }

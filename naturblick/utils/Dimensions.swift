@@ -20,10 +20,11 @@ extension CGFloat {
     static let smallCornerRadius: CGFloat = 4
     static let largeCornerRadius: CGFloat = 8
     static let checkedSize: CGFloat = 20
-    static let roundBottomHeight: CGFloat = 30
     static let editTextIconSize: CGFloat = 24
     static let topRowFactor: CGFloat = 0.25
-    static let bottomRowFactor: CGFloat = 0.2
+    static let bottomRowFactor: CGFloat = 0.21
+    static let maxContentWidth: CGFloat = 700
+    static let bigRoundButtonThreshold = bottomRowFactor * maxContentWidth
     static let goodToKnowLineWidth: CGFloat = 2
     static let mapInfoSize: CGFloat = 250
     static let stopButtonCircleSize: CGFloat = 116
@@ -31,6 +32,9 @@ extension CGFloat {
     static let pixelToMsFactor: CGFloat = 10
     static let editTextFieldHeight: CGFloat = .editTextIconSize + 2 * .defaultPadding
     static let chevron: CGFloat = 24
+    static let roundBottomHeight: CGFloat = 30
+    static let leftRightQuadHeightFactor: CGFloat = 0.2
+    
 }
 
 extension CGSize {
