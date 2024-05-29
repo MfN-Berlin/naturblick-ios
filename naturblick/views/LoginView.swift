@@ -85,16 +85,12 @@ struct LoginView: NavigatableView {
             Spacer()
         }
         .padding(.defaultPadding)
-        .actionSheet(isPresented: $showLoginSuccess) {
-            ActionSheet(
-                title: Text("successful_signin"),
-                message: Text("signed_in_as \(loginVM.email)"),
-                buttons: [
-                    .default(Text("Ok"), action: {
-                        navigationController?.popViewController(animated: true)
-                    })
-                ]
-            )
+        .alert("successful_signin", isPresented: $showLoginSuccess) {
+            Button("ok") {
+                navigationController?.popViewController(animated: true)
+            }
+        } message: {
+            Text("signed_in_as \(loginVM.email)")
         }
         .alertHttpError(isPresented: $isPresented, error: error)
         .onAppear {

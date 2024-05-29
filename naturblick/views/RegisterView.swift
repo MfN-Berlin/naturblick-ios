@@ -88,28 +88,19 @@ struct RegisterView: NavigatableView {
             }
         }
         .padding(.defaultPadding)
-        .actionSheet(isPresented: $showRegisterSuccess) {
-            ActionSheet(
-                title: Text("validate_email_title"),
-                message: Text("validate_email_message"),
-                buttons:
-                    registerSuccessButtons()
-            )
+        .alert("validate_email_title", isPresented: $showRegisterSuccess) {
+            Button("go_to_login_screen") {
+                toLogin()
+            }
+            if (canOpenEmail()) {
+                Button("open_default_email_app") {
+                    openMail(completionHandler: { _ in toLogin() })
+                }
+            }
+        } message: {
+            Text("validate_email_message")
         }
         .alertHttpError(isPresented: $isPresented, error: error)
-    }
-        
-    func registerSuccessButtons() -> [Alert.Button] {
-        var buttons: [Alert.Button] = [Alert.Button.destructive(Text("go_to_login_screen"), action: {
-            toLogin()
-        })]
-        
-        if (canOpenEmail()) {
-            buttons.append(
-                Alert.Button.default(Text("open_default_email_app"), action: { openMail(completionHandler: { _ in toLogin() }) })
-            )
-        }
-        return buttons
     }
     
     private func toLogin() {

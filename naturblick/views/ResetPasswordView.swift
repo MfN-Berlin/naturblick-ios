@@ -57,22 +57,16 @@ struct ResetPasswordView: NavigatableView {
             Spacer()
         }
         .foregroundColor(.onSecondaryHighEmphasis)
-        .actionSheet(isPresented: $showResetSuccess) {
-            ActionSheet(
-                title: Text("reset_password"),
-                message: Text("password_reset_successful"),
-                buttons:
-                    [
-                        .default(Text("Ok"), action: {
-                            withNavigation { navigation in
-                                var viewControllers = navigation.viewControllers
-                                viewControllers[viewControllers.count - 1] = AccountView().setUpViewController()
-                                navigation.setViewControllers(viewControllers, animated: true)
-                            }
-                            
-                        })
-                    ]
-            )
+        .alert("reset_password", isPresented: $showResetSuccess) {
+            Button("ok") {
+                withNavigation { navigation in
+                    var viewControllers = navigation.viewControllers
+                    viewControllers[viewControllers.count - 1] = AccountView().setUpViewController()
+                    navigation.setViewControllers(viewControllers, animated: true)
+                }
+            }
+        } message: {
+            Text("password_reset_successful")
         }
         .alertHttpError(isPresented: $isPresented, error: error)
         .padding(.defaultPadding)
