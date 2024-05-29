@@ -74,17 +74,14 @@ struct DeleteAccountView: NavigatableView {
             Spacer()
         }
         .padding(.defaultPadding)
-        .actionSheet(isPresented: $showDeleteSuccess) {
-            ActionSheet(
-                title: Text("delete_success"),
-                message: Text("account_delete"),
-                buttons: [
-                    .default(Text("Ok"), action: {
-                        navigationController?.popViewController(animated: true)
-                    })
-                ]
-            )
-        }.alertHttpError(isPresented: $isPresented, error: error)
+        .alert("delete_success", isPresented: $showDeleteSuccess) {
+            Button("ok") {
+                navigationController?.popViewController(animated: true)
+            }
+        } message: {
+            Text("account_delete")
+        }
+        .alertHttpError(isPresented: $isPresented, error: error)
     }
 }
 

@@ -9,9 +9,29 @@ import os
 
 class ObservationViewController: HostingController<ObservationView> {
     let model: ObservationViewModel
+    let occurenceId: UUID
+    let persistenceController: ObservationPersistenceController
     init(occurenceId: UUID, persistenceController: ObservationPersistenceController, flow: CreateFlowViewModel) {
+        self.occurenceId = occurenceId
+        self.persistenceController = persistenceController
         self.model = ObservationViewModel(viewObservation: occurenceId, persistenceController: persistenceController)
         super.init(rootView: ObservationView(occurenceId: occurenceId, persistenceController: persistenceController, model: model))
+    }
+    
+    @objc func deleteObservation(_ sender: Any?) {
+        let alert = UIAlertController(title: String(localized: "delete_question"), message: String(localized: "delete_question_message"), preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: String(localized: "delete"), style: .destructive, handler: { _ in
+            do {
+                try self.persistenceController.delete(occurenceId: self.occurenceId)
+                self.navigationController?.popViewController(animated: true)
+            } catch {
+                fatalError(error.localizedDescription)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: String(localized: "cancel"), style: .cancel, handler: { _ in
+        }))
+        alert.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -32,9 +52,7 @@ struct ObservationView: HostedView {
     }
     
     func configureNavigationItem(item: UINavigationItem) {
-        let deleteButton = UIBarButtonItem(image: UIImage(named: "trash_24"), primaryAction: UIAction {_ in
-            model.delete = true
-        })
+        let deleteButton = UIBarButtonItem(image: UIImage(named: "trash_24"), style: .plain, target: viewController, action: #selector(ObservationViewController.deleteObservation))
         deleteButton.tintColor = UIColor(Color.onSecondarywarning)
         let editButton = UIBarButtonItem(title: String(localized: "edit"), primaryAction: UIAction {_ in
             if let observation = persistenceController.observations.first(where: {$0.observation.occurenceId == occurenceId}) {
@@ -143,18 +161,7 @@ struct ObservationView: HostedView {
             .frame(maxHeight: .infinity)
             .background(Color(uiColor: .onPrimaryButtonSecondary))
         }
-        .confirmationDialog("delete_question", isPresented: $model.delete, titleVisibility: .visible) {
-            Button("delete", role: .destructive) {
-                do {
-                    try persistenceController.delete(occurenceId: occurenceId)
-                    navigationController?.popViewController(animated: true)
-                } catch {
-                    fatalError(error.localizedDescription)
-                }
-            }
-        } message: {
-            Text("delete_question_message")
-        }
+        
     }
 }
 

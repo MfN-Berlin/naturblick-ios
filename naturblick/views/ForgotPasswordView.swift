@@ -48,8 +48,9 @@ struct ForgotPasswordView: NavigatableView {
            
             Button("reset_password") {
                 forgotPassword()
-            }.buttonStyle(ConfirmFullWidthButton())
-                .padding([.top])
+            }
+            .buttonStyle(ConfirmFullWidthButton())
+            .padding([.top])
             Text("delete_account_note_password")
                 .body1()
                 .padding([.top])
@@ -57,31 +58,24 @@ struct ForgotPasswordView: NavigatableView {
         }
         .padding(.defaultPadding)
         .foregroundColor(.onSecondaryHighEmphasis)
-        .actionSheet(isPresented: $showSendInfo) {
-            ActionSheet(
-                title: Text("reset_email_sent_title"),
-                message: Text("reset_email_sent_message"),
-                buttons: forgotSuccessButtons()
-            )
-        }.alertHttpError(isPresented: $isPresented, error: error)
+        .alert("reset_email_sent_title", isPresented: $showSendInfo) {
+            Button("go_back_to_login_screen") {
+                dismiss()
+            }
+            if (canOpenEmail()) {
+                Button("open_default_email_app", role: .none) {
+                    openMail(completionHandler: { _ in dismiss() })
+                }
+            }
+        } message: {
+            Text("reset_email_sent_message")
+        }
+        .alertHttpError(isPresented: $isPresented, error: error)
         .onAppear {
             if let email = keychain.email {
                 forgotPasswordVM.email = email
             }
         }
-    }
-    
-    func forgotSuccessButtons() -> [Alert.Button] {
-        var buttons: [Alert.Button] = [Alert.Button.destructive(Text("go_back_to_login_screen"), action: {
-            dismiss()
-        })]
-       
-        if (canOpenEmail()) {
-            buttons.append(
-                Alert.Button.default(Text("open_default_email_app"), action: { openMail(completionHandler: { _ in dismiss() }) })
-            )
-        }
-        return buttons
     }
 }
 
