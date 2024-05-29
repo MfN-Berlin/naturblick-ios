@@ -28,7 +28,7 @@ class EditObservationViewController: HostingController<EditObservationView>, UIA
     }
 
     func cancelOrDiscardAlert() {
-        let alert = UIAlertController(title: String(localized: "save_changes"), message: String(localized: "save_changes_message"), preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: String(localized: "save_changes"), message: String(localized: "save_changes_message"), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: String(localized: "exit_without_saving"), style: .destructive, handler: { _ in
             self.dismiss(animated: true)
         }))

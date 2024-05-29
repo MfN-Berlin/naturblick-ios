@@ -369,7 +369,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     private func permissionSettingsDialog(message: String) {
-        let alert = UIAlertController(title: String(localized: "open_settings"), message: message, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: String(localized: "open_settings"), message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: String(localized: "open_settings"), style: .default) { _ in
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
