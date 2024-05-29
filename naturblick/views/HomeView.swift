@@ -168,13 +168,7 @@ struct HomeView: HostedView {
                            image: Image("specportraits"),
                            size: bottomRowSize
             ).onTapGesture {
-                let nextViewController = GroupsView(
-                    viewType: .portraitGroups,
-                    groups: Group.groups,
-                    destination: { group in
-                        SpeciesListView(filter: .group(group), flow: createFlow).setUpViewController()
-                    }).setUpViewController()
-                viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+                createFlow.createFromPortrait()
             }
             Spacer()
         }

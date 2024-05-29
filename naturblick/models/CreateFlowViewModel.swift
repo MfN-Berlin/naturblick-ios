@@ -34,6 +34,18 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     @MainActor
+    func createFromPortrait() {
+        data = CreateData()
+        let nextViewController = GroupsView(
+            viewType: .portraitGroups,
+            groups: Group.groups,
+            destination: { group in
+                SpeciesListView(filter: .group(group), flow: self).setUpViewController()
+            }).setUpViewController()
+        viewController?.navigationController?.pushViewController(nextViewController, animated: true)
+    }
+    
+    @MainActor
     func selectCharacteristics() {
         data = CreateData()
         let nextViewController = GroupsView(
