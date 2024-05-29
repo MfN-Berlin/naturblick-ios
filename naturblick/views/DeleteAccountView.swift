@@ -52,7 +52,7 @@ struct DeleteAccountView: NavigatableView {
                     .caption()
             }
             
-            OnSecondaryFieldView(image: Image(systemName: "eye")) {
+            OnSecondaryFieldView(image: Image("visibility")) {
                 SecureField(String(localized: "password"), text: $deleteVM.password)
                     .autocorrectionDisabled(true)
                     .autocapitalization(.none)
