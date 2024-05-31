@@ -504,6 +504,7 @@
 				13B4E7582BCD25D30025C64E /* AGBView.swift */,
 				134C75A82A2F513E0046EEE4 /* BirdRecorderView.swift */,
 				13738D552AD984C1004FCB2A /* Button.swift */,
+				138A2A312BF37DBF00BAA384 /* CCByPopupView.swift */,
 				13A2923329D3110C00AF772A /* CharactersView.swift */,
 				13A2923729D3116200AF772A /* CharacterValueView.swift */,
 				13A2923529D3114500AF772A /* CharacterView.swift */,
@@ -557,7 +558,6 @@
 				13F03C7D2ACD6AE100EEF964 /* StaticBottomSheetView.swift */,
 				7B572DD82A6E758F008F50C5 /* Thumbnail.swift */,
 				13738D4F2AD93E0E004FCB2A /* ViewProperty.swift */,
-				138A2A312BF37DBF00BAA384 /* CCByPopupView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
