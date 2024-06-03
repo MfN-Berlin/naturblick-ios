@@ -20,6 +20,8 @@ class SoundStreamController : ObservableObject {
     }
     
     @MainActor func play(url: URL){
+        // Always use solo ambient (default) for playback, could have been changed by the sound recorder
+        try? AVAudioSession.sharedInstance().setCategory(.soloAmbient)
         self.audioPlayer = AVPlayer(url: url)
         self.audioPlayer?.play()
         self.audioPlayer?.publisher(for: \.timeControlStatus)
