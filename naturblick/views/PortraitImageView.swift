@@ -5,10 +5,21 @@
 
 import SwiftUI
 
+extension View {
+    func sourcesAlert(show: Binding<Bool>, image: PortraitImage) -> some View {
+        return self.alert("source",
+               isPresented: show,
+               actions: {
+            Link("to_orig", destination: URL(string: image.source)!)
+            Link("to_licence", destination: URL(string: Licence.licenceToLink(licence: image.license))!)
+            Button("close") { show.wrappedValue = false } },
+               message: { Text("(\(image.license)) \(image.owner)") } )
+    }
+}
+
 struct PortraitImageView: View {
-    let geo: GeometryProxy
+    let width: CGFloat
     let image: PortraitImage
-    let headerImage: Bool
     @Environment(\.displayScale) private var displayScale: CGFloat
     @State var preview: UIImage? = nil
     @State var full: UIImage? = nil
@@ -27,16 +38,16 @@ struct PortraitImageView: View {
                         Image(uiImage: full)
                             .resizable()
                             .scaledToFit()
-                            .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
+                            .cornerRadius(.smallCornerRadius)
                     } else if let preview = self.preview {
                         Image(uiImage: preview)
                             .resizable()
                             .scaledToFit()
-                            .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
+                            .cornerRadius(.smallCornerRadius)
                     } else {
                         Spacer()
                             .aspectRatio(aspectRatio, contentMode: .fit)
-                            .cornerRadius(headerImage ? 0.0 : .smallCornerRadius)
+                            .cornerRadius(.smallCornerRadius)
                     }
                 }
                 .overlay(alignment: .topTrailing) {
@@ -56,14 +67,12 @@ struct PortraitImageView: View {
                             .padding(.defaultPadding)
                     }
                 }
-                if !headerImage {
-                    Text(image.text)
-                        .body1()
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                }
+                Text(image.text)
+                    .body1()
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }.onAppear {
-                let previewUrl = URL(string: Configuration.strapiUrl + image.bestImage(geo: geo, displayScale: displayScale * .previewScale).url)!
-                let fullUrl = URL(string: Configuration.strapiUrl + image.bestImage(geo: geo, displayScale: displayScale).url)!
+                let previewUrl = URL(string: Configuration.strapiUrl + image.bestImage(width: width, displayScale: displayScale * .previewScale).url)!
+                let fullUrl = URL(string: Configuration.strapiUrl + image.bestImage(width: width, displayScale: displayScale).url)!
                 if previewUrl != fullUrl {
                     Task {
                         if let image = await URLSession.shared.cachedImage(url: previewUrl) {
@@ -76,18 +85,12 @@ struct PortraitImageView: View {
                 Task {
                     if let image = await URLSession.shared.cachedImage(url: fullUrl) {
                         Task.detached { @MainActor in
-                            self.preview = image
+                            self.full = image
                         }
                     }
                 }
             }
-            .alert("source",
-                   isPresented: $showCCByInfo,
-                   actions: { 
-                Link("to_orig", destination: URL(string: image.source)!)
-                Link("to_licence", destination: URL(string: Licence.licenceToLink(licence: image.license))!)
-                        Button("close") { showCCByInfo = false } },
-                   message: { Text("(\(image.license)) \(image.owner)") } )
+            .sourcesAlert(show: $showCCByInfo, image: image)
         }
     }
 }
@@ -95,7 +98,7 @@ struct PortraitImageView: View {
 struct PortraitImageView_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
-            PortraitImageView(geo: geo, image: PortraitImage.sampleData, headerImage: true)
+            PortraitImageView(width: geo.size.width, image: PortraitImage.sampleData)
         }
     }
 }
