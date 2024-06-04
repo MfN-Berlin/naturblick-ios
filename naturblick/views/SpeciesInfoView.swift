@@ -40,10 +40,15 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
         }
         if !(flow is VoidSelectionFlow) {
             let actionString = selectionFlow ? String(localized: "create_with_species") : String(localized: "create_obs")
-            item.rightBarButtonItem  = UIBarButtonItem(primaryAction: UIAction(title: actionString) {_ in
+            let share = UIBarButtonItem(primaryAction: UIAction(image: UIImage(systemName: "square.and.arrow.up")) {action in
+                let controller = UIActivityViewController(activityItems: [URL(string: "https://naturblick.museumfuernaturkunde.berlin/species/portrait/\(species.speciesId)")!], applicationActivities: nil)
+                controller.popoverPresentationController?.barButtonItem = action.sender as? UIBarButtonItem
+                viewController?.present(controller, animated: true)
+            })
+            item.rightBarButtonItems = [share, UIBarButtonItem(primaryAction: UIAction(title: actionString) {_ in
                 viewController?.dismiss(animated: true)
                 flow.selectSpecies(species: species)
-            })
+            })]
         }
     }
     
