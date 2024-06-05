@@ -21,10 +21,12 @@ struct ObservationInfoView: View {
     let fallbackThumbnail: Image
     let obsType: ObsType
     let obsIdent: String?
+    let occurenceId: UUID
     @State var thumbnail: Image? = nil
     let sound: NBSound?
     
     init(width: CGFloat, fallbackThumbnail: Image, observation: Observation, sound: NBSound?, navigate: @escaping (UIViewController) -> Void) {
+        self.occurenceId = observation.observation.occurenceId
         self.obsIdent = observation.observation.obsIdent
         self.obsType = observation.observation.obsType
         self.sound = sound
@@ -114,8 +116,12 @@ struct ObservationInfoView: View {
         .padding(.defaultPadding)
         .background(Color(uiColor: .onPrimaryButtonSecondary))
         .task(id: thumbnailId) {
-            if let id = thumbnailId, let image = try? await client.downloadCached(mediaId: id) {
-                thumbnail = Image(uiImage: image)
+            if let id = thumbnailId {
+                if let image = try? await client.downloadCached(mediaId: id) {
+                    thumbnail = Image(uiImage: image)
+                } else if let image = NBThumbnail.findLocal(occurenceId: occurenceId, obsIdent: obsIdent) {
+                    thumbnail = Image(uiImage: image)
+                }
             }
         }
     }
