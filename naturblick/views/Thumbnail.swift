@@ -24,7 +24,11 @@ struct Thumbnail<Content: View> : View {
         }
         .task(id: thumbnailId) {
             if let thumbnailId = self.thumbnailId {
-                self.uiImage = try? await NBThumbnail(id: thumbnailId).image
+                if let thumbnail = try? await NBThumbnail(id: thumbnailId).image {
+                    self.uiImage = thumbnail
+                } else {
+                    self.uiImage = NBThumbnail.findLocal(occurenceId: occurenceId, obsIdent: obsIdent)
+                }
             } else if let obsIdent = obsIdent, let thumbnail = NBThumbnail.loadOld(occurenceId: occurenceId, obsIdent: obsIdent, persistenceController: persistenceController) {
                 self.uiImage = thumbnail.image
             } else if let speciesUrl = speciesUrl {

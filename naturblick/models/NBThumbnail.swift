@@ -39,7 +39,11 @@ struct NBThumbnail {
         URL.oldRecordings?.appendingPathComponent("\(obsIdent)_Avatar.jpg", isDirectory: false)
     }
     
-    private static func findOld(obsIdent: String) -> String? {
+    static func oldUrl(occurenceId: UUID) -> URL? {
+        URL.oldCrops?.appendingPathComponent("\(occurenceId.uuidString.lowercased()).jpg", isDirectory: false)
+    }
+    
+    private static func findOldRecording(obsIdent: String) -> String? {
         guard let path = oldUrl(obsIdent: obsIdent)?.path else {
             Logger.compat.warning("No path for thumbnail \(obsIdent, privacy: .public)")
             return nil
@@ -52,10 +56,32 @@ struct NBThumbnail {
         return path
     }
     
+    private static func findOldImage(occurenceId: UUID) -> String? {
+        guard let path = oldUrl(occurenceId: occurenceId)?.path else {
+            return nil
+        }
+        
+        guard FileManager.default.fileExists(atPath: path) else {
+            return nil
+        }
+        return path
+    }
+    
+    static func findLocal(occurenceId: UUID, obsIdent: String?) -> UIImage? {
+        if let obsIdent = obsIdent, let path = findOldRecording(obsIdent: obsIdent) {
+            return UIImage(contentsOfFile: path)
+        }
+        
+        if let path = findOldImage(occurenceId: occurenceId) {
+            return UIImage(contentsOfFile: path)
+        }
+        return nil
+    }
+    
     static func loadOld(occurenceId: UUID, obsIdent: String, persistenceController: ObservationPersistenceController) -> NBThumbnail? {
         Logger.compat.info("Trying to find thumbnail for \(occurenceId, privacy: .public) \(obsIdent, privacy: .public)")
         
-        guard let path = NBThumbnail.findOld(obsIdent: obsIdent) else {
+        guard let path = NBThumbnail.findOldRecording(obsIdent: obsIdent) else {
             Logger.compat.warning("Could not find thumbnail for \(occurenceId, privacy: .public)")
             return nil
         }

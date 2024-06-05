@@ -119,7 +119,17 @@ struct ObservationListView: HostedView {
             }
         }
         .task {
-            try? await client.sync(controller: self.persistenceController)
+            do {
+                try await client.sync(controller: self.persistenceController)
+            } catch {
+                if persistenceController.observations.isEmpty,
+                   (try? persistenceController.getSync()) == nil,
+                    let oldObservationsFile = URL.oldObservationsFile,
+                    let data = try? Data(contentsOf: oldObservationsFile),
+                    let observations = try? JSONDecoder().decode([DBObservation].self, from: data) {
+                    try? self.persistenceController.importOldObservations(from: observations)
+                }
+            }
         }
         .onReceive(model.$showList) { showList in
             if let item = viewController?.navigationItem {

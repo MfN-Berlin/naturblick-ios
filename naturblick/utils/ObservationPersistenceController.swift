@@ -227,6 +227,12 @@ class ObservationPersistenceController: ObservableObject {
         try updateAndRefresh()
     }
 
+    func importOldObservations(from observations: [DBObservation]) throws {
+        try queue.transaction {
+            try importObservations(from: observations)
+        }
+    }
+    
     func truncateObservations() throws {
         try queue.run(DBObservation.D.backendObservation.delete())
     }
