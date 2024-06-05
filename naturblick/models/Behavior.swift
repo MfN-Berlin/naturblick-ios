@@ -9,7 +9,7 @@ enum Behavior: String, Identifiable, Codable, CaseIterable {
     var id: Behavior {
         self
     }
-    
+    case notSet = ""
     case plantLosingLeafs = "Blätter abwerfend"
     case plantBlooming = "blühend"
     case plantCarryingFruits = "Früchte tragend"
@@ -31,6 +31,7 @@ enum Behavior: String, Identifiable, Codable, CaseIterable {
 
 extension [Behavior] {
     static let forPlants: [Behavior] = [
+        .notSet,
         .plantLosingLeafs,
         .plantBlooming,
         .plantCarryingFruits,
@@ -41,6 +42,7 @@ extension [Behavior] {
     ]
     
     static let forAnimals: [Behavior] = [
+        .notSet,
         .animalOnAFlower,
         .animalNest,
         .animalBiteMarks,

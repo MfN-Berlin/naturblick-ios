@@ -141,11 +141,12 @@ struct EditObservationView: HostedView {
                     Text("behavior")
                         .caption(color: .onSecondarySignalLow)
                     Picker("behavior", selection: $flow.data.behavior) {
-                        if flow.data.original.behavior == nil {
-                            Text("none").tag(nil as Behavior?)
-                        }
                         ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
-                            Text($0.rawValue).tag($0 as Behavior?)
+                            if case .notSet = $0 {
+                                Text("none").tag($0)
+                            } else {
+                                Text($0.rawValue).tag($0)
+                            }
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
