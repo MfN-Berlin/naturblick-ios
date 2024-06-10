@@ -11,14 +11,18 @@ struct Settings {
     private static let userDefault = UserDefaults.standard
     private static var allDeviceIds: [String]? = nil
     
+    static func updateDeviceIds() -> [String] {
+        let persistenceController = ObservationPersistenceController()
+        let allDeviceIds = persistenceController.getAllDeviceIds()
+        Settings.allDeviceIds = allDeviceIds
+        return allDeviceIds
+    }
+    
     static func getAllDeviceIds() -> [String] {
         if let allDeviceIds = Settings.allDeviceIds {
             return allDeviceIds
         } else {
-            let persistenceController = ObservationPersistenceController()
-            let allDeviceIds = persistenceController.getAllDeviceIds()
-            Settings.allDeviceIds = allDeviceIds
-            return allDeviceIds
+            return updateDeviceIds()
         }
     }
     

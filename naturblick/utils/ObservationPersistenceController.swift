@@ -6,6 +6,7 @@
 import CoreData
 import SQLite
 import UIKit
+import os
 
 class ObservationPersistenceController: ObservableObject {
     private var queue: Connection
@@ -131,6 +132,19 @@ class ObservationPersistenceController: ObservableObject {
                         name TEXT NOT NULL
                     );
                     PRAGMA user_version = 3;
+                    COMMIT TRANSACTION;
+"""
+                )
+            }
+            if self.queue.userVersion == 3 {
+                try self.queue.execute(
+"""
+                    BEGIN TRANSACTION;
+                    CREATE TABLE sync_device_ids (
+                        yes INT NOT NULL
+                    );
+                    INSERT INTO sync_device_ids VALUES (1);
+                    PRAGMA user_version = 4;
                     COMMIT TRANSACTION;
 """
                 )
@@ -382,6 +396,21 @@ class ObservationPersistenceController: ObservableObject {
 
     private func clearPendingOperations(ids: [Int64]) throws {
         try queue.run(Operation.D.table.filter(ids.contains(Operation.D.rowid)).delete())
+    }
+    
+    func shouldImportDevices() -> Bool {
+        let count = try? queue.prepare("SELECT count(*) FROM sync_device_ids").scalar() as? Int64
+        return count == 1
+    }
+    
+    func importOldDevices(devices: [DeviceIdentifier]) throws {
+        try queue.transaction {
+            for device in devices {
+                try queue.run(DeviceIdentifier.D.table.insert(or: .ignore, device.setters()))
+            }
+            try queue.run(Sync.D.sync.delete())
+            try queue.execute("DELETE FROM sync_device_ids;");
+        }
     }
     
     func getAllDeviceIds() -> [String] {
