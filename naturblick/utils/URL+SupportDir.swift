@@ -26,5 +26,5 @@ extension URL {
     
     static let oldDir: URL? = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("NoCloud", isDirectory: true)
     static let oldRecordings: URL? = oldDir?.appendingPathComponent("Recordings", isDirectory: true)
-    
+    static let oldObservationsFile: URL? = oldDir?.appendingPathComponent("userObsList.json", isDirectory: false)
 }

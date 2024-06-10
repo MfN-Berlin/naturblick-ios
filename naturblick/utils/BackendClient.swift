@@ -6,6 +6,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import os
 
 struct Chunk {
     
@@ -62,7 +63,54 @@ class BackendClient {
         return fieldData as Data
     }
 
+    private func askForOldDevices(deviceIdentifiers: [String]) async throws -> [DeviceIdentifier] {
+        struct DeviceQuery: Encodable {
+            let occurenceIds: [UUID]
+            let deviceIdentifiers: [String]
+        }
+        
+        struct DeviceResponse: Decodable {
+            let deviceIdentifiers: [String]
+        }
+        
+        guard let oldObservationsFile = URL.oldObservationsFile else {
+            Logger.compat.warning("No old observations file")
+            return []
+        }
+            
+        let data = try Data(contentsOf: oldObservationsFile)
+        let query = DeviceQuery(
+            occurenceIds: try JSONDecoder().decode([DBObservation].self, from: data).map { obs in
+                obs.occurenceId
+            },
+            deviceIdentifiers: deviceIdentifiers
+        )
+        
+        let url = URL(string: Configuration.backendUrl + "/list-devices")!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "PUT"
+        
+        guard let encoded = try? JSONEncoder().encode(query) else {
+            Fail.with(message: "Failed to encode DeviceQuery")
+        }
+        
+        let response = try await downloader.httpSend(request: request, data: encoded)
+        return try JSONDecoder().decode(DeviceResponse.self, from: response).deviceIdentifiers.map { deviceIdentifer in
+            DeviceIdentifier(id: deviceIdentifer, name: "NB-OLD")
+        }
+    }
+    
     func sync(controller: ObservationPersistenceController) async throws {
+        do {
+            if controller.shouldImportDevices() {
+                let oldDevices = try await self.askForOldDevices(deviceIdentifiers: Settings.getAllDeviceIds())
+                try controller.importOldDevices(devices: oldDevices)
+                let _ = Settings.updateDeviceIds()
+            }
+        } catch {
+            Logger.compat.info("Failed to fetch old device identifiers: \(error)")
+        }
         let (ids, operations) = try controller.getPendingOperations()
         var chunk = Chunk()
         
