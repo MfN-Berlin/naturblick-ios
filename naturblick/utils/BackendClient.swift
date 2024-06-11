@@ -79,10 +79,17 @@ class BackendClient {
         }
             
         let data = try Data(contentsOf: oldObservationsFile)
+        let occurenceIds = try JSONDecoder().decode([DBObservation].self, from: data).map { obs in
+            obs.occurenceId
+        }
+        
+        guard !occurenceIds.isEmpty else {
+            Logger.compat.warning("No observations in old observations file")
+            return []
+        }
+        
         let query = DeviceQuery(
-            occurenceIds: try JSONDecoder().decode([DBObservation].self, from: data).map { obs in
-                obs.occurenceId
-            },
+            occurenceIds: occurenceIds,
             deviceIdentifiers: deviceIdentifiers
         )
         
