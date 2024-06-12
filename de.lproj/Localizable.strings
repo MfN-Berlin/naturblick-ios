@@ -194,3 +194,10 @@
 "set_time"="Zeit übernehmen";
 "timezone"="Zeitzone";
 "error"="Fehler";
+"import_info_title"="Hinweis Urheberschaft";
+"import_info"="Mit der Nutzung von Naturblick hast du zugestimmt, dass alle von dir gespeicherten Medien die Lizenz CC BY-SA 4.0 erhalten. Das ist nur möglich, wenn du Autor:in, bzw. Rechteinhaber:in des Werkes bist. Bitte denke daran, wenn du Fotos aus deiner Galerie in die App importierst. Wir wünschen dir viel Freude mit der neuen Funktion!";
+"go_to_app_settings_gallery"="Naturblick benötigt die Erlaubnis deine Fotos zu benutzen. Du kannst das in den Einstellungen erlauben.";
+"photos_restricted_title"="Zugriff eingeschränkt";
+"photos_restricted_text"="Der Zugriff auf deine Bilder ist eingeschränkt und somit unmöglich. Du wirst diese Funktion nicht benutzen können.";
+"no_permission_title"="Zugriffsberechtigung";
+"no_permission_text"="Naturblick darf auf dieses Bild nicht zugreifen. Wenn du dieses Bild für Naturblick auswählen willst, musst du in den Einstellungen den Zugriff gewähren.";

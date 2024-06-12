@@ -9,6 +9,7 @@ import Mantis
 import MapKit
 import Photos
 import PhotosUI
+import os
 
 class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController, PHPickerViewControllerDelegate {
     
@@ -59,31 +60,50 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     @MainActor
-    func pickPhoto() {
+    func createFromPhoto() {
+        if !UserDefaults.standard.bool(forKey: "authorshipHint") {
+            let alert = UIAlertController(title: String(localized: "import_info_title"), message: String(localized: "import_info"), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: String(localized: "ok"), style: .cancel, handler: { _ in
+                UserDefaults.standard.setValue(true, forKey: "authorshipHint") 
+                self.photoLibraryAuthorizationStatus()
+            }))
+            viewController?.present(alert, animated: true)
+        } else {
+            self.photoLibraryAuthorizationStatus()
+        }
+    }
+    
+    @MainActor
+    func photoLibraryAuthorizationStatus() {
+        Task { @MainActor in
+            await PHPhotoLibrary.requestAccess()
+            switch PHPhotoLibrary.authorizationStatus(for: .readWrite) {
+            case .notDetermined:
+                // will not happen
+                photoLibraryAuthorizationStatus()
+            case .restricted:
+                photosRestrictedDialog()
+            case .denied:
+                permissionSettingsDialog(message: String(localized: "go_to_app_settings_gallery"))
+            case .authorized:
+                presentGallery()
+            case .limited:
+                presentGallery()
+            @unknown default:
+                Fail.with(message: "PHAuthorizationStatus has a new case.")
+            }
+        }
+    }
+ 
+    @MainActor
+    func presentGallery() {
         data = CreateData()
         region = .defaultRegion
         speciesAvatar = Image("placeholder")
         Task { @MainActor in
-            if PHPhotoLibrary.askForPermission() {
-                await PHPhotoLibrary.requestAccess()
-            }
-            let status = AVCaptureDevice.authorizationStatus(for: .video)
-            var accessGranted = false
-            if  status == .notDetermined {
-                accessGranted = await AVCaptureDevice.requestAccess(for: .video)
-            } else if status == .authorized {
-                accessGranted = true
-            } else {
-                // User has previously denied the permission, but ask to take a photo again
-                permissionSettingsDialog(message: String(localized: "go_to_app_settings_photo"))
-            }
-            
-            guard accessGranted else {
-                return
-            }
-            
             var config = PHPickerConfiguration(photoLibrary: PHPhotoLibrary.shared())
             config.filter = .images
+            config.selectionLimit = 1
             let picker = PHPickerViewController(configuration: config)
             picker.delegate = self
             navigationController?.present(picker, animated: true)
@@ -116,6 +136,8 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 let image = NBImage(image: uiImage, localIdentifier: phResult.localIdentifier)
                 showDateConfirm = true
                 cropPhoto(image: image)
+            } else {
+                self.noPermissionDialog()
             }
         }
     }
@@ -126,9 +148,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         region = .defaultRegion
         speciesAvatar = Image("placeholder")
         Task { @MainActor in
-            if PHPhotoLibrary.askForPermission() {
-                await PHPhotoLibrary.requestAccess()
-            }
+            await PHPhotoLibrary.requestAccess()
             let status = AVCaptureDevice.authorizationStatus(for: .video)
             var accessGranted = false
             if  status == .notDetermined {
@@ -380,6 +400,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         data.obsType == .image || data.obsType == .unidentifiedimage
     }
     
+    @MainActor
     private func permissionSettingsDialog(message: String) {
         let alert = UIAlertController(title: String(localized: "open_settings"), message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: String(localized: "open_settings"), style: .default) { _ in
@@ -387,6 +408,25 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 UIApplication.shared.open(url)
             }
         })
+        alert.addAction(UIAlertAction(title: String(localized: "cancel"), style: .cancel, handler: nil))
+        viewController?.present(alert, animated: true)
+    }
+    
+    @MainActor
+    private func noPermissionDialog() {
+        let alert = UIAlertController(title: String(localized: "no_permission_title"), message: String(localized: "no_permission_text"), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: String(localized: "open_settings"), style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        })
+        alert.addAction(UIAlertAction(title: String(localized: "cancel"), style: .cancel, handler: nil))
+        viewController?.present(alert, animated: true)
+    }
+
+    @MainActor
+    private func photosRestrictedDialog() {
+        let alert = UIAlertController(title: String(localized: "photos_restricted_title"), message: String(localized: "photos_restricted_text"), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: String(localized: "cancel"), style: .cancel, handler: nil))
         viewController?.present(alert, animated: true)
     }

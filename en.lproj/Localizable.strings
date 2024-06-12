@@ -196,3 +196,10 @@
 "set_time"="Set time";
 "timezone"="Timezone";
 "error"="Error";
+"import_info_title"="Copyright notice";
+"import_info"="By using Naturblick, you have agreed to that all media you save will be licensed under CC BY-SA 4.0. This is only possible if you are the author or copyright holder of the work. Please keep this in mind when importing photos from your gallery into the app. We wish you a lot of fun with this new feature!";
+"go_to_app_settings_gallery"="Naturblick need access to your photos. You can change this permission in the settings app.";
+"photos_restricted_title"="Access restricted";
+"photos_restricted_text"="Access to photo library is restricted and therefore impossible. You will not be able to use this feature.";
+"no_permission_title"="Access authorization";
+"no_permission_text"="Naturblick is not allowed to access this image. If you want to select this image for Naturblick, you must grant access in the settings.";
