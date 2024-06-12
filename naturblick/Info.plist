@@ -15,8 +15,6 @@
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
-	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
-	<true/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>lato_black.ttf</string>
