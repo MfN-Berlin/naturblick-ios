@@ -14,32 +14,18 @@ struct BirdRecorder {
 }
 
 class BirdRecorderViewModel: ObservableObject {
-    @Published private(set) var isDenied: Bool = false
     @Published private(set) var currentTime: String = "00:00.0"
     private var recorder: BirdRecorder? = nil
-    let audioSession: AVAudioSession
-    init() {
-        self.audioSession = AVAudioSession.sharedInstance()
-        do {
-            // Set the audio session category and mode.
-            try audioSession.setCategory(.record, mode: .measurement)
-            Timer.publish(every: 0.1, on: .main, in: .default)
-                .autoconnect()
-                .map { [weak self] t in
-                    (self?.recorder?.audioRecorder.currentTime ?? 0).toTimeString
-                }
-                .assign(to: &$currentTime)
-        } catch {
-            Fail.with(error)
-        }
-    }
+    
     func record() {
         guard self.recorder == nil else {
             return
         }
         
         do {
-            try audioSession.setActive(true)
+            // Set the audio session category and mode.
+            try AVAudioSession.sharedInstance().setCategory(.record, mode: .measurement)
+            try AVAudioSession.sharedInstance().setActive(true)
             let sound = NBSound()
             let recorder = BirdRecorder(
                 audioRecorder: try AVAudioRecorder(url: sound.url, settings: [
@@ -52,6 +38,12 @@ class BirdRecorderViewModel: ObservableObject {
             )
             recorder.audioRecorder.record(forDuration: 60)
             self.recorder = recorder
+            Timer.publish(every: 0.1, on: .main, in: .default)
+                .autoconnect()
+                .map { [weak self] t in
+                    (self?.recorder?.audioRecorder.currentTime ?? 0).toTimeString
+                }
+                .assign(to: &$currentTime)
         } catch {
             Fail.with(error)
         }
@@ -86,6 +78,7 @@ class BirdRecorderViewModel: ObservableObject {
     deinit {
         do {
             try AVAudioSession.sharedInstance().setActive(false)
+            try AVAudioSession.sharedInstance().setCategory(.soloAmbient)
         } catch {
             /* Ignore errors when canceling */
         }
