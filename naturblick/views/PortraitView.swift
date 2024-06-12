@@ -14,13 +14,11 @@ struct PortraitView: View {
     var body: some View {
         GeometryReader { geo in
             ScrollView {
-                SwiftUI.Group {
+                VStack {
                     if let portrait = portraitViewModel.portrait {
                         ZStack { // header
                             if let meta = portrait.descriptionImage {
-                                PortraitImageView(geo: geo, image: meta, headerImage: true)
-                                    .clipShape(RoundBottomShape())
-                                    .nbShadow()
+                                PortraitHeaderView(width: geo.size.width, image: meta, landscape: portrait.landscape, focus: portrait.focus)
                             }
                             if let urlPart = portrait.audioUrl {
                                 SoundButton(url: URL(string: Configuration.strapiUrl + urlPart)!, speciesId: species.speciesId)
@@ -67,7 +65,7 @@ struct PortraitView: View {
                             
                             VStack(alignment: .leading, spacing: .defaultPadding) {
                                 if let meta = portrait.inTheCityImage {
-                                    PortraitImageView(geo: geo, image: meta, headerImage: false)
+                                    PortraitImageView(width: geo.size.width, image: meta)
                                 }
                                 Text("in_the_city")
                                     .headline4()
@@ -75,7 +73,7 @@ struct PortraitView: View {
                                     .body1()
                                 
                                 if let meta = portrait.goodToKnowImage {
-                                    PortraitImageView(geo: geo, image: meta, headerImage: false)
+                                    PortraitImageView(width: geo.size.width, image: meta)
                                 }
                                 Text("good_to_know")
                                     .headline4()

@@ -27,14 +27,37 @@ extension PortraitImage {
         static let license = Expression<String>("license")
     }
     
-    func bestImage(geo: GeometryProxy, displayScale: CGFloat) -> PortraitImageSize {
+    func bestImage(width: CGFloat, displayScale: CGFloat) -> PortraitImageSize {
         sizes.filter { size in
-            CGFloat(size.width) > geo.size.width * displayScale
+            CGFloat(size.width) > width * displayScale
         }.sorted(by: {$0.width < $1.width}).first ?? sizes.sorted(by: {$0.width < $1.width}).last!
+    }
+    
+    func widerThanFocusPoint(landscape: Bool) -> Bool {
+        if let image = sizes.sorted(by: {$0.width < $1.width}).last {
+            let aspectRatio = PortraitImage.focusAspectRatio(landscape: landscape)
+            return CGFloat(image.width) / CGFloat(image.height) >= aspectRatio
+        } else {
+            return false
+        }
+    }
+    
+    func headerAspectRatio(landscape: Bool) -> CGFloat {
+        let size = sizes.first!
+        if widerThanFocusPoint(landscape: landscape) {
+            return CGFloat(size.width) / CGFloat(size.height)
+        } else {
+            return PortraitImage.focusAspectRatio(landscape: landscape)
+        }
     }
 }
 
 extension PortraitImage {
+    static func focusAspectRatio(landscape: Bool) -> CGFloat {
+        landscape ? 4.0 / 3.0 : 3.0 / 4.0
+    }
+
+    
     static let sampleData = PortraitImage(
         id: 1,
         owner: "Jörg Hempel",
