@@ -90,7 +90,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             case .limited:
                 presentGallery()
             @unknown default:
-                fatalError("PHAuthorizationStatus has a new case.")
+                Fail.with(message: "PHAuthorizationStatus has a new case.")
             }
         }
     }
