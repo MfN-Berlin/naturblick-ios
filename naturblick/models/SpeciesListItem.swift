@@ -17,17 +17,6 @@ struct SpeciesListItem: Identifiable {
             return maleUrl
         }
     }
-    var name: String? {
-        if let isFemale = isFemale, let speciesName = speciesName {
-            if isFemale {
-                return "\(speciesName) ♀"
-            } else {
-                return "\(speciesName) ♂"
-            }
-        } else {
-            return speciesName
-        }
-    }
     let speciesId: Int64
     let sciname: String
     let speciesName: String?

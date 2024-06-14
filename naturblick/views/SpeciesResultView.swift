@@ -44,9 +44,16 @@ struct SpeciesResultView: View {
                     .padding(.trailing, .defaultPadding)
             }
             VStack(alignment: .leading, spacing: .zero) {
-                if let name = species.name {
+                if let name = species.speciesName {
                     Text(name)
                         .subtitle1()
+                    if let isFemale = species.isFemale {
+                        if isFemale {
+                            Image("female")
+                        } else {
+                            Image("male")
+                        }
+                    }
                 } else {
                     Text(species.sciname)
                         .subtitle1()

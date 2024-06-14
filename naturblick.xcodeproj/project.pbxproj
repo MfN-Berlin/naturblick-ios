@@ -193,7 +193,6 @@
 		DB6DFBF22C35263A0050F1CC /* UIFont+Prefered.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */; };
 		DB7F3F582BD910B900B4CBC2 /* TimeZonePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */; };
 		DB7F3F5A2BD910E100B4CBC2 /* TimeZoneVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */; };
-		DBEDF7D32C1C3D3B004AB23B /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEDF7D22C1C3D3B004AB23B /* SwiftUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -396,7 +395,6 @@
 		DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Prefered.swift"; sourceTree = "<group>"; };
 		DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZonePolygon.swift; sourceTree = "<group>"; };
 		DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneVertex.swift; sourceTree = "<group>"; };
-		DBEDF7D22C1C3D3B004AB23B /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -569,7 +567,6 @@
 				13F03C7D2ACD6AE100EEF964 /* StaticBottomSheetView.swift */,
 				7B572DD82A6E758F008F50C5 /* Thumbnail.swift */,
 				13738D4F2AD93E0E004FCB2A /* ViewProperty.swift */,
-				DBEDF7D22C1C3D3B004AB23B /* SwiftUIView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -972,7 +969,6 @@
 				7BDD17E02A45BE84001B9DB4 /* AccountView.swift in Sources */,
 				7BB3DE2729F68FE100F0D387 /* SpeciesFeaturesView.swift in Sources */,
 				13738D522AD94AED004FCB2A /* ChevronView.swift in Sources */,
-				DBEDF7D32C1C3D3B004AB23B /* SwiftUIView.swift in Sources */,
 				137ACD2A2A6171A000C370CF /* ImageData.swift in Sources */,
 				7B993F4929F16C3D0023315B /* SoundButton.swift in Sources */,
 				137FE59029E5B3A500B397DF /* NSMutableData+append.swift in Sources */,

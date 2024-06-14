@@ -28,11 +28,18 @@ struct SimilarSpeciesItemView: View {
                 }
             }
             VStack(alignment: .leading, spacing: .zero) {
-                if let name = species.name {
+                if let name = species.speciesName {
                     Text(species.sciname)
                         .subtitle3(color: .onFeatureSignalHigh)
                     Text(name)
                         .subtitle1(color: .onFeatureHighEmphasis)
+                    if let isFemale = species.isFemale {
+                        if isFemale {
+                            Image("female")
+                        } else {
+                            Image("male")
+                        }
+                    }
                 } else {
                     Text(species.sciname)
                         .subtitle1(color: .onFeatureSignalHigh)

@@ -90,13 +90,20 @@ struct ObservationInfoView: View {
             }
 
             if let species = species {
-                if let name = species.name {
+                if let name = species.speciesName {
                     Text(species.sciname)
                         .overline(color: .onPrimarySignalHigh)
                         .multilineTextAlignment(TextAlignment.center)
                     Text(name.uppercased())
                         .headline2()
                         .multilineTextAlignment(TextAlignment.center)
+                    if let isFemale = species.isFemale {
+                        if isFemale {
+                            Image("female")
+                        } else {
+                            Image("male")
+                        }
+                    }
                 } else {
                     Text(species.sciname.uppercased())
                         .headline2()

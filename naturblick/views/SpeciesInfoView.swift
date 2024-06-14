@@ -11,7 +11,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
-        species.name
+        species.speciesName
     }
     let selectionFlow: Bool
     let species: SpeciesListItem
