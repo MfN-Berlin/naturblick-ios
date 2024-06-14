@@ -141,6 +141,7 @@ struct HomeView: HostedView {
             ) {
                 createFlow.takePhoto()
             }
+            
             Spacer()
         }
         .frame(maxWidth: width)
