@@ -10,8 +10,12 @@ extension View {
         return self.alert("source",
                isPresented: show,
                actions: {
-            Link("to_orig", destination: URL(string: image.source)!)
-            Link("to_licence", destination: URL(string: Licence.licenceToLink(licence: image.license))!)
+            if let url = URL(string: image.source) {
+                Link("to_orig", destination: url)
+            }
+            if let url = URL(string: Licence.licenceToLink(licence: image.license)) {
+                Link("to_licence", destination: url)
+            }
             Button("close") { show.wrappedValue = false } },
                message: { Text("(\(image.license)) \(image.owner)") } )
     }
