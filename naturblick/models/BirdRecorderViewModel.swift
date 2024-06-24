@@ -78,7 +78,7 @@ class BirdRecorderViewModel: ObservableObject {
     deinit {
         do {
             try AVAudioSession.sharedInstance().setActive(false)
-            try AVAudioSession.sharedInstance().setCategory(.soloAmbient)
+            try AVAudioSession.sharedInstance().setCategory(.playback)
         } catch {
             /* Ignore errors when canceling */
         }

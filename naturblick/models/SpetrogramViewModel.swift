@@ -29,7 +29,7 @@ class SpectrogramViewModel: HttpErrorViewModel {
         self.obsIdent = obsIdent
         super.init()
         do {
-            try AVAudioSession.sharedInstance().setCategory(.soloAmbient)
+            try AVAudioSession.sharedInstance().setCategory(.playback)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
             Fail.with(error)
