@@ -1,6 +1,6 @@
 {
   "Primary": {
-    "value": "{sleep.300}",
+    "value": "{sleep.500}",
     "type": "color"
   },
   "Secondary": {
@@ -16,7 +16,7 @@
     "type": "color"
   },
   "Feature": {
-    "value": "{sleep.300}",
+    "value": "{sleep.500}",
     "type": "color"
   },
   "On Primary": {
@@ -41,7 +41,7 @@
       "type": "color"
     },
     "Signal Low": {
-      "value": "{sleep.200}",
+      "value": "{sleep.100}",
       "type": "color"
     },
     "Signal High": {
@@ -53,7 +53,7 @@
       "type": "color"
     },
     "Button Secondary": {
-      "value": "{sleep.600}",
+      "value": "{sleep.700}",
       "type": "color"
     },
     "tag": {
@@ -67,7 +67,7 @@
       "type": "color"
     },
     "Medium Emphasis": {
-      "value": "{base.170}",
+      "value": "{base.110}",
       "type": "color"
     },
     "Low Emphasis": {
@@ -75,7 +75,7 @@
       "type": "color"
     },
     "Minimum Emphasis": {
-      "value": "{base.110}",
+      "value": "{sleep.600}",
       "type": "color"
     },
     "Disabled": {
@@ -83,7 +83,7 @@
       "type": "color"
     },
     "Signal Low": {
-      "value": "{sleep.200}",
+      "value": "{sleep.100}",
       "type": "color"
     },
     "Signal High": {
@@ -91,11 +91,11 @@
       "type": "color"
     },
     "Button Primary": {
-      "value": "{relax.200}",
+      "value": "{base.100}",
       "type": "color"
     },
     "Button Secondary": {
-      "value": "{relax.600}",
+      "value": "{sleep.200}",
       "type": "color"
     },
     "tag": {
@@ -117,7 +117,7 @@
       "type": "color"
     },
     "Medium Emphasis": {
-      "value": "{base.170}",
+      "value": "{base.110}",
       "type": "color"
     },
     "Low Emphasis": {
@@ -125,11 +125,11 @@
       "type": "color"
     },
     "Disabled": {
-      "value": "{sleep.200}",
+      "value": "{base.150}",
       "type": "color"
     },
     "Signal High": {
-      "value": "{signal.fun}",
+      "value": "{signal.dark-fun}",
       "type": "color"
     },
     "Signal Low": {
@@ -137,11 +137,11 @@
       "type": "color"
     },
     "Button Primary": {
-      "value": "{relax.200}",
+      "value": "{base.100}",
       "type": "color"
     },
     "Button Secondary": {
-      "value": "{relax.900}",
+      "value": "{sleep.100}",
       "type": "color"
     },
     "tag": {
