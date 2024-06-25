@@ -202,3 +202,4 @@
 "no_permission_title"="Zugriffsberechtigung";
 "no_permission_text"="Naturblick darf auf dieses Bild nicht zugreifen. Wenn du dieses Bild für Naturblick auswählen willst, musst du in den Einstellungen den Zugriff gewähren.";
 "acc_settings"="Einstellungen";
+"acc_record_duration"="Aufnahmelänge";

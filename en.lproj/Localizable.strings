@@ -204,3 +204,4 @@
 "no_permission_title"="Access authorization";
 "no_permission_text"="Naturblick is not allowed to access this image. If you want to select this image for Naturblick, you must grant access in the settings.";
 "acc_settings"="Settings";
+"acc_record_duration"="Duration";

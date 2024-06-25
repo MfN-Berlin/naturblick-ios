@@ -12,32 +12,50 @@ struct BirdRecorderView: NavigatableView {
     @ObservedObject var flow: CreateFlowViewModel
     
     var body: some View {
-        StaticBottomSheetView {
-            HStack(alignment: .center) {
-                Text("\(model.currentTime)")
-                    .headline3()
-                    .foregroundColor(.onPrimaryHighEmphasis)
-                    .onAppear {
-                        model.record()
-                    }
-                    .onDisappear {
-                        model.cancel()
-                    }
-            }
-        } sheet: {
-            Circle()
-                .stroke(Color.onSecondaryDisabled, lineWidth: .goodToKnowLineWidth)
-                .overlay {
-                    RoundedRectangle(cornerRadius: .largeCornerRadius)
-                        .fill(Color.onSecondarywarning)
-                        .frame(width: .stopButtonSize, height: .stopButtonSize)
-                        .nbShadow()
+        GeometryReader { geo in
+            VStack(spacing: .zero) {
+                HStack(alignment: .center) {
+                    Text("\(model.currentTime)")
+                        .headline3()
+                        .accessibilityLabel(Text("acc_record_duration"))
+                        .accessibilityValue(model.currentTime)
+                        .foregroundColor(.onPrimaryHighEmphasis)
+                        .onAppear {
+                            model.record()
+                        }
+                        .onDisappear {
+                            model.cancel()
+                        }
                 }
-                .frame(width: .stopButtonCircleSize, height: .stopButtonCircleSize)
-                .onTapGesture {
-                    flow.soundRecorded(sound: model.stop()!)
+                    .frame(maxHeight: .infinity)
+                VStack(spacing: .zero) {
+                    Circle()
+                        .stroke(Color.onSecondaryDisabled, lineWidth: .goodToKnowLineWidth)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: .largeCornerRadius)
+                                .fill(Color.onSecondarywarning)
+                                .frame(width: .stopButtonSize, height: .stopButtonSize)
+                                .nbShadow()
+                        }
+                        .frame(width: .stopButtonCircleSize, height: .stopButtonCircleSize)
+                        
+                        .onTapGesture {
+                            flow.soundRecorded(sound: model.stop()!)
+                        }
+                        .padding(.defaultPadding)
+                        .accessibilityElement(children: .combine)
+                        .accessibility(label: Text("Stop"))
                 }
                 .padding(.defaultPadding)
+                .padding(.bottom, geo.safeAreaInsets.bottom)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: .largeCornerRadius)
+                        .fill(Color.secondaryColor)
+                        .nbShadow()
+                )
+            }
+            .ignoresSafeArea(edges: .bottom)
         }
     }
 }
