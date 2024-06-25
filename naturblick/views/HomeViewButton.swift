@@ -27,6 +27,8 @@ struct HomeViewButton: View {
                     .bigRoundButtonText(size: size)
                     .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                     .frame(width: size)
+        }.accessibilityRepresentation {
+            Button(text) {}
         }
     }
 }

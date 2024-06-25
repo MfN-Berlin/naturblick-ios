@@ -75,6 +75,7 @@ struct HomeView: HostedView {
         item.scrollEdgeAppearance = nil
         item.compactScrollEdgeAppearance = nil
         item.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: viewController, action: #selector(HomeViewController.openMenu))
+        item.rightBarButtonItem?.accessibilityLabel = String(localized: "acc_settings")
     }
     
     @Environment(\.colorScheme) var colorScheme
@@ -108,6 +109,7 @@ struct HomeView: HostedView {
             .clipShape(RoundBottomShape())
             .nbShadow()
             .ignoresSafeArea()
+            .accessibility(hidden: true)
         }
     
     func topRow(width: CGFloat) -> some View {

@@ -36,6 +36,7 @@ struct AGBView: HostedView {
                 Image("mfn_color_logo")
                     .resizable()
                     .scaledToFit()
+                    .accessibility(hidden: true)
                 Text("new_tac_greeting")
                     .body1()
                 Text("new_tac_info")
