@@ -201,5 +201,4 @@
 "photos_restricted_text"="Der Zugriff auf deine Bilder ist eingeschränkt und somit unmöglich. Du wirst diese Funktion nicht benutzen können.";
 "no_permission_title"="Zugriffsberechtigung";
 "no_permission_text"="Naturblick darf auf dieses Bild nicht zugreifen. Wenn du dieses Bild für Naturblick auswählen willst, musst du in den Einstellungen den Zugriff gewähren.";
-"acc_mfn_logo"="Museum für Naturkunde Berlin";
-"settings"="Einstellungen";
+"acc_settings"="Einstellungen";

@@ -75,7 +75,7 @@ struct HomeView: HostedView {
         item.scrollEdgeAppearance = nil
         item.compactScrollEdgeAppearance = nil
         item.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: viewController, action: #selector(HomeViewController.openMenu))
-        item.rightBarButtonItem?.accessibilityLabel = String(localized: "settings")
+        item.rightBarButtonItem?.accessibilityLabel = String(localized: "acc_settings")
     }
     
     @Environment(\.colorScheme) var colorScheme
@@ -91,7 +91,6 @@ struct HomeView: HostedView {
                     .frame(width: width / 3)
                     .foregroundColor(.onPrimaryHighEmphasis)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                    .accessibility(label: Text("Naturblick"))
                 Image("mfn_logo")
                     .resizable()
                     .scaledToFit()
@@ -100,18 +99,17 @@ struct HomeView: HostedView {
                     .frame(width: width / 3)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
                     .padding(.bottom, .roundBottomHeight)
-                    .accessibility(label: Text("acc_mfn_logo"))
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
                 Image("Kingfisher")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .accessibility(label: Text("Kingfisher"))
             }
             .clipShape(RoundBottomShape())
             .nbShadow()
             .ignoresSafeArea()
+            .accessibility(hidden: true)
         }
     
     func topRow(width: CGFloat) -> some View {

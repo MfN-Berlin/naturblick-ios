@@ -203,6 +203,4 @@
 "photos_restricted_text"="Access to photo library is restricted and therefore impossible. You will not be able to use this feature.";
 "no_permission_title"="Access authorization";
 "no_permission_text"="Naturblick is not allowed to access this image. If you want to select this image for Naturblick, you must grant access in the settings.";
-"acc_mfn_logo"="Museum für Naturkunde Berlin";
-"settings"="Settings";
-"settings"="Settings";
+"acc_settings"="Settings";

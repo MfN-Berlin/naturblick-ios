@@ -20,7 +20,6 @@ struct HomeViewButton: View {
                         .scaledToFit()
                         .foregroundColor(.onPrimaryHighEmphasis)
                         .padding(16)
-                        .accessibility(hidden: true)
                 }
                 .frame(width: size, height: size)
                 .nbShadow()
@@ -28,7 +27,9 @@ struct HomeViewButton: View {
                     .bigRoundButtonText(size: size)
                     .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                     .frame(width: size)
-        }.accessibility(label: Text(text))
+        }.accessibilityRepresentation {
+            Button(text) {}
+        }
     }
 }
 
