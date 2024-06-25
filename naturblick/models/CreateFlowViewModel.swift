@@ -20,7 +20,6 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @Published var data = CreateData()
     @Published var region: MKCoordinateRegion = .defaultRegion
     @Published var speciesAvatar: Image = Image("placeholder")
-    @Published var showDateConfirm: Bool = false
     var isCreate: Bool = true
     var obsIdent: String? = nil
     let fromList: Bool
@@ -134,7 +133,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 }
                 self.data.coords =  phResult.location.map { Coordinates(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude) }
                 let image = NBImage(image: uiImage, localIdentifier: phResult.localIdentifier)
-                showDateConfirm = true
+                data.showDateConfirm = true
                 cropPhoto(image: image)
             } else {
                 self.noPermissionDialog()
@@ -282,7 +281,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
                 setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
             }
         }
-        if showDateConfirm {
+        if data.showDateConfirm {
             navigationController?.pushViewController(ConfirmDateView(createFlow: self).setUpViewController(), animated: true)
         } else {
             showCreateView()
