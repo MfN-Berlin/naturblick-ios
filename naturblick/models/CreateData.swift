@@ -25,6 +25,7 @@ struct CreateData {
     var behavior: Behavior? = nil
     var sound: SoundData = SoundData()
     var image: ImageData = ImageData()
+    var showDateConfirm: Bool = false
 
     var obsType: ObsType {
         if image.image != nil && species != nil {
