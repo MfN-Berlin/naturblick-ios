@@ -34,7 +34,9 @@ class SpectrogramViewModel: HttpErrorViewModel {
         } catch {
             Fail.with(error)
         }
-        downloadSpectrogram()
+        Task {
+            await downloadSpectrogram()
+        }
     }
     
     func toggle(start: CGFloat, end: CGFloat) {
@@ -59,36 +61,38 @@ class SpectrogramViewModel: HttpErrorViewModel {
         player.pause()
     }
     
-    func downloadSpectrogram() {
+    func awaitDownloadSpectrogram() {
         Task {
-            do {
-                let sound = try await NBSound(id: mediaId, obsIdent: obsIdent)
-                self.sound = sound
-                self.audioPlayer = AVPlayer(url: sound.url)
-                self.audioPlayer?.currentItem?.publisher(for: \.status)
-                    .filter({ $0 == .readyToPlay})
-                    .compactMap({ _ in self.audioPlayer?.currentItem?.duration.seconds })
-                    .assign(to: &$totalDuration)
-                self.audioPlayer?.publisher(for: \.timeControlStatus)
-                    .filter({ $0 != self.currentStatus }) // prevent firing multiple waiting
-                    .assign(to: &$currentStatus)
-                let interval = CMTime(seconds: 0.1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-                self.timeObserver = self.audioPlayer?.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
-                    Task { @MainActor [weak self] in
-                        self?.time = time.seconds
-                    }
-                }
-                try await client.upload(sound: sound.url, mediaId: sound.id)
-                let spectrogram = try await client.spectrogram(mediaId: sound.id)
-                Task { @MainActor [weak self] in
-                    self?.spectrogram = spectrogram
-                }
-            } catch {
-                let _ = handle(error)
-            }
+            await downloadSpectrogram()
         }
     }
     
+    func downloadSpectrogram() async {
+        do {
+            let sound = try await NBSound(id: mediaId, obsIdent: obsIdent)
+            self.sound = sound
+            self.audioPlayer = AVPlayer(url: sound.url)
+            self.audioPlayer?.currentItem?.publisher(for: \.status)
+                .filter({ $0 == .readyToPlay})
+                .compactMap({ _ in self.audioPlayer?.currentItem?.duration.seconds })
+                .assign(to: &$totalDuration)
+            self.audioPlayer?.publisher(for: \.timeControlStatus)
+                .filter({ $0 != self.currentStatus }) // prevent firing multiple waiting
+                .assign(to: &$currentStatus)
+            let interval = CMTime(seconds: 0.1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+            self.timeObserver = self.audioPlayer?.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+                Task { @MainActor [weak self] in
+                    self?.time = time.seconds
+                }
+            }
+            try await client.upload(sound: sound.url, mediaId: sound.id)
+            self.spectrogram = try await client.spectrogram(mediaId: sound.id)
+        } catch {
+            let _ = handle(error)
+        }
+    }
+    
+   
     func crop() -> (sound: NBSound, crop: NBThumbnail, start: Int, end: Int)? {
         guard let spectrogram = self.spectrogram, let sound = self.sound else {
             return nil

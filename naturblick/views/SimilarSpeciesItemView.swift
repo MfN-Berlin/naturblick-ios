@@ -18,8 +18,9 @@ struct SimilarSpeciesItemView: View {
                         .clipShape(Circle())
                         .frame(width: .avatarSize, height: .avatarSize)
                         .padding(.trailing, .defaultPadding)
+                        .accessibilityHidden(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                 } placeholder: {
-                    Image("placeholder")
+                    Image(decorative: "placeholder")
                         .resizable()
                         .scaledToFit()
                         .clipShape(Circle())
@@ -31,11 +32,13 @@ struct SimilarSpeciesItemView: View {
                 if let name = species.name {
                     Text(species.sciname)
                         .subtitle3(color: .onFeatureSignalHigh)
+                        .accessibilityLabel(Text("sciname \(species.sciname)"))
                     Text(name)
                         .subtitle1(color: .onFeatureHighEmphasis)
                 } else {
                     Text(species.sciname)
                         .subtitle1(color: .onFeatureSignalHigh)
+                        .accessibilityLabel(Text("sciname \(species.sciname)"))
                 }
             }
             .padding(.top, .avatarTextOffset)

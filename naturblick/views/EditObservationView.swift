@@ -84,6 +84,7 @@ struct EditObservationView: HostedView {
                 flow.speciesAvatar
                     .avatar()
                     .padding(.trailing, .defaultPadding)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("species")
                         .caption(color: .onSecondaryLowEmphasis)
@@ -110,7 +111,7 @@ struct EditObservationView: HostedView {
             }
             Divider()
             HStack {
-                Image("location24")
+                Image(decorative: "location24")
                     .observationProperty()
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("location")
@@ -125,7 +126,7 @@ struct EditObservationView: HostedView {
             }
             Divider()
             HStack {
-                Image("number24")
+                Image(decorative: "number24")
                     .observationProperty()
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("number")
@@ -135,7 +136,7 @@ struct EditObservationView: HostedView {
             }
             Divider()
             HStack {
-                Image("location24")
+                Image(decorative: "location24")
                     .observationProperty()
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("behavior")
@@ -155,7 +156,7 @@ struct EditObservationView: HostedView {
             }
             Divider()
             HStack {
-                Image("details")
+                Image(decorative: "details")
                     .observationProperty()
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("notes")

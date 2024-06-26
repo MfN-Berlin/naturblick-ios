@@ -37,6 +37,7 @@ struct CreateObservationView: NavigatableView {
                 createFlow.speciesAvatar
                     .avatar()
                     .padding(.trailing, .defaultPadding)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("species")
                         .caption(color: .onSecondarySignalLow)
@@ -51,7 +52,7 @@ struct CreateObservationView: NavigatableView {
             }
             Divider()
             HStack {
-                Image("location24")
+                Image(decorative: "location24")
                     .observationProperty()
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("location")
@@ -66,7 +67,7 @@ struct CreateObservationView: NavigatableView {
             }
             Divider()
             HStack {
-                Image("number24")
+                Image(decorative: "number24")
                     .observationProperty()
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("number")
@@ -76,7 +77,7 @@ struct CreateObservationView: NavigatableView {
             }
             Divider()
             HStack {
-                Image("location24")
+                Image(decorative: "location24")
                     .observationProperty()
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("behavior")
@@ -92,7 +93,7 @@ struct CreateObservationView: NavigatableView {
             }
             Divider()
             HStack {
-                Image("details")
+                Image(decorative: "details")
                     .observationProperty()
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("notes")

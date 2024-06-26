@@ -37,21 +37,45 @@ struct SoundButton: View {
         }
     }
     
+    private func action() {
+        if (soundStream.currentStatus == AVPlayer.TimeControlStatus.paused) {
+            if let url = url {
+                soundStream.play(url: url)
+                if let specId = speciesId {
+                    AnalyticsTracker.trackPortraitSound(speciesId: specId, url: url.absoluteString)
+                }
+            } else if let sound = sound {
+                soundStream.play(sound: sound)
+            }
+        } else {
+            soundStream.stop()
+        }
+    }
+    
     var body: some View {
         buttonIcon()
-        .onTapGesture {
-            if (soundStream.currentStatus == AVPlayer.TimeControlStatus.paused) {
-                if let url = url {
-                    soundStream.play(url: url)
-                    if let specId = speciesId {
-                        AnalyticsTracker.trackPortraitSound(speciesId: specId, url: url.absoluteString)
+        .accessibilityRepresentation {
+            switch soundStream.currentStatus {
+                case .waitingToPlayAtSpecifiedRate:
+                    Button("Waiting") {
+                        self.action()
                     }
-                } else if let sound = sound {
-                    soundStream.play(sound: sound)
-                }
-            } else {
-                soundStream.stop()
+                case .paused:
+                    Button("Play") {
+                        self.action()
+                    }
+                case .playing:
+                    Button("Pause") {
+                        self.action()
+                    }
+                default:
+                    Button("Waiting") {
+                        self.action()
+                    }
             }
+        }
+        .onTapGesture {
+            action()
         }
         .onDisappear {
             soundStream.stop()

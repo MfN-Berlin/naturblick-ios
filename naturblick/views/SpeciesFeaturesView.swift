@@ -22,6 +22,7 @@ struct SpeciesFeaturesView: View {
                         RoundedRectangle(cornerRadius: .smallCornerRadius)
                             .foregroundColor(.onFeaturetag)
                     }
+                    .accessibilityElement(children: .combine)
             }
         }
         .frame(maxWidth: .infinity)

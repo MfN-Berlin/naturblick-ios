@@ -54,6 +54,7 @@ struct PortraitImageView: View {
                             .cornerRadius(.smallCornerRadius)
                     }
                 }
+                .accessibilityHidden(true)
                 .overlay(alignment: .topTrailing) {
                     SwiftUI.Button(action: {
                         showCCByInfo.toggle()
@@ -70,6 +71,7 @@ struct PortraitImageView: View {
                             .frame(width: .fabMiniSize, height: .fabMiniSize)
                             .padding(.defaultPadding)
                     }
+                    .accessibilityLabel(Text("Copyright"))
                 }
                 Text(image.text)
                     .body1()

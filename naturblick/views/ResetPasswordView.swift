@@ -35,12 +35,20 @@ struct ResetPasswordView: NavigatableView {
     
     var body: some View {
         VStack(spacing: .defaultPadding) {
-            OnSecondaryFieldView(image: Image("visibility")) {
-                SecureField(String(localized: "password"), text: $resetPasswordVM.password)
-                    .textContentType(.newPassword)
-                    .autocorrectionDisabled(true)
-                    .textInputAutocapitalization(.never)
+            HStack {
+                Image(decorative: "visibility")
+                    .observationProperty()
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("password")
+                        .caption(color: .onSecondarySignalLow)
+                    SecureField(String(localized: "password"), text: $resetPasswordVM.password)
+                        .textContentType(.newPassword)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                }
             }
+    
             if let prompt = resetPasswordVM.passwordPrompt {
                 Text(prompt)
                     .caption()

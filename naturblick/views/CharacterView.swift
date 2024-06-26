@@ -51,10 +51,9 @@ struct CharacterView: View {
                     HStack {
                         ForEach(0 ..< 3, id: \.self) { col in
                             if let value = value(row: row, col: col) {
-                                CharacterValueView(value: value, selected: selected.contains(value.id))
-                                    .onTapGesture {
-                                        toggleSelection(id: value.id)
-                                    }
+                                CharacterValueView(value: value, selected: selected.contains(value.id)) {
+                                    toggleSelection(id: value.id)
+                                }
                             } else {
                                 Spacer().frame(maxWidth: .infinity, maxHeight: .infinity)
                             }

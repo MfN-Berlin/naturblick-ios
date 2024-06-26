@@ -32,7 +32,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
             }
         }
     }
-    
+        
     var body: some View {
         GeometryReader { geo in
             ZStack {}
@@ -41,6 +41,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     Image(uiImage: thumbnail.image)
                         .resizable()
                         .frame(width: geo.size.width, height: geo.size.width)
+                        .accessibilityHidden(true)
                 }
                 .overlay(alignment: .bottom) {
                     VStack(alignment: .leading, spacing: .defaultPadding) {
@@ -51,12 +52,17 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                                 .padding([.top])
                             Text(flow.isImage() ? "image_autoid_infotext" : "sound_autoid_infotext")
                                 .body2()
-                            ForEach(results, id: \.0.id) { (result, item) in
-                                SpeciesResultView(result: result, species: item)
+                            ForEach(results.indices, id: \.self) { index in
+                                SpeciesResultView(result: results[index].0, species: results[index].1)
                                     .listRowInsets(.nbInsets)
                                     .onTapGesture {
-                                        openSpeciesInfo(species: item)
+                                        openSpeciesInfo(species: results[index].1)
                                     }
+                                    .accessibilityElement(children: .combine)
+                                    .accessibilityAction {
+                                        openSpeciesInfo(species: results[index].1)
+                                    }
+                                    .accessibilitySortPriority(Double(4 - index))
                                 Divider()
                             }
                             HStack(alignment: .center) {
@@ -77,6 +83,11 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                             .onTapGesture {
                                 presentAlternativesDialog = true
                             }
+                            .accessibilityElement(children: .combine)
+                            .accessibilityAction {
+                                presentAlternativesDialog = true
+                            }
+                            .accessibilitySortPriority(1)
                         } else {
                             ProgressView {
                                 Text("identifying_species")
@@ -111,8 +122,10 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     }
                 }
                 .alert("other_identification", isPresented: $presentAlternativesDialog) {
-                    Button(flow.isImage() ? "crop_again" : "crop_sound_again") {
-                        navigationController?.popViewController(animated: true)
+                    if !UIAccessibility.isVoiceOverRunning {
+                        Button(flow.isImage() ? "crop_again" : "crop_sound_again") {
+                            navigationController?.popViewController(animated: true)
+                        }
                     }
                     Button("browse_species") {
                         flow.searchSpecies()

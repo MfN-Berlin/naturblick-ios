@@ -33,6 +33,7 @@ struct PortraitView: View {
                             Text(portrait.species.sciname)
                                 .overline(color: .onPrimarySignalHigh)
                                 .multilineTextAlignment(.center)
+                                .accessibilityLabel(Text("sciname \(portrait.species.sciname)"))
                             Text(portrait.species.speciesName?.uppercased() ?? portrait.species.sciname.uppercased())
                                 .headline4(color: .onPrimaryHighEmphasis)
                                 .multilineTextAlignment(.center)
@@ -46,11 +47,14 @@ struct PortraitView: View {
                         .padding([.top, .horizontal], .defaultPadding)
                         
                         VStack(alignment: .leading, spacing: .defaultPadding) { // description
-                            Text("description")
-                                .headline4()
-                                .padding(.top, .defaultPadding)
-                            Text(portrait.description)
-                                .body1()
+                            SwiftUI.Group {
+                                Text("description")
+                                    .headline4()
+                                    .padding(.top, .defaultPadding)
+                                Text(portrait.description)
+                                    .body1()
+                            }
+                            .accessibilityElement(children: .combine)
                             VStack(alignment: .leading, spacing: .defaultPadding) { // similar species
                                 SpeciesFeaturesView(portraitId: portrait.id, species: portrait.species)
                                 if !similarSpeciesViewModel.mixups.isEmpty {

@@ -11,7 +11,7 @@ struct ViewProperty: View {
     let content: String?
     var body: some View {
         HStack {
-            Image(icon)
+            Image(decorative: icon)
                 .observationProperty()
             VStack(alignment: .leading, spacing: .zero) {
                 Text(label)

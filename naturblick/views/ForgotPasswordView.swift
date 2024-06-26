@@ -35,12 +35,20 @@ struct ForgotPasswordView: NavigatableView {
     
     var body: some View {
         VStack(spacing: .zero) {
-            OnSecondaryFieldView(icon: "create_24px") {
-                TextField(String(localized: "email"), text: $forgotPasswordVM.email)
-                    .keyboardType(.emailAddress)
-                    .autocorrectionDisabled(true)
-                    .autocapitalization(.none)
+            HStack {
+                Image(decorative: "create_24px")
+                    .observationProperty()
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("email")
+                        .caption(color: .onSecondarySignalLow)
+                    TextField(String(localized: "email"), text: $forgotPasswordVM.email)
+                        .keyboardType(.emailAddress)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                }
             }
+            
             if let prompt = forgotPasswordVM.emailPrompt {
                 Text(prompt)
                     .caption()

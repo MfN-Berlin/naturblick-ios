@@ -53,6 +53,10 @@ extension Coordinates {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
+    func asString() -> String {
+        String(format: "Latitude: %.2f / Longitude: %.2f", latitude, longitude)
+    }
+    
     static let defaultCoordinates = Coordinates(latitude: 51.163375, longitude: 10.447683)
 }
 

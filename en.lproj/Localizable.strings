@@ -204,3 +204,13 @@
 "no_permission_title"="Access authorization";
 "no_permission_text"="Naturblick is not allowed to access this image. If you want to select this image for Naturblick, you must grant access in the settings.";
 "acc_settings"="Settings";
+"acc_map"="Mapview";
+"acc_add"="New entry";
+"acc_format_list_bulleted"="Listview";
+"acc_further_speciesinfo"="Further species info";
+"acc_delete"="Delete";
+"acc_sound_starthandle"="Interval move start button";
+"acc_sound_endhandle"="Interval move end button";
+"acc_sound_pos_at %@"="at %@";
+"acc_record_a_bird_hint"="Recording starts immediately, use double finger double tap to stop. Stop right after the bird has sung.";
+"sciname %@"="Wissenschaftlicher Name %@";

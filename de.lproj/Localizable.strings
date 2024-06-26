@@ -126,7 +126,7 @@
 "change"="ändern";
 "location"="Ort";
 "number"="Anzahl";
-"edit"="Editieren";
+"edit"="Bearbeiten";
 "create_obs"="Beobachtung eintragen";
 "ident_from_photo"="Pflanze von bestehendem Bild";
 "source"="Quelle";
@@ -202,3 +202,13 @@
 "no_permission_title"="Zugriffsberechtigung";
 "no_permission_text"="Naturblick darf auf dieses Bild nicht zugreifen. Wenn du dieses Bild für Naturblick auswählen willst, musst du in den Einstellungen den Zugriff gewähren.";
 "acc_settings"="Einstellungen";
+"acc_map"="Kartenansicht";
+"acc_add"="Neuer Eintrag";
+"acc_format_list_bulleted"="Listenansicht";
+"acc_further_speciesinfo"="Weitere Artinformationen";
+"acc_delete"="Löschen";
+"acc_sound_starthandle"="Intervallauswall Start verschieben Taste";
+"acc_sound_endhandle"="Intervallauswall Ende verschieben Taste";
+"acc_sound_pos_at %@"="bei %@";
+"acc_record_a_bird_hint"="Die Aufnahme startet sofort, nutze einen 2 Finger Doppeltap um diese zu beenden. Stoppe direkt nachdem der Vogel gesungen hat.";
+"sciname %@"="Wissenschaftlicher Name %@";

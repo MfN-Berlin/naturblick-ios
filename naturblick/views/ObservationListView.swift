@@ -72,10 +72,13 @@ struct ObservationListView: HostedView {
     }
     
     func configureNavigationItem(item: UINavigationItem, showList: Bool) {
-        item.rightBarButtonItems = [ UIBarButtonItem(image: UIImage(named: "add_24"), style: .plain, target: viewController, action: #selector(ObservationListViewController.openMenu)),
-         UIBarButtonItem(primaryAction: UIAction(image: UIImage(named: showList ? "map" : "format_list_bulleted")) {action in
-             model.showList.toggle()
-         })]
+        let addButton = UIBarButtonItem(image: UIImage(named: "add_24"), style: .plain, target: viewController, action: #selector(ObservationListViewController.openMenu))
+        let mapButton = UIBarButtonItem(primaryAction: UIAction(image: UIImage(named: showList ? "map" : "format_list_bulleted")) {action in
+            model.showList.toggle()
+        })
+        addButton.accessibilityLabel = String(localized: "acc_add")
+        mapButton.accessibilityLabel = String(localized: showList ? "acc_map" : "acc_format_list_bulleted")
+        item.rightBarButtonItems = [ addButton, mapButton]
     }
     
     func configureNavigationItem(item: UINavigationItem) {
@@ -94,6 +97,7 @@ struct ObservationListView: HostedView {
                             .onTapGesture {
                                 navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, persistenceController: persistenceController, flow: createFlow), animated: true)
                             }
+                            .accessibilityElement(children: .combine)
                     }
                 }
                 .animation(.default, value: persistenceController.observations)

@@ -53,6 +53,7 @@ struct ObservationView: HostedView {
     
     func configureNavigationItem(item: UINavigationItem) {
         let deleteButton = UIBarButtonItem(image: UIImage(named: "trash_24"), style: .plain, target: viewController, action: #selector(ObservationViewController.deleteObservation))
+        deleteButton.accessibilityLabel = String(localized: "acc_delete")
         deleteButton.tintColor = UIColor(Color.onSecondarywarning)
         let editButton = UIBarButtonItem(title: String(localized: "edit"), primaryAction: UIAction {_ in
             if let observation = persistenceController.observations.first(where: {$0.observation.occurenceId == occurenceId}) {
@@ -70,6 +71,7 @@ struct ObservationView: HostedView {
                 speciesAvatar
                     .avatar()
                     .padding(.trailing, .defaultPadding)
+                    .accessibilityHidden(true)
                 
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("species")
@@ -85,17 +87,21 @@ struct ObservationView: HostedView {
                 Spacer()
                 if model.observation?.species != nil {
                     ChevronView(color: .onSecondarySignalLow)
+                        .accessibilityElement()
+                        .accessibilityRepresentation {
+                            Button("acc_further_speciesinfo") {
+                                speciesInfoNavigate()
+                            }
+                        }
                 }
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                if let species = model.observation?.species?.listItem {
-                    navigationController?.pushViewController(SpeciesInfoView(selectionFlow: false, species: species, flow: VoidSelectionFlow()).setUpViewController(), animated: true)
-                }
+                speciesInfoNavigate()
             }
             Divider()
             HStack {
-                Image("location24")
+                Image(decorative: "location24")
                     .observationProperty()
                 VStack(alignment: .leading, spacing: .zero) {
                     Text("location")
@@ -105,13 +111,17 @@ struct ObservationView: HostedView {
                 Spacer()
                 if model.observation?.observation.coords != nil {
                     ChevronView(color: .onSecondarySignalLow)
+                        .accessibilityElement()
+                        .accessibilityRepresentation {
+                            Button("acc_map") {
+                                mapNavigate()
+                            }
+                        }
                 }
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                if model.observation?.observation.coords != nil {
-                    navigationController?.pushViewController(ObservationListViewController(persistenceController: persistenceController, showObservation: model.observation), animated: true)
-                }
+                mapNavigate()
             }
             Divider()
             ViewProperty(icon: "number24", label: String(localized: "number"), content: String(model.observation?.observation.individuals ?? 1))
@@ -131,6 +141,18 @@ struct ObservationView: HostedView {
                     Logger.compat.warning("Audio Observation \(observation.occurenceId, privacy: .public) has neither mediaId nor obsIdent")
                 }
             }
+        }
+    }
+    
+    private func speciesInfoNavigate() {
+        if let species = model.observation?.species?.listItem {
+            navigationController?.pushViewController(SpeciesInfoView(selectionFlow: false, species: species, flow: VoidSelectionFlow()).setUpViewController(), animated: true)
+        }
+    }
+    
+    private func mapNavigate() {
+        if model.observation?.observation.coords != nil {
+            navigationController?.pushViewController(ObservationListViewController(persistenceController: persistenceController, showObservation: model.observation), animated: true)
         }
     }
     

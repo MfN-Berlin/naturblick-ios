@@ -8,9 +8,8 @@ import SwiftUI
 struct CoordinatesView: View {
     let coordinates: Coordinates?
     var body: some View {
-        if let latitude = coordinates?.latitude,
-           let longitude = coordinates?.longitude {
-            Text(String(format: "Latitude: %.2f / Longitude: %.2f", latitude, longitude))
+        if let coordinates = coordinates {
+            Text(coordinates.asString())
         } else {
             Text("no_coordinates")
         }

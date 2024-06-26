@@ -246,11 +246,25 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     @MainActor func openSpectrogramView() {
-        withNavigation { navigation in
-            if let sound = data.sound.sound {
-                var viewControllers = navigation.viewControllers
-                viewControllers[viewControllers.count - 1] = SpectrogramViewController(mediaId: sound.id, flow: self)
-                navigation.setViewControllers(viewControllers, animated: true)
+        if UIAccessibility.isVoiceOverRunning, let mediaId = data.sound.sound?.id {
+            let svm = SpectrogramViewModel(mediaId: mediaId, obsIdent: obsIdent)
+            Task {
+                await svm.downloadSpectrogram()
+                if let (sound, thumbnail, start, end) = svm.crop() {
+                    data.sound.sound = sound
+                    data.sound.crop = thumbnail
+                    data.sound.start = start
+                    data.sound.end = end
+                    cropDone(thumbnail: thumbnail)
+                }
+            }
+        } else {
+            withNavigation { navigation in
+                if let sound = data.sound.sound {
+                    var viewControllers = navigation.viewControllers
+                    viewControllers[viewControllers.count - 1] = SpectrogramViewController(mediaId: sound.id, flow: self)
+                    navigation.setViewControllers(viewControllers, animated: true)
+                }
             }
         }
     }

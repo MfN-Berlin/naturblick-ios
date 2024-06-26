@@ -55,8 +55,9 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
                             .resizable()
                             .scaledToFit()
                             .clipShape(RoundedRectangle(cornerRadius: .largeCornerRadius))
+                            .accessibilityHidden(true)
                     } placeholder: {
-                        Image("placeholder")
+                        Image(decorative: "placeholder")
                             .resizable()
                             .scaledToFit()
                             .clipShape(Circle())
@@ -73,6 +74,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
                     Text(species.sciname)
                         .overline(color: .onSecondarySignalHigh)
                         .multilineTextAlignment(.center)
+                        .accessibilityLabel(Text("sciname \(species.sciname)"))
                     Text(species.speciesName?.uppercased() ?? species.sciname.uppercased())
                         .headline4(color: .onSecondaryHighEmphasis)
                         .multilineTextAlignment(.center)

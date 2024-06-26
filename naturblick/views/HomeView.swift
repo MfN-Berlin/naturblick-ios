@@ -123,7 +123,7 @@ struct HomeView: HostedView {
                 image: Image("audio24"),
                 size: topRowSize) {
                 createFlow.recordSound()
-            }
+            }.accessibilityHint(String(localized: "acc_record_a_bird_hint"))
             Spacer()
             HomeViewButton(text: String(localized: "select_characteristics"),
                            color: Color.onPrimaryButtonPrimary,
