@@ -148,6 +148,7 @@ struct EditObservationView: HostedView {
                             Text($0.rawValue).tag($0 as Behavior?)
                         }
                     }
+                    .accentColor(Color.onSecondaryHighEmphasis)
                     .pickerStyle(MenuPickerStyle())
                 }
             }
