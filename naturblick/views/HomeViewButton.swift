@@ -9,6 +9,7 @@ struct HomeViewButton: View {
     let color: Color
     let image: Image
     let size: CGFloat
+    let action: () -> ()
 
     var body: some View {
         VStack(spacing: .defaultPadding) {
@@ -28,7 +29,12 @@ struct HomeViewButton: View {
                     .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                     .frame(width: size)
         }.accessibilityRepresentation {
-            Button(text) {}
+            Button(text) {
+                // action()
+            }
+        }
+        .onTapGesture {
+            action()
         }
     }
 }
@@ -39,6 +45,6 @@ struct HomeViewButton_Previews: PreviewProvider {
                        color: Color.onPrimaryButtonPrimary,
                        image: Image(systemName: "questionmark"),
                        size: 75.0
-        )
+        ) {}
     }
 }
