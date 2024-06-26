@@ -30,7 +30,7 @@ struct HomeViewButton: View {
                     .frame(width: size)
         }.accessibilityRepresentation {
             Button(text) {
-                // action()
+                action()
             }
         }
         .onTapGesture {
