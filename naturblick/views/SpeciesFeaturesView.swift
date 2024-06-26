@@ -16,11 +16,11 @@ struct SpeciesFeaturesView: View {
             SimilarSpeciesItemView(species: species.listItem)
             ForEach(featureViewModel.features) { feature in
                 Text(feature.description)
-                    .body2(color: .onFeatureHighEmphasis)
+                    .body2(color: .onSecondaryMinimumEmphasis)
                     .padding(.halfPadding)
                     .background {
                         RoundedRectangle(cornerRadius: .smallCornerRadius)
-                            .foregroundColor(.onPrimaryMediumEmphasis)
+                            .foregroundColor(.onFeaturetag)
                     }
             }
         }
