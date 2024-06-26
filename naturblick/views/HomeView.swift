@@ -121,8 +121,7 @@ struct HomeView: HostedView {
                 text: String(localized: "record_a_bird"),
                 color: Color.onPrimaryButtonPrimary,
                 image: Image("audio24"),
-                size: topRowSize)
-            .onTapGesture {
+                size: topRowSize) {
                 createFlow.recordSound()
             }
             Spacer()
@@ -130,8 +129,7 @@ struct HomeView: HostedView {
                            color: Color.onPrimaryButtonPrimary,
                            image: Image("characteristics24"),
                            size: topRowSize
-            )
-            .onTapGesture {
+            ) {
                 createFlow.selectCharacteristics()
             }
             Spacer()
@@ -140,8 +138,7 @@ struct HomeView: HostedView {
                            color: Color.onPrimaryButtonPrimary,
                            image: Image("photo24"),
                            size: topRowSize
-            )
-            .onTapGesture {
+            ) {
                 createFlow.takePhoto()
             }
             Spacer()
@@ -158,8 +155,7 @@ struct HomeView: HostedView {
                 color: Color.onPrimaryButtonSecondary,
                 image: Image("feldbuch24"),
                 size: bottomRowSize
-            )
-            .onTapGesture {
+            ) {
                 withNavigation { navigation in
                     navigation.pushViewController(ObservationListViewController(persistenceController: persistenceController), animated: true)
                 }
@@ -169,7 +165,7 @@ struct HomeView: HostedView {
                            color: Color.onPrimaryButtonSecondary,
                            image: Image("specportraits"),
                            size: bottomRowSize
-            ).onTapGesture {
+            ) {
                 createFlow.createFromPortrait()
             }
             Spacer()
