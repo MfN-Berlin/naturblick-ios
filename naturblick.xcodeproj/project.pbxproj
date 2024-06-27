@@ -189,6 +189,7 @@
 		7BDD17E62A45C7C3001B9DB4 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */; };
 		DB01A49E2BC52F5600F67812 /* String+LinkDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */; };
 		DB0564812BD7DBAB0013FB61 /* ConfirmDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */; };
+		DB0727AE2C2D7FC400F288A4 /* OldSyncOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0727AD2C2D7FC400F288A4 /* OldSyncOperations.swift */; };
 		DB7F3F582BD910B900B4CBC2 /* TimeZonePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */; };
 		DB7F3F5A2BD910E100B4CBC2 /* TimeZoneVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */; };
 /* End PBXBuildFile section */
@@ -389,6 +390,7 @@
 		7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+LinkDetect.swift"; sourceTree = "<group>"; };
 		DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmDateView.swift; sourceTree = "<group>"; };
+		DB0727AD2C2D7FC400F288A4 /* OldSyncOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldSyncOperations.swift; sourceTree = "<group>"; };
 		DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZonePolygon.swift; sourceTree = "<group>"; };
 		DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneVertex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -663,6 +665,7 @@
 				1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */,
 				137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */,
 				136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */,
+				DB0727AD2C2D7FC400F288A4 /* OldSyncOperations.swift */,
 				13F0FC9B2BC984BA0010FD65 /* OldUserData.swift */,
 				13ED4C282AE6C3C00007C228 /* PHPhotoLibrary.swift */,
 				137B996B2BFF6E92003D25C9 /* RoundBottomShape.swift */,
@@ -985,6 +988,7 @@
 				137690032A30946F0076F93A /* SpectrogramView.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
 				139C986F2BF76CE600541454 /* Keychain.swift in Sources */,
+				DB0727AE2C2D7FC400F288A4 /* OldSyncOperations.swift in Sources */,
 				7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */,
 				13640AF12ADEAE2400BA5907 /* EditObservationView.swift in Sources */,
 				13F0FC9C2BC984BA0010FD65 /* OldUserData.swift in Sources */,

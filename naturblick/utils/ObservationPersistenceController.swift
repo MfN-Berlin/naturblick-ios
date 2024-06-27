@@ -149,6 +149,19 @@ class ObservationPersistenceController: ObservableObject {
 """
                 )
             }
+            if self.queue.userVersion == 4 {
+                try self.queue.execute(
+"""
+                    BEGIN TRANSACTION;
+                    CREATE TABLE sync_oldoperations (
+                        yes INT NOT NULL
+                    );
+                    INSERT INTO sync_oldoperations VALUES (1);
+                    PRAGMA user_version = 5;
+                    COMMIT TRANSACTION;
+"""
+                )
+            }
             try refresh()
         } catch {
             fatalError(error.localizedDescription)
@@ -410,6 +423,17 @@ class ObservationPersistenceController: ObservableObject {
             }
             try queue.run(Sync.D.sync.delete())
             try queue.execute("DELETE FROM sync_device_ids;");
+        }
+    }
+    
+    func shouldSyncOldOperations() -> Bool {
+        let count = try? queue.prepare("SELECT count(*) FROM sync_oldoperations").scalar() as? Int64
+        return count == 1
+    }
+    
+    func oldOperationsSynced() throws {
+        try queue.transaction {
+            try queue.execute("DELETE FROM sync_oldoperations;");
         }
     }
     
