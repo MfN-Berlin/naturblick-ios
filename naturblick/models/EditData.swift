@@ -14,7 +14,7 @@ struct EditData {
     var details: String
     var individuals: Int64
     var thumbnail: NBThumbnail?
-    var behavior: Behavior?
+    var behavior: Behavior
     
     init(observation: Observation) {
         self.original = observation.observation
@@ -23,7 +23,7 @@ struct EditData {
         self.details = observation.observation.details ?? ""
         self.coords = observation.observation.coords
         self.individuals = observation.observation.individuals ?? 1
-        self.behavior = observation.observation.behavior
+        self.behavior = observation.observation.behavior ?? .notSet
     }
 
     var speciesChanged: Bool {
@@ -46,7 +46,8 @@ struct EditData {
         let individuals = original.individuals != self.individuals ? self.individuals : nil
         let speciesId = speciesChanged ? self.species?.speciesId : nil
         let thumbnailId = thumbnail?.id != original.thumbnailId ? thumbnail?.id : nil
-        let behavior = original.behavior != self.behavior ? self.behavior : nil
+        let originalBehavior: Behavior = original.behavior ?? .notSet
+        let behavior = originalBehavior != self.behavior ? self.behavior : nil
         guard details != nil || obsType != nil || coords != nil || individuals != nil || speciesId != nil || thumbnailId != nil || behavior != nil else {
             return nil
         }
