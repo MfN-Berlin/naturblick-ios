@@ -118,6 +118,16 @@ class BackendClient {
         } catch {
             Logger.compat.info("Failed to fetch old device identifiers: \(error)")
         }
+        
+        if controller.shouldSyncOldOperations() {
+            do {
+                try await syncOldSyncOperations()
+                try controller.oldOperationsSynced()
+            } catch {
+                Logger.compat.error("Failed syncing old data from syncOperations.json: \(error)")
+            }
+        }
+        
         let (ids, operations) = try controller.getPendingOperations()
         var chunk = Chunk()
         
