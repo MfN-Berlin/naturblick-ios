@@ -45,7 +45,7 @@ class MenuController : UITableViewController, UIPopoverPresentationControllerDel
         let entry = entries[indexPath.row]
         
         contentConfig.text = entry.title
-        contentConfig.textProperties.font = .nbBody1
+        contentConfig.textProperties.font = .preferredFont(forTextStyle: .body, size: .body1)
         contentConfig.textProperties.color = .onPrimaryHighEmphasis
 
         contentConfig.image = entry.image

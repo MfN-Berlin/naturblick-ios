@@ -190,6 +190,7 @@
 		DB01A49E2BC52F5600F67812 /* String+LinkDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */; };
 		DB0564812BD7DBAB0013FB61 /* ConfirmDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */; };
 		DB0727AE2C2D7FC400F288A4 /* OldSyncOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0727AD2C2D7FC400F288A4 /* OldSyncOperations.swift */; };
+		DB6DFBF22C35263A0050F1CC /* UIFont+Prefered.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */; };
 		DB7F3F582BD910B900B4CBC2 /* TimeZonePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */; };
 		DB7F3F5A2BD910E100B4CBC2 /* TimeZoneVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */; };
 /* End PBXBuildFile section */
@@ -391,6 +392,7 @@
 		DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+LinkDetect.swift"; sourceTree = "<group>"; };
 		DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmDateView.swift; sourceTree = "<group>"; };
 		DB0727AD2C2D7FC400F288A4 /* OldSyncOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldSyncOperations.swift; sourceTree = "<group>"; };
+		DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Prefered.swift"; sourceTree = "<group>"; };
 		DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZonePolygon.swift; sourceTree = "<group>"; };
 		DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneVertex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -677,6 +679,7 @@
 				7BCEFCC52A690F4800EAC332 /* UIApplication.swift */,
 				7BCEFCC72A690FC800EAC332 /* UIDevice.swift */,
 				7BB74B582ABAE834002C4493 /* UIFont+Lato.swift */,
+				DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */,
 				13743F6B2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift */,
 				13ED860A2C05FE5D00DAB6C1 /* UIImage+Crop.swift */,
 				7BB777152A612B9100EA844C /* URL+Query.swift */,
@@ -930,6 +933,7 @@
 				DB0564812BD7DBAB0013FB61 /* ConfirmDateView.swift in Sources */,
 				13070CA82A053EC700A2046D /* Operation.swift in Sources */,
 				7B8008F229D5B66B00950839 /* PortraitImageSize.swift in Sources */,
+				DB6DFBF22C35263A0050F1CC /* UIFont+Prefered.swift in Sources */,
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
 				134C75AB2A2F515C0046EEE4 /* BirdRecorderViewModel.swift in Sources */,
 				7BDCC0EB2AD0458C0089A4C6 /* PickSpeciesListView.swift in Sources */,
