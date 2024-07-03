@@ -39,19 +39,19 @@ struct SpeciesListItemView: View {
                         Text(name)
                             .subtitle1()
                         Text(species.sciname)
-                            .subtitle3(color: .onSecondaryButtonPrimary)
+                            .subtitle3(color: .onSecondarySignalLow)
                         Text(gersynonym)
                             .subtitle3(color: .onSecondaryHighEmphasis)
                     } else if let name = species.name {
                         Text(name)
                             .subtitle1()
                         Text(species.sciname)
-                            .subtitle3(color: .onSecondaryButtonPrimary)
+                            .subtitle3(color: .onSecondarySignalLow)
                     } else if let gersynonym = species.synonym {
                         Text(species.sciname)
                             .subtitle1()
                         Text(gersynonym)
-                            .subtitle3(color: .onSecondaryHighEmphasis)
+                            .subtitle3(color: .onSecondarySignalLow)
                     } else {
                         Text(species.sciname)
                             .subtitle1()
