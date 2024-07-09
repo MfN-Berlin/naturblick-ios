@@ -1,6 +1,9 @@
 # naturblick-ios
 
-# Release a new version
+This project contains the code for the iOS app naturblick. The project is hosted at the Museum für Naturkunde Berlin. 
+The code is licensed under MIT license (see LICENSE.txt for details). If you want to contribute please take a look at CODE_OF_CONDUCT.md and CONTRIBUTING.md.
+
+## Release a new version
 
 * Checkout the `main` branch `git checkout main`
 * Sync the repo with origin `git pull`
