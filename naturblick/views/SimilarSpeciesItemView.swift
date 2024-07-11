@@ -29,12 +29,18 @@ struct SimilarSpeciesItemView: View {
                 }
             }
             VStack(alignment: .leading, spacing: .zero) {
-                if let name = species.name {
+                if let name = species.speciesName {
                     Text(species.sciname)
                         .subtitle3(color: .onFeatureSignalHigh)
                         .accessibilityLabel(Text("sciname \(species.sciname)"))
-                    Text(name)
-                        .subtitle1(color: .onFeatureHighEmphasis)
+                    HStack {
+                        Text(name)
+                            .subtitle1(color: .onFeatureHighEmphasis)
+                        if let gender = species.gender {
+                            Text(gender)
+                                .foregroundColor(.onFeatureHighEmphasis)
+                        }
+                    }
                 } else {
                     Text(species.sciname)
                         .subtitle1(color: .onFeatureSignalHigh)

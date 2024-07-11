@@ -17,16 +17,16 @@ struct SpeciesListItem: Identifiable {
             return maleUrl
         }
     }
-    var name: String? {
-        if let isFemale = isFemale, let speciesName = speciesName {
-            if isFemale {
-                return "\(speciesName) ♀"
-            } else {
-                return "\(speciesName) ♂"
-            }
-        } else {
-            return speciesName
+    var gender: String? {
+        guard let isFemale else {
+            return nil
         }
+        
+        if isFemale {
+            return "♀"
+        }
+        
+        return "♂"
     }
     let speciesId: Int64
     let sciname: String

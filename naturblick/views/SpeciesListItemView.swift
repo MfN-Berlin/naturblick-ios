@@ -35,17 +35,29 @@ struct SpeciesListItemView: View {
                         .padding(.trailing, .defaultPadding)
                 }
                 VStack(alignment: .leading, spacing: .zero) {
-                    if let name = species.name, let gersynonym = species.synonym {
-                        Text(name)
-                            .subtitle1()
+                    if let name = species.speciesName, let gersynonym = species.synonym {
+                        HStack {
+                            Text(name)
+                                .subtitle1()
+                            if let gender = species.gender {
+                                Text(gender)
+                                    .foregroundColor(.onSecondaryHighEmphasis)
+                            }
+                        }
                         Text(species.sciname)
                             .subtitle3(color: .onSecondaryButtonPrimary)
                             .accessibilityLabel(Text("sciname \(species.sciname)"))
                         Text(gersynonym)
                             .subtitle3(color: .onSecondaryHighEmphasis)
-                    } else if let name = species.name {
-                        Text(name)
-                            .subtitle1()
+                    } else if let name = species.speciesName {
+                        HStack {
+                            Text(name)
+                                .subtitle1()
+                            if let gender = species.gender {
+                                Text(gender)
+                                    .foregroundColor(.onSecondaryHighEmphasis)
+                            }
+                        }
                         Text(species.sciname)
                             .subtitle3(color: .onSecondaryButtonPrimary)
                             .accessibilityLabel(Text("sciname \(species.sciname)"))
