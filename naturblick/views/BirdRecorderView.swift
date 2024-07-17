@@ -39,6 +39,9 @@ struct BirdRecorderView: NavigatableView {
                 }
                 .padding(.defaultPadding)
         }
+        .accessibilityAction(.magicTap) {
+            flow.soundRecorded(sound: model.stop()!)
+        }
     }
 }
 

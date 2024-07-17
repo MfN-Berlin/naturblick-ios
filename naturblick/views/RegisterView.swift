@@ -40,14 +40,21 @@ struct RegisterView: NavigatableView {
                 Text("sign_up_text")
                     .body1()
                 
-                
-                OnSecondaryFieldView(icon: "create_24px") {
-                    TextField(String(localized: "email"), text: $registerVM.email)
-                        .textContentType(.username)
-                        .keyboardType(.emailAddress)
-                        .autocorrectionDisabled(true)
-                        .textInputAutocapitalization(.never)
+                HStack {
+                    Image(decorative: "create_24px")
+                        .observationProperty()
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: .zero) {
+                        Text("email")
+                            .caption(color: .onSecondarySignalLow)
+                        TextField(String(localized: "email"), text: $registerVM.email)
+                            .textContentType(.username)
+                            .keyboardType(.emailAddress)
+                            .autocorrectionDisabled(true)
+                            .textInputAutocapitalization(.never)
+                    }
                 }
+                
                 if let prompt = registerVM.emailPrompt {
                     Text(prompt)
                         .caption(color: .onSecondaryMediumEmphasis)
@@ -58,12 +65,20 @@ struct RegisterView: NavigatableView {
                         .caption(color: .onSecondarywarning)
                 }
                 
-                OnSecondaryFieldView(image: Image("visibility")) {
-                    SecureField(String(localized: "password"), text: $registerVM.password)
-                        .textContentType(.newPassword)
-                        .autocorrectionDisabled(true)
-                        .textInputAutocapitalization(.never)
+                HStack {
+                    Image(decorative: "visibility")
+                        .observationProperty()
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: .zero) {
+                        Text("password")
+                            .caption(color: .onSecondarySignalLow)
+                        SecureField(String(localized: "password"), text: $registerVM.password)
+                            .textContentType(.password)
+                            .autocorrectionDisabled(true)
+                            .textInputAutocapitalization(.never)
+                    }
                 }
+                
                 if let prompt = registerVM.passwordPrompt {
                     Text(prompt)
                         .caption(color: .onSecondaryMediumEmphasis)

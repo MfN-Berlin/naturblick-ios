@@ -32,7 +32,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
             }
         }
     }
-    
+        
     var body: some View {
         GeometryReader { geo in
             ZStack {}
@@ -41,6 +41,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     Image(uiImage: thumbnail.image)
                         .resizable()
                         .frame(width: geo.size.width, height: geo.size.width)
+                        .accessibilityHidden(true)
                 }
                 .overlay(alignment: .bottom) {
                     VStack(alignment: .leading, spacing: .defaultPadding) {
@@ -55,6 +56,10 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                                 SpeciesResultView(result: result, species: item)
                                     .listRowInsets(.nbInsets)
                                     .onTapGesture {
+                                        openSpeciesInfo(species: item)
+                                    }
+                                    .accessibilityElement(children: .combine)
+                                    .accessibilityAction {
                                         openSpeciesInfo(species: item)
                                     }
                                 Divider()
@@ -75,6 +80,10 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                             .contentShape(Rectangle())
                             .listRowInsets(.nbInsets)
                             .onTapGesture {
+                                presentAlternativesDialog = true
+                            }
+                            .accessibilityElement(children: .combine)
+                            .accessibilityAction {
                                 presentAlternativesDialog = true
                             }
                         } else {
@@ -111,8 +120,10 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     }
                 }
                 .alert("other_identification", isPresented: $presentAlternativesDialog) {
-                    Button(flow.isImage() ? "crop_again" : "crop_sound_again") {
-                        navigationController?.popViewController(animated: true)
+                    if !UIAccessibility.isVoiceOverRunning {
+                        Button(flow.isImage() ? "crop_again" : "crop_sound_again") {
+                            navigationController?.popViewController(animated: true)
+                        }
                     }
                     Button("browse_species") {
                         flow.searchSpecies()

@@ -35,8 +35,9 @@ struct SpeciesResultView: View {
                     .clipShape(Circle())
                     .frame(width: .avatarSize, height: .avatarSize)
                     .padding(.trailing, .defaultPadding)
+                    .accessibilityHidden(true)
             } placeholder: {
-                Image("placeholder")
+                Image(decorative: "placeholder")
                     .resizable()
                     .scaledToFit()
                     .clipShape(Circle())
@@ -50,6 +51,7 @@ struct SpeciesResultView: View {
                 } else {
                     Text(species.sciname)
                         .subtitle1()
+                        .accessibilityLabel(Text("sciname \(species.sciname)"))
                 }
                 Text(String(format: "Score: %.0f%%", result.score.rounded()))
                     .subtitle3(color: color)

@@ -41,21 +41,37 @@ struct DeleteAccountView: NavigatableView {
         VStack(alignment: .leading, spacing: .defaultPadding) {
             Text("delete_account_text_rly")
                 .body1()
-            OnSecondaryFieldView(icon: "create_24px") {
-                TextField(String(localized: "email"), text: $deleteVM.email)
-                    .keyboardType(.emailAddress)
-                    .autocorrectionDisabled(true)
-                    .autocapitalization(.none)
+            
+            HStack {
+                Image(decorative: "create_24px")
+                    .observationProperty()
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("email")
+                        .caption(color: .onSecondarySignalLow)
+                    TextField(String(localized: "email"), text: $deleteVM.email)
+                        .keyboardType(.emailAddress)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                }
             }
+            
             if let prompt = deleteVM.emailPrompt {
                 Text(prompt)
                     .caption()
             }
             
-            OnSecondaryFieldView(image: Image("visibility")) {
-                SecureField(String(localized: "password"), text: $deleteVM.password)
-                    .autocorrectionDisabled(true)
-                    .autocapitalization(.none)
+            HStack {
+                Image(decorative: "visibility")
+                    .observationProperty()
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("password")
+                        .caption(color: .onSecondarySignalLow)
+                    SecureField(String(localized: "password"), text: $deleteVM.password)
+                        .autocorrectionDisabled(true)
+                        .autocapitalization(.none)
+                }
             }
             if let prompt = deleteVM.passwordPrompt {
                 Text(prompt)

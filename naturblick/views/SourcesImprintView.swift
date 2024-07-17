@@ -24,7 +24,7 @@ struct SourcesImprintView: NavigatableView {
                                     .multilineTextAlignment(.leading)
                             }
                         }
-                    }
+                    }.accessibilityElement(children: .combine)
                 }
             }
             .padding(.defaultPadding)

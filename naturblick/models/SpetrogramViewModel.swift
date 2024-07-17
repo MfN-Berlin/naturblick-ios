@@ -34,7 +34,9 @@ class SpectrogramViewModel: HttpErrorViewModel {
         } catch {
             Fail.with(error)
         }
-        downloadSpectrogram()
+        Task {
+            await initPlayer()
+        }
     }
     
     func toggle(start: CGFloat, end: CGFloat) {
@@ -59,11 +61,14 @@ class SpectrogramViewModel: HttpErrorViewModel {
         player.pause()
     }
     
-    func downloadSpectrogram() {
+   
+    func initPlayer() {
         Task {
             do {
-                let sound = try await NBSound(id: mediaId, obsIdent: obsIdent)
+                let (spectrogram, sound) = try await SpectrogramViewModel.createSpectrogram(mediaId: mediaId, obsIdent: obsIdent)
                 self.sound = sound
+                self.spectrogram = spectrogram
+                
                 self.audioPlayer = AVPlayer(url: sound.url)
                 self.audioPlayer?.currentItem?.publisher(for: \.status)
                     .filter({ $0 == .readyToPlay})
@@ -78,21 +83,29 @@ class SpectrogramViewModel: HttpErrorViewModel {
                         self?.time = time.seconds
                     }
                 }
-                try await client.upload(sound: sound.url, mediaId: sound.id)
-                let spectrogram = try await client.spectrogram(mediaId: sound.id)
-                Task { @MainActor [weak self] in
-                    self?.spectrogram = spectrogram
-                }
             } catch {
                 let _ = handle(error)
             }
         }
     }
     
+    static func createSpectrogram(mediaId: UUID, obsIdent: String?) async throws -> (UIImage, NBSound) {
+        let client = BackendClient()
+        let sound = try await NBSound(id: mediaId, obsIdent: obsIdent)
+        try await client.upload(sound: sound.url, mediaId: sound.id)
+        return (try await client.spectrogram(mediaId: sound.id), sound)
+    }
+    
+   
     func crop() -> (sound: NBSound, crop: NBThumbnail, start: Int, end: Int)? {
         guard let spectrogram = self.spectrogram, let sound = self.sound else {
             return nil
         }
+        
+        return SpectrogramViewModel.crop(spectrogram: spectrogram, sound: sound, start: start, end: end) 
+    }
+    
+    static func crop(spectrogram: UIImage, sound: NBSound, start: CGFloat = 0, end: CGFloat = 1) -> (sound: NBSound, crop: NBThumbnail, start: Int, end: Int)? {
         let startPx = spectrogram.size.width * start
         let endPx = spectrogram.size.width * end
         let crop = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in

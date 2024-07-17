@@ -30,6 +30,7 @@ struct PortraitHeaderView: View {
                     .aspectRatio(image.headerAspectRatio(landscape: landscape), contentMode: .fit)
             }
         }
+        .accessibilityHidden(true)
         .overlay(alignment: .topTrailing) {
             SwiftUI.Button(action: {
                 showCCByInfo.toggle()
@@ -45,7 +46,7 @@ struct PortraitHeaderView: View {
                     }
                     .frame(width: .fabMiniSize, height: .fabMiniSize)
                     .padding(.defaultPadding)
-            }
+            }.accessibilityLabel(Text("Copyright"))
         }
         .clipShape(RoundBottomShape())
         .nbShadow()

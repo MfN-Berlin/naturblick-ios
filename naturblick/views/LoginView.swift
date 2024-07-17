@@ -47,22 +47,39 @@ struct LoginView: NavigatableView {
                 Text("login_standard")
                     .body1()
             }
-            
-            OnSecondaryFieldView(icon: "create_24px") {
-                TextField(String(localized: "email"), text: $loginVM.email)
-                    .textContentType(.username)
-                    .keyboardType(.emailAddress)
-                    .textInputAutocapitalization(.never)
+               
+            HStack {
+                Image(decorative: "create_24px")
+                    .observationProperty()
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("email")
+                        .caption(color: .onSecondarySignalLow)
+                    TextField(String(localized: "email"), text: $loginVM.email)
+                        .textContentType(.username)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                }
             }
+            
             if let prompt = loginVM.emailPrompt {
                 Text(prompt)
                     .caption(color: .onSecondaryMediumEmphasis)
             }
-            OnSecondaryFieldView(image: Image("visibility")) {
-                SecureField(String(localized: "password"), text: $loginVM.password)
-                    .textContentType(.password)
-                    .textInputAutocapitalization(.never)
+            
+            HStack {
+                Image(decorative: "visibility")
+                    .observationProperty()
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: .zero) {
+                    Text("password")
+                        .caption(color: .onSecondarySignalLow)
+                    SecureField(String(localized: "password"), text: $loginVM.password)
+                        .textContentType(.password)
+                        .textInputAutocapitalization(.never)
+                }
             }
+            
             if let prompt = loginVM.passwordPrompt {
                 Text(prompt)
                     .caption(color: .onSecondaryMediumEmphasis)

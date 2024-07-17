@@ -53,12 +53,14 @@ struct ObservationInfoView: View {
                 .scaledToFit()
                 .clipShape(Circle())
                 .frame(width: width * 0.4, height: width * 0.4)
+                .accessibilityHidden(true)
         } else {
             return fallbackThumbnail
                 .resizable()
                 .scaledToFit()
                 .clipShape(Circle())
                 .frame(width: width * 0.4, height: width * 0.4)
+                .accessibilityHidden(true)
         }
     }
     

@@ -225,7 +225,7 @@ struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
         }
         .alertHttpError(isPresented: $model.isPresented, error: model.error) { details in
             Button("try_again") {
-                model.downloadSpectrogram()
+                model.initPlayer()
             }
             Button("browse_species") {
                 flow.searchSpecies()

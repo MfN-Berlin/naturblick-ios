@@ -27,8 +27,16 @@ struct SettingsView: HostedView {
             VStack(alignment: .leading, spacing: .defaultPadding) {
                 Text("cc_by_msg")
                     .body1()
-                OnSecondaryFieldView(image: Image(systemName: "pencil")) {
-                    TextField(String(localized: "cc_by_field"), text: $ccByName)
+                
+                HStack {
+                    Image(decorative: "create_24px")
+                        .observationProperty()
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: .zero) {
+                        Text("cc_by_field")
+                            .caption(color: .onSecondarySignalLow)
+                        TextField(String(localized: "cc_by_field"), text: $ccByName)
+                    }
                 }
             }
         }.padding(.defaultPadding)

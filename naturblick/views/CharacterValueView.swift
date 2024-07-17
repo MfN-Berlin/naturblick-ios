@@ -8,8 +8,21 @@ import SwiftUI
 struct CharacterValueView: View {
     let value: CharacterValue
     let selected: Bool
+    let action: () -> ()
+    
     var body: some View {
-
+        stack().onTapGesture {
+            action()
+        }
+        .accessibilityRepresentation {
+            Button(value.name) {
+                action()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func stack() -> some View {
         let stack = VStack(spacing: .zero) {
             if(value.hasImage) {
                 Image("character_\(value.id)")
@@ -52,6 +65,6 @@ struct CharacterValueView: View {
 
 struct CharacterValueView_Previews: PreviewProvider {
     static var previews: some View {
-        CharacterValueView(value: CharacterValue.sampleData[2], selected: true)
+        CharacterValueView(value: CharacterValue.sampleData[2], selected: true) {}
     }
 }
