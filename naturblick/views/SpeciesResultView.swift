@@ -45,9 +45,15 @@ struct SpeciesResultView: View {
                     .padding(.trailing, .defaultPadding)
             }
             VStack(alignment: .leading, spacing: .zero) {
-                if let name = species.name {
-                    Text(name)
-                        .subtitle1()
+                if let name = species.speciesName {
+                    HStack {
+                        Text(name)
+                            .subtitle1()
+                        if let gender = species.gender {
+                            Text(gender)
+                                .foregroundColor(.onSecondaryHighEmphasis)
+                        }
+                    }
                 } else {
                     Text(species.sciname)
                         .subtitle1()
