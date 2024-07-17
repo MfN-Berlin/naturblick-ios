@@ -203,7 +203,13 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     func afterCrop(thumbnail: NBThumbnail) {
         let resultView = SelectSpeciesView(flow: self, thumbnail: thumbnail)
         withNavigation { navigation in
-            navigation.pushViewController(resultView.setUpViewController(), animated: true)
+            if UIAccessibility.isVoiceOverRunning {
+                var viewControllers = navigation.viewControllers
+                viewControllers[viewControllers.count - 1] = resultView.setUpViewController()
+                navigation.setViewControllers(viewControllers, animated: true)
+            } else {
+                navigation.pushViewController(resultView.setUpViewController(), animated: true)
+            }
         }
     }
     
@@ -247,7 +253,6 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     @MainActor func openSpectrogramView() {
         if UIAccessibility.isVoiceOverRunning, let mediaId = data.sound.sound?.id {
-          
             Task {
                 let (spectrogram, sound) = try await SpectrogramViewModel.createSpectrogram(mediaId: mediaId, obsIdent: obsIdent)
                 if let (sound, thumbnail, start, end) = SpectrogramViewModel.crop(spectrogram: spectrogram, sound: sound) {
