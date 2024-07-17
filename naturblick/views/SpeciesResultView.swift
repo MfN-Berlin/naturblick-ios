@@ -58,10 +58,6 @@ struct SpeciesResultView: View {
             }
             Spacer()
             ChevronView(color: .onPrimarySignalLow)
-                .accessibilityRepresentation {
-                    Button("acc_further_speciesinfo") {
-                    }
-                }
         }
         .contentShape(Rectangle())
     }

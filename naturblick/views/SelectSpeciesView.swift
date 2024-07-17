@@ -52,17 +52,16 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                                 .padding([.top])
                             Text(flow.isImage() ? "image_autoid_infotext" : "sound_autoid_infotext")
                                 .body2()
-                            ForEach(results.indices, id: \.self) { index in
-                                SpeciesResultView(result: results[index].0, species: results[index].1)
+                            ForEach(results, id: \.0.id) { (result, item) in
+                                SpeciesResultView(result: result, species: item)
                                     .listRowInsets(.nbInsets)
                                     .onTapGesture {
-                                        openSpeciesInfo(species: results[index].1)
+                                        openSpeciesInfo(species: item)
                                     }
                                     .accessibilityElement(children: .combine)
                                     .accessibilityAction {
-                                        openSpeciesInfo(species: results[index].1)
+                                        openSpeciesInfo(species: item)
                                     }
-                                    .accessibilitySortPriority(Double(4 - index))
                                 Divider()
                             }
                             HStack(alignment: .center) {
@@ -87,7 +86,6 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                             .accessibilityAction {
                                 presentAlternativesDialog = true
                             }
-                            .accessibilitySortPriority(1)
                         } else {
                             ProgressView {
                                 Text("identifying_species")

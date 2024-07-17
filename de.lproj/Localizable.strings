@@ -207,8 +207,5 @@
 "acc_format_list_bulleted"="Listenansicht";
 "acc_further_speciesinfo"="Weitere Artinformationen";
 "acc_delete"="Löschen";
-"acc_sound_starthandle"="Intervallauswall Start verschieben Taste";
-"acc_sound_endhandle"="Intervallauswall Ende verschieben Taste";
-"acc_sound_pos_at %@"="bei %@";
 "acc_record_a_bird_hint"="Die Aufnahme startet sofort, nutze einen 2 Finger Doppeltap um diese zu beenden. Stoppe direkt nachdem der Vogel gesungen hat.";
 "sciname %@"="Wissenschaftlicher Name %@";

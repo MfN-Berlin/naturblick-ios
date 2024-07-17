@@ -18,7 +18,7 @@ struct SimilarSpeciesItemView: View {
                         .clipShape(Circle())
                         .frame(width: .avatarSize, height: .avatarSize)
                         .padding(.trailing, .defaultPadding)
-                        .accessibilityHidden(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                        .accessibilityHidden(true)
                 } placeholder: {
                     Image(decorative: "placeholder")
                         .resizable()

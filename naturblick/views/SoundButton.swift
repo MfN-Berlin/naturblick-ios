@@ -37,7 +37,7 @@ struct SoundButton: View {
         }
     }
     
-    private func action() {
+    private func toggle() {
         if (soundStream.currentStatus == AVPlayer.TimeControlStatus.paused) {
             if let url = url {
                 soundStream.play(url: url)
@@ -58,24 +58,24 @@ struct SoundButton: View {
             switch soundStream.currentStatus {
                 case .waitingToPlayAtSpecifiedRate:
                     Button("Waiting") {
-                        self.action()
+                        self.toggle()
                     }
                 case .paused:
                     Button("Play") {
-                        self.action()
+                        self.toggle()
                     }
                 case .playing:
                     Button("Pause") {
-                        self.action()
+                        self.toggle()
                     }
                 default:
                     Button("Waiting") {
-                        self.action()
+                        self.toggle()
                     }
             }
         }
         .onTapGesture {
-            action()
+            toggle()
         }
         .onDisappear {
             soundStream.stop()

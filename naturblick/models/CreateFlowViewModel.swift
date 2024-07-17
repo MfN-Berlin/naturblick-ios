@@ -247,10 +247,10 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     @MainActor func openSpectrogramView() {
         if UIAccessibility.isVoiceOverRunning, let mediaId = data.sound.sound?.id {
-            let svm = SpectrogramViewModel(mediaId: mediaId, obsIdent: obsIdent)
+          
             Task {
-                await svm.downloadSpectrogram()
-                if let (sound, thumbnail, start, end) = svm.crop() {
+                let (spectrogram, sound) = try await SpectrogramViewModel.createSpectrogram(mediaId: mediaId, obsIdent: obsIdent)
+                if let (sound, thumbnail, start, end) = SpectrogramViewModel.crop(spectrogram: spectrogram, sound: sound) {
                     data.sound.sound = sound
                     data.sound.crop = thumbnail
                     data.sound.start = start

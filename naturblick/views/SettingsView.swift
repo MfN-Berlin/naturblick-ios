@@ -29,7 +29,7 @@ struct SettingsView: HostedView {
                     .body1()
                 
                 HStack {
-                    Image(systemName: "pencil")
+                    Image(decorative: "create_24px")
                         .observationProperty()
                         .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: .zero) {
