@@ -45,7 +45,7 @@ struct SpeciesListItemView: View {
                             }
                         }
                         Text(species.sciname)
-                            .subtitle3(color: .onSecondaryButtonPrimary)
+                            .subtitle3(color: .onSecondarySignalLow)
                             .accessibilityLabel(Text("sciname \(species.sciname)"))
                         Text(gersynonym)
                             .subtitle3(color: .onSecondaryHighEmphasis)
@@ -59,17 +59,17 @@ struct SpeciesListItemView: View {
                             }
                         }
                         Text(species.sciname)
-                            .subtitle3(color: .onSecondaryButtonPrimary)
+                            .subtitle3(color: .onSecondarySignalLow)
                             .accessibilityLabel(Text("sciname \(species.sciname)"))
                     } else if let gersynonym = species.synonym {
                         Text(species.sciname)
-                            .subtitle1()
+                            .subtitle1(color: Color.onSecondarySignalLow)
                             .accessibilityLabel(Text("sciname \(species.sciname)"))
                         Text(gersynonym)
                             .subtitle3(color: .onSecondaryHighEmphasis)
                     } else {
                         Text(species.sciname)
-                            .subtitle1()
+                            .subtitle1(color: Color.onSecondarySignalLow)
                             .accessibilityLabel(Text("sciname \(species.sciname)"))
                     }
                 }
