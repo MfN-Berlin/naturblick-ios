@@ -54,7 +54,7 @@ struct ObservationView: HostedView {
     func configureNavigationItem(item: UINavigationItem) {
         let deleteButton = UIBarButtonItem(image: UIImage(named: "trash_24"), style: .plain, target: viewController, action: #selector(ObservationViewController.deleteObservation))
         deleteButton.accessibilityLabel = String(localized: "acc_delete")
-        deleteButton.tintColor = UIColor(Color.onSecondarywarning)
+        deleteButton.tintColor = UIColor(Color.onPrimaryHighEmphasis)
         let editButton = UIBarButtonItem(title: String(localized: "edit"), primaryAction: UIAction {_ in
             if let observation = persistenceController.observations.first(where: {$0.observation.occurenceId == occurenceId}) {
                 let view = EditObservationViewController(observation: observation, persistenceController: persistenceController)

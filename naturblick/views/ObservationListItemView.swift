@@ -21,6 +21,7 @@ struct ObservationListItemView: View {
                 } else {
                     Text(observation.species?.sciname ?? String(localized: "unknown_species"))
                         .subtitle1()
+                        .foregroundColor(Color.onSecondarySignalLow)
                 }
                 Text(observation.observation.created.date.formatted())
                     .subtitle3()
