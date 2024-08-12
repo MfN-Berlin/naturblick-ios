@@ -38,12 +38,24 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
                 viewController?.dismiss(animated: true)
             })
         }
+        let share = UIBarButtonItem(primaryAction: UIAction(image: UIImage(systemName: "square.and.arrow.up", withConfiguration: UIImage.SymbolConfiguration(weight: .regular))) {action in
+            let controller = UIActivityViewController(activityItems: [URL(string: "https://naturblick.museumfuernaturkunde.berlin/species/portrait/\(species.speciesId)")!], applicationActivities: nil)
+            controller.popoverPresentationController?.barButtonItem = action.sender as? UIBarButtonItem
+            viewController?.present(controller, animated: true)
+        })
         if !(flow is VoidSelectionFlow) {
-            let actionString = selectionFlow ? String(localized: "create_with_species") : String(localized: "create_obs")
-            item.rightBarButtonItem  = UIBarButtonItem(primaryAction: UIAction(title: actionString) {_ in
-                viewController?.dismiss(animated: true)
-                flow.selectSpecies(species: species)
-            })
+            if selectionFlow {
+                item.rightBarButtonItem = UIBarButtonItem(primaryAction: UIAction(title: String(localized: "create_with_species")) {_ in
+                    viewController?.dismiss(animated: true)
+                    flow.selectSpecies(species: species)
+                })
+            } else {
+                item.rightBarButtonItems = [share, UIBarButtonItem(primaryAction: UIAction(image: UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(weight: .regular))) {_ in
+                    flow.selectSpecies(species: species)
+                })]
+            }
+        } else {
+            item.rightBarButtonItem = share
         }
     }
     
