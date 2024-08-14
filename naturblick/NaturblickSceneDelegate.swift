@@ -70,7 +70,8 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         Keychain.shared.refresh()
         let existingCcByName = UserDefaults.standard.string(forKey: "ccByName")
         let existingAgb = UserDefaults.standard.bool(forKey: "agb")
-        if existingCcByName == nil || !existingAgb {
+        let existingAccountInfo = UserDefaults.standard.bool(forKey: "accountInfo")
+        if existingCcByName == nil || !existingAgb || !existingAccountInfo {
             if let userData = OldUserData.getFromOldDB() {
                 if let ccByName = userData.name, existingCcByName == nil {
                     UserDefaults.standard.setValue(ccByName, forKey: "ccByName")
@@ -78,6 +79,9 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
                 if let agb = userData.policy, !existingAgb {
                     UserDefaults.standard.setValue(agb, forKey: "agb")
+                }
+                if let accountInfo = userData.accountFeatShown, !existingAccountInfo {
+                    UserDefaults.standard.setValue(accountInfo, forKey: "accountInfo")
                 }
             }
         }

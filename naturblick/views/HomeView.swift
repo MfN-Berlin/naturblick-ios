@@ -23,6 +23,15 @@ class HomeViewController: HostingController<HomeView> {
             let agb = PopAwareNavigationController(rootViewController: AGBViewController())
             agb.modalPresentationStyle = .fullScreen
             self.present(agb, animated: true)
+        } else if !UserDefaults.standard.bool(forKey: "accountInfo") {
+            let alert = UIAlertController(title: String(localized: "set_up_an_account"), message: String(localized: "account_info"), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: String(localized: "yes"), style: .default) {_ in 
+                let view = AccountView().setUpViewController()
+                self.navigationController?.pushViewController(view, animated: true)
+            })
+            alert.addAction(UIAlertAction(title: String(localized: "no"), style: .cancel))
+            UserDefaults.standard.setValue(true, forKey: "accountInfo")
+            present(alert, animated: true)
         }
     }
     
