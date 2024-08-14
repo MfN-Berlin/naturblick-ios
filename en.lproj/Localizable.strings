@@ -211,3 +211,5 @@
 "acc_delete"="Delete";
 "acc_record_a_bird_hint"="Recording starts immediately, use double finger double tap to stop. Stop right after the bird has sung.";
 "sciname %@"="Scientific name %@";
+"no"="No";
+"yes"="Yes";

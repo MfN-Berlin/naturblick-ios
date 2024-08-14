@@ -10,6 +10,7 @@ import os
 struct OldUserData: Decodable {
     let name: String?
     let policy: Bool?
+    let accountFeatShown: Bool?
 }
 
 extension OldUserData {
