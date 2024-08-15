@@ -43,26 +43,6 @@ extension CGFloat {
     }
 }
 
-extension Font {
-    static let nbHeadline2 = Font.custom("Lato", size: .headline2, relativeTo: .title).weight(.black).leading(.tight)
-    static let nbHeadline3 = Font.custom("Lato", size: .headline3, relativeTo: .title).weight(.black).leading(.tight)
-    static let nbHeadline4 = Font.custom("Lato", size: .headline4, relativeTo: .title).weight(.black).leading(.tight)
-    static let nbHeadline6 = Font.custom("Lato", size: .headline6, relativeTo: .title).weight(.black).leading(.tight)
-    
-    static let nbSubtitle1 = Font.custom("Lato", size: .subtitle1, relativeTo: .subheadline).weight(.black).leading(.tight)
-    static let nbSubtitle2 = Font.custom("Lato", size: .subtitle2, relativeTo: .subheadline).weight(.black).leading(.tight)
-    static let nbSubtitle3 = Font.custom("Lato", size: .subtitle3, relativeTo: .subheadline).italic().leading(.tight)
-    
-    static let nbBody1 = Font.custom("Lato", size: .body1, relativeTo: .body).leading(.tight)
-    static let nbBody2 = Font.custom("Lato", size: .body2, relativeTo: .body).leading(.tight)
-    
-    static let nbCaption = Font.custom("Lato", size: .caption, relativeTo: .caption).leading(.tight)
-    
-    static let nbButton = Font.custom("Lato", size: .button, relativeTo: .body)
-    static let nbOverline = Font.custom("Lato", size: .overline, relativeTo: .subheadline).italic().leading(.tight)
-    
-}
-
 extension Text {
     private func lineSpacing(fontSize: CGFloat, lineHeight: CGFloat) -> some View {
         let lineSpacing: CGFloat = .spacing(fontSize: fontSize, lineHeight: lineHeight)
@@ -72,22 +52,20 @@ extension Text {
     }
     
     func headline2() -> some View {
-        self.font(.nbHeadline2)
-            .lineSpacing(fontSize: .headline2, lineHeight: .headline2LineHeight)
+        self.lineSpacing(fontSize: .headline2, lineHeight: .headline2LineHeight)
+            .accessibilityFont(.nbHeadline2)
             .foregroundColor(.onPrimaryHighEmphasis)
     }
     
     func headline3() -> some View {
-        self
-            .font(.nbHeadline3)
-            .lineSpacing(fontSize: .headline3, lineHeight: .headline3LineHeight)
+        self.lineSpacing(fontSize: .headline3, lineHeight: .headline3LineHeight)
+            .accessibilityFont(.nbHeadline3)
             .foregroundColor(.onPrimaryHighEmphasis)
     }
     
     func headline4(color: Color) -> some View {
-        self
-            .font(.nbHeadline4)
-            .lineSpacing(fontSize: .headline4, lineHeight: .headline4LineHeight)
+        self.lineSpacing(fontSize: .headline4, lineHeight: .headline4LineHeight)
+            .accessibilityFont(.nbHeadline4)
             .foregroundColor(color)
     }
     
@@ -100,8 +78,8 @@ extension Text {
     }
 
     func headline6(color: Color) -> some View {
-        self.font(.nbHeadline6)
-            .lineSpacing(fontSize: .headline6, lineHeight: .headline6LineHeight)
+        self.lineSpacing(fontSize: .headline6, lineHeight: .headline6LineHeight)
+            .accessibilityFont(.nbHeadline6)
             .foregroundColor(color)
     }
     
@@ -110,8 +88,8 @@ extension Text {
     }
     
     func subtitle1(color: Color) -> some View {
-        self.font(.nbSubtitle1)
-            .lineSpacing(fontSize: .subtitle1, lineHeight: .subtitle1LineHeight)
+        self.lineSpacing(fontSize: .subtitle1, lineHeight: .subtitle1LineHeight)
+            .accessibilityFont(.nbSubtitle1)
             .foregroundColor(color)
     }
     
@@ -120,15 +98,15 @@ extension Text {
     }
     
     func subtitle3(color: Color) -> some View {
-        self.font(.nbSubtitle3)
-            .kerning(0.018 * .subtitle3)
+        self.kerning(0.018 * .subtitle3)
             .lineSpacing(fontSize: .subtitle3, lineHeight: .subtitle3LineHeight)
+            .accessibilityFont(.nbSubtitle3)
             .foregroundColor(color)
     }
     
     func body1(color: Color) -> some View {
-        self.font(.nbBody1)
-            .lineSpacing(fontSize: .body1, lineHeight: .body1LineHeight)
+        self.lineSpacing(fontSize: .body1, lineHeight: .body1LineHeight)
+            .accessibilityFont(.nbBody1)
             .foregroundColor(color)
     }
     
@@ -141,8 +119,8 @@ extension Text {
     }
     
     func body2(color: Color) -> some View {
-        self.font(.nbBody2)
-            .lineSpacing(fontSize: .body2, lineHeight: .body2LineHeight)
+        self.lineSpacing(fontSize: .body2, lineHeight: .body2LineHeight)
+            .accessibilityFont(.nbBody2)
             .foregroundColor(color)
     }
     
@@ -151,31 +129,30 @@ extension Text {
     }
     
     func caption(color: Color) -> some View {
-        self.font(.nbCaption)
-            .kerning(0.04 * .caption)
+        self.kerning(0.04 * .caption)
             .lineSpacing(fontSize: .caption, lineHeight: .captionLineHeight)
+            .accessibilityFont(.nbCaption)
             .foregroundColor(color)
     }
     
-    func button() -> Text {
-        self.font(.nbButton)
-            .kerning(0.018 * .button)
+    func button() -> some View {
+        self.kerning(0.018 * .button)
+            .accessibilityFont(.nbButton)
     }
     
     func overline(color: Color) -> some View {
-        self
-            .font(.nbOverline)
-            .kerning(0.042 * .overline)
+        self.kerning(0.042 * .overline)
             .lineSpacing(fontSize: .overline, lineHeight: .overlineLineHeight)
+            .accessibilityFont(.nbOverline)
             .foregroundColor(color)
     }
     
     func bigRoundButtonText(size: CGFloat) -> some View {
         let isBig = size >= CGFloat.bigRoundButtonThreshold
         return self
-            .font(isBig ? .nbBody1 : .nbCaption)
             .kerning(0.04 * (isBig ? .body1 : .caption))
             .lineSpacing(fontSize: isBig ? .body1 : .caption, lineHeight: isBig ? .body1LineHeight : .captionLineHeight)
+            .accessibilityFont(isBig ? .nbBody1 : .nbCaption)
             .foregroundColor(.onPrimaryHighEmphasis)
     }
 }
