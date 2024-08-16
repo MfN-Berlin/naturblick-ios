@@ -67,7 +67,7 @@ struct ButtonLabelStyle: LabelStyle {
         HStack(spacing: .halfPadding) {
             configuration.icon
             configuration.title
-                .font(.nbButton)
+                .accessibilityFont(.nbButton)
         }
         .padding(.halfPadding)
     }
