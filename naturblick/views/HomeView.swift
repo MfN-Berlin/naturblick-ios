@@ -9,8 +9,8 @@ class HomeViewController: HostingController<HomeView> {
     let backend: Backend
     let createFlow: CreateFlowViewModel
     
-    init() {
-        self.backend = Backend(persistence: ObservationPersistenceController())
+    init(backend: Backend) {
+        self.backend = backend
         createFlow = CreateFlowViewModel(backend: backend)
         let view = HomeView(backend: backend, createFlow: createFlow)
         view.viewController?.view.backgroundColor = .primaryHome
