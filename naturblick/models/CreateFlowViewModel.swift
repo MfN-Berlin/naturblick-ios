@@ -14,17 +14,16 @@ import os
 class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController, PHPickerViewControllerDelegate {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
-    let client = BackendClient()
+    let backend: Backend
     @Published private(set) var result: [SpeciesResult]? = nil
-    let persistenceController: ObservationPersistenceController
     @Published var data = CreateData()
     @Published var region: MKCoordinateRegion = .defaultRegion
     @Published var speciesAvatar: Image = Image("placeholder")
     var isCreate: Bool = true
     var obsIdent: String? = nil
     let fromList: Bool
-    init(persistenceController: ObservationPersistenceController, fromList: Bool = false) {
-        self.persistenceController = persistenceController
+    init(backend: Backend, fromList: Bool = false) {
+        self.backend = backend
         self.fromList = fromList
         super.init()
         
@@ -254,7 +253,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @MainActor func openSpectrogramView() {
         if UIAccessibility.isVoiceOverRunning, let mediaId = data.sound.sound?.id {
             Task {
-                let (spectrogram, sound) = try await SpectrogramViewModel.createSpectrogram(mediaId: mediaId, obsIdent: obsIdent)
+                let (spectrogram, sound) = try await SpectrogramViewModel.createSpectrogram(backend: backend, mediaId: mediaId, obsIdent: obsIdent)
                 if let (sound, thumbnail, start, end) = SpectrogramViewModel.crop(spectrogram: spectrogram, sound: sound) {
                     data.sound.sound = sound
                     data.sound.crop = thumbnail
@@ -334,12 +333,12 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     
     func identify() async throws -> [SpeciesResult] {
         if let thumbnail = data.image.crop {
-            try await client.upload(image: thumbnail)
-            let result = try await client.imageId(mediaId: thumbnail.id.uuidString)
+            try await backend.upload(image: thumbnail)
+            let result = try await backend.imageId(mediaId: thumbnail.id.uuidString)
             updateResult(result: result)
             return result
         } else if let sound = data.sound.sound, let start = data.sound.start, let end = data.sound.end {
-            let result = try await client.soundId(mediaId: sound.id.uuidString, start: start, end: end)
+            let result = try await backend.soundId(mediaId: sound.id.uuidString, start: start, end: end)
             updateResult(result: result)
             return result
         } else {
@@ -379,13 +378,13 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     func saveObservation() {
         if let controller = viewController, let navigation = controller.navigationController {
             do {
-                try persistenceController.insert(data: data)
+                try backend.persistence.insert(data: data)
                 var controllers = navigation.viewControllers
                 if fromList {
                     controllers.removeLast(controllers.count - 2)
                 } else {
                     controllers.removeLast(controllers.count - 1)
-                    controllers.append(ObservationListViewController(persistenceController: persistenceController))
+                    controllers.append(ObservationListViewController(backend: backend))
                 }
                 navigation.setViewControllers(controllers, animated: true)
             } catch {

@@ -11,9 +11,8 @@ import Combine
 
 class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    let client = BackendClient()
+    let backend: Backend
     @Published private(set) var result: [SpeciesResult]? = nil
-    let persistenceController: ObservationPersistenceController
     @Published var data: EditData
     @Published var imageData: ImageData = ImageData()
     @Published var soundData: SoundData = SoundData()
@@ -23,8 +22,8 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     var obsIdent: String? {
         data.original.obsIdent
     }
-    init(persistenceController: ObservationPersistenceController, observation: Observation) {
-        self.persistenceController = persistenceController
+    init(backend: Backend, observation: Observation) {
+        self.backend = backend
         let data = EditData(observation: observation)
         self.data = data
         self.region = data.region
@@ -42,7 +41,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         
         if let thumbnailId = observation.observation.thumbnailId {
             Task {
-                let thumbnail = try await NBThumbnail(id: thumbnailId)
+                let thumbnail = try await NBThumbnail(id: thumbnailId, backend: backend)
                 await setThumbnail(thumbnail: thumbnail)
             }
         }
@@ -125,12 +124,12 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     
     func identify() async throws -> [SpeciesResult] {
         if let thumbnail = imageData.crop {
-            try await client.upload(image: thumbnail)
-            let result = try await client.imageId(mediaId: thumbnail.id.uuidString)
+            try await backend.upload(image: thumbnail)
+            let result = try await backend.imageId(mediaId: thumbnail.id.uuidString)
             await updateResult(result: result)
             return result
         } else if let sound = soundData.sound, let start = soundData.start, let end = soundData.end {
-            let result = try await client.soundId(mediaId: sound.id.uuidString, start: start, end: end)
+            let result = try await backend.soundId(mediaId: sound.id.uuidString, start: start, end: end)
             await updateResult(result: result)
             return result
         } else {
@@ -158,7 +157,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     func saveObservation() {
         if let navigation = navigationController {
             do {
-                try persistenceController.insert(data: data)
+                try backend.persistence.insert(data: data)
                 navigation.forcePopViewController(animated: true)
             } catch {
                 Fail.with(error)

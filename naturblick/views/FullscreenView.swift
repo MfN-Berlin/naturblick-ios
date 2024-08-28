@@ -10,6 +10,7 @@ struct FullscreenView: NavigatableView {
     
     let imageId: UUID
     let localIdentifier: String?
+    let backend: Backend
     @State var image: NBImage? = nil
     @StateObject var errorHandler = HttpErrorViewModel()
     var body: some View {
@@ -25,7 +26,7 @@ struct FullscreenView: NavigatableView {
                     .controlSize(.large)
                     .task {
                         do {
-                            image = try await NBImage(id: imageId, localIdentifier: localIdentifier)
+                            image = try await NBImage(id: imageId, backend: backend, localIdentifier: localIdentifier)
                         } catch {
                             errorHandler.handle(error)
                         }

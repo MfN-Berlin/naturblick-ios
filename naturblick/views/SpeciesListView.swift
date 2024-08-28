@@ -65,6 +65,6 @@ struct SpeciesListView: NavigatableView {
 
 struct SpeciesListView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesListView(filter: .group(Group.groups[0]), flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
+        SpeciesListView(filter: .group(Group.groups[0]), flow: CreateFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))))
     }
 }

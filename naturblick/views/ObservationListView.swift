@@ -16,12 +16,12 @@ class ObservationListViewModel: ObservableObject {
 }
 
 class ObservationListViewController: HostingController<ObservationListView> {
-    let persistenceController: ObservationPersistenceController
+    let backend: Backend
     let createFlow: CreateFlowViewModel
-    init(persistenceController: ObservationPersistenceController, showObservation: Observation? = nil) {
-        self.persistenceController = persistenceController
-        createFlow = CreateFlowViewModel(persistenceController: persistenceController, fromList: true)
-        let view = ObservationListView(persistenceController: persistenceController, createFlow: createFlow, showObservation: showObservation)
+    init(backend: Backend, showObservation: Observation? = nil) {
+        self.backend = backend
+        createFlow = CreateFlowViewModel(backend: backend, fromList: true)
+        let view = ObservationListView(backend: backend, createFlow: createFlow, showObservation: showObservation)
         super.init(rootView: view)
         createFlow.setViewController(controller: self)
     }
@@ -52,7 +52,7 @@ struct ObservationListView: HostedView {
     
     var viewName: String? = String(localized: "field_book")
     
-    private let client = BackendClient()
+    let backend: Backend
     @StateObject private var locationManager = LocationManager()
     @StateObject private var errorHandler = HttpErrorViewModel()
     @State private var userTrackingMode: MKUserTrackingMode = .none
@@ -63,8 +63,9 @@ struct ObservationListView: HostedView {
     @State var deleteObservation: IndexSet? = nil
     let showObservation: Observation?
     
-    init(persistenceController: ObservationPersistenceController, createFlow: CreateFlowViewModel, showObservation: Observation?) {
-        self.persistenceController = persistenceController
+    init(backend: Backend, createFlow: CreateFlowViewModel, showObservation: Observation?) {
+        self.backend = backend
+        self.persistenceController = backend.persistence
         self.createFlow = createFlow
         self.showObservation = showObservation
         self._model = StateObject(wrappedValue: ObservationListViewModel(showList: showObservation == nil)
@@ -91,11 +92,11 @@ struct ObservationListView: HostedView {
                 List {
                     ForEach(persistenceController.observations) {
                         observation in
-                        ObservationListItemWithImageView(observation: observation, persistenceController: persistenceController)
+                        ObservationListItemWithImageView(observation: observation, backend: backend)
                             .listRowInsets(.nbInsets)
                             .listRowBackground(Color.secondaryColor)
                             .onTapGesture {
-                                navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, persistenceController: persistenceController, flow: createFlow), animated: true)
+                                navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, backend: backend), animated: true)
                             }
                             .accessibilityElement(children: .combine)
                     }
@@ -104,17 +105,17 @@ struct ObservationListView: HostedView {
                 .listStyle(.plain)
                 .refreshable {
                     do {
-                        try await client.sync(controller: persistenceController)
+                        try await backend.sync()
                     } catch {
                         errorHandler.handle(error)
                     }
                 }
             } else {
                 ObservationMapView(
-                    persistenceController: persistenceController,
+                    backend: backend,
                     userTrackingMode: $userTrackingMode,
                     initial: showObservation) { observation in
-                        navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, persistenceController: persistenceController, flow: createFlow), animated: true)
+                        navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, backend: backend), animated: true)
                     }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
                 .onAppear {
@@ -126,7 +127,7 @@ struct ObservationListView: HostedView {
             }
         }
         .task {
-            try? await client.sync(controller: self.persistenceController)
+            try? await backend.sync()
         }
         .onReceive(model.$showList) { showList in
             if let item = viewController?.navigationItem {
@@ -139,7 +140,7 @@ struct ObservationListView: HostedView {
                     Keychain.shared.deleteEmail()
                 }
                 Button("to_sign_in") {
-                    navigationController?.pushViewController(LoginView(accountViewModel: AccountViewModel()).setUpViewController(), animated: true)
+                    navigationController?.pushViewController(LoginView(accountViewModel: AccountViewModel(backend: backend)).setUpViewController(), animated: true)
                 }
             }
         } message: { error in
@@ -150,7 +151,7 @@ struct ObservationListView: HostedView {
 
 struct ObservationListView_Previews: PreviewProvider {
     static var previews: some View {
-        let persistenceController = ObservationPersistenceController(inMemory: true)
-        ObservationListView(persistenceController: persistenceController, createFlow: CreateFlowViewModel(persistenceController: persistenceController), showObservation: nil)
+        let backend = Backend(persistence: ObservationPersistenceController(inMemory: true))
+        ObservationListView(backend: backend, createFlow: CreateFlowViewModel(backend: backend), showObservation: nil)
     }
 }

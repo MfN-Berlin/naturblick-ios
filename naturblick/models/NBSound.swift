@@ -13,7 +13,7 @@ struct NBSound {
         self.id = UUID()
     }
     
-    init(id: UUID, obsIdent: String?) async throws {
+    init(id: UUID, backend: Backend, obsIdent: String?) async throws {
         self.id = id
         let url = NBSound.url(id: id)
         let path = url.path
@@ -27,11 +27,11 @@ struct NBSound {
                     Logger.compat.info("Successfully moved local sound \(id, privacy: .public) from \(oldPath, privacy: .public)")
                 } catch {
                     Logger.compat.info("Failed to create sound from \(oldPath, privacy: .public): \(error)")
-                    let data = try await BackendClient().downloadSound(mediaId: id)
+                    let data = try await backend.downloadSound(mediaId: id)
                     FileManager.default.createFile(atPath: path, contents: data)
                 }
             } else {
-                let data = try await BackendClient().downloadSound(mediaId: id)
+                let data = try await backend.downloadSound(mediaId: id)
                 FileManager.default.createFile(atPath: path, contents: data)
             }
         }

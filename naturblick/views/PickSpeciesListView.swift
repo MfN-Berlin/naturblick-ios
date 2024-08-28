@@ -72,6 +72,6 @@ struct PickSpeciesListView<Flow>: NavigatableView where Flow: IdFlow {
 
 struct AllSpeciesListView_Previews: PreviewProvider {
     static var previews: some View {
-        PickSpeciesListView(flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
+        PickSpeciesListView(flow: CreateFlowViewModel(backend: Backend(persistence:  ObservationPersistenceController(inMemory: true))))
     }
 }

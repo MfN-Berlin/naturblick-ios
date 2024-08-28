@@ -123,6 +123,6 @@ struct CreateObservationView: NavigatableView {
 
 struct CreateObservationView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateObservationView(createFlow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
+        CreateObservationView(createFlow: CreateFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))))
     }
 }

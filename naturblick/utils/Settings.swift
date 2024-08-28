@@ -11,18 +11,17 @@ struct Settings {
     private static let userDefault = UserDefaults.standard
     private static var allDeviceIds: [String]? = nil
     
-    static func updateDeviceIds() -> [String] {
-        let persistenceController = ObservationPersistenceController()
+    static func updateDeviceIds(persistenceController: ObservationPersistenceController) -> [String] {
         let allDeviceIds = persistenceController.getAllDeviceIds()
         Settings.allDeviceIds = allDeviceIds
         return allDeviceIds
     }
     
-    static func getAllDeviceIds() -> [String] {
-        if let allDeviceIds = Settings.allDeviceIds {
+    static func getAllDeviceIds(persistenceController: ObservationPersistenceController) -> [String] {
+        if let allDeviceIds = Settings.allDeviceIds, !allDeviceIds.isEmpty {
             return allDeviceIds
         } else {
-            return updateDeviceIds()
+            return updateDeviceIds(persistenceController: persistenceController)
         }
     }
     
@@ -35,7 +34,7 @@ struct Settings {
         return userDefault.string(forKey: "ccByName") ?? "MfN Naturblick"
     }
     
-    static func deviceIdHeader() -> String {
-        return getAllDeviceIds().joined(separator: ",")
+    static func deviceIdHeader(persistenceController: ObservationPersistenceController) -> String {
+        return getAllDeviceIds(persistenceController: persistenceController).joined(separator: ",")
     }
 }

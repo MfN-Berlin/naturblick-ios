@@ -8,8 +8,8 @@ struct ResetPasswordView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = String(localized: "reset")
     
+    let backend: Backend
     let token: String
-        
     @StateObject private var resetPasswordVM = EmailAndPasswordWithPrompt()
     
     @State var showResetSuccess: Bool = false
@@ -17,10 +17,9 @@ struct ResetPasswordView: NavigatableView {
     @State var error: HttpError? = nil
     
     func resetPassword(token: String) {
-        let client = BackendClient()
         Task {
             do {
-                try await client.resetPassword(token: token, password: resetPasswordVM.password)
+                try await backend.resetPassword(token: token, password: resetPasswordVM.password)
                 Keychain.shared.deleteToken()
                 showResetSuccess = true
             }
@@ -69,7 +68,7 @@ struct ResetPasswordView: NavigatableView {
             Button("ok") {
                 withNavigation { navigation in
                     var viewControllers = navigation.viewControllers
-                    viewControllers[viewControllers.count - 1] = AccountView().setUpViewController()
+                    viewControllers[viewControllers.count - 1] = AccountView(backend: backend).setUpViewController()
                     navigation.setViewControllers(viewControllers, animated: true)
                 }
             }

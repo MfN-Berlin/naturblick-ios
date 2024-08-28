@@ -31,7 +31,7 @@
 		134082AD2ADD721500351C42 /* NBThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134082AC2ADD721500351C42 /* NBThumbnail.swift */; };
 		1341AA142C0090DD00428E37 /* Fail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1341AA132C0090DD00428E37 /* Fail.swift */; };
 		1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C829DD94870075ACE3 /* HttpError.swift */; };
-		1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1CA29DD94F50075ACE3 /* BackendClient.swift */; };
+		1343D1CB29DD94F50075ACE3 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1CA29DD94F50075ACE3 /* Backend.swift */; };
 		1343D1D329DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1D229DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift */; };
 		1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */; };
 		1345EF802AB873D600F1CEA8 /* ObservationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1345EF7F2AB873D600F1CEA8 /* ObservationInfoView.swift */; };
@@ -221,7 +221,7 @@
 		13316BD829C9F4150077292B /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
 		13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewModel.swift; sourceTree = "<group>"; };
-		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
+		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
 		133715992A8CFBC2009E31E0 /* HttpErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpErrorViewModel.swift; sourceTree = "<group>"; };
 		1337D96C2A7A982700712B8F /* SpeciesResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesResultView.swift; sourceTree = "<group>"; };
 		133B391F2A40517200D48617 /* SelectSpeciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpeciesView.swift; sourceTree = "<group>"; };
@@ -232,7 +232,7 @@
 		1341AA132C0090DD00428E37 /* Fail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fail.swift; sourceTree = "<group>"; };
 		1343D1C629DD944D0075ACE3 /* HTTPDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPDownloader.swift; sourceTree = "<group>"; };
 		1343D1C829DD94870075ACE3 /* HttpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpError.swift; sourceTree = "<group>"; };
-		1343D1CA29DD94F50075ACE3 /* BackendClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendClient.swift; sourceTree = "<group>"; };
+		1343D1CA29DD94F50075ACE3 /* Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
 		1343D1D029DD988D0075ACE3 /* naturblickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = naturblickTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1343D1D229DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZonedDateTimeDecoderTest.swift; sourceTree = "<group>"; };
 		1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZonedDateTime.swift; sourceTree = "<group>"; };
@@ -642,7 +642,7 @@
 				DB0163282C6CD3D900D54F17 /* AccessibleFont.swift */,
 				502C51082BDB9E1E0077B06B /* AnalyticsTracker.swift */,
 				13E50A2C2AE805890049FACD /* AVAudioSession.swift */,
-				1343D1CA29DD94F50075ACE3 /* BackendClient.swift */,
+				1343D1CA29DD94F50075ACE3 /* Backend.swift */,
 				137F1F682AC3281A00D14BE1 /* ButtonStyle.swift */,
 				134F54932A5ED78E00A079EC /* CGFloat+Constants.swift */,
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
@@ -876,7 +876,7 @@
 				134F54922A5EB67B00A079EC /* MimeType.swift in Sources */,
 				13F5D6582BBFED910022CE0F /* ObservationMapView.swift in Sources */,
 				133B392A2A4081A000D48617 /* NBImage.swift in Sources */,
-				1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */,
+				1343D1CB29DD94F50075ACE3 /* Backend.swift in Sources */,
 				134B72B52A05348000C1DCAD /* PatchOperation.swift in Sources */,
 				7BDD17E42A45C5AA001B9DB4 /* RegisterView.swift in Sources */,
 				13839FBE2ABDBE0A00DE2A5B /* SourcesTranslation.swift in Sources */,

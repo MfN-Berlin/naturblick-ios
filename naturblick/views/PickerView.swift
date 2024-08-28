@@ -34,6 +34,6 @@ struct PickerView<Flow>: NavigatableView where Flow: PickerFlow {
 
 struct PickerView_Previews: PreviewProvider {
     static var previews: some View {
-        PickerView(flow: EditFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true), observation: Observation(observation: DBObservation.sampleData, species: nil)))
+        PickerView(flow: EditFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true)), observation: Observation(observation: DBObservation.sampleData, species: nil)))
     }
 }

@@ -9,7 +9,7 @@ import AVFoundation
 import AVFAudio
 
 class SpectrogramViewModel: HttpErrorViewModel {
-    let client = BackendClient()
+    let backend: Backend
     let mediaId: UUID
     let obsIdent: String?
     @Published var spectrogram: UIImage? = nil
@@ -24,7 +24,8 @@ class SpectrogramViewModel: HttpErrorViewModel {
     
     private var audioPlayer: AVPlayer? = nil
     private var timeObserver: Any? = nil
-    init(mediaId: UUID, obsIdent: String?) {
+    init(backend: Backend, mediaId: UUID, obsIdent: String?) {
+        self.backend = backend
         self.mediaId = mediaId
         self.obsIdent = obsIdent
         super.init()
@@ -65,7 +66,7 @@ class SpectrogramViewModel: HttpErrorViewModel {
     func initPlayer() {
         Task {
             do {
-                let (spectrogram, sound) = try await SpectrogramViewModel.createSpectrogram(mediaId: mediaId, obsIdent: obsIdent)
+                let (spectrogram, sound) = try await SpectrogramViewModel.createSpectrogram(backend: backend, mediaId: mediaId, obsIdent: obsIdent)
                 self.sound = sound
                 self.spectrogram = spectrogram
                 
@@ -89,11 +90,10 @@ class SpectrogramViewModel: HttpErrorViewModel {
         }
     }
     
-    static func createSpectrogram(mediaId: UUID, obsIdent: String?) async throws -> (UIImage, NBSound) {
-        let client = BackendClient()
-        let sound = try await NBSound(id: mediaId, obsIdent: obsIdent)
-        try await client.upload(sound: sound.url, mediaId: sound.id)
-        return (try await client.spectrogram(mediaId: sound.id), sound)
+    static func createSpectrogram(backend: Backend, mediaId: UUID, obsIdent: String?) async throws -> (UIImage, NBSound) {
+        let sound = try await NBSound(id: mediaId, backend: backend, obsIdent: obsIdent)
+        try await backend.upload(sound: sound.url, mediaId: sound.id)
+        return (try await backend.spectrogram(mediaId: sound.id), sound)
     }
     
    

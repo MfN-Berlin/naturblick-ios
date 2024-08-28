@@ -50,7 +50,7 @@ struct NBImage {
         }
     }
     
-    init(id: UUID, localIdentifier: String?) async throws {
+    init(id: UUID, backend: Backend, localIdentifier: String?) async throws {
         self.id = id
         self.localIdentifier = localIdentifier
         let path = NBImage.url(id: id).path
@@ -59,7 +59,7 @@ struct NBImage {
         } else if let local = localIdentifier, let image = await NBImage.fetchImage(localIdentifier: local) {
             self.image = image
         } else {
-            self.image = try await BackendClient().downloadCached(mediaId: id)
+            self.image = try await backend.downloadCached(mediaId: id)
         }
     }
     

@@ -7,7 +7,7 @@ import SwiftUI
 
 struct Thumbnail<Content: View> : View {
     let occurenceId: UUID
-    let persistenceController: ObservationPersistenceController
+    let backend: Backend
     let speciesUrl: String?
     let thumbnailId: UUID?
     let obsIdent: String?
@@ -24,8 +24,8 @@ struct Thumbnail<Content: View> : View {
         }
         .task(id: thumbnailId) {
             if let thumbnailId = self.thumbnailId {
-                self.uiImage = try? await NBThumbnail(id: thumbnailId).image
-            } else if let obsIdent = obsIdent, let thumbnail = NBThumbnail.loadOld(occurenceId: occurenceId, obsIdent: obsIdent, persistenceController: persistenceController) {
+                self.uiImage = try? await NBThumbnail(id: thumbnailId, backend: backend).image
+            } else if let obsIdent = obsIdent, let thumbnail = NBThumbnail.loadOld(occurenceId: occurenceId, obsIdent: obsIdent, persistenceController: backend.persistence) {
                 self.uiImage = thumbnail.image
             } else if let speciesUrl = speciesUrl {
                 self.uiImage = await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!)
@@ -38,7 +38,7 @@ struct Thumbnail_Previews: PreviewProvider {
     static var previews: some View {
         Thumbnail(
             occurenceId: UUID(),
-            persistenceController: ObservationPersistenceController(inMemory: true),
+            backend: Backend(persistence: ObservationPersistenceController(inMemory: true)),
             speciesUrl: nil,
             thumbnailId: nil,
             obsIdent: nil

@@ -6,13 +6,13 @@ import SwiftUI
 import Photos
 
 class HomeViewController: HostingController<HomeView> {
-    let persistenceController: ObservationPersistenceController
+    let backend: Backend
     let createFlow: CreateFlowViewModel
     
     init() {
-        persistenceController = ObservationPersistenceController()
-        createFlow = CreateFlowViewModel(persistenceController: persistenceController)
-        let view = HomeView(persistenceController: persistenceController, createFlow: createFlow)
+        self.backend = Backend(persistence: ObservationPersistenceController())
+        createFlow = CreateFlowViewModel(backend: backend)
+        let view = HomeView(backend: backend, createFlow: createFlow)
         view.viewController?.view.backgroundColor = .primaryHome
         super.init(rootView: view)
         createFlow.setViewController(controller: self)
@@ -26,7 +26,7 @@ class HomeViewController: HostingController<HomeView> {
         } else if !UserDefaults.standard.bool(forKey: "accountInfo") {
             let alert = UIAlertController(title: String(localized: "set_up_an_account"), message: String(localized: "account_info"), preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: String(localized: "yes"), style: .default) {_ in 
-                let view = AccountView().setUpViewController()
+                let view = AccountView(backend: self.backend).setUpViewController()
                 self.navigationController?.pushViewController(view, animated: true)
             })
             alert.addAction(UIAlertAction(title: String(localized: "no"), style: .cancel))
@@ -42,7 +42,7 @@ class HomeViewController: HostingController<HomeView> {
                 self.navigationController?.pushViewController(view, animated: true)
             },
             MenuEntry(title: String(localized: "account"), image: UIImage(systemName: "person")!) {
-                let view = AccountView().setUpViewController()
+                let view = AccountView(backend: self.backend).setUpViewController()
                 self.navigationController?.pushViewController(view, animated: true)
             },
             MenuEntry(title: String(localized: "action_settings"), image: UIImage(named: "settings")!) {
@@ -89,9 +89,16 @@ struct HomeView: HostedView {
     
     @Environment(\.colorScheme) var colorScheme
     
+    let backend: Backend
     @ObservedObject var persistenceController: ObservationPersistenceController
     @ObservedObject var createFlow: CreateFlowViewModel
 
+    init(backend: Backend, createFlow: CreateFlowViewModel) {
+        self.backend = backend
+        self.persistenceController = backend.persistence
+        self.createFlow = createFlow
+    }
+    
     func header(width: CGFloat) -> some View {
             ZStack {
                 Image("logo24")
@@ -166,7 +173,7 @@ struct HomeView: HostedView {
                 size: bottomRowSize
             ) {
                 withNavigation { navigation in
-                    navigation.pushViewController(ObservationListViewController(persistenceController: persistenceController), animated: true)
+                    navigation.pushViewController(ObservationListViewController(backend: backend), animated: true)
                 }
             }
             Spacer()

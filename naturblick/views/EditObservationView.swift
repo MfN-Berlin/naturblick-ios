@@ -8,8 +8,8 @@ import SwiftUI
 class EditObservationViewController: HostingController<EditObservationView>, UIAdaptivePresentationControllerDelegate {
     let flow: EditFlowViewModel
     
-    init(observation: Observation, persistenceController: ObservationPersistenceController) {
-        self.flow = EditFlowViewModel(persistenceController: persistenceController, observation: observation)
+    init(observation: Observation, backend: Backend) {
+        self.flow = EditFlowViewModel(backend: backend, observation: observation)
         super.init(rootView: EditObservationView(flow: flow))
         flow.setViewController(controller: self)
     }
@@ -66,7 +66,7 @@ struct EditObservationView: HostedView {
     func identifyImage() {
         Task {
             if let mediaId = flow.data.original.mediaId {
-                let origImage = try await NBImage(id: mediaId, localIdentifier: flow.data.original.localMediaId)
+                let origImage = try await NBImage(id: mediaId, backend: flow.backend, localIdentifier: flow.data.original.localMediaId)
                 flow.cropPhoto(image: origImage)
             }
         }
@@ -172,6 +172,6 @@ struct EditObservationView: HostedView {
 
 struct EditObservationView_Previews: PreviewProvider {
     static var previews: some View {
-        EditObservationView(flow: EditFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true), observation: Observation(observation: DBObservation.sampleData, species: Species.sampleData)))
+        EditObservationView(flow: EditFlowViewModel(backend: Backend(persistence:  ObservationPersistenceController(inMemory: true)), observation: Observation(observation: DBObservation.sampleData, species: Species.sampleData)))
     }
 }

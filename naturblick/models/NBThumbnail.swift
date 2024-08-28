@@ -22,9 +22,9 @@ struct NBThumbnail {
         }
     }
     
-    init(id: UUID) async throws {
+    init(id: UUID, backend: Backend) async throws {
         self.id = id
-        self.image = try await BackendClient().downloadCached(mediaId: id)
+        self.image = try await backend.downloadCached(mediaId: id)
     }
     
     var url: URL {

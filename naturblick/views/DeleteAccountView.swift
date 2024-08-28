@@ -21,7 +21,6 @@ struct DeleteAccountView: NavigatableView {
     @State var error: HttpError? = nil
     
     func deleteAccount() {
-        let client = BackendClient()
         Task {
             do {
                 try await accountViewModel.delete(email: deleteVM.email, password: deleteVM.password)
@@ -103,6 +102,6 @@ struct DeleteAccountView: NavigatableView {
 
 struct DeleteAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        DeleteAccountView(accountViewModel: AccountViewModel())
+        DeleteAccountView(accountViewModel: AccountViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))))
     }
 }

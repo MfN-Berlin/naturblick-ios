@@ -6,7 +6,7 @@
 import Foundation
 import os
 
-func syncOldSyncOperations() async throws {
+func syncOldSyncOperations(persistenceController: ObservationPersistenceController) async throws {
     guard let fileURL = URL.syncOperationsFile else {
         Logger.compat.info("No old syncs")
         return
@@ -29,7 +29,7 @@ func syncOldSyncOperations() async throws {
             request.httpMethod = "PUT"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.timeoutInterval = 30
-            request.setAuthHeader(bearerToken: await Keychain.shared.token)
+            request.setAuthHeader(persistenceController: persistenceController, bearerToken: await Keychain.shared.token)
      
             let downloader: HTTPDownloader = URLSession.shared
             let _ = try await downloader.http(request: request)

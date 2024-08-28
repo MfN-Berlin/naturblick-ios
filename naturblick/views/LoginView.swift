@@ -121,6 +121,6 @@ struct LoginView: NavigatableView {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(accountViewModel: AccountViewModel())
+        LoginView(accountViewModel: AccountViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))))
     }
 }
