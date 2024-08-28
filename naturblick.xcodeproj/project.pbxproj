@@ -855,7 +855,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    curl --retry 5 --retry-all-errors --compressed -L https://staging.naturblick.net/ktor-strapidb -o resources/strapi-db.sqlite3\nelse\n    curl --retry 5 --retry-all-errors --compressed -L https://naturblick.museumfuernaturkunde.berlin/ktor-strapidb -o resources/strapi-db.sqlite3\nfi\n";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    curl --retry 5 --retry-all-errors --compressed -L https://staging.naturblick.net/app-content/db -o resources/strapi-db.sqlite3\nelse\n    curl --retry 5 --retry-all-errors --compressed -L https://naturblick.museumfuernaturkunde.berlin/app-content/db -o resources/strapi-db.sqlite3\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
