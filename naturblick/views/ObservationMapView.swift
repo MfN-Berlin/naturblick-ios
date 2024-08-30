@@ -7,11 +7,20 @@ import SwiftUI
 import MapKit
 
 struct ObservationMapView: UIViewRepresentable {
+    let backend: Backend
     @ObservedObject var persistenceController: ObservationPersistenceController
     @Binding var userTrackingMode: MKUserTrackingMode
 
     let initial: Observation?
     let toDetails: (Observation) -> Void
+
+    init(backend: Backend, userTrackingMode: Binding<MKUserTrackingMode>, initial: Observation?, toDetails: @escaping (Observation) -> Void) {
+        self.backend = backend
+        self.persistenceController = backend.persistence
+        self._userTrackingMode = userTrackingMode
+        self.initial = initial
+        self.toDetails = toDetails
+    }
     
     private func setAnnotations(map: MKMapView) {
         var annotations = persistenceController.observations
@@ -88,7 +97,7 @@ struct ObservationMapView: UIViewRepresentable {
         }
         func showObservation(_ mapView: MKMapView, annotation: ObservationAnnotation) {
             let point = mapView.convert(annotation.coordinate, toPointTo: mapView)
-            let infoBox = MapInfoBox(observation: annotation.observation, persistenceController: parent.persistenceController, toDetails: parent.toDetails)
+            let infoBox = MapInfoBox(observation: annotation.observation, backend: parent.backend, toDetails: parent.toDetails)
             let controller = UIHostingController(rootView: infoBox)
             let popup = PopupContainer(frame: CGRect(x: point.x - 224 / 2, y: point.y - 224, width: 224, height: 224), subview: controller.view)
             mapView.addSubview(popup)

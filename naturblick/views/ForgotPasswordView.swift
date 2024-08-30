@@ -89,6 +89,6 @@ struct ForgotPasswordView: NavigatableView {
 
 struct ForgotPasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        ForgotPasswordView(accountViewModel: AccountViewModel())
+        ForgotPasswordView(accountViewModel: AccountViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))))
     }
 }

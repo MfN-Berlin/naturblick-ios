@@ -31,7 +31,7 @@
 		134082AD2ADD721500351C42 /* NBThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134082AC2ADD721500351C42 /* NBThumbnail.swift */; };
 		1341AA142C0090DD00428E37 /* Fail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1341AA132C0090DD00428E37 /* Fail.swift */; };
 		1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C829DD94870075ACE3 /* HttpError.swift */; };
-		1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1CA29DD94F50075ACE3 /* BackendClient.swift */; };
+		1343D1CB29DD94F50075ACE3 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1CA29DD94F50075ACE3 /* Backend.swift */; };
 		1343D1D329DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1D229DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift */; };
 		1343D1DB29DD991B0075ACE3 /* ZonedDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */; };
 		1345EF802AB873D600F1CEA8 /* ObservationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1345EF7F2AB873D600F1CEA8 /* ObservationInfoView.swift */; };
@@ -100,7 +100,6 @@
 		13B686B22A09410A001FD28F /* Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B686B12A09410A001FD28F /* Coordinates.swift */; };
 		13C02EBE2AB059FE001F8D4B /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C02EBD2AB059FE001F8D4B /* PickerView.swift */; };
 		13C02EC02AB06313001F8D4B /* PickerFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C02EBF2AB06313001F8D4B /* PickerFlow.swift */; };
-		13C7C8FA2BCFCE12000FD5FC /* URLRequest+AuthHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C7C8F92BCFCE12000FD5FC /* URLRequest+AuthHeader.swift */; };
 		13C850DC2AA20CE30006FA1A /* CreateFlowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C850DB2AA20CE30006FA1A /* CreateFlowViewModel.swift */; };
 		13C880FF2A98BB91007DEC0B /* NaturblickAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C880FE2A98BB91007DEC0B /* NaturblickAppDelegate.swift */; };
 		13C881012A98BC07007DEC0B /* NaturblickSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */; };
@@ -189,7 +188,6 @@
 		DB0163292C6CD3D900D54F17 /* AccessibleFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0163282C6CD3D900D54F17 /* AccessibleFont.swift */; };
 		DB01A49E2BC52F5600F67812 /* String+LinkDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */; };
 		DB0564812BD7DBAB0013FB61 /* ConfirmDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */; };
-		DB0727AE2C2D7FC400F288A4 /* OldSyncOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0727AD2C2D7FC400F288A4 /* OldSyncOperations.swift */; };
 		DB6DFBF22C35263A0050F1CC /* UIFont+Prefered.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */; };
 		DB7F3F582BD910B900B4CBC2 /* TimeZonePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */; };
 		DB7F3F5A2BD910E100B4CBC2 /* TimeZoneVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */; };
@@ -221,7 +219,7 @@
 		13316BD829C9F4150077292B /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
 		13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewModel.swift; sourceTree = "<group>"; };
-		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
+		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
 		133715992A8CFBC2009E31E0 /* HttpErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpErrorViewModel.swift; sourceTree = "<group>"; };
 		1337D96C2A7A982700712B8F /* SpeciesResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesResultView.swift; sourceTree = "<group>"; };
 		133B391F2A40517200D48617 /* SelectSpeciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpeciesView.swift; sourceTree = "<group>"; };
@@ -232,7 +230,7 @@
 		1341AA132C0090DD00428E37 /* Fail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fail.swift; sourceTree = "<group>"; };
 		1343D1C629DD944D0075ACE3 /* HTTPDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPDownloader.swift; sourceTree = "<group>"; };
 		1343D1C829DD94870075ACE3 /* HttpError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpError.swift; sourceTree = "<group>"; };
-		1343D1CA29DD94F50075ACE3 /* BackendClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendClient.swift; sourceTree = "<group>"; };
+		1343D1CA29DD94F50075ACE3 /* Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
 		1343D1D029DD988D0075ACE3 /* naturblickTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = naturblickTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1343D1D229DD988D0075ACE3 /* ZonedDateTimeDecoderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZonedDateTimeDecoderTest.swift; sourceTree = "<group>"; };
 		1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZonedDateTime.swift; sourceTree = "<group>"; };
@@ -302,7 +300,6 @@
 		13B686B12A09410A001FD28F /* Coordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinates.swift; sourceTree = "<group>"; };
 		13C02EBD2AB059FE001F8D4B /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 		13C02EBF2AB06313001F8D4B /* PickerFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerFlow.swift; sourceTree = "<group>"; };
-		13C7C8F92BCFCE12000FD5FC /* URLRequest+AuthHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+AuthHeader.swift"; sourceTree = "<group>"; };
 		13C850DB2AA20CE30006FA1A /* CreateFlowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFlowViewModel.swift; sourceTree = "<group>"; };
 		13C880FE2A98BB91007DEC0B /* NaturblickAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickAppDelegate.swift; sourceTree = "<group>"; };
 		13C881002A98BC07007DEC0B /* NaturblickSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaturblickSceneDelegate.swift; sourceTree = "<group>"; };
@@ -391,7 +388,6 @@
 		DB0163282C6CD3D900D54F17 /* AccessibleFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleFont.swift; sourceTree = "<group>"; };
 		DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+LinkDetect.swift"; sourceTree = "<group>"; };
 		DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmDateView.swift; sourceTree = "<group>"; };
-		DB0727AD2C2D7FC400F288A4 /* OldSyncOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldSyncOperations.swift; sourceTree = "<group>"; };
 		DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Prefered.swift"; sourceTree = "<group>"; };
 		DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZonePolygon.swift; sourceTree = "<group>"; };
 		DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneVertex.swift; sourceTree = "<group>"; };
@@ -642,7 +638,7 @@
 				DB0163282C6CD3D900D54F17 /* AccessibleFont.swift */,
 				502C51082BDB9E1E0077B06B /* AnalyticsTracker.swift */,
 				13E50A2C2AE805890049FACD /* AVAudioSession.swift */,
-				1343D1CA29DD94F50075ACE3 /* BackendClient.swift */,
+				1343D1CA29DD94F50075ACE3 /* Backend.swift */,
 				137F1F682AC3281A00D14BE1 /* ButtonStyle.swift */,
 				134F54932A5ED78E00A079EC /* CGFloat+Constants.swift */,
 				7BCE46C129C9DC7800C6C101 /* Color.swift */,
@@ -667,7 +663,6 @@
 				1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */,
 				137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */,
 				136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */,
-				DB0727AD2C2D7FC400F288A4 /* OldSyncOperations.swift */,
 				13F0FC9B2BC984BA0010FD65 /* OldUserData.swift */,
 				13ED4C282AE6C3C00007C228 /* PHPhotoLibrary.swift */,
 				137B996B2BFF6E92003D25C9 /* RoundBottomShape.swift */,
@@ -684,7 +679,6 @@
 				13ED860A2C05FE5D00DAB6C1 /* UIImage+Crop.swift */,
 				7BB777152A612B9100EA844C /* URL+Query.swift */,
 				134F54972A5EDC8100A079EC /* URL+SupportDir.swift */,
-				13C7C8F92BCFCE12000FD5FC /* URLRequest+AuthHeader.swift */,
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
@@ -876,7 +870,7 @@
 				134F54922A5EB67B00A079EC /* MimeType.swift in Sources */,
 				13F5D6582BBFED910022CE0F /* ObservationMapView.swift in Sources */,
 				133B392A2A4081A000D48617 /* NBImage.swift in Sources */,
-				1343D1CB29DD94F50075ACE3 /* BackendClient.swift in Sources */,
+				1343D1CB29DD94F50075ACE3 /* Backend.swift in Sources */,
 				134B72B52A05348000C1DCAD /* PatchOperation.swift in Sources */,
 				7BDD17E42A45C5AA001B9DB4 /* RegisterView.swift in Sources */,
 				13839FBE2ABDBE0A00DE2A5B /* SourcesTranslation.swift in Sources */,
@@ -957,7 +951,6 @@
 				7B83703529E98EA10075D9F5 /* ColorTestView.swift in Sources */,
 				13709A832A7CFE2600B81108 /* FullscreenView.swift in Sources */,
 				7BA037C729D6E36E00804AFE /* SimilarSpeciesView.swift in Sources */,
-				13C7C8FA2BCFCE12000FD5FC /* URLRequest+AuthHeader.swift in Sources */,
 				13ED86092C05E36200DAB6C1 /* PortraitHeaderView.swift in Sources */,
 				7BB518632AC1AAFF008A1CEA /* MapInfoBox.swift in Sources */,
 				134C75A92A2F513E0046EEE4 /* BirdRecorderView.swift in Sources */,
@@ -992,7 +985,6 @@
 				137690032A30946F0076F93A /* SpectrogramView.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
 				139C986F2BF76CE600541454 /* Keychain.swift in Sources */,
-				DB0727AE2C2D7FC400F288A4 /* OldSyncOperations.swift in Sources */,
 				7BBF7AF32A03C2CD00D184FA /* LocationManager.swift in Sources */,
 				13640AF12ADEAE2400BA5907 /* EditObservationView.swift in Sources */,
 				13F0FC9C2BC984BA0010FD65 /* OldUserData.swift in Sources */,

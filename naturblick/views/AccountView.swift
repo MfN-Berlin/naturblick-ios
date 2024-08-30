@@ -10,11 +10,17 @@ struct AccountView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = String(localized: "account")
     
-    var token: String? = nil
-    
-    @StateObject var accountViewModel = AccountViewModel()
+    var token: String?
+    let backend: Backend
+    @StateObject var accountViewModel: AccountViewModel
     @StateObject private var errorHandler = HttpErrorViewModel()
     @ObservedObject var keychain = Keychain.shared
+    
+    init(backend: Backend, token: String? = nil) {
+        self.token = token
+        self.backend = backend
+        _accountViewModel = StateObject(wrappedValue: AccountViewModel(backend: backend))
+    }
     var body: some View {
         VStack(alignment: .leading, spacing: .defaultPadding) {
             Text("your_account")
@@ -97,7 +103,7 @@ struct AccountView: NavigatableView {
         if let token = token {
             Task {
                 do {
-                    try await BackendClient().activateAccount(token: token)
+                    try await backend.activateAccount(token: token)
                     accountViewModel.activated = true
                 } catch {
                     let _ = errorHandler.handle(error)
@@ -109,6 +115,6 @@ struct AccountView: NavigatableView {
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView()
+        AccountView(backend: Backend(persistence: ObservationPersistenceController(inMemory: true)))
     }
 }

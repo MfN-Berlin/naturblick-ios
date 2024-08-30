@@ -129,7 +129,7 @@ struct RegisterView: NavigatableView {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView(accountViewModel: AccountViewModel())
+        RegisterView(accountViewModel: AccountViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))))
     }
 }
 

@@ -10,7 +10,7 @@ class AccountViewModel : ObservableObject {
     @AppStorage("naturblick_neverSignedIn") private var storageNeverSignedIn: Bool = true
     @AppStorage("naturblick_activated") private var storageActivated: Bool = false
     
-    private let client = BackendClient()
+    let backend: Backend
     
     var neverSignedIn: Bool = true {
         willSet {
@@ -28,13 +28,13 @@ class AccountViewModel : ObservableObject {
    
     @MainActor
     func signUp(email: String, password: String) async throws {
-        try await client.signUp(deviceId: Settings.deviceId(), email: email, password: password)
+        try await backend.signUp(deviceId: Settings.deviceId(), email: email, password: password)
         Keychain.shared.setEmail(email: email)
     }
     
     @MainActor
     func signIn(email: String, password: String) async throws {
-        let signInResponse = try await client.signIn(email: email, password: password)
+        let signInResponse = try await backend.signIn(email: email, password: password)
         Keychain.shared.setEmail(email: email)
         Keychain.shared.setToken(token: signInResponse.access_token)
         self.neverSignedIn = false
@@ -51,16 +51,17 @@ class AccountViewModel : ObservableObject {
     
     @MainActor
     func delete(email: String, password: String) async throws {
-        try await client.deleteAccount(email: email, password: password)
+        try await backend.deleteAccount(email: email, password: password)
         signOut()
     }
     
     @MainActor
     func forgotPassword(email: String) async throws {
-        try await client.forgotPassword(email: email)
+        try await backend.forgotPassword(email: email)
     }
     
-    init() {
+    init(backend: Backend) {
+        self.backend = backend
         neverSignedIn = storageNeverSignedIn
         activated = storageActivated
     }

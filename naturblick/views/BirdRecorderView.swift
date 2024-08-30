@@ -47,6 +47,6 @@ struct BirdRecorderView: NavigatableView {
 
 struct BirdRecorderView_Previews: PreviewProvider {
     static var previews: some View {
-        BirdRecorderView(flow: CreateFlowViewModel(persistenceController: ObservationPersistenceController(inMemory: true)))
+        BirdRecorderView(flow: CreateFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))))
     }
 }

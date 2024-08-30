@@ -10,19 +10,19 @@ import os
 class ObservationViewController: HostingController<ObservationView> {
     let model: ObservationViewModel
     let occurenceId: UUID
-    let persistenceController: ObservationPersistenceController
-    init(occurenceId: UUID, persistenceController: ObservationPersistenceController, flow: CreateFlowViewModel) {
+    let backend: Backend
+    init(occurenceId: UUID, backend: Backend) {
         self.occurenceId = occurenceId
-        self.persistenceController = persistenceController
-        self.model = ObservationViewModel(viewObservation: occurenceId, persistenceController: persistenceController)
-        super.init(rootView: ObservationView(occurenceId: occurenceId, persistenceController: persistenceController, model: model))
+        self.backend = backend
+        self.model = ObservationViewModel(viewObservation: occurenceId, persistenceController: backend.persistence)
+        super.init(rootView: ObservationView(occurenceId: occurenceId, backend: backend, model: model))
     }
     
     @objc func deleteObservation(_ sender: Any?) {
         let alert = UIAlertController(title: String(localized: "delete_question"), message: String(localized: "delete_question_message"), preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: String(localized: "delete"), style: .destructive, handler: { _ in
             do {
-                try self.persistenceController.delete(occurenceId: self.occurenceId)
+                try self.backend.persistence.delete(occurenceId: self.occurenceId)
                 self.navigationController?.popViewController(animated: true)
             } catch {
                 fatalError(error.localizedDescription)
@@ -37,7 +37,7 @@ class ObservationViewController: HostingController<ObservationView> {
 
 struct ObservationView: HostedView {
     var holder: ViewControllerHolder = ViewControllerHolder()
-    let client = BackendClient()
+    let backend: Backend
     var hideNavigationBarShadow: Bool = true
     @State var speciesAvatar: Image = Image("placeholder")
     @State var sound: NBSound? = nil
@@ -45,9 +45,10 @@ struct ObservationView: HostedView {
     @ObservedObject var model: ObservationViewModel
     let occurenceId: UUID
     
-    init(occurenceId: UUID, persistenceController: ObservationPersistenceController, model: ObservationViewModel) {
+    init(occurenceId: UUID, backend: Backend, model: ObservationViewModel) {
         self.occurenceId = occurenceId
-        self.persistenceController = persistenceController
+        self.backend = backend
+        self.persistenceController = backend.persistence
         self.model = model
     }
     
@@ -57,7 +58,7 @@ struct ObservationView: HostedView {
         deleteButton.tintColor = UIColor(Color.onPrimaryHighEmphasis)
         let editButton = UIBarButtonItem(title: String(localized: "edit"), primaryAction: UIAction {_ in
             if let observation = persistenceController.observations.first(where: {$0.observation.occurenceId == occurenceId}) {
-                let view = EditObservationViewController(observation: observation, persistenceController: persistenceController)
+                let view = EditObservationViewController(observation: observation, backend: backend)
                 let navigation = PopAwareNavigationController(rootViewController: view)
                 viewController?.present(navigation, animated: true)
             }
@@ -129,12 +130,12 @@ struct ObservationView: HostedView {
             ViewProperty(icon: "details", label: String(localized: "notes"), content: model.observation?.observation.details)
         }
         .task(id: model.observation?.species?.id) {
-            if let speciesUrl = model.observation?.species?.listItem.url, let image = try? await client.downloadCached(speciesUrl: speciesUrl) {
+            if let speciesUrl = model.observation?.species?.listItem.url, let image = try? await backend.downloadCached(speciesUrl: speciesUrl) {
                 speciesAvatar = Image(uiImage: image)
             }
             if let observation = model.observation?.observation, observation.obsType == .audio || observation.obsType == .unidentifiedaudio {
                 if let mediaId = observation.mediaId {
-                    sound = try? await NBSound(id: mediaId, obsIdent: observation.obsIdent)
+                    sound = try? await NBSound(id: mediaId, backend: backend, obsIdent: observation.obsIdent)
                 } else if let obsIdent = observation.obsIdent {
                     sound = NBSound.loadOld(occurenceId: observation.occurenceId, obsIdent: obsIdent, persistenceController: persistenceController)
                 } else {
@@ -152,7 +153,7 @@ struct ObservationView: HostedView {
     
     private func mapNavigate() {
         if model.observation?.observation.coords != nil {
-            navigationController?.pushViewController(ObservationListViewController(persistenceController: persistenceController, showObservation: model.observation), animated: true)
+            navigationController?.pushViewController(ObservationListViewController(backend: backend, showObservation: model.observation), animated: true)
         }
     }
     
@@ -161,7 +162,7 @@ struct ObservationView: HostedView {
             ZStack {
                 VStack(alignment: .center, spacing: .zero) {
                     if let observation = model.observation {
-                        ObservationInfoView(width: geo.size.width, fallbackThumbnail: speciesAvatar, observation: observation, sound: sound) { view in
+                        ObservationInfoView(backend: backend, width: geo.size.width, fallbackThumbnail: speciesAvatar, observation: observation, sound: sound) { view in
                             navigationController?.pushViewController(view, animated: true)
                         }
                     }
@@ -189,7 +190,7 @@ struct ObservationView: HostedView {
 
 struct EditObsevationView_Previews: PreviewProvider {
     static var previews: some View {
-        let persistenceController = ObservationPersistenceController(inMemory: true)
-        ObservationView(occurenceId: DBObservation.sampleData.occurenceId, persistenceController: persistenceController, model: ObservationViewModel(viewObservation: DBObservation.sampleData.occurenceId, persistenceController: persistenceController))
+        let backend = Backend(persistence: ObservationPersistenceController(inMemory: true))
+        ObservationView(occurenceId: DBObservation.sampleData.occurenceId, backend: backend, model: ObservationViewModel(viewObservation: DBObservation.sampleData.occurenceId, persistenceController: backend.persistence))
     }
 }

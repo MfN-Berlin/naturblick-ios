@@ -11,7 +11,7 @@ enum HttpError: Error {
     case serverError(statusCode: Int, data: String)
     case clientError(statusCode: Int)
     case loggedOut
-}
+}	
 
 extension HttpError: Equatable {
     var localizedDescription: String {

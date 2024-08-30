@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct ObservationInfoView: View {
-    let client = BackendClient()
+    let backend: Backend
     let width: CGFloat
     let navigate: (UIViewController) -> Void
 
@@ -24,7 +24,8 @@ struct ObservationInfoView: View {
     @State var thumbnail: Image? = nil
     let sound: NBSound?
     
-    init(width: CGFloat, fallbackThumbnail: Image, observation: Observation, sound: NBSound?, navigate: @escaping (UIViewController) -> Void) {
+    init(backend: Backend, width: CGFloat, fallbackThumbnail: Image, observation: Observation, sound: NBSound?, navigate: @escaping (UIViewController) -> Void) {
+        self.backend = backend
         self.obsIdent = observation.observation.obsIdent
         self.obsType = observation.observation.obsType
         self.sound = sound
@@ -76,7 +77,7 @@ struct ObservationInfoView: View {
                             Image("zoom")
                                 .foregroundColor(.onPrimaryHighEmphasis)
                         }.onTapGesture {
-                            navigate(FullscreenView(imageId: fullscreenImageId, localIdentifier: self.fullscreenLocalId).setUpViewController())
+                            navigate(FullscreenView(imageId: fullscreenImageId, localIdentifier: self.fullscreenLocalId, backend: backend).setUpViewController())
                         }
                     }
                     .padding(.bottom, .defaultPadding)
@@ -120,7 +121,7 @@ struct ObservationInfoView: View {
         .padding(.defaultPadding)
         .background(Color(uiColor: .onPrimaryButtonSecondary))
         .task(id: thumbnailId) {
-            if let id = thumbnailId, let image = try? await client.downloadCached(mediaId: id) {
+            if let id = thumbnailId, let image = try? await backend.downloadCached(mediaId: id) {
                 thumbnail = Image(uiImage: image)
             }
         }

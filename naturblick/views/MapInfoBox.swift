@@ -7,12 +7,12 @@ import SwiftUI
 
 struct MapInfoBox: View {
     let observation: Observation
-    let persistenceController: ObservationPersistenceController
+    let backend: Backend
     let toDetails: (Observation) -> Void
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            Thumbnail(occurenceId: observation.id, persistenceController: persistenceController, speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId, obsIdent: observation.observation.obsIdent) { image in
+            Thumbnail(occurenceId: observation.id, backend: backend, speciesUrl: observation.species?.maleUrl, thumbnailId: observation.observation.thumbnailId, obsIdent: observation.observation.obsIdent) { image in
                 image
                     .resizable()
                     .scaledToFit()

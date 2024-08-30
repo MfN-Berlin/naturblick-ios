@@ -89,18 +89,20 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         URLSession.shared.configuration.timeoutIntervalForRequest = 15
         URLSession.shared.configuration.timeoutIntervalForResource = 30
         
+        let backend = Backend(persistence: ObservationPersistenceController())
+        
         Task {
-            try await BackendClient().register()
+            try! await backend.register()
         }
         
         let window = UIWindow(windowScene: windowScene)
-        let navigationController = PopAwareNavigationController(rootViewController: HomeViewController())
+        let navigationController = PopAwareNavigationController(rootViewController: HomeViewController(backend: backend))
         
         switch deepLink {
         case .activateAccount(let token):
-            navigationController.pushViewController(AccountView(token: token).setUpViewController(), animated: true)
+            navigationController.pushViewController(AccountView(backend: backend, token: token).setUpViewController(), animated: true)
         case .resetPasswort(let token):
-            navigationController.pushViewController(ResetPasswordView(token: token).setUpViewController(), animated: true)
+            navigationController.pushViewController(ResetPasswordView(backend: backend, token: token).setUpViewController(), animated: true)
         case .speciesPortrait(let speciesId):
             let species = try? SpeciesListItem.find(speciesId: speciesId)
             if let species = species {

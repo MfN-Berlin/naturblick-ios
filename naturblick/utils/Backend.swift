@@ -37,14 +37,28 @@ struct Chunk {
     }
 }
 
-class BackendClient {
+class Backend {
     let downloader: HTTPDownloader
     let local: LocalFileDownloader
+    let persistence: ObservationPersistenceController
     private let encoder = JSONEncoder()
     
-    init(downloader: HTTPDownloader = URLSession.shared, local: LocalFileDownloader = URLSession.shared) {
+    init(downloader: HTTPDownloader = URLSession.shared, local: LocalFileDownloader = URLSession.shared, persistence: ObservationPersistenceController) {
         self.downloader = downloader
         self.local = local
+        self.persistence = persistence
+    }
+    
+    private var deviceIdHeader: String {
+        persistence.getAllDeviceIds().joined(separator: ",")
+    }
+    
+    private func setAuthHeader(_ request: inout URLRequest) async {
+        if let token = await Keychain.shared.token {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        } else {
+            request.setValue(deviceIdHeader, forHTTPHeaderField: "X-MfN-Device-Id")
+        }
     }
     
     private func dataFormField(named name: String,
@@ -108,41 +122,40 @@ class BackendClient {
         }
     }
     
-    func sync(controller: ObservationPersistenceController) async throws {
+    func sync() async throws {
         do {
-            if controller.shouldImportDevices() {
-                let oldDevices = try await self.askForOldDevices(deviceIdentifiers: Settings.getAllDeviceIds())
-                try controller.importOldDevices(devices: oldDevices)
-                let _ = Settings.updateDeviceIds()
+            if persistence.shouldImportDevices() {
+                let oldDevices = try await self.askForOldDevices(deviceIdentifiers: persistence.getAllDeviceIds())
+                try persistence.importOldDevices(devices: oldDevices)
             }
         } catch {
             Logger.compat.info("Failed to fetch old device identifiers: \(error)")
         }
         
-        if controller.shouldSyncOldOperations() {
+        if persistence.shouldSyncOldOperations() {
             do {
                 try await syncOldSyncOperations()
-                try controller.oldOperationsSynced()
+                try persistence.oldOperationsSynced()
             } catch {
                 Logger.compat.error("Failed syncing old data from syncOperations.json: \(error)")
             }
         }
         
-        let (ids, operations) = try controller.getPendingOperations()
+        let (ids, operations) = try persistence.getPendingOperations()
         var chunk = Chunk()
         
         for (i, o) in zip(ids, operations) {
             chunk.addOperation(id: i, operation: o)
             if chunk.exceedsMaxSize() {
-                try await syncChunk(chunk: chunk, controller: controller)
+                try await syncChunk(chunk: chunk)
                 chunk = Chunk()
             }
         }
-        try await syncChunk(chunk: chunk, controller: controller)
+        try await syncChunk(chunk: chunk)
     }
     
-    private func syncChunk(chunk: Chunk, controller: ObservationPersistenceController) async throws {
-        let sync = try controller.getSync()
+    private func syncChunk(chunk: Chunk) async throws {
+        let sync = try persistence.getSync()
         let observationRequest = ObservationRequest(operations: chunk.operations, syncInfo: SyncInfo(deviceIdentifier: Settings.deviceId(), syncId: sync?.syncId))
         var mpr = MultipartRequest()
         let json = try encoder.encode(observationRequest)
@@ -157,15 +170,15 @@ class BackendClient {
         
         var request = mpr.urlRequest(url: URL(string: Configuration.backendUrl + "obs/androidsync")!, method: "PUT")
         request.timeoutInterval = 30
-        request.setAuthHeader(bearerToken: await Keychain.shared.token)
+        await setAuthHeader(&request)
  
         let response: ObservationResponse = try await downloader.httpJson(request: request)
         
         if (!response.partial) {
-            try controller.truncateObservations()
+            try persistence.truncateObservations()
         }
         
-        try controller.handleChunk(from: response.data, ids: chunk.ids, syncId: response.syncId)
+        try persistence.handleChunk(from: response.data, ids: chunk.ids, syncId: response.syncId)
         
         for operation in chunk.operations {
             if case .upload(let upload) = operation {
@@ -206,7 +219,7 @@ class BackendClient {
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setValue(deviceIdHeader, forHTTPHeaderField: "X-MfN-Device-Id")
         let _ = try await downloader.http(request: request)
     }
     
@@ -221,7 +234,7 @@ class BackendClient {
         
         let url = URL(string: Configuration.backendUrl + "upload-media?mediaId=\(mediaId)&deviceIdentifier=\(Settings.deviceId())")
         var request = mpr.urlRequest(url: url!, method: "PUT")
-        request.setValue(Settings.deviceIdHeader(), forHTTPHeaderField: "X-MfN-Device-Id")
+        request.setValue(deviceIdHeader, forHTTPHeaderField: "X-MfN-Device-Id")
         let _ = try await downloader.http(request: request)
     }
     
@@ -244,7 +257,7 @@ class BackendClient {
     func spectrogram(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/specgram/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setAuthHeader(bearerToken: await Keychain.shared.token)
+        await setAuthHeader(&request)
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
     }
@@ -252,14 +265,14 @@ class BackendClient {
     func downloadSound(mediaId: UUID) async throws -> Data {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setAuthHeader(bearerToken: await Keychain.shared.token)
+        await setAuthHeader(&request)
         return try await downloader.http(request: request)
     }
     
     func downloadCached(mediaId: UUID) async throws -> UIImage {
         let url = URL(string: Configuration.backendUrl + "/media/\(mediaId)")!
         var request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        request.setAuthHeader(bearerToken: await Keychain.shared.token)
+        await setAuthHeader(&request)
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!
     }
@@ -309,7 +322,7 @@ class BackendClient {
         let data = try await downloader.http(request: request)
         let decoder = JSONDecoder()
         let signInResponse = try decoder.decode(SigninResponse.self, from: data)
-        for deviceId in Settings.getAllDeviceIds() {
+        for deviceId in persistence.getAllDeviceIds() {
             try await deviceConnect(token: signInResponse.access_token, deviceId: deviceId)
         }
         
@@ -401,5 +414,37 @@ class BackendClient {
         }
         
         let _ = try await downloader.httpSend(request: request, data: encoded)
+    }
+    
+    func syncOldSyncOperations() async throws {
+        guard let fileURL = URL.syncOperationsFile else {
+            Logger.compat.info("No old syncs")
+            return
+        }
+        
+        if FileManager().fileExists(atPath: fileURL.path) {
+            let json = try Data(contentsOf: fileURL)
+            if let jsonStr = String(data: json, encoding: .utf8) {
+                
+                let newJsonStr = """
+                    {
+                        "operations" : \(jsonStr)
+                    }
+                """
+                
+                let url = URL(string: Configuration.backendUrl + "obs/sync")!
+                var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData)
+                
+                request.httpBody = newJsonStr.data(using: .utf8)
+                request.httpMethod = "PUT"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.timeoutInterval = 30
+                await setAuthHeader(&request)
+         
+                let downloader: HTTPDownloader = URLSession.shared
+                let _ = try await downloader.http(request: request)
+                Logger.compat.info("Successfully send old syncOperations.json")
+            }
+        }
     }
 }
