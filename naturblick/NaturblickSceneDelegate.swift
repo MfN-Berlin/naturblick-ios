@@ -92,7 +92,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         let backend = Backend(persistence: ObservationPersistenceController())
         
         Task {
-            try! await backend.register()
+            try? await backend.register()
         }
         
         let window = UIWindow(windowScene: windowScene)
