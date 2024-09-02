@@ -62,6 +62,7 @@ struct ObservationListView: HostedView {
     @State var showDelete: Bool = false
     @State var deleteObservation: IndexSet? = nil
     let showObservation: Observation?
+    @State var searchText: String = ""
     
     init(backend: Backend, createFlow: CreateFlowViewModel, showObservation: Observation?) {
         self.backend = backend
@@ -90,7 +91,7 @@ struct ObservationListView: HostedView {
         SwiftUI.Group {
             if(model.showList) {
                 List {
-                    ForEach(persistenceController.observations) {
+                    ForEach(observations) {
                         observation in
                         ObservationListItemWithImageView(observation: observation, backend: backend)
                             .listRowInsets(.nbInsets)
@@ -101,6 +102,7 @@ struct ObservationListView: HostedView {
                             .accessibilityElement(children: .combine)
                     }
                 }
+                .searchable(text: $searchText)
                 .animation(.default, value: persistenceController.observations)
                 .listStyle(.plain)
                 .refreshable {
@@ -147,6 +149,21 @@ struct ObservationListView: HostedView {
             Text(error.localizedDescription)
         }
     }
+    
+    var observations: [Observation] {
+        if (searchText.isEmpty) {
+           return persistenceController.observations
+       } else {
+           return persistenceController.observations.filter {
+               let str = searchText.lowercased()
+               return $0.species?.gername?.lowercased().contains(str) ?? false
+               || $0.species?.gersynonym?.lowercased().contains(str) ?? false
+               || $0.species?.engname?.lowercased().contains(str) ?? false
+               || $0.species?.engsynonym?.lowercased().contains(str) ?? false
+               || $0.species?.sciname.lowercased().contains(str) ?? false }
+       }
+    }
+      
 }
 
 struct ObservationListView_Previews: PreviewProvider {

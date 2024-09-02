@@ -15,16 +15,21 @@ struct ObservationListItemView: View {
                 .avatar()
                 .padding(.trailing, .defaultPadding)
             VStack(alignment: .leading, spacing: .zero) {
-                if let name = observation.species?.speciesName {
-                    Text(name)
-                        .subtitle1()
+                if let species = observation.species {
+                    if let name = species.speciesName {
+                        Text(name)
+                            .subtitle1()
+                    }
+                    Text(species.sciname)
+                        .subtitle3(color: .onSecondarySignalLow)
+                        .accessibilityLabel(Text("sciname \(species.sciname)"))
                 } else {
                     Text(observation.species?.sciname ?? String(localized: "unknown_species"))
                         .subtitle1()
                         .foregroundColor(Color.onSecondarySignalLow)
                 }
                 Text(observation.observation.created.date.formatted())
-                    .subtitle3()
+                    .subtitle3(color: .onSecondaryHighEmphasis)
             }
             .padding(.top, .avatarTextOffset)
             Spacer()
@@ -32,7 +37,6 @@ struct ObservationListItemView: View {
         .contentShape(Rectangle())
     }
 }
-
 
 struct ObservationListItemView_Previews: PreviewProvider {
     static var previews: some View {
