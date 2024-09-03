@@ -213,3 +213,6 @@
 "sciname %@"="Scientific name %@";
 "no"="No";
 "yes"="Yes";
+"delete_question_plural"="Delete observations?";
+"delete_question_message_plural %@"="Are you sure that you want to delete %@ observations?";
+"select"="Select";
