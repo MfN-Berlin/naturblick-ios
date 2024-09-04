@@ -39,6 +39,7 @@ extension Group {
         "tree",
         "reptile",
         "butterfly",
+        "gastropoda",
         "mammal",
         "bird"
     ]
