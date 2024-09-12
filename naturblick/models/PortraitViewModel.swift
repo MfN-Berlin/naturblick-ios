@@ -103,7 +103,7 @@ class PortraitViewModel: ObservableObject {
             
             let speciesDb = Connection.speciesDB
             let souresTranslations = try Dictionary(speciesDB: speciesDb, language: 1)
-            let result = try speciesDb.prepare(
+            let result: AnySequence<Row> = try speciesDb.prepare(
                 PortraitViewModel.query(speciesId: speciesId)
             )
             
@@ -125,7 +125,9 @@ class PortraitViewModel: ObservableObject {
                             engsynonym: row[Species.Definition.table[Species.Definition.engsynonym]],
                             redListGermany: row[Species.Definition.table[Species.Definition.redListGermany]],
                             iucnCategory: row[Species.Definition.table[Species.Definition.iucnCategory]],
-                            hasPortrait: true
+                            hasPortrait: true,
+                            gersearchfield: row[Species.Definition.table[Species.Definition.gersearchfield]],
+                            engsearchfield: row[Species.Definition.table[Species.Definition.engsearchfield]]
                         ),
                         description: row[Portrait.Definition.description],
                         descriptionImage: portraitImage(imgTable: PortraitViewModel.descImg, sizesTable: PortraitViewModel.descImgSizes, rows: rows),

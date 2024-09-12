@@ -19,6 +19,8 @@ struct Species: Identifiable, Equatable {
     let redListGermany: String?
     let iucnCategory: String?
     let hasPortrait: Bool
+    let gersearchfield: String?
+    let engsearchfield: String?
     
     var speciesName: String? {
         isGerman() ? gername : engname
@@ -32,7 +34,9 @@ struct Species: Identifiable, Equatable {
 extension Species {
     struct Definition {
         static let table = Table("species")
+        
         static let id = Expression<Int64>("rowid")
+        static let acceptedId = Expression<Int64?>("rowid")
         static let group = Expression<String>("group_id")
         static let sciname = Expression<String>("sciname")
         static let gername = Expression<String?>("gername")
@@ -48,11 +52,26 @@ extension Species {
         static let hasPortrait = Expression<Bool>("has_portrait")
         static let optionalPortraitId = Portrait.Definition.table[Expression<Int64?>("rowid")]
         static let optionalLanguage = Portrait.Definition.table[Expression<Int64?>("language")]
+        static let gersearchfield = Expression<String?>("gersearchfield")
+        static let engsearchfield = Expression<String?>("engsearchfield")
         static let baseQuery = table
             .select(table[*], optionalPortraitId, Portrait.Definition.audioUrl)
             .join(.leftOuter, Portrait.Definition.table, on: table[id] == Portrait.Definition.speciesId)
             .filter(optionalLanguage == getLanguageId() || optionalLanguage == nil)
     }
+    
+    private static func searchOrNil(search: String) -> String? {
+        return search.isEmpty ? nil : "%\(search)%"
+    }
+
+   static func query(searchString: String) -> QueryType {
+       let searchString = searchOrNil(search: searchString)
+       let query = Definition.baseQuery
+       let queryWithSearch = searchString != nil ? (isGerman() ? query.filter(Species.Definition.gersearchfield.like(searchString!)) : query.filter(Species.Definition.engsearchfield.like(searchString!)) ) : query
+       return queryWithSearch
+           .filter(Species.Definition.gersearchfield != nil)
+           .order(isGerman() ? Species.Definition.gername : Species.Definition.engname, Species.Definition.sciname)
+   }
 }
 
 extension Species {
@@ -69,6 +88,8 @@ extension Species {
         engsynonym: nil,
         redListGermany: "gefahrdet",
         iucnCategory: "LC",
-        hasPortrait: true
+        hasPortrait: true,
+        gersearchfield: nil,
+        engsearchfield: nil
     )
 }
