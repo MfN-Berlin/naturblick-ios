@@ -73,10 +73,10 @@ ORDER BY distance
             numberOfCharacters
         ] + characterValueWeights + [
             searchQuery,
-            1,
+            getLanguageId(),
             searchQuery,
             searchQuery,
-            1,
+            getLanguageId(),
             searchQuery,
             searchQuery,
             searchQuery
