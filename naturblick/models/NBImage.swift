@@ -63,8 +63,17 @@ struct NBImage {
         }
     }
     
-    var url: URL {
-        NBImage.url(id: id)
+    func localFileUrl() async throws -> URL {
+        let url = NBImage.url(id: id)
+        if FileManager.default.fileExists(atPath: url.path) {
+            return url
+        } else {
+            let temporaryUrl = URL.temporaryFileURL(id: id, mime: MimeType.jpeg)
+            if let data = image.jpegData(compressionQuality: .jpegQuality) {
+                try data.write(to: temporaryUrl, options: [.atomic])
+            }
+            return temporaryUrl
+        }
     }
     
     private static func url(id: UUID) -> URL {

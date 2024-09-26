@@ -163,7 +163,7 @@ struct ObservationView: HostedView {
                 VStack(alignment: .center, spacing: .zero) {
                     if let observation = model.observation {
                         ObservationInfoView(backend: backend, width: geo.size.width, fallbackThumbnail: speciesAvatar, observation: observation, sound: sound) { view in
-                            navigationController?.pushViewController(view, animated: true)
+                            navigationController?.present(view, animated: true)
                         }
                     }
                 }

@@ -4,44 +4,46 @@
 
 
 import SwiftUI
+import QuickLook
 
 struct ObservationInfoView: View {
     let backend: Backend
     let width: CGFloat
-    let navigate: (UIViewController) -> Void
+    let present: (UIViewController) -> Void
 
     let species: SpeciesListItem?
     let created: ZonedDateTime
     
     let start: Int?
     let end: Int?
-    let fullscreenImageId: UUID?
-    let fullscreenLocalId: String?
     let thumbnailId: UUID?
     let fallbackThumbnail: Image
     let obsType: ObsType
     let obsIdent: String?
+    @StateObject var model: ObservationInfoViewModel
     @State var thumbnail: Image? = nil
     let sound: NBSound?
     
-    init(backend: Backend, width: CGFloat, fallbackThumbnail: Image, observation: Observation, sound: NBSound?, navigate: @escaping (UIViewController) -> Void) {
+    init(backend: Backend, width: CGFloat, fallbackThumbnail: Image, observation: Observation, sound: NBSound?, present: @escaping (UIViewController) -> Void) {
         self.backend = backend
         self.obsIdent = observation.observation.obsIdent
         self.obsType = observation.observation.obsType
         self.sound = sound
         self.width = width
-        self.navigate = navigate
+        self.present = present
         self.species = observation.species?.listItem
         self.created = observation.observation.created
         self.start = observation.observation.segmStart.map { s in Int(s) } ?? nil
         self.end = observation.observation.segmEnd.map { s in Int(s) } ?? nil
         
         if observation.observation.obsType == .image || observation.observation.obsType == .unidentifiedimage, let mediaId = observation.observation.mediaId {
-            self.fullscreenImageId = mediaId
-            self.fullscreenLocalId = observation.observation.localMediaId
+            _model = StateObject(wrappedValue:
+                ObservationInfoViewModel(mediaId: mediaId, localIdentifier: observation.observation.localMediaId, backend: backend)
+            )
         } else {
-            self.fullscreenImageId = nil
-            self.fullscreenLocalId = nil
+            _model = StateObject(wrappedValue:
+                ObservationInfoViewModel(mediaId: nil, localIdentifier: nil, backend: backend)
+            )
         }
         self.thumbnailId = observation.observation.thumbnailId
         self.fallbackThumbnail = fallbackThumbnail
@@ -67,17 +69,31 @@ struct ObservationInfoView: View {
     
     var body: some View {
         VStack(spacing: .zero) {
-            if let fullscreenImageId = fullscreenImageId {
+            if model.mediaId != nil {
                 avatar
                     .overlay(alignment: .bottomTrailing) {
                         ZStack {
                             Circle()
                                 .fill(Color.onPrimaryButtonPrimary)
                                 .frame(width: 40, height: 40)
-                            Image("zoom")
-                                .foregroundColor(.onPrimaryHighEmphasis)
+                            if(model.loadingImage) {
+                                Image(systemName: "clock.circle")
+                                    .foregroundColor(.onPrimaryHighEmphasis)
+                            } else {
+                                Image("zoom")
+                                    .foregroundColor(.onPrimaryHighEmphasis)
+                            }
                         }.onTapGesture {
-                            navigate(FullscreenView(imageId: fullscreenImageId, localIdentifier: self.fullscreenLocalId, backend: backend).setUpViewController())
+                            Task { @MainActor in
+                                do {
+                                    try await model.downloadImageItem()
+                                    let controller = QLPreviewController()
+                                    controller.dataSource = model
+                                    present(controller)
+                                } catch {
+                                    model.handle(error)
+                                }
+                            }
                         }
                     }
                     .padding(.bottom, .defaultPadding)
@@ -120,10 +136,12 @@ struct ObservationInfoView: View {
         }
         .padding(.defaultPadding)
         .background(Color(uiColor: .onPrimaryButtonSecondary))
+        .alertHttpError(isPresented: $model.isPresented, error: model.error)
         .task(id: thumbnailId) {
             if let id = thumbnailId, let image = try? await backend.downloadCached(mediaId: id) {
                 thumbnail = Image(uiImage: image)
             }
         }
+
     }
 }

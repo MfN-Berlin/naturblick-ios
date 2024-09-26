@@ -15,6 +15,9 @@ extension URL {
     static func fileURL(id: UUID, mime: MimeType) -> URL {
         return documentsDirectory.appendingPathComponent(id.filename(mime: mime))
     }
+    static func temporaryFileURL(id: UUID, mime: MimeType) -> URL {
+        return FileManager.default.temporaryDirectory.appendingPathComponent(id.filename(mime: mime))
+    }
     func fileSizeBytes() -> Int {
         do {
             let resources = try self.resourceValues(forKeys:[.fileSizeKey])
