@@ -39,37 +39,37 @@ extension AccessibleFont {
     }
     
     static var nbHeadline2: AccessibleFont {
-        var f = Font.custom("Lato", size: .headline2, relativeTo: .title).weight(.black).leading(.tight)
+        let f = Font.custom("Lato", size: .headline2, relativeTo: .title).weight(.black).leading(.tight)
         return AccessibleFont(regular: f, bold: f)
     }
     
     static var nbHeadline3: AccessibleFont {
-        var f = Font.custom("Lato", size: .headline3, relativeTo: .title).weight(.black).leading(.tight)
+        let f = Font.custom("Lato", size: .headline3, relativeTo: .title).weight(.black).leading(.tight)
         return AccessibleFont(regular: f, bold: f)
     }
     
     static var nbHeadline4: AccessibleFont {
-        var f = Font.custom("Lato", size: .headline4, relativeTo: .title).weight(.black).leading(.tight)
+        let f = Font.custom("Lato", size: .headline4, relativeTo: .title).weight(.black).leading(.tight)
         return AccessibleFont(regular: f, bold: f)
     }
     
     static var nbHeadline6: AccessibleFont {
-        var f = Font.custom("Lato", size: .headline6, relativeTo: .title).weight(.black).leading(.tight)
+        let f = Font.custom("Lato", size: .headline6, relativeTo: .title).weight(.black).leading(.tight)
         return AccessibleFont(regular: f, bold: f)
     }
     
     static var nbSubtitle1: AccessibleFont {
-        var f = Font.custom("Lato", size: .subtitle1, relativeTo: .subheadline).weight(.black).leading(.tight)
+        let f = Font.custom("Lato", size: .subtitle1, relativeTo: .subheadline).weight(.black).leading(.tight)
         return AccessibleFont(regular: f, bold: f)
     }
     
     static var nbSubtitle2: AccessibleFont {
-        var f = Font.custom("Lato", size: .subtitle2, relativeTo: .subheadline).weight(.black).leading(.tight)
+        let f = Font.custom("Lato", size: .subtitle2, relativeTo: .subheadline).weight(.black).leading(.tight)
         return AccessibleFont(regular: f, bold: f)
     }
 
     static var nbSubtitle3: AccessibleFont {
-        var f = Font.custom("Lato", size: .subtitle3, relativeTo: .subheadline).italic().leading(.tight)
+        let f = Font.custom("Lato", size: .subtitle3, relativeTo: .subheadline).italic().leading(.tight)
         return AccessibleFont(
             regular: f.weight(.regular),
             bold: f.weight(.black)
@@ -77,7 +77,7 @@ extension AccessibleFont {
     }
     
     static var nbCaption: AccessibleFont {
-        var f = Font.custom("Lato", size: .caption, relativeTo: .caption).leading(.tight)
+        let f = Font.custom("Lato", size: .caption, relativeTo: .caption).leading(.tight)
         return AccessibleFont(
             regular: f.weight(.regular),
             bold: f.weight(.black)
@@ -85,7 +85,7 @@ extension AccessibleFont {
     }
     
     static var nbButton: AccessibleFont {
-        var f = Font.custom("Lato", size: .button, relativeTo: .body)
+        let f = Font.custom("Lato", size: .button, relativeTo: .body)
         return AccessibleFont(
             regular: f.weight(.regular),
             bold: f.weight(.black)
@@ -93,7 +93,7 @@ extension AccessibleFont {
     }
     
     static var nbOverline: AccessibleFont {
-        var f = Font.custom("Lato", size: .overline, relativeTo: .subheadline).italic().leading(.tight)
+        let f = Font.custom("Lato", size: .overline, relativeTo: .subheadline).italic().leading(.tight)
         return AccessibleFont(
             regular: f.weight(.regular),
             bold: f.weight(.black)
