@@ -46,7 +46,9 @@ class SimilarSpeciesViewModel: ObservableObject {
                             engsynonym: row[Species.Definition.engsynonym],
                             redListGermany: row[Species.Definition.redListGermany],
                             iucnCategory: row[Species.Definition.iucnCategory],
-                            hasPortrait: row[Species.Definition.optionalPortraitId] != nil
+                            hasPortrait: row[Species.Definition.optionalPortraitId] != nil,
+                            gersearchfield: row[Species.Definition.gersearchfield],
+                            engsearchfield: row[Species.Definition.engsearchfield]
                         )
                     )
                 }

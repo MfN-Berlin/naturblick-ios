@@ -14,10 +14,7 @@ class PickSpeciesListViewModel: ObservableObject {
     }
     
     func query(search: String, page: Int) throws -> [SpeciesListItem] {
-        let searchString = searchOrNil(search: search)
-        let query = Species.Definition.baseQuery
-        let queryWithSearch = searchString != nil ? query.filter(Species.Definition.gername.like(searchString!) || Species.Definition.engname.like(searchString!)) : query
-        return try speciesDb.prepare(queryWithSearch.order(isGerman() ? Species.Definition.gername : Species.Definition.engname).limit(PickSpeciesListViewModel.pageSize, offset: page * PickSpeciesListViewModel.pageSize))
+        return try speciesDb.prepare(Species.query(searchString: search).limit(PickSpeciesListViewModel.pageSize, offset: page * PickSpeciesListViewModel.pageSize))
             .map { row in
                 SpeciesListItem(
                     speciesId: row[Species.Definition.table[Species.Definition.id]],

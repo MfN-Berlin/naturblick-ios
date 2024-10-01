@@ -199,7 +199,9 @@ class ObservationPersistenceController: ObservableObject {
                 engsynonym: row[Species.Definition.engsynonym],
                 redListGermany: row[Species.Definition.redListGermany],
                 iucnCategory: row[Species.Definition.iucnCategory],
-                hasPortrait: (portraits ?? 0) > 0
+                hasPortrait: (portraits ?? 0) > 0,
+                gersearchfield: row[Species.Definition.gersearchfield],
+                engsearchfield: row[Species.Definition.engsearchfield]
             )
             return Observation(observation: observation, species: species)
         }

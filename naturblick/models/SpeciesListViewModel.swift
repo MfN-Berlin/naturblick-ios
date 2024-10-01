@@ -24,13 +24,8 @@ class SpeciesListViewModel: ObservableObject {
         let searchString = searchOrNil(search: search)
         switch filter {
         case .group(let group):
-            let query = Species.Definition.table
-                .join(.leftOuter, Portrait.Definition.table,
-                      on: Portrait.Definition.speciesId == Species.Definition.table[Species.Definition.id])
-                .filter(Species.Definition.group == group.id)
-                .filter(Portrait.Definition.language == Int(getLanguageId()))
-            let queryWithSearch = searchString != nil ? filterSearchString(query, searchString) : query
-            return try speciesDb.prepareRowIterator(queryWithSearch.order(isGerman() ? Species.Definition.gername : Species.Definition.engname))
+            return try speciesDb.prepareRowIterator(Species.query(searchString: search)
+                .filter(Species.Definition.group == group.id))
                 .map { row in
                     SpeciesListItem(
                         speciesId: row[Species.Definition.table[Species.Definition.id]],
