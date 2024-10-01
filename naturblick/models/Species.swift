@@ -70,7 +70,9 @@ extension Species {
        let queryWithSearch = searchString != nil ? (isGerman() ? query.filter(Species.Definition.gersearchfield.like(searchString!)) : query.filter(Species.Definition.engsearchfield.like(searchString!)) ) : query
        return queryWithSearch
            .filter(Species.Definition.gersearchfield != nil)
-           .order(isGerman() ? Species.Definition.gername : Species.Definition.engname, Species.Definition.sciname)
+           .order(isGerman() ?
+                  [Expression(literal: "gername is null"), Expression(literal: "gername"), Expression(literal: "gersynonym is null"), Expression(literal: "gersynonym"), Species.Definition.sciname] :
+                    [Expression(literal: "engname is null"), Expression(literal: "engname"), Expression(literal: "engsynonym is null"), Expression(literal: "engsynonym"), Species.Definition.sciname])
    }
 }
 
