@@ -5,6 +5,8 @@
 import Foundation
 import SQLite
 
+typealias Expression = SQLite.Expression
+
 extension Connection {
     static var speciesDB: Connection {
         do {
