@@ -25,7 +25,8 @@ class SpeciesListViewModel: ObservableObject {
         switch filter {
         case .group(let group):
             return try speciesDb.prepareRowIterator(Species.query(searchString: search)
-                .filter(Species.Definition.group == group.id))
+                .filter(Species.Definition.group == group.id)
+                .filter(Portrait.Definition.language == Int(getLanguageId())))
                 .map { row in
                     SpeciesListItem(
                         speciesId: row[Species.Definition.table[Species.Definition.id]],
