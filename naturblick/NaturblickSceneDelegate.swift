@@ -89,6 +89,16 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         URLSession.shared.configuration.timeoutIntervalForRequest = 15
         URLSession.shared.configuration.timeoutIntervalForResource = 30
         
+        let searchBarAppearance = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+        
+        let placeholderColor: UIColor = .onPrimaryMininumEmphasis
+        searchBarAppearance.backgroundColor = .onPrimaryInput
+
+        searchBarAppearance.attributedPlaceholder = NSAttributedString(
+            string: "Suchen", // unused
+            attributes: [NSAttributedString.Key.foregroundColor: placeholderColor ]
+        )
+
         let backend = Backend(persistence: ObservationPersistenceController())
         
         Task {

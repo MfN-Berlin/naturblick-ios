@@ -58,6 +58,9 @@ extension Color {
 }
 
 extension UIColor {
+    
+    static let onPrimaryInput = UIColor(red: 0.043, green: 0.165, blue: 0.251, alpha: 1.000)
+    
     static var onPrimaryButtonSecondary: UIColor {
         return UIColor { (traits) -> UIColor in
             traits.userInterfaceStyle == .dark ?
@@ -65,14 +68,16 @@ extension UIColor {
                 UIColor(red: 0.055, green: 0.220, blue: 0.333, alpha: 1.000)
         }
     }
-
-    static var onPrimaryHighEmphasis: UIColor {
+    
+    static var onPrimaryMininumEmphasis: UIColor {
         return UIColor { (traits) -> UIColor in
             traits.userInterfaceStyle == .dark ?
-                UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000) :
-                UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
+                UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.804) :
+                UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.502)
         }
     }
+
+    static var onPrimaryHighEmphasis: UIColor = UIColor(red: 1.000, green: 1.000, blue: 1.000, alpha: 1.000)
     
     static var onSecondaryHighEmphasis: UIColor {
         return UIColor { (traits) -> UIColor in

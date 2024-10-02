@@ -45,6 +45,7 @@ struct PickSpeciesListView<Flow>: NavigatableView where Flow: IdFlow {
         }
         .listStyle(.plain)
         .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always))
+        .foregroundColor(.onPrimaryHighEmphasis)
         .onChange(of: query) { query in
             page = 0
             updateSpecies()
