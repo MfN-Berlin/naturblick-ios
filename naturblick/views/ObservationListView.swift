@@ -197,6 +197,7 @@ struct ObservationListView: HostedView {
                 }
                 .environment(\.editMode, .constant(model.editMode))
                 .searchable(text: $searchText)
+                .foregroundColor(.onPrimaryHighEmphasis)
                 .animation(.default, value: persistenceController.observations)
                 .listStyle(.plain)
                 .refreshable {

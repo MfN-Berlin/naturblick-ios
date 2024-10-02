@@ -52,6 +52,7 @@ struct SpeciesListView: NavigatableView {
         }
         .listStyle(.plain)
         .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always))
+        .foregroundColor(.onPrimaryHighEmphasis)
         .onChange(of: query) { query in
             updateFilter()
         }

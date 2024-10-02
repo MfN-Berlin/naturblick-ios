@@ -159,6 +159,7 @@ enum AddColors {
         }
         
         let jsonEncoder: JSONEncoder = JSONEncoder()
+        jsonEncoder.outputFormatting = .sortedKeys
 
         tokens.forEach { token in
              let data: Data = try! jsonEncoder.encode(token)

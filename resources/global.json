@@ -67,6 +67,10 @@
     "Stable Dark": {
       "value": "{sleep.500}",
       "type": "color"
+    },
+    "Input": {
+      "value": "{sleep.900}",
+      "type": "color"
     }
   },
   "On Secondary": {
