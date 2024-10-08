@@ -5,7 +5,7 @@
 import Foundation
 import SQLite
 
-class PickSpeciesListViewModel: ObservableObject {
+class PickSpeciesListProvider {
     let speciesDb: Connection = Connection.speciesDB
     static let pageSize: Int = 50
 
@@ -14,7 +14,7 @@ class PickSpeciesListViewModel: ObservableObject {
     }
     
     func query(search: String, page: Int) throws -> [SpeciesListItem] {
-        return try speciesDb.prepare(Species.query(searchString: search).limit(PickSpeciesListViewModel.pageSize, offset: page * PickSpeciesListViewModel.pageSize))
+        return try speciesDb.prepare(Species.query(searchString: search).limit(PickSpeciesListProvider.pageSize, offset: page * PickSpeciesListProvider.pageSize))
             .map { row in
                 SpeciesListItem(
                     speciesId: row[Species.Definition.table[Species.Definition.id]],

@@ -24,7 +24,7 @@ class CharactersViewController: HostingController<CharactersView> {
     @objc func showResults() {
         AnalyticsTracker.trackSpeciesSelection(filter: model.filter)
         navigationController?.pushViewController(
-            SpeciesListView(filter: model.filter, flow: flow, isCharacterResult: true).setUpViewController(), animated: true)
+            SpeciesListViewController(filter: model.filter, flow: flow, isCharacterResult: true), animated: true)
     }
     
     init(group: Group, flow: CreateFlowViewModel) {

@@ -5,34 +5,75 @@
 
 import SwiftUI
 
-struct PickSpeciesListView<Flow>: NavigatableView where Flow: IdFlow {
+class PickSpeciesListModel: ObservableObject {
+    var page: Int = 0
+    var query: String = "" {
+        didSet {
+            page = 0
+        }
+    }
+    @Published var species:  [SpeciesListItem] = []
+    let pickSpeciesListProvider = PickSpeciesListProvider()
+
+    func allSpeciesPagination(item: SpeciesListItem) {
+        if let lastId = species.last?.id, lastId == item.id {
+            page = page + 1
+            appendSpecies()
+        }
+    }
+    
+    func updateSpecies() {
+        do {
+            species = try pickSpeciesListProvider.query(search: query, page: page)
+        } catch {
+            Fail.with(error)
+        }
+    }
+    
+    func appendSpecies() {
+        do {
+            species.append(contentsOf: try pickSpeciesListProvider.query(search: query, page: page))
+        } catch {
+            Fail.with(error)
+        }
+    }
+}
+
+class PickSpeciesListViewController<Flow>: HostingController<PickSpeciesListView<Flow>>, UISearchResultsUpdating where Flow: IdFlow {
+    
+    let pickSpeciesListModel = PickSpeciesListModel()
+    
+    init(flow: Flow) {
+        let view = PickSpeciesListView(flow: flow, pickSpeciesListModel: pickSpeciesListModel)
+        super.init(rootView: view)
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        pickSpeciesListModel.query = searchController.searchBar.text?.lowercased() ?? ""
+        pickSpeciesListModel.updateSpecies()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let searchController = setupSearchController()
+        searchController.searchResultsUpdater = self
+        updateSearchResults(for: searchController)
+    }
+}
+
+struct PickSpeciesListView<Flow>: HostedView where Flow: IdFlow {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = "Species"
-    
-    @State var page: Int = 0
-    @State var species:  [SpeciesListItem] = []
-    @State var query: String = ""
-    @StateObject var pickSpeciesListViewModel: PickSpeciesListViewModel = PickSpeciesListViewModel()
-   
     var flow: Flow
-    
-    func updateSpecies() {
-        Task {
-            do {
-                species = try pickSpeciesListViewModel.query(search: query, page: page)
-            } catch {
-                Fail.with(error)
-            }
-        }
-    }
+    @ObservedObject var pickSpeciesListModel: PickSpeciesListModel
     
     func showSpecies(species: SpeciesListItem) {
         viewController?.present(PopAwareNavigationController(rootViewController: SpeciesInfoView(selectionFlow: true, species: species, flow: flow).setUpViewController()), animated: true)
     }
     
     var body: some View {
-        List(species) { current in
+        List(pickSpeciesListModel.species) { current in
             SpeciesListItemView(species: current)
                 .onTapGesture {
                     showSpecies(species: current)
@@ -40,39 +81,17 @@ struct PickSpeciesListView<Flow>: NavigatableView where Flow: IdFlow {
                 .listRowInsets(.nbInsets)
                 .listRowBackground(Color.secondaryColor)
                 .onAppear {
-                    allSpeciesPagination(item: current)
+                    pickSpeciesListModel.allSpeciesPagination(item: current)
                 }
         }
         .listStyle(.plain)
-        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always))
         .foregroundColor(.onPrimaryHighEmphasis)
-        .onChange(of: query) { query in
-            page = 0
-            updateSpecies()
-        }
-        .onAppear {
-            if species.isEmpty {
-                updateSpecies()
-            }
-        }
-    }
-    
-    func allSpeciesPagination(item: SpeciesListItem) {
-        if let lastId = species.last?.id, lastId == item.id {
-            page = page + 1
-            Task {
-                do {
-                    species.append(contentsOf: try pickSpeciesListViewModel.query(search: query, page: page))
-                } catch {
-                    Fail.with(error)
-                }
-            }
-        }
     }
 }
 
-struct AllSpeciesListView_Previews: PreviewProvider {
-    static var previews: some View {
-        PickSpeciesListView(flow: CreateFlowViewModel(backend: Backend(persistence:  ObservationPersistenceController(inMemory: true))))
-    }
-}
+
+ struct AllSpeciesListView_Previews: PreviewProvider {
+     static var previews: some View {
+         PickSpeciesListView(flow: CreateFlowViewModel(backend: Backend(persistence:  ObservationPersistenceController(inMemory: true))), pickSpeciesListModel: PickSpeciesListModel())
+     }
+ }

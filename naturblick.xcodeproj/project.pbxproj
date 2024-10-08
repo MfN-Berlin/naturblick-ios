@@ -19,7 +19,7 @@
 		132B0D9D29CDD78600B80C9E /* lato_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 132B0D9A29CDD78600B80C9E /* lato_italic.ttf */; };
 		13316BD929C9F4150077292B /* Species.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BD829C9F4150077292B /* Species.swift */; };
 		13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDA29C9F6030077292B /* SpeciesListFilter.swift */; };
-		13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */; };
+		13316BDD29C9F85F0077292B /* SpeciesListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDC29C9F85F0077292B /* SpeciesListProvider.swift */; };
 		13316BE029C9FAF80077292B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 13316BDF29C9FAF80077292B /* SQLite */; };
 		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
 		1337159A2A8CFBC2009E31E0 /* HttpErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133715992A8CFBC2009E31E0 /* HttpErrorViewModel.swift */; };
@@ -180,7 +180,7 @@
 		7BDA8FBB2ABC241E002E93C9 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */; };
 		7BDA8FBE2ABC5E94002E93C9 /* CachedAsyncImage in Frameworks */ = {isa = PBXBuildFile; productRef = 7BDA8FBD2ABC5E94002E93C9 /* CachedAsyncImage */; };
 		7BDCC0EB2AD0458C0089A4C6 /* PickSpeciesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDCC0EA2AD0458C0089A4C6 /* PickSpeciesListView.swift */; };
-		7BDCC0ED2AD045B20089A4C6 /* PickSpeciesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDCC0EC2AD045B20089A4C6 /* PickSpeciesListViewModel.swift */; };
+		7BDCC0ED2AD045B20089A4C6 /* PickSpeciesListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDCC0EC2AD045B20089A4C6 /* PickSpeciesListProvider.swift */; };
 		7BDD17E02A45BE84001B9DB4 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */; };
 		7BDD17E22A45C397001B9DB4 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E12A45C397001B9DB4 /* LoginView.swift */; };
 		7BDD17E42A45C5AA001B9DB4 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */; };
@@ -218,7 +218,7 @@
 		132B0D9E29CDD90B00B80C9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		13316BD829C9F4150077292B /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
-		13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListViewModel.swift; sourceTree = "<group>"; };
+		13316BDC29C9F85F0077292B /* SpeciesListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListProvider.swift; sourceTree = "<group>"; };
 		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
 		133715992A8CFBC2009E31E0 /* HttpErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpErrorViewModel.swift; sourceTree = "<group>"; };
 		1337D96C2A7A982700712B8F /* SpeciesResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesResultView.swift; sourceTree = "<group>"; };
@@ -380,7 +380,7 @@
 		7BD263512A8E654300CB4FE0 /* Sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sync.swift; sourceTree = "<group>"; };
 		7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		7BDCC0EA2AD0458C0089A4C6 /* PickSpeciesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSpeciesListView.swift; sourceTree = "<group>"; };
-		7BDCC0EC2AD045B20089A4C6 /* PickSpeciesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSpeciesListViewModel.swift; sourceTree = "<group>"; };
+		7BDCC0EC2AD045B20089A4C6 /* PickSpeciesListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickSpeciesListProvider.swift; sourceTree = "<group>"; };
 		7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		7BDD17E12A45C397001B9DB4 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
@@ -600,7 +600,7 @@
 				13070CA72A053EC700A2046D /* Operation.swift */,
 				134B72B42A05348000C1DCAD /* PatchOperation.swift */,
 				13C02EBF2AB06313001F8D4B /* PickerFlow.swift */,
-				7BDCC0EC2AD045B20089A4C6 /* PickSpeciesListViewModel.swift */,
+				7BDCC0EC2AD045B20089A4C6 /* PickSpeciesListProvider.swift */,
 				136D907F29D18BBE00A00BD4 /* Portrait.swift */,
 				7BA037C829D7020500804AFE /* PortraitImage.swift */,
 				7B8008F129D5B66B00950839 /* PortraitImageSize.swift */,
@@ -617,7 +617,7 @@
 				13316BD829C9F4150077292B /* Species.swift */,
 				13316BDA29C9F6030077292B /* SpeciesListFilter.swift */,
 				13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */,
-				13316BDC29C9F85F0077292B /* SpeciesListViewModel.swift */,
+				13316BDC29C9F85F0077292B /* SpeciesListProvider.swift */,
 				7BD016262A0BCE1F00B07A3E /* SpeciesResult.swift */,
 				137D280A2AC44A91009DFB36 /* SpetrogramViewModel.swift */,
 				7BD263512A8E654300CB4FE0 /* Sync.swift */,
@@ -918,7 +918,7 @@
 				7BB3DE2529F68DC700F0D387 /* UnambiguousFeatureViewModel.swift in Sources */,
 				134B72B72A053A6300C1DCAD /* CreateData.swift in Sources */,
 				7BD263522A8E654300CB4FE0 /* Sync.swift in Sources */,
-				13316BDD29C9F85F0077292B /* SpeciesListViewModel.swift in Sources */,
+				13316BDD29C9F85F0077292B /* SpeciesListProvider.swift in Sources */,
 				13CFACCB2BEA34B1004C506A /* DeviceIdentifier.swift in Sources */,
 				7BB74B5B2ABB2E34002C4493 /* MenuController.swift in Sources */,
 				7BCEFCC62A690F4800EAC332 /* UIApplication.swift in Sources */,
@@ -973,7 +973,7 @@
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
 				7BC11AFE2A4ACD4E00823D4F /* DeleteAccountView.swift in Sources */,
 				132A91432A2DD52100AC405C /* CoordinatesView.swift in Sources */,
-				7BDCC0ED2AD045B20089A4C6 /* PickSpeciesListViewModel.swift in Sources */,
+				7BDCC0ED2AD045B20089A4C6 /* PickSpeciesListProvider.swift in Sources */,
 				139DA94C2AB99E6F00C8C238 /* View+Shadow.swift in Sources */,
 				13C850DC2AA20CE30006FA1A /* CreateFlowViewModel.swift in Sources */,
 				136DFAB929F96E6500C8B8FF /* CreateObservationView.swift in Sources */,

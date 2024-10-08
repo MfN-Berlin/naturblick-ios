@@ -214,3 +214,4 @@
 "delete_question_plural"="Beobachtungen löschen?";
 "delete_question_message_plural %@"="Bist du sicher, dass du %@ Beobachtungen löschen möchtest?";
 "select"="Auswählen";
+"search"="Artname...";
