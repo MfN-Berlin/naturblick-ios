@@ -148,6 +148,7 @@ public protocol NavigatableView: View, HoldingViewController, PopAware {
     var viewName: String? { get }
     var alwaysDarkBackground: Bool { get }
     var hideNavigationBarShadow: Bool { get }
+    var searchModel: SearchModel? { get set }
     func configureNavigationItem(item: UINavigationItem)
     func updateSearchResult(searchText: String?)
 }
@@ -254,13 +255,8 @@ private class NavigatableHostingController<ContentView>: UIHostingController<Con
     }
     
     public func updateSearchResults(for searchController: UISearchController) {
-        print("updateSearchResults in NavigatableHostingController ")
         if self.rootView.searchController() != nil {
-            
             searchModel.query = searchController.searchBar.text?.lowercased()
-            print("\(searchModel.query) after \(searchController.searchBar.text?.lowercased())")
-//            self.rootView.updateSearchResult(searchText: searchController.searchBar.text?.lowercased())
-            print("Query in Holder: \(rootView.holder.searchModel?.query)")
         }
     }
     
