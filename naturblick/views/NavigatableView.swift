@@ -42,19 +42,25 @@ class PopAwareNavigationController: UINavigationController {
 
 public class ViewControllerHolder {
     public weak var viewController: UIViewController?
-    
+    public weak var searchModel: SearchModel?
+     
     public init() {}
 }
 
 public protocol HoldingViewController {
     var holder: ViewControllerHolder { get set }
     func setViewController(controller: UIViewController)
+    func setSearchModel(searchModel: SearchModel)
     func searchController() -> UISearchController?
 }
 
 extension HoldingViewController {
     func setViewController(controller: UIViewController) {
         holder.viewController = controller
+    }
+    
+    func setSearchModel(searchModel: SearchModel) {
+        holder.searchModel = searchModel
     }
     
     var viewController: UIViewController? {
@@ -149,6 +155,7 @@ public protocol NavigatableView: View, HoldingViewController, PopAware {
 public extension NavigatableView {
     func setUpViewController() -> UIViewController {
         let viewController = NavigatableHostingController(rootView: self)
+        self.setSearchModel(searchModel: viewController.searchModel)
         return viewController
     }
     
@@ -166,6 +173,7 @@ public extension NavigatableView {
 
     func configureNavigationItem(item: UINavigationItem) {
     }
+    
     func updateSearchResult(searchText: String?) {
         fatalError("has to be implemented in the ContentView of the Controller")
     }
@@ -224,7 +232,13 @@ public class HostingController<ContentView>: UIHostingController<ContentView>, P
     }
 }
 
+public class SearchModel: ObservableObject {
+    @Published var query: String? = nil
+}
+
 private class NavigatableHostingController<ContentView>: UIHostingController<ContentView>, PopAware, SearchableController, UISearchResultsUpdating where ContentView: NavigatableView {
+    
+    let searchModel = SearchModel()
     
     func setupSearchController() {
         if let searchController = self.rootView.searchController() {
@@ -240,8 +254,13 @@ private class NavigatableHostingController<ContentView>: UIHostingController<Con
     }
     
     public func updateSearchResults(for searchController: UISearchController) {
+        print("updateSearchResults in NavigatableHostingController ")
         if self.rootView.searchController() != nil {
-            self.rootView.updateSearchResult(searchText: searchController.searchBar.text?.lowercased())
+            
+            searchModel.query = searchController.searchBar.text?.lowercased()
+            print("\(searchModel.query) after \(searchController.searchBar.text?.lowercased())")
+//            self.rootView.updateSearchResult(searchText: searchController.searchBar.text?.lowercased())
+            print("Query in Holder: \(rootView.holder.searchModel?.query)")
         }
     }
     
@@ -263,6 +282,7 @@ private class NavigatableHostingController<ContentView>: UIHostingController<Con
     
     public override init(rootView: ContentView) {
         super.init(rootView: rootView)
+        rootView.setSearchModel(searchModel: searchModel)
         rootView.setViewController(controller: self)
     }
     

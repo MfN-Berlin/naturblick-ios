@@ -17,19 +17,32 @@ struct SpeciesListView: NavigatableView {
     }
     
     @State var species:  [SpeciesListItem] = []
-    @State var query: String = ""
     @StateObject var speciesListViewModel: SpeciesListViewModel = SpeciesListViewModel()
     let filter: SpeciesListFilter
     @ObservedObject var flow: CreateFlowViewModel
     var isCharacterResult: Bool = false
     
     func updateFilter() {
+        print("update filter called")
         Task {
             do {
-                species = try speciesListViewModel.query(filter: filter, search: query)
+                if let searchModel = holder.searchModel {
+                    species = try speciesListViewModel.query(filter: filter, search: searchModel.query ?? "")
+                }
             } catch {
                 Fail.with(error)
             }
+        }
+    }
+    
+    func searchController() -> UISearchController? {
+        UISearchController(searchResultsController: nil)
+    }
+    
+    func updateSearchResult(searchText: String?) {
+        print("updateSearchResult in SpeciesListView \(String(describing: searchText))")
+        if let searchModel = holder.searchModel {
+            searchModel.query = searchText
         }
     }
     
@@ -51,9 +64,9 @@ struct SpeciesListView: NavigatableView {
                 .listRowBackground(Color.secondaryColor)
         }
         .listStyle(.plain)
-        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always))
+       // .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always))
         .foregroundColor(.onPrimaryHighEmphasis)
-        .onChange(of: query) { query in
+        .onChange(of: holder.searchModel?.$query) { query in
             updateFilter()
         }
         .onAppear {

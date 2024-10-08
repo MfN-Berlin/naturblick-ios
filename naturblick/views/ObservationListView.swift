@@ -137,7 +137,7 @@ class ObservationListViewController: HostingController<ObservationListView> {
 }
 
 struct ObservationListView: HostedView {
-    
+   
     func updateSearchResult(searchText: String?) {
         model.searchText = searchText
     }
