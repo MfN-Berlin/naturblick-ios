@@ -11,6 +11,7 @@ class ObservationListViewModel: ObservableObject {
     @Published var showList: Bool
     @Published var selectedItems: Set<Observation> = Set<Observation>()
     @Published var editMode: EditMode = EditMode.inactive
+    @Published var searchText: String? = nil
     
     init(showList: Bool) {
         self.showList = showList
@@ -20,11 +21,10 @@ class ObservationListViewModel: ObservableObject {
 class ObservationListViewController: HostingController<ObservationListView> {
     let backend: Backend
     let createFlow: CreateFlowViewModel
-    
-    @Published var model: ObservationListViewModel
-    
     var deleteButton: UIBarButtonItem? = nil
-        
+
+    var model: ObservationListViewModel
+    
     init(backend: Backend, showObservation: Observation? = nil) {
         self.backend = backend
         createFlow = CreateFlowViewModel(backend: backend, fromList: true)
@@ -32,6 +32,7 @@ class ObservationListViewController: HostingController<ObservationListView> {
         model = m
         let view = ObservationListView(backend: backend, createFlow: createFlow, showObservation: showObservation, model: m)
         super.init(rootView: view)
+
         createFlow.setViewController(controller: self)
     }
     
@@ -136,6 +137,16 @@ class ObservationListViewController: HostingController<ObservationListView> {
 }
 
 struct ObservationListView: HostedView {
+    
+    func updateSearchResult(searchText: String?) {
+        model.searchText = searchText
+    }
+    
+    func searchController() -> UISearchController? {
+        return UISearchController(searchResultsController: nil)
+    }
+    
+    
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? = String(localized: "field_book")
@@ -150,7 +161,7 @@ struct ObservationListView: HostedView {
     @State var showDelete: Bool = false
     @State var deleteObservation: IndexSet? = nil
     let showObservation: Observation?
-    @State var searchText: String = ""
+    
     
     init(backend: Backend, createFlow: CreateFlowViewModel, showObservation: Observation?, model: ObservationListViewModel) {
         self.backend = backend
@@ -158,6 +169,7 @@ struct ObservationListView: HostedView {
         self.createFlow = createFlow
         self.showObservation = showObservation
         self.model = model
+        self.updateSearchResult(searchText: nil)
     }
     
     func configureNavigationItem(item: UINavigationItem) {
@@ -196,7 +208,6 @@ struct ObservationListView: HostedView {
                     createListItem(observation: observation)
                 }
                 .environment(\.editMode, .constant(model.editMode))
-                .searchable(text: $searchText)
                 .foregroundColor(.onPrimaryHighEmphasis)
                 .animation(.default, value: persistenceController.observations)
                 .listStyle(.plain)
@@ -253,19 +264,17 @@ struct ObservationListView: HostedView {
     }
     
     var observations: [Observation] {
-        if (searchText.isEmpty) {
-           return persistenceController.observations
-       } else {
-           return persistenceController.observations.filter {
-               let str = searchText.lowercased()
-               return $0.species?.gername?.lowercased().contains(str) ?? false
-               || $0.species?.gersynonym?.lowercased().contains(str) ?? false
-               || $0.species?.engname?.lowercased().contains(str) ?? false
-               || $0.species?.engsynonym?.lowercased().contains(str) ?? false
-               || $0.species?.sciname.lowercased().contains(str) ?? false }
-       }
+        if let searchText = model.searchText, !searchText.isEmpty {
+            return persistenceController.observations.filter {
+               return $0.species?.gername?.lowercased().contains(searchText) ?? false
+                   || $0.species?.gersynonym?.lowercased().contains(searchText) ?? false
+                   || $0.species?.engname?.lowercased().contains(searchText) ?? false
+                   || $0.species?.engsynonym?.lowercased().contains(searchText) ?? false
+                   || $0.species?.sciname.lowercased().contains(searchText) ?? false }
+        } else {
+            return persistenceController.observations
+        }
     }
-      
 }
 
 struct ObservationListView_Previews: PreviewProvider {
