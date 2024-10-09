@@ -6,6 +6,7 @@ import SwiftUI
 
 struct SpeciesListView: NavigatableView {
     
+    
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? {
         switch(filter) {
@@ -21,11 +22,12 @@ struct SpeciesListView: NavigatableView {
     var isCharacterResult: Bool = false
     
     @State var species:  [SpeciesListItem] = []
+    @ObservedObject var searchModel: SearchModel
     
     func updateSpeciesList() {
         print("updateSpeciesList()")
         do {
-            species = try speciesListViewModel.query(filter: filter, search: holder.searchModel?.query ?? "")
+            species = try speciesListViewModel.query(filter: filter, search: searchModel.query ?? "")
         } catch {
             Fail.with(error)
         }
@@ -63,7 +65,7 @@ struct SpeciesListView: NavigatableView {
         .listStyle(.plain)
        // .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always))
         .foregroundColor(.onPrimaryHighEmphasis)
-        .onChange(of: holder.searchModel!.query) { query in
+        .onChange(of: searchModel.query) { query in
             print("onChange")
             updateSpeciesList()
         }

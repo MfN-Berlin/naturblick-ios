@@ -148,7 +148,6 @@ public protocol NavigatableView: View, HoldingViewController, PopAware {
     var viewName: String? { get }
     var alwaysDarkBackground: Bool { get }
     var hideNavigationBarShadow: Bool { get }
-    var searchModel: SearchModel? { get set }
     func configureNavigationItem(item: UINavigationItem)
     func updateSearchResult(searchText: String?)
 }
