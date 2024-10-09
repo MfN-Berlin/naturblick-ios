@@ -118,7 +118,7 @@ public protocol HostedView: View, HoldingViewController, PopAware {
     var alwaysDarkBackground: Bool { get }
     var hideNavigationBarShadow: Bool { get }
     func configureNavigationItem(item: UINavigationItem)
-    mutating func updateSearchResult(searchText: String?)
+    func updateSearchResult(searchText: String?)
 }
 
 public extension HostedView {
