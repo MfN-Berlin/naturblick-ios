@@ -39,7 +39,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             viewType: .portraitGroups,
             groups: Group.groups,
             destination: { group in
-                SpeciesListView(filter: .group(group), flow: self).setUpViewController()
+                SpeciesListViewController(filter: .group(group), flow: self)
             }).setUpViewController()
         viewController?.navigationController?.pushViewController(nextViewController, animated: true)
     }
@@ -408,8 +408,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
 
     func searchSpecies() {
         withNavigation { navigation in
-            let view = PickSpeciesListView(flow: self)
-            navigation.pushViewController(view.setUpViewController(), animated: true)
+            navigation.pushViewController(PickSpeciesListViewController(flow: self), animated: true)
         }
     }
     

@@ -5,7 +5,7 @@
 import Foundation
 import SQLite
 
-class SpeciesListViewModel: ObservableObject {
+class SpeciesListProvider {
     let speciesDb: Connection = Connection.speciesDB
   
     private func searchOrNil(search: String) -> String? {

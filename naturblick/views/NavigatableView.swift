@@ -49,7 +49,6 @@ public class ViewControllerHolder {
 public protocol HoldingViewController {
     var holder: ViewControllerHolder { get set }
     func setViewController(controller: UIViewController)
-    func searchController() -> UISearchController?
 }
 
 extension HoldingViewController {
@@ -69,10 +68,6 @@ extension HoldingViewController {
         if let navigation = navigationController {
             block(navigation)
         }
-    }
-    
-    func searchController() -> UISearchController? {
-        return nil
     }
 }
 
@@ -118,7 +113,6 @@ public protocol HostedView: View, HoldingViewController, PopAware {
     var alwaysDarkBackground: Bool { get }
     var hideNavigationBarShadow: Bool { get }
     func configureNavigationItem(item: UINavigationItem)
-    mutating func updateSearchResult(searchText: String?)
 }
 
 public extension HostedView {
@@ -133,9 +127,6 @@ public extension HostedView {
     }
     func configureNavigationItem(item: UINavigationItem) {
     }
-    func updateSearchResult(searchText: String?) {
-        fatalError("has to be implemented in the ContentView of the Controller")
-    }
 }
 
 public protocol NavigatableView: View, HoldingViewController, PopAware {
@@ -143,7 +134,6 @@ public protocol NavigatableView: View, HoldingViewController, PopAware {
     var alwaysDarkBackground: Bool { get }
     var hideNavigationBarShadow: Bool { get }
     func configureNavigationItem(item: UINavigationItem)
-    func updateSearchResult(searchText: String?)
 }
 
 public extension NavigatableView {
@@ -166,44 +156,15 @@ public extension NavigatableView {
 
     func configureNavigationItem(item: UINavigationItem) {
     }
-    func updateSearchResult(searchText: String?) {
-        fatalError("has to be implemented in the ContentView of the Controller")
-    }
 }
 
-protocol SearchableController {
-    func setupSearchController()
-}
-
-public class HostingController<ContentView>: UIHostingController<ContentView>, PopAware, SearchableController, UISearchResultsUpdating where ContentView: HostedView {
-    
-    func setupSearchController() {
-        if let searchController = self.rootView.searchController() {
-            searchController.searchResultsUpdater = self
-            searchController.obscuresBackgroundDuringPresentation = false
-            searchController.hidesNavigationBarDuringPresentation = false
-            searchController.searchBar.placeholder = "Search" //TODO Il8n
-            
-            self.navigationItem.searchController = searchController
-            self.navigationItem.hidesSearchBarWhenScrolling = false
-            self.definesPresentationContext = false
-        }
-    }
-    
-    public func updateSearchResults(for searchController: UISearchController) {
-        if self.rootView.searchController() != nil {
-            self.rootView.updateSearchResult(searchText: searchController.searchBar.text?.lowercased())
-        }
-    }
-    
+public class HostingController<ContentView>: UIHostingController<ContentView>, PopAware where ContentView: HostedView {
     public func pop() -> Bool {
         return rootView.pop()
     }
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUpDefaultNavigationItemApperance(hideShadow: rootView.hideNavigationBarShadow)
-        setupSearchController()
         if let title = rootView.viewName {
             navigationItem.title = title
         }
@@ -224,27 +185,7 @@ public class HostingController<ContentView>: UIHostingController<ContentView>, P
     }
 }
 
-private class NavigatableHostingController<ContentView>: UIHostingController<ContentView>, PopAware, SearchableController, UISearchResultsUpdating where ContentView: NavigatableView {
-    
-    func setupSearchController() {
-        if let searchController = self.rootView.searchController() {
-            searchController.searchResultsUpdater = self
-            searchController.obscuresBackgroundDuringPresentation = false
-            searchController.hidesNavigationBarDuringPresentation = false
-            searchController.searchBar.placeholder = "Search" //TODO Il8n
-            
-            self.navigationItem.searchController = searchController
-            self.navigationItem.hidesSearchBarWhenScrolling = false
-            self.definesPresentationContext = false
-        }
-    }
-    
-    public func updateSearchResults(for searchController: UISearchController) {
-        if self.rootView.searchController() != nil {
-            self.rootView.updateSearchResult(searchText: searchController.searchBar.text?.lowercased())
-        }
-    }
-    
+private class NavigatableHostingController<ContentView>: UIHostingController<ContentView>, PopAware where ContentView: NavigatableView {
     public func pop() -> Bool {
         return rootView.pop()
     }
@@ -252,7 +193,6 @@ private class NavigatableHostingController<ContentView>: UIHostingController<Con
     public override func viewDidLoad() {
         super.viewDidLoad()
         setUpDefaultNavigationItemApperance(hideShadow: rootView.hideNavigationBarShadow)
-        setupSearchController()
         if let title = rootView.viewName {
             navigationItem.title = title
         }

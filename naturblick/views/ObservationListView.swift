@@ -18,7 +18,43 @@ class ObservationListViewModel: ObservableObject {
     }
 }
 
-class ObservationListViewController: HostingController<ObservationListView> {
+class ObservationListViewController: HostingController<ObservationListView>, UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        model.searchText = searchController.searchBar.text?.lowercased()
+    }
+    
+    func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+    /*    searchController.searchBar.searchTextField.defaultTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.red
+        ] */
+        
+     //   searchController.searchBar.searchTextField.backgroundColor = .onPrimaryButtonSecondary
+
+  /*      searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
+            string: String(localized: "search"),
+            attributes: [  // NSAttributedString.Key.font: UIFont(name: "Lato", size: .body2)!,
+                         NSAttributedString.Key.foregroundColor: UIColor.onPrimaryMininumEmphasis]
+        )
+        searchController.searchBar.searchTextField.attributedText = NSAttributedString(
+            string: "",
+            attributes: [  // NSAttributedString.Key.font: UIFont(name: "Lato", size: .body2)!,
+                NSAttributedString.Key.foregroundColor: UIColor.onPrimaryHighEmphasis]
+        ) */
+        
+        let glassIconView = searchController.searchBar.searchTextField.leftView as? UIImageView
+        glassIconView?.tintColor = UIColor.onPrimaryMininumEmphasis
+        
+        self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.definesPresentationContext = false
+    }
+    
+    let searchController = UISearchController(searchResultsController: nil)
+    
     let backend: Backend
     let createFlow: CreateFlowViewModel
     var deleteButton: UIBarButtonItem? = nil
@@ -32,7 +68,7 @@ class ObservationListViewController: HostingController<ObservationListView> {
         model = m
         let view = ObservationListView(backend: backend, createFlow: createFlow, showObservation: showObservation, model: m)
         super.init(rootView: view)
-
+        setupSearchController()
         createFlow.setViewController(controller: self)
     }
     
@@ -137,16 +173,6 @@ class ObservationListViewController: HostingController<ObservationListView> {
 }
 
 struct ObservationListView: HostedView {
-    
-    func updateSearchResult(searchText: String?) {
-        model.searchText = searchText
-    }
-    
-    func searchController() -> UISearchController? {
-        return UISearchController(searchResultsController: nil)
-    }
-    
-    
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? = String(localized: "field_book")
@@ -162,14 +188,12 @@ struct ObservationListView: HostedView {
     @State var deleteObservation: IndexSet? = nil
     let showObservation: Observation?
     
-    
     init(backend: Backend, createFlow: CreateFlowViewModel, showObservation: Observation?, model: ObservationListViewModel) {
         self.backend = backend
         self.persistenceController = backend.persistence
         self.createFlow = createFlow
         self.showObservation = showObservation
         self.model = model
-        self.updateSearchResult(searchText: nil)
     }
     
     func configureNavigationItem(item: UINavigationItem) {
