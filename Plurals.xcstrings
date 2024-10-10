@@ -1,0 +1,47 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%lld obs_count" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Beobachtung"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Beobachtungen"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld \u0010Observation"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Observations"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
