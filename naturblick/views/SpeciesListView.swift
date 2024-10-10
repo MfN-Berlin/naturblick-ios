@@ -4,7 +4,86 @@
 
 import SwiftUI
 
-struct SpeciesListView: NavigatableView {
+class SpeciesListViewModel: ObservableObject {
+    @Published var species: [SpeciesListItem] = []
+}
+
+class SpeciesListViewController: HostingController<SpeciesListView>, UISearchResultsUpdating, UISearchControllerDelegate {
+
+    let filter: SpeciesListFilter
+    let flow: CreateFlowViewModel
+    let isCharacterResult: Bool = false
+    let speciesListModel = SpeciesListViewModel()
+    private let speciesProvider = SpeciesListProvider()
+    private let searchController = UISearchController(searchResultsController: nil)
+    
+    init(filter: SpeciesListFilter, flow: CreateFlowViewModel, isCharacterResult: Bool = false) {
+        self.filter = filter
+        self.flow = flow
+        let view = SpeciesListView(filter: filter, flow: flow, isCharacterResult: isCharacterResult, speciesListModel: speciesListModel)
+        super.init(rootView: view)
+        setupSearchController()
+        updateSearchResults(for: searchController)
+    }
+    
+    private func updateSpecies(filter: SpeciesListFilter, searchText: String?) {
+        do {
+            speciesListModel.species = try speciesProvider.query(filter: filter, search: searchText ?? "")
+        } catch {
+            Fail.with(error)
+        }
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        updateSpecies(filter: filter, searchText: searchController.searchBar.text?.lowercased())
+    }
+    
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        let glassIconView = searchController.searchBar.searchTextField.leftView as? UIImageView
+        glassIconView?.tintColor = UIColor.onPrimaryMininumEmphasis
+        
+        self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.definesPresentationContext = false
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchBarCustomStyling()
+    }
+    
+    // it's important to set the textColor in viewDidLoad, otherwise the custom setting is overwriten somewhere else magically
+    private func searchBarCustomStyling() {
+        let sb = searchController.searchBar
+        let stf = sb.searchTextField
+        let glasIconView = searchController.searchBar.searchTextField.leftView as? UIImageView
+        
+        glasIconView?.tintColor = .onPrimaryMininumEmphasis
+        stf.attributedPlaceholder = NSAttributedString(
+            string: String(localized: "search"),
+            attributes: [
+                NSAttributedString.Key.foregroundColor: UIColor.onPrimaryMininumEmphasis]
+        )
+        
+        stf.textColor = .onPrimaryHighEmphasis
+        stf.backgroundColor = UIColor.onPrimaryButtonSecondary
+    }
+    
+    func willPresentSearchController(_ searchController: UISearchController) {
+     searchController.searchBar.searchTextField.backgroundColor = UIColor.onPrimaryInput
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+     searchController.searchBar.searchTextField.backgroundColor = UIColor.onPrimaryButtonSecondary
+    }
+}
+
+struct SpeciesListView: HostedView {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? {
@@ -15,23 +94,11 @@ struct SpeciesListView: NavigatableView {
             return String(localized: "species")
         }
     }
-    
-    @State var species:  [SpeciesListItem] = []
-    @State var query: String = ""
-    @StateObject var speciesListViewModel: SpeciesListViewModel = SpeciesListViewModel()
+
     let filter: SpeciesListFilter
     @ObservedObject var flow: CreateFlowViewModel
-    var isCharacterResult: Bool = false
-    
-    func updateFilter() {
-        Task {
-            do {
-                species = try speciesListViewModel.query(filter: filter, search: query)
-            } catch {
-                Fail.with(error)
-            }
-        }
-    }
+    let isCharacterResult: Bool
+    @ObservedObject var speciesListModel: SpeciesListViewModel
     
     func showSpecies(species: SpeciesListItem) {
         if isCharacterResult {
@@ -42,7 +109,7 @@ struct SpeciesListView: NavigatableView {
     }
     
     var body: some View {
-        List(species) { current in
+        List(speciesListModel.species) { current in
             SpeciesListItemView(species: current)
                 .onTapGesture {
                     showSpecies(species: current)
@@ -51,21 +118,12 @@ struct SpeciesListView: NavigatableView {
                 .listRowBackground(Color.secondaryColor)
         }
         .listStyle(.plain)
-        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always))
         .foregroundColor(.onPrimaryHighEmphasis)
-        .onChange(of: query) { query in
-            updateFilter()
-        }
-        .onAppear {
-            if species.isEmpty {
-                updateFilter()
-            }
-        }
     }
 }
 
 struct SpeciesListView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesListView(filter: .group(Group.groups[0]), flow: CreateFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))))
+        SpeciesListView(filter: .group(Group.groups[0]), flow: CreateFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))), isCharacterResult: false, speciesListModel: SpeciesListViewModel())
     }
 }
