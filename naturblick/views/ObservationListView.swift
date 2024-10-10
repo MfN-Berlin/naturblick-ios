@@ -260,7 +260,8 @@ struct ObservationListView: HostedView {
                 ObservationMapView(
                     backend: backend,
                     userTrackingMode: $userTrackingMode,
-                    initial: showObservation) { observation in
+                    initial: showObservation,
+                    model: model) { observation in
                         navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, backend: backend), animated: true)
                     }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
