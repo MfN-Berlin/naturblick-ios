@@ -1,8 +1,6 @@
 //
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
-
-
 import SwiftUI
 import MapKit
 import Photos
@@ -18,7 +16,7 @@ class ObservationListViewModel: ObservableObject {
     }
 }
 
-class ObservationListViewController: HostingController<ObservationListView>, UISearchResultsUpdating {
+class ObservationListViewController: HostingController<ObservationListView>, UISearchResultsUpdating, UISearchControllerDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         model.searchText = searchController.searchBar.text?.lowercased()
     }
@@ -27,27 +25,7 @@ class ObservationListViewController: HostingController<ObservationListView>, UIS
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
-        
-    /*    searchController.searchBar.searchTextField.defaultTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.red
-        ] */
-        
-     //   searchController.searchBar.searchTextField.backgroundColor = .onPrimaryButtonSecondary
-
-  /*      searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
-            string: String(localized: "search"),
-            attributes: [  // NSAttributedString.Key.font: UIFont(name: "Lato", size: .body2)!,
-                         NSAttributedString.Key.foregroundColor: UIColor.onPrimaryMininumEmphasis]
-        )
-        searchController.searchBar.searchTextField.attributedText = NSAttributedString(
-            string: "",
-            attributes: [  // NSAttributedString.Key.font: UIFont(name: "Lato", size: .body2)!,
-                NSAttributedString.Key.foregroundColor: UIColor.onPrimaryHighEmphasis]
-        ) */
-        
-        let glassIconView = searchController.searchBar.searchTextField.leftView as? UIImageView
-        glassIconView?.tintColor = UIColor.onPrimaryMininumEmphasis
-        
+        searchController.delegate = self
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
         self.definesPresentationContext = false
@@ -169,6 +147,36 @@ class ObservationListViewController: HostingController<ObservationListView>, UIS
         }))
         alert.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    // it's important to set the textColor in viewDidLoad, otherwise the custom setting is overwriten somewhere else magically
+    private func searchBarCustomStyling() {
+        let sb = searchController.searchBar
+        let stf = sb.searchTextField
+        let glasIconView = searchController.searchBar.searchTextField.leftView as? UIImageView
+        
+        glasIconView?.tintColor = .onPrimaryMininumEmphasis
+        stf.attributedPlaceholder = NSAttributedString(
+            string: String(localized: "search"),
+            attributes: [
+                NSAttributedString.Key.foregroundColor: UIColor.onPrimaryMininumEmphasis]
+        )
+        
+        stf.textColor = .onPrimaryHighEmphasis
+        stf.backgroundColor = UIColor.onPrimaryButtonSecondary
+    }
+    
+    func willPresentSearchController(_ searchController: UISearchController) {
+     searchController.searchBar.searchTextField.backgroundColor = UIColor.onPrimaryInput
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+     searchController.searchBar.searchTextField.backgroundColor = UIColor.onPrimaryButtonSecondary
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchBarCustomStyling()
     }
 }
 
