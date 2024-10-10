@@ -39,7 +39,7 @@ class PickSpeciesListModel: ObservableObject {
     }
 }
 
-class PickSpeciesListViewController<Flow>: HostingController<PickSpeciesListView<Flow>>, UISearchResultsUpdating where Flow: IdFlow {
+class PickSpeciesListViewController<Flow>: HostingController<PickSpeciesListView<Flow>>, UISearchResultsUpdating, UISearchControllerDelegate where Flow: IdFlow {
     
     let pickSpeciesListModel = PickSpeciesListModel()
     
@@ -57,6 +57,7 @@ class PickSpeciesListViewController<Flow>: HostingController<PickSpeciesListView
     
     func setupSearchController() {
         searchController.searchResultsUpdater = self
+        searchController.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         
@@ -69,6 +70,36 @@ class PickSpeciesListViewController<Flow>: HostingController<PickSpeciesListView
     }
     
     let searchController = UISearchController(searchResultsController: nil)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchBarCustomStyling()
+    }
+    
+    // it's important to set the textColor in viewDidLoad, otherwise the custom setting is overwriten somewhere else magically
+    private func searchBarCustomStyling() {
+        let sb = searchController.searchBar
+        let stf = sb.searchTextField
+        let glasIconView = searchController.searchBar.searchTextField.leftView as? UIImageView
+        
+        glasIconView?.tintColor = .onPrimaryMininumEmphasis
+        stf.attributedPlaceholder = NSAttributedString(
+            string: String(localized: "search"),
+            attributes: [
+                NSAttributedString.Key.foregroundColor: UIColor.onPrimaryMininumEmphasis]
+        )
+        
+        stf.textColor = .onPrimaryHighEmphasis
+        stf.backgroundColor = UIColor.onPrimaryButtonSecondary
+    }
+    
+    func willPresentSearchController(_ searchController: UISearchController) {
+     searchController.searchBar.searchTextField.backgroundColor = UIColor.onPrimaryInput
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+     searchController.searchBar.searchTextField.backgroundColor = UIColor.onPrimaryButtonSecondary
+    }
 }
 
 struct PickSpeciesListView<Flow>: HostedView where Flow: IdFlow {
