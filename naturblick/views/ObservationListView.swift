@@ -199,25 +199,29 @@ struct ObservationListView: HostedView {
     var body: some View {
         SwiftUI.Group {
             if(model.showList) {
-                List(observations, id: \.self, selection: $model.selectedItems) { observation in
-                    createListItem(observation: observation)
-                }
-                .environment(\.editMode, .constant(model.editMode))
-                .foregroundColor(.onPrimaryHighEmphasis)
-                .animation(.default, value: persistenceController.observations)
-                .listStyle(.plain)
-                .refreshable {
-                    do {
-                        try await backend.sync()
-                    } catch {
-                        errorHandler.handle(error)
+                VStack {
+                    List(observations, id: \.self, selection: $model.selectedItems) { observation in
+                        createListItem(observation: observation)
                     }
-                }
-                .onChange(of: model.editMode) { _ in
-                    reinitNav()
-                }
-                .onChange(of: model.selectedItems.count) { count in
-                    (viewController as? ObservationListViewController)?.enableDelete(enabled: count > 0)
+                    .environment(\.editMode, .constant(model.editMode))
+                    .foregroundColor(.onPrimaryHighEmphasis)
+                    .animation(.default, value: persistenceController.observations)
+                    .listStyle(.plain)
+                    .refreshable {
+                        do {
+                            try await backend.sync()
+                        } catch {
+                            errorHandler.handle(error)
+                        }
+                    }
+                    .onChange(of: model.editMode) { _ in
+                        reinitNav()
+                    }
+                    .onChange(of: model.selectedItems.count) { count in
+                        (viewController as? ObservationListViewController)?.enableDelete(enabled: count > 0)
+                    }
+                    Text("\(observations.count) obs_count", tableName: "Plurals")
+                        .body2()
                 }
             } else {
                 ObservationMapView(
