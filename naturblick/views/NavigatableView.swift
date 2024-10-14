@@ -183,6 +183,33 @@ public class HostingController<ContentView>: UIHostingController<ContentView>, P
     required init?(coder aDecoder: NSCoder) {
         fatalError("NSCoding not supported")
     }
+    
+    func setupSearchController() -> UISearchController {
+        let searchController = UISearchController(searchResultsController: nil)
+        self.navigationItem.searchController = searchController
+        
+        let sb = searchController.searchBar
+       
+        let stf = sb.searchTextField
+        let glasIconView = searchController.searchBar.searchTextField.leftView as? UIImageView
+        
+        glasIconView?.tintColor = .onPrimaryMininumEmphasis
+        stf.attributedPlaceholder = NSAttributedString(
+            string: String(localized: "search"),
+            attributes: [
+                NSAttributedString.Key.foregroundColor: UIColor.onPrimaryMininumEmphasis]
+        )
+        
+        stf.textColor = .onPrimaryHighEmphasis
+        stf.backgroundColor = UIColor.onPrimaryInput
+        
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.definesPresentationContext = false
+        return searchController
+    }
 }
 
 private class NavigatableHostingController<ContentView>: UIHostingController<ContentView>, PopAware where ContentView: NavigatableView {

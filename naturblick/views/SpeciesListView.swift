@@ -4,7 +4,46 @@
 
 import SwiftUI
 
-struct SpeciesListView: NavigatableView {
+class SpeciesListViewModel: ObservableObject {
+    @Published var species: [SpeciesListItem] = []
+}
+
+class SpeciesListViewController: HostingController<SpeciesListView>, UISearchResultsUpdating {
+
+    let filter: SpeciesListFilter
+    let flow: CreateFlowViewModel
+    let isCharacterResult: Bool = false
+    let speciesListModel = SpeciesListViewModel()
+    private let speciesProvider = SpeciesListProvider()
+    
+    init(filter: SpeciesListFilter, flow: CreateFlowViewModel, isCharacterResult: Bool = false) {
+        self.filter = filter
+        self.flow = flow
+        let view = SpeciesListView(filter: filter, flow: flow, isCharacterResult: isCharacterResult, speciesListModel: speciesListModel)
+        super.init(rootView: view)
+    }
+    
+    private func updateSpecies(filter: SpeciesListFilter, searchText: String?) {
+        do {
+            speciesListModel.species = try speciesProvider.query(filter: filter, search: searchText ?? "")
+        } catch {
+            Fail.with(error)
+        }
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        updateSpecies(filter: filter, searchText: searchController.searchBar.text?.lowercased())
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let searchController = setupSearchController()
+        searchController.searchResultsUpdater = self
+        updateSearchResults(for: searchController)
+    }
+}
+
+struct SpeciesListView: HostedView {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? {
@@ -15,23 +54,11 @@ struct SpeciesListView: NavigatableView {
             return String(localized: "species")
         }
     }
-    
-    @State var species:  [SpeciesListItem] = []
-    @State var query: String = ""
-    @StateObject var speciesListViewModel: SpeciesListViewModel = SpeciesListViewModel()
+
     let filter: SpeciesListFilter
     @ObservedObject var flow: CreateFlowViewModel
-    var isCharacterResult: Bool = false
-    
-    func updateFilter() {
-        Task {
-            do {
-                species = try speciesListViewModel.query(filter: filter, search: query)
-            } catch {
-                Fail.with(error)
-            }
-        }
-    }
+    let isCharacterResult: Bool
+    @ObservedObject var speciesListModel: SpeciesListViewModel
     
     func showSpecies(species: SpeciesListItem) {
         if isCharacterResult {
@@ -42,7 +69,7 @@ struct SpeciesListView: NavigatableView {
     }
     
     var body: some View {
-        List(species) { current in
+        List(speciesListModel.species) { current in
             SpeciesListItemView(species: current)
                 .onTapGesture {
                     showSpecies(species: current)
@@ -51,21 +78,12 @@ struct SpeciesListView: NavigatableView {
                 .listRowBackground(Color.secondaryColor)
         }
         .listStyle(.plain)
-        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always))
         .foregroundColor(.onPrimaryHighEmphasis)
-        .onChange(of: query) { query in
-            updateFilter()
-        }
-        .onAppear {
-            if species.isEmpty {
-                updateFilter()
-            }
-        }
     }
 }
 
 struct SpeciesListView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesListView(filter: .group(Group.groups[0]), flow: CreateFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))))
+        SpeciesListView(filter: .group(Group.groups[0]), flow: CreateFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))), isCharacterResult: false, speciesListModel: SpeciesListViewModel())
     }
 }

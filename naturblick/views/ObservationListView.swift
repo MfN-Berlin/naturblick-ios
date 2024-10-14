@@ -1,8 +1,6 @@
 //
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
-
-
 import SwiftUI
 import MapKit
 import Photos
@@ -11,20 +9,24 @@ class ObservationListViewModel: ObservableObject {
     @Published var showList: Bool
     @Published var selectedItems: Set<Observation> = Set<Observation>()
     @Published var editMode: EditMode = EditMode.inactive
+    @Published var searchText: String? = nil
     
     init(showList: Bool) {
         self.showList = showList
     }
 }
 
-class ObservationListViewController: HostingController<ObservationListView> {
+class ObservationListViewController: HostingController<ObservationListView>, UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        model.searchText = searchController.searchBar.text?.lowercased()
+    }
+    
     let backend: Backend
     let createFlow: CreateFlowViewModel
-    
-    @Published var model: ObservationListViewModel
-    
     var deleteButton: UIBarButtonItem? = nil
-        
+
+    var model: ObservationListViewModel
+    
     init(backend: Backend, showObservation: Observation? = nil) {
         self.backend = backend
         createFlow = CreateFlowViewModel(backend: backend, fromList: true)
@@ -133,6 +135,12 @@ class ObservationListViewController: HostingController<ObservationListView> {
         alert.popoverPresentationController?.barButtonItem = sender as? UIBarButtonItem
         self.present(alert, animated: true, completion: nil)
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let searchController = setupSearchController()
+        searchController.searchResultsUpdater = self
+    }
 }
 
 struct ObservationListView: HostedView {
@@ -150,7 +158,6 @@ struct ObservationListView: HostedView {
     @State var showDelete: Bool = false
     @State var deleteObservation: IndexSet? = nil
     let showObservation: Observation?
-    @State var searchText: String = ""
     
     init(backend: Backend, createFlow: CreateFlowViewModel, showObservation: Observation?, model: ObservationListViewModel) {
         self.backend = backend
@@ -196,7 +203,6 @@ struct ObservationListView: HostedView {
                     createListItem(observation: observation)
                 }
                 .environment(\.editMode, .constant(model.editMode))
-                .searchable(text: $searchText)
                 .foregroundColor(.onPrimaryHighEmphasis)
                 .animation(.default, value: persistenceController.observations)
                 .listStyle(.plain)
@@ -217,7 +223,8 @@ struct ObservationListView: HostedView {
                 ObservationMapView(
                     backend: backend,
                     userTrackingMode: $userTrackingMode,
-                    initial: showObservation) { observation in
+                    initial: showObservation,
+                    model: model) { observation in
                         navigationController?.pushViewController(ObservationViewController(occurenceId: observation.id, backend: backend), animated: true)
                     }
                 .trackingToggle($userTrackingMode: $userTrackingMode, authorizationStatus: locationManager.permissionStatus)
@@ -253,19 +260,17 @@ struct ObservationListView: HostedView {
     }
     
     var observations: [Observation] {
-        if (searchText.isEmpty) {
-           return persistenceController.observations
-       } else {
-           return persistenceController.observations.filter {
-               let str = searchText.lowercased()
-               return $0.species?.gername?.lowercased().contains(str) ?? false
-               || $0.species?.gersynonym?.lowercased().contains(str) ?? false
-               || $0.species?.engname?.lowercased().contains(str) ?? false
-               || $0.species?.engsynonym?.lowercased().contains(str) ?? false
-               || $0.species?.sciname.lowercased().contains(str) ?? false }
-       }
+        if let searchText = model.searchText, !searchText.isEmpty {
+            return persistenceController.observations.filter {
+               return $0.species?.gername?.lowercased().contains(searchText) ?? false
+                   || $0.species?.gersynonym?.lowercased().contains(searchText) ?? false
+                   || $0.species?.engname?.lowercased().contains(searchText) ?? false
+                   || $0.species?.engsynonym?.lowercased().contains(searchText) ?? false
+                   || $0.species?.sciname.lowercased().contains(searchText) ?? false }
+        } else {
+            return persistenceController.observations
+        }
     }
-      
 }
 
 struct ObservationListView_Previews: PreviewProvider {

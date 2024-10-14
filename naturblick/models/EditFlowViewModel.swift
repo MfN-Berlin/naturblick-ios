@@ -178,8 +178,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     
     func searchSpecies() {
         withNavigation { navigation in
-            let view = PickSpeciesListView(flow: self)
-            navigation.pushViewController(view.setUpViewController(), animated: true)
+            navigation.pushViewController(PickSpeciesListViewController(flow: self), animated: true)
         }
     }
     

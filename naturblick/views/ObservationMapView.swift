@@ -10,20 +10,35 @@ struct ObservationMapView: UIViewRepresentable {
     let backend: Backend
     @ObservedObject var persistenceController: ObservationPersistenceController
     @Binding var userTrackingMode: MKUserTrackingMode
-
+    @ObservedObject var model: ObservationListViewModel
+    
     let initial: Observation?
     let toDetails: (Observation) -> Void
 
-    init(backend: Backend, userTrackingMode: Binding<MKUserTrackingMode>, initial: Observation?, toDetails: @escaping (Observation) -> Void) {
+    init(backend: Backend, userTrackingMode: Binding<MKUserTrackingMode>, initial: Observation?, model: ObservationListViewModel, toDetails: @escaping (Observation) -> Void) {
         self.backend = backend
         self.persistenceController = backend.persistence
         self._userTrackingMode = userTrackingMode
         self.initial = initial
         self.toDetails = toDetails
+        self.model = model
+    }
+    
+    var observations: [Observation] {
+        if let searchText = model.searchText, !searchText.isEmpty {
+            return persistenceController.observations.filter {
+               return $0.species?.gername?.lowercased().contains(searchText) ?? false
+                   || $0.species?.gersynonym?.lowercased().contains(searchText) ?? false
+                   || $0.species?.engname?.lowercased().contains(searchText) ?? false
+                   || $0.species?.engsynonym?.lowercased().contains(searchText) ?? false
+                   || $0.species?.sciname.lowercased().contains(searchText) ?? false }
+        } else {
+            return persistenceController.observations
+        }
     }
     
     private func setAnnotations(map: MKMapView) {
-        var annotations = persistenceController.observations
+        var annotations = observations
             .compactMap { observation in
                 guard let coords = observation.observation.coords else {
                     return nil as (Observation, Coordinates)?
