@@ -134,10 +134,11 @@ struct ObservationView: HostedView {
                 speciesAvatar = Image(uiImage: image)
             }
             if let observation = model.observation?.observation, observation.obsType == .audio || observation.obsType == .unidentifiedaudio {
+                let soundFromTo = SoundFromTo.createSoundFromTo(observation: observation)
                 if let mediaId = observation.mediaId {
-                    sound = try? await NBSound(id: mediaId, backend: backend, obsIdent: observation.obsIdent)
+                    sound = try? await NBSound(id: mediaId, backend: backend, obsIdent: observation.obsIdent, soundFromTo: soundFromTo)
                 } else if let obsIdent = observation.obsIdent {
-                    sound = NBSound.loadOld(occurenceId: observation.occurenceId, obsIdent: obsIdent, persistenceController: persistenceController)
+                    sound = NBSound.loadOld(occurenceId: observation.occurenceId, obsIdent: obsIdent, persistenceController: persistenceController, soundFromTo: soundFromTo)
                 } else {
                     Logger.compat.warning("Audio Observation \(observation.occurenceId, privacy: .public) has neither mediaId nor obsIdent")
                 }

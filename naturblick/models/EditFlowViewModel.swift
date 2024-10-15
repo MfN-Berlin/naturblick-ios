@@ -78,9 +78,9 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         }
     }
     
-    @MainActor func existingSound(mediaId: UUID) {
+    @MainActor func existingSound(mediaId: UUID, prevSoundFromTo: SoundFromTo?) {
         withNavigation { navigation in
-            navigation.pushViewController(SpectrogramViewController(mediaId: mediaId, flow: self), animated: true)
+            navigation.pushViewController(SpectrogramViewController(mediaId: mediaId, flow: self, prevSoundFromTo: prevSoundFromTo), animated: true)
         }
     }
     
