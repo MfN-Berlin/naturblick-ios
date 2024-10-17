@@ -18,8 +18,7 @@ struct FeedbackView: NavigatableView {
                 Text("support_us_text")
                     .body1()
                 Button("feedback_email") {
-                    let email = "naturblick@mfn-berlin.de"
-                    if let url = URL(string: "mailto:\(email)") {
+                    if let url = URL.feedback() {
                         UIApplication.shared.open(url)
                     }
                 }.buttonStyle(ConfirmFullWidthButton())

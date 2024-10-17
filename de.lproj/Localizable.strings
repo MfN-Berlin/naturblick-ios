@@ -215,3 +215,5 @@
 "delete_question_message_plural %@"="Bist du sicher, dass du %@ Beobachtungen löschen möchtest?";
 "select"="Auswählen";
 "search"="Artname...";
+"feedback_subject %@"="Naturblick %@ Feedback";
+"feedback_device %@ os %@ app %@"="\n\nAutomatische Informationen:\nDie folgenden Informationen über dein Gerät und die App helfen uns, dein Problem zu verstehen:\nGerät: %1$@\nAPI: %2$@\nApp: %3$@\n\nDu kannst diese Informationen gerne einfach entfernen, wenn du sie nicht mit uns teilen möchtest.";

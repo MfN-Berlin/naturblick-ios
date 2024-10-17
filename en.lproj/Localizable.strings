@@ -217,3 +217,5 @@
 "delete_question_message_plural %@"="Are you sure that you want to delete %@ observations?";
 "select"="Select";
 "search"="Species name...";
+"feedback_subject %@"="Naturblick %@ feedback";
+"feedback_device %@ os %@ app %@"="\n\nAutomatic information:\nThe following information about your device and the App helps us to understand your problem:\nDevice: %1$@\nAPI: %2$@\nApp: %3$@\n\nFeel free to remove this information if you do not want to share it with us.";
