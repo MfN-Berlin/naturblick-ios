@@ -40,12 +40,12 @@ struct SoundButton: View {
     private func toggle() {
         if (soundStream.currentStatus == AVPlayer.TimeControlStatus.paused) {
             if let url = url {
-                soundStream.play(url: url)
+                soundStream.play(url: url, soundFromTo: nil)
                 if let specId = speciesId {
                     AnalyticsTracker.trackPortraitSound(speciesId: specId, url: url.absoluteString)
                 }
             } else if let sound = sound {
-                soundStream.play(sound: sound)
+                soundStream.play(sound: sound, soundFromTo: sound.soundFromTo)
             }
         } else {
             soundStream.stop()

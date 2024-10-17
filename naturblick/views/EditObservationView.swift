@@ -74,7 +74,7 @@ struct EditObservationView: HostedView {
     
     func identifySound() {
         if let mediaId = flow.data.original.mediaId {
-            flow.existingSound(mediaId: mediaId)
+            flow.existingSound(mediaId: mediaId, prevSoundFromTo: SoundFromTo.createSoundFromTo(observation: flow.data.original) )
         }
     }
     

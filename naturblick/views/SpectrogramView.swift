@@ -9,9 +9,10 @@ class SpectrogramViewController<Flow>: HostingController<SpectrogramView<Flow>> 
     let flow: Flow
     let model: SpectrogramViewModel
     
-    init(mediaId: UUID, flow: Flow) {
+    init(mediaId: UUID, flow: Flow, prevSoundFromTo: SoundFromTo?) {
         self.flow = flow
         self.model = SpectrogramViewModel(backend: flow.backend, mediaId: mediaId, obsIdent: flow.obsIdent)
+        self.model.prevSoundFromTo = prevSoundFromTo
         super.init(rootView: SpectrogramView(model: model, flow: flow))
     }
 }
@@ -236,8 +237,13 @@ struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
         }
         .onReceive(model.$spectrogram) { spectrogramOpt in
             if let spectrogram = spectrogramOpt {
-                let initialStart = 1 - 400 / spectrogram.size.width
-                model.start = initialStart > 0 ? initialStart : 0
+                if let sft = model.prevSoundFromTo {
+                    model.start = CGFloat(sft.from) / .pixelToMsFactor / spectrogram.size.width
+                    model.end = CGFloat(sft.to) / .pixelToMsFactor / spectrogram.size.width
+                } else {
+                    let initialStart = 1 - 400 / spectrogram.size.width
+                    model.start = initialStart > 0 ? initialStart : 0
+                }
             }
         }
     }

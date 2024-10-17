@@ -21,6 +21,7 @@ class SpectrogramViewModel: HttpErrorViewModel {
     @Published var start: CGFloat = 0
     @Published var end: CGFloat = 1
     var sound: NBSound? = nil
+    var prevSoundFromTo: SoundFromTo? = nil
     
     private var audioPlayer: AVPlayer? = nil
     private var timeObserver: Any? = nil
@@ -36,7 +37,7 @@ class SpectrogramViewModel: HttpErrorViewModel {
             Fail.with(error)
         }
         Task {
-            await initPlayer()
+            initPlayer()
         }
     }
     
@@ -91,7 +92,7 @@ class SpectrogramViewModel: HttpErrorViewModel {
     }
     
     static func createSpectrogram(backend: Backend, mediaId: UUID, obsIdent: String?) async throws -> (UIImage, NBSound) {
-        let sound = try await NBSound(id: mediaId, backend: backend, obsIdent: obsIdent)
+        let sound = try await NBSound(id: mediaId, backend: backend, obsIdent: obsIdent, soundFromTo: nil)
         try await backend.upload(sound: sound.url, mediaId: sound.id)
         return (try await backend.spectrogram(mediaId: sound.id), sound)
     }
