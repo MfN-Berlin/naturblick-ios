@@ -12,20 +12,37 @@ class SoundStreamController : ObservableObject {
     @Published var currentStatus: AVPlayer.TimeControlStatus = .paused
     private var audioPlayer: AVPlayer? = nil
     
-    func play(sound: NBSound) {
+    func play(sound: NBSound, soundFromTo: SoundFromTo?) {
         currentStatus = .waitingToPlayAtSpecifiedRate
         Task { @MainActor in
-            play(url: sound.url)
+            play(url: sound.url, soundFromTo: soundFromTo)
         }
     }
     
-    @MainActor func play(url: URL){
+    func play(url: URL, soundFromTo: SoundFromTo?) {
         // Always use playback for playback, could have been changed by the sound recorder
         try? AVAudioSession.sharedInstance().setCategory(.playback)
         self.audioPlayer = AVPlayer(url: url)
-        self.audioPlayer?.play()
+        
+        if let from = soundFromTo?.from, let to = soundFromTo?.to, let audioPlayer = self.audioPlayer {
+            let newTime = CMTime(seconds: Double(from/1000), preferredTimescale: 1000)
+            audioPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] success in
+                if success, let self = self {
+                    audioPlayer.play()
+                    let interval = Double(to - from) / 1000
+                    Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
+                        self.stop()
+                    }
+                } else {
+                    self?.play(url: url, soundFromTo: nil)
+                }
+            }
+        } else {
+            self.audioPlayer?.play()
+        }
+
         self.audioPlayer?.publisher(for: \.timeControlStatus)
-            .filter({ $0 != self.currentStatus }) // prevent firing multiple waiting
+            .filter({ $0 != self.currentStatus }) // prevent firing multiple times
             .assign(to: &$currentStatus)
     }
     

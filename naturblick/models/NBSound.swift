@@ -6,15 +6,32 @@
 import Foundation
 import os
 
+struct SoundFromTo {
+    let from: Int64
+    let to: Int64
+}
+
+extension SoundFromTo {
+    static func createSoundFromTo(observation: DBObservation) -> SoundFromTo? {
+        if let segmStart = observation.segmStart, let segmEnd = observation.segmEnd {
+            return SoundFromTo(from: segmStart, to: segmEnd)
+        } else {
+            return nil
+        }
+    }
+}
+
 struct NBSound {
     let id: UUID
+    var soundFromTo: SoundFromTo? = nil
     
     init() {
         self.id = UUID()
     }
     
-    init(id: UUID, backend: Backend, obsIdent: String?) async throws {
+    init(id: UUID, backend: Backend, obsIdent: String?, soundFromTo: SoundFromTo?) async throws {
         self.id = id
+        self.soundFromTo = soundFromTo
         let url = NBSound.url(id: id)
         let path = url.path
         if !FileManager.default.fileExists(atPath: path) {
@@ -62,10 +79,11 @@ struct NBSound {
         return path
     }
 
-    static func loadOld(occurenceId: UUID, obsIdent: String, persistenceController: ObservationPersistenceController) -> NBSound? {
+    static func loadOld(occurenceId: UUID, obsIdent: String, persistenceController: ObservationPersistenceController, soundFromTo: SoundFromTo?) -> NBSound? {
         Logger.compat.info("Trying to find audio for \(occurenceId, privacy: .public) \(obsIdent, privacy: .public)")
-        let newSound = NBSound()
-
+        var newSound = NBSound()
+        newSound.soundFromTo = soundFromTo
+        
         guard let path = NBSound.findOld(obsIdent: obsIdent) else {
             Logger.compat.warning("Could not find audio for \(occurenceId, privacy: .public)")
             return nil
