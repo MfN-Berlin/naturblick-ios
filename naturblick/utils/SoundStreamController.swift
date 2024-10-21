@@ -27,14 +27,14 @@ class SoundStreamController : ObservableObject {
         if let from = soundFromTo?.from, let to = soundFromTo?.to, let audioPlayer = self.audioPlayer {
             let newTime = CMTime(seconds: Double(from/1000), preferredTimescale: 1000)
             audioPlayer.seek(to: newTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] success in
-                guard success, let self = self else {
-                    print("Seek failed")
-                    return
-                }
-                audioPlayer.play()
-                let interval = Double(to - from) / 1000
-                Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
-                    self.stop()
+                if success, let self = self {
+                    audioPlayer.play()
+                    let interval = Double(to - from) / 1000
+                    Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { _ in
+                        self.stop()
+                    }
+                } else {
+                    self?.play(url: url, soundFromTo: nil)
                 }
             }
         } else {
