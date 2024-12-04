@@ -104,9 +104,9 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
                             .multilineTextAlignment(.center)
                     }
                 }
-                if let wikipedia = species.wikipedia {
+                if let wikipediaUrl = URL.wikipedia(species: species) {
                     Button("link_to_wikipedia") {
-                        openURL(URL(string: wikipedia)!)
+                        openURL(wikipediaUrl)
                     }
                     .buttonStyle(AuxiliaryOnSecondaryButton())
                 }
