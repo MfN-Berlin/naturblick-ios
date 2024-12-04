@@ -7,6 +7,7 @@ import Foundation
 import Combine
 import SwiftUI
 import os
+import SQLite
 
 struct Chunk {
     
@@ -41,12 +42,14 @@ class Backend {
     let downloader: HTTPDownloader
     let local: LocalFileDownloader
     let persistence: ObservationPersistenceController
+    private let currentSpeciesVersion: Int64
     private let encoder = JSONEncoder()
     
     init(downloader: HTTPDownloader = URLSession.shared, local: LocalFileDownloader = URLSession.shared, persistence: ObservationPersistenceController) {
         self.downloader = downloader
         self.local = local
         self.persistence = persistence
+        self.currentSpeciesVersion = try! Connection.speciesDB.scalar("SELECT version FROM species_current_version") as! Int64
     }
     
     private var deviceIdHeader: String {
@@ -239,7 +242,7 @@ class Backend {
     }
     
     func imageId(mediaId: String) async throws -> [SpeciesResult] {
-        let url = URL(string: Configuration.backendUrl + "androidimageid?mediaId=\(mediaId)")
+        let url = URL(string: Configuration.backendUrl + "androidimageid?mediaId=\(mediaId)&speciesVersion=\(currentSpeciesVersion)")
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
         let speciesResults: [SpeciesResult] = try await downloader.httpJson(request: request)
