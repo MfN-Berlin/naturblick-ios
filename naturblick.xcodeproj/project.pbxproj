@@ -28,6 +28,7 @@
 		133B39222A40598C00D48617 /* Connection+SpeciesDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */; };
 		133B39242A4069BD00D48617 /* SelectSpeciesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B39232A4069BD00D48617 /* SelectSpeciesViewModel.swift */; };
 		133B392A2A4081A000D48617 /* NBImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B39292A4081A000D48617 /* NBImage.swift */; };
+		133F58082D00A34F00FCEAE5 /* URL+Wikipedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133F58072D00A34100FCEAE5 /* URL+Wikipedia.swift */; };
 		134082AD2ADD721500351C42 /* NBThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134082AC2ADD721500351C42 /* NBThumbnail.swift */; };
 		1341AA142C0090DD00428E37 /* Fail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1341AA132C0090DD00428E37 /* Fail.swift */; };
 		1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1343D1C829DD94870075ACE3 /* HttpError.swift */; };
@@ -227,6 +228,7 @@
 		133B39212A40598C00D48617 /* Connection+SpeciesDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Connection+SpeciesDB.swift"; sourceTree = "<group>"; };
 		133B39232A4069BD00D48617 /* SelectSpeciesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpeciesViewModel.swift; sourceTree = "<group>"; };
 		133B39292A4081A000D48617 /* NBImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBImage.swift; sourceTree = "<group>"; };
+		133F58072D00A34100FCEAE5 /* URL+Wikipedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Wikipedia.swift"; sourceTree = "<group>"; };
 		134082AC2ADD721500351C42 /* NBThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBThumbnail.swift; sourceTree = "<group>"; };
 		1341AA132C0090DD00428E37 /* Fail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fail.swift; sourceTree = "<group>"; };
 		1343D1C629DD944D0075ACE3 /* HTTPDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPDownloader.swift; sourceTree = "<group>"; };
@@ -682,6 +684,7 @@
 				13ED860A2C05FE5D00DAB6C1 /* UIImage+Crop.swift */,
 				7BB777152A612B9100EA844C /* URL+Query.swift */,
 				134F54972A5EDC8100A079EC /* URL+SupportDir.swift */,
+				133F58072D00A34100FCEAE5 /* URL+Wikipedia.swift */,
 				134F54952A5EDC3600A079EC /* UUID+Media.swift */,
 				7BAFDA562A580800005D8B20 /* View+mail.swift */,
 				139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */,
@@ -975,6 +978,7 @@
 				134082AD2ADD721500351C42 /* NBThumbnail.swift in Sources */,
 				7BB3DE2029F6695F00F0D387 /* SimilarSpeciesItemView.swift in Sources */,
 				136D908029D18BBE00A00BD4 /* Portrait.swift in Sources */,
+				133F58082D00A34F00FCEAE5 /* URL+Wikipedia.swift in Sources */,
 				7BC11AFE2A4ACD4E00823D4F /* DeleteAccountView.swift in Sources */,
 				132A91432A2DD52100AC405C /* CoordinatesView.swift in Sources */,
 				7BDCC0ED2AD045B20089A4C6 /* PickSpeciesListProvider.swift in Sources */,
