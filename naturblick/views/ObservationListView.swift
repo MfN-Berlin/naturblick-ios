@@ -265,16 +265,8 @@ struct ObservationListView: HostedView {
     
     var observations: [Observation] {
         if let searchText = model.searchText, !searchText.isEmpty {
-            return persistenceController.observations.filter {
-                if(isGerman()) {
-                    return $0.species?.gername?.lowercased().contains(searchText) ?? false
-                    || $0.species?.gersynonym?.lowercased().contains(searchText) ?? false
-                    || $0.species?.sciname.lowercased().contains(searchText) ?? false
-                } else {
-                    return $0.species?.engname?.lowercased().contains(searchText) ?? false
-                    || $0.species?.engsynonym?.lowercased().contains(searchText) ?? false
-                    || $0.species?.sciname.lowercased().contains(searchText) ?? false
-                }
+            return persistenceController.observations.filter { observation in
+                return observation.species?.matches(searchText: searchText) ?? false
             }
         } else {
             return persistenceController.observations
