@@ -74,6 +74,18 @@ extension Species {
                   [Expression(literal: "gername is null"), Expression(literal: "gername"), Expression(literal: "gersynonym is null"), Expression(literal: "gersynonym"), Species.Definition.sciname] :
                     [Expression(literal: "engname is null"), Expression(literal: "engname"), Expression(literal: "engsynonym is null"), Expression(literal: "engsynonym"), Species.Definition.sciname])
    }
+    
+    func matches(searchText: String) -> Bool {
+        if(isGerman()) {
+            return gername?.lowercased().contains(searchText) ?? false
+            || gersynonym?.lowercased().contains(searchText) ?? false
+            || sciname.lowercased().contains(searchText)
+        } else {
+            return engname?.lowercased().contains(searchText) ?? false
+            || engsynonym?.lowercased().contains(searchText) ?? false
+            || sciname.lowercased().contains(searchText)
+        }
+    }
 }
 
 extension Species {
