@@ -107,6 +107,7 @@
 		13D8A7E32BD68DBF008AF50E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13D8A7E22BD68DBF008AF50E /* PrivacyInfo.xcprivacy */; };
 		13E50A282AE7F4010049FACD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 13E50A2A2AE7F4010049FACD /* InfoPlist.strings */; };
 		13E50A2D2AE805890049FACD /* AVAudioSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E50A2C2AE805890049FACD /* AVAudioSession.swift */; };
+		13EAD2062D3FEB55003DEC5A /* GeneralPrivacyNoticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EAD2052D3FEB48003DEC5A /* GeneralPrivacyNoticeView.swift */; };
 		13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */; };
 		13EC572129DC80AD00D56A77 /* ObservationListItemWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */; };
 		13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13EC572229DC83E900D56A77 /* ObservationListView.swift */; };
@@ -311,6 +312,7 @@
 		13E50A292AE7F4010049FACD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13E50A2B2AE7F40A0049FACD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		13E50A2C2AE805890049FACD /* AVAudioSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioSession.swift; sourceTree = "<group>"; };
+		13EAD2052D3FEB48003DEC5A /* GeneralPrivacyNoticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPrivacyNoticeView.swift; sourceTree = "<group>"; };
 		13EC571A29DC3F9200D56A77 /* SpeciesListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListItem.swift; sourceTree = "<group>"; };
 		13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemWithImageView.swift; sourceTree = "<group>"; };
 		13EC572229DC83E900D56A77 /* ObservationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListView.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 			isa = PBXGroup;
 			children = (
 				13F008C72DD374CB00BE9C85 /* AccessibilityView.swift */,
+				13EAD2052D3FEB48003DEC5A /* GeneralPrivacyNoticeView.swift */,
 				7B2E70652A2F671900164C85 /* AboutView.swift */,
 				7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */,
 				13B4E7582BCD25D30025C64E /* AGBView.swift */,
@@ -993,6 +996,7 @@
 				13EC571B29DC3F9200D56A77 /* SpeciesListItem.swift in Sources */,
 				7B02E4DA2A4993DF006406A1 /* Settings.swift in Sources */,
 				133B39202A40517200D48617 /* SelectSpeciesView.swift in Sources */,
+				13EAD2062D3FEB55003DEC5A /* GeneralPrivacyNoticeView.swift in Sources */,
 				13743F6C2A68116100ABCCB1 /* UIGraphicsImageRendererFormat+noScale.swift in Sources */,
 				137690032A30946F0076F93A /* SpectrogramView.swift in Sources */,
 				13A2923A29D3123700AF772A /* Character.swift in Sources */,
