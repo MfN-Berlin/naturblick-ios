@@ -15,6 +15,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     let thumbnail: NBThumbnail
     @State var showInfo: SpeciesListItem? = nil
     @State private var presentAlternativesDialog: Bool = false
+    @State private var presentNoSpeciesFoundDialog: Bool = false
     @StateObject var model: SelectSpeciesViewModel = SelectSpeciesViewModel()
     @StateObject private var errorHandler = HttpErrorViewModel()
     
@@ -26,7 +27,12 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     func identify() {
         Task {
             do {
-                model.resolveSpecies(results: try await flow.identify())
+                let results = try await flow.identify()
+                if !results.isEmpty {
+                    model.resolveSpecies(results: results)
+                } else {
+                    presentNoSpeciesFoundDialog.toggle()
+                }
             } catch {
                 let _ = errorHandler.handle(error)
             }
@@ -115,8 +121,10 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     Button("browse_species") {
                         flow.searchSpecies()
                     }
-                    Button("save_unknown") {
-                        flow.selectSpecies(species: nil)
+                    if(flow.isCreate) {
+                        Button("save_unknown") {
+                            flow.selectSpecies(species: nil)
+                        }
                     }
                 }
                 .alert("other_identification", isPresented: $presentAlternativesDialog) {
@@ -128,11 +136,30 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     Button("browse_species") {
                         flow.searchSpecies()
                     }
-                    Button("save_unknown") {
-                        flow.selectSpecies(species: nil)
+                    if(flow.isCreate) {
+                        Button("save_unknown") {
+                            flow.selectSpecies(species: nil)
+                        }
                     }
                     Button("cancel", role: .cancel) {
                     }
+                }
+                .alert("no_species_found", isPresented: $presentNoSpeciesFoundDialog) {
+                    if !UIAccessibility.isVoiceOverRunning {
+                        Button(flow.isImage() ? "crop_again" : "crop_sound_again") {
+                            navigationController?.popViewController(animated: true)
+                        }
+                    }
+                    Button("browse_species") {
+                        flow.searchSpecies()
+                    }
+                    if(flow.isCreate) {
+                        Button("save_unknown") {
+                            flow.selectSpecies(species: nil)
+                        }
+                    }
+                } message: {
+                    Text("no_species_found_description")
                 }
         }
     }
