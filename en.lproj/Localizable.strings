@@ -111,7 +111,7 @@
 "none_of_the_options"="None of the above";
 "crop_again"="Use another part of the image";
 "crop_sound_again"="Use another part of the recording";
-"other_identification"="Do you want to identify the species in another way?";
+"other_identification"="What do you want to do?";
 "results"="Results";
 "choose"="Choose";
 "link_to_wikipedia"="Look it up on Wikipedia";
@@ -219,3 +219,5 @@
 "search"="Species name...";
 "feedback_subject %@"="Naturblick %@ feedback";
 "feedback_device %@ os %@ app %@"="\n\nAutomatic information:\nThe following information about your device and the App helps us to understand your problem:\nDevice: %1$@\nAPI: %2$@\nApp: %3$@\n\nFeel free to remove this information if you do not want to share it with us.";
+"no_species_found"="We were unable to identify any plants.";
+"no_species_found_description"="This may be because no plant is visible in the image or because this plant is not part of the selection of species trained for identification.";

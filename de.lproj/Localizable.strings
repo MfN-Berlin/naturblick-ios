@@ -110,7 +110,7 @@
 "image_autoid_infotext"="Die Liste gibt dir Vorschläge zu Wildpflanzen in der Stadt. Die Ergebnisse entstehen durch den Vergleich mit Fotos von [über 2000 Arten](https://naturblick.museumfuernaturkunde.berlin/speciesimagerecognition?lang=de). Je näher der Score an 100% ist, desto wahrscheinlicher ist Zuordnung zu einer Art.";
 "crop_again"="Bild neu zuschneiden";
 "crop_sound_again"="Einen anderen Zeitabschnitt auswählen";
-"other_identification"="Du willst die Art anders bestimmen?";
+"other_identification"="Was möchtest du tun?";
 "choose"="Auswählen";
 "link_to_wikipedia"="Schaue in Wikipedia nach";
 "to_artportrait"="Zum Artportrait";
@@ -217,3 +217,5 @@
 "search"="Artname...";
 "feedback_subject %@"="Naturblick %@ Feedback";
 "feedback_device %@ os %@ app %@"="\n\nAutomatische Informationen:\nDie folgenden Informationen über dein Gerät und die App helfen uns, dein Problem zu verstehen:\nGerät: %1$@\nAPI: %2$@\nApp: %3$@\n\nDu kannst diese Informationen gerne einfach entfernen, wenn du sie nicht mit uns teilen möchtest.";
+"no_species_found"="Wir konnten keine Pflanze identifizieren.";
+"no_species_found_description"="Das kann daran liegen, dass auf dem Bild keine Pflanze zu sehen ist oder diese Pflanze nicht Teil der für die Bestimmung trainierten Auswahl von Arten ist.";
