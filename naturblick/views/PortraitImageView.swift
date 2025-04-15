@@ -77,8 +77,8 @@ struct PortraitImageView: View {
                     .body1()
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }.onAppear {
-                let previewUrl = URL(string: Configuration.strapiUrl + image.bestImage(width: width, displayScale: displayScale * .previewScale).url)!
-                let fullUrl = URL(string: Configuration.strapiUrl + image.bestImage(width: width, displayScale: displayScale).url)!
+                let previewUrl = URL(string: Configuration.djangoUrl + image.bestImage(width: width, displayScale: displayScale * .previewScale).url)!
+                let fullUrl = URL(string: Configuration.djangoUrl + image.bestImage(width: width, displayScale: displayScale).url)!
                 if previewUrl != fullUrl {
                     Task {
                         if let image = await URLSession.shared.cachedImage(url: previewUrl) {

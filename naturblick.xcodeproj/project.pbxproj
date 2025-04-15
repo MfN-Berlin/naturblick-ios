@@ -21,7 +21,6 @@
 		13316BDB29C9F6030077292B /* SpeciesListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDA29C9F6030077292B /* SpeciesListFilter.swift */; };
 		13316BDD29C9F85F0077292B /* SpeciesListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13316BDC29C9F85F0077292B /* SpeciesListProvider.swift */; };
 		13316BE029C9FAF80077292B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 13316BDF29C9FAF80077292B /* SQLite */; };
-		13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 13316BE329CA13E00077292B /* strapi-db.sqlite3 */; };
 		1337159A2A8CFBC2009E31E0 /* HttpErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133715992A8CFBC2009E31E0 /* HttpErrorViewModel.swift */; };
 		1337D96D2A7A982700712B8F /* SpeciesResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1337D96C2A7A982700712B8F /* SpeciesResultView.swift */; };
 		133B39202A40517200D48617 /* SelectSpeciesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133B391F2A40517200D48617 /* SelectSpeciesView.swift */; };
@@ -221,7 +220,6 @@
 		13316BD829C9F4150077292B /* Species.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		13316BDA29C9F6030077292B /* SpeciesListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListFilter.swift; sourceTree = "<group>"; };
 		13316BDC29C9F85F0077292B /* SpeciesListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListProvider.swift; sourceTree = "<group>"; };
-		13316BE329CA13E00077292B /* strapi-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "strapi-db.sqlite3"; sourceTree = "<group>"; };
 		133715992A8CFBC2009E31E0 /* HttpErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpErrorViewModel.swift; sourceTree = "<group>"; };
 		1337D96C2A7A982700712B8F /* SpeciesResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesResultView.swift; sourceTree = "<group>"; };
 		133B391F2A40517200D48617 /* SelectSpeciesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSpeciesView.swift; sourceTree = "<group>"; };
@@ -476,7 +474,6 @@
 				132B0D9829CDD78600B80C9E /* lato_black.ttf */,
 				132B0D9A29CDD78600B80C9E /* lato_italic.ttf */,
 				132B0D9929CDD78600B80C9E /* lato_regular.ttf */,
-				13316BE329CA13E00077292B /* strapi-db.sqlite3 */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -797,7 +794,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13316BE429CA13E00077292B /* strapi-db.sqlite3 in Resources */,
 				131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */,
 				132B0D9D29CDD78600B80C9E /* lato_italic.ttf in Resources */,
 				132B0D9B29CDD78600B80C9E /* lato_black.ttf in Resources */,
@@ -852,11 +848,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(SRCROOT)/resources/strapi-db.sqlite3",
+				"$(SRCROOT)/resources/django-db.sqlite3",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    curl --retry 5 --retry-all-errors --compressed -L https://staging.naturblick.net/app-content/db -o resources/strapi-db.sqlite3\nelse\n    curl --retry 5 --retry-all-errors --compressed -L https://naturblick.museumfuernaturkunde.berlin/app-content/db -o resources/strapi-db.sqlite3\nfi\n";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    curl --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://staging.naturblick.museumfuernaturkunde.berlin/django/app-content/db -o resources/django-db.sqlite3\nelse\n    curl --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://naturblick.museumfuernaturkunde.berlin/django/app-content/db -o resources/django-db.sqlite3\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

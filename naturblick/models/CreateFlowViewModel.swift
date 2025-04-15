@@ -296,7 +296,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         data.species = species
         if let speciesUrl = species?.url {
             Task {
-                setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
+                setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.djangoUrl + speciesUrl)!))
             }
         }
         if data.showDateConfirm {
@@ -320,7 +320,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         speciesAvatar = Image("placeholder")
         if let speciesUrl = species.url {
             Task {
-                setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
+                setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.djangoUrl + speciesUrl)!))
             }
         }
         let create = PopAwareNavigationController(rootViewController: CreateObservationView(createFlow: self).setUpViewController())

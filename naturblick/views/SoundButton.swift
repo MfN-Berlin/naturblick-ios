@@ -85,7 +85,7 @@ struct SoundButton: View {
 
 struct SoundButton_Previews: PreviewProvider {
     static var previews: some View {
-        let url = URL(string: Configuration.strapiUrl + "/uploads/bird_33905da8_c19adc870e.mp3")!
+        let url = URL(string: Configuration.djangoUrl + "/uploads/bird_33905da8_c19adc870e.mp3")!
         SoundButton(url: url, speciesId: 0)
     }
 }

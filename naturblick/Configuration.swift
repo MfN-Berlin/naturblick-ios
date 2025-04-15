@@ -6,11 +6,11 @@ import Foundation
 
 struct Configuration {
     #if DEBUG
-    static let strapiUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/strapi/"
+    static let djangoUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/django/"
     static let backendUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/api/"
     static let analyticsUrl = "https://staging.naturblick.museumfuernaturkunde.berlin/analytics"
     #else
-    static let strapiUrl = "https://naturblick.museumfuernaturkunde.berlin/strapi/"
+    static let djangoUrl = "https://naturblick.museumfuernaturkunde.berlin/django/"
     static let backendUrl = "https://naturblick.museumfuernaturkunde.berlin/api/"
     static let analyticsUrl = "https://naturblick.museumfuernaturkunde.berlin/analytics"
     #endif
