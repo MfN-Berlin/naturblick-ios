@@ -188,6 +188,7 @@
 		DB0163292C6CD3D900D54F17 /* AccessibleFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0163282C6CD3D900D54F17 /* AccessibleFont.swift */; };
 		DB01A49E2BC52F5600F67812 /* String+LinkDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */; };
 		DB0564812BD7DBAB0013FB61 /* ConfirmDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */; };
+		DB0B73342DAE4FA4001A6331 /* django-db.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = DB0B73332DAE4FA4001A6331 /* django-db.sqlite3 */; };
 		DB1777372CB7DB2900262050 /* Plurals.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DB1777362CB7DB2900262050 /* Plurals.xcstrings */; };
 		DB6DFBF22C35263A0050F1CC /* UIFont+Prefered.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */; };
 		DB7F3F582BD910B900B4CBC2 /* TimeZonePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */; };
@@ -389,6 +390,7 @@
 		DB0163282C6CD3D900D54F17 /* AccessibleFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibleFont.swift; sourceTree = "<group>"; };
 		DB01A49D2BC52F5600F67812 /* String+LinkDetect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+LinkDetect.swift"; sourceTree = "<group>"; };
 		DB0564802BD7DBAB0013FB61 /* ConfirmDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmDateView.swift; sourceTree = "<group>"; };
+		DB0B73332DAE4FA4001A6331 /* django-db.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "django-db.sqlite3"; sourceTree = "<group>"; };
 		DB1777362CB7DB2900262050 /* Plurals.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Plurals.xcstrings; sourceTree = "<group>"; };
 		DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Prefered.swift"; sourceTree = "<group>"; };
 		DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZonePolygon.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 		132B0D9729CDD75700B80C9E /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				DB0B73332DAE4FA4001A6331 /* django-db.sqlite3 */,
 				132B0D9829CDD78600B80C9E /* lato_black.ttf */,
 				132B0D9A29CDD78600B80C9E /* lato_italic.ttf */,
 				132B0D9929CDD78600B80C9E /* lato_regular.ttf */,
@@ -797,6 +800,7 @@
 				131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */,
 				132B0D9D29CDD78600B80C9E /* lato_italic.ttf in Resources */,
 				132B0D9B29CDD78600B80C9E /* lato_black.ttf in Resources */,
+				DB0B73342DAE4FA4001A6331 /* django-db.sqlite3 in Resources */,
 				131E786629C9BB25000DF928 /* Assets.xcassets in Resources */,
 				DB1777372CB7DB2900262050 /* Plurals.xcstrings in Resources */,
 				7B3507C52AD6D824006F594B /* Localizable.strings in Resources */,
