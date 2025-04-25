@@ -21,7 +21,7 @@ struct PortraitView: View {
                                 PortraitHeaderView(width: geo.size.width, image: meta, landscape: portrait.landscape, focus: portrait.focus)
                             }
                             if let urlPart = portrait.audioUrl {
-                                SoundButton(url: URL(string: Configuration.strapiUrl + urlPart)!, speciesId: species.speciesId)
+                                SoundButton(url: URL(string: Configuration.djangoUrl + urlPart)!, speciesId: species.speciesId)
                                     .frame(height: .fabSize)
                                     .padding(.horizontal, .defaultPadding)
                                     .padding(.bottom, .roundBottomHeight + .defaultPadding)

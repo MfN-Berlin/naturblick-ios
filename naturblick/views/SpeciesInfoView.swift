@@ -25,7 +25,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     @ObservedObject var flow: Flow
     
     var urlRequest: URLRequest? {
-        if let urlstr = species.url, let url = URL(string: Configuration.strapiUrl + urlstr) {
+        if let urlstr = species.url, let url = URL(string: Configuration.djangoUrl + urlstr) {
             return URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
         } else {
             return nil
@@ -84,7 +84,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
                 }
                 .overlay(alignment: .bottomTrailing) {
                     if let audioUrl = species.audioUrl {
-                        SoundButton(url: URL(string: Configuration.strapiUrl + audioUrl)!, speciesId: species.speciesId)
+                        SoundButton(url: URL(string: Configuration.djangoUrl + audioUrl)!, speciesId: species.speciesId)
                             .frame(height: .fabSize)
                             .padding(.defaultPadding)
                     }

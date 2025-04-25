@@ -10,7 +10,7 @@ typealias Expression = SQLite.Expression
 extension Connection {
     static var speciesDB: Connection {
         do {
-            guard let path = Bundle.main.path(forResource: "strapi-db", ofType: "sqlite3") else {
+            guard let path = Bundle.main.path(forResource: "django-db", ofType: "sqlite3") else {
                 Fail.with(message: "Failed to find database file")
             }
             return try Connection(path, readonly: true)

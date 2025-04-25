@@ -51,8 +51,8 @@ struct PortraitHeaderView: View {
         .clipShape(RoundBottomShape())
         .nbShadow()
         .onAppear {
-            let previewUrl = URL(string: Configuration.strapiUrl + image.bestImage(width: width, displayScale: displayScale * .previewScale).url)!
-            let fullUrl = URL(string: Configuration.strapiUrl + image.bestImage(width: width, displayScale: displayScale).url)!
+            let previewUrl = URL(string: Configuration.djangoUrl + image.bestImage(width: width, displayScale: displayScale * .previewScale).url)!
+            let fullUrl = URL(string: Configuration.djangoUrl + image.bestImage(width: width, displayScale: displayScale).url)!
             if previewUrl != fullUrl {
                 Task {
                     if let uiImage = await URLSession.shared.cachedImage(url: previewUrl) {

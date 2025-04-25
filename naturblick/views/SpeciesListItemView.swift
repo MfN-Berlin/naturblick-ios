@@ -9,7 +9,7 @@ struct SpeciesListItemView: View {
     let species: SpeciesListItem
 
     var urlRequest: URLRequest? {
-        if let urlstr = species.url, let url = URL(string: Configuration.strapiUrl + urlstr) {
+        if let urlstr = species.url, let url = URL(string: Configuration.djangoUrl + urlstr) {
             return URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
         } else {
             return nil

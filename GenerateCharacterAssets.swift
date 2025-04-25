@@ -126,7 +126,7 @@ enum GenerateCharacterAssets {
         }
 
         let decoder = JSONDecoder()
-        let data = try await URLSession.shared.httpData(from: URL(string: "\(url)/app-content/character-values")!)
+        let data = try await URLSession.shared.httpData(from: URL(string: "\(url)/django/app-content/character-values")!)
         let characters = try decoder.decode([CharacterValue].self, from: data)
         for character in characters {
             guard character.image != nil || (character.colors != nil && character.colors != "") else {

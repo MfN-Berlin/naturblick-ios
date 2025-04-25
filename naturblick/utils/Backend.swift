@@ -281,7 +281,7 @@ class Backend {
     }
 
     func downloadCached(speciesUrl: String) async throws -> UIImage {
-        let url = URL(string: Configuration.strapiUrl + speciesUrl)!
+        let url = URL(string: Configuration.djangoUrl + speciesUrl)!
         let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
         let data = try await downloader.http(request: request)
         return UIImage(data: data)!

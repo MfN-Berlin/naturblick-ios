@@ -3,4 +3,4 @@ xcuserdata/
 /naturblick/Generated.xcassets/
 /generate_character_assets
 .DS_Store
-resources/strapi-db.sqlite3
+resources/django-db.sqlite3

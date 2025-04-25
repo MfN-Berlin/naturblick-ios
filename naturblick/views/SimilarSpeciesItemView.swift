@@ -11,7 +11,7 @@ struct SimilarSpeciesItemView: View {
     var body: some View {
         HStack(alignment: .top) {
             if let url = species.maleUrl {
-                CachedAsyncImage(url: URL(string: Configuration.strapiUrl + url)!) { image in
+                CachedAsyncImage(url: URL(string: Configuration.djangoUrl + url)!) { image in
                     image
                         .resizable()
                         .scaledToFit()

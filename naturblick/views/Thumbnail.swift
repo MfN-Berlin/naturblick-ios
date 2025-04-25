@@ -28,7 +28,7 @@ struct Thumbnail<Content: View> : View {
             } else if let obsIdent = obsIdent, let thumbnail = NBThumbnail.loadOld(occurenceId: occurenceId, obsIdent: obsIdent, persistenceController: backend.persistence) {
                 self.uiImage = thumbnail.image
             } else if let speciesUrl = speciesUrl {
-                self.uiImage = await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!)
+                self.uiImage = await URLSession.shared.cachedImage(url: URL(string: Configuration.djangoUrl + speciesUrl)!)
             }
         }
     }

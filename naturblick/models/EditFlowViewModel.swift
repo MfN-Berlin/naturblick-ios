@@ -48,7 +48,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         
         if let speciesUrl = data.species?.url {
             Task {
-                await setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
+                await setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.djangoUrl + speciesUrl)!))
             }
         }
     }
@@ -108,7 +108,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         data.species = species
         if let speciesUrl = species?.url {
             Task {
-                setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.strapiUrl + speciesUrl)!))
+                setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.djangoUrl + speciesUrl)!))
             }
         } else {
             setSpeciesAvatar(avatar: nil)
