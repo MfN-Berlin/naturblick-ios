@@ -57,6 +57,10 @@ class HomeViewController: HostingController<HomeView> {
                 let view = ImprintView().setUpViewController()
                 self.navigationController?.pushViewController(view, animated: true)
             },
+            MenuEntry(title: String(localized: "privacy_notice"), image: UIImage(systemName: "lock.circle")!) {
+                let view = GeneralPrivacyNoticeView().setUpViewController()
+                self.navigationController?.pushViewController(view, animated: true)
+            },
             MenuEntry(title: String(localized: "about_nb"), image: UIImage(systemName: "info.circle")!) {
                 let view = AboutView().setUpViewController()
                 self.navigationController?.pushViewController(view, animated: true)
