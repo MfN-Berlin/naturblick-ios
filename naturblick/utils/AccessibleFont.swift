@@ -75,7 +75,15 @@ extension AccessibleFont {
             bold: f.weight(.black)
         )
     }
-    
+
+    static var nbSynonym: AccessibleFont {
+        let f = Font.custom("Lato", size: .subtitle3, relativeTo: .subheadline).leading(.tight)
+        return AccessibleFont(
+            regular: f.weight(.regular),
+            bold: f.weight(.black)
+        )
+    }
+
     static var nbCaption: AccessibleFont {
         let f = Font.custom("Lato", size: .caption, relativeTo: .caption).leading(.tight)
         return AccessibleFont(

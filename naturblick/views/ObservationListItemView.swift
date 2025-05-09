@@ -29,7 +29,7 @@ struct ObservationListItemView: View {
                         .foregroundColor(Color.onSecondarySignalLow)
                 }
                 Text(observation.observation.created.date.formatted())
-                    .subtitle3(color: .onSecondaryHighEmphasis)
+                    .synonym(color: .onSecondaryHighEmphasis)
             }
             .padding(.top, .avatarTextOffset)
             Spacer()
