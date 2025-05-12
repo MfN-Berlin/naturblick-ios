@@ -103,7 +103,14 @@ extension Text {
             .accessibilityFont(.nbSubtitle3)
             .foregroundColor(color)
     }
-    
+
+    func synonym(color: Color) -> some View {
+        self.kerning(0.018 * .subtitle3)
+            .lineSpacing(fontSize: .subtitle3, lineHeight: .subtitle3LineHeight)
+            .accessibilityFont(.nbSynonym)
+            .foregroundColor(color)
+    }
+
     func body1(color: Color) -> some View {
         self.lineSpacing(fontSize: .body1, lineHeight: .body1LineHeight)
             .accessibilityFont(.nbBody1)

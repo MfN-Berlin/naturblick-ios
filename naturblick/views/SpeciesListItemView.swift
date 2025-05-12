@@ -35,7 +35,7 @@ struct SpeciesListItemView: View {
                         .padding(.trailing, .defaultPadding)
                 }
                 VStack(alignment: .leading, spacing: .zero) {
-                    if let name = species.speciesName, let gersynonym = species.synonym {
+                    if let name = species.speciesName, let synonym = species.synonym {
                         HStack {
                             Text(name)
                                 .subtitle1()
@@ -47,8 +47,8 @@ struct SpeciesListItemView: View {
                         Text(species.sciname)
                             .subtitle3(color: .onSecondarySignalLow)
                             .accessibilityLabel(Text("sciname \(species.sciname)"))
-                        Text(gersynonym)
-                            .subtitle3(color: .onSecondaryHighEmphasis)
+                        Text(synonym)
+                            .synonym(color: .onSecondaryHighEmphasis)
                     } else if let name = species.speciesName {
                         HStack {
                             Text(name)
