@@ -27,4 +27,7 @@ extension URL {
         }
         return URL(string: encoded)
     }
+    static func accessibilityFeedback() -> URL? {
+        return URL(string: "mailto:naturblick@mfn-berlin.de")
+    }
 }
