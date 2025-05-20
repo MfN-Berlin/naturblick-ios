@@ -34,7 +34,8 @@ struct Species: Identifiable, Equatable {
 extension Species {
     struct Definition {
         static let table = Table("species")
-        
+        static let tableAlias = table.alias("species2")
+
         static let id = Expression<Int64>("rowid")
         static let acceptedId = Expression<Int64?>("rowid")
         static let group = Expression<String>("group_id")
@@ -52,6 +53,7 @@ extension Species {
         static let hasPortrait = Expression<Bool>("has_portrait")
         static let optionalPortraitId = Portrait.Definition.table[Expression<Int64?>("rowid")]
         static let optionalLanguage = Portrait.Definition.table[Expression<Int64?>("language")]
+        static let accepted = Expression<Int64?>("accepted")
         static let gersearchfield = Expression<String?>("gersearchfield")
         static let engsearchfield = Expression<String?>("engsearchfield")
         static let baseQuery = table
@@ -62,6 +64,38 @@ extension Species {
     
     private static func searchOrNil(search: String) -> String? {
         return search.isEmpty ? nil : "%\(search)%"
+    }
+
+    static func acceptedSpeciesId(row: Row) -> Int64 {
+        return row[Species.Definition.tableAlias[Species.Definition.acceptedId]] ?? row[Species.Definition.table[Species.Definition.id]]
+    }
+
+    private static func fromRow(row: Row, hasPortraits: Bool, alias: SchemaType) -> Species {
+        return Species(
+            id: row[alias[Species.Definition.id]],
+            group: row[alias[Species.Definition.group]],
+            sciname: row[alias[Species.Definition.sciname]],
+            gername: row[alias[Species.Definition.gername]],
+            engname: row[alias[Species.Definition.engname]],
+            wikipedia: row[alias[Species.Definition.wikipedia]],
+            maleUrl: row[alias[Species.Definition.maleUrl]],
+            femaleUrl: row[alias[Species.Definition.femaleUrl]],
+            gersynonym: row[alias[Species.Definition.gersynonym]],
+            engsynonym: row[alias[Species.Definition.engsynonym]],
+            redListGermany: row[alias[Species.Definition.redListGermany]],
+            iucnCategory: row[alias[Species.Definition.iucnCategory]],
+            hasPortrait: hasPortraits,
+            gersearchfield: row[alias[Species.Definition.gersearchfield]],
+            engsearchfield: row[alias[Species.Definition.engsearchfield]]
+        )
+    }
+
+    static func acceptedFromRow(row: Row, hasPortraits: Bool) -> Species {
+        return if row[Species.Definition.tableAlias[Species.Definition.acceptedId]] != nil {
+            Species.fromRow(row: row, hasPortraits: hasPortraits, alias: Species.Definition.tableAlias)
+        } else {
+            Species.fromRow(row: row, hasPortraits: hasPortraits, alias: Species.Definition.table)
+        }
     }
 
    static func query(searchString: String) -> QueryType {

@@ -5,6 +5,7 @@
 
 import SwiftUI
 import UIKit
+import SQLite
 
 enum DeepLink : Equatable {
     case resetPasswort(token: String)
@@ -104,9 +105,17 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
         case .resetPasswort(let token):
             navigationController.pushViewController(ResetPasswordView(backend: backend, token: token).setUpViewController(), animated: true)
         case .speciesPortrait(let speciesId):
-            let species = try? SpeciesListItem.find(speciesId: speciesId)
-            if let species = species {
-                navigationController.pushViewController(SpeciesInfoView(selectionFlow: false, species: species, flow: VoidSelectionFlow()).setUpViewController(), animated: true)
+            let speciesDb: Connection = Connection.speciesDB
+            if let row = try? speciesDb.pluck(Species.Definition.table.join(.leftOuter, Species.Definition.tableAlias, on: Species.Definition.table[Species.Definition.accepted] == Species.Definition.tableAlias[Species.Definition.id]).filter(Species.Definition.table[Species.Definition.id] == speciesId)) {
+                let realSpeciesId = Species.acceptedSpeciesId(row: row)
+                let portraits = try? speciesDb.scalar(
+                    Portrait.Definition.table
+                        .filter(Portrait.Definition.speciesId == realSpeciesId)
+                        .filter(Portrait.Definition.language == Int(getLanguageId()))
+                        .count
+                )
+                let species = Species.acceptedFromRow(row: row, hasPortraits: (portraits ?? 0) > 0)
+                navigationController.pushViewController(SpeciesInfoView(selectionFlow: false, species: species.listItem, flow: VoidSelectionFlow()).setUpViewController(), animated: true)
             }
         default: break
         }

@@ -177,32 +177,17 @@ class ObservationPersistenceController: ObservableObject {
             guard let speciesId = observation.newSpeciesId else {
                 return Observation(observation: observation, species: nil)
             }
-            guard let row = try speciesDb.pluck(Species.Definition.table.filter(Species.Definition.id == speciesId)) else {
+            guard let row = try speciesDb.pluck(Species.Definition.table.join(.leftOuter, Species.Definition.tableAlias, on: Species.Definition.table[Species.Definition.accepted] == Species.Definition.tableAlias[Species.Definition.id]).filter(Species.Definition.table[Species.Definition.id] == speciesId)) else {
                 return Observation(observation: observation, species: nil)
             }
+            let realSpeciesId = Species.acceptedSpeciesId(row: row)
             let portraits = try? speciesDb.scalar(
                 Portrait.Definition.table
-                    .filter(Portrait.Definition.speciesId == speciesId)
+                    .filter(Portrait.Definition.speciesId == realSpeciesId)
                     .filter(Portrait.Definition.language == Int(getLanguageId()))
                     .count
             )
-            let species = Species(
-                id: row[Species.Definition.id],
-                group: row[Species.Definition.group],
-                sciname: row[Species.Definition.sciname],
-                gername: row[Species.Definition.gername],
-                engname: row[Species.Definition.engname],
-                wikipedia: row[Species.Definition.wikipedia],
-                maleUrl: row[Species.Definition.maleUrl],
-                femaleUrl: row[Species.Definition.femaleUrl],
-                gersynonym: row[Species.Definition.gersynonym],
-                engsynonym: row[Species.Definition.engsynonym],
-                redListGermany: row[Species.Definition.redListGermany],
-                iucnCategory: row[Species.Definition.iucnCategory],
-                hasPortrait: (portraits ?? 0) > 0,
-                gersearchfield: row[Species.Definition.gersearchfield],
-                engsearchfield: row[Species.Definition.engsearchfield]
-            )
+            let species = Species.acceptedFromRow(row: row, hasPortraits: (portraits ?? 0) > 0)
             return Observation(observation: observation, species: species)
         }
         Task { @MainActor in
