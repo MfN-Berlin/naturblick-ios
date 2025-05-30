@@ -13,8 +13,22 @@ struct GeneralPrivacyNoticeView: NavigatableView {
     
     var body: some View {
         ScrollView {
-            Text("TBD")
-                .body1()
+            VStack(alignment: .leading) {
+                Text("privacy_notice")
+                    .headline2()
+                Text("privacy_notice_intro")
+                    .subtitle1()
+                Text("privacy_notice_intro_text")
+                    .body2()
+                Text("privacy_notice_responsible")
+                    .subtitle1()
+                Text("privacy_notice_responsible_text")
+                    .body2()
+                Text("privacy_notice_use")
+                    .subtitle1()
+                Text("privacy_notice_use_text")
+                    .body2()
+            }
         }
         .padding(.defaultPadding)
     }
