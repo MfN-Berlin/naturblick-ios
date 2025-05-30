@@ -15,7 +15,6 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
     let thumbnail: NBThumbnail
     @State var showInfo: SpeciesListItem? = nil
     @State private var presentAlternativesDialog: Bool = false
-    @State private var presentNoSpeciesFoundDialog: Bool = false
     @StateObject var model: SelectSpeciesViewModel = SelectSpeciesViewModel()
     @StateObject private var errorHandler = HttpErrorViewModel()
     
@@ -28,17 +27,38 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
         Task {
             do {
                 let results = try await flow.identify()
-                if !results.isEmpty {
-                    model.resolveSpecies(results: results)
-                } else {
-                    presentNoSpeciesFoundDialog.toggle()
-                }
+                model.resolveSpecies(results: results)
             } catch {
                 let _ = errorHandler.handle(error)
             }
         }
     }
         
+    func Alternative(_ key: LocalizedStringKey, tap: @escaping () -> Void) -> some View {
+        HStack(alignment: .center) {
+            Image("unknown_species")
+                .resizable()
+                .scaledToFit()
+                .clipShape(Circle())
+                .frame(width: .avatarSize, height: .avatarSize)
+                .padding(.trailing, .defaultPadding)
+                .foregroundColor(.onSecondaryHighEmphasis)
+            Text(key)
+                .subtitle1()
+            Spacer()
+            ChevronView(color: .onPrimarySignalLow)
+        }
+        .contentShape(Rectangle())
+        .listRowInsets(.nbInsets)
+        .onTapGesture {
+            tap()
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityAction {
+            tap()
+        }
+    }
+
     var body: some View {
         GeometryReader { geo in
             ZStack {}
@@ -53,44 +73,50 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                     VStack(alignment: .leading, spacing: .defaultPadding) {
                         if let results
                             = model.speciesResults {
-                            Text("suggestions")
-                                .headline4()
-                                .padding([.top])
-                            Text(flow.isImage() ? "image_autoid_infotext" : "sound_autoid_infotext")
-                                .body2()
-                            ForEach(results, id: \.0.id) { (result, item) in
-                                SpeciesResultView(result: result, species: item)
-                                    .listRowInsets(.nbInsets)
-                                    .onTapGesture {
-                                        openSpeciesInfo(species: item)
+                            if results.isEmpty {
+                                Text("no_species_found")
+                                    .headline4()
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .padding([.top])
+                                Text("no_species_found_description")
+                                    .body2()
+                                if(flow.isCreate) {
+                                    Alternative("save_unknown") {
+                                        flow.selectSpecies(species: nil)
                                     }
-                                    .accessibilityElement(children: .combine)
-                                    .accessibilityAction {
-                                        openSpeciesInfo(species: item)
+                                }
+                                if !UIAccessibility.isVoiceOverRunning {
+                                    Alternative(flow.isImage() ? "crop_again" : "crop_sound_again") {
+                                        navigationController?.popViewController(animated: true)
                                     }
-                                Divider()
-                            }
-                            HStack(alignment: .center) {
-                                Image("unknown_species")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .clipShape(Circle())
-                                    .frame(width: .avatarSize, height: .avatarSize)
-                                    .padding(.trailing, .defaultPadding)
-                                    .foregroundColor(.onSecondaryHighEmphasis)
-                                Text("none_of_the_options")
-                                    .subtitle1()
-                                Spacer()
-                                ChevronView(color: .onPrimarySignalLow)
-                            }
-                            .contentShape(Rectangle())
-                            .listRowInsets(.nbInsets)
-                            .onTapGesture {
-                                presentAlternativesDialog = true
-                            }
-                            .accessibilityElement(children: .combine)
-                            .accessibilityAction {
-                                presentAlternativesDialog = true
+                                }
+                                Alternative("browse_species") {
+                                    flow.searchSpecies()
+                                }
+                                Alternative(flow.isCreate ? "discard_observation" : "cancel") {
+                                    flow.cancel()
+                                }
+                            } else {
+                                Text("suggestions")
+                                    .headline4()
+                                    .padding([.top])
+                                Text(flow.isImage() ? "image_autoid_infotext" : "sound_autoid_infotext")
+                                    .body2()
+                                ForEach(results, id: \.0.id) { (result, item) in
+                                    SpeciesResultView(result: result, species: item)
+                                        .listRowInsets(.nbInsets)
+                                        .onTapGesture {
+                                            openSpeciesInfo(species: item)
+                                        }
+                                        .accessibilityElement(children: .combine)
+                                        .accessibilityAction {
+                                            openSpeciesInfo(species: item)
+                                        }
+                                    Divider()
+                                }
+                                Alternative("none_of_the_options") {
+                                    presentAlternativesDialog = true
+                                }
                             }
                         } else {
                             ProgressView {
@@ -126,6 +152,9 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                             flow.selectSpecies(species: nil)
                         }
                     }
+                    Button(flow.isCreate ? "discard_observation" : "cancel") {
+                        flow.cancel()
+                    }
                 }
                 .alert("other_identification", isPresented: $presentAlternativesDialog) {
                     if !UIAccessibility.isVoiceOverRunning {
@@ -141,25 +170,11 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                             flow.selectSpecies(species: nil)
                         }
                     }
-                    Button("cancel", role: .cancel) {
+                    Button(flow.isCreate ? "discard_observation" : "cancel") {
+                        flow.cancel()
                     }
-                }
-                .alert("no_species_found", isPresented: $presentNoSpeciesFoundDialog) {
-                    if !UIAccessibility.isVoiceOverRunning {
-                        Button(flow.isImage() ? "crop_again" : "crop_sound_again") {
-                            navigationController?.popViewController(animated: true)
-                        }
+                    Button("back", role: .cancel) {
                     }
-                    Button("browse_species") {
-                        flow.searchSpecies()
-                    }
-                    if(flow.isCreate) {
-                        Button("save_unknown") {
-                            flow.selectSpecies(species: nil)
-                        }
-                    }
-                } message: {
-                    Text("no_species_found_description")
                 }
         }
     }
