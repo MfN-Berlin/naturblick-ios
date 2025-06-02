@@ -375,6 +375,12 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         cropViewController.navigationController?.popViewController(animated: true)
     }
     
+    func cancel() {
+        if let controller = viewController, let navigation = controller.navigationController {
+            navigation.popToViewController(controller, animated: true)
+        }
+    }
+
     func saveObservation() {
         if let controller = viewController, let navigation = controller.navigationController {
             do {

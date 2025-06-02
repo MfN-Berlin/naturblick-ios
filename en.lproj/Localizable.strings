@@ -229,3 +229,4 @@
 "accessibility_german_sign_language"="Information in German Sign Language (DGS)";
 "accessibility_german_sign_language_info"="Currently, the Naturblick app does not offer content in German Sign Language (DGS). Providing information in DGS is not a mandatory requirement under current accessibility standards but is recommended under §3(4) BIKTG Bln as part of the highest possible accessibility standard.\n\nWe plan to include a sign language video explaining key features of the app in the future. Implementation will take place in close cooperation with experts in accessible communication.\n\nAs soon as DGS content becomes available, we will inform you here.";
 "accessibility_email"="Send an email";
+"discard_observation"="Discard observation";

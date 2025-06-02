@@ -154,6 +154,13 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         cropViewController.navigationController?.popViewController(animated: true)
     }
     
+    func cancel() {
+        if let controller = viewController, let navigation = controller.navigationController {
+            data.thumbnail = nil
+            navigation.popToViewController(controller, animated: true)
+        }
+    }
+
     func saveObservation() {
         if let navigation = navigationController {
             do {

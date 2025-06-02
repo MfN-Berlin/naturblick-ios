@@ -13,6 +13,7 @@ protocol IdFlow: ObservableObject, SelectionFlow {
     func spectrogramCropDone(sound: NBSound, crop: NBThumbnail, start: Int, end: Int)
     func identify() async throws -> [SpeciesResult]
     func searchSpecies()
+    func cancel()
     func isImage() -> Bool
 }
 
