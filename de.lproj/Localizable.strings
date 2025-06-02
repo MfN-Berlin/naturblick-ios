@@ -220,7 +220,7 @@
 "no_species_found"="Wir konnten keine Pflanze identifizieren.";
 "no_species_found_description"="Das kann daran liegen, dass auf dem Bild keine Pflanze zu sehen ist oder diese Pflanze nicht Teil der für die Bestimmung trainierten Auswahl von Arten ist.";
 "accessibility"="Barrierefreiheit";
-"accessibility_timestamp"="Stand: April 2025; Android-Version 4.1.31";
+"accessibility_timestamp"="Stand: April 2025; iOS-Version 4.0.51";
 "accessibility_statement"="Die App Naturblick soll möglichst vielen Menschen zugänglich sein – unabhängig von körperlichen oder kognitiven Einschränkungen. Wir sind bemüht, die Anforderungen der Barrierefreiheit nach dem Berliner Barrierefreie-IKT-Gesetz (BIKTG Bln) und der EU-Richtlinie 2016/2102 zu erfüllen.\n\nIm November 2024 wurde die App durch die Überwachungsstelle für digitale Barrierefreiheit Berlin geprüft. Das Ergebnis: Die App entspricht derzeit nicht vollständig den Anforderungen der Barrierefreiheit. Zahlreiche Barrieren bestehen insbesondere für Screenreader-Nutzer:innen, Menschen mit Sehbehinderung sowie bei der Nutzung auditiver Inhalte.\n\nWir arbeiten an der schrittweisen Verbesserung der Zugänglichkeit, unter anderem durch:\n\n• die Ergänzung von Alternativtexten für Bilder und Schaltflächen,\n\n• die Optimierung der App-Navigation für assistive Technologien\n\nEin Maßnahmenplan zur Behebung der Mängel wurde erstellt und wird laufend aktualisiert.";
 "accessibility_report_problem"="Wenn Sie Barrieren feststellen oder Hinweise geben möchten, freuen wir uns über Ihre Nachricht.";
 "accessibility_complete_report"="Die vollständigen Erklärung zur Barrierefreiheit finden Sie [hier](https://www.museumfuernaturkunde.berlin/de/erklaerung-zur-barrierefreiheit).";
