@@ -783,7 +783,6 @@
 			mainGroup = 131E785529C9BB24000DF928;
 			packageReferences = (
 				13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */,
-				136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 				7BB350D92A2A32A8005065E4 /* XCRemoteSwiftPackageReference "Mantis" */,
 				7BDA8FBC2ABC5E93002E93C9 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				502C51052BDB88950077B06B /* XCRemoteSwiftPackageReference "snowplow-ios-tracker" */,
@@ -861,8 +860,8 @@
 				"$(SRCROOT)/resources/django-db.sqlite3",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    curl --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://staging.naturblick.museumfuernaturkunde.berlin/django/app-content/db -o resources/django-db.sqlite3\nelse\n    curl --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://naturblick.museumfuernaturkunde.berlin/django/app-content/db -o resources/django-db.sqlite3\nfi\n";
+			shellPath = /bin/bash;
+			shellScript = "set -e\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    curl -f --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://staging.naturblick.museumfuernaturkunde.berlin/django/app-content/db -o resources/django-db.sqlite3\nelse\n    curl -f --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://naturblick.museumfuernaturkunde.berlin/django/app-content/db -o resources/django-db.sqlite3\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1359,14 +1358,6 @@
 			requirement = {
 				kind = exactVersion;
 				version = 0.15.1;
-			};
-		};
-		136C118929D6E66E00805628 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lucaszischka/BottomSheet";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.1;
 			};
 		};
 		502C51052BDB88950077B06B /* XCRemoteSwiftPackageReference "snowplow-ios-tracker" */ = {
