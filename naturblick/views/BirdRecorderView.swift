@@ -8,8 +8,13 @@ import SwiftUI
 struct BirdRecorderView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var alwaysDarkBackground: Bool = true
-    @StateObject private var model = BirdRecorderViewModel()
+    @StateObject private var model: BirdRecorderViewModel
     @ObservedObject var flow: CreateFlowViewModel
+
+    init(flow: CreateFlowViewModel) {
+        self._model = StateObject(wrappedValue: BirdRecorderViewModel(flow: flow))
+        self.flow = flow
+    }
     
     var body: some View {
         StaticBottomSheetView {
@@ -35,12 +40,12 @@ struct BirdRecorderView: NavigatableView {
                 }
                 .frame(width: .stopButtonCircleSize, height: .stopButtonCircleSize)
                 .onTapGesture {
-                    flow.soundRecorded(sound: model.stop()!)
+                    model.stop()
                 }
                 .padding(.defaultPadding)
         }
         .accessibilityAction(.magicTap) {
-            flow.soundRecorded(sound: model.stop()!)
+            model.stop()
         }
     }
 }
