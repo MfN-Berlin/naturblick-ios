@@ -13,9 +13,15 @@ struct BirdRecorder {
     let sound: NBSound
 }
 
-class BirdRecorderViewModel: ObservableObject {
+class BirdRecorderViewModel: NSObject, ObservableObject, AVAudioRecorderDelegate {
+    private let flow: CreateFlowViewModel
     @Published private(set) var currentTime: String = "00:00.0"
     private var recorder: BirdRecorder? = nil
+    private var canceled: Bool = false
+
+    init(flow: CreateFlowViewModel) {
+        self.flow = flow
+    }
     
     func record() {
         guard self.recorder == nil else {
@@ -36,6 +42,7 @@ class BirdRecorderViewModel: ObservableObject {
                 ]),
                 sound: sound
             )
+            recorder.audioRecorder.delegate = self
             recorder.audioRecorder.record(forDuration: 60)
             self.recorder = recorder
             Timer.publish(every: 0.1, on: .main, in: .default)
@@ -49,39 +56,33 @@ class BirdRecorderViewModel: ObservableObject {
         }
     }
     
-    func stop() -> NBSound? {
-        guard let recorder = self.recorder else {
-            return nil
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully: Bool) {
+        if let sound = self.recorder?.sound, !canceled {
+            Task { @MainActor in
+                self.flow.soundRecorded(sound: sound)
+            }
         }
-        do {
-            recorder.audioRecorder.stop()
-            try AVAudioSession.sharedInstance().setActive(false)
-            return recorder.sound
-        } catch {
-            return recorder.sound
-        }
+        try! AVAudioSession.sharedInstance().setActive(false)
+    }
+
+    func stop() {
+        recorder?.audioRecorder.stop()
     }
     
     func cancel() {
-        do {
-            if let isRecording = self.recorder?.audioRecorder.isRecording, isRecording {
-                self.recorder?.audioRecorder.stop()
-                self.recorder?.audioRecorder.deleteRecording()
-            }
-            self.recorder = nil
-            try AVAudioSession.sharedInstance().setActive(false)
-        } catch {
-                /* Ignore errors when canceling */
+        canceled = true
+        if let isRecording = self.recorder?.audioRecorder.isRecording, isRecording {
+            self.recorder?.audioRecorder.stop()
+            self.recorder?.audioRecorder.deleteRecording()
         }
+        self.recorder = nil
+        try! AVAudioSession.sharedInstance().setActive(false)
     }
     
     deinit {
-        do {
-            try AVAudioSession.sharedInstance().setActive(false)
-            try AVAudioSession.sharedInstance().setCategory(.playback)
-        } catch {
-            /* Ignore errors when canceling */
-        }
+        /* Ignore errors when canceling */
+        try! AVAudioSession.sharedInstance().setActive(false)
+        try! AVAudioSession.sharedInstance().setCategory(.playback)
     }
 }
 
