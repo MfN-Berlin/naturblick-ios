@@ -4,6 +4,7 @@
 
 
 import SwiftUI
+import os
 
 class SpectrogramViewController<Flow>: HostingController<SpectrogramView<Flow>> where Flow: IdFlow {
     let flow: Flow
@@ -84,7 +85,12 @@ struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
                             width: width,
                             minWidth: minWidth
                         )
-                        model.start = model.start + (model.startOffset / width)
+                        let newStart = model.start + (model.startOffset / width)
+                        if newStart < model.end {
+                            model.start = newStart
+                        } else {
+                            Logger.spectrogram.info("Start \(newStart) was bigger than end \(model.end)")
+                        }
                         model.startOffset = 0
                     }
             )
@@ -117,7 +123,12 @@ struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
                             width: width,
                             minWidth: minWidth
                         )
-                        model.end = model.end + (model.endOffset / width)
+                        let newEnd = model.end + (model.endOffset / width)
+                        if newEnd > model.start {
+                            model.end = newEnd
+                        } else {
+                            Logger.spectrogram.info("End \(newEnd) was smaller than start \(model.start)")
+                        }
                         model.endOffset = 0
                     }
             )
@@ -153,8 +164,14 @@ struct SpectrogramView<Flow>: HostedView where Flow: IdFlow {
                             translation: gesture.translation,
                             width: width
                         )
-                        model.start = model.start + (model.startOffset / width)
-                        model.end = model.end + (model.endOffset / width)
+                        let newStart = model.start + (model.startOffset / width)
+                        let newEnd = model.end + (model.endOffset / width)
+                        if(newStart < newEnd) {
+                            model.start = newStart
+                            model.end = newEnd
+                        } else {
+                            Logger.spectrogram.info("Start \(newStart) was bigger than end \(newEnd), when updating both")
+                        }
                         model.startOffset = 0
                         model.endOffset = 0
                     }
