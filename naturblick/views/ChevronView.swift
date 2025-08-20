@@ -6,17 +6,16 @@
 import SwiftUI
 
 struct ChevronView: View {
-    let color: Color
     var body: some View {
         Image("chevron_right_24")
             .resizable()
-            .foregroundColor(color)
+            .foregroundColor(.onSecondarySignalLow)
             .frame(width: .chevron, height: .chevron)
     }
 }
 
 struct ChevronView_Previews: PreviewProvider {
     static var previews: some View {
-        ChevronView(color: .onPrimarySignalHigh)
+        ChevronView()
     }
 }

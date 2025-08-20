@@ -87,7 +87,7 @@ struct ObservationView: HostedView {
                 }
                 Spacer()
                 if model.observation?.species != nil {
-                    ChevronView(color: .onSecondarySignalLow)
+                    ChevronView()
                         .accessibilityElement()
                         .accessibilityRepresentation {
                             Button("acc_further_speciesinfo") {
@@ -111,7 +111,7 @@ struct ObservationView: HostedView {
                 }
                 Spacer()
                 if model.observation?.observation.coords != nil {
-                    ChevronView(color: .onSecondarySignalLow)
+                    ChevronView()
                         .accessibilityElement()
                         .accessibilityRepresentation {
                             Button("acc_map") {

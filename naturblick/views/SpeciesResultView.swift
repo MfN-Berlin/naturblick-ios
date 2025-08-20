@@ -63,7 +63,7 @@ struct SpeciesResultView: View {
                     .subtitle3(color: color)
             }
             Spacer()
-            ChevronView(color: .onPrimarySignalLow)
+            ChevronView()
         }
         .contentShape(Rectangle())
     }

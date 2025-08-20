@@ -46,7 +46,7 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
             Text(key)
                 .subtitle1()
             Spacer()
-            ChevronView(color: .onPrimarySignalLow)
+            ChevronView()
         }
         .contentShape(Rectangle())
         .listRowInsets(.nbInsets)
