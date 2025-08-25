@@ -18,7 +18,7 @@ struct ObservationListItemWithImageView: View {
                 ObservationListItemView(observation: observation, image: image)
             }
             if (editMode == .inactive) {
-                ChevronView(color: .onPrimarySignalLow)
+                ChevronView()
             }
        }
        .listRowBackground(Color.secondaryColor)

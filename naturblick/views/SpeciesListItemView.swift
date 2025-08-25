@@ -76,7 +76,7 @@ struct SpeciesListItemView: View {
                 .padding(.top, .avatarTextOffset)
                 Spacer()
             }
-            ChevronView(color: .onPrimarySignalLow)
+            ChevronView()
         }
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
