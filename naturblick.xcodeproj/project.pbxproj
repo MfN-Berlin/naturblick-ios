@@ -462,6 +462,7 @@
 				131E786729C9BB25000DF928 /* Preview Content */,
 				7BCE46C029C9DC5E00C6C101 /* utils */,
 				7BCE46A229C9D90300C6C101 /* views */,
+				DBF06BF82E61E5020051CA44 /* BuildtimeAssets */,
 			);
 			path = naturblick;
 			sourceTree = "<group>";
@@ -706,6 +707,13 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		DBF06BF82E61E5020051CA44 /* BuildtimeAssets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BuildtimeAssets;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -718,6 +726,7 @@
 				131E785B29C9BB24000DF928 /* Frameworks */,
 				7BDF9EE12A98C1E60064DD3B /* ShellScript */,
 				131E785C29C9BB24000DF928 /* Resources */,
+				DB9436942E5DDB9B0066F0FA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -862,6 +871,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "set -e\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    curl -f --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://staging.naturblick.museumfuernaturkunde.berlin/django/app-content/db -o resources/django-db.sqlite3\nelse\n    curl -f --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://naturblick.museumfuernaturkunde.berlin/django/app-content/db -o resources/django-db.sqlite3\nfi\n";
+		};
+		DB9436942E5DDB9B0066F0FA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "python3 \"$SRCROOT/download_image_assets.py\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

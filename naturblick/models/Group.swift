@@ -5,7 +5,7 @@ enum GroupType {
     case flora
 }
 
-struct Group: Identifiable, Hashable {
+struct Group: Identifiable, Hashable, Equatable {
     let id: String
     let groupType: GroupType
     let gerName: String
