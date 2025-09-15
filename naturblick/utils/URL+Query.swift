@@ -22,12 +22,12 @@ extension URL {
         }
         let subject = String(localized: "feedback_subject \(UIApplication.appVersion)")
         let body = String(localized: "feedback_device \(device) os \(UIDevice.current.systemVersion) app \(UIApplication.appVersion)")
-        guard let encoded = "mailto:naturblick@mfn-berlin.de?subject=\(subject)&body=\(body)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+        guard let encoded = "mailto:naturblick@mfn.berlin?subject=\(subject)&body=\(body)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return nil
         }
         return URL(string: encoded)
     }
     static func accessibilityFeedback() -> URL? {
-        return URL(string: "mailto:naturblick@mfn-berlin.de")
+        return URL(string: "mailto:naturblick@mfn.berlin")
     }
 }
