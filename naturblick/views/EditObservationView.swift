@@ -79,94 +79,96 @@ struct EditObservationView: HostedView {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: .defaultPadding) {
-            HStack {
-                flow.speciesAvatar
-                    .avatar()
-                    .padding(.trailing, .defaultPadding)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: .zero) {
-                    Text("species")
-                        .caption(color: .onSecondaryLowEmphasis)
-                    if let species = flow.data.species {
-                        Text(species.speciesName ?? species.sciname)
-                            .subtitle1(color: .onSecondaryHighEmphasis)
-                    } else {
-                        Text("unknown_species")
-                            .subtitle1(color: .onSecondaryHighEmphasis)
-                    }
-                }
-                Spacer()
-                Button("change") {
-                    switch(flow.data.obsType) {
-                    case .image, .unidentifiedimage:
-                        identifyImage()
-                    case .audio, .unidentifiedaudio:
-                        identifySound()
-                    case .manual:
-                        flow.searchSpecies()
-                    }
-                }
-                .buttonStyle(ChangeSpeciesButton())
-            }
-            Divider()
-            HStack {
-                Image(decorative: "location24")
-                    .observationProperty()
-                VStack(alignment: .leading, spacing: .zero) {
-                    Text("location")
-                        .caption(color: .onSecondarySignalLow)
-                    CoordinatesView(coordinates: flow.data.coords)
-                }
-                Spacer()
-                Button("change") {
-                    navigationController?.pushViewController(PickerView(flow: flow).setUpViewController(), animated: true)
-                }
-                .buttonStyle(ChangeSpeciesButton())
-            }
-            Divider()
-            HStack {
-                Image(decorative: "number24")
-                    .observationProperty()
-                VStack(alignment: .leading, spacing: .zero) {
-                    Text("number")
-                        .caption(color: .onSecondarySignalLow)
-                    IndividualsView(individuals: $flow.data.individuals)
-                }
-            }
-            Divider()
-            HStack {
-                Image(decorative: "location24")
-                    .observationProperty()
-                VStack(alignment: .leading, spacing: .zero) {
-                    Text("behavior")
-                        .caption(color: .onSecondarySignalLow)
-                    Picker("behavior", selection: $flow.data.behavior) {
-                        ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
-                            if case .notSet = $0 {
-                                Text("none").tag($0)
-                            } else {
-                                Text($0.rawValue).tag($0)
-                            }
+        ScrollView(.vertical) {
+            VStack(alignment: .leading, spacing: .defaultPadding) {
+                HStack {
+                    flow.speciesAvatar
+                        .avatar()
+                        .padding(.trailing, .defaultPadding)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: .zero) {
+                        Text("species")
+                            .caption(color: .onSecondaryLowEmphasis)
+                        if let species = flow.data.species {
+                            Text(species.speciesName ?? species.sciname)
+                                .subtitle1(color: .onSecondaryHighEmphasis)
+                        } else {
+                            Text("unknown_species")
+                                .subtitle1(color: .onSecondaryHighEmphasis)
                         }
                     }
-                    .accentColor(Color.onSecondaryHighEmphasis)
-                    .pickerStyle(MenuPickerStyle())
+                    Spacer()
+                    Button("change") {
+                        switch(flow.data.obsType) {
+                        case .image, .unidentifiedimage:
+                            identifyImage()
+                        case .audio, .unidentifiedaudio:
+                            identifySound()
+                        case .manual:
+                            flow.searchSpecies()
+                        }
+                    }
+                    .buttonStyle(ChangeSpeciesButton())
                 }
-            }
-            Divider()
-            HStack {
-                Image(decorative: "details")
-                    .observationProperty()
-                VStack(alignment: .leading, spacing: .zero) {
-                    Text("notes")
-                        .caption(color: .onSecondarySignalLow)
-                    TextField("edit_notes", text: $flow.data.details)
+                Divider()
+                HStack {
+                    Image(decorative: "location24")
+                        .observationProperty()
+                    VStack(alignment: .leading, spacing: .zero) {
+                        Text("location")
+                            .caption(color: .onSecondarySignalLow)
+                        CoordinatesView(coordinates: flow.data.coords)
+                    }
+                    Spacer()
+                    Button("change") {
+                        navigationController?.pushViewController(PickerView(flow: flow).setUpViewController(), animated: true)
+                    }
+                    .buttonStyle(ChangeSpeciesButton())
                 }
+                Divider()
+                HStack {
+                    Image(decorative: "number24")
+                        .observationProperty()
+                    VStack(alignment: .leading, spacing: .zero) {
+                        Text("number")
+                            .caption(color: .onSecondarySignalLow)
+                        IndividualsView(individuals: $flow.data.individuals)
+                    }
+                }
+                Divider()
+                HStack {
+                    Image(decorative: "location24")
+                        .observationProperty()
+                    VStack(alignment: .leading, spacing: .zero) {
+                        Text("behavior")
+                            .caption(color: .onSecondarySignalLow)
+                        Picker("behavior", selection: $flow.data.behavior) {
+                            ForEach([Behavior].forGroup(group: flow.data.species?.group)) {
+                                if case .notSet = $0 {
+                                    Text("none").tag($0)
+                                } else {
+                                    Text($0.rawValue).tag($0)
+                                }
+                            }
+                        }
+                        .accentColor(Color.onSecondaryHighEmphasis)
+                        .pickerStyle(MenuPickerStyle())
+                    }
+                }
+                Divider()
+                HStack {
+                    Image(decorative: "details")
+                        .observationProperty()
+                    VStack(alignment: .leading, spacing: .zero) {
+                        Text("notes")
+                            .caption(color: .onSecondarySignalLow)
+                        TextField("edit_notes", text: $flow.data.details)
+                    }
+                }
+                Spacer()
             }
-            Spacer()
+            .padding(.defaultPadding)
         }
-        .padding(.defaultPadding)
     }
 }
 
