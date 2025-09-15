@@ -18,7 +18,7 @@ extension URLSession {
             do {
                 return try await load(url: url)
             } catch {
-                try? await Task.sleep(nanoseconds: 500_000_000)
+                try? await Task.sleep(nanoseconds: 5_000_000_000)
                 continue
             }
         }
