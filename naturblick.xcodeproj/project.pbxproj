@@ -124,6 +124,7 @@
 		13F5D6582BBFED910022CE0F /* ObservationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F5D6572BBFED910022CE0F /* ObservationMapView.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
 		13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */; };
+		13FEBF492E7B093300878ACA /* SelectGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FEBF482E7B092A00878ACA /* SelectGroupView.swift */; };
 		502C51072BDB88950077B06B /* SnowplowTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 502C51062BDB88950077B06B /* SnowplowTracker */; };
 		502C51092BDB9E1E0077B06B /* AnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502C51082BDB9E1E0077B06B /* AnalyticsTracker.swift */; };
 		7B02E4DA2A4993DF006406A1 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B02E4D92A4993DF006406A1 /* Settings.swift */; };
@@ -329,6 +330,7 @@
 		13F5D6572BBFED910022CE0F /* ObservationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationMapView.swift; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOperation.swift; sourceTree = "<group>"; };
+		13FEBF482E7B092A00878ACA /* SelectGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupView.swift; sourceTree = "<group>"; };
 		502C51082BDB9E1E0077B06B /* AnalyticsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
 		7B02E4D92A4993DF006406A1 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		7B13663829F0122600F1DA30 /* SoundStreamController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundStreamController.swift; sourceTree = "<group>"; };
@@ -512,9 +514,8 @@
 		7BCE46A229C9D90300C6C101 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				13F008C72DD374CB00BE9C85 /* AccessibilityView.swift */,
-				13EAD2052D3FEB48003DEC5A /* GeneralPrivacyNoticeView.swift */,
 				7B2E70652A2F671900164C85 /* AboutView.swift */,
+				13F008C72DD374CB00BE9C85 /* AccessibilityView.swift */,
 				7BDD17DF2A45BE84001B9DB4 /* AccountView.swift */,
 				13B4E7582BCD25D30025C64E /* AGBView.swift */,
 				134C75A82A2F513E0046EEE4 /* BirdRecorderView.swift */,
@@ -533,6 +534,7 @@
 				13709A842A7D1C0E00B81108 /* FABView.swift */,
 				7BDA8FBA2ABC241E002E93C9 /* FeedbackView.swift */,
 				7BDD17E52A45C7C3001B9DB4 /* ForgotPasswordView.swift */,
+				13EAD2052D3FEB48003DEC5A /* GeneralPrivacyNoticeView.swift */,
 				7BCE46B129C9DAFE00C6C101 /* GroupButton.swift */,
 				7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */,
 				7BA4DA112A73EC5600AEC0A4 /* HelpView.swift */,
@@ -557,6 +559,7 @@
 				7B8839D729D5749B006CB94E /* PortraitView.swift */,
 				7BDD17E32A45C5AA001B9DB4 /* RegisterView.swift */,
 				7BCCB4CE2A5D427E0072841B /* ResetPasswordView.swift */,
+				13FEBF482E7B092A00878ACA /* SelectGroupView.swift */,
 				133B391F2A40517200D48617 /* SelectSpeciesView.swift */,
 				7BC77E8B2A6AA4A300B489C2 /* SettingsView.swift */,
 				7BB3DE1F29F6695F00F0D387 /* SimilarSpeciesItemView.swift */,
@@ -923,6 +926,7 @@
 				134C75A72A2F32650046EEE4 /* IndividualsView.swift in Sources */,
 				13535CED2A77E4FE00501DFA /* SpeciesInfoView.swift in Sources */,
 				13F008C82DD374D800BE9C85 /* AccessibilityView.swift in Sources */,
+				13FEBF492E7B093300878ACA /* SelectGroupView.swift in Sources */,
 				13738D562AD984C1004FCB2A /* Button.swift in Sources */,
 				13738D502AD93E0E004FCB2A /* ViewProperty.swift in Sources */,
 				137690092A30DC5A0076F93A /* LocalFileDownloader.swift in Sources */,

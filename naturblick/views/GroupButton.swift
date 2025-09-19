@@ -17,21 +17,17 @@ struct GroupButton: View {
                 .scaledToFit()
                 .padding(.horizontal, .halfPadding)
                 .nbShadow()
-            Text(text)
+            Text(group.name)
                 .bigRoundButtonText(size: size)
             Spacer()
         }.accessibilityRepresentation {
-            Button(text) {
+            Button(group.name) {
                 action()
             }
         }
         .onTapGesture {
             action()
         }
-    }
-    
-    private var text: String {
-        return isGerman() ? group.gerName : group.engName
     }
 }
 
