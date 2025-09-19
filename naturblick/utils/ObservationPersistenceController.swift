@@ -8,7 +8,11 @@ import SQLite
 import UIKit
 import os
 
-class ObservationPersistenceController: ObservableObject {
+protocol ObservationProvider: ObservableObject {
+    var observations: [Observation] {get}
+}
+
+class ObservationPersistenceController: ObservationProvider {
     private var queue: Connection
     @Published var observations: [Observation] = []
         

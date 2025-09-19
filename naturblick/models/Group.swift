@@ -11,6 +11,9 @@ struct Group: Identifiable, Hashable {
     let gerName: String
     let image: String
     let engName: String
+    var name: String {
+        return isGerman() ? gerName : engName
+    }
 }
 
 extension Group {
