@@ -157,7 +157,6 @@ struct ObservationListView: HostedView {
     @ObservedObject var model: ObservationListViewModel
     @State var showDelete: Bool = false
     @State var deleteObservation: IndexSet? = nil
-    @State var showGroupSelection: Bool = false
     
     let showObservation: Observation?
     
@@ -251,7 +250,7 @@ struct ObservationListView: HostedView {
                 Text("\(observations.count) obs_count", tableName: "Plurals")
                     .body2()
                     .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .frame(maxWidth: .infinity, alignment: .center)
                 Spacer().frame(maxWidth: .infinity, alignment: .trailing)
             }
             .padding(.horizontal, .defaultPadding)

@@ -37,31 +37,26 @@ struct SelectGroupView<P, GS>: NavigatableView where P: ObservationProvider, GS:
     }
 
     var groups: [GroupSelection] {
-        let groupIds: [String?] = provider.observations.map { observation in
+        let groupIds = Set(provider.observations.map { observation in
             observation.species?.group
-        }
+        })
         let hasUnknown = groupIds.contains(nil)
-        let hasOther = groupIds.contains { id in
-            guard let groupId = id else {
-                return false
-            }
+        let knownGroupIds = groupIds.compactMap({$0})
+        let hasOther = knownGroupIds.contains { id in
             return !Group.groups.contains { group in
-                group.id == groupId
+                group.id == id
             }
         }
-        let selectableGroups = Set(
-            groupIds
-                .compactMap({$0})
-                .compactMap { id in
-                    let groupMatch = Group.groups.first {
-                        group in group.id == id
-                    }
-                    guard let group = groupMatch else {
-                        return nil as Group?
-                    }
-                    return group
+        let selectableGroups = knownGroupIds
+            .compactMap { id in
+                let groupMatch = Group.groups.first {
+                    group in group.id == id
                 }
-            )
+                guard let group = groupMatch else {
+                    return nil as Group?
+                }
+                return group
+            }
             .sorted(by: {$0.name < $1.name})
             .map { group in
                 GroupSelection.group(group)
