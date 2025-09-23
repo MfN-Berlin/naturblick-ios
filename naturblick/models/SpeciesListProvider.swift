@@ -13,10 +13,10 @@ class SpeciesListProvider {
     }
     
     private func filterSearchString(_ query: Table, _ searchString: String?) -> Table {
-        return query.filter(Species.Definition.gername.like(searchString!) ||
+        return query.filter(Species.Definition.table[Species.Definition.gername].like(searchString!) ||
                             Species.Definition.sciname.like(searchString!) ||
                             Species.Definition.gersynonym.like(searchString!) ||
-                            Species.Definition.engname.like(searchString!) ||
+                            Species.Definition.table[Species.Definition.engname].like(searchString!) ||
                             Species.Definition.engsynonym.like(searchString!))
     }
     
@@ -31,14 +31,14 @@ class SpeciesListProvider {
                     SpeciesListItem(
                         speciesId: row[Species.Definition.table[Species.Definition.id]],
                         sciname: row[Species.Definition.sciname],
-                        speciesName: isGerman() ? row[Species.Definition.gername] : row[Species.Definition.engname],
+                        speciesName: isGerman() ? row[Species.Definition.table[Species.Definition.gername]] : row[Species.Definition.table[Species.Definition.engname]],
                         maleUrl: row[Species.Definition.maleUrl],
                         femaleUrl: row[Species.Definition.femaleUrl],
                         synonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engsynonym],
                         isFemale: nil,
                         wikipedia: row[Species.Definition.wikipedia],
                         hasPortrait: true,
-                        group: row[Species.Definition.group],
+                        group: Group.fromRow(row: row),
                         audioUrl: row[Portrait.Definition.audioUrl]
                     )
                 }
@@ -56,7 +56,7 @@ class SpeciesListProvider {
                         isFemale: row[Species.Definition.isFemale],
                         wikipedia: row[Species.Definition.wikipedia],
                         hasPortrait: true,
-                        group: row[Species.Definition.group],
+                        group: Group(id: row[Character.groupName], groupType: GroupType(nature: row[Character.groupNature])),
                         audioUrl: nil
                     )
                 }

@@ -27,7 +27,7 @@ class CharactersViewController: HostingController<CharactersView> {
             SpeciesListViewController(filter: model.filter, flow: flow, isCharacterResult: true), animated: true)
     }
     
-    init(group: Group, flow: CreateFlowViewModel) {
+    init(group: NamedGroup, flow: CreateFlowViewModel) {
         self.model = CharactersViewModel()
         self.flow = flow
         super.init(rootView: CharactersView(group: group, charactersViewModel: model))
@@ -39,10 +39,10 @@ struct CharactersView: HostedView {
 
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? {
-        isGerman() ? group.gerName : group.engName
+        group.name
     }
     
-    let group: Group
+    let group: NamedGroup
     @ObservedObject var charactersViewModel: CharactersViewModel
     
     var body: some View {
@@ -67,7 +67,7 @@ struct CharactersView: HostedView {
 struct CharactersView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CharactersView(group: Group.groups[0], charactersViewModel: CharactersViewModel())
+            CharactersView(group: NamedGroup.exampleData, charactersViewModel: CharactersViewModel())
         }
     }
 }

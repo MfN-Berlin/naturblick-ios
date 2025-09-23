@@ -181,7 +181,10 @@ class ObservationPersistenceController: ObservationProvider {
             guard let speciesId = observation.newSpeciesId else {
                 return Observation(observation: observation, species: nil)
             }
-            guard let row = try speciesDb.pluck(Species.Definition.table.join(.leftOuter, Species.Definition.tableAlias, on: Species.Definition.table[Species.Definition.accepted] == Species.Definition.tableAlias[Species.Definition.id]).filter(Species.Definition.table[Species.Definition.id] == speciesId)) else {
+            guard let row = try speciesDb.pluck(Species.Definition.table
+                    .join(.leftOuter, Species.Definition.tableAlias, on: Species.Definition.table[Species.Definition.accepted] == Species.Definition.tableAlias[Species.Definition.id])
+                    .join(.inner, Group.Definition.table, on: Species.Definition.table[Species.Definition.group] == Group.Definition.table[Group.Definition.name])
+                    .filter(Species.Definition.table[Species.Definition.id] == speciesId)) else {
                 return Observation(observation: observation, species: nil)
             }
             let realSpeciesId = Species.acceptedSpeciesId(row: row)

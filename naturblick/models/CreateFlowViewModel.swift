@@ -22,9 +22,15 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     var isCreate: Bool = true
     var obsIdent: String? = nil
     let fromList: Bool
+    let groupsWithPortraits: [NamedGroup]
+    let groupsWithCharacters: [NamedGroup]
+
     init(backend: Backend, fromList: Bool = false) {
         self.backend = backend
         self.fromList = fromList
+        self.groupsWithPortraits = NamedGroup.withPortraits()
+        self.groupsWithCharacters = NamedGroup.withCharacters()
+
         super.init()
         
         $data.map { data in
@@ -37,7 +43,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         data = CreateData()
         let nextViewController = GroupsView(
             viewType: .portraitGroups,
-            groups: Group.groups,
+            groups: groupsWithPortraits,
             destination: { group in
                 SpeciesListViewController(filter: .group(group), flow: self)
             }).setUpViewController()
@@ -49,7 +55,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         data = CreateData()
         let nextViewController = GroupsView(
             viewType: .characterKeys,
-            groups: Group.characterGroups,
+            groups: groupsWithCharacters,
             destination: { group in
                 CharactersViewController(group: group, flow: self)
             }

@@ -11,8 +11,11 @@ class ObservationListViewModel: GroupSelector {
     @Published var editMode: EditMode = EditMode.inactive
     @Published var searchText: String? = nil
     @Published var group: GroupSelection = .all
+    @Published var groups: [NamedGroup]
+
     init(showList: Bool) {
         self.showList = showList
+        self.groups = NamedGroup.fieldBookFilter()
     }
 }
 
@@ -143,7 +146,7 @@ class ObservationListViewController: HostingController<ObservationListView>, UIS
     }
 }
 
-struct ObservationListView: HostedView {
+struct ObservationListView: HostedView {    
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? = String(localized: "field_book")
@@ -291,13 +294,13 @@ struct ObservationListView: HostedView {
                 guard let species = observation.species else {
                     return false
                 }
-                return !Group.groups.contains { group in
-                    group.id == species.group
+                return !model.groups.contains { group in
+                    group.id == species.group.id
                 }
             }
         case let .group(group):
             initial.filter { observation in
-                observation.species?.group == group.id
+                observation.species?.group.id == group.id
             }
         }
 

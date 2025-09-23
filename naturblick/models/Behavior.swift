@@ -55,14 +55,11 @@ extension [Behavior] {
         .animalCall,
         .animalTrack
     ]
-    static func forGroup(group: String?) -> [Behavior] {
-        guard let safeGroup = group else {
-            return Behavior.allCases
-        }
-        if safeGroup.isPlant {
-            return forPlants
-        } else {
-            return forAnimals
+    static func forGroup(group: Group?) -> [Behavior] {
+        switch(group?.groupType) {
+        case .fauna: return forPlants
+        case .flora: return forAnimals
+        default: return Behavior.allCases
         }
     }
 }

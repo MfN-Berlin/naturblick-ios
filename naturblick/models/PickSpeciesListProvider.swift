@@ -26,7 +26,7 @@ class PickSpeciesListProvider {
                     isFemale: nil,
                     wikipedia: row[Species.Definition.wikipedia],
                     hasPortrait: row[Species.Definition.optionalPortraitId] != nil,
-                    group: row[Species.Definition.group],
+                    group: Group.fromRow(row: row),
                     audioUrl: row[Portrait.Definition.audioUrl]
                 )
             }

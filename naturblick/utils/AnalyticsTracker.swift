@@ -72,7 +72,7 @@ class AnalyticsTracker {
                 let action: String = view == .portraitGroups ? "pickSpeciesGroup" : "pickSpeciesMKey"
                 let event = Structured(category: "UI", action: action)
                     .label(group.id)
-                    .property(group.gerName)
+                    .property(group.gername)
                 
                 AnalyticsTracker.tracker?.track(event)
             }

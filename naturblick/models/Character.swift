@@ -38,6 +38,9 @@ extension Character {
         static let engdescription = Expression<String?>("engdescription")
     }
 
+    static let groupName = Expression<String>("group_name")
+    static let groupNature = Expression<String>("group_nature")
+
     static func charactersQuery(number: Int, query: [(Int64, Float)], searchQuery: String?) -> (String, [Binding?]) {
         let selectedCharacters = query.map({_ in  "SELECT ? AS id, ? AS weight" }).joined(separator: " UNION ALL ")
         let querySyntax = """
@@ -46,12 +49,15 @@ character_species.species_id AS species_id,
 female,
 character.rowid AS character_id,
 species.*,
+groups.name AS group_name,
+groups.nature AS group_nature,
 (sum(abs(selected.weight - character_species.weight)) / 2.0) * character.weight AS inner_distance
 FROM character_value_species AS character_species
 JOIN character_value ON character_value.rowid = character_species.character_value_id
 JOIN character ON character.rowid = character_value.character_id
 JOIN (\(selectedCharacters)) AS selected ON selected.id = character_value.rowid
 JOIN species ON character_species.species_id = species.rowid
+JOIN groups ON species.group_id = groups.name
 WHERE
     ? IS NULL
 OR (
@@ -91,7 +97,7 @@ extension Character {
         id: 1,
         gername: "Farbe",
         engname: "Color",
-        group: Group.groups[0].id,
+        group: Group.exampleData.id,
         weight: 1,
         single: true,
         gerdescription: "Verschiedene Farben",

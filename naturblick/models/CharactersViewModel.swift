@@ -14,7 +14,7 @@ class CharactersViewModel: ObservableObject {
     @Published private(set) var count: Int64 = 0
     @Published private(set) var filter: SpeciesListFilter = .characters(0, [])
     
-    func initializeCharacters(group: Group) {
+    func initializeCharacters(group: NamedGroup) {
         do {
             let speciesDb = Connection.speciesDB
             
@@ -79,14 +79,14 @@ extension CharactersViewModel {
         return (selectedCharacters.count, query)
     }
 
-    private static func query(group: Group) -> QueryType {
+    private static func query(group: NamedGroup) -> QueryType {
         return Character.D.table
             .join(CharacterValue.D.table,
                   on: Character.D.table[Character.D.id] == CharacterValue.D.table[CharacterValue.D.characterId])
             .filter(Character.D.group == group.id)
     }
     
-    func configure(group: Group) {
+    func configure(group: NamedGroup) {
         $characters
             .combineLatest($selected, CharactersViewModel.calculateFilter)
             .map { filter in

@@ -1,63 +1,59 @@
 import Foundation
+import SQLite
 
 enum GroupType {
     case fauna
     case flora
 }
+extension GroupType {
+    init?(nature: String?) {
+        switch(nature) {
+        case "fauna": self = .fauna
+        case "flora": self = .flora
+        default: return nil
+        }
+    }
+}
 
-struct Group: Identifiable, Hashable {
+struct Group: Identifiable, Equatable {
     let id: String
-    let groupType: GroupType
-    let gerName: String
-    let image: String
-    let engName: String
+    let groupType: GroupType?
+}
+
+struct NamedGroup: Identifiable, Hashable {
+    let id: String
+    let groupType: GroupType?
+    let gername: String
+    let engname: String
     var name: String {
-        return isGerman() ? gerName : engName
+        return isGerman() ? gername : engname
     }
 }
 
 extension Group {
-    static let groups: [Group] = [
-        Group(id: "amphibian", groupType: GroupType.fauna, gerName: "Amphibien", image: "group_amphibian", engName: "Amphibians"),
-        Group(
-            id: "hymenoptera",
-            groupType: GroupType.fauna,
-            gerName: "Bienen, Wespen & Co",
-            image: "group_hymenoptera",
-            engName: "Bees, wasps & co"
-        ),
-        Group(id: "conifer", groupType: GroupType.flora, gerName: "Nadelbäume", image: "group_conifer", engName: "Evergreens"),
-        Group(id: "herb", groupType: GroupType.flora, gerName: "Kräuter & Wildblumen", image: "group_herb", engName: "Herbs & Wild Flowers"),
-        Group(id: "tree", groupType: GroupType.flora, gerName: "Laubbäume & Ginkgo", image: "group_tree", engName: "Deciduous trees & ginkgo"),
-        Group(id: "reptile", groupType: GroupType.fauna, gerName: "Reptilien", image: "group_reptile", engName: "Reptiles"),
-        Group(id: "butterfly", groupType: GroupType.fauna, gerName: "Schmetterlinge", image: "group_butterfly", engName: "Butterflies"),
-        Group(id: "gastropoda", groupType: GroupType.fauna, gerName: "Schnecken", image: "group_snail", engName: "Slugs"),
-        Group(id: "mammal", groupType: GroupType.fauna, gerName: "Säugetiere", image: "group_mammal", engName: "Mammals"),
-        Group(id: "bird", groupType: GroupType.fauna, gerName: "Vögel", image: "group_bird", engName: "Birds")
-    ]
-    private static let characterGroupIds = [
-        "amphibian",
-        "hymenoptera",
-        "herb",
-        "tree",
-        "reptile",
-        "butterfly",
-        "gastropoda",
-        "mammal",
-        "bird"
-    ]
-    
-    static let characterGroups = groups.filter( { characterGroupIds.contains($0.id) } )
-    
-}
-
-extension String {
-    var isPlant: Bool {
-        self == "herb" || self == "tree" || self == "conifer"
+    struct Definition {
+        static let table = Table("groups")
+        
+        static let name = Expression<String>("name")
+        static let nature = Expression<String?>("nature")
+        static let gername = Expression<String?>("gername")
+        static let engname = Expression<String?>("engname")
+        static let hasPortraits = Expression<Bool>("has_portraits")
+        static let isFieldbookfilter = Expression<Bool>("is_fieldbookfilter")
+        static let hasCharacters = Expression<Bool>("has_characters")
     }
     
+    static func fromRow(row: Row) -> Group {
+        return Group(
+            id: row[Definition.table[Group.Definition.name]],
+            groupType: GroupType(nature: row[Definition.table[Group.Definition.nature]])
+        )
+    }
+    
+    static let exampleData = Group(id: "amphibian", groupType: GroupType.fauna)
+    
     var mapIcon: String {
-        switch(self) {
+        switch(self.id) {
         case "acarida":
             return "map_spiders"
         case "actinopterygii":
@@ -164,6 +160,37 @@ extension String {
             return "map_insects"
         default:
             return "map_nbobs"
+        }
+    }
+}
+
+extension NamedGroup {
+    static func fromRow(row: Row) -> NamedGroup {
+        return NamedGroup(
+            id: row[Group.Definition.name],
+            groupType: GroupType(nature: row[Group.Definition.nature]),
+            gername: row[Group.Definition.gername]!,
+            engname: row[Group.Definition.engname]!
+        )
+    }
+    
+    static let exampleData = NamedGroup(id: "amphibian", groupType: GroupType.fauna, gername: "Amphibien", engname: "Amphibians")
+
+    static func fieldBookFilter() -> [NamedGroup] {
+        try! Connection.speciesDB.prepareRowIterator(Group.Definition.table.select(*).filter(Group.Definition.isFieldbookfilter)).map { row in
+            NamedGroup.fromRow(row: row)
+        }
+    }
+
+    static func withPortraits() -> [NamedGroup] {
+        try! Connection.speciesDB.prepareRowIterator(Group.Definition.table.select(*).filter(Group.Definition.hasPortraits)).map { row in
+            NamedGroup.fromRow(row: row)
+        }
+    }
+
+    static func withCharacters() -> [NamedGroup] {
+        try! Connection.speciesDB.prepareRowIterator(Group.Definition.table.select(*).filter(Group.Definition.hasCharacters)).map { row in
+            NamedGroup.fromRow(row: row)
         }
     }
 }

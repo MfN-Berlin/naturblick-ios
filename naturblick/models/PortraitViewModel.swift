@@ -59,6 +59,10 @@ class PortraitViewModel: ObservableObject {
                 Portrait.Definition.gtkTable,
                 on: Portrait.Definition.table[Portrait.Definition.id] == Portrait.Definition.gtkTable[Portrait.Definition.gtkPortraitId]
             )
+            .join(
+                .inner,
+                Group.Definition.table,
+                on: Species.Definition.table[Species.Definition.group] == Group.Definition.table[Group.Definition.name])
             .filter(Portrait.Definition.speciesId == speciesId)
             .filter(Portrait.Definition.language == Int(getLanguageId()))
         }
@@ -114,7 +118,7 @@ class PortraitViewModel: ObservableObject {
                         id: row[Portrait.Definition.table[Portrait.Definition.id]],
                         species: Species(
                             id: row[Portrait.Definition.speciesId],
-                            group: row[Species.Definition.table[Species.Definition.group]],
+                            group: Group.fromRow(row: row),
                             sciname: row[Species.Definition.table[Species.Definition.sciname]],
                             gername: row[Species.Definition.table[Species.Definition.gername]],
                             engname: row[Species.Definition.table[Species.Definition.engname]],

@@ -9,8 +9,8 @@ struct GroupsView<Content>: NavigatableView where Content: UIViewController {
     var viewName: String? = String(localized: "menu_groups")
     var viewType: GroupsViewType
     var alwaysDarkBackground: Bool = true
-    let groups: [Group]
-    let destination: (Group) -> Content
+    let groups: [NamedGroup]
+    let destination: (NamedGroup) -> Content
     
     var body: some View {
         GeometryReader { geo in
@@ -75,8 +75,8 @@ struct GroupsView_Previews: PreviewProvider {
     
     static var previews: some View {
         NavigationView {
-            GroupsView(viewType: .portraitGroups ,groups: Group.groups) { group in
-                TController(str: "Clicked on \(group.gerName)")
+            GroupsView(viewType: .portraitGroups ,groups: [NamedGroup.exampleData]) { group in
+                TController(str: "Clicked on \(group.gername)")
             }
         }
     }
