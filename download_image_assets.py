@@ -1,5 +1,6 @@
 import os
 import requests
+import cairosvg
 
 GROUPS_URL = "https://naturblick.museumfuernaturkunde.berlin/django/groups/"
 
@@ -9,7 +10,6 @@ def download_file(url, filepath):
         response.raise_for_status()
         with open(filepath, "wb") as f:
             f.write(response.content)
-        print(f"ok: {filepath}")
     except Exception as e:
         print(f"error: Fehler beim Laden {url}: {e}")
 
@@ -18,8 +18,7 @@ def main():
     response.raise_for_status()
     data = response.json()
 
-    asset_dir = os.path.join(os.path.dirname(__file__), "naturblick", "BuildtimeAssets")
-    os.makedirs(asset_dir, exist_ok=True)
+    downloaded_dir = os.path.join(os.path.dirname(__file__), "resources", "downloaded")
 
     for group in data:
         name = group.get("name").lower()
@@ -27,11 +26,12 @@ def main():
         svg_url = group.get("svg")
 
         if image_url:
-            img_path = os.path.join(asset_dir, f"{name}.png")
+            img_path = os.path.join(downloaded_dir, f"group_{name}.png")
             download_file(image_url, img_path)
 
         if svg_url:
-            svg_path = os.path.join(asset_dir, f"{name}_icon.svg")
-            download_file(svg_url, svg_path)
+            pdf_path = os.path.join(downloaded_dir, f"map_{name}.pdf")
+            # download_file(svg_url, svg_path)
+            cairosvg.svg2pdf(url=svg_url, write_to=pdf_path)
 
 main()

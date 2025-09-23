@@ -10,13 +10,16 @@ struct GroupButton: View {
     let action: () -> ()
     var body: some View {
         VStack(spacing: .defaultPadding) {
-            Image(group.image)
-                .resizable()
-                .imageScale(.small)
-                .clipShape(Circle())
-                .scaledToFit()
-                .padding(.horizontal, .halfPadding)
-                .nbShadow()
+            if let img = UIImage(named: group.image) {
+                Image(uiImage: img)
+                    .resizable()
+                    .imageScale(.small)
+                    .clipShape(Circle())
+                    .scaledToFit()
+                    .padding(.horizontal, .halfPadding)
+                    .nbShadow()
+
+            }
             Text(text)
                 .bigRoundButtonText(size: size)
             Spacer()

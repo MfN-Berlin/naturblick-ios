@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -401,6 +401,10 @@
 		DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneVertex.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		DB6F5FA82E65A09400FA9EA3 /* downloaded */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = downloaded; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		131E785B29C9BB24000DF928 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -462,7 +466,6 @@
 				131E786729C9BB25000DF928 /* Preview Content */,
 				7BCE46C029C9DC5E00C6C101 /* utils */,
 				7BCE46A229C9D90300C6C101 /* views */,
-				DBF06BF82E61E5020051CA44 /* BuildtimeAssets */,
 			);
 			path = naturblick;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 		132B0D9729CDD75700B80C9E /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				DB6F5FA82E65A09400FA9EA3 /* downloaded */,
 				DB0B73332DAE4FA4001A6331 /* django-db.sqlite3 */,
 				132B0D9829CDD78600B80C9E /* lato_black.ttf */,
 				132B0D9A29CDD78600B80C9E /* lato_italic.ttf */,
@@ -707,13 +711,6 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		DBF06BF82E61E5020051CA44 /* BuildtimeAssets */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BuildtimeAssets;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -731,6 +728,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				DB6F5FA82E65A09400FA9EA3 /* downloaded */,
 			);
 			name = naturblick;
 			packageProductDependencies = (
