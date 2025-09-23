@@ -5,12 +5,12 @@ import SwiftUI
 import MapKit
 import Photos
 
-class ObservationListViewModel: ObservableObject {
+class ObservationListViewModel: GroupSelector {
     @Published var showList: Bool
     @Published var selectedItems: Set<Observation> = Set<Observation>()
     @Published var editMode: EditMode = EditMode.inactive
     @Published var searchText: String? = nil
-    
+    @Published var group: GroupSelection = .all
     init(showList: Bool) {
         self.showList = showList
     }
@@ -157,6 +157,7 @@ struct ObservationListView: HostedView {
     @ObservedObject var model: ObservationListViewModel
     @State var showDelete: Bool = false
     @State var deleteObservation: IndexSet? = nil
+    
     let showObservation: Observation?
     
     init(backend: Backend, createFlow: CreateFlowViewModel, showObservation: Observation?, model: ObservationListViewModel) {
@@ -197,31 +198,27 @@ struct ObservationListView: HostedView {
     }
     
     var body: some View {
-        SwiftUI.Group {
+        VStack {
             if(model.showList) {
-                VStack {
-                    List(observations, id: \.self, selection: $model.selectedItems) { observation in
-                        createListItem(observation: observation)
+                List(observations, id: \.self, selection: $model.selectedItems) { observation in
+                    createListItem(observation: observation)
+                }
+                .environment(\.editMode, .constant(model.editMode))
+                .foregroundColor(.onPrimaryHighEmphasis)
+                .animation(.default, value: persistenceController.observations)
+                .listStyle(.plain)
+                .refreshable {
+                    do {
+                        try await backend.sync()
+                    } catch {
+                        errorHandler.handle(error)
                     }
-                    .environment(\.editMode, .constant(model.editMode))
-                    .foregroundColor(.onPrimaryHighEmphasis)
-                    .animation(.default, value: persistenceController.observations)
-                    .listStyle(.plain)
-                    .refreshable {
-                        do {
-                            try await backend.sync()
-                        } catch {
-                            errorHandler.handle(error)
-                        }
-                    }
-                    .onChange(of: model.editMode) { _ in
-                        reinitNav()
-                    }
-                    .onChange(of: model.selectedItems.count) { count in
-                        (viewController as? ObservationListViewController)?.enableDelete(enabled: count > 0)
-                    }
-                    Text("\(observations.count) obs_count", tableName: "Plurals")
-                        .body2()
+                }
+                .onChange(of: model.editMode) { _ in
+                    reinitNav()
+                }
+                .onChange(of: model.selectedItems.count) { count in
+                    (viewController as? ObservationListViewController)?.enableDelete(enabled: count > 0)
                 }
             } else {
                 ObservationMapView(
@@ -237,8 +234,26 @@ struct ObservationListView: HostedView {
                         locationManager.requestLocation()
                     }
                 }
-                .ignoresSafeArea(edges: .bottom)
             }
+            HStack(alignment: .center, spacing: .defaultPadding) {
+                VStack {
+                    Text(model.group.description)
+                        .button()
+                        .foregroundColor(.onSecondarySignalLow)
+                        .multilineTextAlignment(.center)
+                }
+                .contentShape(Rectangle())
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .onTapGesture {
+                    viewController?.present(PopAwareNavigationController(rootViewController: SelectGroupView(selector: model, provider: persistenceController).setUpViewController()), animated: true)
+                }
+                Text("\(observations.count) obs_count", tableName: "Plurals")
+                    .body2()
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                Spacer().frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            .padding(.horizontal, .defaultPadding)
         }
         .task {
             try? await backend.sync()
@@ -264,12 +279,34 @@ struct ObservationListView: HostedView {
     }
     
     var observations: [Observation] {
+        let initial = persistenceController.observations
+        let filteredByGroup = switch(model.group) {
+        case .all: initial
+        case .unknown:
+            initial.filter { observation in
+                observation.species == nil
+            }
+        case .other:
+            initial.filter { observation in
+                guard let species = observation.species else {
+                    return false
+                }
+                return !Group.groups.contains { group in
+                    group.id == species.group
+                }
+            }
+        case let .group(group):
+            initial.filter { observation in
+                observation.species?.group == group.id
+            }
+        }
+
         if let searchText = model.searchText, !searchText.isEmpty {
-            return persistenceController.observations.filter { observation in
+            return filteredByGroup.filter { observation in
                 return observation.species?.matches(searchText: searchText) ?? false
             }
         } else {
-            return persistenceController.observations
+            return filteredByGroup
         }
     }
 }
