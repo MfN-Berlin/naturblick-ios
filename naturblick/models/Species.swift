@@ -7,7 +7,7 @@ import SQLite
 
 struct Species: Identifiable, Equatable {
     let id: Int64
-    let group: String
+    let group: Group
     let sciname: String
     let gername: String?
     let engname: String?
@@ -57,8 +57,9 @@ extension Species {
         static let gersearchfield = Expression<String?>("gersearchfield")
         static let engsearchfield = Expression<String?>("engsearchfield")
         static let baseQuery = table
-            .select(table[*], optionalPortraitId, Portrait.Definition.audioUrl)
+            .select(table[*], optionalPortraitId, Portrait.Definition.audioUrl, Group.Definition.table[Group.Definition.name], Group.Definition.table[Group.Definition.nature])
             .join(.leftOuter, Portrait.Definition.table, on: table[id] == Portrait.Definition.speciesId)
+            .join(.inner, Group.Definition.table, on: table[group] == Group.Definition.table[Group.Definition.name])
             .filter(optionalLanguage == getLanguageId() || optionalLanguage == nil)
     }
     
@@ -73,7 +74,7 @@ extension Species {
     private static func fromRow(row: Row, hasPortraits: Bool, alias: SchemaType) -> Species {
         return Species(
             id: row[alias[Species.Definition.id]],
-            group: row[alias[Species.Definition.group]],
+            group: Group.fromRow(row: row),
             sciname: row[alias[Species.Definition.sciname]],
             gername: row[alias[Species.Definition.gername]],
             engname: row[alias[Species.Definition.engname]],
@@ -105,8 +106,8 @@ extension Species {
        return queryWithSearch
            .filter(Species.Definition.gersearchfield != nil)
            .order(isGerman() ?
-                  [Expression(literal: "gername is null"), Expression(literal: "gername"), Expression(literal: "gersynonym is null"), Expression(literal: "gersynonym"), Species.Definition.sciname] :
-                    [Expression(literal: "engname is null"), Expression(literal: "engname"), Expression(literal: "engsynonym is null"), Expression(literal: "engsynonym"), Species.Definition.sciname])
+                  [Expression(literal: "species.gername is null"), Expression(literal: "species.gername"), Expression(literal: "species.gersynonym is null"), Expression(literal: "species.gersynonym"), Species.Definition.sciname] :
+                    [Expression(literal: "species.engname is null"), Expression(literal: "species.engname"), Expression(literal: "species.engsynonym is null"), Expression(literal: "species.engsynonym"), Species.Definition.sciname])
    }
     
     func matches(searchText: String) -> Bool {
@@ -125,7 +126,7 @@ extension Species {
 extension Species {
     static let sampleData = Species(
         id: 44,
-        group: "bird",
+        group: Group.exampleData,
         sciname: "Sturnus vulgaris",
         gername: "Star",
         engname: "Starling",

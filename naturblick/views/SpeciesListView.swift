@@ -49,7 +49,7 @@ struct SpeciesListView: HostedView {
     var viewName: String? {
         switch(filter) {
         case .group(let group):
-            return isGerman() ? group.gerName : group.engName
+            return group.name
         case _:
             return String(localized: "species")
         }
@@ -84,6 +84,6 @@ struct SpeciesListView: HostedView {
 
 struct SpeciesListView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesListView(filter: .group(Group.groups[0]), flow: CreateFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))), isCharacterResult: false, speciesListModel: SpeciesListViewModel())
+        SpeciesListView(filter: .group(NamedGroup.exampleData), flow: CreateFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))), isCharacterResult: false, speciesListModel: SpeciesListViewModel())
     }
 }

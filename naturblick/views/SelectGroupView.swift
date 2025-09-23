@@ -19,11 +19,12 @@ enum GroupSelection: Hashable, Identifiable {
     case all
     case unknown
     case other
-    case group(Group)
+    case group(NamedGroup)
 }
 
 protocol GroupSelector: ObservableObject {
     var group: GroupSelection { get set }
+    var groups: [NamedGroup] { get }
 }
 
 struct SelectGroupView<P, GS>: NavigatableView where P: ObservationProvider, GS: GroupSelector {
@@ -37,23 +38,24 @@ struct SelectGroupView<P, GS>: NavigatableView where P: ObservationProvider, GS:
     }
 
     var groups: [GroupSelection] {
+        let fieldbookGroups = selector.groups
         let groupIds = Set(provider.observations.map { observation in
-            observation.species?.group
+            observation.species?.group.id
         })
         let hasUnknown = groupIds.contains(nil)
         let knownGroupIds = groupIds.compactMap({$0})
         let hasOther = knownGroupIds.contains { id in
-            return !Group.groups.contains { group in
+            return !fieldbookGroups.contains { group in
                 group.id == id
             }
         }
         let selectableGroups = knownGroupIds
             .compactMap { id in
-                let groupMatch = Group.groups.first {
+                let groupMatch = fieldbookGroups.first {
                     group in group.id == id
                 }
                 guard let group = groupMatch else {
-                    return nil as Group?
+                    return nil as NamedGroup?
                 }
                 return group
             }

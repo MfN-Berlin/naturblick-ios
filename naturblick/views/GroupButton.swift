@@ -6,11 +6,11 @@ import SwiftUI
 
 struct GroupButton: View {
     let size: CGFloat
-    let group: Group
+    let group: NamedGroup
     let action: () -> ()
     var body: some View {
         VStack(spacing: .defaultPadding) {
-            Image(group.image)
+            Image("group_conifer")
                 .resizable()
                 .imageScale(.small)
                 .clipShape(Circle())
@@ -33,6 +33,6 @@ struct GroupButton: View {
 
 struct GroupButton_Previews: PreviewProvider {
     static var previews: some View {
-        GroupButton(size: 500, group: Group.groups[0]) {}
+        GroupButton(size: 500, group: NamedGroup.exampleData) {}
     }
 }

@@ -12,12 +12,13 @@ class SimilarSpeciesViewModel: ObservableObject {
     
     private static func query(portraitId: Int64) -> QueryType {
         return SimilarSpecies.Definition.table
-            .select(SimilarSpecies.Definition.table[*], Species.Definition.table[*], Species.Definition.optionalPortraitId)
+            .select(SimilarSpecies.Definition.table[*], Species.Definition.table[*], Species.Definition.optionalPortraitId, Group.Definition.table[Group.Definition.name], Group.Definition.table[Group.Definition.nature])
             .join(
                 Species.Definition.table,
                 on: Species.Definition.table[Species.Definition.id] == SimilarSpecies.Definition.similarToId
             )
             .join(.leftOuter, Portrait.Definition.table, on: Species.Definition.table[Species.Definition.id] == Portrait.Definition.speciesId)
+            .join(.inner, Group.Definition.table, on: Species.Definition.table[Species.Definition.group] == Group.Definition.table[Group.Definition.name])
             .filter(Species.Definition.optionalLanguage == getLanguageId() || Species.Definition.optionalLanguage == nil)
             .filter(SimilarSpecies.Definition.portraitId == portraitId)
         }
@@ -35,7 +36,7 @@ class SimilarSpeciesViewModel: ObservableObject {
                         differences: row[SimilarSpecies.Definition.differences],
                         species: Species(
                             id: row[Species.Definition.table[Species.Definition.id]],
-                            group: row[Species.Definition.group],
+                            group: Group.fromRow(row: row),
                             sciname: row[Species.Definition.sciname],
                             gername: row[Species.Definition.gername],
                             engname: row[Species.Definition.engname],
