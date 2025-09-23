@@ -846,7 +846,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcrun --sdk macosx swiftc -parse-as-library GenerateCharacterAssets.swift -o generate_character_assets && ./generate_character_assets\n";
+			shellScript = "xcrun --sdk macosx swiftc -parse-as-library GenerateAssets.swift -o generate_assets && ./generate_assets\n";
 		};
 		7BDF9EE12A98C1E60064DD3B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

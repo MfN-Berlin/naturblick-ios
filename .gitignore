@@ -1,6 +1,6 @@
 ## X-Code user settings
 xcuserdata/
 /naturblick/Generated.xcassets/
-/generate_character_assets
+/generate_assets
 .DS_Store
 resources/django-db.sqlite3

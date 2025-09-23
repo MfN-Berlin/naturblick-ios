@@ -7,6 +7,12 @@ struct CharacterValue: Decodable {
     let dots: String?
 }
 
+struct Group: Decodable {
+    let name: String
+    let image: String?
+    let svg: String?
+}
+
 enum ImportError: Error {
     case networkError
 }
@@ -116,7 +122,7 @@ enum SvgGenerator {
 }
 
 @main
-enum GenerateCharacterAssets {
+enum GenerateAssets {
     static func main() async throws {
         let url = ProcessInfo.processInfo.environment["CONFIGURATION"] == "Debug" ? "https://staging.naturblick.net" : "https://naturblick.museumfuernaturkunde.berlin"
         let generatedAssets = URL(fileURLWithPath: FileManager().currentDirectoryPath).appendingPathComponent("naturblick/Generated.xcassets")
@@ -132,25 +138,46 @@ enum GenerateCharacterAssets {
             guard character.image != nil || (character.colors != nil && character.colors != "") else {
                 continue
             }
-            let assetDir = generatedAssets.appendingPathComponent("character_\(character.id).imageset")
 
-            if !FileManager.default.fileExists(atPath: assetDir.path) {
-                try FileManager().createDirectory(at: assetDir, withIntermediateDirectories: false)
-            }
+            let assetFile = try createAssetDir(generatedAssetsDir: generatedAssets, prefix: "character", id: String(character.id), suffix: "svg")
 
             if let image = character.image {
                 let svgData = try await URLSession.shared.httpData(from: URL(string: "\(url)/strapi" + image)!)
-                try svgData.write(to: assetDir.appendingPathComponent("character_\(character.id).svg"))
+                try svgData.write(to: assetFile)
             } else if let colors = character.colors {
                 let image = SvgGenerator.svg(colors: colors.split(separator: ","), dotsOpt: character.dots)
                 let svgData = Data(image.utf8)
-                try svgData.write(to: assetDir.appendingPathComponent("character_\(character.id).svg"))
+                try svgData.write(to: assetFile)
             }
-            let assetContents = """
+        }
+
+        let groupData = try await URLSession.shared.httpData(from: URL(string: "\(url)/django/groups")!)
+        let groups = try decoder.decode([Group].self, from: groupData)
+        for group in groups {
+            if let image = group.image {
+                let assetFile = try createAssetDir(generatedAssetsDir: generatedAssets, prefix: "group", id: group.name, suffix: "jpeg")
+                let imageData = try await URLSession.shared.httpData(from: URL(string: image)!)
+                try imageData.write(to: assetFile)
+            }
+            if let svg = group.svg {
+                let assetFile = try createAssetDir(generatedAssetsDir: generatedAssets, prefix: "map", id: group.name, suffix: "svg")
+                let imageData = try await URLSession.shared.httpData(from: URL(string: svg)!)
+                try imageData.write(to: assetFile)
+            }
+        }
+    }
+
+    static func createAssetDir(generatedAssetsDir: URL, prefix: String, id: String, suffix: String) throws -> URL {
+        let assetDir = generatedAssetsDir.appendingPathComponent("\(prefix)_\(id).imageset")
+        if !FileManager.default.fileExists(atPath: assetDir.path) {
+            try FileManager().createDirectory(at: assetDir, withIntermediateDirectories: false)
+        }
+        let filename = "\(prefix)_\(id).\(suffix)"
+        let assetContents = """
 {
   "images" : [
     {
-      "filename" : "character_\(character.id).svg",
+      "filename" : "\(filename)",
       "idiom" : "universal"
     }
   ],
@@ -160,7 +187,7 @@ enum GenerateCharacterAssets {
   }
 }
 """
-            try Data(assetContents.utf8).write(to: assetDir.appendingPathComponent("Contents.json"))
-        }
+        try Data(assetContents.utf8).write(to: assetDir.appendingPathComponent("Contents.json"))
+        return assetDir.appendingPathComponent(filename)
     }
 }
