@@ -8,7 +8,6 @@ import MapKit
 
 struct ObservationMapView: UIViewRepresentable {
     let backend: Backend
-    @ObservedObject var persistenceController: ObservationPersistenceController
     @Binding var userTrackingMode: MKUserTrackingMode
     @ObservedObject var model: ObservationListViewModel
     
@@ -17,25 +16,14 @@ struct ObservationMapView: UIViewRepresentable {
 
     init(backend: Backend, userTrackingMode: Binding<MKUserTrackingMode>, initial: Observation?, model: ObservationListViewModel, toDetails: @escaping (Observation) -> Void) {
         self.backend = backend
-        self.persistenceController = backend.persistence
         self._userTrackingMode = userTrackingMode
         self.initial = initial
         self.toDetails = toDetails
         self.model = model
     }
     
-    var observations: [Observation] {
-        if let searchText = model.searchText, !searchText.isEmpty {
-            return persistenceController.observations.filter { observation in
-                return observation.species?.matches(searchText: searchText) ?? false
-            }
-        } else {
-            return persistenceController.observations
-        }
-    }
-    
     private func setAnnotations(map: MKMapView) {
-        var annotations = observations
+        var annotations = model.observations
             .compactMap { observation in
                 guard let coords = observation.observation.coords else {
                     return nil as (Observation, Coordinates)?
