@@ -72,7 +72,7 @@ struct SelectGroupView<P, GS>: NavigatableView where P: ObservationProvider, GS:
                 let selected = selector.group == group
                 HStack(alignment: .center) {
                     Text(group.description)
-                        .subtitle1(color: selected ? Color.onPrimaryButtonSecondary : Color.onSecondaryHighEmphasis)
+                        .subtitle1(color: selected ? Color.onPrimaryHighEmphasis : Color.onSecondaryHighEmphasis)
                     Spacer()
                     ChevronView()
                 }
@@ -82,7 +82,7 @@ struct SelectGroupView<P, GS>: NavigatableView where P: ObservationProvider, GS:
                     viewController?.dismiss(animated: true)
                 }
                 .listRowInsets(.nbInsets)
-                .listRowBackground(selected ? Color.primary : Color.secondaryColor)
+                .listRowBackground(selected ? Color.primaryColor : Color.secondaryColor)
             }
             .listStyle(.plain)
         }
