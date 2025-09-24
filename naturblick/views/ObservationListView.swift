@@ -4,6 +4,7 @@
 import SwiftUI
 import MapKit
 import Photos
+import Combine
 
 class ObservationListViewModel: GroupSelector {
     @Published var showList: Bool
@@ -12,10 +13,43 @@ class ObservationListViewModel: GroupSelector {
     @Published var searchText: String? = nil
     @Published var group: GroupSelection = .all
     @Published var groups: [NamedGroup]
+    @Published var observations: [Observation] = []
 
-    init(showList: Bool) {
+    init(persistenceController: ObservationPersistenceController, showList: Bool) {
         self.showList = showList
         self.groups = NamedGroup.fieldBookFilter()
+        Publishers.CombineLatest4(persistenceController.$observations, $group, $groups, $searchText).map { (observations, group, groups, searchText) in
+            let initial = persistenceController.observations
+            let filteredByGroup = switch(group) {
+            case .all: initial
+            case .unknown:
+                initial.filter { observation in
+                    observation.species == nil
+                }
+            case .other:
+                initial.filter { observation in
+                    guard let species = observation.species else {
+                        return false
+                    }
+                    return !groups.contains { group in
+                        group.id == species.group.id
+                    }
+                }
+            case let .group(group):
+                initial.filter { observation in
+                    observation.species?.group.id == group.id
+                }
+            }
+
+            if let searchText = searchText, !searchText.isEmpty {
+                return filteredByGroup.filter { observation in
+                    return observation.species?.matches(searchText: searchText) ?? false
+                }
+            } else {
+                return filteredByGroup
+            }
+        }
+        .assign(to: &$observations)
     }
 }
 
@@ -33,7 +67,7 @@ class ObservationListViewController: HostingController<ObservationListView>, UIS
     init(backend: Backend, showObservation: Observation? = nil) {
         self.backend = backend
         createFlow = CreateFlowViewModel(backend: backend, fromList: true)
-        let m = ObservationListViewModel(showList: showObservation == nil)
+        let m = ObservationListViewModel(persistenceController: backend.persistence, showList: showObservation == nil)
         model = m
         let view = ObservationListView(backend: backend, createFlow: createFlow, showObservation: showObservation, model: m)
         super.init(rootView: view)
@@ -203,7 +237,7 @@ struct ObservationListView: HostedView {
     var body: some View {
         VStack {
             if(model.showList) {
-                List(observations, id: \.self, selection: $model.selectedItems) { observation in
+                List(model.observations, id: \.self, selection: $model.selectedItems) { observation in
                     createListItem(observation: observation)
                 }
                 .environment(\.editMode, .constant(model.editMode))
@@ -250,7 +284,7 @@ struct ObservationListView: HostedView {
                 .onTapGesture {
                     viewController?.present(PopAwareNavigationController(rootViewController: SelectGroupView(selector: model, provider: persistenceController).setUpViewController()), animated: true)
                 }
-                Text("\(observations.count) obs_count", tableName: "Plurals")
+                Text("\(model.observations.count) obs_count", tableName: "Plurals")
                     .body2()
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -281,42 +315,11 @@ struct ObservationListView: HostedView {
         .navigationBarBackButtonHidden(model.editMode == .active)
     }
     
-    var observations: [Observation] {
-        let initial = persistenceController.observations
-        let filteredByGroup = switch(model.group) {
-        case .all: initial
-        case .unknown:
-            initial.filter { observation in
-                observation.species == nil
-            }
-        case .other:
-            initial.filter { observation in
-                guard let species = observation.species else {
-                    return false
-                }
-                return !model.groups.contains { group in
-                    group.id == species.group.id
-                }
-            }
-        case let .group(group):
-            initial.filter { observation in
-                observation.species?.group.id == group.id
-            }
-        }
-
-        if let searchText = model.searchText, !searchText.isEmpty {
-            return filteredByGroup.filter { observation in
-                return observation.species?.matches(searchText: searchText) ?? false
-            }
-        } else {
-            return filteredByGroup
-        }
-    }
 }
 
 struct ObservationListView_Previews: PreviewProvider {
     static var previews: some View {
         let backend = Backend(persistence: ObservationPersistenceController(inMemory: true))
-        ObservationListView(backend: backend, createFlow: CreateFlowViewModel(backend: backend), showObservation: nil, model: ObservationListViewModel(showList: true))
+        ObservationListView(backend: backend, createFlow: CreateFlowViewModel(backend: backend), showObservation: nil, model: ObservationListViewModel(persistenceController: backend.persistence, showList: true))
     }
 }
