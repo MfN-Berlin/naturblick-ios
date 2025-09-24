@@ -10,7 +10,7 @@ struct GroupButton: View {
     let action: () -> ()
     var body: some View {
         VStack(spacing: .defaultPadding) {
-            Image("group_conifer")
+            Image(group.image)
                 .resizable()
                 .imageScale(.small)
                 .clipShape(Circle())

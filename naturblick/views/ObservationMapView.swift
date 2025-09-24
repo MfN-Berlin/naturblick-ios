@@ -130,7 +130,7 @@ struct ObservationMapView: UIViewRepresentable {
             testAnnotationView.canShowCallout = false
             
             // Provide the annotation view's image.
-            let image = UIImage(named: annotation.observation.species?.group.mapIcon ?? "map_undefined_spec")
+            let image = UIImage(named: annotation.observation.species?.group.mapIcon ?? "map_undefined_spec") ?? UIImage(named: "map_undefined_spec")
             testAnnotationView.image = image
             return testAnnotationView
         }
