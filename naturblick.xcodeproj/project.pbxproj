@@ -123,6 +123,7 @@
 		13F49F5D2BC440330094FB49 /* SourcesImprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F49F5C2BC440330094FB49 /* SourcesImprint.swift */; };
 		13F5D6582BBFED910022CE0F /* ObservationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F5D6572BBFED910022CE0F /* ObservationMapView.swift */; };
 		13F9789529CB3F1D0031D124 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F9789429CB3F1D0031D124 /* Configuration.swift */; };
+		13FC24B92EA67F8900106443 /* SourcesImprintsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FC24B82EA67F7F00106443 /* SourcesImprintsView.swift */; };
 		13FCE0BE2A01122B00C3B995 /* CreateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */; };
 		13FEBF492E7B093300878ACA /* SelectGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FEBF482E7B092A00878ACA /* SelectGroupView.swift */; };
 		502C51072BDB88950077B06B /* SnowplowTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 502C51062BDB88950077B06B /* SnowplowTracker */; };
@@ -329,6 +330,7 @@
 		13F49F5C2BC440330094FB49 /* SourcesImprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesImprint.swift; sourceTree = "<group>"; };
 		13F5D6572BBFED910022CE0F /* ObservationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationMapView.swift; sourceTree = "<group>"; };
 		13F9789429CB3F1D0031D124 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		13FC24B82EA67F7F00106443 /* SourcesImprintsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesImprintsView.swift; sourceTree = "<group>"; };
 		13FCE0BD2A01122B00C3B995 /* CreateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOperation.swift; sourceTree = "<group>"; };
 		13FEBF482E7B092A00878ACA /* SelectGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupView.swift; sourceTree = "<group>"; };
 		502C51082BDB9E1E0077B06B /* AnalyticsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsTracker.swift; sourceTree = "<group>"; };
@@ -565,6 +567,7 @@
 				7BB3DE1F29F6695F00F0D387 /* SimilarSpeciesItemView.swift */,
 				7BA037C629D6E36E00804AFE /* SimilarSpeciesView.swift */,
 				7B993F4829F16C3D0023315B /* SoundButton.swift */,
+				13FC24B82EA67F7F00106443 /* SourcesImprintsView.swift */,
 				7BC6100B2A30989900185BAA /* SourcesImprintView.swift */,
 				7BB3DE2629F68FE100F0D387 /* SpeciesFeaturesView.swift */,
 				13535CEC2A77E4FE00501DFA /* SpeciesInfoView.swift */,
@@ -942,6 +945,7 @@
 				13535CEB2A77CFB600501DFA /* SpeciesListView.swift in Sources */,
 				13EC572329DC83E900D56A77 /* ObservationListView.swift in Sources */,
 				1349393A2AAB42F800A50BF1 /* IdFlow.swift in Sources */,
+				13FC24B92EA67F8900106443 /* SourcesImprintsView.swift in Sources */,
 				DB0564812BD7DBAB0013FB61 /* ConfirmDateView.swift in Sources */,
 				13070CA82A053EC700A2046D /* Operation.swift in Sources */,
 				7B8008F229D5B66B00950839 /* PortraitImageSize.swift in Sources */,

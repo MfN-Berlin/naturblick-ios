@@ -238,3 +238,6 @@
 "filter_all"="Alle Arten";
 "filter_others"="Sonstige";
 "filter_unknown"="Unbekannte Art";
+"ident_keys"="Bestimmungsschlüssel";
+"sound_recogniotion_sounds"="Lauterkennung Tonaufnahmen";
+"sound_recogniotion_images"="Lauterkennung Bilder";

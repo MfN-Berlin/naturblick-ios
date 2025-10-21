@@ -8,6 +8,7 @@ import SQLite
 
 struct SourcesImprint: Identifiable {
     let id: Int64
+    let section: String
     let scieName: String
     let scieNameEng: String
     let imageSource: String?
@@ -19,6 +20,7 @@ extension SourcesImprint {
     struct Definition {
         static let table = Table("sources_imprint")
         static let id = Expression<Int64>("id")
+        static let section = Expression<String>("section")
         static let scieName = Expression<String>("scie_name")
         static let scieNameEng = Expression<String>("scie_name_eng")
         static let imageSource = Expression<String?>("image_source")

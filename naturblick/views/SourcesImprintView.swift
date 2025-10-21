@@ -8,13 +8,19 @@ import SwiftUI
 struct SourcesImprintView: NavigatableView {
     var holder: ViewControllerHolder = ViewControllerHolder()
     var viewName: String? = "Further Sources"
-    @StateObject var model = SourcesImprintViewModel()
-    
+    @StateObject var model: SourcesImprintViewModel
+    let section: String
 
-    
+    init(section: String) {
+        self._model = StateObject(wrappedValue: SourcesImprintViewModel(section: section))
+        self.section = section
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: .defaultPadding) {
+                Text(LocalizedStringKey(section))
+                    .headline4()
                 ForEach(model.sources) { source in
                     VStack(alignment: .leading) {
                         Text(source.text)
