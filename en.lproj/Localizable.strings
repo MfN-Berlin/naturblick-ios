@@ -240,3 +240,6 @@
 "filter_all"="All species";
 "filter_others"="Others";
 "filter_unknown"="Unknown species";
+"ident_keys"="Characteristics";
+"sound_recogniotion_sounds"="Record a bird sound";
+"sound_recogniotion_images"="Record a bird images";
