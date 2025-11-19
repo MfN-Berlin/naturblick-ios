@@ -27,13 +27,13 @@ struct SoundButton: View {
     func buttonIcon() -> FABView {
         switch soundStream.currentStatus {
             case .waitingToPlayAtSpecifiedRate:
-                return FABView(systemName: "clock.circle") // placeholder icon
+            return FABView(systemName: "clock.circle", color: .onSecondaryButtonSecondary, size: .mini) // placeholder icon
             case .paused:
-                return FABView("ic_play_circle_outline")
+                return FABView("ic_play_circle_outline", color: .onSecondaryButtonSecondary, size: .mini)
             case .playing:
-                return FABView("ic_pause_circle_outline")
+                return FABView("ic_pause_circle_outline", color: .onSecondaryButtonSecondary, size: .mini)
             default:
-                return FABView(systemName: "clock.circle")
+                return FABView(systemName: "clock.circle", color: .onSecondaryButtonSecondary, size: .mini)
         }
     }
     

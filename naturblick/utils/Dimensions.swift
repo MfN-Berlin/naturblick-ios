@@ -11,9 +11,11 @@ extension CGFloat {
     static let doublePadding: CGFloat = defaultPadding * 2
     static let avatarSize: CGFloat = 64
     static let fabSize: CGFloat = 48
-    static let fabMiniSize: CGFloat = 24
+    static let fabMiniSize: CGFloat = 40
+    static let fabMicroSize: CGFloat = 24
     static let fabIconPadding: CGFloat = 12
-    static let fabIconMiniPadding: CGFloat = 6
+    static let fabIconMiniPadding: CGFloat = 8
+    static let fabIconMicroPadding: CGFloat = 6
     static let avatarTextOffset: CGFloat = (avatarSize - .subtitle1LineHeight - .subtitle3LineHeight) / 2
     static let avatarOffsetPadding: CGFloat = 20
     static let headerIconSize: CGFloat = 24

@@ -24,7 +24,6 @@ struct PortraitView: View {
                                 SoundButton(url: URL(string: Configuration.djangoUrl + urlPart)!, speciesId: species.speciesId)
                                     .frame(height: .fabSize)
                                     .padding(.horizontal, .defaultPadding)
-                                    .padding(.bottom, .roundBottomHeight + .defaultPadding)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                             }
                         }

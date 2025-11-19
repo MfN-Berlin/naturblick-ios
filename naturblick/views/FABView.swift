@@ -5,19 +5,43 @@
 
 import SwiftUI
 
+enum FabSize {
+    case normal
+    case mini
+}
+
 struct FABView: View {
     let image: Image
     let color: Color
-    init(_ asset: String, color: Color = Color.primaryColor) {
+    let size: FabSize
+    init(_ asset: String, color: Color = Color.primaryColor, size: FabSize = .normal) {
         self.image = Image(asset)
         self.color = color
+        self.size = size
     }
     
-    init(systemName: String, color: Color = Color.primaryColor) {
+    init(systemName: String, color: Color = Color.primaryColor, size: FabSize = .normal) {
         self.image = Image(systemName: systemName)
         self.color = color
+        self.size = size
     }
     
+    var viewSize: CGFloat {
+        switch(size) {
+        case .normal:
+            return .fabSize
+        case .mini:
+            return .fabMiniSize
+        }
+    }
+    var paddingSize: CGFloat {
+        switch(size) {
+        case .normal:
+            return .fabIconPadding
+        case .mini:
+            return .fabIconMiniPadding
+        }
+    }
     var body: some View {
         Circle()
             .fill(color)
@@ -26,9 +50,9 @@ struct FABView: View {
                 .resizable()
                 .scaledToFit()
                 .foregroundColor(.onPrimaryHighEmphasis)
-                .padding(.fabIconPadding)
+                .padding(paddingSize)
             }
-            .frame(width: .fabSize, height: .fabSize)
+            .frame(width: viewSize, height: viewSize)
             .nbShadow()
     }
 }

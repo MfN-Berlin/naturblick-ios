@@ -42,9 +42,9 @@ struct PortraitHeaderView: View {
                             .resizable()
                             .scaledToFill()
                             .foregroundColor(.onPrimaryHighEmphasis)
-                            .padding(.fabIconMiniPadding)
+                            .padding(.fabIconMicroPadding)
                     }
-                    .frame(width: .fabMiniSize, height: .fabMiniSize)
+                    .frame(width: .fabMicroSize, height: .fabMicroSize)
                     .padding(.defaultPadding)
             }.accessibilityLabel(Text("Copyright"))
         }
