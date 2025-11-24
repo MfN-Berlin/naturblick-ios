@@ -129,7 +129,7 @@
 "edit"="Bearbeiten";
 "create_obs"="Beobachtung eintragen";
 "ident_from_photo"="Pflanze von bestehendem Bild";
-"source"="Quelle";
+"source"="Foto von";
 "show_results %@"="%@ Ergebnissse anzeigen";
 "no_coordinates"="Keine Koordinaten";
 "loading"="Lade...";
@@ -182,6 +182,7 @@
 "ok"="Ok";
 "to_orig"="Zum Original";
 "to_licence"="Lizenzinfo";
+"to_owner_page"="Zur Autorenseite";
 "save_observation"="Achtung";
 "save_observation_message"="Deine Beobachtung ist noch nicht gespeichert. Nicht gespeicherte Beobachtungen können nicht wieder hergestellt werden.";
 "exit_without_saving_observation"="Beobachtung verwerfen";
