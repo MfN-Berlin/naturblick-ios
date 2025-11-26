@@ -124,6 +124,7 @@ class PortraitViewModel: ObservableObject {
                             engname: row[Species.Definition.table[Species.Definition.engname]],
                             wikipedia: row[Species.Definition.table[Species.Definition.wikipedia]],
                             maleUrl: row[Species.Definition.table[Species.Definition.maleUrl]],
+                            maleUrlOrig: row[Species.Definition.table[Species.Definition.maleUrlOrig]],
                             femaleUrl: row[Species.Definition.table[Species.Definition.femaleUrl]],
                             gersynonym: row[Species.Definition.table[Species.Definition.gersynonym]],
                             engsynonym: row[Species.Definition.table[Species.Definition.engsynonym]],

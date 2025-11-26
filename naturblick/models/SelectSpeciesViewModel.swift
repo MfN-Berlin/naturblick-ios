@@ -21,6 +21,7 @@ class SelectSpeciesViewModel: ObservableObject {
                         sciname: row[Species.Definition.sciname],
                         speciesName: isGerman() ? row[Species.Definition.gername] : row[Species.Definition.engname],
                         maleUrl: row[Species.Definition.maleUrl],
+                        maleUrlOrig: row[Species.Definition.maleUrlOrig],
                         femaleUrl: row[Species.Definition.femaleUrl],
                         synonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engsynonym],
                         isFemale: nil,

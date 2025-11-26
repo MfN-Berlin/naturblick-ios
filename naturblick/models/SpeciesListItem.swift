@@ -32,6 +32,7 @@ struct SpeciesListItem: Identifiable {
     let sciname: String
     let speciesName: String?
     let maleUrl: String?
+    let maleUrlOrig: String?
     let femaleUrl: String?
     let synonym: String?
     let isFemale: Bool?
@@ -47,6 +48,7 @@ extension SpeciesListItem {
         sciname: "Lissotriton vulgaris",
         speciesName: "Teichmolch",
         maleUrl: "/uploads/crop_d60f7f6c98b0fcf1aa52e7b0_f0b5f2e568.jpg",
+        maleUrlOrig: "/uploads/crop_d60f7f6c98b0fcf1aa52e7b0_f0b5f2e568.jpg",
         femaleUrl: nil,
         synonym: nil,
         isFemale: nil,
@@ -67,6 +69,7 @@ extension SpeciesListItem {
                     sciname: row[Species.Definition.sciname],
                     speciesName: isGerman() ? row[Species.Definition.gername] : row[Species.Definition.engname],
                     maleUrl: row[Species.Definition.maleUrl],
+                    maleUrlOrig: row[Species.Definition.maleUrlOrig],
                     femaleUrl: row[Species.Definition.femaleUrl],
                     synonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engsynonym],
                     isFemale: nil,
@@ -86,6 +89,7 @@ extension Species {
             sciname: sciname,
             speciesName: speciesName,
             maleUrl: maleUrl,
+            maleUrlOrig: maleUrlOrig,
             femaleUrl: femaleUrl,
             synonym: synonym,
             isFemale: nil,

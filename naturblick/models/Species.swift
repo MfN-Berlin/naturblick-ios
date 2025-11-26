@@ -13,6 +13,7 @@ struct Species: Identifiable, Equatable {
     let engname: String?
     let wikipedia: String?
     let maleUrl: String?
+    let maleUrlOrig: String?
     let femaleUrl: String?
     let gersynonym: String?
     let engsynonym: String?
@@ -44,6 +45,7 @@ extension Species {
         static let engname = Expression<String?>("engname")
         static let wikipedia = Expression<String?>("wikipedia")
         static let maleUrl = Expression<String?>("image_url")
+        static let maleUrlOrig = Expression<String?>("image_url_orig")
         static let femaleUrl = Expression<String?>("female_image_url")
         static let gersynonym = Expression<String?>("gersynonym")
         static let engsynonym = Expression<String?>("engsynonym")
@@ -80,6 +82,7 @@ extension Species {
             engname: row[alias[Species.Definition.engname]],
             wikipedia: row[alias[Species.Definition.wikipedia]],
             maleUrl: row[alias[Species.Definition.maleUrl]],
+            maleUrlOrig: row[alias[Species.Definition.maleUrlOrig]],
             femaleUrl: row[alias[Species.Definition.femaleUrl]],
             gersynonym: row[alias[Species.Definition.gersynonym]],
             engsynonym: row[alias[Species.Definition.engsynonym]],
@@ -132,6 +135,7 @@ extension Species {
         engname: "Starling",
         wikipedia: "https://de.wikipedia.org/wiki/Star_(Art)",
         maleUrl: "/uploads/crop_053557dc868d4fac054473e2_f1d6e2d875.jpg",
+        maleUrlOrig: "/uploads/crop_053557dc868d4fac054473e2_f1d6e2d875.jpg",
         femaleUrl: nil,
         gersynonym: nil,
         engsynonym: nil,

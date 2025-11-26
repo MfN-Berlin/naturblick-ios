@@ -42,6 +42,7 @@ class SimilarSpeciesViewModel: ObservableObject {
                             engname: row[Species.Definition.engname],
                             wikipedia: row[Species.Definition.wikipedia],
                             maleUrl: row[Species.Definition.maleUrl],
+                            maleUrlOrig: row[Species.Definition.maleUrlOrig],
                             femaleUrl: row[Species.Definition.femaleUrl],
                             gersynonym: row[Species.Definition.gersynonym],
                             engsynonym: row[Species.Definition.engsynonym],
