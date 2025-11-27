@@ -1239,7 +1239,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.3.11;
+				MARKETING_VERSION = 4.3.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mfnberlin.stadtnaturentdecken.naturblick.debug;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1279,7 +1279,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.3.11;
+				MARKETING_VERSION = 4.3.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mfnberlin.stadtnaturentdecken.naturblick;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
