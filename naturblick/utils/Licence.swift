@@ -6,7 +6,7 @@
 import Foundation
 
 struct Licence {
-    
+  
     public static func licenceToLink(licence: String) -> String {
         let l = licence.lowercased()
         

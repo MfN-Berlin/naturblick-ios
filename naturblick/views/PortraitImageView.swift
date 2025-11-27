@@ -16,8 +16,12 @@ extension View {
             if let url = URL(string: Licence.licenceToLink(licence: image.license)) {
                 Link("to_licence", destination: url)
             }
+            if let ownerLink = image.ownerLink, !ownerLink.isEmpty,
+               let url = URL(string: ownerLink) {
+                Link("to_owner_page", destination: url)
+            }
             Button("close") { show.wrappedValue = false } },
-               message: { Text("(\(image.license)) \(image.owner)") } )
+               message: { Text("\(image.owner)/ CC BY") } )
     }
 }
 

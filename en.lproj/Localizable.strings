@@ -131,7 +131,7 @@
 "edit"="Edit";
 "create_obs"="Create observation";
 "ident_from_photo"="Plant from existing image";
-"source"="Source";
+"source"="Photo by";
 "show_results %@"="Show %@ results";
 "no_coordinates"="No coordinates";
 "loading"="Loading";
@@ -184,6 +184,7 @@
 "ok"="Ok";
 "to_orig"="Goto original";
 "to_licence"="Licence information";
+"to_owner_page"="Goto owner's page";
 "save_observation"="Attention";
 "save_observation_message"="The observation has not been saved. Unsaved observations cannot be recovered.";
 "exit_without_saving_observation"="Discard observation";
