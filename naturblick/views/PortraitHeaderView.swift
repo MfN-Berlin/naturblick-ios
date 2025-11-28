@@ -13,7 +13,6 @@ struct PortraitHeaderView: View {
     @Environment(\.displayScale) private var displayScale: CGFloat
     @State var preview: UIImage? = nil
     @State var full: UIImage? = nil
-    @State var showCCByInfo: Bool = false
     
     var body: some View {
         SwiftUI.Group {
@@ -32,21 +31,8 @@ struct PortraitHeaderView: View {
         }
         .accessibilityHidden(true)
         .overlay(alignment: .topTrailing) {
-            SwiftUI.Button(action: {
-                showCCByInfo.toggle()
-            }) {
-                Circle()
-                    .fill(Color.onImageSignalLow)
-                    .overlay {
-                        Image("ic_copyright")
-                            .resizable()
-                            .scaledToFill()
-                            .foregroundColor(.onPrimaryHighEmphasis)
-                            .padding(.fabIconMicroPadding)
-                    }
-                    .frame(width: .fabMicroSize, height: .fabMicroSize)
-                    .padding(.defaultPadding)
-            }.accessibilityLabel(Text("Copyright"))
+            CopyrightButtonView(source: image.source, license: image.license, owner: image.owner, ownerLink: image.ownerLink)
+                .padding(.defaultPadding)
         }
         .clipShape(RoundBottomShape())
         .nbShadow()
@@ -84,7 +70,6 @@ struct PortraitHeaderView: View {
                 }
             }
         }
-        .sourcesAlert(show: $showCCByInfo, image: image)
     }
 }
 

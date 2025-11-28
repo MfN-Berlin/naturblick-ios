@@ -5,33 +5,12 @@
 
 import SwiftUI
 
-extension View {
-    func sourcesAlert(show: Binding<Bool>, image: PortraitImage) -> some View {
-        return self.alert("source",
-               isPresented: show,
-               actions: {
-            if let url = URL(string: image.source) {
-                Link("to_orig", destination: url)
-            }
-            if let url = URL(string: Licence.licenceToLink(licence: image.license)) {
-                Link("to_licence", destination: url)
-            }
-            if let ownerLink = image.ownerLink, !ownerLink.isEmpty,
-               let url = URL(string: ownerLink) {
-                Link("to_owner_page", destination: url)
-            }
-            Button("close") { show.wrappedValue = false } },
-               message: { Text("\(image.owner)/ CC BY") } )
-    }
-}
-
 struct PortraitImageView: View {
     let width: CGFloat
     let image: PortraitImage
     @Environment(\.displayScale) private var displayScale: CGFloat
     @State var preview: UIImage? = nil
     @State var full: UIImage? = nil
-    @State var showCCByInfo: Bool = false
     
     var aspectRatio: CGFloat {
         let size = image.sizes.first!
@@ -60,22 +39,8 @@ struct PortraitImageView: View {
                 }
                 .accessibilityHidden(true)
                 .overlay(alignment: .topTrailing) {
-                    SwiftUI.Button(action: {
-                        showCCByInfo.toggle()
-                    }) {
-                        Circle()
-                            .fill(Color.onImageSignalLow)
-                            .overlay {
-                                Image("ic_copyright")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .foregroundColor(.onPrimaryHighEmphasis)
-                                    .padding(.fabIconMicroPadding)
-                            }
-                            .frame(width: .fabMicroSize, height: .fabMicroSize)
-                            .padding(.defaultPadding)
-                    }
-                    .accessibilityLabel(Text("Copyright"))
+                    CopyrightButtonView(source: image.source, license: image.license, owner: image.owner, ownerLink: image.ownerLink)
+                        .padding(.defaultPadding)
                 }
                 Text(image.text)
                     .body1()
@@ -100,7 +65,6 @@ struct PortraitImageView: View {
                     }
                 }
             }
-            .sourcesAlert(show: $showCCByInfo, image: image)
         }
     }
 }

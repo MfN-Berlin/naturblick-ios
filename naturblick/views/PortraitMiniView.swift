@@ -37,6 +37,13 @@ struct PortraitMiniView: View {
             .overlay(alignment: .bottomTrailing) {
                 if let url = species.maleUrlOrig {
                     FullscreenButtonView(present: present, url: URL(string: Configuration.djangoUrl + url)!)
+                        .padding(.defaultPadding)
+                }
+            }
+            .overlay(alignment: .topTrailing) {
+                if let source = species.maleUrlSource, let license = species.maleUrlLicense, let owner = species.maleUrlOwner {
+                    CopyrightButtonView(source: source, license: license, owner: owner, ownerLink: species.maleUrlOwnerLink)
+                        .padding(.defaultPadding)
                 }
             }
             VStack {

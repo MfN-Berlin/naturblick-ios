@@ -33,6 +33,10 @@ struct SpeciesListItem: Identifiable {
     let speciesName: String?
     let maleUrl: String?
     let maleUrlOrig: String?
+    let maleUrlSource: String?
+    let maleUrlOwner: String?
+    let maleUrlOwnerLink: String?
+    let maleUrlLicense: String?
     let femaleUrl: String?
     let synonym: String?
     let isFemale: Bool?
@@ -49,6 +53,10 @@ extension SpeciesListItem {
         speciesName: "Teichmolch",
         maleUrl: "/uploads/crop_d60f7f6c98b0fcf1aa52e7b0_f0b5f2e568.jpg",
         maleUrlOrig: "/uploads/crop_d60f7f6c98b0fcf1aa52e7b0_f0b5f2e568.jpg",
+        maleUrlSource: "https://example.com",
+        maleUrlOwner: "Owner Name",
+        maleUrlOwnerLink: nil,
+        maleUrlLicense: "CC BY",
         femaleUrl: nil,
         synonym: nil,
         isFemale: nil,
@@ -70,6 +78,10 @@ extension SpeciesListItem {
                     speciesName: isGerman() ? row[Species.Definition.gername] : row[Species.Definition.engname],
                     maleUrl: row[Species.Definition.maleUrl],
                     maleUrlOrig: row[Species.Definition.maleUrlOrig],
+                    maleUrlSource: row[Species.Definition.maleUrlSource],
+                    maleUrlOwner: row[Species.Definition.maleUrlOwner],
+                    maleUrlOwnerLink: row[Species.Definition.maleUrlOwnerLink],
+                    maleUrlLicense: row[Species.Definition.maleUrlLicense],
                     femaleUrl: row[Species.Definition.femaleUrl],
                     synonym: isGerman() ? row[Species.Definition.gersynonym] : row[Species.Definition.engsynonym],
                     isFemale: nil,
@@ -90,6 +102,10 @@ extension Species {
             speciesName: speciesName,
             maleUrl: maleUrl,
             maleUrlOrig: maleUrlOrig,
+            maleUrlSource: maleUrlSource,
+            maleUrlOwner: maleUrlOwner,
+            maleUrlOwnerLink: maleUrlOwnerLink,
+            maleUrlLicense: maleUrlLicense,
             femaleUrl: femaleUrl,
             synonym: synonym,
             isFemale: nil,
