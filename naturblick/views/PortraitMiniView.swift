@@ -8,7 +8,7 @@ import CachedAsyncImage
 struct PortraitMiniView: View {
     @Environment(\.openURL) var openURL
     let species: SpeciesListItem
-    let present: (UIViewController) -> Void
+    let present: (UIViewController, (() -> Void)?) -> Void
 
     var urlRequest: URLRequest? {
         if let urlstr = species.url, let url = URL(string: Configuration.djangoUrl + urlstr) {

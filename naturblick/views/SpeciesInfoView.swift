@@ -56,10 +56,10 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     
     var body: some View {
         if species.hasPortrait {
-            PortraitView(species: species, present: {view in navigationController?.present(view, animated: true)}, similarSpeciesDestination: navigate)
+            PortraitView(species: species, present: {view, completion in navigationController?.present(view, animated: true, completion: completion)}, similarSpeciesDestination: navigate)
         } else {
-            PortraitMiniView(species: species) { view in
-                navigationController?.present(view, animated: true)
+            PortraitMiniView(species: species) { view, completion in
+                navigationController?.present(view, animated: true, completion: completion)
             }
         }
     }

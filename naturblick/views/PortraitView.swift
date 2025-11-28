@@ -9,7 +9,7 @@ struct PortraitView: View {
     @StateObject var portraitViewModel = PortraitViewModel()
     @StateObject var similarSpeciesViewModel = SimilarSpeciesViewModel()
     let species: SpeciesListItem
-    let present: (UIViewController) -> Void
+    let present: (UIViewController, (() -> Void)?) -> Void
     let similarSpeciesDestination: (SpeciesListItem) -> Void
     var body: some View {
         GeometryReader { geo in
@@ -142,7 +142,7 @@ struct PortraitView: View {
 struct PortraitView_Previews: PreviewProvider {
     
     static var previews: some View {
-        PortraitView(species: SpeciesListItem.sampleData, present: {v in}) { _ in
+        PortraitView(species: SpeciesListItem.sampleData, present: {u, v in}) { _ in
             
         }
     }

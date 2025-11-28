@@ -12,10 +12,6 @@ class FullscreenButtonViewModel: HttpErrorViewModel, QLPreviewControllerDataSour
 
     @MainActor
     func downloadImageItem(remoteUrl: URL) async throws {
-        defer {
-            self.loadingImage = false
-        }
-        self.loadingImage = true
         let temporaryUrl = URL.temporaryFileURL(ending: "jpeg")
         let data = try await URLSession.shared.http(request: URLRequest(url: remoteUrl))
         try data.write(to: temporaryUrl, options: [.atomic])
@@ -31,12 +27,13 @@ class FullscreenButtonViewModel: HttpErrorViewModel, QLPreviewControllerDataSour
     }
 
     func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> any QLPreviewItem {
-        url! as NSURL
+        //self.loadingImage = false
+        return url! as NSURL
     }
 }
 
 struct FullscreenButtonView: View {
-    let present: (UIViewController) -> Void
+    let present: (UIViewController, (() -> Void)?) -> Void
     let url: URL
     @StateObject var model = FullscreenButtonViewModel()
 
@@ -49,11 +46,15 @@ struct FullscreenButtonView: View {
                     .onTapGesture {
                         Task { @MainActor in
                             do {
+                                model.loadingImage = true
                                 try await model.downloadImageItem(remoteUrl: url)
                                 let controller = QLPreviewController()
                                 controller.dataSource = model
-                                present(controller)
+                                present(controller) {
+                                    model.loadingImage = false
+                                }
                             } catch {
+                                model.loadingImage = false
                                 model.handle(error)
                             }
                         }
