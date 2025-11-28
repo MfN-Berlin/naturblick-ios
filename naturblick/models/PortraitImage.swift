@@ -50,6 +50,12 @@ extension PortraitImage {
             return PortraitImage.focusAspectRatio(landscape: landscape)
         }
     }
+
+    var largest: PortraitImageSize? {
+        sizes.max { size1, size2 in
+            size1.width * size1.height < size2.width * size2.height
+        }
+    }
 }
 
 extension PortraitImage {

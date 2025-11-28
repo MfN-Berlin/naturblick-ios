@@ -73,15 +73,10 @@ struct ObservationInfoView: View {
                 avatar
                     .overlay(alignment: .bottomTrailing) {
                         ZStack {
-                            Circle()
-                                .fill(Color.onPrimaryButtonPrimary)
-                                .frame(width: 40, height: 40)
                             if(model.loadingImage) {
-                                Image(systemName: "clock.circle")
-                                    .foregroundColor(.onPrimaryHighEmphasis)
+                                FABView(systemName: "clock.circle", color: .onSecondaryButtonSecondary, size: .mini)
                             } else {
-                                Image("zoom")
-                                    .foregroundColor(.onPrimaryHighEmphasis)
+                                FABView("zoom", color: .onSecondaryButtonSecondary, size: .mini)
                             }
                         }.onTapGesture {
                             Task { @MainActor in

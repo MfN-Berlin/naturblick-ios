@@ -9,8 +9,8 @@ struct PortraitView: View {
     @StateObject var portraitViewModel = PortraitViewModel()
     @StateObject var similarSpeciesViewModel = SimilarSpeciesViewModel()
     let species: SpeciesListItem
+    let present: (UIViewController, (() -> Void)?) -> Void
     let similarSpeciesDestination: (SpeciesListItem) -> Void
-    
     var body: some View {
         GeometryReader { geo in
             ScrollView {
@@ -20,13 +20,17 @@ struct PortraitView: View {
                             if let meta = portrait.descriptionImage {
                                 PortraitHeaderView(width: geo.size.width, image: meta, landscape: portrait.landscape, focus: portrait.focus)
                             }
-                            if let urlPart = portrait.audioUrl {
-                                SoundButton(url: URL(string: Configuration.djangoUrl + urlPart)!, speciesId: species.speciesId)
-                                    .frame(height: .fabSize)
-                                    .padding(.horizontal, .defaultPadding)
-                                    .padding(.bottom, .roundBottomHeight + .defaultPadding)
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                            HStack(spacing: .defaultPadding) {
+                                if let url = portrait.descriptionImage?.largest?.url {
+                                    FullscreenButtonView(present: present, url: URL(string: Configuration.djangoUrl + url)!)
+                                }
+                                if let urlPart = portrait.audioUrl {
+                                    SoundButton(url: URL(string: Configuration.djangoUrl + urlPart)!, speciesId: species.speciesId)
+                                }
                             }
+                            .frame(height: .fabSize)
+                            .padding(.horizontal, .defaultPadding)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                         }
                         
                         VStack(spacing: .zero) { // names
@@ -138,7 +142,7 @@ struct PortraitView: View {
 struct PortraitView_Previews: PreviewProvider {
     
     static var previews: some View {
-        PortraitView(species: SpeciesListItem.sampleData) { _ in
+        PortraitView(species: SpeciesListItem.sampleData, present: {u, v in}) { _ in
             
         }
     }

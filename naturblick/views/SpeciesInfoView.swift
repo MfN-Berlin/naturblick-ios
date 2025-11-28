@@ -7,7 +7,6 @@ import SwiftUI
 import CachedAsyncImage
 
 struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
-    @Environment(\.openURL) var openURL
     var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
@@ -23,14 +22,6 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     let selectionFlow: Bool
     let species: SpeciesListItem
     @ObservedObject var flow: Flow
-    
-    var urlRequest: URLRequest? {
-        if let urlstr = species.url, let url = URL(string: Configuration.djangoUrl + urlstr) {
-            return URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
-        } else {
-            return nil
-        }
-    }
     
     func configureNavigationItem(item: UINavigationItem) {
         if navigationController?.viewControllers.first == viewController {
@@ -65,55 +56,12 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     
     var body: some View {
         if species.hasPortrait {
-            PortraitView(species: species, similarSpeciesDestination: navigate)
+            PortraitView(species: species, present: {view, completion in navigationController?.present(view, animated: true, completion: completion)}, similarSpeciesDestination: navigate)
         } else {
-            VStack(alignment: .center, spacing: .defaultPadding) {
-                SwiftUI.Group {
-                    CachedAsyncImage(urlRequest: urlRequest) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .clipShape(RoundedRectangle(cornerRadius: .largeCornerRadius))
-                            .accessibilityHidden(true)
-                    } placeholder: {
-                        Image(decorative: "placeholder")
-                            .resizable()
-                            .scaledToFit()
-                            .clipShape(Circle())
-                    }
-                }
-                .overlay(alignment: .bottomTrailing) {
-                    if let audioUrl = species.audioUrl {
-                        SoundButton(url: URL(string: Configuration.djangoUrl + audioUrl)!, speciesId: species.speciesId)
-                            .frame(height: .fabSize)
-                            .padding(.defaultPadding)
-                    }
-                }
-                VStack {
-                    Text(species.sciname)
-                        .overline(color: .onSecondarySignalHigh)
-                        .multilineTextAlignment(.center)
-                        .accessibilityLabel(Text("sciname \(species.sciname)"))
-                    Text(species.speciesName?.uppercased() ?? species.sciname.uppercased())
-                        .headline4(color: .onSecondaryHighEmphasis)
-                        .multilineTextAlignment(.center)
-                    
-                    if let synonym = species.synonym {
-                        Text("also \(synonym)")
-                            .caption(color: .onSecondaryLowEmphasis)
-                            .multilineTextAlignment(.center)
-                    }
-                }
-                if let wikipediaUrl = URL.wikipedia(species: species) {
-                    Button("link_to_wikipedia") {
-                        openURL(wikipediaUrl)
-                    }
-                    .buttonStyle(AuxiliaryOnSecondaryButton())
-                }
-                Spacer()
-            }.padding(.defaultPadding)
+            PortraitMiniView(species: species) { view, completion in
+                navigationController?.present(view, animated: true, completion: completion)
+            }
         }
-        
     }
 }
 
