@@ -8,6 +8,7 @@ import CachedAsyncImage
 struct PortraitMiniView: View {
     @Environment(\.openURL) var openURL
     let species: SpeciesListItem
+    let backend: Backend
     let present: (UIViewController, (() -> Void)?) -> Void
 
     var urlRequest: URLRequest? {
@@ -67,6 +68,9 @@ struct PortraitMiniView: View {
                 .buttonStyle(AuxiliaryOnSecondaryButton())
             }
             Spacer()
-        }.padding(.defaultPadding)
+        }.padding(.defaultPadding).task {
+            try? backend.persistence.addViewPortrait(speciesId: species.speciesId)
+        }
+           
     }
 }

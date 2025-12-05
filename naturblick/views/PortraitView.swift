@@ -9,6 +9,7 @@ struct PortraitView: View {
     @StateObject var portraitViewModel = PortraitViewModel()
     @StateObject var similarSpeciesViewModel = SimilarSpeciesViewModel()
     let species: SpeciesListItem
+    let backend: Backend
     let present: (UIViewController, (() -> Void)?) -> Void
     let similarSpeciesDestination: (SpeciesListItem) -> Void
     var body: some View {
@@ -134,6 +135,7 @@ struct PortraitView: View {
             }
             .task {
                 portraitViewModel.filter(speciesId: species.speciesId)
+                try? backend.persistence.addViewPortrait(speciesId: species.speciesId)
             }
         }
     }
@@ -142,7 +144,7 @@ struct PortraitView: View {
 struct PortraitView_Previews: PreviewProvider {
     
     static var previews: some View {
-        PortraitView(species: SpeciesListItem.sampleData, present: {u, v in}) { _ in
+        PortraitView(species: SpeciesListItem.sampleData, backend: Backend(persistence: ObservationPersistenceController(inMemory: true)), present: {u, v in}) { _ in
             
         }
     }

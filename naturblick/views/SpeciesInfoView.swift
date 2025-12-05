@@ -8,6 +8,7 @@ import CachedAsyncImage
 
 struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
+    let backend: Backend
     
     var viewName: String? {
         if let speciesName = species.speciesName {
@@ -51,14 +52,14 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     }
     
     func navigate(species: SpeciesListItem) {
-        navigationController?.pushViewController(SpeciesInfoView(selectionFlow: selectionFlow, species: species, flow: flow).setUpViewController(), animated: true)
+        navigationController?.pushViewController(SpeciesInfoView(backend: backend, selectionFlow: selectionFlow, species: species, flow: flow).setUpViewController(), animated: true)
     }
     
     var body: some View {
         if species.hasPortrait {
-            PortraitView(species: species, present: {view, completion in navigationController?.present(view, animated: true, completion: completion)}, similarSpeciesDestination: navigate)
+            PortraitView(species: species, backend: backend, present: {view, completion in navigationController?.present(view, animated: true, completion: completion)}, similarSpeciesDestination: navigate)
         } else {
-            PortraitMiniView(species: species) { view, completion in
+            PortraitMiniView(species: species, backend: backend) { view, completion in
                 navigationController?.present(view, animated: true, completion: completion)
             }
         }
@@ -67,7 +68,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
 
 struct SpeciesInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesInfoView(selectionFlow: false, species: .sampleData, flow: VoidSelectionFlow())
+        SpeciesInfoView(backend: Backend(persistence: ObservationPersistenceController(inMemory: true)), selectionFlow: false, species: .sampleData, flow: VoidSelectionFlow())
     }
 }
 

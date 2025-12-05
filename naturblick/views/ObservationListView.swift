@@ -293,6 +293,7 @@ struct ObservationListView: HostedView {
             .padding(.horizontal, .defaultPadding)
         }
         .task {
+            try? backend.persistence.addViewFieldbook()
             try? await backend.sync()
         }
         .onReceive(model.$showList) { showList in
