@@ -657,9 +657,9 @@
 				7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */,
 				7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */,
 				134F548F2A5EB60F00A079EC /* UploadOperation.swift */,
-				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
 				DBE3C8E72EDDDF2E008B3480 /* ViewFieldbookOperation.swift */,
 				DBE3C8E92EDDDF3C008B3480 /* ViewPortraitOperation.swift */,
+				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
