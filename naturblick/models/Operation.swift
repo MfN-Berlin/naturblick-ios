@@ -11,6 +11,8 @@ enum Operation: Encodable {
     case patch(PatchOperation)
     case upload(UploadOperation)
     case delete(DeleteOperation)
+    case viewfieldbook(ViewFieldbookOperation)
+    case viewportrait(ViewPortraitOperation)
     
     enum CodingKeys: String, CodingKey {
         case operation
@@ -32,6 +34,12 @@ enum Operation: Encodable {
         case .delete(let operation):
             try wrapper.encode("delete", forKey: .operation)
             try wrapper.encode(operation, forKey: .data)
+        case .viewfieldbook(let operation):
+            try wrapper.encode("view_fieldbook", forKey: .operation)
+            try wrapper.encode(operation, forKey: .data)
+        case .viewportrait(let operation):
+            try wrapper.encode("view_portrait", forKey: .operation)
+            try wrapper.encode(operation, forKey: .data)
         }
     }
 
@@ -44,6 +52,8 @@ enum Operation: Encodable {
             let patchId = try row.get(PatchOperation.D.table[Operation.D.optionalRowid])
             let uploadId = try row.get(UploadOperation.D.table[Operation.D.optionalRowid])
             let deleteId = try row.get(DeleteOperation.D.table[Operation.D.optionalRowid])
+            let viewPortraitId = try row.get(ViewPortraitOperation.D.table[Operation.D.optionalRowid])
+            let viewFieldbookId = try row.get(ViewFieldbookOperation.D.table[Operation.D.optionalRowid])
             
             if createId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .create(try CreateOperation.D.instance(row: row)))
@@ -51,8 +61,12 @@ enum Operation: Encodable {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .patch(try PatchOperation.D.instance(row: row)))
             } else if uploadId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .upload(try UploadOperation.D.instance(row: row)))
-            }  else if deleteId != nil {
+            } else if deleteId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .delete(try DeleteOperation.D.instance(row: row)))
+            } else if viewPortraitId != nil {
+                return (try row.get(Operation.D.table[Operation.D.rowid]), .viewportrait(try ViewPortraitOperation.D.instance(row: row)))
+            } else if viewFieldbookId != nil {
+                return (try row.get(Operation.D.table[Operation.D.rowid]), .viewfieldbook(try ViewFieldbookOperation.D.instance(row: row)))
             } else {
                 Fail.with(message: "Unknown operation")
             }

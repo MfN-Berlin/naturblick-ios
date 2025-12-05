@@ -72,7 +72,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     }
     
     func cropDone(thumbnail: NBThumbnail) {
-        let resultView = SelectSpeciesView(flow: self, thumbnail: thumbnail)
+        let resultView = SelectSpeciesView(flow: self, thumbnail: thumbnail, backend: backend)
         withNavigation { navigation in
             navigation.pushViewController(resultView.setUpViewController(), animated: true)
         }
@@ -90,7 +90,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         data.thumbnail = crop
         soundData.start = start
         soundData.end = end
-        let resultView = SelectSpeciesView(flow: self, thumbnail: crop)
+        let resultView = SelectSpeciesView(flow: self, thumbnail: crop, backend: backend)
         withNavigation { navigation in
             navigation.pushViewController(resultView.setUpViewController(), animated: true)
         }
@@ -185,7 +185,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     
     func searchSpecies() {
         withNavigation { navigation in
-            navigation.pushViewController(PickSpeciesListViewController(flow: self), animated: true)
+            navigation.pushViewController(PickSpeciesListViewController(flow: self, backend: backend), animated: true)
         }
     }
     

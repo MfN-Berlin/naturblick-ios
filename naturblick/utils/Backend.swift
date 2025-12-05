@@ -125,7 +125,7 @@ class Backend {
         }
     }
     
-    func sync() async throws {
+    func sync() async throws {	
         do {
             if persistence.shouldImportDevices() {
                 let oldDevices = try await self.askForOldDevices(deviceIdentifiers: persistence.getAllDeviceIds())

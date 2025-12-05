@@ -293,7 +293,12 @@ struct ObservationListView: HostedView {
             .padding(.horizontal, .defaultPadding)
         }
         .task {
-            try? await backend.sync()
+            try! backend.persistence.addViewFieldbook()
+            do {
+                try await backend.sync()
+            } catch {
+                errorHandler.handle(error)
+            }
         }
         .onReceive(model.$showList) { showList in
             if let item = viewController?.navigationItem {

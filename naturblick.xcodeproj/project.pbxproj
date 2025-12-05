@@ -200,6 +200,8 @@
 		DB6DFBF22C35263A0050F1CC /* UIFont+Prefered.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */; };
 		DB7F3F582BD910B900B4CBC2 /* TimeZonePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */; };
 		DB7F3F5A2BD910E100B4CBC2 /* TimeZoneVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */; };
+		DBE3C8E82EDDDF2E008B3480 /* ViewFieldbookOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3C8E72EDDDF2E008B3480 /* ViewFieldbookOperation.swift */; };
+		DBE3C8EA2EDDDF3C008B3480 /* ViewPortraitOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3C8E92EDDDF3C008B3480 /* ViewPortraitOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -409,6 +411,8 @@
 		DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Prefered.swift"; sourceTree = "<group>"; };
 		DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZonePolygon.swift; sourceTree = "<group>"; };
 		DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneVertex.swift; sourceTree = "<group>"; };
+		DBE3C8E72EDDDF2E008B3480 /* ViewFieldbookOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFieldbookOperation.swift; sourceTree = "<group>"; };
+		DBE3C8E92EDDDF3C008B3480 /* ViewPortraitOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPortraitOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -653,6 +657,8 @@
 				7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */,
 				7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */,
 				134F548F2A5EB60F00A079EC /* UploadOperation.swift */,
+				DBE3C8E72EDDDF2E008B3480 /* ViewFieldbookOperation.swift */,
+				DBE3C8E92EDDDF3C008B3480 /* ViewPortraitOperation.swift */,
 				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
 			);
 			path = models;
@@ -964,6 +970,7 @@
 				7BCE46BF29C9DB3700C6C101 /* Group.swift in Sources */,
 				134C75AB2A2F515C0046EEE4 /* BirdRecorderViewModel.swift in Sources */,
 				7BDCC0EB2AD0458C0089A4C6 /* PickSpeciesListView.swift in Sources */,
+				DBE3C8EA2EDDDF3C008B3480 /* ViewPortraitOperation.swift in Sources */,
 				134F54982A5EDC8100A079EC /* URL+SupportDir.swift in Sources */,
 				1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */,
 				1358D5EE2AA5D86300B48C01 /* NBMantisController.swift in Sources */,
@@ -1031,6 +1038,7 @@
 				7BB68E4A2A545D5C00B1DC51 /* String+Validations.swift in Sources */,
 				7BA4DA122A73EC5600AEC0A4 /* HelpView.swift in Sources */,
 				7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */,
+				DBE3C8E82EDDDF2E008B3480 /* ViewFieldbookOperation.swift in Sources */,
 				13F49F5D2BC440330094FB49 /* SourcesImprint.swift in Sources */,
 				13EC572529DC86D600D56A77 /* EdgeInsets+Dimensions.swift in Sources */,
 				7BB68E482A544B7F00B1DC51 /* RegisterViewModel.swift in Sources */,
