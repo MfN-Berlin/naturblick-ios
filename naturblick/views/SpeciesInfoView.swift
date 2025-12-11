@@ -1,13 +1,13 @@
 //
 // Copyright © 2023 Museum für Naturkunde Berlin.
 // This code is licensed under MIT license (see LICENSE.txt for details)
-
-
 import SwiftUI
 import CachedAsyncImage
 
 struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     var holder: ViewControllerHolder = ViewControllerHolder()
+    let backend: Backend
+    let countView: Bool
     
     var viewName: String? {
         if let speciesName = species.speciesName {
@@ -51,15 +51,21 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
     }
     
     func navigate(species: SpeciesListItem) {
-        navigationController?.pushViewController(SpeciesInfoView(selectionFlow: selectionFlow, species: species, flow: flow).setUpViewController(), animated: true)
+        navigationController?.pushViewController(SpeciesInfoView(backend: backend, countView: countView, selectionFlow: selectionFlow, species: species, flow: flow).setUpViewController(), animated: true)
     }
     
     var body: some View {
-        if species.hasPortrait {
-            PortraitView(species: species, present: {view, completion in navigationController?.present(view, animated: true, completion: completion)}, similarSpeciesDestination: navigate)
-        } else {
-            PortraitMiniView(species: species) { view, completion in
-                navigationController?.present(view, animated: true, completion: completion)
+        SwiftUI.Group {
+            if species.hasPortrait {
+                PortraitView(species: species, present: {view, completion in navigationController?.present(view, animated: true, completion: completion)}, similarSpeciesDestination: navigate)
+            } else {
+                PortraitMiniView(species: species) { view, completion in
+                    navigationController?.present(view, animated: true, completion: completion)
+                }
+            }
+        }.task {
+            if (countView) {
+                try! backend.persistence.addViewPortrait(speciesId: species.speciesId)
             }
         }
     }
@@ -67,7 +73,7 @@ struct SpeciesInfoView<Flow>: NavigatableView where Flow: SelectionFlow {
 
 struct SpeciesInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesInfoView(selectionFlow: false, species: .sampleData, flow: VoidSelectionFlow())
+        SpeciesInfoView(backend: Backend(persistence: ObservationPersistenceController(inMemory: true)), countView: false, selectionFlow: false, species: .sampleData, flow: VoidSelectionFlow())
     }
 }
 

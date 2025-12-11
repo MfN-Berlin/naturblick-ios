@@ -13,13 +13,14 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
 
     @ObservedObject var flow: Flow
     let thumbnail: NBThumbnail
+    let backend: Backend
     @State var showInfo: SpeciesListItem? = nil
     @State private var presentAlternativesDialog: Bool = false
     @StateObject var model: SelectSpeciesViewModel = SelectSpeciesViewModel()
     @StateObject private var errorHandler = HttpErrorViewModel()
     
     func openSpeciesInfo(species: SpeciesListItem) {
-        let info = SpeciesInfoView(selectionFlow: true, species: species, flow: flow).setUpViewController()
+        let info = SpeciesInfoView(backend: backend, countView: false, selectionFlow: true, species: species, flow: flow).setUpViewController()
         viewController?.present(PopAwareNavigationController(rootViewController: info), animated: true)
     }
     

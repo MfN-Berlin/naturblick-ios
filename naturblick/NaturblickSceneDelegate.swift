@@ -115,7 +115,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
                         .count
                 )
                 let species = Species.acceptedFromRow(row: row, hasPortraits: (portraits ?? 0) > 0)
-                navigationController.pushViewController(SpeciesInfoView(selectionFlow: false, species: species.listItem, flow: VoidSelectionFlow()).setUpViewController(), animated: true)
+                navigationController.pushViewController(SpeciesInfoView(backend: backend, countView: false, selectionFlow: false, species: species.listItem, flow: VoidSelectionFlow()).setUpViewController(), animated: true)
             }
         default: break
         }

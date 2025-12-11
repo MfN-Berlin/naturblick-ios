@@ -45,7 +45,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             viewType: .portraitGroups,
             groups: groupsWithPortraits,
             destination: { group in
-                SpeciesListViewController(filter: .group(group), flow: self)
+                SpeciesListViewController(filter: .group(group), flow: self, backend: self.backend, countView: true)
             }).setUpViewController()
         viewController?.navigationController?.pushViewController(nextViewController, animated: true)
     }
@@ -206,7 +206,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     }
     
     func afterCrop(thumbnail: NBThumbnail) {
-        let resultView = SelectSpeciesView(flow: self, thumbnail: thumbnail)
+        let resultView = SelectSpeciesView(flow: self, thumbnail: thumbnail, backend: backend)
         withNavigation { navigation in
             if UIAccessibility.isVoiceOverRunning {
                 var viewControllers = navigation.viewControllers
@@ -284,7 +284,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         data.sound.crop = crop
         data.sound.start = start
         data.sound.end = end
-        let resultView = SelectSpeciesView(flow: self, thumbnail: crop)
+        let resultView = SelectSpeciesView(flow: self, thumbnail: crop, backend: backend)
         withNavigation { navigation in
             navigation.pushViewController(resultView.setUpViewController(), animated: true)
         }
@@ -420,7 +420,7 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
 
     func searchSpecies() {
         withNavigation { navigation in
-            navigation.pushViewController(PickSpeciesListViewController(flow: self), animated: true)
+            navigation.pushViewController(PickSpeciesListViewController(flow: self, backend: backend), animated: true)
         }
     }
     

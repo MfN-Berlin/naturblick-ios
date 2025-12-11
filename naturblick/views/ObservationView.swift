@@ -148,7 +148,7 @@ struct ObservationView: HostedView {
     
     private func speciesInfoNavigate() {
         if let species = model.observation?.species?.listItem {
-            navigationController?.pushViewController(SpeciesInfoView(selectionFlow: false, species: species, flow: VoidSelectionFlow()).setUpViewController(), animated: true)
+            navigationController?.pushViewController(SpeciesInfoView(backend: backend, countView: false,  selectionFlow: false, species: species, flow: VoidSelectionFlow()).setUpViewController(), animated: true)
         }
     }
     
