@@ -219,11 +219,7 @@ struct HomeView: HostedView {
         }
         .background(Color.primaryColor)
         .task {
-            do {
-                try await backend.sync()
-            } catch {
-                errorHandler.handle(error)
-            }
+            try! await backend.sync()
         }
         .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { error in
             if case .loggedOut = error {

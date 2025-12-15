@@ -294,11 +294,7 @@ struct ObservationListView: HostedView {
         }
         .task {
             try! backend.persistence.addViewFieldbook()
-            do {
-                try await backend.sync()
-            } catch {
-                errorHandler.handle(error)
-            }
+            try! await backend.sync()
         }
         .onReceive(model.$showList) { showList in
             if let item = viewController?.navigationItem {
