@@ -77,8 +77,7 @@ class HomeViewController: HostingController<HomeView> {
 }
 
 struct HomeView: HostedView {
-    @StateObject private var errorHandler = HttpErrorViewModel()
-    var holder: ViewControllerHolder = ViewControllerHolder()
+	    var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
         String(localized: "home")
@@ -220,18 +219,6 @@ struct HomeView: HostedView {
         .background(Color.primaryColor)
         .task {
             try! await backend.sync()
-        }
-        .alertHttpError(isPresented: $errorHandler.isPresented, error: errorHandler.error) { error in
-            if case .loggedOut = error {
-                Button("sign_out") {
-                    Keychain.shared.deleteEmail()
-                }
-                Button("to_sign_in") {
-                    navigationController?.pushViewController(LoginView(accountViewModel: AccountViewModel(backend: backend)).setUpViewController(), animated: true)
-                }
-            }
-        } message: { error in
-            Text(error.localizedDescription)
         }
     }
 }

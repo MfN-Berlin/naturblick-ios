@@ -320,14 +320,12 @@ class ObservationPersistenceController: ObservationProvider {
         let viewFieldbookOperation = ViewFieldbookOperation(timestamp: ZonedDateTime())
         let viewFieldbookId = try queue.run(Operation.D.table.insert())
         try queue.run(ViewFieldbookOperation.D.table.insert(viewFieldbookOperation.setters(id: viewFieldbookId)))
-        try updateAndRefresh()
     }
     
     func addViewPortrait(speciesId: Int64) throws {
         let viewPortraitOperation = ViewPortraitOperation(speciesId: speciesId, timestamp: ZonedDateTime())
         let viewPortraitId = try queue.run(Operation.D.table.insert())
         try queue.run(ViewPortraitOperation.D.table.insert(viewPortraitOperation.setters(id: viewPortraitId)))
-        try updateAndRefresh()
     }
     
     func addMissingSound(occurenceId: UUID, sound: NBSound) throws {
