@@ -166,6 +166,27 @@ class ObservationPersistenceController: ObservationProvider {
 """
                 )
             }
+
+            if self.queue.userVersion == 5 {
+                try self.queue.execute(
+"""
+                    BEGIN TRANSACTION;
+                    CREATE TABLE view_portrait_operation (
+                        rowid INTEGER PRIMARY KEY NOT NULL,
+                        species_id INTEGER NOT NULL,
+                        timestamp TEXT NOT NULL,
+                        timestampTz TEXT NOT NULL
+                    );
+                    CREATE TABLE view_fieldbook_operation (
+                        rowid INTEGER PRIMARY KEY NOT NULL,
+                        timestamp TEXT NOT NULL,
+                        timestampTz TEXT NOT NULL
+                    );
+                    PRAGMA user_version = 6;
+                    COMMIT TRANSACTION;
+"""
+                )
+            }
             try refresh()
         } catch {
             fatalError(error.localizedDescription)
@@ -227,6 +248,10 @@ class ObservationPersistenceController: ObservationProvider {
                 do {} // No need to change observation due to uploading media
             case .delete(let delete):
                 try queue.run(DBObservation.D.observation.filter(DBObservation.D.occurenceId == delete.occurenceId).delete())
+            case .viewfieldbook(let viewFieldbook):
+                do {} // No need to change observation due to viewFieldbook counting
+            case .viewportrait(let viewPortrait):
+                do {} // No need to change observation due to viewPortrait counting
             }
         }
     }
@@ -289,6 +314,18 @@ class ObservationPersistenceController: ObservationProvider {
         let upload = UploadOperation(occurenceId: occurenceId, mediaId: sound.id, mime: .mp4)
         let uploadId = try queue.run(Operation.D.table.insert())
         try queue.run(UploadOperation.D.table.insert(upload.setters(id: uploadId)))
+    }
+    
+    func addViewFieldbook() throws {
+        let viewFieldbookOperation = ViewFieldbookOperation(timestamp: ZonedDateTime())
+        let viewFieldbookId = try queue.run(Operation.D.table.insert())
+        try queue.run(ViewFieldbookOperation.D.table.insert(viewFieldbookOperation.setters(id: viewFieldbookId)))
+    }
+    
+    func addViewPortrait(speciesId: Int64) throws {
+        let viewPortraitOperation = ViewPortraitOperation(speciesId: speciesId, timestamp: ZonedDateTime())
+        let viewPortraitId = try queue.run(Operation.D.table.insert())
+        try queue.run(ViewPortraitOperation.D.table.insert(viewPortraitOperation.setters(id: viewPortraitId)))
     }
     
     func addMissingSound(occurenceId: UUID, sound: NBSound) throws {
@@ -395,6 +432,16 @@ class ObservationPersistenceController: ObservationProvider {
                     .leftOuter,
                     DeleteOperation.D.table,
                     on: Operation.D.table[Operation.D.rowid] == DeleteOperation.D.table[DeleteOperation.D.rowid]
+                )
+                .join(
+                    .leftOuter,
+                    ViewPortraitOperation.D.table,
+                    on: Operation.D.table[Operation.D.rowid] == ViewPortraitOperation.D.table[ViewPortraitOperation.D.rowid]
+                )
+                .join(
+                    .leftOuter,
+                    ViewFieldbookOperation.D.table,
+                    on: Operation.D.table[Operation.D.rowid] == ViewFieldbookOperation.D.table[ViewFieldbookOperation.D.rowid]
                 )
                 .select(*)
                 .order(Operation.D.rowid.asc))

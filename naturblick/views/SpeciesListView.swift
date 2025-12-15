@@ -9,17 +9,19 @@ class SpeciesListViewModel: ObservableObject {
 }
 
 class SpeciesListViewController: HostingController<SpeciesListView>, UISearchResultsUpdating {
-
+    
+    let countView: Bool
     let filter: SpeciesListFilter
     let flow: CreateFlowViewModel
     let isCharacterResult: Bool = false
     let speciesListModel = SpeciesListViewModel()
     private let speciesProvider = SpeciesListProvider()
     
-    init(filter: SpeciesListFilter, flow: CreateFlowViewModel, isCharacterResult: Bool = false) {
+    init(filter: SpeciesListFilter, flow: CreateFlowViewModel, backend: Backend, countView: Bool, isCharacterResult: Bool = false) {
         self.filter = filter
         self.flow = flow
-        let view = SpeciesListView(filter: filter, flow: flow, isCharacterResult: isCharacterResult, speciesListModel: speciesListModel)
+        self.countView = countView
+        let view = SpeciesListView(backend: backend, filter: filter, flow: flow, isCharacterResult: isCharacterResult, speciesListModel: speciesListModel, countView: countView)
         super.init(rootView: view)
     }
     
@@ -54,17 +56,19 @@ struct SpeciesListView: HostedView {
             return String(localized: "species")
         }
     }
-
+    
+    let backend: Backend
     let filter: SpeciesListFilter
     @ObservedObject var flow: CreateFlowViewModel
     let isCharacterResult: Bool
     @ObservedObject var speciesListModel: SpeciesListViewModel
+    let countView: Bool
     
     func showSpecies(species: SpeciesListItem) {
         if isCharacterResult {
-            viewController?.present(PopAwareNavigationController(rootViewController: SpeciesInfoView(selectionFlow: true, species: species, flow: flow).setUpViewController()), animated: true)
+            viewController?.present(PopAwareNavigationController(rootViewController: SpeciesInfoView(backend: backend, countView: countView, selectionFlow: true, species: species, flow: flow).setUpViewController()), animated: true)
         } else {
-            viewController?.navigationController?.pushViewController(SpeciesInfoView(selectionFlow: false, species: species, flow: flow).setUpViewController(), animated: true)
+            viewController?.navigationController?.pushViewController(SpeciesInfoView(backend: backend, countView: countView, selectionFlow: false, species: species, flow: flow).setUpViewController(), animated: true)
         }
     }
     
@@ -84,6 +88,7 @@ struct SpeciesListView: HostedView {
 
 struct SpeciesListView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesListView(filter: .group(NamedGroup.exampleData), flow: CreateFlowViewModel(backend: Backend(persistence: ObservationPersistenceController(inMemory: true))), isCharacterResult: false, speciesListModel: SpeciesListViewModel())
+        let backend = Backend(persistence: ObservationPersistenceController(inMemory: true))
+        SpeciesListView(backend: backend, filter: .group(NamedGroup.exampleData), flow: CreateFlowViewModel(backend: backend), isCharacterResult: false, speciesListModel: SpeciesListViewModel(), countView: false)
     }
 }

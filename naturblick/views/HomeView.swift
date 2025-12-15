@@ -217,5 +217,8 @@ struct HomeView: HostedView {
             }
         }
         .background(Color.primaryColor)
+        .task {
+            try! await backend.sync()
+        }
     }
 }

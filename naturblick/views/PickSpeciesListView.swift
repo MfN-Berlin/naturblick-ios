@@ -43,8 +43,8 @@ class PickSpeciesListViewController<Flow>: HostingController<PickSpeciesListView
     
     let pickSpeciesListModel = PickSpeciesListModel()
     
-    init(flow: Flow) {
-        let view = PickSpeciesListView(flow: flow, pickSpeciesListModel: pickSpeciesListModel)
+    init(flow: Flow, backend: Backend) {
+        let view = PickSpeciesListView(flow: flow, pickSpeciesListModel: pickSpeciesListModel, backend: backend)
         super.init(rootView: view)
     }
     
@@ -67,9 +67,10 @@ struct PickSpeciesListView<Flow>: HostedView where Flow: IdFlow {
     var viewName: String? = "Species"
     var flow: Flow
     @ObservedObject var pickSpeciesListModel: PickSpeciesListModel
+    let backend: Backend
     
     func showSpecies(species: SpeciesListItem) {
-        viewController?.present(PopAwareNavigationController(rootViewController: SpeciesInfoView(selectionFlow: true, species: species, flow: flow).setUpViewController()), animated: true)
+        viewController?.present(PopAwareNavigationController(rootViewController: SpeciesInfoView(backend: backend, countView: false, selectionFlow: true, species: species, flow: flow).setUpViewController()), animated: true)
     }
     
     var body: some View {
@@ -92,6 +93,6 @@ struct PickSpeciesListView<Flow>: HostedView where Flow: IdFlow {
 
  struct AllSpeciesListView_Previews: PreviewProvider {
      static var previews: some View {
-         PickSpeciesListView(flow: CreateFlowViewModel(backend: Backend(persistence:  ObservationPersistenceController(inMemory: true))), pickSpeciesListModel: PickSpeciesListModel())
+         PickSpeciesListView(flow: CreateFlowViewModel(backend: Backend(persistence:  ObservationPersistenceController(inMemory: true))), pickSpeciesListModel: PickSpeciesListModel(), backend: Backend(persistence: ObservationPersistenceController(inMemory: true)))
      }
  }
