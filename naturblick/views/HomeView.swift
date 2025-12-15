@@ -77,7 +77,7 @@ class HomeViewController: HostingController<HomeView> {
 }
 
 struct HomeView: HostedView {
-	    var holder: ViewControllerHolder = ViewControllerHolder()
+    var holder: ViewControllerHolder = ViewControllerHolder()
     
     var viewName: String? {
         String(localized: "home")
