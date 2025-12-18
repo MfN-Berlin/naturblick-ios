@@ -13,6 +13,7 @@ enum Operation: Encodable {
     case delete(DeleteOperation)
     case viewfieldbook(ViewFieldbookOperation)
     case viewportrait(ViewPortraitOperation)
+    case viewcharacters(ViewCharactersOperation)
     
     enum CodingKeys: String, CodingKey {
         case operation
@@ -40,6 +41,9 @@ enum Operation: Encodable {
         case .viewportrait(let operation):
             try wrapper.encode("view_portrait", forKey: .operation)
             try wrapper.encode(operation, forKey: .data)
+        case .viewcharacters(let operation):
+            try wrapper.encode("view_characters", forKey: .operation)
+            try wrapper.encode(operation, forKey: .data)
         }
     }
 
@@ -54,6 +58,7 @@ enum Operation: Encodable {
             let deleteId = try row.get(DeleteOperation.D.table[Operation.D.optionalRowid])
             let viewPortraitId = try row.get(ViewPortraitOperation.D.table[Operation.D.optionalRowid])
             let viewFieldbookId = try row.get(ViewFieldbookOperation.D.table[Operation.D.optionalRowid])
+            let viewCharactersId = try row.get(ViewCharactersOperation.D.table[Operation.D.optionalRowid])
             
             if createId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .create(try CreateOperation.D.instance(row: row)))
@@ -67,7 +72,9 @@ enum Operation: Encodable {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .viewportrait(try ViewPortraitOperation.D.instance(row: row)))
             } else if viewFieldbookId != nil {
                 return (try row.get(Operation.D.table[Operation.D.rowid]), .viewfieldbook(try ViewFieldbookOperation.D.instance(row: row)))
-            } else {
+            } else if viewCharactersId != nil {
+                return (try row.get(Operation.D.table[Operation.D.rowid]), .viewcharacters(try ViewCharactersOperation.D.instance(row: row)))
+            }else {
                 Fail.with(message: "Unknown operation")
             }
         }

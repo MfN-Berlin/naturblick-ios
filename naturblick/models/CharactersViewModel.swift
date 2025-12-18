@@ -87,6 +87,8 @@ extension CharactersViewModel {
     }
     
     func configure(group: NamedGroup) {
+        let backend = Backend(persistence: ObservationPersistenceController())
+        try! backend.persistence.addViewCharacters(group: group.id)
         $characters
             .combineLatest($selected, CharactersViewModel.calculateFilter)
             .map { filter in
