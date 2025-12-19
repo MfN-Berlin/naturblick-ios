@@ -86,8 +86,7 @@ extension CharactersViewModel {
             .filter(Character.D.group == group.id)
     }
     
-    func configure(group: NamedGroup, backend: Backend) {
-        try! backend.persistence.addViewCharacters(group: group.id)
+    func configure(group: NamedGroup) {
         $characters
             .combineLatest($selected, CharactersViewModel.calculateFilter)
             .map { filter in

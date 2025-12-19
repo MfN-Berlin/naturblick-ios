@@ -60,7 +60,8 @@ struct CharactersView: HostedView {
                 }
             }
             .task {
-                charactersViewModel.configure(group: group, backend: backend)
+                try! backend.persistence.addViewCharacters(group: group.id)
+                charactersViewModel.configure(group: group)
             }
         }
     }
