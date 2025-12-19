@@ -9,6 +9,7 @@ import Combine
 class CharactersViewController: HostingController<CharactersView> {
     let model: CharactersViewModel
     let flow: CreateFlowViewModel
+    
     private var subscriptions = Set<AnyCancellable>()
     var count: Int64 = 0 {
         didSet {
@@ -27,10 +28,10 @@ class CharactersViewController: HostingController<CharactersView> {
             SpeciesListViewController(filter: model.filter, flow: flow, backend: flow.backend, countView: false, isCharacterResult: true), animated: true)
     }
     
-    init(group: NamedGroup, flow: CreateFlowViewModel) {
+    init(group: NamedGroup, flow: CreateFlowViewModel, backend: Backend) {
         self.model = CharactersViewModel()
         self.flow = flow
-        super.init(rootView: CharactersView(group: group, charactersViewModel: model))
+        super.init(rootView: CharactersView(backend: backend,  group: group, charactersViewModel: model))
         model.$count.assign(to: \.count, on: self).store(in: &subscriptions)
     }
 }
@@ -42,6 +43,7 @@ struct CharactersView: HostedView {
         group.name
     }
     
+    let backend: Backend
     let group: NamedGroup
     @ObservedObject var charactersViewModel: CharactersViewModel
     
@@ -58,6 +60,7 @@ struct CharactersView: HostedView {
                 }
             }
             .task {
+                try! backend.persistence.addViewCharacters(group: group.id)
                 charactersViewModel.configure(group: group)
             }
         }
@@ -67,7 +70,7 @@ struct CharactersView: HostedView {
 struct CharactersView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CharactersView(group: NamedGroup.exampleData, charactersViewModel: CharactersViewModel())
+            CharactersView(backend: Backend(persistence: ObservationPersistenceController()), group: NamedGroup.exampleData, charactersViewModel: CharactersViewModel())
         }
     }
 }

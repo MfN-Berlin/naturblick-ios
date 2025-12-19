@@ -200,6 +200,7 @@
 		DB6DFBF22C35263A0050F1CC /* UIFont+Prefered.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */; };
 		DB7F3F582BD910B900B4CBC2 /* TimeZonePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */; };
 		DB7F3F5A2BD910E100B4CBC2 /* TimeZoneVertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */; };
+		DBA296E82EF5573800D43476 /* ViewCharactersOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBA296E72EF5573800D43476 /* ViewCharactersOperation.swift */; };
 		DBE3C8E82EDDDF2E008B3480 /* ViewFieldbookOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3C8E72EDDDF2E008B3480 /* ViewFieldbookOperation.swift */; };
 		DBE3C8EA2EDDDF3C008B3480 /* ViewPortraitOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE3C8E92EDDDF3C008B3480 /* ViewPortraitOperation.swift */; };
 /* End PBXBuildFile section */
@@ -411,6 +412,7 @@
 		DB6DFBF12C35263A0050F1CC /* UIFont+Prefered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Prefered.swift"; sourceTree = "<group>"; };
 		DB7F3F572BD910B900B4CBC2 /* TimeZonePolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZonePolygon.swift; sourceTree = "<group>"; };
 		DB7F3F592BD910E100B4CBC2 /* TimeZoneVertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeZoneVertex.swift; sourceTree = "<group>"; };
+		DBA296E72EF5573800D43476 /* ViewCharactersOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCharactersOperation.swift; sourceTree = "<group>"; };
 		DBE3C8E72EDDDF2E008B3480 /* ViewFieldbookOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFieldbookOperation.swift; sourceTree = "<group>"; };
 		DBE3C8E92EDDDF3C008B3480 /* ViewPortraitOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPortraitOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -657,6 +659,7 @@
 				7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */,
 				7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */,
 				134F548F2A5EB60F00A079EC /* UploadOperation.swift */,
+				DBA296E72EF5573800D43476 /* ViewCharactersOperation.swift */,
 				DBE3C8E72EDDDF2E008B3480 /* ViewFieldbookOperation.swift */,
 				DBE3C8E92EDDDF3C008B3480 /* ViewPortraitOperation.swift */,
 				1343D1DA29DD991B0075ACE3 /* ZonedDateTime.swift */,
@@ -919,6 +922,7 @@
 				138A2A322BF37DBF00BAA384 /* CCByPopupView.swift in Sources */,
 				13C880FF2A98BB91007DEC0B /* NaturblickAppDelegate.swift in Sources */,
 				13E50A2D2AE805890049FACD /* AVAudioSession.swift in Sources */,
+				DBA296E82EF5573800D43476 /* ViewCharactersOperation.swift in Sources */,
 				13ED4C292AE6C3C00007C228 /* PHPhotoLibrary.swift in Sources */,
 				7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */,
 				136CC95829E97ED700FF56A0 /* ObservationPersistenceController.swift in Sources */,
