@@ -142,12 +142,12 @@ struct HomeView: HostedView {
             Spacer()
             
             HomeViewButton(
-                text: String(localized: "record_a_bird"),
+                text: String(localized: "record_an_animal"),
                 color: Color.onPrimaryButtonPrimary,
                 image: Image("audio24"),
                 size: topRowSize) {
                 createFlow.recordSound()
-            }.accessibilityHint(String(localized: "acc_record_a_bird_hint"))
+            }.accessibilityHint(String(localized: "acc_record_an_animal_hint"))
             Spacer()
             HomeViewButton(text: String(localized: "select_characteristics"),
                            color: Color.onPrimaryButtonPrimary,
