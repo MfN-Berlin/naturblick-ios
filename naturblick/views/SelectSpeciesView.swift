@@ -75,11 +75,11 @@ struct SelectSpeciesView<Flow>: NavigatableView where Flow: IdFlow {
                         if let results
                             = model.speciesResults {
                             if results.isEmpty {
-                                Text("no_species_found")
+                                Text(flow.isImage() ? "no_plant_found" : "no_animal_found")
                                     .headline4()
                                     .fixedSize(horizontal: false, vertical: true)
                                     .padding([.top])
-                                Text("no_species_found_description")
+                                Text(flow.isImage() ? "no_plant_found_description" : "no_animal_found_description")
                                     .body2()
                                 if(flow.isCreate) {
                                     Alternative("save_unknown") {

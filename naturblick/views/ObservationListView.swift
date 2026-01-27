@@ -76,7 +76,7 @@ class ObservationListViewController: HostingController<ObservationListView>, UIS
     
     @objc func openMenu(sender: AnyObject) {
         let menuVC = MenuController(entries: [
-               MenuEntry(title: String(localized: "record_a_bird"), image: UIImage(named: "audio24")!) {
+               MenuEntry(title: String(localized: "record_an_animal"), image: UIImage(named: "audio24")!) {
                    self.createFlow.recordSound()
                },
                MenuEntry(title: String(localized: "photograph_a_plant"), image: UIImage(named: "photo24")!) {
