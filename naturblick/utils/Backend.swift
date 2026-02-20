@@ -249,8 +249,8 @@ class Backend {
         return speciesResults
     }
     
-    func soundId(mediaId: String, start: Int, end: Int) async throws -> [SpeciesResult] {
-        let url = URL(string: Configuration.backendUrl + "androidsoundid?mediaId=\(mediaId)&segmentStart=\(start)&segmentEnd=\(end)&speciesVersion=\(currentSpeciesVersion)")
+    func soundId(mediaId: String, thumbnailId: String, start: Int, end: Int) async throws -> [SpeciesResult] {
+        let url = URL(string: Configuration.backendUrl + "androidsoundid?mediaId=\(mediaId)&thumbnailId=\(thumbnailId)&segmentStart=\(start)&segmentEnd=\(end)&speciesVersion=\(currentSpeciesVersion)")
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
         let speciesResults: [SpeciesResult] = try await downloader.httpJson(request: request)

@@ -343,8 +343,9 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
             let result = try await backend.imageId(mediaId: thumbnail.id.uuidString)
             updateResult(result: result)
             return result
-        } else if let sound = data.sound.sound, let start = data.sound.start, let end = data.sound.end {
-            let result = try await backend.soundId(mediaId: sound.id.uuidString, start: start, end: end)
+        } else if let sound = data.sound.sound, let start = data.sound.start, let end = data.sound.end, let thumbnail = data.sound.crop {
+            try await backend.upload(image: thumbnail)
+            let result = try await backend.soundId(mediaId: sound.id.uuidString, thumbnailId: thumbnail.id.uuidString, start: start, end: end)
             updateResult(result: result)
             return result
         } else {
