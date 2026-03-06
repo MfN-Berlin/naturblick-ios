@@ -244,3 +244,5 @@
 "ident_keys"="Bestimmungsschlüssel";
 "sound_recogniotion_sounds"="Lauterkennung Tonaufnahmen";
 "sound_recogniotion_images"="Lauterkennung Bilder";
+"new_birdnet"="Neue Lauterkennung";
+"new_birdnet_text"="Unsere Lauterkennung erkennt jetzt auch weitere Tiergruppen!\nTeste das neue Feature und gib uns Feedback über unser Menü (⚙) → Feedback.";

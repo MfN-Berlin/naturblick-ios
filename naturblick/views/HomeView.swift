@@ -146,8 +146,19 @@ struct HomeView: HostedView {
                 color: Color.onPrimaryButtonPrimary,
                 image: Image("audio24"),
                 size: topRowSize) {
-                createFlow.recordSound()
-            }.accessibilityHint(String(localized: "acc_record_an_animal_hint"))
+                    if(UserDefaults.standard.bool(forKey: "birdNetInfoWasShown")) {
+                        createFlow.recordSound()
+                    } else {
+                        withNavigation { navigation in
+                            let alert = UIAlertController(title:  String(localized: "new_birdnet"), message: String(localized: "new_birdnet_text"), preferredStyle: .actionSheet)
+                            alert.addAction(UIAlertAction(title: String(localized: "ok"), style: .default, handler: { _ in
+                                UserDefaults.standard.setValue(true, forKey: "birdNetInfoWasShown")
+                                createFlow.recordSound()
+                            }))
+                            navigation.present(alert, animated: true)
+                        }
+                    }
+                }.accessibilityHint(String(localized: "acc_record_an_animal_hint"))
             Spacer()
             HomeViewButton(text: String(localized: "select_characteristics"),
                            color: Color.onPrimaryButtonPrimary,
