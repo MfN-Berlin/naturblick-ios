@@ -128,8 +128,9 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
             let result = try await backend.imageId(mediaId: thumbnail.id.uuidString)
             await updateResult(result: result)
             return result
-        } else if let sound = soundData.sound, let start = soundData.start, let end = soundData.end {
-            let result = try await backend.soundId(mediaId: sound.id.uuidString, start: start, end: end)
+        } else if let sound = soundData.sound, let start = soundData.start, let end = soundData.end, let thumbnail = soundData.crop {
+            try await backend.upload(image: thumbnail)
+            let result = try await backend.soundId(mediaId: sound.id.uuidString, thumbnailId: thumbnail.id.uuidString,start: start, end: end)
             await updateResult(result: result)
             return result
         } else {
