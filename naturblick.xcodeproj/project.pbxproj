@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		13070CA82A053EC700A2046D /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13070CA72A053EC700A2046D /* Operation.swift */; };
 		1311C2602BDBDB9600CD1384 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1311C25F2BDBDB9600CD1384 /* Logger.swift */; };
+		1315B91C2FB2185C00DC77FC /* NBCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1315B91B2FB2185400DC77FC /* NBCropViewController.swift */; };
 		131E786629C9BB25000DF928 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786529C9BB25000DF928 /* Assets.xcassets */; };
 		131E786929C9BB25000DF928 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 131E786829C9BB25000DF928 /* Preview Assets.xcassets */; };
 		132A91412A2DCF6C00AC405C /* Map+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132A91402A2DCF6C00AC405C /* Map+Extensions.swift */; };
@@ -51,7 +52,6 @@
 		13535CEB2A77CFB600501DFA /* SpeciesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13535CEA2A77CFB600501DFA /* SpeciesListView.swift */; };
 		13535CED2A77E4FE00501DFA /* SpeciesInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13535CEC2A77E4FE00501DFA /* SpeciesInfoView.swift */; };
 		13561BE32A7937F700968A03 /* Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13561BE22A7937F700968A03 /* Behavior.swift */; };
-		1358D5EE2AA5D86300B48C01 /* NBMantisController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */; };
 		135E682F29EE805700192C4A /* ObservationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 135E682E29EE805700192C4A /* ObservationListItemView.swift */; };
 		13631B072BE513A500AEB78B /* SelectionFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13631B062BE513A500AEB78B /* SelectionFlow.swift */; };
 		13640AF12ADEAE2400BA5907 /* EditObservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13640AF02ADEAE2400BA5907 /* EditObservationView.swift */; };
@@ -80,6 +80,7 @@
 		13839FBE2ABDBE0A00DE2A5B /* SourcesTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13839FBD2ABDBE0A00DE2A5B /* SourcesTranslation.swift */; };
 		138A2A322BF37DBF00BAA384 /* CCByPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138A2A312BF37DBF00BAA384 /* CCByPopupView.swift */; };
 		1395C1562ADFCEED00B168AD /* ObservationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1395C1552ADFCEED00B168AD /* ObservationViewModel.swift */; };
+		1399D0F92FB1CBBF00C4D179 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 1399D0F82FB1CBBF00C4D179 /* CropViewController */; };
 		139C986F2BF76CE600541454 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139C986E2BF76CE600541454 /* Keychain.swift */; };
 		139C98712BF7821A00541454 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139C98702BF7821A00541454 /* AccountViewModel.swift */; };
 		139DA94C2AB99E6F00C8C238 /* View+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139DA94B2AB99E6F00C8C238 /* View+Shadow.swift */; };
@@ -152,7 +153,6 @@
 		7BAC5BC82A8F629400160DEC /* DeleteOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAC5BC72A8F629400160DEC /* DeleteOperation.swift */; };
 		7BAFDA572A580800005D8B20 /* View+mail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAFDA562A580800005D8B20 /* View+mail.swift */; };
 		7BB03C352A0CCA9900C3A885 /* HTTPDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB03C342A0CCA9900C3A885 /* HTTPDownloader.swift */; };
-		7BB350DB2A2A32A8005065E4 /* Mantis in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB350DA2A2A32A8005065E4 /* Mantis */; };
 		7BB3DE2029F6695F00F0D387 /* SimilarSpeciesItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE1F29F6695F00F0D387 /* SimilarSpeciesItemView.swift */; };
 		7BB3DE2329F68D4500F0D387 /* UnambiguousFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2229F68D4500F0D387 /* UnambiguousFeature.swift */; };
 		7BB3DE2529F68DC700F0D387 /* UnambiguousFeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB3DE2429F68DC700F0D387 /* UnambiguousFeatureViewModel.swift */; };
@@ -170,7 +170,6 @@
 		7BC6100C2A30989900185BAA /* SourcesImprintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC6100B2A30989900185BAA /* SourcesImprintView.swift */; };
 		7BC77E8C2A6AA4A300B489C2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC77E8B2A6AA4A300B489C2 /* SettingsView.swift */; };
 		7BCCB4CF2A5D427E0072841B /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCCB4CE2A5D427E0072841B /* ResetPasswordView.swift */; };
-		7BCD2E442A2DCF3E0083B310 /* ImageCropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCD2E432A2DCF3D0083B310 /* ImageCropper.swift */; };
 		7BCE46B429C9DAFE00C6C101 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */; };
 		7BCE46B629C9DAFE00C6C101 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */; };
 		7BCE46B729C9DAFE00C6C101 /* HomeViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */; };
@@ -218,6 +217,7 @@
 /* Begin PBXFileReference section */
 		13070CA72A053EC700A2046D /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
 		1311C25F2BDBDB9600CD1384 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		1315B91B2FB2185400DC77FC /* NBCropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBCropViewController.swift; sourceTree = "<group>"; };
 		131E785E29C9BB24000DF928 /* naturblick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naturblick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		131E786529C9BB25000DF928 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		131E786829C9BB25000DF928 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -263,7 +263,6 @@
 		13535CEA2A77CFB600501DFA /* SpeciesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesListView.swift; sourceTree = "<group>"; };
 		13535CEC2A77E4FE00501DFA /* SpeciesInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesInfoView.swift; sourceTree = "<group>"; };
 		13561BE22A7937F700968A03 /* Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Behavior.swift; sourceTree = "<group>"; };
-		1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBMantisController.swift; sourceTree = "<group>"; };
 		135E682E29EE805700192C4A /* ObservationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationListItemView.swift; sourceTree = "<group>"; };
 		13631B062BE513A500AEB78B /* SelectionFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionFlow.swift; sourceTree = "<group>"; };
 		13640AF02ADEAE2400BA5907 /* EditObservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditObservationView.swift; sourceTree = "<group>"; };
@@ -383,7 +382,6 @@
 		7BC77E8B2A6AA4A300B489C2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7BCAE7BF2A5BF6A300B27370 /* naturblick.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = naturblick.entitlements; sourceTree = "<group>"; };
 		7BCCB4CE2A5D427E0072841B /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
-		7BCD2E432A2DCF3D0083B310 /* ImageCropper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCropper.swift; sourceTree = "<group>"; };
 		7BCE46AB29C9DAFE00C6C101 /* GroupsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		7BCE46AD29C9DAFE00C6C101 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7BCE46AE29C9DAFE00C6C101 /* HomeViewButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewButton.swift; sourceTree = "<group>"; };
@@ -422,9 +420,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BB350DB2A2A32A8005065E4 /* Mantis in Frameworks */,
 				502C51072BDB88950077B06B /* SnowplowTracker in Frameworks */,
 				7BDA8FBE2ABC5E94002E93C9 /* CachedAsyncImage in Frameworks */,
+				1399D0F92FB1CBBF00C4D179 /* CropViewController in Frameworks */,
 				13316BE029C9FAF80077292B /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -562,6 +560,7 @@
 				132A91402A2DCF6C00AC405C /* Map+Extensions.swift */,
 				7BB518622AC1AAFF008A1CEA /* MapInfoBox.swift */,
 				13F08DE02A9F674600874264 /* NavigatableView.swift */,
+				1315B91B2FB2185400DC77FC /* NBCropViewController.swift */,
 				1345EF7F2AB873D600F1CEA8 /* ObservationInfoView.swift */,
 				135E682E29EE805700192C4A /* ObservationListItemView.swift */,
 				13EC572029DC80AD00D56A77 /* ObservationListItemWithImageView.swift */,
@@ -687,7 +686,6 @@
 				7BB03C342A0CCA9900C3A885 /* HTTPDownloader.swift */,
 				1343D1C829DD94870075ACE3 /* HttpError.swift */,
 				13743F692A6803AA00ABCCB1 /* Image+Style.swift */,
-				7BCD2E432A2DCF3D0083B310 /* ImageCropper.swift */,
 				139C986E2BF76CE600541454 /* Keychain.swift */,
 				7BD0FBE22AD7EF2900B63E07 /* Language.swift */,
 				7B2CEA132AA5DAA8004B4276 /* Licence.swift */,
@@ -695,7 +693,6 @@
 				1311C25F2BDBDB9600CD1384 /* Logger.swift */,
 				7BB74B5A2ABB2E34002C4493 /* MenuController.swift */,
 				7BD016222A0B723600B07A3E /* MultipartRequest.swift */,
-				1358D5ED2AA5D86300B48C01 /* NBMantisController.swift */,
 				137FE58F29E5B3A500B397DF /* NSMutableData+append.swift */,
 				136CC95729E97ED700FF56A0 /* ObservationPersistenceController.swift */,
 				13F0FC9B2BC984BA0010FD65 /* OldUserData.swift */,
@@ -750,9 +747,9 @@
 			name = naturblick;
 			packageProductDependencies = (
 				13316BDF29C9FAF80077292B /* SQLite */,
-				7BB350DA2A2A32A8005065E4 /* Mantis */,
 				7BDA8FBD2ABC5E94002E93C9 /* CachedAsyncImage */,
 				502C51062BDB88950077B06B /* SnowplowTracker */,
+				1399D0F82FB1CBBF00C4D179 /* CropViewController */,
 			);
 			productName = naturblick;
 			productReference = 131E785E29C9BB24000DF928 /* naturblick.app */;
@@ -807,9 +804,9 @@
 			mainGroup = 131E785529C9BB24000DF928;
 			packageReferences = (
 				13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */,
-				7BB350D92A2A32A8005065E4 /* XCRemoteSwiftPackageReference "Mantis" */,
 				7BDA8FBC2ABC5E93002E93C9 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */,
 				502C51052BDB88950077B06B /* XCRemoteSwiftPackageReference "snowplow-ios-tracker" */,
+				1399D0F72FB1CBBF00C4D179 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			productRefGroup = 131E785F29C9BB24000DF928 /* Products */;
 			projectDirPath = "";
@@ -946,7 +943,6 @@
 				13A9FDBE2CA5730D00326D05 /* ObservationInfoViewModel.swift in Sources */,
 				7B8839DA29D5762D006CB94E /* PortraitViewModel.swift in Sources */,
 				7BCCB4CF2A5D427E0072841B /* ResetPasswordView.swift in Sources */,
-				7BCD2E442A2DCF3E0083B310 /* ImageCropper.swift in Sources */,
 				134C75A72A2F32650046EEE4 /* IndividualsView.swift in Sources */,
 				13535CED2A77E4FE00501DFA /* SpeciesInfoView.swift in Sources */,
 				13F008C82DD374D800BE9C85 /* AccessibilityView.swift in Sources */,
@@ -977,7 +973,7 @@
 				DBE3C8EA2EDDDF3C008B3480 /* ViewPortraitOperation.swift in Sources */,
 				134F54982A5EDC8100A079EC /* URL+SupportDir.swift in Sources */,
 				1343D1C929DD94870075ACE3 /* HttpError.swift in Sources */,
-				1358D5EE2AA5D86300B48C01 /* NBMantisController.swift in Sources */,
+				1315B91C2FB2185C00DC77FC /* NBCropViewController.swift in Sources */,
 				7BB74B592ABAE834002C4493 /* UIFont+Lato.swift in Sources */,
 				13631B072BE513A500AEB78B /* SelectionFlow.swift in Sources */,
 				7B8839D829D5749B006CB94E /* PortraitView.swift in Sources */,
@@ -1392,20 +1388,20 @@
 				version = 0.15.1;
 			};
 		};
+		1399D0F72FB1CBBF00C4D179 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.2;
+			};
+		};
 		502C51052BDB88950077B06B /* XCRemoteSwiftPackageReference "snowplow-ios-tracker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/snowplow/snowplow-ios-tracker";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 6.0.2;
-			};
-		};
-		7BB350D92A2A32A8005065E4 /* XCRemoteSwiftPackageReference "Mantis" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/guoyingtao/Mantis.git";
-			requirement = {
-				kind = exactVersion;
-				version = 2.21.0;
 			};
 		};
 		7BDA8FBC2ABC5E93002E93C9 /* XCRemoteSwiftPackageReference "swiftui-cached-async-image" */ = {
@@ -1424,15 +1420,15 @@
 			package = 13316BDE29C9FAF80077292B /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
 		};
+		1399D0F82FB1CBBF00C4D179 /* CropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1399D0F72FB1CBBF00C4D179 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = CropViewController;
+		};
 		502C51062BDB88950077B06B /* SnowplowTracker */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 502C51052BDB88950077B06B /* XCRemoteSwiftPackageReference "snowplow-ios-tracker" */;
 			productName = SnowplowTracker;
-		};
-		7BB350DA2A2A32A8005065E4 /* Mantis */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7BB350D92A2A32A8005065E4 /* XCRemoteSwiftPackageReference "Mantis" */;
-			productName = Mantis;
 		};
 		7BDA8FBD2ABC5E94002E93C9 /* CachedAsyncImage */ = {
 			isa = XCSwiftPackageProductDependency;
