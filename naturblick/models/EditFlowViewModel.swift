@@ -6,8 +6,8 @@
 import Foundation
 import SwiftUI
 import MapKit
-import Mantis
 import Combine
+import CropViewController
 
 class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController {
     var holder: ViewControllerHolder = ViewControllerHolder()
@@ -60,14 +60,12 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
     @MainActor func cropPhoto(image: NBImage) {
         imageData.image = image
         imageData.crop = nil
-        var config = Mantis.Config()
-        config.cropViewConfig.showAttachedRotationControlView = false
-        config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1)
-        config.cropToolbarConfig.mode = .embedded
-        let cropViewController: NBMantisController = Mantis.cropViewController(image: image.image, config: config)
-        cropViewController.delegate = self
+
+        let cropController = NBCropViewController(image: image.image)
+        cropController.delegate = self
+
         withNavigation { navigation in
-            navigation.pushViewController(cropViewController, animated: true)
+            navigation.pushViewController(cropController, animated: true)
         }
     }
     
@@ -138,9 +136,9 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         }
     }
     
-    @MainActor func cropViewControllerDidCrop(_ cropViewController: Mantis.CropViewController, cropped: UIImage, transformation: Mantis.Transformation, cropInfo: Mantis.CropInfo) {
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         let thumbnail = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
-            cropped.draw(in: CGRect(origin: .zero, size: .thumbnail))
+            image.draw(in: CGRect(origin: .zero, size: .thumbnail))
         }
         let crop = NBThumbnail(image: thumbnail)
         imageData.crop = crop
@@ -151,8 +149,10 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         }
     }
     
-    func cropViewControllerDidCancel(_ cropViewController: Mantis.CropViewController, original: UIImage) {
-        cropViewController.navigationController?.popViewController(animated: true)
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        if(cancelled) {
+            cropViewController.navigationController?.popViewController(animated: true)
+        }
     }
     
     func cancel() {

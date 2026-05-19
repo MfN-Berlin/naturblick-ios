@@ -5,11 +5,11 @@
 
 import Foundation
 import SwiftUI
-import Mantis
 import MapKit
 import Photos
 import PhotosUI
 import os
+import CropViewController
 
 class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController, PHPickerViewControllerDelegate {
     
@@ -180,14 +180,12 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
     @MainActor private func cropPhoto(image: NBImage) {
         data.image.image = image
         data.image.crop = nil
-        var config = Mantis.Config()
-        config.cropViewConfig.showAttachedRotationControlView = false
-        config.presetFixedRatioType = .alwaysUsingOnePresetFixedRatio(ratio: 1)
-        config.cropToolbarConfig.mode = .embedded
-        let cropViewController: NBMantisController = Mantis.cropViewController(image: image.image, config: config)
-        cropViewController.delegate = self
+
+        let cropController = NBCropViewController(image: image.image)
+        cropController.delegate = self
+
         withNavigation { navigation in
-            navigation.pushViewController(cropViewController, animated: true)
+            navigation.pushViewController(cropController, animated: true)
         }
     }
     
@@ -366,9 +364,9 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         }
     }
     
-    @MainActor func cropViewControllerDidCrop(_ cropViewController: Mantis.CropViewController, cropped: UIImage, transformation: Mantis.Transformation, cropInfo: Mantis.CropInfo) {
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         let thumbnail = UIGraphicsImageRenderer(size: .thumbnail, format: .noScale).image { _ in
-            cropped.draw(in: CGRect(origin: .zero, size: .thumbnail))
+            image.draw(in: CGRect(origin: .zero, size: .thumbnail))
         }
         let crop = NBThumbnail(image: thumbnail)
         data.image.crop = crop
@@ -378,8 +376,10 @@ class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePick
         }
     }
     
-    func cropViewControllerDidCancel(_ cropViewController: Mantis.CropViewController, original: UIImage) {
-        cropViewController.navigationController?.popViewController(animated: true)
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        if(cancelled) {
+            cropViewController.navigationController?.popViewController(animated: true)
+        }
     }
     
     func cancel() {
