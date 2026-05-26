@@ -246,3 +246,5 @@
 "sound_recogniotion_images"="Lauterkennung Bilder";
 "new_birdnet"="Neue Lauterkennung";
 "new_birdnet_text"="Unsere Lauterkennung erkennt jetzt auch weitere Tiergruppen!\nTeste das neue Feature und gib uns Feedback über unser Menü (⚙) → Feedback.";
+"no_priority"="Mikrofon derzeit nicht verfügbar";
+"no_priority_text"="Eine andere App mit höherer Priorität (z. B. ein Telefonanruf) verwendet gerade das Mikrofon oder verhindert dessen Nutzung. Bitte den Anruf oder die App beenden, um eine Tierstimme aufzunehmen.";
