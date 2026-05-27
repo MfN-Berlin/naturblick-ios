@@ -47,6 +47,13 @@ struct BirdRecorderView: NavigatableView {
         .accessibilityAction(.magicTap) {
             model.stop()
         }
+        .alert("no_priority", isPresented: $model.notAllowedToRecord) {
+            Button("ok") {
+                navigationController?.popViewController(animated: true)
+            }
+        } message: {
+            Text("no_priority_text")
+        }
     }
 }
 

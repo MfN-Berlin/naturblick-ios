@@ -16,6 +16,7 @@ struct BirdRecorder {
 class BirdRecorderViewModel: NSObject, ObservableObject, AVAudioRecorderDelegate {
     private let flow: CreateFlowViewModel
     @Published private(set) var currentTime: String = "00:00.0"
+    @Published var notAllowedToRecord = false
     private var recorder: BirdRecorder? = nil
     private var canceled: Bool = false
 
@@ -51,6 +52,12 @@ class BirdRecorderViewModel: NSObject, ObservableObject, AVAudioRecorderDelegate
                     (self?.recorder?.audioRecorder.currentTime ?? 0).toTimeString
                 }
                 .assign(to: &$currentTime)
+        } catch let error as NSError {
+            if error.code == AVAudioSession.ErrorCode.insufficientPriority.rawValue {
+                notAllowedToRecord = true
+            } else {
+                Fail.with(error)
+            }
         } catch {
             Fail.with(error)
         }

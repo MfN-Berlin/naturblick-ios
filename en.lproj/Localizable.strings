@@ -248,3 +248,5 @@
 "sound_recogniotion_images"="Record an animal images";
 "new_birdnet"="New sound recognition";
 "new_birdnet_text"="Our sound recognition now also recognizes other animals!\nTry out the new feature and give us feedback via our menu (⚙) → Feedback.";
+"no_priority"="Microphone currently not available";
+"no_priority_text"="Another app with higher priority (such as a phone call) is currently using the microphone or is preventing other apps from using it. Please end the call or stop the other app to record an animal sound.";
