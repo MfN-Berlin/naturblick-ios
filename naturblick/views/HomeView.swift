@@ -150,7 +150,7 @@ struct HomeView: HostedView {
                         createFlow.recordSound()
                     } else {
                         withNavigation { navigation in
-                            let alert = UIAlertController(title:  String(localized: "new_birdnet"), message: String(localized: "new_birdnet_text"), preferredStyle: .actionSheet)
+                            let alert = UIAlertController(title:  String(localized: "new_birdnet"), message: String(localized: "new_birdnet_text"), preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: String(localized: "ok"), style: .default, handler: { _ in
                                 UserDefaults.standard.setValue(true, forKey: "birdNetInfoWasShown")
                                 createFlow.recordSound()
