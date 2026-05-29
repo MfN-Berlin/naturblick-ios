@@ -14,7 +14,7 @@ struct SpeciesResultView: View {
         if result.score > 50 {
             return .onSecondarySignalMedium
         } else {
-            return .onSecondarySignalLow
+            return .onSecondaryHighEmphasis
         }
     }
     
@@ -47,23 +47,22 @@ struct SpeciesResultView: View {
             VStack(alignment: .leading, spacing: .zero) {
                 if let name = species.speciesName {
                     HStack {
-                        VStack(alignment: HorizontalAlignment.leading) {
-                            Text(name)
-                                .subtitle1()
-                            Text(species.sciname)
-                                .subtitle3(color: Color.onSecondaryHighEmphasis)
-                                .accessibilityLabel(Text("sciname \(species.sciname)"))
-                        }
+                        Text(name)
+                            .subtitle1()
                         if let gender = species.gender {
                             Text(gender)
                                 .foregroundColor(.onSecondaryHighEmphasis)
                         }
                     }
+                    Text(species.sciname)
+                        .subtitle3(color: .onSecondarySignalLow)
+                        .accessibilityLabel(Text("sciname \(species.sciname)"))
                 } else {
                     Text(species.sciname)
-                        .subtitle1()
+                        .subtitle1(color: Color.onSecondarySignalLow)
                         .accessibilityLabel(Text("sciname \(species.sciname)"))
                 }
+                
                 Text(String(format: "Score: %.0f%%", result.score.rounded()))
                     .subtitle3(color: color)
             }
