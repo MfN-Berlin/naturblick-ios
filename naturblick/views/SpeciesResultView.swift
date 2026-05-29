@@ -27,7 +27,7 @@ struct SpeciesResultView: View {
     }
     
     var body: some View {
-        HStack {
+        HStack(alignment: .top, spacing: .zero) {
             CachedAsyncImage(urlRequest: urlRequest) { image in
                 image
                     .resizable()
