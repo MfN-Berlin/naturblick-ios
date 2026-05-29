@@ -14,7 +14,7 @@ struct SpeciesResultView: View {
         if result.score > 50 {
             return .onSecondarySignalMedium
         } else {
-            return .onSecondarySignalLow
+            return .onSecondaryHighEmphasis
         }
     }
     
@@ -27,7 +27,7 @@ struct SpeciesResultView: View {
     }
     
     var body: some View {
-        HStack {
+        HStack(alignment: .top, spacing: .zero) {
             CachedAsyncImage(urlRequest: urlRequest) { image in
                 image
                     .resizable()
@@ -54,11 +54,15 @@ struct SpeciesResultView: View {
                                 .foregroundColor(.onSecondaryHighEmphasis)
                         }
                     }
+                    Text(species.sciname)
+                        .subtitle3(color: .onSecondarySignalLow)
+                        .accessibilityLabel(Text("sciname \(species.sciname)"))
                 } else {
                     Text(species.sciname)
-                        .subtitle1()
+                        .subtitle1(color: Color.onSecondarySignalLow)
                         .accessibilityLabel(Text("sciname \(species.sciname)"))
                 }
+                
                 Text(String(format: "Score: %.0f%%", result.score.rounded()))
                     .subtitle3(color: color)
             }
