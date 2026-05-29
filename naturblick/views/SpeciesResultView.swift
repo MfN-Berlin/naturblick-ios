@@ -47,8 +47,13 @@ struct SpeciesResultView: View {
             VStack(alignment: .leading, spacing: .zero) {
                 if let name = species.speciesName {
                     HStack {
-                        Text(name)
-                            .subtitle1()
+                        VStack(alignment: HorizontalAlignment.leading) {
+                            Text(name)
+                                .subtitle1()
+                            Text(species.sciname)
+                                .subtitle3(color: Color.onSecondaryHighEmphasis)
+                                .accessibilityLabel(Text("sciname \(species.sciname)"))
+                        }
                         if let gender = species.gender {
                             Text(gender)
                                 .foregroundColor(.onSecondaryHighEmphasis)
