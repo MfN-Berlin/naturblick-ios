@@ -106,6 +106,13 @@ extension Species {
         )
     }
 
+    static func acceptedQuery(speciesId: Int64) -> QueryType {
+        Species.Definition.table
+                .join(.leftOuter, Species.Definition.tableAlias, on: Species.Definition.table[Species.Definition.accepted] == Species.Definition.tableAlias[Species.Definition.id])
+                .join(.inner, Group.Definition.table, on: Species.Definition.table[Species.Definition.group] == Group.Definition.table[Group.Definition.name])
+                .filter(Species.Definition.table[Species.Definition.id] == speciesId)
+    }
+
     static func acceptedFromRow(row: Row, hasPortraits: Bool) -> Species {
         return if row[Species.Definition.tableAlias[Species.Definition.acceptedId]] != nil {
             Species.fromRow(row: row, hasPortraits: hasPortraits, alias: Species.Definition.tableAlias)
