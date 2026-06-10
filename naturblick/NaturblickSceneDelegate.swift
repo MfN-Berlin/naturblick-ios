@@ -106,7 +106,7 @@ class NaturblickSceneDelegate: UIResponder, UIWindowSceneDelegate {
             navigationController.pushViewController(ResetPasswordView(backend: backend, token: token).setUpViewController(), animated: true)
         case .speciesPortrait(let speciesId):
             let speciesDb: Connection = Connection.speciesDB
-            if let row = try? speciesDb.pluck(Species.Definition.table.join(.leftOuter, Species.Definition.tableAlias, on: Species.Definition.table[Species.Definition.accepted] == Species.Definition.tableAlias[Species.Definition.id]).filter(Species.Definition.table[Species.Definition.id] == speciesId)) {
+            if let row = try? speciesDb.pluck(Species.acceptedQuery(speciesId: speciesId)) {
                 let realSpeciesId = Species.acceptedSpeciesId(row: row)
                 let portraits = try? speciesDb.scalar(
                     Portrait.Definition.table
