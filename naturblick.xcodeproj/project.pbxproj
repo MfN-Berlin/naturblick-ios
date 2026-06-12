@@ -882,7 +882,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "set -e\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    curl -f --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://staging.naturblick.museumfuernaturkunde.berlin/django/app-content/db -o resources/django-db.sqlite3\nelse\n    curl -f --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://naturblick.museumfuernaturkunde.berlin/django/app-content/db -o resources/django-db.sqlite3\nfi\n";
+			shellScript = "set -e\n\nif [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    curl -f --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://staging.naturblick.museumfuernaturkunde.berlin/app-content/db -o resources/django-db.sqlite3\nelse\n    curl -f --connect-timeout 60 --retry 5 --retry-all-errors --compressed -L https://naturblick.museumfuernaturkunde.berlin/app-content/db -o resources/django-db.sqlite3\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

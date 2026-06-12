@@ -132,7 +132,7 @@ enum GenerateAssets {
         }
 
         let decoder = JSONDecoder()
-        let data = try await URLSession.shared.httpData(from: URL(string: "\(url)/django/app-content/character-values")!)
+        let data = try await URLSession.shared.httpData(from: URL(string: "\(url)/app-content/character-values")!)
         let characters = try decoder.decode([CharacterValue].self, from: data)
         for character in characters {
             guard character.image != nil || (character.colors != nil && character.colors != "") else {
@@ -151,7 +151,7 @@ enum GenerateAssets {
             }
         }
 
-        let groupData = try await URLSession.shared.httpData(from: URL(string: "\(url)/django/groups")!)
+        let groupData = try await URLSession.shared.httpData(from: URL(string: "\(url)/app-content/groups")!)
         let groups = try decoder.decode([Group].self, from: groupData)
         for group in groups {
             if let image = group.image {
