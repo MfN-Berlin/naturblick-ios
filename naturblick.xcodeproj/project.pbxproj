@@ -1385,7 +1385,7 @@
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.15.1;
+				version = 0.16.0;
 			};
 		};
 		1399D0F72FB1CBBF00C4D179 /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {

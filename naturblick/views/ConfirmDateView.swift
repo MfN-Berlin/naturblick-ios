@@ -42,8 +42,8 @@ struct ConfirmDateView: NavigatableView {
                 .labelsHidden()
             
             Picker(selection: $selectedTimeZone, label: Text("timezone")) {
-                ForEach(0 ..< timeZones.count) {
-                    Text(self.timeZones[$0]).tag($0)
+                ForEach(0 ..< timeZones.count, id: \.self) { i in
+                    Text(self.timeZones[i]).tag(i)
                 }
             }
             Spacer()
