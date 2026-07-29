@@ -9,7 +9,7 @@ import MapKit
 import Combine
 import CropViewController
 
-class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController {
+class EditFlowViewModel: NSObject, CropViewControllerDelegate, @MainActor IdFlow, PickerFlow, HoldingViewController {
     var holder: ViewControllerHolder = ViewControllerHolder()
     let backend: Backend
     @Published private(set) var result: [SpeciesResult]? = nil
@@ -48,7 +48,7 @@ class EditFlowViewModel: NSObject, CropViewControllerDelegate, IdFlow, PickerFlo
         
         if let speciesUrl = data.species?.url {
             Task {
-                await setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.djangoUrl + speciesUrl)!))
+                setSpeciesAvatar(avatar: await URLSession.shared.cachedImage(url: URL(string: Configuration.djangoUrl + speciesUrl)!))
             }
         }
     }

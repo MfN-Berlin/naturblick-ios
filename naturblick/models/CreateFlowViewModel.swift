@@ -11,7 +11,7 @@ import PhotosUI
 import os
 import CropViewController
 
-class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, IdFlow, PickerFlow, HoldingViewController, PHPickerViewControllerDelegate {
+class CreateFlowViewModel: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, CropViewControllerDelegate, @MainActor IdFlow, PickerFlow, HoldingViewController, PHPickerViewControllerDelegate {
     
     var holder: ViewControllerHolder = ViewControllerHolder()
     let backend: Backend

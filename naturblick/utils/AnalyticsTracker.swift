@@ -52,7 +52,7 @@ class AnalyticsTracker {
             .label(appVersion)
             .property(displayData)
 
-        AnalyticsTracker.tracker?.track(event)
+        let _ = AnalyticsTracker.tracker?.track(event)
     }
 
     static func trackSpeciesSelection(filter: SpeciesListFilter, viewType: GroupsViewType? = nil) {
@@ -65,7 +65,7 @@ class AnalyticsTracker {
                     .label("MKey")
                     .property(String(data: selectionString, encoding: String.Encoding.utf8))
                 
-                AnalyticsTracker.tracker?.track(event)
+                let _ = AnalyticsTracker.tracker?.track(event)
             }
         case .group(let group):
             if let view = viewType {
@@ -74,7 +74,7 @@ class AnalyticsTracker {
                     .label(group.id)
                     .property(group.gername)
                 
-                AnalyticsTracker.tracker?.track(event)
+                let _ = AnalyticsTracker.tracker?.track(event)
             }
         }
     }
@@ -85,7 +85,7 @@ class AnalyticsTracker {
             .property(species.sciname)
             .value(NSNumber(value: species.speciesId))
         
-        AnalyticsTracker.tracker?.track(event)
+        let _ = AnalyticsTracker.tracker?.track(event)
     }
     
     static func trackPortraitSound(speciesId: Int64, url: String) {
@@ -94,18 +94,18 @@ class AnalyticsTracker {
             .property(url)
             .value(NSNumber(value: speciesId))
         
-        AnalyticsTracker.tracker?.track(event)
+        let _ = AnalyticsTracker.tracker?.track(event)
     }
     
     static func trackError(error: Error) {
         let event = SNOWError(message: "\(error)")
             .stackTrace("\(Thread.callStackSymbols)")
-        AnalyticsTracker.tracker?.track(event)
+        let _ = AnalyticsTracker.tracker?.track(event)
     }
     
     static func trackError(message: String) {
         let event = SNOWError(message: message)
-        AnalyticsTracker.tracker?.track(event)
+        let _ = AnalyticsTracker.tracker?.track(event)
     }
 }
 
