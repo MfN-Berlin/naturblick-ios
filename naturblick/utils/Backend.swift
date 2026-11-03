@@ -148,6 +148,14 @@ class Backend {
         var chunk = Chunk()
         
         for (i, o) in zip(ids, operations) {
+            // An upload whose file is gone can never succeed. It has to be dropped,
+            // otherwise it crashes the app on every sync from now on.
+            if case .upload(let upload) = o,
+               !FileManager.default.fileExists(atPath: URL.uploadFileURL(id: upload.mediaId, mime: upload.mime).path) {
+                try persistence.clearPendingOperations(ids: [i])
+                AnalyticsTracker.trackError(message: "Dropped pending upload with missing file")
+                continue
+            }
             chunk.addOperation(id: i, operation: o)
             if chunk.exceedsMaxSize() {
                 try await syncChunk(chunk: chunk)

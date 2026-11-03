@@ -476,7 +476,7 @@ class ObservationPersistenceController: ObservationProvider {
         return (operationAndId.map { $0.0 }, operationAndId.map { $0.1 })
     }
 
-    private func clearPendingOperations(ids: [Int64]) throws {
+    func clearPendingOperations(ids: [Int64]) throws {
         try queue.run(Operation.D.table.filter(ids.contains(Operation.D.rowid)).delete())
     }
     
