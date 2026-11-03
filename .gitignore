@@ -2,5 +2,6 @@
 xcuserdata/
 /naturblick/Generated.xcassets/
 /generate_assets
+/generate_character_assets
 .DS_Store
 resources/django-db.sqlite3
